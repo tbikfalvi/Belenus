@@ -55,13 +55,13 @@ public:
     {
         switch( p_enGA )
         {
-            case HA_DEFAULT:            return "HTTPMSG_01 Unidentified ";              break;
-            case HA_AUTHENTICATE:       return "HTTPMSG_02 Authenticate ";              break;
-            case HA_PCSENDDATA:         return "HTTPMSG_03 PatientCardSendData ";       break;
-            case HA_PCUPDATERECORD:     return "HTTPMSG_04 UpdateRecord ";              break;
-            case HA_PROCESSQUEUE:       return "HTTPMSG_05 ProcessWaitingData";         break;
-            case HA_PROCESSFINISHED:    return "HTTPMSG_99 ProcessFinished";            break;
-            default:                    return "INVALID_IDENTIFIER";
+            case HA_DEFAULT:            return "HTTPMSG_00";    break;
+            case HA_AUTHENTICATE:       return "HTTPMSG_01";    break;
+            case HA_PCSENDDATA:         return "HTTPMSG_02";    break;
+            case HA_PCUPDATERECORD:     return "HTTPMSG_03";    break;
+            case HA_PROCESSQUEUE:       return "HTTPMSG_04";    break;
+            case HA_PROCESSFINISHED:    return "HTTPMSG_99";    break;
+            default:                    return "HTTPMSGERR";
         }
     }
 };
@@ -76,12 +76,12 @@ public:
     cBlnsHttp();
     ~cBlnsHttp();
 
-    void             setHost( const QString p_qsHost );
     void             setTimeout( const int p_inTimeout );
-    void             sendPatientCardData( QString p_qsBarcode, QString p_qsPatientCardData );
+    void             sendPatientCardData( QString p_qsBarcode, QString p_qsPatientCardData, bool p_bSendNow = true );
     void             processWaitingCardData();
-
     void             checkHttpServerAvailability();
+    QString          errorMessage();
+    int              getNumberOfWaitingRecords();
 
 protected:
 
@@ -94,7 +94,6 @@ private:
     bool             m_httpRequestAborted;
     int              m_httpGetId;
 
-    QString          m_qsHost;
     QString          m_qsError;
     int              m_inTimeout;
     int              m_inTimer;
@@ -103,6 +102,7 @@ private:
     QString          m_qsBarcode;
     QString          m_qsCardData;
     QString          m_qsCardDataSendResponse;
+    unsigned int     m_uiRecordId;
 
     cBlnsHttpAction::teBlnsHttpAction           m_teBlnsHttpProcess;
     vector<cBlnsHttpAction::teBlnsHttpAction>   m_vrHttpActions;
@@ -123,7 +123,8 @@ signals:
 
     void             signalErrorOccured();
     void             signalActionProcessed( QString p_qsInfo );
-    void             signalDebugMessage(QString p_qsMessage);
+    void             signalStepProgress();
+    void             signalHideProgress();
 
 private slots:
     void            _slotHttpRequestFinished(int requestId, bool error);

@@ -595,7 +595,7 @@ void cDBPatientCard::setArchive( const QString &p_qsArchive ) throw()
     m_qsArchive = p_qsArchive;
 }
 
-void cDBPatientCard::sendDataToWeb() throw()
+void cDBPatientCard::sendDataToWeb( bool p_bSendNow ) throw()
 {
     try
     {
@@ -606,7 +606,7 @@ void cDBPatientCard::sendDataToWeb() throw()
         qsMessageData.append( "<div id='valid'><label>T201</label>" );
         qsMessageData.append( validDateTo() );
         qsMessageData.append( "</div><div id='unit'><label>T202</label>" );
-        qsMessageData.append( units() );
+        qsMessageData.append( QString::number(units()) );
         qsMessageData.append( "</div><label id='validT'>T203</label>" );
 
         QString qsQuery = QString( "SELECT patientCardUnitId, patientCardTypeId, unitTime, validDateFrom, validDateTo, COUNT(unitTime) "
@@ -654,76 +654,10 @@ void cDBPatientCard::sendDataToWeb() throw()
             }
         }
 
-        g_poBlnsHttp->sendPatientCardData( barcode(), qsMessageData );
+        g_poBlnsHttp->sendPatientCardData( barcode(), qsMessageData, p_bSendNow );
     }
     catch( cSevException &e )
     {
         g_obLogger(e.severity()) << e.what() << EOM;
     }
-}
-
-void cDBPatientCard::sendDataToGibbig() throw()
-{
-/*
-    QString      qsQuery = "";
-
-    qsQuery.append( "SELECT COUNT(active), gibbigId, unitTime, validDateTo " );
-    qsQuery.append( "FROM patientcardunits WHERE " );
-    qsQuery.append( QString("patientcardid=%1 AND ").arg(id()) );
-    if( p_teActionType == cGibbigAction::GA_PCREGISTER ||
-        p_teActionType == cGibbigAction::GA_PCREFILL )
-    {
-        qsQuery.append( "gibbigId=0 AND " );
-    }
-    qsQuery.append( "active=1 " );
-    qsQuery.append( "GROUP BY unitTime, validDateTo " );
-    QSqlQuery   *poQuery = g_poDB->executeQTQuery( qsQuery );
-    QStringList  qslUnits;
-
-    while( poQuery->next() )
-    {
-        qslUnits << QString( "%1/%2/%3/%4" ).arg( poQuery->value(0).toString() )
-                                            .arg( poQuery->value(1).toString() )
-                                            .arg( poQuery->value(2).toString() )
-                                            .arg( poQuery->value(3).toString() );
-    }
-
-    QString qsPatientCard = "";
-
-    qsPatientCard.append( barcode() );
-    qsPatientCard.append( "#" );
-    qsPatientCard.append( validDateTo() );
-    qsPatientCard.append( "#" );
-    qsPatientCard.append( qslUnits.join("|") );
-//
-    switch( p_teActionType )
-    {
-        case cGibbigAction::GA_PCREGISTER:
-            g_poGibbig->gibbigPCRegister( qsPatientCard );
-            break;
-        case cGibbigAction::GA_PCREFILL:
-            g_poGibbig->gibbigPCRefill( qsPatientCard );
-            break;
-        case cGibbigAction::GA_PCUSE:
-            g_poGibbig->gibbigPCUse( qsPatientCard );
-            break;
-        case cGibbigAction::GA_PCDELETE:
-            g_poGibbig->gibbigPCDelete( qsPatientCard );
-            break;
-        default:
-            break;
-    }
-*/
-}
-
-void cDBPatientCard::updateGibbigId(const QString &p_qsId) throw()
-{
-    /*
-    QString      qsQuery = "";
-
-    qsQuery.append( QString("UPDATE patientcardunits SET gibbigId=%1 WHERE ").arg( p_qsId ) );
-    qsQuery.append( QString("gibbigId=0 AND patientcardid=%1 AND active=1 ").arg(id()) );
-
-    g_poDB->executeQTQuery( qsQuery );
-    */
 }
