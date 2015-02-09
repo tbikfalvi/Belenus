@@ -211,7 +211,7 @@ bool cDBCassaHistory::isRevokeEnabled( const unsigned int p_uiId ) const throw()
     if( poQuery->size() != 1 )
         throw cSevException( cSeverity::ERROR, "Cassa history id not found" );
 
-    // Ha sztornó tétel
+    // Ha sztorno tetel
     poQuery->first();
     if( poQuery->value(2).toUInt() > 0 )
     {
@@ -220,7 +220,7 @@ bool cDBCassaHistory::isRevokeEnabled( const unsigned int p_uiId ) const throw()
 
     poQuery = g_poDB->executeQTQuery( QString( "SELECT * FROM cassaHistory WHERE parentId = %1" ).arg( p_uiId ) );
 
-    // Ha sztornózott tétel
+    // Ha sztornozott tetel
     if( poQuery->size() > 0 )
     {
         return false;
@@ -229,10 +229,23 @@ bool cDBCassaHistory::isRevokeEnabled( const unsigned int p_uiId ) const throw()
     poQuery = g_poDB->executeQTQuery( QString( "SELECT * FROM ledger, cassaHistory WHERE cassaHistoryId = %1 AND ledger.ledgerId=cassaHistory.ledgerId" ).arg( p_uiId ) );
     poQuery->first();
 
-    // Ha géphasználat, vagy kassza nyitás, zárás
+    // Ha gephasznalat, vagy kassza nyitas, zaras
     if( poQuery->size() > 0 && poQuery->value(3).toUInt() < 2 )
     {
         return false;
+    }
+
+    // Ha az eladott berlet hasznalatban van
+    if( poQuery->value(9).toUInt() > 1 )
+    {
+        unsigned int uiPCId = poQuery->value(9).toUInt();
+
+        poQuery = g_poDB->executeQTQuery( QString( "SELECT * FROM patientcardunits WHERE patientCardId = %1 AND prepared = 1 " ).arg( uiPCId ) );
+
+        if( poQuery->size() > 0 )
+        {
+            return false;
+        }
     }
 
     return true;
