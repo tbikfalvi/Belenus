@@ -3928,117 +3928,161 @@ A vonalkódnak %1 karakter hosszúnak kell lennie.</translation>
 <context>
     <name>cDlgPatientCardAssign</name>
     <message>
-        <location filename="dlg/dlgpatientcardassign.cpp" line="70"/>
-        <location filename="dlg/dlgpatientcardassign.cpp" line="77"/>
-        <location filename="dlg/dlgpatientcardassign.cpp" line="155"/>
-        <location filename="dlg/dlgpatientcardassign.cpp" line="162"/>
+        <location filename="dlg/dlgpatientcardassign.cpp" line="103"/>
+        <location filename="dlg/dlgpatientcardassign.cpp" line="111"/>
+        <location filename="dlg/dlgpatientcardassign.cpp" line="132"/>
+        <location filename="dlg/dlgpatientcardassign.cpp" line="148"/>
+        <location filename="dlg/dlgpatientcardassign.cpp" line="154"/>
+        <location filename="dlg/dlgpatientcardassign.cpp" line="161"/>
         <source>Error</source>
         <translation>Hiba</translation>
     </message>
     <message>
-        <location filename="dlg/dlgpatientcardassign.cpp" line="71"/>
-        <location filename="dlg/dlgpatientcardassign.cpp" line="156"/>
+        <location filename="dlg/dlgpatientcardassign.cpp" line="104"/>
+        <location filename="dlg/dlgpatientcardassign.cpp" line="126"/>
         <source>Invalid barcode length.
 The length of the barcode should be %1.</source>
         <translation>Nem megfelelő vonalkód hosszúság.
 A vonalkódnak %1 karakter hosszúnak kell lennie.</translation>
     </message>
     <message>
-        <location filename="dlg/dlgpatientcardassign.cpp" line="78"/>
-        <location filename="dlg/dlgpatientcardassign.cpp" line="163"/>
+        <location filename="dlg/dlgpatientcardassign.cpp" line="112"/>
+        <location filename="dlg/dlgpatientcardassign.cpp" line="133"/>
         <source>Barcode of the Main card and Assigned card can not be the same.</source>
         <translation>A Fő kártya és a Társkártya vonalkódja nem lehet ugyanaz.</translation>
     </message>
     <message>
-        <location filename="dlg/dlgpatientcardassign.cpp" line="97"/>
+        <location filename="dlg/dlgpatientcardassign.cpp" line="149"/>
+        <source>These cards has already been assigned to each other.</source>
+        <translation>Ezek a bérletek már egymáshoz vannak társítva.</translation>
+    </message>
+    <message>
+        <location filename="dlg/dlgpatientcardassign.cpp" line="155"/>
+        <source>These cards has already been assigned to another cards.</source>
+        <translation>Ezek a bérletek már társítva vannak különböző bérletekhez.</translation>
+    </message>
+    <message>
+        <location filename="dlg/dlgpatientcardassign.cpp" line="162"/>
+        <source>Both cards has issues prevent to assign them
+
+.&apos;Old&apos; card: 
+%1
+&apos;New&apos; card: 
+%2</source>
+        <translation>Egyik bérletet sem lehet társítani
+
+&apos;Régi&apos; bérlet: 
+%1
+&apos;Új&apos; bérlet: 
+%2</translation>
+    </message>
+    <message>
+        <location filename="dlg/dlgpatientcardassign.cpp" line="170"/>
+        <location filename="dlg/dlgpatientcardassign.cpp" line="177"/>
+        <source>&apos;%1&apos; card can not be assigned.
+%2</source>
+        <translation>&apos;%1&apos; bérletet nem lehet társítani.
+%2</translation>
+    </message>
+    <message>
+        <location filename="dlg/dlgpatientcardassign.cpp" line="187"/>
+        <source>&apos;%1&apos; card can not be processed.
+%2</source>
+        <translation>&apos;%1&apos; bérlet nem használható.
+%2</translation>
+    </message>
+    <message>
+        <location filename="dlg/dlgpatientcardassign.cpp" line="305"/>
+        <location filename="dlg/dlgpatientcardassign.cpp" line="438"/>
         <source>Patientcard is inactive.</source>
         <translation>A bérlet inaktív, érvénytelen.</translation>
     </message>
     <message>
-        <location filename="dlg/dlgpatientcardassign.cpp" line="101"/>
+        <location filename="dlg/dlgpatientcardassign.cpp" line="373"/>
+        <source>&apos;%1&apos; barcode has not found in the database.
+Do you want to register it for a new patientcard?</source>
+        <translation>&apos;%1&apos; vonalkód nincs elmentve az adatbázisban.
+Regisztrálni akarja a vonalkódot egy új bérlethez?</translation>
+    </message>
+    <message>
+        <location filename="dlg/dlgpatientcardassign.cpp" line="297"/>
+        <location filename="dlg/dlgpatientcardassign.cpp" line="430"/>
         <source>Patientcard is empty.</source>
         <translation>A bérlet üres.</translation>
     </message>
     <message>
-        <location filename="dlg/dlgpatientcardassign.cpp" line="105"/>
+        <location filename="dlg/dlgpatientcardassign.cpp" line="292"/>
+        <location filename="dlg/dlgpatientcardassign.cpp" line="420"/>
         <source>Service cards can not be main card.</source>
         <translation>Szervíz bérlet nem lehet fő kártya.</translation>
     </message>
     <message>
-        <location filename="dlg/dlgpatientcardassign.cpp" line="109"/>
         <source>This card has been assigned to another card.</source>
-        <translation>Ez a bérlet már egy másik bérlettel van társítva.</translation>
+        <translation type="obsolete">Ez a bérlet már egy másik bérlettel van társítva.</translation>
     </message>
     <message>
-        <location filename="dlg/dlgpatientcardassign.cpp" line="113"/>
-        <location filename="dlg/dlgpatientcardassign.cpp" line="195"/>
+        <location filename="dlg/dlgpatientcardassign.cpp" line="287"/>
+        <location filename="dlg/dlgpatientcardassign.cpp" line="425"/>
         <source>This patientcard has been lost and replaced
 and can not be used or sold again.</source>
         <translation>Ez a bérlet elveszett és lecserélték másik bérletre
 ezért nem lehet használni vagy eladni újra.</translation>
     </message>
     <message>
-        <location filename="dlg/dlgpatientcardassign.cpp" line="117"/>
-        <location filename="dlg/dlgpatientcardassign.cpp" line="199"/>
+        <location filename="dlg/dlgpatientcardassign.cpp" line="301"/>
+        <location filename="dlg/dlgpatientcardassign.cpp" line="434"/>
         <source>The validity of this patientcard has been expired on %1</source>
         <translation>A bérlet érvényességi ideje lejárt %1</translation>
     </message>
     <message>
-        <location filename="dlg/dlgpatientcardassign.cpp" line="120"/>
-        <location filename="dlg/dlgpatientcardassign.cpp" line="132"/>
-        <location filename="dlg/dlgpatientcardassign.cpp" line="209"/>
+        <location filename="dlg/dlgpatientcardassign.cpp" line="169"/>
+        <location filename="dlg/dlgpatientcardassign.cpp" line="176"/>
+        <location filename="dlg/dlgpatientcardassign.cpp" line="186"/>
         <source>Warning</source>
         <translation>Figyelmeztetés</translation>
     </message>
     <message>
-        <location filename="dlg/dlgpatientcardassign.cpp" line="121"/>
         <source>This card can not be main card.
 %1</source>
-        <translation>Ez a bérlet nem lehet fő kártya.
+        <translation type="obsolete">Ez a bérlet nem lehet fő kártya.
 %1</translation>
     </message>
     <message>
-        <location filename="dlg/dlgpatientcardassign.cpp" line="132"/>
         <source>This barcode has not found in the database.
 Please select an existing barcode for main card.</source>
-        <translation>Ez a vonalkód nincs elmentve az adatbázisban.
+        <translation type="obsolete">Ez a vonalkód nincs elmentve az adatbázisban.
 Kérem válasszon egy létező vonalkódot fő kártyának.</translation>
     </message>
     <message>
-        <location filename="dlg/dlgpatientcardassign.cpp" line="182"/>
         <source>This patientcard has been already assigned to another card.
 The main card barcode is: %1
 </source>
-        <translation>Ez a bérlet már egy másik bérlethez lett társítva.
+        <translation type="obsolete">Ez a bérlet már egy másik bérlethez lett társítva.
 A főkártya vonalkódja: %1</translation>
     </message>
     <message>
-        <location filename="dlg/dlgpatientcardassign.cpp" line="187"/>
         <source>This patientcard is already a main card.</source>
-        <translation>Ehhez a bérlethez már társítottak kártyát.</translation>
+        <translation type="obsolete">Ehhez a bérlethez már társítottak kártyát.</translation>
     </message>
     <message>
-        <location filename="dlg/dlgpatientcardassign.cpp" line="191"/>
         <source>Service cards can not be assigned card.</source>
-        <translation>Szervíz bérlet nem lehet társított kártya.</translation>
+        <translation type="obsolete">Szervíz bérlet nem lehet társított kártya.</translation>
     </message>
     <message>
-        <location filename="dlg/dlgpatientcardassign.cpp" line="210"/>
         <source>This card can not be assigned to the main card.
 %1</source>
-        <translation>Ezt a bérletet nem lehet társítani a fő kártyához.
+        <translation type="obsolete">Ezt a bérletet nem lehet társítani a fő kártyához.
 %1</translation>
     </message>
     <message>
-        <location filename="dlg/dlgpatientcardassign.cpp" line="221"/>
+        <location filename="dlg/dlgpatientcardassign.cpp" line="372"/>
         <source>Question</source>
         <translation>Kérdés</translation>
     </message>
     <message>
-        <location filename="dlg/dlgpatientcardassign.cpp" line="222"/>
         <source>This barcode has not found in the database.
 Do you want to register it for a new patientcard?</source>
-        <translation>Ez a vonalkód nincs elmentve az adatbázisban.
+        <translation type="obsolete">Ez a vonalkód nincs elmentve az adatbázisban.
 Regisztrálni akarja a vonalkódot egy új bérlethez?</translation>
     </message>
 </context>
@@ -11872,34 +11916,95 @@ El akarja menteni ezt a hármast az adatbázisba?</translation>
         <translation>Bérlet társítás</translation>
     </message>
     <message>
-        <location filename="dlgpatientcardassign.ui" line="22"/>
         <source> Main card </source>
-        <translation> Fő kártya </translation>
+        <translation type="obsolete"> Fő kártya </translation>
     </message>
     <message>
-        <location filename="dlgpatientcardassign.ui" line="28"/>
-        <location filename="dlgpatientcardassign.ui" line="67"/>
+        <location filename="dlgpatientcardassign.ui" line="26"/>
+        <source> &apos;Old&apos; (existing) patientcard  </source>
+        <translation> &apos;Régi&apos; (létező) bérlet </translation>
+    </message>
+    <message>
+        <location filename="dlgpatientcardassign.ui" line="32"/>
+        <location filename="dlgpatientcardassign.ui" line="51"/>
         <source>Barcode :</source>
         <translation>Vonalkód :</translation>
     </message>
     <message>
-        <location filename="dlgpatientcardassign.ui" line="51"/>
-        <location filename="dlgpatientcardassign.ui" line="90"/>
+        <location filename="dlgpatientcardassign.ui" line="45"/>
+        <source> New patientcard (to be assigned to old) </source>
+        <translation> Új bérlet (társítandó a régihez) </translation>
+    </message>
+    <message>
+        <location filename="dlgpatientcardassign.ui" line="68"/>
         <source>Verify</source>
         <translation>Ellenőrzés</translation>
     </message>
     <message>
-        <location filename="dlgpatientcardassign.ui" line="61"/>
+        <location filename="dlgpatientcardassign.ui" line="88"/>
+        <source> Old card assign structure </source>
+        <translation> Régi bérlet társítási kapcsolatok </translation>
+    </message>
+    <message>
+        <location filename="dlgpatientcardassign.ui" line="113"/>
+        <source> Action to be processed </source>
+        <translation> Végrehajtandó feladat </translation>
+    </message>
+    <message>
+        <location filename="dlgpatientcardassign.ui" line="122"/>
+        <source>After the assign process the old card will be the main (parent) card, the new card will be the assigned (child) card.</source>
+        <translation>A társítás után a régi kártya lesz a fő (szülő) kártya, míg az új kártya lesz a társított (gyerek) kártya.</translation>
+    </message>
+    <message>
+        <location filename="dlgpatientcardassign.ui" line="125"/>
+        <source>Assign new card to old card</source>
+        <translation>Új kártya társítása a meglévőhöz</translation>
+    </message>
+    <message>
+        <location filename="dlgpatientcardassign.ui" line="135"/>
+        <source>After the assign process the new card will be the main (parent) card and the old card will be the assigned (child) card.</source>
+        <translation>A társítás után az új kártya lesz a fő (szülő) kártya, míg a régi kártya lesz a társított (gyerek) kártya.</translation>
+    </message>
+    <message>
+        <location filename="dlgpatientcardassign.ui" line="138"/>
+        <source>Assign old card to new card</source>
+        <translation>Meglévő kártya társítása az újhoz</translation>
+    </message>
+    <message>
+        <location filename="dlgpatientcardassign.ui" line="148"/>
+        <source>Replace the current main (parent) card with the &apos;old&apos; card. The current main will be assigned (child) card.</source>
+        <translation>A jelenlegi fő (szülő) kártya lecserélése a &apos;Régi&apos; kártyára. A jelenlegi fő kártya ezután társított (gyerek) kártya lesz.</translation>
+    </message>
+    <message>
+        <location filename="dlgpatientcardassign.ui" line="151"/>
+        <source>Transform old card to main card</source>
+        <translation>Meglévő kártya fő kártyává alakítása</translation>
+    </message>
+    <message>
+        <location filename="dlgpatientcardassign.ui" line="171"/>
+        <source>...</source>
+        <translation>...</translation>
+    </message>
+    <message>
+        <location filename="dlgpatientcardassign.ui" line="184"/>
+        <source>RadioButton</source>
+        <translation>RB</translation>
+    </message>
+    <message>
+        <location filename="dlgpatientcardassign.ui" line="194"/>
+        <source>Execute selected action</source>
+        <translation>Kiválasztott feladat végrehajtása</translation>
+    </message>
+    <message>
         <source> Card to be assigned to main card </source>
-        <translation> Társkártya </translation>
+        <translation type="obsolete"> Társkártya </translation>
     </message>
     <message>
-        <location filename="dlgpatientcardassign.ui" line="104"/>
         <source>Assign</source>
-        <translation>Társítás</translation>
+        <translation type="obsolete">Társítás</translation>
     </message>
     <message>
-        <location filename="dlgpatientcardassign.ui" line="111"/>
+        <location filename="dlgpatientcardassign.ui" line="210"/>
         <source>Cancel</source>
         <translation>Mégsem</translation>
     </message>
