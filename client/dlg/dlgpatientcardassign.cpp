@@ -43,6 +43,7 @@ cDlgPatientCardAssign::cDlgPatientCardAssign( QWidget *p_poParent, QString p_qsM
     connect( rbActAssign,       SIGNAL(clicked()), this, SLOT(slotRadioClicked()) );
     connect( rbActAssignOld,    SIGNAL(clicked()), this, SLOT(slotRadioClicked()) );
     connect( rbActSetOldToMain, SIGNAL(clicked()), this, SLOT(slotRadioClicked()) );
+    connect( rbActRemoveChild,  SIGNAL(clicked()), this, SLOT(slotRadioClicked()) );
 
     rbDefault->setVisible( false );
     rbDefault->setChecked( true );
@@ -185,14 +186,14 @@ void cDlgPatientCardAssign::on_pbCheckCards_clicked()
         if( !m_bMainCardOk )
         {
             QMessageBox::warning( this, tr("Warning"),
-                                  tr("'%1' card can not be assigned.\n%2")
+                                  tr("'%1' card can not be assigned.\n\n%2")
                                     .arg(ledMainBarcode->text())
                                     .arg( m_qsReasonM ) );
         }
         if( !m_bAssignCardOk )
         {
             QMessageBox::warning( this, tr("Warning"),
-                                  tr("'%1' card can not be assigned.\n%2")
+                                  tr("'%1' card can not be assigned.\n\n%2")
                                   .arg(ledAssignBarcode->text())
                                   .arg( m_qsReasonA ) );
         }
@@ -202,7 +203,7 @@ void cDlgPatientCardAssign::on_pbCheckCards_clicked()
         if( !m_bMainCardOk )
         {
             QMessageBox::warning( this, tr("Warning"),
-                                  tr("'%1' card can not be processed.\n%2")
+                                  tr("'%1' card can not be processed.\n\n%2")
                                     .arg(ledMainBarcode->text())
                                     .arg( m_qsReasonM ) );
         }
@@ -262,6 +263,7 @@ void cDlgPatientCardAssign::_fillOldCardAssignStructure()
                 itemParent->setExpanded( true );
 
                 rbActSetOldToMain->setEnabled( false );
+                rbActRemoveChild->setEnabled( true );
             }
             else
             {
@@ -291,6 +293,7 @@ void cDlgPatientCardAssign::_fillOldCardAssignStructure()
                 itemParent->setExpanded( true );
 
                 rbActSetOldToMain->setEnabled( true );
+                rbActRemoveChild->setEnabled( false );
             }
         }
 
@@ -347,6 +350,10 @@ void cDlgPatientCardAssign::slotRadioClicked()
     {
         lblInfo->setText( rbActSetOldToMain->toolTip() );
     }
+    else if( rbActRemoveChild->isChecked() )
+    {
+        lblInfo->setText( rbActRemoveChild->toolTip() );
+    }
     else
     {
         lblInfo->setText( "" );
@@ -363,6 +370,7 @@ void cDlgPatientCardAssign::_disableControls()
     rbActAssign->setEnabled( false );
     rbActAssignOld->setEnabled( false );
     rbActSetOldToMain->setEnabled( false );
+    rbActRemoveChild->setEnabled( false );
     rbDefault->setVisible( false );
     rbDefault->setChecked( true );
     lblInfo->setText( "" );

@@ -153,6 +153,19 @@
          </widget>
         </item>
         <item>
+         <widget class="QRadioButton" name="rbActRemoveChild">
+          <property name="enabled">
+           <bool>false</bool>
+          </property>
+          <property name="toolTip">
+           <string>Unlink all assigned cards from the main (parent) card and inactivate them.</string>
+          </property>
+          <property name="text">
+           <string>Remove assigned cards</string>
+          </property>
+         </widget>
+        </item>
+        <item>
          <spacer name="verticalSpacer_2">
           <property name="orientation">
            <enum>Qt::Vertical</enum>
@@ -160,7 +173,7 @@
           <property name="sizeHint" stdset="0">
            <size>
             <width>20</width>
-            <height>137</height>
+            <height>114</height>
            </size>
           </property>
          </spacer>
