@@ -2,6 +2,7 @@
 #define DLGPATIENTCARDASSIGN_H
 
 #include "ui_dlgpatientcardassign.h"
+#include "dlgprogress.h"
 
 class cDlgPatientCardAssign : public QDialog, protected Ui::dlgPatientCardAssign
 {
@@ -22,7 +23,10 @@ private:
     void            _disableControls();
     bool            _checkIfExists( QString p_qsBarcode );
     void            _loadAssignedCard();
+    void            _removeAndDeactivateAssignedCards();
+    void            _setSelectedCardToMainCard();
 
+    cDlgProgress    *m_dlgProgress;
     bool             m_bMainCardOk;
     bool             m_bAssignCardOk;
     QString          m_qsBarcodeMain;

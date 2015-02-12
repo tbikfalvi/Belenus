@@ -2509,40 +2509,40 @@ The length of the new barcode should be %1.</source>
 <context>
     <name>cDlgPatientCardAssign</name>
     <message>
-        <location filename="dlg/dlgpatientcardassign.cpp" line="103"/>
-        <location filename="dlg/dlgpatientcardassign.cpp" line="111"/>
+        <location filename="dlg/dlgpatientcardassign.cpp" line="124"/>
         <location filename="dlg/dlgpatientcardassign.cpp" line="132"/>
-        <location filename="dlg/dlgpatientcardassign.cpp" line="148"/>
-        <location filename="dlg/dlgpatientcardassign.cpp" line="154"/>
-        <location filename="dlg/dlgpatientcardassign.cpp" line="161"/>
+        <location filename="dlg/dlgpatientcardassign.cpp" line="153"/>
+        <location filename="dlg/dlgpatientcardassign.cpp" line="169"/>
+        <location filename="dlg/dlgpatientcardassign.cpp" line="175"/>
+        <location filename="dlg/dlgpatientcardassign.cpp" line="182"/>
         <source>Error</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="dlg/dlgpatientcardassign.cpp" line="104"/>
-        <location filename="dlg/dlgpatientcardassign.cpp" line="126"/>
+        <location filename="dlg/dlgpatientcardassign.cpp" line="125"/>
+        <location filename="dlg/dlgpatientcardassign.cpp" line="147"/>
         <source>Invalid barcode length.
 The length of the barcode should be %1.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="dlg/dlgpatientcardassign.cpp" line="112"/>
         <location filename="dlg/dlgpatientcardassign.cpp" line="133"/>
+        <location filename="dlg/dlgpatientcardassign.cpp" line="154"/>
         <source>Barcode of the Main card and Assigned card can not be the same.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="dlg/dlgpatientcardassign.cpp" line="149"/>
+        <location filename="dlg/dlgpatientcardassign.cpp" line="170"/>
         <source>These cards has already been assigned to each other.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="dlg/dlgpatientcardassign.cpp" line="155"/>
+        <location filename="dlg/dlgpatientcardassign.cpp" line="176"/>
         <source>These cards has already been assigned to another cards.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="dlg/dlgpatientcardassign.cpp" line="162"/>
+        <location filename="dlg/dlgpatientcardassign.cpp" line="183"/>
         <source>Both cards has issues prevent to assign them
 
 .&apos;Old&apos; card: 
@@ -2552,65 +2552,81 @@ The length of the barcode should be %1.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="dlg/dlgpatientcardassign.cpp" line="169"/>
-        <location filename="dlg/dlgpatientcardassign.cpp" line="176"/>
-        <location filename="dlg/dlgpatientcardassign.cpp" line="186"/>
+        <location filename="dlg/dlgpatientcardassign.cpp" line="190"/>
+        <location filename="dlg/dlgpatientcardassign.cpp" line="197"/>
+        <location filename="dlg/dlgpatientcardassign.cpp" line="207"/>
         <source>Warning</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="dlg/dlgpatientcardassign.cpp" line="170"/>
-        <location filename="dlg/dlgpatientcardassign.cpp" line="177"/>
+        <location filename="dlg/dlgpatientcardassign.cpp" line="191"/>
+        <location filename="dlg/dlgpatientcardassign.cpp" line="198"/>
         <source>&apos;%1&apos; card can not be assigned.
+
 %2</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="dlg/dlgpatientcardassign.cpp" line="187"/>
+        <location filename="dlg/dlgpatientcardassign.cpp" line="208"/>
         <source>&apos;%1&apos; card can not be processed.
+
 %2</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="dlg/dlgpatientcardassign.cpp" line="287"/>
-        <location filename="dlg/dlgpatientcardassign.cpp" line="425"/>
+        <location filename="dlg/dlgpatientcardassign.cpp" line="330"/>
+        <location filename="dlg/dlgpatientcardassign.cpp" line="473"/>
         <source>This patientcard has been lost and replaced
 and can not be used or sold again.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="dlg/dlgpatientcardassign.cpp" line="292"/>
-        <location filename="dlg/dlgpatientcardassign.cpp" line="420"/>
+        <location filename="dlg/dlgpatientcardassign.cpp" line="335"/>
+        <location filename="dlg/dlgpatientcardassign.cpp" line="468"/>
         <source>Service cards can not be main card.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="dlg/dlgpatientcardassign.cpp" line="297"/>
-        <location filename="dlg/dlgpatientcardassign.cpp" line="430"/>
+        <location filename="dlg/dlgpatientcardassign.cpp" line="340"/>
+        <location filename="dlg/dlgpatientcardassign.cpp" line="478"/>
         <source>Patientcard is empty.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="dlg/dlgpatientcardassign.cpp" line="301"/>
-        <location filename="dlg/dlgpatientcardassign.cpp" line="434"/>
+        <location filename="dlg/dlgpatientcardassign.cpp" line="344"/>
+        <location filename="dlg/dlgpatientcardassign.cpp" line="482"/>
         <source>The validity of this patientcard has been expired on %1</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="dlg/dlgpatientcardassign.cpp" line="305"/>
-        <location filename="dlg/dlgpatientcardassign.cpp" line="438"/>
+        <location filename="dlg/dlgpatientcardassign.cpp" line="348"/>
+        <location filename="dlg/dlgpatientcardassign.cpp" line="486"/>
         <source>Patientcard is inactive.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="dlg/dlgpatientcardassign.cpp" line="372"/>
+        <location filename="dlg/dlgpatientcardassign.cpp" line="420"/>
+        <location filename="dlg/dlgpatientcardassign.cpp" line="499"/>
+        <location filename="dlg/dlgpatientcardassign.cpp" line="542"/>
         <source>Question</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="dlg/dlgpatientcardassign.cpp" line="373"/>
+        <location filename="dlg/dlgpatientcardassign.cpp" line="421"/>
         <source>&apos;%1&apos; barcode has not found in the database.
 Do you want to register it for a new patientcard?</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="dlg/dlgpatientcardassign.cpp" line="500"/>
+        <source>Are you sure you want to unlink the assigned cards?
+All of the assigned card will be deactivated.</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="dlg/dlgpatientcardassign.cpp" line="543"/>
+        <source>Are you sure you want to set the selected card to main cards?
+All of the assigned card will be linked to this selected card.</source>
         <translation type="unfinished"></translation>
     </message>
 </context>
@@ -8182,22 +8198,32 @@ Do you want to save them as new into the database?</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="dlgpatientcardassign.ui" line="171"/>
-        <source>...</source>
+        <location filename="dlgpatientcardassign.ui" line="161"/>
+        <source>Unlink all assigned cards from the main (parent) card and inactivate them.</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="dlgpatientcardassign.ui" line="164"/>
+        <source>Remove assigned cards</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
         <location filename="dlgpatientcardassign.ui" line="184"/>
+        <source>...</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="dlgpatientcardassign.ui" line="197"/>
         <source>RadioButton</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="dlgpatientcardassign.ui" line="194"/>
+        <location filename="dlgpatientcardassign.ui" line="207"/>
         <source>Execute selected action</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="dlgpatientcardassign.ui" line="210"/>
+        <location filename="dlgpatientcardassign.ui" line="223"/>
         <source>Cancel</source>
         <translation type="unfinished"></translation>
     </message>

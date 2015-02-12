@@ -37,7 +37,15 @@ MainWindow::MainWindow(QWidget *parent, teAction p_teAction, QString p_qsFileNam
         case ACT_EXECUTE:
         {
             ui->lblCaption->setText( tr("Update database") );
-            m_nTimer = startTimer( 1000 );
+            if( p_qsFileName.length() == 0 )
+            {
+                ui->lblInfo->setText( tr("Please select desired database and click on Start") );
+                setControlsEnabled( true );
+            }
+            else
+            {
+                m_nTimer = startTimer( 1000 );
+            }
             break;
         }
         default:

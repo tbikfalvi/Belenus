@@ -51,6 +51,8 @@ cDlgPatientCardAssign::cDlgPatientCardAssign( QWidget *p_poParent, QString p_qsM
 
     on_ledMainBarcode_textChanged( "" );
     on_ledAssignBarcode_textChanged( "" );
+
+    m_dlgProgress = new cDlgProgress( this );
 }
 //===========================================================================================================
 cDlgPatientCardAssign::~cDlgPatientCardAssign()
@@ -209,12 +211,32 @@ void cDlgPatientCardAssign::on_pbCheckCards_clicked()
         }
 
     }
+
+    if( _isCardsCanBeAssigned() )
+    {
+        rbActAssign->setEnabled( true );
+        rbActAssignOld->setEnabled( true );
+    }
+    pbCheckCards->setIcon( QIcon("./resources/40x40_ok.png") );
 }
 //===========================================================================================================
 void cDlgPatientCardAssign::on_pbAssign_clicked()
 //-----------------------------------------------------------------------------------------------------------
 {
-
+    if( rbActAssign->isChecked() )
+    {
+    }
+    else if( rbActAssignOld->isChecked() )
+    {
+    }
+    else if( rbActSetOldToMain->isChecked() )
+    {
+        _setSelectedCardToMainCard();
+    }
+    else if( rbActRemoveChild->isChecked() )
+    {
+        _removeAndDeactivateAssignedCards();
+    }
 }
 //===========================================================================================================
 void cDlgPatientCardAssign::on_pbCancel_clicked()
@@ -470,6 +492,93 @@ void cDlgPatientCardAssign::_loadAssignedCard()
         g_obLogger(e.severity()) << e.what() << EOM;
     }
 }
+//===========================================================================================================
+void cDlgPatientCardAssign::_removeAndDeactivateAssignedCards()
+//-----------------------------------------------------------------------------------------------------------
+{
+    if( QMessageBox::question( this, tr("Question"),
+                               tr("Are you sure you want to unlink the assigned cards?\n"
+                                  "All of the assigned card will be deactivated."),
+                               QMessageBox::Yes,QMessageBox::No ) == QMessageBox::No )
+    {
+        return;
+    }
+
+    m_dlgProgress->showProgress();
+
+    cDBPatientCard  obDBPatientCard;
+
+    try
+    {
+        obDBPatientCard.load( ledMainBarcode->text() );
+
+        QSqlQuery *poQuery = g_poDB->executeQTQuery( QString( "SELECT patientCardId FROM patientCards WHERE parentCardId = %1" )
+                                                            .arg( obDBPatientCard.id() ) );
+        m_dlgProgress->showProgressBar( poQuery->size() );
+        while( poQuery->next() )
+        {
+            cDBPatientCard  obTemp;
+
+            obTemp.load( poQuery->value(0).toUInt() );
+            obTemp.deactivate();
+            m_dlgProgress->stepProgressBar();
+        }
+    }
+    catch( cSevException &e )
+    {
+        g_obLogger(e.severity()) << e.what() << EOM;
+    }
+
+    ledMainBarcode->setText( "" );
+    ledAssignBarcode->setText( "" );
+    _disableControls();
+    m_dlgProgress->hideProgress();
+    pbCancel->setFocus();
+}
+//===========================================================================================================
+void cDlgPatientCardAssign::_setSelectedCardToMainCard()
+//-----------------------------------------------------------------------------------------------------------
+{
+    if( QMessageBox::question( this, tr("Question"),
+                               tr("Are you sure you want to set the selected card to main cards?\n"
+                                  "All of the assigned card will be linked to this selected card."),
+                               QMessageBox::Yes,QMessageBox::No ) == QMessageBox::No )
+    {
+        return;
+    }
+
+    m_dlgProgress->showProgress();
+
+    cDBPatientCard  obDBPatientCard;
+
+    try
+    {
+        obDBPatientCard.load( ledMainBarcode->text() );
+
+        g_poDB->executeQTQuery( QString( "UPDATE patientcardunits "
+                                         "SET patientCardId=%1 WHERE "
+                                         "patientCardId=%2 AND "
+                                         "active=1" ).arg( obDBPatientCard.id() )
+                                                     .arg( obDBPatientCard.parentId() ) );
+        g_poDB->executeQTQuery( QString( "UPDATE patientcards "
+                                         "SET parentCardId=%1 WHERE "
+                                         "patientCardId=%2 OR "
+                                         "parentCardId=%2").arg( obDBPatientCard.id() )
+                                                           .arg( obDBPatientCard.parentId() ) );
+        obDBPatientCard.setParentId( 0 );
+        obDBPatientCard.save();
+    }
+    catch( cSevException &e )
+    {
+        g_obLogger(e.severity()) << e.what() << EOM;
+    }
+
+    ledMainBarcode->setText( "" );
+    ledAssignBarcode->setText( "" );
+    _disableControls();
+    m_dlgProgress->hideProgress();
+    pbCancel->setFocus();
+}
 
 
 
@@ -483,148 +592,4 @@ void cDlgPatientCardAssign::
 {
 
 
-//===========================================================================================================
-void cDlgPatientCardAssign::on_pbMainVerify_clicked()
-//-----------------------------------------------------------------------------------------------------------
-{
-
-    cDBPatientCard  obDBPatientCard;
-
-    try
-    {
-        obDBPatientCard.load( ledMainBarcode->text() );
-        if( obDBPatientCard.isPatientCardCanBeParent() )
-        {
-            m_bMainCardOk = true;
-        }
-        else
-        {
-            QString qsReason = "";
-
-            if( obDBPatientCard.active() == 0 )
-            {
-                qsReason = tr( "Patientcard is inactive." );
-            }
-            else if( obDBPatientCard.units() < 1 or obDBPatientCard.timeLeft() < 1 )
-            {
-                qsReason = tr( "Patientcard is empty." );
-            }
-            else if( obDBPatientCard.patientCardTypeId() < 2 )
-            {
-                qsReason = tr( "Service cards can not be main card." );
-            }
-            else if( obDBPatientCard.parentId() > 0 )
-            {
-                qsReason = tr( "This card has been assigned to another card." );
-            }
-            else if( obDBPatientCard.pincode().compare("LOST") == 0 )
-            {
-                qsReason = tr( "This patientcard has been lost and replaced\nand can not be used or sold again." );
-            }
-            else if( QDate::fromString( obDBPatientCard.validDateTo(), "yyyy-MM-dd" ) < QDate::currentDate() )
-            {
-                qsReason = tr( "The validity of this patientcard has been expired on %1" ).arg( obDBPatientCard.validDateTo() );
-            }
-
-            QMessageBox::warning( this, tr("Warning"),
-                                  tr("This card can not be main card.\n%1").arg( qsReason ) );
-        }
-    }
-    catch( cSevException &e )
-    {
-        if( QString(e.what()).compare("Patientcard barcode not found") != 0 )
-        {
-            g_obLogger(e.severity()) << e.what() << EOM;
-        }
-        else
-        {
-            QMessageBox::warning( this, tr("Warning"), tr("This barcode has not found in the database.\n"
-                                                          "Please select an existing barcode for main card.") );
-        }
-    }
-
-    pbMainVerify->setIcon( (m_bMainCardOk ? QIcon("./resources/40x40_ok.png") : QIcon("./resources/40x40_cancel.png")) );
-
-    pbAssign->setEnabled( isCardsCanBeAssigned() );
-}
-//===========================================================================================================
-void cDlgPatientCardAssign::on_pbAssignVerify_clicked()
-//-----------------------------------------------------------------------------------------------------------
-{
-
-    cDBPatientCard  obDBPatientCard;
-
-    try
-    {
-        obDBPatientCard.load( ledAssignBarcode->text() );
-
-        QString qsReason = "";
-
-        if( obDBPatientCard.active() )
-        {
-            if( obDBPatientCard.parentId() > 0 )
-            {
-                cDBPatientCard  obParent;
-
-                obParent.load( obDBPatientCard.parentId() );
-                qsReason = tr( "This patientcard has been already assigned to another card.\n"
-                              "The main card barcode is: %1\n" ).arg( obParent.barcode() );
-            }
-            else if( obDBPatientCard.isAssignedCardExists() )
-            {
-                qsReason = tr( "This patientcard is already a main card." );
-            }
-            else if( obDBPatientCard.patientCardTypeId() == 1 )
-            {
-                qsReason = tr( "Service cards can not be assigned card." );
-            }
-            else if( obDBPatientCard.pincode().compare("LOST") == 0 )
-            {
-                qsReason = tr( "This patientcard has been lost and replaced\nand can not be used or sold again." );
-            }
-            else if( QDate::fromString( obDBPatientCard.validDateTo(), "yyyy-MM-dd" ) < QDate::currentDate() )
-            {
-                qsReason = tr( "The validity of this patientcard has been expired on %1" ).arg( obDBPatientCard.validDateTo() );
-            }
-        }
-
-        if( qsReason.length() == 0 )
-        {
-            m_bAssignCardOk = true;
-        }
-        else
-        {
-            QMessageBox::warning( this, tr("Warning"),
-                                  tr("This card can not be assigned to the main card.\n%1").arg( qsReason ) );
-        }
-    }
-    catch( cSevException &e )
-    {
-        if( QString(e.what()).compare("Patientcard barcode not found") != 0 )
-        {
-            g_obLogger(e.severity()) << e.what() << EOM;
-        }
-        else
-        {
-            if( QMessageBox::question( this, tr("Question"),
-                                       tr("This barcode has not found in the database.\n"
-                                          "Do you want to register it for a new patientcard?"),
-                                       QMessageBox::Yes,QMessageBox::No ) == QMessageBox::Yes )
-            {
-                obDBPatientCard.createNew();
-                obDBPatientCard.setLicenceId( g_poPrefs->getLicenceId() );
-                obDBPatientCard.setBarcode( ledAssignBarcode->text() );
-                obDBPatientCard.save();
-                m_bAssignCardOk = true;
-            }
-        }
-    }
-
-    pbAssignVerify->setIcon( (m_bAssignCardOk ? QIcon("./resources/40x40_ok.png") : QIcon("./resources/40x40_cancel.png")) );
-
-    pbAssign->setEnabled( isCardsCanBeAssigned() );
-}
 */
-
-
-

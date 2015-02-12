@@ -34,7 +34,7 @@ int main(int argc, char *argv[])
     {
         teAction = MainWindow::ACT_RESTORE;
     }
-    else if( argc > 2 && strcmp(argv[1],"-execute") == 0 )
+    else if( argc > 1 && strcmp(argv[1],"-execute") == 0 )
     {
         teAction = MainWindow::ACT_EXECUTE;
         qsFileName = QString( argv[2] );
