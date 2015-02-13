@@ -6,8 +6,8 @@
    <rect>
     <x>0</x>
     <y>0</y>
-    <width>524</width>
-    <height>362</height>
+    <width>525</width>
+    <height>365</height>
    </rect>
   </property>
   <property name="windowTitle">
@@ -140,6 +140,13 @@
          </widget>
         </item>
         <item>
+         <widget class="Line" name="line">
+          <property name="orientation">
+           <enum>Qt::Horizontal</enum>
+          </property>
+         </widget>
+        </item>
+        <item>
          <widget class="QRadioButton" name="rbActSetOldToMain">
           <property name="enabled">
            <bool>false</bool>
@@ -220,7 +227,7 @@
      <item>
       <widget class="QPushButton" name="pbCancel">
        <property name="text">
-        <string>Cancel</string>
+        <string>Exit</string>
        </property>
        <property name="iconSize">
         <size>

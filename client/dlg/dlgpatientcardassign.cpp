@@ -20,6 +20,9 @@
 #include "../framework/tracer.h"
 #include "../db/dbpatientcard.h"
 #include "dlgpatientcardassign.h"
+#include "dlgcassaaction.h"
+#include "../db/dbpatientcardunits.h"
+#include "../db/dbledger.h"
 
 //===========================================================================================================
 cDlgPatientCardAssign::cDlgPatientCardAssign( QWidget *p_poParent, QString p_qsMainBarcode ) : QDialog( p_poParent )
@@ -53,11 +56,15 @@ cDlgPatientCardAssign::cDlgPatientCardAssign( QWidget *p_poParent, QString p_qsM
     on_ledAssignBarcode_textChanged( "" );
 
     m_dlgProgress = new cDlgProgress( this );
+
+    QPoint  qpDlgSize = g_poPrefs->getDialogSize( "CardAssign", QPoint(525,365) );
+    resize( qpDlgSize.x(), qpDlgSize.y() );
 }
 //===========================================================================================================
 cDlgPatientCardAssign::~cDlgPatientCardAssign()
 //-----------------------------------------------------------------------------------------------------------
 {
+    g_poPrefs->setDialogSize( "CardAssign", QPoint( width(), height() ) );
 }
 //===========================================================================================================
 void cDlgPatientCardAssign::getCardsBarcode(QString *p_qsBarcodeMain, QString *p_qsBarcodeAssign)
@@ -225,9 +232,11 @@ void cDlgPatientCardAssign::on_pbAssign_clicked()
 {
     if( rbActAssign->isChecked() )
     {
+        _assignNewCardToOldCard();
     }
     else if( rbActAssignOld->isChecked() )
     {
+        _assignOldAndOtherCardsToNewCard();
     }
     else if( rbActSetOldToMain->isChecked() )
     {
@@ -493,41 +502,19 @@ void cDlgPatientCardAssign::_loadAssignedCard()
     }
 }
 //===========================================================================================================
-void cDlgPatientCardAssign::_removeAndDeactivateAssignedCards()
+void cDlgPatientCardAssign::_assignNewCardToOldCard()
 //-----------------------------------------------------------------------------------------------------------
 {
     if( QMessageBox::question( this, tr("Question"),
-                               tr("Are you sure you want to unlink the assigned cards?\n"
-                                  "All of the assigned card will be deactivated."),
+                               tr("Are you sure you want to assign the selected cards?\n\n"
+                                  "The old (existing) card will be the main (parent) card and\n"
+                                  "the new card will be the assigned (child) card."),
                                QMessageBox::Yes,QMessageBox::No ) == QMessageBox::No )
     {
         return;
     }
 
-    m_dlgProgress->showProgress();
-
-    cDBPatientCard  obDBPatientCard;
-
-    try
-    {
-        obDBPatientCard.load( ledMainBarcode->text() );
-
-        QSqlQuery *poQuery = g_poDB->executeQTQuery( QString( "SELECT patientCardId FROM patientCards WHERE parentCardId = %1" )
-                                                            .arg( obDBPatientCard.id() ) );
-        m_dlgProgress->showProgressBar( poQuery->size() );
-        while( poQuery->next() )
-        {
-            cDBPatientCard  obTemp;
-
-            obTemp.load( poQuery->value(0).toUInt() );
-            obTemp.deactivate();
-            m_dlgProgress->stepProgressBar();
-        }
-    }
-    catch( cSevException &e )
-    {
-        g_obLogger(e.severity()) << e.what() << EOM;
-    }
+    _processAssignNewToOld();
 
     ledMainBarcode->setText( "" );
     ledAssignBarcode->setText( "" );
@@ -536,17 +523,145 @@ void cDlgPatientCardAssign::_removeAndDeactivateAssignedCards()
     pbCancel->setFocus();
 }
 //===========================================================================================================
+void cDlgPatientCardAssign::_processAssignNewToOld()
+//-----------------------------------------------------------------------------------------------------------
+{
+    cDBPatientCard  obDBPatientCardMain;
+    cDBPatientCard  obDBPatientCardAssign;
+
+    obDBPatientCardMain.load( ledMainBarcode->text() );
+    obDBPatientCardAssign.load( ledAssignBarcode->text() );
+
+    unsigned int uiTimeLeft = obDBPatientCardMain.timeLeft() + obDBPatientCardAssign.timeLeft();
+    unsigned int uiUnits    = obDBPatientCardMain.units() + obDBPatientCardAssign.units();
+
+    if( obDBPatientCardAssign.active() )
+    {
+        obDBPatientCardMain.setUnits( uiUnits );
+        obDBPatientCardMain.setTimeLeft( uiTimeLeft );
+        obDBPatientCardMain.save();
+
+        obDBPatientCardAssign.setParentId( obDBPatientCardMain.id() );
+        obDBPatientCardAssign.setUnits( uiUnits );
+        obDBPatientCardAssign.setTimeLeft( uiTimeLeft );
+        obDBPatientCardAssign.setComment( tr("Partner card of \"%1\"").arg(obDBPatientCardMain.barcode()) );
+        obDBPatientCardAssign.save();
+
+        cDBPatientcardUnit  obDBPatientcardUnit;
+
+        obDBPatientcardUnit.setPatientCardId( obDBPatientCardAssign.id() );
+        obDBPatientcardUnit.replacePatientCard( obDBPatientCardMain.id() );
+    }
+    else
+    {
+        obDBPatientCardAssign.setActive( true );
+        obDBPatientCardAssign.setPatientCardTypeId( obDBPatientCardMain.patientCardTypeId() );
+        obDBPatientCardAssign.setParentId( obDBPatientCardMain.id() );
+        obDBPatientCardAssign.setPatientId( 0 );
+        obDBPatientCardAssign.setUnits( uiUnits );
+        obDBPatientCardAssign.setTimeLeft( uiTimeLeft );
+        obDBPatientCardAssign.setValidDateFrom( obDBPatientCardMain.validDateFrom() );
+        obDBPatientCardAssign.setValidDateTo( obDBPatientCardMain.validDateTo() );
+        obDBPatientCardAssign.setComment( tr("Partner card of \"%1\"").arg(obDBPatientCardMain.barcode()) );
+
+        cCurrency cPrice( QString::number(g_poPrefs->getPatientCardPartnerPrice()/100) );
+
+        cDBShoppingCart obDBShoppingCart;
+
+        obDBShoppingCart.setLicenceId( g_poPrefs->getLicenceId() );
+        obDBShoppingCart.setGuestId( obDBPatientCardAssign.patientId() );
+        obDBShoppingCart.setProductId( 0 );
+        obDBShoppingCart.setPatientCardId( obDBPatientCardAssign.id() );
+        obDBShoppingCart.setPatientCardTypeId( obDBPatientCardAssign.patientCardTypeId() );
+        obDBShoppingCart.setPanelId( 0 );
+        obDBShoppingCart.setLedgerTypeId( cDBLedger::LT_PC_ASSIGN_PARTNER );
+        obDBShoppingCart.setItemName( QString("%1 -> %2").arg(obDBPatientCardMain.barcode()).arg(obDBPatientCardAssign.barcode()) );
+        obDBShoppingCart.setItemCount( 1 );
+        obDBShoppingCart.setItemNetPrice( cPrice.currencyValue().toInt() );
+        obDBShoppingCart.setItemVAT( g_poPrefs->getPatientCardLostPriceVat() );
+        obDBShoppingCart.setItemDiscount( 0 );
+        obDBShoppingCart.setItemSumPrice( cPrice.currencyValue().toInt() );
+
+        cDlgCassaAction     obDlgCassaAction( this, &obDBShoppingCart );
+
+        obDlgCassaAction.setPayWithCash();
+
+        int             inCassaAction   = obDlgCassaAction.exec();
+        int             inPayType       = 0;
+        QString         qsComment       = tr("Assign patientcard [%1]<-[%2]").arg(obDBPatientCardMain.barcode()).arg(obDBPatientCardAssign.barcode());
+        bool            bShoppingCart   = false;
+        unsigned int    uiCouponId = 0;
+
+        obDlgCassaAction.cassaResult( &inPayType, &bShoppingCart, &uiCouponId );
+
+        if( inCassaAction == QDialog::Accepted && !bShoppingCart )
+        {
+            g_obCassa.cassaProcessPatientCardSell( obDBPatientCardAssign, obDBShoppingCart, qsComment, true, inPayType );
+        }
+        else if( inCassaAction != QDialog::Accepted )
+        {
+            // Nem tortent meg az eladas
+            return;
+        }
+
+        obDBPatientCardAssign.save();
+    }
+}
+//===========================================================================================================
+void cDlgPatientCardAssign::_assignOldAndOtherCardsToNewCard()
+//-----------------------------------------------------------------------------------------------------------
+{
+    if( QMessageBox::question( this, tr("Question"),
+                               tr("Are you sure you want to assign the selected cards?\n\n"
+                                  "The new card will be the main (parent) card and\n"
+                                  "the old (existing) card will be the assigned (child) card.\n"
+                                  "All of the currently assigned card will be linked to the new card."),
+                               QMessageBox::Yes,QMessageBox::No ) == QMessageBox::No )
+    {
+        return;
+    }
+
+    _processAssignOldToNew();
+
+    ledMainBarcode->setText( "" );
+    ledAssignBarcode->setText( "" );
+    _disableControls();
+    m_dlgProgress->hideProgress();
+    pbCancel->setFocus();
+}
+//===========================================================================================================
+void cDlgPatientCardAssign::_processAssignOldToNew()
+//-----------------------------------------------------------------------------------------------------------
+{
+    _processAssignNewToOld();
+    ledMainBarcode->setText( ledAssignBarcode->text() );
+    ledAssignBarcode->setText( "" );
+    _processSelectedToMain();
+}
+//===========================================================================================================
 void cDlgPatientCardAssign::_setSelectedCardToMainCard()
 //-----------------------------------------------------------------------------------------------------------
 {
     if( QMessageBox::question( this, tr("Question"),
-                               tr("Are you sure you want to set the selected card to main cards?\n"
+                               tr("Are you sure you want to set the selected card to main cards?\n\n"
                                   "All of the assigned card will be linked to this selected card."),
                                QMessageBox::Yes,QMessageBox::No ) == QMessageBox::No )
     {
         return;
     }
 
+    _processSelectedToMain();
+
+    ledMainBarcode->setText( "" );
+    ledAssignBarcode->setText( "" );
+    _disableControls();
+    m_dlgProgress->hideProgress();
+    pbCancel->setFocus();
+}
+//===========================================================================================================
+void cDlgPatientCardAssign::_processSelectedToMain()
+//-----------------------------------------------------------------------------------------------------------
+{
     m_dlgProgress->showProgress();
 
     cDBPatientCard  obDBPatientCard;
@@ -572,6 +687,20 @@ void cDlgPatientCardAssign::_setSelectedCardToMainCard()
     {
         g_obLogger(e.severity()) << e.what() << EOM;
     }
+}
+//===========================================================================================================
+void cDlgPatientCardAssign::_removeAndDeactivateAssignedCards()
+//-----------------------------------------------------------------------------------------------------------
+{
+    if( QMessageBox::question( this, tr("Question"),
+                               tr("Are you sure you want to unlink the assigned cards?\n\n"
+                                  "All of the assigned card will be deactivated."),
+                               QMessageBox::Yes,QMessageBox::No ) == QMessageBox::No )
+    {
+        return;
+    }
+
+    _processRemoveAndDeactivate();
 
     ledMainBarcode->setText( "" );
     ledAssignBarcode->setText( "" );
@@ -579,17 +708,33 @@ void cDlgPatientCardAssign::_setSelectedCardToMainCard()
     m_dlgProgress->hideProgress();
     pbCancel->setFocus();
 }
-
-
-
-
-
-/*
-
 //===========================================================================================================
-void cDlgPatientCardAssign::
+void cDlgPatientCardAssign::_processRemoveAndDeactivate()
 //-----------------------------------------------------------------------------------------------------------
 {
+    m_dlgProgress->showProgress();
 
+    cDBPatientCard  obDBPatientCard;
 
-*/
+    try
+    {
+        obDBPatientCard.load( ledMainBarcode->text() );
+
+        QSqlQuery *poQuery = g_poDB->executeQTQuery( QString( "SELECT patientCardId FROM patientCards WHERE parentCardId = %1" )
+                                                            .arg( obDBPatientCard.id() ) );
+        m_dlgProgress->showProgressBar( poQuery->size() );
+        while( poQuery->next() )
+        {
+            cDBPatientCard  obTemp;
+
+            obTemp.load( poQuery->value(0).toUInt() );
+            obTemp.deactivate();
+            m_dlgProgress->stepProgressBar();
+        }
+    }
+    catch( cSevException &e )
+    {
+        g_obLogger(e.severity()) << e.what() << EOM;
+    }
+}
+

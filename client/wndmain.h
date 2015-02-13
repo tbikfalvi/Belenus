@@ -100,6 +100,7 @@ private:
     void _removePatientcardFromWeb();
     void _setStatusText( QString p_qsText, bool p_bError = false );
     void _processHttpActions();
+    void _checkVersions();
 
 public slots:
     void processDeviceUsePayment( unsigned int p_uiPanelId, unsigned int p_uiLedgerId, int p_nPaymentType );

@@ -23,8 +23,14 @@ private:
     void            _disableControls();
     bool            _checkIfExists( QString p_qsBarcode );
     void            _loadAssignedCard();
+    void            _assignNewCardToOldCard();
+    void            _processAssignNewToOld();
+    void            _assignOldAndOtherCardsToNewCard();
+    void            _processAssignOldToNew();
     void            _removeAndDeactivateAssignedCards();
+    void            _processRemoveAndDeactivate();
     void            _setSelectedCardToMainCard();
+    void            _processSelectedToMain();
 
     cDlgProgress    *m_dlgProgress;
     bool             m_bMainCardOk;

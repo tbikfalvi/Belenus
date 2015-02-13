@@ -173,32 +173,32 @@
     </message>
     <message>
         <location filename="general.cpp" line="78"/>
-        <location filename="wndmain.cpp" line="3066"/>
+        <location filename="wndmain.cpp" line="3060"/>
         <source>Information</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
         <location filename="general.cpp" line="82"/>
-        <location filename="wndmain.cpp" line="3070"/>
+        <location filename="wndmain.cpp" line="3064"/>
         <source>Warning</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
         <location filename="general.cpp" line="86"/>
-        <location filename="wndmain.cpp" line="3074"/>
+        <location filename="wndmain.cpp" line="3068"/>
         <source>Attention</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
         <location filename="general.cpp" line="90"/>
-        <location filename="wndmain.cpp" line="3078"/>
+        <location filename="wndmain.cpp" line="3072"/>
         <source>Error</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
         <location filename="general.cpp" line="94"/>
         <location filename="general.cpp" line="182"/>
-        <location filename="wndmain.cpp" line="3082"/>
+        <location filename="wndmain.cpp" line="3076"/>
         <source>Question</source>
         <translation type="unfinished"></translation>
     </message>
@@ -233,40 +233,40 @@
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="main.cpp" line="109"/>
+        <location filename="main.cpp" line="111"/>
         <source>SystemID: </source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="main.cpp" line="128"/>
+        <location filename="main.cpp" line="130"/>
         <source>Connecting to database ...</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="main.cpp" line="137"/>
+        <location filename="main.cpp" line="139"/>
         <source> SUCCEEDED.
 </source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="main.cpp" line="143"/>
+        <location filename="main.cpp" line="145"/>
         <source>Another instance of application ... </source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="main.cpp" line="158"/>
+        <location filename="main.cpp" line="160"/>
         <source> NOT RUNNING.
 </source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="main.cpp" line="163"/>
+        <location filename="main.cpp" line="165"/>
         <source> ALREADY RUNNING.
 </source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="main.cpp" line="164"/>
+        <location filename="main.cpp" line="166"/>
         <source>
 
 Please use the currently running application.
@@ -274,39 +274,39 @@ Please use the currently running application.
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="main.cpp" line="179"/>
+        <location filename="main.cpp" line="181"/>
         <source>License is ... </source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="main.cpp" line="183"/>
+        <location filename="main.cpp" line="185"/>
         <source>NO_SERIAL_DETECTED</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="main.cpp" line="197"/>
+        <location filename="main.cpp" line="199"/>
         <source>DEMO</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="main.cpp" line="199"/>
+        <location filename="main.cpp" line="201"/>
         <source>OK</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="main.cpp" line="203"/>
+        <location filename="main.cpp" line="205"/>
         <source>Serial: %1
 </source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="main.cpp" line="210"/>
+        <location filename="main.cpp" line="212"/>
         <source>Days remains: %1
 </source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="main.cpp" line="215"/>
+        <location filename="main.cpp" line="217"/>
         <source>
 VALIDATE YOUR APPLICATION
 WITH YOUR FRANCHISE PROVIDER
@@ -315,7 +315,7 @@ WITH YOUR FRANCHISE PROVIDER
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="main.cpp" line="220"/>
+        <location filename="main.cpp" line="222"/>
         <source>The application validity has been expired.
 The application can be used only in DEMO mode.
 
@@ -323,79 +323,79 @@ The application can be used only in DEMO mode.
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="main.cpp" line="248"/>
+        <location filename="main.cpp" line="250"/>
         <source>Checking hardware connection ...</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="main.cpp" line="257"/>
+        <location filename="main.cpp" line="259"/>
         <source>FAILED
 </source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="main.cpp" line="259"/>
-        <location filename="main.cpp" line="306"/>
-        <location filename="main.cpp" line="313"/>
+        <location filename="main.cpp" line="261"/>
+        <location filename="main.cpp" line="308"/>
+        <location filename="main.cpp" line="315"/>
         <source>Starting application in DEMO mode.
 </source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="main.cpp" line="267"/>
+        <location filename="main.cpp" line="269"/>
         <source>CONNECTED
 </source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="main.cpp" line="270"/>
+        <location filename="main.cpp" line="272"/>
         <source>Initializing hardware device ... </source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="main.cpp" line="274"/>
+        <location filename="main.cpp" line="276"/>
         <source>FINISHED
 </source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="main.cpp" line="277"/>
+        <location filename="main.cpp" line="279"/>
         <source>Caption stored in hardware: %1
 </source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="main.cpp" line="280"/>
+        <location filename="main.cpp" line="282"/>
         <source>Number of hardware panels: %1
 </source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="main.cpp" line="283"/>
+        <location filename="main.cpp" line="285"/>
         <source>Checking hardware panels:
 </source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="main.cpp" line="288"/>
+        <location filename="main.cpp" line="290"/>
         <source>     Checking hardware panel -%1- </source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="main.cpp" line="293"/>
+        <location filename="main.cpp" line="295"/>
         <source> SUCCEEDED
 </source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="main.cpp" line="298"/>
-        <location filename="main.cpp" line="359"/>
+        <location filename="main.cpp" line="300"/>
+        <location filename="main.cpp" line="361"/>
         <source> FAILED
 </source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="main.cpp" line="366"/>
+        <location filename="main.cpp" line="368"/>
         <source>Database server application is not running.
 Belenus application can not be started without active database server.
 Please start WampServer application then restart Belenus application.</source>
@@ -1585,7 +1585,7 @@ Please note the action can not be revoked.</source>
     <message>
         <location filename="dlg/dlgmanagedatabase.cpp" line="157"/>
         <location filename="dlg/dlgmanagedatabase.cpp" line="254"/>
-        <location filename="dlg/dlgmanagedatabase.cpp" line="297"/>
+        <location filename="dlg/dlgmanagedatabase.cpp" line="367"/>
         <source>Information</source>
         <translation type="unfinished"></translation>
     </message>
@@ -1597,13 +1597,17 @@ Number of affected records: %1</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="dlg/dlgmanagedatabase.cpp" line="298"/>
+        <location filename="dlg/dlgmanagedatabase.cpp" line="368"/>
         <source>The action successfully finished.
+
 Number of affected records:
 PatientCardUnits -&gt; %1 records
 ProductHistory -&gt; %2 records
 CassaHistory -&gt; %3 records
-Ledger -&gt; %4 records</source>
+Ledger -&gt; %4 records
+LedgerDevice -&gt; %5 records
+Denominations -&gt; %6 records
+Cassa -&gt; %7 records</source>
         <translation type="unfinished"></translation>
     </message>
 </context>
@@ -2509,40 +2513,40 @@ The length of the new barcode should be %1.</source>
 <context>
     <name>cDlgPatientCardAssign</name>
     <message>
-        <location filename="dlg/dlgpatientcardassign.cpp" line="124"/>
-        <location filename="dlg/dlgpatientcardassign.cpp" line="132"/>
-        <location filename="dlg/dlgpatientcardassign.cpp" line="153"/>
-        <location filename="dlg/dlgpatientcardassign.cpp" line="169"/>
-        <location filename="dlg/dlgpatientcardassign.cpp" line="175"/>
+        <location filename="dlg/dlgpatientcardassign.cpp" line="131"/>
+        <location filename="dlg/dlgpatientcardassign.cpp" line="139"/>
+        <location filename="dlg/dlgpatientcardassign.cpp" line="160"/>
+        <location filename="dlg/dlgpatientcardassign.cpp" line="176"/>
         <location filename="dlg/dlgpatientcardassign.cpp" line="182"/>
+        <location filename="dlg/dlgpatientcardassign.cpp" line="189"/>
         <source>Error</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="dlg/dlgpatientcardassign.cpp" line="125"/>
-        <location filename="dlg/dlgpatientcardassign.cpp" line="147"/>
+        <location filename="dlg/dlgpatientcardassign.cpp" line="132"/>
+        <location filename="dlg/dlgpatientcardassign.cpp" line="154"/>
         <source>Invalid barcode length.
 The length of the barcode should be %1.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="dlg/dlgpatientcardassign.cpp" line="133"/>
-        <location filename="dlg/dlgpatientcardassign.cpp" line="154"/>
+        <location filename="dlg/dlgpatientcardassign.cpp" line="140"/>
+        <location filename="dlg/dlgpatientcardassign.cpp" line="161"/>
         <source>Barcode of the Main card and Assigned card can not be the same.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="dlg/dlgpatientcardassign.cpp" line="170"/>
+        <location filename="dlg/dlgpatientcardassign.cpp" line="177"/>
         <source>These cards has already been assigned to each other.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="dlg/dlgpatientcardassign.cpp" line="176"/>
+        <location filename="dlg/dlgpatientcardassign.cpp" line="183"/>
         <source>These cards has already been assigned to another cards.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="dlg/dlgpatientcardassign.cpp" line="183"/>
+        <location filename="dlg/dlgpatientcardassign.cpp" line="190"/>
         <source>Both cards has issues prevent to assign them
 
 .&apos;Old&apos; card: 
@@ -2552,81 +2556,113 @@ The length of the barcode should be %1.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="dlg/dlgpatientcardassign.cpp" line="190"/>
         <location filename="dlg/dlgpatientcardassign.cpp" line="197"/>
-        <location filename="dlg/dlgpatientcardassign.cpp" line="207"/>
+        <location filename="dlg/dlgpatientcardassign.cpp" line="204"/>
+        <location filename="dlg/dlgpatientcardassign.cpp" line="214"/>
         <source>Warning</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="dlg/dlgpatientcardassign.cpp" line="191"/>
         <location filename="dlg/dlgpatientcardassign.cpp" line="198"/>
+        <location filename="dlg/dlgpatientcardassign.cpp" line="205"/>
         <source>&apos;%1&apos; card can not be assigned.
 
 %2</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="dlg/dlgpatientcardassign.cpp" line="208"/>
+        <location filename="dlg/dlgpatientcardassign.cpp" line="215"/>
         <source>&apos;%1&apos; card can not be processed.
 
 %2</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="dlg/dlgpatientcardassign.cpp" line="330"/>
-        <location filename="dlg/dlgpatientcardassign.cpp" line="473"/>
+        <location filename="dlg/dlgpatientcardassign.cpp" line="339"/>
+        <location filename="dlg/dlgpatientcardassign.cpp" line="482"/>
         <source>This patientcard has been lost and replaced
 and can not be used or sold again.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="dlg/dlgpatientcardassign.cpp" line="335"/>
-        <location filename="dlg/dlgpatientcardassign.cpp" line="468"/>
+        <location filename="dlg/dlgpatientcardassign.cpp" line="344"/>
+        <location filename="dlg/dlgpatientcardassign.cpp" line="477"/>
         <source>Service cards can not be main card.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="dlg/dlgpatientcardassign.cpp" line="340"/>
-        <location filename="dlg/dlgpatientcardassign.cpp" line="478"/>
+        <location filename="dlg/dlgpatientcardassign.cpp" line="349"/>
+        <location filename="dlg/dlgpatientcardassign.cpp" line="487"/>
         <source>Patientcard is empty.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="dlg/dlgpatientcardassign.cpp" line="344"/>
-        <location filename="dlg/dlgpatientcardassign.cpp" line="482"/>
+        <location filename="dlg/dlgpatientcardassign.cpp" line="353"/>
+        <location filename="dlg/dlgpatientcardassign.cpp" line="491"/>
         <source>The validity of this patientcard has been expired on %1</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="dlg/dlgpatientcardassign.cpp" line="348"/>
-        <location filename="dlg/dlgpatientcardassign.cpp" line="486"/>
+        <location filename="dlg/dlgpatientcardassign.cpp" line="357"/>
+        <location filename="dlg/dlgpatientcardassign.cpp" line="495"/>
         <source>Patientcard is inactive.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="dlg/dlgpatientcardassign.cpp" line="420"/>
-        <location filename="dlg/dlgpatientcardassign.cpp" line="499"/>
-        <location filename="dlg/dlgpatientcardassign.cpp" line="542"/>
+        <location filename="dlg/dlgpatientcardassign.cpp" line="429"/>
+        <location filename="dlg/dlgpatientcardassign.cpp" line="508"/>
+        <location filename="dlg/dlgpatientcardassign.cpp" line="614"/>
+        <location filename="dlg/dlgpatientcardassign.cpp" line="645"/>
+        <location filename="dlg/dlgpatientcardassign.cpp" line="695"/>
         <source>Question</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="dlg/dlgpatientcardassign.cpp" line="421"/>
+        <location filename="dlg/dlgpatientcardassign.cpp" line="430"/>
         <source>&apos;%1&apos; barcode has not found in the database.
 Do you want to register it for a new patientcard?</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="dlg/dlgpatientcardassign.cpp" line="500"/>
-        <source>Are you sure you want to unlink the assigned cards?
-All of the assigned card will be deactivated.</source>
+        <location filename="dlg/dlgpatientcardassign.cpp" line="509"/>
+        <source>Are you sure you want to assign the selected cards?
+
+The old (existing) card will be the main (parent) card and
+the new card will be the assigned (child) card.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="dlg/dlgpatientcardassign.cpp" line="543"/>
+        <location filename="dlg/dlgpatientcardassign.cpp" line="547"/>
+        <location filename="dlg/dlgpatientcardassign.cpp" line="565"/>
+        <source>Partner card of &quot;%1&quot;</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="dlg/dlgpatientcardassign.cpp" line="591"/>
+        <source>Assign patientcard [%1]&lt;-[%2]</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="dlg/dlgpatientcardassign.cpp" line="615"/>
+        <source>Are you sure you want to assign the selected cards?
+
+The new card will be the main (parent) card and
+the old (existing) card will be the assigned (child) card.
+All of the currently assigned card will be linked to the new card.</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="dlg/dlgpatientcardassign.cpp" line="646"/>
         <source>Are you sure you want to set the selected card to main cards?
+
 All of the assigned card will be linked to this selected card.</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="dlg/dlgpatientcardassign.cpp" line="696"/>
+        <source>Are you sure you want to unlink the assigned cards?
+
+All of the assigned card will be deactivated.</source>
         <translation type="unfinished"></translation>
     </message>
 </context>
@@ -5905,10 +5941,9 @@ Click the &apos;Start new cassa&apos; if you don&apos;t want to use the previous
         <location filename="wndmain.cpp" line="2232"/>
         <location filename="wndmain.cpp" line="2254"/>
         <location filename="wndmain.cpp" line="2739"/>
-        <location filename="wndmain.cpp" line="2869"/>
-        <location filename="wndmain.cpp" line="3218"/>
-        <location filename="wndmain.cpp" line="3228"/>
-        <location filename="wndmain.cpp" line="3239"/>
+        <location filename="wndmain.cpp" line="3212"/>
+        <location filename="wndmain.cpp" line="3222"/>
+        <location filename="wndmain.cpp" line="3233"/>
         <source>Question</source>
         <translation type="unfinished"></translation>
     </message>
@@ -6004,9 +6039,10 @@ Do you want to update application users and attach them to the newly registered 
         <location filename="wndmain.cpp" line="1662"/>
         <location filename="wndmain.cpp" line="2164"/>
         <location filename="wndmain.cpp" line="2754"/>
-        <location filename="wndmain.cpp" line="2999"/>
-        <location filename="wndmain.cpp" line="3290"/>
-        <location filename="wndmain.cpp" line="3320"/>
+        <location filename="wndmain.cpp" line="2993"/>
+        <location filename="wndmain.cpp" line="3284"/>
+        <location filename="wndmain.cpp" line="3314"/>
+        <location filename="wndmain.cpp" line="3546"/>
         <source>Warning</source>
         <translation type="unfinished"></translation>
     </message>
@@ -6024,9 +6060,9 @@ Please also check whether the defined licence key is valid and not used by someb
         <location filename="wndmain.cpp" line="2197"/>
         <location filename="wndmain.cpp" line="2431"/>
         <location filename="wndmain.cpp" line="2726"/>
-        <location filename="wndmain.cpp" line="3139"/>
-        <location filename="wndmain.cpp" line="3148"/>
-        <location filename="wndmain.cpp" line="3332"/>
+        <location filename="wndmain.cpp" line="3133"/>
+        <location filename="wndmain.cpp" line="3142"/>
+        <location filename="wndmain.cpp" line="3326"/>
         <source>Attention</source>
         <translation type="unfinished"></translation>
     </message>
@@ -6118,6 +6154,21 @@ Please relogin to enable cassa.</source>
     <message>
         <location filename="wndmain.cpp" line="2470"/>
         <source>Using device: %1</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="wndmain.cpp" line="3547"/>
+        <source>The version information stored in database is not match.
+
+Correct version numbers:
+Application version number: %1
+Database version number: %2
+
+Version numbers stored in database:
+Application version number: %3
+Database version number: %4
+
+It is recommended to exit application and to contact system administrator.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
@@ -6232,25 +6283,7 @@ Please select a non-active patientcard.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="wndmain.cpp" line="2870"/>
-        <source>Are you sure about to merge these patientcards?
-Main card: %1
-Assigned card: %2</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <location filename="wndmain.cpp" line="2882"/>
-        <location filename="wndmain.cpp" line="2901"/>
-        <source>Partner card of &quot;%1&quot;</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <location filename="wndmain.cpp" line="2927"/>
-        <source>Assign patientcard [%1]&lt;-[%2]</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <location filename="wndmain.cpp" line="3000"/>
+        <location filename="wndmain.cpp" line="2994"/>
         <source>Error occured when starting process:ReportViewer.exe
 
 Error code: %1
@@ -6263,79 +6296,79 @@ Error code: %1
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="wndmain.cpp" line="3040"/>
+        <location filename="wndmain.cpp" line="3034"/>
         <source>About</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="wndmain.cpp" line="3041"/>
+        <location filename="wndmain.cpp" line="3035"/>
         <source>&lt;h2&gt;Belenus Software Application System&lt;/h2&gt;&lt;p&gt;Application version : %1&lt;br&gt;Database version : %2&lt;p&gt;Copyright 2013 Tamas Bikfalvi. All rights reserved.&lt;p&gt;Application Licence : %3&lt;p&gt;The application and all of its related products&lt;br&gt;is the property of KiwiSun Franchise.&lt;br&gt;For more information visit the &lt;a href=&quot;%4&quot;&gt;KiwiSun website&lt;/a&gt;</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="wndmain.cpp" line="3139"/>
+        <location filename="wndmain.cpp" line="3133"/>
         <source>Currently not allowed to use. Please contact your franchise provider.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="wndmain.cpp" line="3148"/>
+        <location filename="wndmain.cpp" line="3142"/>
         <source>Use report viewer application to display and export program related data.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="wndmain.cpp" line="3193"/>
-        <location filename="wndmain.cpp" line="3216"/>
+        <location filename="wndmain.cpp" line="3187"/>
+        <location filename="wndmain.cpp" line="3210"/>
         <source>Process remaining actions</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="wndmain.cpp" line="3195"/>
+        <location filename="wndmain.cpp" line="3189"/>
         <source>Update all patientcards</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="wndmain.cpp" line="3197"/>
-        <location filename="wndmain.cpp" line="3237"/>
+        <location filename="wndmain.cpp" line="3191"/>
+        <location filename="wndmain.cpp" line="3231"/>
         <source>Remove inactive patientcards</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="wndmain.cpp" line="3198"/>
-        <location filename="wndmain.cpp" line="3248"/>
+        <location filename="wndmain.cpp" line="3192"/>
+        <location filename="wndmain.cpp" line="3242"/>
         <source>Remove patientcard</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="wndmain.cpp" line="3202"/>
-        <location filename="wndmain.cpp" line="3252"/>
+        <location filename="wndmain.cpp" line="3196"/>
+        <location filename="wndmain.cpp" line="3246"/>
         <source>Test connection</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="wndmain.cpp" line="3205"/>
-        <location filename="wndmain.cpp" line="3256"/>
+        <location filename="wndmain.cpp" line="3199"/>
+        <location filename="wndmain.cpp" line="3250"/>
         <source>Disable communication</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="wndmain.cpp" line="3209"/>
-        <location filename="wndmain.cpp" line="3261"/>
+        <location filename="wndmain.cpp" line="3203"/>
+        <location filename="wndmain.cpp" line="3255"/>
         <source>Enable communication</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="wndmain.cpp" line="3219"/>
+        <location filename="wndmain.cpp" line="3213"/>
         <source>Are you sure about to process all remaining actions?
 This process may take long time and slow down the application.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="wndmain.cpp" line="3226"/>
+        <location filename="wndmain.cpp" line="3220"/>
         <source>Update all patientcard</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="wndmain.cpp" line="3229"/>
+        <location filename="wndmain.cpp" line="3223"/>
         <source>Are you sure about to update all patientcards on web?
 This process may take long time and slow down the application.</source>
         <oldsource>Are you sure about to update all patientcards on web?
@@ -6343,7 +6376,7 @@ This process may take long time and slow down the appliation.</oldsource>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="wndmain.cpp" line="3240"/>
+        <location filename="wndmain.cpp" line="3234"/>
         <source>Are you sure about to remove all inactive patientcards from web?
 This process may take long time and slow down the application.</source>
         <oldsource>Are you sure about to remove all inactive patientcards from web?
@@ -6351,8 +6384,8 @@ This process may take long time and slow down the appliation.</oldsource>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="wndmain.cpp" line="3291"/>
-        <location filename="wndmain.cpp" line="3321"/>
+        <location filename="wndmain.cpp" line="3285"/>
+        <location filename="wndmain.cpp" line="3315"/>
         <source>Error occured when starting process:Advertisement.exe
 
 Error code: %1
@@ -6365,25 +6398,25 @@ Error code: %1
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="wndmain.cpp" line="3333"/>
+        <location filename="wndmain.cpp" line="3327"/>
         <source>Please note that you should restart the application for the modifications to take effect.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="wndmain.cpp" line="3344"/>
-        <location filename="wndmain.cpp" line="3373"/>
+        <location filename="wndmain.cpp" line="3338"/>
+        <location filename="wndmain.cpp" line="3367"/>
         <source>Disable HW Debug</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="wndmain.cpp" line="3349"/>
-        <location filename="wndmain.cpp" line="3369"/>
+        <location filename="wndmain.cpp" line="3343"/>
+        <location filename="wndmain.cpp" line="3363"/>
         <source>Enable HW Debug</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="wndmain.cpp" line="3353"/>
-        <location filename="wndmain.cpp" line="3364"/>
+        <location filename="wndmain.cpp" line="3347"/>
+        <location filename="wndmain.cpp" line="3358"/>
         <source>Reset communication</source>
         <translation type="unfinished"></translation>
     </message>
@@ -8188,43 +8221,43 @@ Do you want to save them as new into the database?</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="dlgpatientcardassign.ui" line="148"/>
+        <location filename="dlgpatientcardassign.ui" line="155"/>
         <source>Replace the current main (parent) card with the &apos;old&apos; card. The current main will be assigned (child) card.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="dlgpatientcardassign.ui" line="151"/>
+        <location filename="dlgpatientcardassign.ui" line="158"/>
         <source>Transform old card to main card</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="dlgpatientcardassign.ui" line="161"/>
+        <location filename="dlgpatientcardassign.ui" line="168"/>
         <source>Unlink all assigned cards from the main (parent) card and inactivate them.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="dlgpatientcardassign.ui" line="164"/>
+        <location filename="dlgpatientcardassign.ui" line="171"/>
         <source>Remove assigned cards</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="dlgpatientcardassign.ui" line="184"/>
+        <location filename="dlgpatientcardassign.ui" line="191"/>
         <source>...</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="dlgpatientcardassign.ui" line="197"/>
+        <location filename="dlgpatientcardassign.ui" line="204"/>
         <source>RadioButton</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="dlgpatientcardassign.ui" line="207"/>
+        <location filename="dlgpatientcardassign.ui" line="214"/>
         <source>Execute selected action</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="dlgpatientcardassign.ui" line="223"/>
-        <source>Cancel</source>
+        <location filename="dlgpatientcardassign.ui" line="230"/>
+        <source>Exit</source>
         <translation type="unfinished"></translation>
     </message>
 </context>

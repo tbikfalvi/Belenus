@@ -14,6 +14,7 @@
 //====================================================================================
 
 #define APPLICATION_VERSION_NUMBER  "1.5.0"
+#define DATABASE_VERSION_NUMBER     "1.7.0"
 
 //====================================================================================
 
@@ -90,6 +91,7 @@ int main( int argc, char *argv[] )
 
     g_poPrefs  = new cPreferences( QString::fromAscii( "./belenus.ini" ) );
     g_poPrefs->setVersion( APPLICATION_VERSION_NUMBER );
+    g_poPrefs->setVersionDb( DATABASE_VERSION_NUMBER );
     g_poPrefs->setLangFilePrefix( "belenus_" );
     g_poPrefs->setDBAccess( "localhost", "belenus", "belenus", "belenus" );
 

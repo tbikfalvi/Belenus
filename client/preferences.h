@@ -33,6 +33,8 @@ public:
     QString         getFileName() const;
     void            setVersion( const QString &p_qsVersion, bool p_boSaveNow = false );
     QString         getVersion() const;
+    void            setVersionDb(const QString &p_qsVersion);
+    QString         getVersionDb() const;
     void            setComponents( const unsigned int p_uiComponent, bool p_boSaveNow = false );
     unsigned int    getComponents() const;
     void            processComponentID();
@@ -220,6 +222,7 @@ public:
 private:
     QString         m_qsFileName;
     QString         m_qsVersion;
+    QString         m_qsVersionDb;
     unsigned int    m_uiComponent;
     bool            m_bComponentSensolite;
     bool            m_bComponentKiwiSun;

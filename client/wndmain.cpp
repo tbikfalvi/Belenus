@@ -414,6 +414,8 @@ bool cWndMain::showLogIn()
 
     ledPassword->setFocus();
 
+    _checkVersions();
+
     return true;
 }
 //====================================================================================
@@ -2846,7 +2848,8 @@ void cWndMain::slotAssignPartnerCard( const QString &p_qsBarcode )
 
     cDlgPatientCardAssign obDlgPatientCardAssign( this, p_qsBarcode );
 
-    if( obDlgPatientCardAssign.exec() == QDialog::Accepted )
+    obDlgPatientCardAssign.exec();
+    /*if( obDlgPatientCardAssign.exec() == QDialog::Accepted )
     {
         QString qsBarcodeMain;
         QString qsBarcodeAssign;
@@ -2927,18 +2930,11 @@ void cWndMain::slotAssignPartnerCard( const QString &p_qsBarcode )
                 QString         qsComment       = tr("Assign patientcard [%1]<-[%2]").arg(obDBPatientCardMain.barcode()).arg(obDBPatientCardAssign.barcode());
                 bool            bShoppingCart   = false;
                 unsigned int    uiCouponId = 0;
-                cDBDiscount     obDBDiscount;
 
                 obDlgCassaAction.cassaResult( &inPayType, &bShoppingCart, &uiCouponId );
 
                 if( inCassaAction == QDialog::Accepted && !bShoppingCart )
                 {
-                    /*if( uiCouponId > 0 )
-                    {
-                        obDBDiscount.load( uiCouponId );
-
-                        obDBShoppingCart.setItemDiscount( obDBShoppingCart.itemDiscount()+obDBDiscount.discount(obDBShoppingCart.itemSumPrice()) );
-                    }*/
                     g_obCassa.cassaProcessPatientCardSell( obDBPatientCardAssign, obDBShoppingCart, qsComment, true, inPayType );
                 }
                 else if( inCassaAction != QDialog::Accepted )
@@ -2954,7 +2950,7 @@ void cWndMain::slotAssignPartnerCard( const QString &p_qsBarcode )
         {
             g_obLogger(e.severity()) << e.what() << EOM;
         }
-    }
+    }*/
 }
 
 void cWndMain::on_action_PaymentMethods_triggered()
@@ -3525,5 +3521,44 @@ void cWndMain::_processHttpActions()
     m_dlgProgress->showProgress();
     m_dlgProgress->showProgressBar( g_poBlnsHttp->getNumberOfWaitingRecords() );
     g_poBlnsHttp->processWaitingCardData();
+}
+
+void cWndMain::_checkVersions()
+{
+    QSqlQuery   *poQuery            = NULL;
+    QString      qsAppVersion       = "";
+    QString      qsDbVersion        = "";
+
+    poQuery = g_poDB->executeQTQuery( QString( "SELECT * FROM settings " ) );
+    while( poQuery->next() )
+    {
+        QString qsIdentifier = poQuery->value(1).toString();
+
+        if( qsIdentifier.compare("APPLICATION_VERSION") == 0 )
+            qsAppVersion = poQuery->value( 2 ).toString();
+        else if( qsIdentifier.compare("DATABASE_VERSION") == 0 )
+            qsDbVersion = poQuery->value( 2 ).toString();
+    }
+
+    qsAppVersion.replace( "_", "." );
+    qsDbVersion.replace( "_", "." );
+
+    if( qsAppVersion.compare( g_poPrefs->getVersion() ) ||
+        qsDbVersion.compare( g_poPrefs->getVersionDb() ) )
+    {
+        QMessageBox::warning( this, tr("Warning"),
+                              tr( "The version information stored in database is not match.\n\n"
+                                  "Correct version numbers:\n"
+                                  "Application version number: %1\n"
+                                  "Database version number: %2\n\n"
+                                  "Version numbers stored in database:\n"
+                                  "Application version number: %3\n"
+                                  "Database version number: %4\n\n"
+                                  "It is recommended to exit application and to contact system administrator.")
+                              .arg( g_poPrefs->getVersion() )
+                              .arg( g_poPrefs->getVersionDb() )
+                              .arg( qsAppVersion )
+                              .arg( qsDbVersion ) );
+    }
 }
 

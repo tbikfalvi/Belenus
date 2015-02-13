@@ -381,6 +381,16 @@ QString cPreferences::getVersion() const
     return m_qsVersion;
 }
 
+void cPreferences::setVersionDb( const QString &p_qsVersion )
+{
+    m_qsVersionDb = p_qsVersion;
+}
+
+QString cPreferences::getVersionDb() const
+{
+    return m_qsVersionDb;
+}
+
 void cPreferences::setComponents( const unsigned int p_uiComponent, bool p_boSaveNow )
 {
     m_uiComponent = p_uiComponent;
