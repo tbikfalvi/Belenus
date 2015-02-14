@@ -15,7 +15,7 @@
     </message>
     <message>
         <location filename="mainwindow.ui" line="155"/>
-        <location filename="mainwindow.cpp" line="253"/>
+        <location filename="mainwindow.cpp" line="261"/>
         <source>Please wait until the process finish.</source>
         <translation>Bitte warten Sie bis der Prozess beendet is.</translation>
     </message>
@@ -36,6 +36,7 @@
     </message>
     <message>
         <location filename="mainwindow.cpp" line="33"/>
+        <location filename="mainwindow.cpp" line="42"/>
         <source>Please select desired database and click on Start</source>
         <translation>Bitte wählen Sie die gewünschte Datenbank aus und klicken Sie auf Start</translation>
     </message>
@@ -45,44 +46,44 @@
         <translation>Datenbank Update</translation>
     </message>
     <message>
-        <location filename="mainwindow.cpp" line="108"/>
-        <location filename="mainwindow.cpp" line="145"/>
-        <location filename="mainwindow.cpp" line="157"/>
-        <location filename="mainwindow.cpp" line="170"/>
-        <location filename="mainwindow.cpp" line="197"/>
-        <location filename="mainwindow.cpp" line="258"/>
+        <location filename="mainwindow.cpp" line="116"/>
+        <location filename="mainwindow.cpp" line="153"/>
+        <location filename="mainwindow.cpp" line="165"/>
+        <location filename="mainwindow.cpp" line="178"/>
+        <location filename="mainwindow.cpp" line="205"/>
+        <location filename="mainwindow.cpp" line="266"/>
         <source>Error</source>
         <translation>Fehler</translation>
     </message>
     <message>
-        <location filename="mainwindow.cpp" line="109"/>
-        <location filename="mainwindow.cpp" line="158"/>
-        <location filename="mainwindow.cpp" line="171"/>
-        <location filename="mainwindow.cpp" line="198"/>
+        <location filename="mainwindow.cpp" line="117"/>
+        <location filename="mainwindow.cpp" line="166"/>
+        <location filename="mainwindow.cpp" line="179"/>
+        <location filename="mainwindow.cpp" line="206"/>
         <source>Unable to execute the following command:
 %1</source>
         <translation>Der folgende Prozess konnte nicht gestartet werden:
 %1</translation>
     </message>
     <message>
-        <location filename="mainwindow.cpp" line="117"/>
+        <location filename="mainwindow.cpp" line="125"/>
         <source>Warning</source>
         <translation>Belehrung</translation>
     </message>
     <message>
-        <location filename="mainwindow.cpp" line="118"/>
+        <location filename="mainwindow.cpp" line="126"/>
         <source>Location of the MySQL archive application is not set.
 Please check your settings.</source>
         <translation>Die MySQL Archivierungs-Route ist nicht angegeben.
 Bitte bei Einstellungen kontrollieren</translation>
     </message>
     <message>
-        <location filename="mainwindow.cpp" line="146"/>
+        <location filename="mainwindow.cpp" line="154"/>
         <source>Unable to create temporary file: dbrecreate.sql</source>
         <translation>Fehler bei der Wiederherstellung von dbrecreate.sql vorläufigem Bestand</translation>
     </message>
     <message>
-        <location filename="mainwindow.cpp" line="259"/>
+        <location filename="mainwindow.cpp" line="267"/>
         <source>The selected file not exists or not readable
 
 %1</source>

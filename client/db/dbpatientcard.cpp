@@ -603,13 +603,20 @@ void cDBPatientCard::sendDataToWeb( bool p_bSendNow ) throw()
 
         synchronizeUnits();
 
-        qsMessageData.append( "<div id='valid'><label>T201</label>" );
-        qsMessageData.append( validDateTo() );
-        qsMessageData.append( "</div><div id='unit'><label>T202</label>" );
-        qsMessageData.append( QString::number(units()) );
-        qsMessageData.append( "</div><label id='validT'>T203</label>" );
+//        qsMessageData.append( "<div id='valid'><label>T201</label>" );
+//        qsMessageData.append( validDateTo() );
+//        qsMessageData.append( "</div><div id='unit'><label>T202</label>" );
+//        qsMessageData.append( QString::number(units()) );
+//        qsMessageData.append( "</div><label id='validT'>T203</label>" );
 
-        QString qsQuery = QString( "SELECT patientCardUnitId, patientCardTypeId, unitTime, validDateFrom, validDateTo, COUNT(unitTime) "
+        qsMessageData.append( "<div id='unit'><label>T202</label></div>" );
+
+        QString qsQuery = QString( "SELECT patientCardUnitId, "
+                                          "patientCardTypeId, "
+                                          "unitTime, "
+                                          "validDateFrom, "
+                                          "validDateTo, "
+                                          "COUNT(unitTime) "
                                    "FROM patientcardunits "
                                    "WHERE patientCardId=%1 "
                                    "AND validDateFrom<=CURDATE() AND validDateTo>=CURDATE() "
@@ -621,7 +628,8 @@ void cDBPatientCard::sendDataToWeb( bool p_bSendNow ) throw()
 
         while( poQuery->next() )
         {
-            QString qsValid;
+            QString qsValid = QString( "%1 -> %2" ).arg( poQuery->value( 3 ).toString() )
+                                                   .arg( poQuery->value( 4 ).toString() );
             unsigned int uiPCTId = poQuery->value( 1 ).toUInt();
 
             if( uiPCTId == 0 )
@@ -633,14 +641,14 @@ void cDBPatientCard::sendDataToWeb( bool p_bSendNow ) throw()
                 cDBPatientCardType obDBPatientCardType;
 
                 obDBPatientCardType.load( uiPCTId );
-                isPatientCardCanBeUsed( uiPCTId, &qsValid );
-                qsValid.replace( QObject::tr("Mon"), "T205" );
-                qsValid.replace( QObject::tr("Tue"), "T206" );
-                qsValid.replace( QObject::tr("Wed"), "T207" );
-                qsValid.replace( QObject::tr("Thu"), "T208" );
-                qsValid.replace( QObject::tr("Fri"), "T209" );
-                qsValid.replace( QObject::tr("Sat"), "T210" );
-                qsValid.replace( QObject::tr("Sun"), "T211" );
+//                isPatientCardCanBeUsed( uiPCTId, &qsValid );
+//                qsValid.replace( QObject::tr("Mon"), "T205" );
+//                qsValid.replace( QObject::tr("Tue"), "T206" );
+//                qsValid.replace( QObject::tr("Wed"), "T207" );
+//                qsValid.replace( QObject::tr("Thu"), "T208" );
+//                qsValid.replace( QObject::tr("Fri"), "T209" );
+//                qsValid.replace( QObject::tr("Sat"), "T210" );
+//                qsValid.replace( QObject::tr("Sun"), "T211" );
 
                 qsMessageData.append( "<div class='validType'><span class='cardName'>" );
                 qsMessageData.append( poQuery->value( 5 ).toString() );

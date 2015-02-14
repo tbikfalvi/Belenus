@@ -12,6 +12,7 @@ USE `belenus`;
 
 DROP TABLE gibbigmessages;
 DROP TABLE gibbigmessagetypes;
+ALTER TABLE `patientcardunits` DROP `gibbigId`
 
 -- -----------------------------------------------------------------------------------
 
