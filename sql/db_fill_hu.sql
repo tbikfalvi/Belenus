@@ -20,17 +20,6 @@ INSERT INTO `licences` (`licenceId`, `serial`, `country`, `region`, `city`, `zip
 
 -- -----------------------------------------------------------------------------------
 
-INSERT INTO `gibbigmessagetypes` ( `licenceId`, `gibbigMessageType`, `active`, `archive` ) VALUES
- ( '0', 'PCT_CREATE', '1', 'ARC' ),
- ( '0', 'PCT_MODIFY', '1', 'ARC' ),
- ( '0', 'PCT_DELETE', '1', 'ARC' ),
- ( '0', 'PC_SELL', '1', 'ARC' ),
- ( '0', 'PC_REFILL', '1', 'ARC' ),
- ( '0', 'PC_USE', '1', 'ARC' ),
- ( '0', 'PC_DELETE', '1', 'ARC' );
-
--- -----------------------------------------------------------------------------------
-
 INSERT INTO `users` (`licenceId`, `name`, `realName`, `password`, `accgroup`, `active`, `comment`, `archive`) VALUES
  ( 0, 'guest', 'guest', '', 1, 0, '', 'ARC' );
 UPDATE `users` SET `userId`=0 WHERE `userId`=1;
@@ -198,8 +187,8 @@ ALTER TABLE `panelUses` auto_increment=1;
 
 -- -----------------------------------------------------------------------------------
 
-INSERT INTO `patientcardunits` (`patientCardUnitId` ,`licenceId` ,`patientCardId` ,`ledgerId` ,`panelId` ,`gibbigId` ,`unitTime` ,`unitPrice` ,`validDateFrom` ,`validDateTo` ,`dateTimeUsed` ,`active` ,`archive` ) VALUES
- ('0',  '0', '1', '0', '0', '0', '5', '0', '2013-01-01', '2100-12-31', CURRENT_TIMESTAMP , '1', 'ARC');
+INSERT INTO `patientcardunits` (`patientCardUnitId` ,`licenceId` ,`patientCardId` ,`ledgerId` ,`panelId` ,`unitTime` ,`unitPrice` ,`validDateFrom` ,`validDateTo` ,`dateTimeUsed` ,`active` ,`archive` ) VALUES
+ ('0',  '0', '1', '0', '0', '5', '0', '2013-01-01', '2100-12-31', CURRENT_TIMESTAMP , '1', 'ARC');
 UPDATE `patientcardunits` SET `patientCardUnitId`='0' WHERE `patientCardUnitId`=1;
 
 -- -----------------------------------------------------------------------------------

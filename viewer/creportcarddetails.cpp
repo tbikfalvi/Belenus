@@ -106,13 +106,13 @@ void cReportCardDetails::refreshReport()
         addTableCell( " : ", "bold" );
         addTableCell( poQueryResultCards->value(5).toString() );
         m_dlgProgress.increaseProgressValue();
-
+/*
         addTableRow();
         addTableCell( tr( "Patientcard type" ), "bold" );
         addTableCell( " : ", "bold" );
         addTableCell( poQueryResultCards->value(18).toString() );
         m_dlgProgress.increaseProgressValue();
-
+*/
         addTableRow();
         addTableCell( tr( "Owner" ), "bold" );
         addTableCell( " : ", "bold" );
@@ -124,7 +124,7 @@ void cReportCardDetails::refreshReport()
         addTableCell( " : ", "bold" );
         addTableCell( poQueryResultCards->value(7).toString() );
         m_dlgProgress.increaseProgressValue();
-*/
+
         unsigned int    uiTimeLeft = poQueryResultCards->value(9).toInt();
         QTime           qtTemp( uiTimeLeft/3600, (uiTimeLeft%3600)/60, (uiTimeLeft%3600)%60, 0 );
 
@@ -133,7 +133,7 @@ void cReportCardDetails::refreshReport()
         addTableCell( " : ", "bold" );
         addTableCell( qtTemp.toString( "hh:mm:ss" ) );
         m_dlgProgress.increaseProgressValue();
-
+*/
         addTableRow();
         addTableCell( tr( "Valid" ), "bold" );
         addTableCell( " : ", "bold" );
@@ -155,12 +155,19 @@ void cReportCardDetails::refreshReport()
         m_dlgProgress.setProgressMax( 100 );
         m_dlgProgress.setProgressValue( 0 );
 
-        qsQueryCards = QString( "SELECT patientCardUnitId, unitTime, validDateFrom, validDateTo, COUNT(unitTime) "
-                                "FROM patientcardunits "
-                                "WHERE patientCardId=%1 "
-                                "AND validDateFrom<=CURDATE() AND validDateTo>=CURDATE() "
-                                "AND active=1 "
-                                "GROUP BY unitTime, validDateTo ORDER BY validDateTo" ).arg( uiPatientCardId );
+        qsQueryCards = QString( "SELECT patientCardUnitId, unitTime, validDateFrom, validDateTo, COUNT(unitTime), name "
+                                "FROM patientcardunits, patientcardtypes "
+                                "WHERE "
+                                "patientcardunits.patientCardTypeId=patientcardtypes.patientCardTypeId AND "
+                                "patientCardId=%1 AND "
+                                "patientcardunits.validDateFrom<=CURDATE() AND "
+                                "patientcardunits.validDateTo>=CURDATE() AND "
+                                "patientcardunits.active=1 "
+                                "GROUP BY "
+                                "patientcardunits.unitTime, "
+                                "patientcardunits.validDateTo, "
+                                "patientcardunits.patientCardTypeId "
+                                "ORDER BY validDateTo" ).arg( uiPatientCardId );
         poQueryResultCards = g_poDB->executeQTQuery( qsQueryCards );
 
         m_dlgProgress.setProgressValue( 10 );
@@ -169,20 +176,22 @@ void cReportCardDetails::refreshReport()
         addTable();
 
         addTableRow();
+        addTableCell( tr( "No. units" ), "center bold" );
+        addTableCell( tr( "Unit type" ), "center bold" );
         addTableCell( tr( "Unit time" ), "center bold" );
         addTableCell( tr( "Valid" ), "center bold" );
         addTableCell( tr( "Valid till ..." ), "center bold" );
-        addTableCell( tr( "No. units" ), "center bold" );
 
         m_dlgProgress.setProgressMax( poQueryResultCards->size()+10 );
 
         while( poQueryResultCards->next() )
         {
             addTableRow();
+            addTableCell( poQueryResultCards->value(4).toString(), "center" );
+            addTableCell( poQueryResultCards->value(5).toString(), "center" );
             addTableCell( poQueryResultCards->value(1).toString(), "center" );
             addTableCell( QString("%1 -> %2").arg( poQueryResultCards->value(2).toString() ).arg( poQueryResultCards->value(3).toString() ), "center" );
             addTableCell( tr("%1 day(s)").arg( QDate::currentDate().daysTo( QDate::fromString(poQueryResultCards->value(3).toString(), "yyyy-MM-dd") ) ), "center" );
-            addTableCell( poQueryResultCards->value(4).toString(), "center" );
             m_dlgProgress.increaseProgressValue();
         }
         finishTable();
