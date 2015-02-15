@@ -139,10 +139,6 @@ public:
     int             getPatientCardPartnerPrice() const;
     void            setPatientCardPartnerPriceVat(const int p_inVat );
     int             getPatientCardPartnerPriceVat() const;
-    void            setGibbigName( const QString &p_qsGibbigName, bool p_boSaveNow = false );
-    QString         getGibbigName() const;
-    void            setGibbigPassword( const QString &p_qsGibbigPassword, bool p_boSaveNow = false );
-    QString         getGibbigPassword() const;
     void            setBlnsHttpEnabled( bool p_bEnable, bool p_boSaveNow = false );
     bool            isBlnsHttpEnabled();
     int             getBlnsHttpMessageWaitTime() const;
@@ -275,8 +271,6 @@ private:
     int             m_nPatientCardPartnerPrice;
     int             m_nPatientCardPartnerPriceVat;
     QStringList     m_qslPanelIds;
-    QString         m_qsGibbigName;
-    QString         m_qsGibbigPassword;
     bool            m_bBlnsHttpEnabled;
     int             m_nBlnsHttpWaitTime;
     QString         m_qsDirDbBinaries;

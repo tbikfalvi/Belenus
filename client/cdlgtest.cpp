@@ -15,7 +15,7 @@ cDlgTest::cDlgTest(QWidget *parent) : QDialog(parent), ui(new Ui::cDlgTest)
 
     ui->ledVat->setText( "0" );
 
-    ui->pbImageClick->setIcon( QIcon( "./resources/20x20_gibbig_off.png" ) );
+    ui->pbImageClick->setIcon( QIcon( "./resources/20x20_ok.png" ) );
 
     connect( ui->ledCurrencyValue, SIGNAL(textEdited(QString)), this, SLOT(on_pbCalculate_clicked()) );
 }

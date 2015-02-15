@@ -260,15 +260,6 @@ void cDlgPreferences::timerEvent(QTimerEvent *)
     m_nTimer = 0;
 
     setCursor( Qt::ArrowCursor);
-
-/*
-    if( g_poGibbig->gibbigIsErrorOccured() )
-    {
-        QMessageBox::warning( this, tr("Warning"),
-                              tr("Authentication with server failed.\n"
-                                 "Please check your server and user settings.") );
-    }
-*/
 }
 
 void cDlgPreferences::on_sliConsoleLogLevel_valueChanged( int p_inValue )

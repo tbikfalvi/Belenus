@@ -1714,7 +1714,7 @@ is different :</string>
         </widget>
        </item>
        <item>
-        <widget class="QGroupBox" name="gbGibbigEnable">
+        <widget class="QGroupBox" name="gbHttpActionEnable">
          <property name="enabled">
           <bool>true</bool>
          </property>
@@ -1768,7 +1768,7 @@ is different :</string>
           <item>
            <layout class="QHBoxLayout" name="horizontalLayout_29">
             <item>
-             <widget class="QLabel" name="lblGibbigWaitTime">
+             <widget class="QLabel" name="lblHttpWaitTime">
               <property name="text">
                <string>Length of Http message is visible in seconds :</string>
               </property>

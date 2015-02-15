@@ -345,14 +345,13 @@ void cDBPatientCard::synchronizeTime() throw()
 void cDBPatientCard::synchronizeUnitTime(int p_nUnitTime) throw()
 {
     QString     qsQuery = "";
-    QSqlQuery  *poQuery;
 
     qsQuery += QString( "UPDATE patientcardunits SET patientCardTypeId=%1 " ).arg( patientCardTypeId() );
     qsQuery += QString( "WHERE patientCardId=%1 " ).arg( m_uiId );
     qsQuery += QString( "AND patientCardTypeId=0 " );
 //    qsQuery += QString( "AND active=1 " );
 
-    poQuery = g_poDB->executeQTQuery( qsQuery );
+    g_poDB->executeQTQuery( qsQuery );
 
     if( p_nUnitTime > 0 )
     {
@@ -362,7 +361,7 @@ void cDBPatientCard::synchronizeUnitTime(int p_nUnitTime) throw()
         qsQuery += QString( "AND patientCardTypeId=%1 " ).arg( patientCardTypeId() );
         qsQuery += QString( "AND active=1 " );
 
-        poQuery = g_poDB->executeQTQuery( qsQuery );
+        g_poDB->executeQTQuery( qsQuery );
     }
 }
 

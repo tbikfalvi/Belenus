@@ -175,5 +175,5 @@
             <application home="%CURRENT_DIR%" name="DBBackup.exe" params='-execute "%DOWNLOAD_DIR%/sql/db_update_1_5_0.sql"' />
         </execute>
     </version>
-    
+
 </Process>

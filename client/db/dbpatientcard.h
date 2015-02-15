@@ -5,7 +5,6 @@
 #include <QDate>
 
 #include "../../framework/sevexception.h"
-//#include "../gibbig.h"
 
 class cDBPatientCard
 {
