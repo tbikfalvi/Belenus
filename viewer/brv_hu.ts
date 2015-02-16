@@ -45,32 +45,30 @@
     </message>
     <message>
         <location filename="creportcarddetails.cpp" line="105"/>
-        <location filename="creportcarddetails.cpp" line="252"/>
+        <location filename="creportcarddetails.cpp" line="278"/>
         <source>Barcode</source>
         <translation>Vonalkód</translation>
     </message>
     <message>
-        <location filename="creportcarddetails.cpp" line="111"/>
-        <location filename="creportcarddetails.cpp" line="256"/>
+        <location filename="creportcarddetails.cpp" line="282"/>
         <source>Patientcard type</source>
         <translation>Bérlettípus</translation>
     </message>
     <message>
         <location filename="creportcarddetails.cpp" line="117"/>
-        <location filename="creportcarddetails.cpp" line="257"/>
+        <location filename="creportcarddetails.cpp" line="283"/>
         <source>Owner</source>
         <translation>Tulajdonos</translation>
     </message>
     <message>
-        <location filename="creportcarddetails.cpp" line="175"/>
-        <location filename="creportcarddetails.cpp" line="253"/>
+        <location filename="creportcarddetails.cpp" line="185"/>
+        <location filename="creportcarddetails.cpp" line="279"/>
         <source>No. units</source>
         <translation>Egységek száma</translation>
     </message>
     <message>
-        <location filename="creportcarddetails.cpp" line="132"/>
         <source>Time left</source>
-        <translation>Idő</translation>
+        <translation type="obsolete">Idő</translation>
     </message>
     <message>
         <location filename="creportcarddetails.cpp" line="153"/>
@@ -78,44 +76,51 @@
         <translation>Érvényes egységek</translation>
     </message>
     <message>
-        <location filename="creportcarddetails.cpp" line="172"/>
+        <location filename="creportcarddetails.cpp" line="186"/>
+        <location filename="creportcarddetails.cpp" line="234"/>
         <source>Unit time</source>
         <translation>Egység idő</translation>
     </message>
     <message>
-        <location filename="creportcarddetails.cpp" line="174"/>
+        <location filename="creportcarddetails.cpp" line="187"/>
+        <location filename="creportcarddetails.cpp" line="235"/>
+        <source>Unit type</source>
+        <translation>Egység típus</translation>
+    </message>
+    <message>
+        <location filename="creportcarddetails.cpp" line="189"/>
         <source>Valid till ...</source>
         <translation>Érvényes még ...</translation>
     </message>
     <message>
-        <location filename="creportcarddetails.cpp" line="184"/>
+        <location filename="creportcarddetails.cpp" line="200"/>
         <source>%1 day(s)</source>
         <translation>%1 napig</translation>
     </message>
     <message>
-        <location filename="creportcarddetails.cpp" line="192"/>
+        <location filename="creportcarddetails.cpp" line="207"/>
         <source>Patientcard unit usages</source>
         <translation>Bérlet egység használatok</translation>
     </message>
     <message>
-        <location filename="creportcarddetails.cpp" line="210"/>
+        <location filename="creportcarddetails.cpp" line="232"/>
         <source>Date of usage</source>
         <translation>Használat dátuma</translation>
     </message>
     <message>
-        <location filename="creportcarddetails.cpp" line="211"/>
+        <location filename="creportcarddetails.cpp" line="233"/>
         <source>Unit count</source>
         <translation>Egységek száma</translation>
     </message>
     <message>
-        <location filename="creportcarddetails.cpp" line="254"/>
+        <location filename="creportcarddetails.cpp" line="280"/>
         <source>Time</source>
         <translation>Idő</translation>
     </message>
     <message>
         <location filename="creportcarddetails.cpp" line="138"/>
-        <location filename="creportcarddetails.cpp" line="173"/>
-        <location filename="creportcarddetails.cpp" line="255"/>
+        <location filename="creportcarddetails.cpp" line="188"/>
+        <location filename="creportcarddetails.cpp" line="281"/>
         <source>Valid</source>
         <translation>Érvényes</translation>
     </message>
@@ -136,7 +141,7 @@
     </message>
     <message>
         <location filename="creportcarddetails.cpp" line="144"/>
-        <location filename="creportcarddetails.cpp" line="258"/>
+        <location filename="creportcarddetails.cpp" line="284"/>
         <source>Comment</source>
         <translation>Megjegyzés</translation>
     </message>
@@ -724,8 +729,8 @@
         <translation type="obsolete">Pénztárak listája</translation>
     </message>
     <message>
-        <location filename="creportledger.cpp" line="63"/>
-        <location filename="creportledger.cpp" line="615"/>
+        <location filename="creportledger.cpp" line="65"/>
+        <location filename="creportledger.cpp" line="618"/>
         <source>Products sold</source>
         <translation>Eladott termékek</translation>
     </message>
@@ -742,31 +747,29 @@
         <translation type="obsolete">Géphasználatok bérlettel és készpénzes fizetéssel</translation>
     </message>
     <message>
-        <location filename="creportledger.cpp" line="181"/>
+        <location filename="creportledger.cpp" line="184"/>
         <source>Product name</source>
         <translation>Termék megnevezés</translation>
     </message>
     <message>
-        <location filename="creportledger.cpp" line="182"/>
-        <location filename="creportledger.cpp" line="479"/>
+        <location filename="creportledger.cpp" line="185"/>
         <source>Count</source>
         <translation>Darabszám</translation>
     </message>
     <message>
-        <location filename="creportledger.cpp" line="183"/>
-        <location filename="creportledger.cpp" line="347"/>
-        <location filename="creportledger.cpp" line="416"/>
-        <location filename="creportledger.cpp" line="513"/>
+        <location filename="creportledger.cpp" line="186"/>
+        <location filename="creportledger.cpp" line="350"/>
+        <location filename="creportledger.cpp" line="419"/>
+        <location filename="creportledger.cpp" line="516"/>
         <source>Amount</source>
         <translation>Összeg</translation>
     </message>
     <message>
-        <location filename="creportledger.cpp" line="162"/>
-        <location filename="creportledger.cpp" line="315"/>
-        <location filename="creportledger.cpp" line="392"/>
-        <location filename="creportledger.cpp" line="496"/>
-        <location filename="creportledger.cpp" line="588"/>
-        <location filename="creportledger.cpp" line="642"/>
+        <location filename="creportledger.cpp" line="165"/>
+        <location filename="creportledger.cpp" line="318"/>
+        <location filename="creportledger.cpp" line="395"/>
+        <location filename="creportledger.cpp" line="591"/>
+        <location filename="creportledger.cpp" line="645"/>
         <source>Sum total</source>
         <translation>Mind összesen</translation>
     </message>
@@ -787,54 +790,54 @@
         <translation>Műszakok listája</translation>
     </message>
     <message>
-        <location filename="creportledger.cpp" line="68"/>
-        <location filename="creportledger.cpp" line="622"/>
+        <location filename="creportledger.cpp" line="70"/>
+        <location filename="creportledger.cpp" line="625"/>
         <source>Patientcards sold</source>
         <translation>Eladott bérletek</translation>
     </message>
     <message>
-        <location filename="creportledger.cpp" line="73"/>
+        <location filename="creportledger.cpp" line="75"/>
         <source>Occasionally usage of devices</source>
         <translation>Alkalmi géphasználatok bevétele</translation>
     </message>
     <message>
-        <location filename="creportledger.cpp" line="83"/>
-        <location filename="creportledger.cpp" line="636"/>
+        <location filename="creportledger.cpp" line="85"/>
+        <location filename="creportledger.cpp" line="639"/>
         <source>Expenses</source>
         <translation>Kiadások</translation>
     </message>
     <message>
-        <location filename="creportledger.cpp" line="415"/>
+        <location filename="creportledger.cpp" line="418"/>
         <source>Description</source>
         <translation>Leírás</translation>
     </message>
     <message>
-        <location filename="creportledger.cpp" line="510"/>
+        <location filename="creportledger.cpp" line="513"/>
         <source>Payed by cash</source>
         <translation>Készpénzzel fizetve</translation>
     </message>
     <message>
-        <location filename="creportledger.cpp" line="511"/>
+        <location filename="creportledger.cpp" line="514"/>
         <source>Payed by card</source>
         <translation>Bankkártyával fizetve</translation>
     </message>
     <message>
-        <location filename="creportledger.cpp" line="512"/>
+        <location filename="creportledger.cpp" line="515"/>
         <source>Payed by voucher</source>
         <translation>Utalvánnyal fizetve</translation>
     </message>
     <message>
-        <location filename="creportledger.cpp" line="629"/>
+        <location filename="creportledger.cpp" line="632"/>
         <source>Device usages</source>
         <translation>Géphasználatok</translation>
     </message>
     <message>
-        <location filename="creportledger.cpp" line="649"/>
+        <location filename="creportledger.cpp" line="652"/>
         <source>Cash/voucher</source>
         <translation>Készpénz/utalvány</translation>
     </message>
     <message>
-        <location filename="creportledger.cpp" line="656"/>
+        <location filename="creportledger.cpp" line="659"/>
         <source>Card</source>
         <translation>Bankkártya</translation>
     </message>
@@ -843,42 +846,42 @@
         <translation type="obsolete">Géphasználatok bérlettel</translation>
     </message>
     <message>
-        <location filename="creportledger.cpp" line="78"/>
+        <location filename="creportledger.cpp" line="80"/>
         <source>Income by payment methods</source>
         <translation>Fizetések szerinti bevétel</translation>
     </message>
     <message>
-        <location filename="creportledger.cpp" line="88"/>
+        <location filename="creportledger.cpp" line="90"/>
         <source>Income summary</source>
         <translation>Bevétel összesítés</translation>
     </message>
     <message>
-        <location filename="creportledger.cpp" line="127"/>
+        <location filename="creportledger.cpp" line="130"/>
         <source>Owner</source>
         <translation>Tulajdonos</translation>
     </message>
     <message>
-        <location filename="creportledger.cpp" line="131"/>
+        <location filename="creportledger.cpp" line="134"/>
         <source>Balance</source>
         <translation>Egyenleg</translation>
     </message>
     <message>
-        <location filename="creportledger.cpp" line="132"/>
+        <location filename="creportledger.cpp" line="135"/>
         <source>Income</source>
         <translation>Bevétel</translation>
     </message>
     <message>
-        <location filename="creportledger.cpp" line="128"/>
+        <location filename="creportledger.cpp" line="131"/>
         <source>Cassa started</source>
         <translation>Pénztár indítás</translation>
     </message>
     <message>
-        <location filename="creportledger.cpp" line="129"/>
+        <location filename="creportledger.cpp" line="132"/>
         <source>Cassa closed</source>
         <translation>Pénztár leállítás</translation>
     </message>
     <message>
-        <location filename="creportledger.cpp" line="130"/>
+        <location filename="creportledger.cpp" line="133"/>
         <source>Last entry</source>
         <translation>Utolsó bejegyzés</translation>
     </message>
@@ -887,9 +890,9 @@
         <translation type="obsolete">Délelőtt</translation>
     </message>
     <message>
-        <location filename="creportledger.cpp" line="218"/>
-        <location filename="creportledger.cpp" line="448"/>
-        <location filename="creportledger.cpp" line="569"/>
+        <location filename="creportledger.cpp" line="221"/>
+        <location filename="creportledger.cpp" line="451"/>
+        <location filename="creportledger.cpp" line="572"/>
         <source>Sum</source>
         <translation>Összesen</translation>
     </message>

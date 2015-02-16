@@ -144,12 +144,15 @@
         <backup>
             <file path="%INSTALL_DIR%" directory="" name="belenus.exe" move="yes" />
             <file path="%INSTALL_DIR%" directory="" name="DBBackup.exe" move="yes" />
+            <file path="%INSTALL_DIR%" directory="" name="ReportViewer.exe" move="yes" />
         </backup>
         <update>
             <file src="%DOWNLOAD_DIR%/belenus.exe" dst="%INSTALL_DIR%/belenus.exe" />
             <file src="%DOWNLOAD_DIR%/DBBackup.exe" dst="%INSTALL_DIR%/DBBackup.exe" />
             <file src="%DOWNLOAD_DIR%/DBBackup.exe" dst="%CURRENT_DIR%/DBBackup.exe" />
+            <file src="%DOWNLOAD_DIR%/ReportViewer.exe" dst="%INSTALL_DIR%/ReportViewer.exe" />
             <file src="%DOWNLOAD_DIR%/lang/belenus_hu.qm" dst="%INSTALL_DIR%/lang/belenus_hu.qm" />
+            <file src="%DOWNLOAD_DIR%/lang/brv_hu.qm" dst="%INSTALL_DIR%/lang/brv_hu.qm" />
             <file src="%DOWNLOAD_DIR%/resources/40x40_http_disabled.png" dst="%INSTALL_DIR%/resources/40x40_http_disabled.png" />
             <file src="%DOWNLOAD_DIR%/resources/40x40_http_enabled.png" dst="%INSTALL_DIR%/resources/40x40_http_enabled.png" />
         </update>

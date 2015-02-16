@@ -51,43 +51,47 @@
     </message>
     <message>
         <location filename="creportcarddetails.cpp" line="105"/>
-        <location filename="creportcarddetails.cpp" line="252"/>
+        <location filename="creportcarddetails.cpp" line="278"/>
         <source>Barcode</source>
         <translation>Strichcode</translation>
     </message>
     <message>
-        <location filename="creportcarddetails.cpp" line="111"/>
-        <location filename="creportcarddetails.cpp" line="256"/>
+        <location filename="creportcarddetails.cpp" line="187"/>
+        <location filename="creportcarddetails.cpp" line="235"/>
+        <source>Unit type</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="creportcarddetails.cpp" line="282"/>
         <source>Patientcard type</source>
         <translation>Club Karten Typ</translation>
     </message>
     <message>
         <location filename="creportcarddetails.cpp" line="117"/>
-        <location filename="creportcarddetails.cpp" line="257"/>
+        <location filename="creportcarddetails.cpp" line="283"/>
         <source>Owner</source>
         <translation>Besitzer</translation>
     </message>
     <message>
-        <location filename="creportcarddetails.cpp" line="175"/>
-        <location filename="creportcarddetails.cpp" line="253"/>
+        <location filename="creportcarddetails.cpp" line="185"/>
+        <location filename="creportcarddetails.cpp" line="279"/>
         <source>No. units</source>
         <translation>Anzahl der Einheiten</translation>
     </message>
     <message>
-        <location filename="creportcarddetails.cpp" line="132"/>
         <source>Time left</source>
-        <translation>Zeit</translation>
+        <translation type="obsolete">Zeit</translation>
     </message>
     <message>
         <location filename="creportcarddetails.cpp" line="138"/>
-        <location filename="creportcarddetails.cpp" line="173"/>
-        <location filename="creportcarddetails.cpp" line="255"/>
+        <location filename="creportcarddetails.cpp" line="188"/>
+        <location filename="creportcarddetails.cpp" line="281"/>
         <source>Valid</source>
         <translation>Gültig</translation>
     </message>
     <message>
         <location filename="creportcarddetails.cpp" line="144"/>
-        <location filename="creportcarddetails.cpp" line="258"/>
+        <location filename="creportcarddetails.cpp" line="284"/>
         <source>Comment</source>
         <translation>Bemerkung</translation>
     </message>
@@ -97,37 +101,38 @@
         <translation>gültige Einheiten</translation>
     </message>
     <message>
-        <location filename="creportcarddetails.cpp" line="172"/>
+        <location filename="creportcarddetails.cpp" line="186"/>
+        <location filename="creportcarddetails.cpp" line="234"/>
         <source>Unit time</source>
         <translation>Zeit pro Einheit</translation>
     </message>
     <message>
-        <location filename="creportcarddetails.cpp" line="174"/>
+        <location filename="creportcarddetails.cpp" line="189"/>
         <source>Valid till ...</source>
         <translation>Gültigkeit …</translation>
     </message>
     <message>
-        <location filename="creportcarddetails.cpp" line="184"/>
+        <location filename="creportcarddetails.cpp" line="200"/>
         <source>%1 day(s)</source>
         <translation>%1 Tage</translation>
     </message>
     <message>
-        <location filename="creportcarddetails.cpp" line="192"/>
+        <location filename="creportcarddetails.cpp" line="207"/>
         <source>Patientcard unit usages</source>
         <translation>Benutzung der Club Karten Einheit</translation>
     </message>
     <message>
-        <location filename="creportcarddetails.cpp" line="210"/>
+        <location filename="creportcarddetails.cpp" line="232"/>
         <source>Date of usage</source>
         <translation>Datum der Benutzung</translation>
     </message>
     <message>
-        <location filename="creportcarddetails.cpp" line="211"/>
+        <location filename="creportcarddetails.cpp" line="233"/>
         <source>Unit count</source>
         <translation>Anzahl der Einheiten</translation>
     </message>
     <message>
-        <location filename="creportcarddetails.cpp" line="254"/>
+        <location filename="creportcarddetails.cpp" line="280"/>
         <source>Time</source>
         <translation>Zeit</translation>
     </message>
@@ -670,136 +675,134 @@
         <translation>Liste der Arbeitsschichten</translation>
     </message>
     <message>
-        <location filename="creportledger.cpp" line="63"/>
-        <location filename="creportledger.cpp" line="615"/>
+        <location filename="creportledger.cpp" line="65"/>
+        <location filename="creportledger.cpp" line="618"/>
         <source>Products sold</source>
         <translation>Verkaufte Produkte</translation>
     </message>
     <message>
-        <location filename="creportledger.cpp" line="68"/>
-        <location filename="creportledger.cpp" line="622"/>
+        <location filename="creportledger.cpp" line="70"/>
+        <location filename="creportledger.cpp" line="625"/>
         <source>Patientcards sold</source>
         <translation>Verkaufte Club Karten</translation>
     </message>
     <message>
-        <location filename="creportledger.cpp" line="73"/>
+        <location filename="creportledger.cpp" line="75"/>
         <source>Occasionally usage of devices</source>
         <translation>gelegentliche Einnahme durch Gerätebenutzung</translation>
     </message>
     <message>
-        <location filename="creportledger.cpp" line="78"/>
+        <location filename="creportledger.cpp" line="80"/>
         <source>Income by payment methods</source>
         <translation>Einnahmen laut Zahlungen</translation>
     </message>
     <message>
-        <location filename="creportledger.cpp" line="83"/>
-        <location filename="creportledger.cpp" line="636"/>
+        <location filename="creportledger.cpp" line="85"/>
+        <location filename="creportledger.cpp" line="639"/>
         <source>Expenses</source>
         <translation>Ausgaben</translation>
     </message>
     <message>
-        <location filename="creportledger.cpp" line="88"/>
+        <location filename="creportledger.cpp" line="90"/>
         <source>Income summary</source>
         <translation>Einnahmen laut Gesamtbetrachtung</translation>
     </message>
     <message>
-        <location filename="creportledger.cpp" line="127"/>
+        <location filename="creportledger.cpp" line="130"/>
         <source>Owner</source>
         <translation>Besitzer</translation>
     </message>
     <message>
-        <location filename="creportledger.cpp" line="128"/>
+        <location filename="creportledger.cpp" line="131"/>
         <source>Cassa started</source>
         <translation>Kassen-Öffnung</translation>
     </message>
     <message>
-        <location filename="creportledger.cpp" line="129"/>
+        <location filename="creportledger.cpp" line="132"/>
         <source>Cassa closed</source>
         <translation>Kassen-Schluss</translation>
     </message>
     <message>
-        <location filename="creportledger.cpp" line="130"/>
+        <location filename="creportledger.cpp" line="133"/>
         <source>Last entry</source>
         <translation>letzter Eintrag</translation>
     </message>
     <message>
-        <location filename="creportledger.cpp" line="131"/>
+        <location filename="creportledger.cpp" line="134"/>
         <source>Balance</source>
         <translation>Kontostand</translation>
     </message>
     <message>
-        <location filename="creportledger.cpp" line="132"/>
+        <location filename="creportledger.cpp" line="135"/>
         <source>Income</source>
         <translation>Einnahme</translation>
     </message>
     <message>
-        <location filename="creportledger.cpp" line="162"/>
-        <location filename="creportledger.cpp" line="315"/>
-        <location filename="creportledger.cpp" line="392"/>
-        <location filename="creportledger.cpp" line="496"/>
-        <location filename="creportledger.cpp" line="588"/>
-        <location filename="creportledger.cpp" line="642"/>
+        <location filename="creportledger.cpp" line="165"/>
+        <location filename="creportledger.cpp" line="318"/>
+        <location filename="creportledger.cpp" line="395"/>
+        <location filename="creportledger.cpp" line="591"/>
+        <location filename="creportledger.cpp" line="645"/>
         <source>Sum total</source>
         <translation>Insgesammt</translation>
     </message>
     <message>
-        <location filename="creportledger.cpp" line="181"/>
+        <location filename="creportledger.cpp" line="184"/>
         <source>Product name</source>
         <translation>Bezeichnung des Produkts</translation>
     </message>
     <message>
-        <location filename="creportledger.cpp" line="182"/>
-        <location filename="creportledger.cpp" line="479"/>
+        <location filename="creportledger.cpp" line="185"/>
         <source>Count</source>
         <translation>Stückzahl</translation>
     </message>
     <message>
-        <location filename="creportledger.cpp" line="183"/>
-        <location filename="creportledger.cpp" line="347"/>
-        <location filename="creportledger.cpp" line="416"/>
-        <location filename="creportledger.cpp" line="513"/>
+        <location filename="creportledger.cpp" line="186"/>
+        <location filename="creportledger.cpp" line="350"/>
+        <location filename="creportledger.cpp" line="419"/>
+        <location filename="creportledger.cpp" line="516"/>
         <source>Amount</source>
         <translation>Preis</translation>
     </message>
     <message>
-        <location filename="creportledger.cpp" line="218"/>
-        <location filename="creportledger.cpp" line="448"/>
-        <location filename="creportledger.cpp" line="569"/>
+        <location filename="creportledger.cpp" line="221"/>
+        <location filename="creportledger.cpp" line="451"/>
+        <location filename="creportledger.cpp" line="572"/>
         <source>Sum</source>
         <translation>Insgesammt</translation>
     </message>
     <message>
-        <location filename="creportledger.cpp" line="415"/>
+        <location filename="creportledger.cpp" line="418"/>
         <source>Description</source>
         <translation>Abbuchung</translation>
     </message>
     <message>
-        <location filename="creportledger.cpp" line="510"/>
+        <location filename="creportledger.cpp" line="513"/>
         <source>Payed by cash</source>
         <translation>Bargeld Zahlung</translation>
     </message>
     <message>
-        <location filename="creportledger.cpp" line="511"/>
+        <location filename="creportledger.cpp" line="514"/>
         <source>Payed by card</source>
         <translation>Bankkarten Zahlung</translation>
     </message>
     <message>
-        <location filename="creportledger.cpp" line="512"/>
+        <location filename="creportledger.cpp" line="515"/>
         <source>Payed by voucher</source>
         <translation>Gutschein Zahlung</translation>
     </message>
     <message>
-        <location filename="creportledger.cpp" line="629"/>
+        <location filename="creportledger.cpp" line="632"/>
         <source>Device usages</source>
         <translation>Geräte-Benutzungen</translation>
     </message>
     <message>
-        <location filename="creportledger.cpp" line="649"/>
+        <location filename="creportledger.cpp" line="652"/>
         <source>Cash/voucher</source>
         <translation>Bargeld Gutschein</translation>
     </message>
     <message>
-        <location filename="creportledger.cpp" line="656"/>
+        <location filename="creportledger.cpp" line="659"/>
         <source>Card</source>
         <translation>Bankkarte</translation>
     </message>
