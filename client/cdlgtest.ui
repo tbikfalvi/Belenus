@@ -19,7 +19,7 @@
      <x>9</x>
      <y>9</y>
      <width>560</width>
-     <height>27</height>
+     <height>30</height>
     </rect>
    </property>
    <layout class="QHBoxLayout" name="horizontalLayout">
@@ -229,6 +229,82 @@
     </item>
     <item>
      <widget class="QTextEdit" name="teLicenceArea"/>
+    </item>
+   </layout>
+  </widget>
+  <widget class="QGroupBox" name="gbMd5Hash">
+   <property name="geometry">
+    <rect>
+     <x>420</x>
+     <y>90</y>
+     <width>291</width>
+     <height>191</height>
+    </rect>
+   </property>
+   <property name="title">
+    <string> MD5 hash test </string>
+   </property>
+   <layout class="QVBoxLayout" name="verticalLayout_3">
+    <item>
+     <layout class="QFormLayout" name="formLayout">
+      <item row="0" column="0">
+       <widget class="QLabel" name="lblToken">
+        <property name="text">
+         <string>Token</string>
+        </property>
+       </widget>
+      </item>
+      <item row="0" column="1">
+       <widget class="QLineEdit" name="ledToken"/>
+      </item>
+      <item row="1" column="0">
+       <widget class="QLabel" name="lblTimeStamp">
+        <property name="text">
+         <string>Timestamp</string>
+        </property>
+       </widget>
+      </item>
+      <item row="1" column="1">
+       <widget class="QLineEdit" name="ledTimeStamp"/>
+      </item>
+      <item row="2" column="0">
+       <widget class="QLabel" name="lblBarcode">
+        <property name="text">
+         <string>Barcode</string>
+        </property>
+       </widget>
+      </item>
+      <item row="2" column="1">
+       <widget class="QLineEdit" name="ledBarcode"/>
+      </item>
+     </layout>
+    </item>
+    <item>
+     <layout class="QHBoxLayout" name="horizontalLayout_3">
+      <item>
+       <spacer name="horizontalSpacer_5">
+        <property name="orientation">
+         <enum>Qt::Horizontal</enum>
+        </property>
+        <property name="sizeHint" stdset="0">
+         <size>
+          <width>40</width>
+          <height>20</height>
+         </size>
+        </property>
+       </spacer>
+      </item>
+      <item>
+       <widget class="QPushButton" name="pbGenerateMd5Hash">
+        <property name="text">
+         <string>Generate MD5 hash</string>
+        </property>
+       </widget>
+      </item>
+     </layout>
+    </item>
+    <item>
+     <widget class="QLineEdit" name="ledMd5Hash"/>
     </item>
    </layout>
   </widget>

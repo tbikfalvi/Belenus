@@ -48,19 +48,19 @@
 
     <version current="1.4.5" next="1.4.6">
     </version>
-    
+
     <version current="1.4.6" next="1.4.7">
     </version>
-    
+
     <version current="1.4.7" next="1.4.8">
     </version>
-    
+
     <version current="1.4.8" next="1.4.9">
     </version>
-    
+
     <version current="1.4.9" next="1.4.10">
     </version>
-    
+
     <version current="1.4.10" next="1.4.11">
         <uncompress>
             <file path="%DOWNLOAD_DIR%" name="Update_1_4_11.zip" />
@@ -83,7 +83,7 @@
             <application home="%CURRENT_DIR%" name="DBBackup.exe" params='-execute "%DOWNLOAD_DIR%/sql/db_update_1_4_11.sql"' />
         </execute>
     </version>
-    
+
     <version current="1.4.11" next="1.4.12">
         <uncompress>
             <file path="%DOWNLOAD_DIR%" name="Update_1_4_12.zip" />
@@ -99,7 +99,7 @@
             <application home="%CURRENT_DIR%" name="DBBackup.exe" params='-execute "%DOWNLOAD_DIR%/sql/db_update_1_4_12.sql"' />
         </execute>
     </version>
-    
+
     <version current="1.4.12" next="1.4.14">
         <uncompress>
             <file path="%DOWNLOAD_DIR%" name="Update_1_4_14.zip" />
@@ -117,7 +117,7 @@
 
     <version current="1.4.14" next="1.4.15">
     </version>
-    
+
     <version current="1.4.15" next="1.4.16">
         <uncompress>
             <file path="%DOWNLOAD_DIR%" name="Update_1_4_16.zip" />
@@ -134,6 +134,30 @@
         </update>
         <execute>
             <application home="%CURRENT_DIR%" name="DBBackup.exe" params='-execute "%DOWNLOAD_DIR%/sql/db_update_1_4_16.sql"' />
+        </execute>
+    </version>
+
+    <version current="1.4.16" next="1.5.0">
+        <uncompress>
+            <file path="%DOWNLOAD_DIR%" name="Update_1_5_0.zip" />
+        </uncompress>
+        <backup>
+            <file path="%INSTALL_DIR%" directory="" name="belenus.exe" move="yes" />
+            <file path="%INSTALL_DIR%" directory="" name="DBBackup.exe" move="yes" />
+            <file path="%INSTALL_DIR%" directory="" name="ReportViewer.exe" move="yes" />
+        </backup>
+        <update>
+            <file src="%DOWNLOAD_DIR%/belenus.exe" dst="%INSTALL_DIR%/belenus.exe" />
+            <file src="%DOWNLOAD_DIR%/DBBackup.exe" dst="%INSTALL_DIR%/DBBackup.exe" />
+            <file src="%DOWNLOAD_DIR%/DBBackup.exe" dst="%CURRENT_DIR%/DBBackup.exe" />
+            <file src="%DOWNLOAD_DIR%/ReportViewer.exe" dst="%INSTALL_DIR%/ReportViewer.exe" />
+            <file src="%DOWNLOAD_DIR%/lang/belenus_hu.qm" dst="%INSTALL_DIR%/lang/belenus_hu.qm" />
+            <file src="%DOWNLOAD_DIR%/lang/brv_hu.qm" dst="%INSTALL_DIR%/lang/brv_hu.qm" />
+            <file src="%DOWNLOAD_DIR%/resources/40x40_http_disabled.png" dst="%INSTALL_DIR%/resources/40x40_http_disabled.png" />
+            <file src="%DOWNLOAD_DIR%/resources/40x40_http_enabled.png" dst="%INSTALL_DIR%/resources/40x40_http_enabled.png" />
+        </update>
+        <execute>
+            <application home="%CURRENT_DIR%" name="DBBackup.exe" params='-execute "%DOWNLOAD_DIR%/sql/db_update_1_5_0.sql"' />
         </execute>
     </version>
     

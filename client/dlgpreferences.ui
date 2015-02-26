@@ -9,8 +9,8 @@
    <rect>
     <x>0</x>
     <y>0</y>
-    <width>546</width>
-    <height>486</height>
+    <width>608</width>
+    <height>536</height>
    </rect>
   </property>
   <property name="windowTitle">
@@ -23,7 +23,7 @@
    <item>
     <widget class="QTabWidget" name="tbwPreferences">
      <property name="currentIndex">
-      <number>6</number>
+      <number>5</number>
      </property>
      <widget class="QWidget" name="tab_General">
       <attribute name="title">
@@ -1690,49 +1690,23 @@ is different :</string>
        <item>
         <widget class="QGroupBox" name="gbServerSettings">
          <property name="enabled">
-          <bool>false</bool>
+          <bool>true</bool>
          </property>
          <property name="title">
-          <string> Gibbig server settings </string>
+          <string> Http server settings </string>
          </property>
-         <layout class="QFormLayout" name="formLayout_6">
-          <item row="0" column="0">
+         <layout class="QHBoxLayout" name="horizontalLayout_32">
+          <item>
            <widget class="QLabel" name="lblServerHost">
             <property name="text">
-             <string>Server Host:</string>
+             <string>Server address :</string>
             </property>
            </widget>
           </item>
-          <item row="0" column="1">
+          <item>
            <widget class="QLineEdit" name="ledServerHost">
             <property name="enabled">
-             <bool>false</bool>
-            </property>
-            <property name="maximumSize">
-             <size>
-              <width>200</width>
-              <height>16777215</height>
-             </size>
-            </property>
-           </widget>
-          </item>
-          <item row="1" column="0">
-           <widget class="QLabel" name="lblServerPort">
-            <property name="text">
-             <string>Server Port:</string>
-            </property>
-           </widget>
-          </item>
-          <item row="1" column="1">
-           <widget class="QLineEdit" name="ledServerPort">
-            <property name="enabled">
-             <bool>false</bool>
-            </property>
-            <property name="maximumSize">
-             <size>
-              <width>50</width>
-              <height>16777215</height>
-             </size>
+             <bool>true</bool>
             </property>
            </widget>
           </item>
@@ -1740,55 +1714,9 @@ is different :</string>
         </widget>
        </item>
        <item>
-        <widget class="QGroupBox" name="gbUserSettings">
+        <widget class="QGroupBox" name="gbHttpActionEnable">
          <property name="enabled">
-          <bool>false</bool>
-         </property>
-         <property name="title">
-          <string> Gibbig user settings </string>
-         </property>
-         <layout class="QFormLayout" name="formLayout_5">
-          <item row="0" column="0">
-           <widget class="QLabel" name="lblGibbigName">
-            <property name="text">
-             <string>User name :</string>
-            </property>
-           </widget>
-          </item>
-          <item row="0" column="1">
-           <widget class="QLineEdit" name="ledGibbigName">
-            <property name="maximumSize">
-             <size>
-              <width>300</width>
-              <height>16777215</height>
-             </size>
-            </property>
-           </widget>
-          </item>
-          <item row="1" column="0">
-           <widget class="QLabel" name="lblGibbigPassword">
-            <property name="text">
-             <string>Password :</string>
-            </property>
-           </widget>
-          </item>
-          <item row="1" column="1">
-           <widget class="QLineEdit" name="ledGibbigPassword">
-            <property name="maximumSize">
-             <size>
-              <width>150</width>
-              <height>16777215</height>
-             </size>
-            </property>
-           </widget>
-          </item>
-         </layout>
-        </widget>
-       </item>
-       <item>
-        <widget class="QGroupBox" name="gbGibbigEnable">
-         <property name="enabled">
-          <bool>false</bool>
+          <bool>true</bool>
          </property>
          <property name="title">
           <string> Actions </string>
@@ -1797,9 +1725,9 @@ is different :</string>
           <item>
            <layout class="QHBoxLayout" name="horizontalLayout_30">
             <item>
-             <widget class="QCheckBox" name="chkEnableGibbig">
+             <widget class="QCheckBox" name="chkEnableHttp">
               <property name="enabled">
-               <bool>false</bool>
+               <bool>true</bool>
               </property>
               <property name="text">
                <string>Enable synchronization</string>
@@ -1820,7 +1748,7 @@ is different :</string>
              </spacer>
             </item>
             <item>
-             <widget class="QPushButton" name="pbTestGibbig">
+             <widget class="QPushButton" name="pbTestHttpConnection">
               <property name="enabled">
                <bool>false</bool>
               </property>
@@ -1840,14 +1768,14 @@ is different :</string>
           <item>
            <layout class="QHBoxLayout" name="horizontalLayout_29">
             <item>
-             <widget class="QLabel" name="lblGibbigWaitTime">
+             <widget class="QLabel" name="lblHttpWaitTime">
               <property name="text">
-               <string>Length of Gibbig message is visible in seconds :</string>
+               <string>Length of Http message is visible in seconds :</string>
               </property>
              </widget>
             </item>
             <item>
-             <widget class="QSpinBox" name="sbGibbigWaitTime">
+             <widget class="QSpinBox" name="sbHttpWaitTime">
               <property name="enabled">
                <bool>false</bool>
               </property>
@@ -1873,38 +1801,6 @@ is different :</string>
              </spacer>
             </item>
            </layout>
-          </item>
-         </layout>
-        </widget>
-       </item>
-       <item>
-        <widget class="QGroupBox" name="gbDBSynchron">
-         <property name="enabled">
-          <bool>false</bool>
-         </property>
-         <property name="title">
-          <string> Automatically synchronize ...</string>
-         </property>
-         <layout class="QVBoxLayout" name="verticalLayout_4">
-          <item>
-           <widget class="QCheckBox" name="chkDBAutoSynchron">
-            <property name="enabled">
-             <bool>false</bool>
-            </property>
-            <property name="text">
-             <string>database when exiting from application</string>
-            </property>
-           </widget>
-          </item>
-          <item>
-           <widget class="QCheckBox" name="chkDBGlobalAutoSynchron">
-            <property name="enabled">
-             <bool>false</bool>
-            </property>
-            <property name="text">
-             <string>studio independent data when application started.</string>
-            </property>
-           </widget>
           </item>
          </layout>
         </widget>

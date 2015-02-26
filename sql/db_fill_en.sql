@@ -1,14 +1,10 @@
 ﻿-- -----------------------------------------------------------------------------------
---
 -- Belenus Szoftver Rendszer (c) Pagony Multimedia Studio Bt - 2013
---
 -- -----------------------------------------------------------------------------------
---
--- Filename    : db_fill_us.sql
--- AppVersion  : 1.4.11
--- DbVersion   : 1.6.1
+-- Filename    : db_fill_en.sql
+-- AppVersion  : 1.5.0
+-- DbVersion   : 1.7.0
 -- Author      : Bikfalvi Tamas
---
 -- -----------------------------------------------------------------------------------
 -- Adatbazist default adatokkal feltolto SQL script
 -- -----------------------------------------------------------------------------------
@@ -21,17 +17,6 @@ INSERT INTO `licences` (`licenceId`, `serial`, `country`, `region`, `city`, `zip
  ( 0, 'BLNS_SERIAL_GLOBAL', 'Hungary', 'Budapest', 'Budapest', '', '', 'KiwiSun Franchise', NULL, '2013-10-01', 1, 'ARC');
 INSERT INTO `licences` (`licenceId`, `serial`, `country`, `region`, `city`, `zip`, `address`, `studio`, `contact`, `lastValidated`, `active`, `archive`) VALUES
  ( 1, 'BLNS_SERIAL_DEMO', 'Hungary', 'Budapest', 'Budapest', '', '', 'KiwiSun Franchise', NULL, '2013-10-01', 1, 'ARC');
-
--- -----------------------------------------------------------------------------------
-
-INSERT INTO `gibbigmessagetypes` ( `licenceId`, `gibbigMessageType`, `active`, `archive` ) VALUES
- ( '0', 'PCT_CREATE', '1', 'ARC' ),
- ( '0', 'PCT_MODIFY', '1', 'ARC' ),
- ( '0', 'PCT_DELETE', '1', 'ARC' ),
- ( '0', 'PC_SELL', '1', 'ARC' ),
- ( '0', 'PC_REFILL', '1', 'ARC' ),
- ( '0', 'PC_USE', '1', 'ARC' ),
- ( '0', 'PC_DELETE', '1', 'ARC' );
 
 -- -----------------------------------------------------------------------------------
 
@@ -196,8 +181,8 @@ ALTER TABLE `panelUses` auto_increment=1;
 
 -- -----------------------------------------------------------------------------------
 
-INSERT INTO `patientcardunits` (`patientCardUnitId` ,`licenceId` ,`patientCardId` ,`ledgerId` ,`panelId` ,`gibbigId` ,`unitTime` ,`unitPrice` ,`validDateFrom` ,`validDateTo` ,`dateTimeUsed` ,`active` ,`archive` ) VALUES
- ('0',  '0', '1', '0', '0', '0', '5', '0', '2013-01-01', '2100-12-31', CURRENT_TIMESTAMP , '1', 'ARC');
+INSERT INTO `patientcardunits` (`patientCardUnitId` ,`licenceId` ,`patientCardId` ,`ledgerId` ,`panelId` ,`unitTime` ,`unitPrice` ,`validDateFrom` ,`validDateTo` ,`dateTimeUsed` ,`active` ,`archive` ) VALUES
+ ('0',  '0', '1', '0', '0', '5', '0', '2013-01-01', '2100-12-31', CURRENT_TIMESTAMP , '1', 'ARC');
 UPDATE `patientcardunits` SET `patientCardUnitId`='0' WHERE `patientCardUnitId`=1;
 
 -- -----------------------------------------------------------------------------------
@@ -334,7 +319,7 @@ ALTER TABLE `shoppingcartitems` auto_increment=1;
 INSERT INTO `settings` (`settingId`, `identifier`, `value`) VALUES
  (NULL, 'GLOBAL_DATA_UPDATED', '2015-01-01 08:00:00'),
  (NULL, 'ABOUT_INFO_LINK', 'http://www.kiwisun.eu/elerhetosegeink.html'),
- (NULL, 'APPLICATION_VERSION', '1_4_16'),
- (NULL, 'DATABASE_VERSION', '1_6_1');
+ (NULL, 'APPLICATION_VERSION', '1_5_0'),
+ (NULL, 'DATABASE_VERSION', '1_7_0');
 
 -- -----------------------------------------------------------------------------------

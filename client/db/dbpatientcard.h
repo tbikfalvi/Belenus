@@ -5,7 +5,6 @@
 #include <QDate>
 
 #include "../../framework/sevexception.h"
-#include "../gibbig.h"
 
 class cDBPatientCard
 {
@@ -61,8 +60,7 @@ public:
     void            setActive( const bool p_bActive )                           throw();
     QString         archive() const                                             throw();
     void            setArchive( const QString &p_qsArchive )                    throw();
-    void            sendDataToGibbig(cGibbigAction::teGibbigAction p_teActionType ) throw();
-    void            updateGibbigId( const QString &p_qsId )                         throw();
+    void            sendDataToWeb( bool p_bSendNow = true )                     throw();
 
 private:
     unsigned int    m_uiId;

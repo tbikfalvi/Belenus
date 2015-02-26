@@ -33,6 +33,8 @@ public:
     QString         getFileName() const;
     void            setVersion( const QString &p_qsVersion, bool p_boSaveNow = false );
     QString         getVersion() const;
+    void            setVersionDb(const QString &p_qsVersion);
+    QString         getVersionDb() const;
     void            setComponents( const unsigned int p_uiComponent, bool p_boSaveNow = false );
     unsigned int    getComponents() const;
     void            processComponentID();
@@ -137,14 +139,10 @@ public:
     int             getPatientCardPartnerPrice() const;
     void            setPatientCardPartnerPriceVat(const int p_inVat );
     int             getPatientCardPartnerPriceVat() const;
-    void            setGibbigName( const QString &p_qsGibbigName, bool p_boSaveNow = false );
-    QString         getGibbigName() const;
-    void            setGibbigPassword( const QString &p_qsGibbigPassword, bool p_boSaveNow = false );
-    QString         getGibbigPassword() const;
-    void            setGibbigEnabled( bool p_bEnable, bool p_boSaveNow = false );
-    bool            isGibbigEnabled();
-    int             getGibbigMessageWaitTime() const;
-    void            setGibbigMessageWaitTime(const int p_inWaitTime );
+    void            setBlnsHttpEnabled( bool p_bEnable, bool p_boSaveNow = false );
+    bool            isBlnsHttpEnabled();
+    int             getBlnsHttpMessageWaitTime() const;
+    void            setBlnsHttpMessageWaitTime(const int p_inWaitTime );
 
     unsigned int    getPanelId( int p_nPanelIterator );
 
@@ -220,6 +218,7 @@ public:
 private:
     QString         m_qsFileName;
     QString         m_qsVersion;
+    QString         m_qsVersionDb;
     unsigned int    m_uiComponent;
     bool            m_bComponentSensolite;
     bool            m_bComponentKiwiSun;
@@ -272,10 +271,8 @@ private:
     int             m_nPatientCardPartnerPrice;
     int             m_nPatientCardPartnerPriceVat;
     QStringList     m_qslPanelIds;
-    QString         m_qsGibbigName;
-    QString         m_qsGibbigPassword;
-    bool            m_bGibbigEnabled;
-    int             m_nGibbiWaitTime;
+    bool            m_bBlnsHttpEnabled;
+    int             m_nBlnsHttpWaitTime;
     QString         m_qsDirDbBinaries;
     QString         m_qsDirDbBackup;
     bool            m_bForceBackupDatabase;

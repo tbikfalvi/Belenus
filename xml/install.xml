@@ -1,4 +1,4 @@
-<installer version="1.4.16">
+<installer version="1.5.0">
 
     <files>
 
@@ -23,8 +23,6 @@
         <file src="%CURRENT_DIR%/lang/qt_hu.qm" dst="%INSTALL_DIR%/lang/qt_hu.qm" />
         <file src="%CURRENT_DIR%/lang/qt_de.qm" dst="%INSTALL_DIR%/lang/qt_de.qm" />
 
-        <file src="%CURRENT_DIR%/resources/20x20_gibbig_off.png" dst="%INSTALL_DIR%/resources/20x20_gibbig_off.png" />
-        <file src="%CURRENT_DIR%/resources/20x20_gibbig_on.png" dst="%INSTALL_DIR%/resources/20x20_gibbig_on.png" />
         <file src="%CURRENT_DIR%/resources/35x35_export.png" dst="%INSTALL_DIR%/resources/35x35_export.png" />
         <file src="%CURRENT_DIR%/resources/35x35_import.png" dst="%INSTALL_DIR%/resources/35x35_import.png" />
         <file src="%CURRENT_DIR%/resources/40x40_address.png" dst="%INSTALL_DIR%/resources/40x40_address.png" />
@@ -130,6 +128,8 @@
         <file src="%CURRENT_DIR%/resources/40x40_keyboard_enabled.png" dst="%INSTALL_DIR%/resources/40x40_keyboard_enabled.png" />
         <file src="%CURRENT_DIR%/resources/40x40_keyboard_locked.png" dst="%INSTALL_DIR%/resources/40x40_keyboard_locked.png" />
         <file src="%CURRENT_DIR%/resources/40x40_patientcard_info.png" dst="%INSTALL_DIR%/resources/40x40_patientcard_info.png" />
+        <file src="%CURRENT_DIR%/resources/40x40_http_disabled.png" dst="%INSTALL_DIR%/resources/40x40_http_disabled.png" />
+        <file src="%CURRENT_DIR%/resources/40x40_http_enabled.png" dst="%INSTALL_DIR%/resources/40x40_http_enabled.png" />
         
         <file src="%CURRENT_DIR%/sqldrivers/qsqlmysql4.dll" dst="%INSTALL_DIR%/sqldrivers/qsqlmysql4.dll" />
 

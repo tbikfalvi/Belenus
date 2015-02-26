@@ -120,9 +120,11 @@ cWndMain::cWndMain( QWidget *parent ) : QMainWindow( parent )
     m_bActionProcessing             = false;
     m_bProgressErrorVisible         = false;
     m_nProgressCounter              = 0;
-    m_bGibbigConnected              = false;
+    m_bBlnsHttpConnected            = false;
     m_nCommunicationErrorCounter    = 0;
     m_nCommResetStep                = 0;
+    m_bBlnsHttpErrorVisible         = false;
+    m_uiBlnsErrorAppeared           = 0;
 
     pbLogin->setIcon( QIcon("./resources/40x40_ok.png") );
 
@@ -330,40 +332,37 @@ cWndMain::cWndMain( QWidget *parent ) : QMainWindow( parent )
 
     m_pbStatusKeyboard.setEnabled( false );
 
-//    if( !g_poPrefs->isFapados() )
-//    {
-//        m_pbStatusGibbig.setIcon( QIcon( "./resources/20x20_gibbig_off.png" ) );
-//        m_pbStatusGibbig.setFlat( true );
-//        m_pbStatusGibbig.setText( "" );
-//        m_pbStatusGibbig.setIconSize( QSize(20,20) );
-//        m_pbStatusGibbig.setFixedSize( 22, 22 );
-//
-//        connect( &m_pbStatusGibbig, SIGNAL(clicked()), this, SLOT(on_GibbigIconClicked()) );
-//    }
+    if( !g_poPrefs->isFapados() )
+    {
+        m_pbStatusHttp.setIcon( QIcon( "./resources/40x40_http_disabled.png" ) );
+        m_pbStatusHttp.setFlat( true );
+        m_pbStatusHttp.setText( "" );
+        m_pbStatusHttp.setIconSize( QSize(20,20) );
+        m_pbStatusHttp.setFixedSize( 22, 22 );
+
+        connect( &m_pbStatusHttp, SIGNAL(clicked()), this, SLOT(on_BlnsHttpIconClicked()) );
+    }
 
     statusbar->addPermanentWidget( &m_lblStatusLeft, 3 );
     statusbar->addPermanentWidget( &m_pbStatusCommunication, 0 );
     statusbar->addPermanentWidget( &m_pbStatusKeyboard, 0 );
-//    if( !g_poPrefs->isFapados() )
-//    {
-//        statusbar->addPermanentWidget( &m_pbStatusGibbig, 0 );
-//    }
+    if( !g_poPrefs->isFapados() )
+    {
+        statusbar->addPermanentWidget( &m_pbStatusHttp, 0 );
+    }
     statusbar->addPermanentWidget( &m_lblStatusRight, 1 );
 
-//    g_poGibbig = new cGibbig();
-//
-//    if( !g_poPrefs->isFapados() )
-//    {
-//        connect( g_poGibbig, SIGNAL(signalErrorOccured()),                      this, SLOT(on_GibbigErrorOccured()) );
-//        connect( g_poGibbig, SIGNAL(signalActionProcessed(QString)),            this, SLOT(on_GibbigActionFinished(QString)) );
-//        connect( g_poGibbig, SIGNAL(signalDebugMessage(QString)),               this, SLOT(on_GibbigMessageArrived(QString)) );
-//        connect( g_poGibbig, SIGNAL(signalUpdatePatientCard(QString,QString)),  this, SLOT(on_GibbigPatientCardUpdate(QString,QString)) );
-//
-//        g_poGibbig->setHost( g_poPrefs->getServerAddress() );
-//        g_poGibbig->setUserName( g_poPrefs->getGibbigName() );
-//        g_poGibbig->setPassword( g_poPrefs->getGibbigPassword() );
-//        g_poGibbig->setTimeout( 10000 );
-//    }
+    g_poBlnsHttp = new cBlnsHttp();
+
+    if( !g_poPrefs->isFapados() )
+    {
+        connect( g_poBlnsHttp, SIGNAL(signalErrorOccured()),            this, SLOT(on_BlnsHttpErrorOccured()) );
+        connect( g_poBlnsHttp, SIGNAL(signalActionProcessed(QString)),  this, SLOT(on_BlnsHttpActionFinished(QString)) );
+        connect( g_poBlnsHttp, SIGNAL(signalStepProgress()),            this, SLOT(on_BlnsHttpStepProgress()) );
+        connect( g_poBlnsHttp, SIGNAL(signalHideProgress()),            this, SLOT(on_BlnsHttpHideProgress()) );
+
+        g_poBlnsHttp->setTimeout( g_poPrefs->getBlnsHttpMessageWaitTime()*1000 );
+    }
 
     this->setFocus();
 }
@@ -415,6 +414,8 @@ bool cWndMain::showLogIn()
 
     ledPassword->setFocus();
 
+    _checkVersions();
+
     return true;
 }
 //====================================================================================
@@ -449,10 +450,10 @@ void cWndMain::on_pbLogin_clicked()
 
         updateTitle();
         loginUser();
-//        if( g_poPrefs->isGibbigEnabled() )
-//        {
-//            g_poGibbig->gibbigAuthenticate();
-//        }
+        if( g_poPrefs->isBlnsHttpEnabled() )
+        {
+            g_poBlnsHttp->checkHttpServerAvailability();
+        }
     }
     catch( cSevException &e )
     {
@@ -912,11 +913,10 @@ void cWndMain::keyPressEvent( QKeyEvent *p_poEvent )
         return;
     }
 
-    m_lblStatusLeft.setStyleSheet( "QLabel {font: normal;}" );
     if( p_poEvent->key() == Qt::Key_Control )
     {
         m_bCtrlPressed = true;
-        m_lblStatusLeft.setText( tr("Q -> Exit application | F -> pay device usage | S -> start device | N -> skip status | T -> device cleared | K -> open shopping kart") );
+        _setStatusText( tr("Q -> Exit application | F -> pay device usage | S -> start device | N -> skip status | T -> device cleared | K -> open shopping kart") );
     }
 
     if( m_bCtrlPressed )
@@ -925,14 +925,14 @@ void cWndMain::keyPressEvent( QKeyEvent *p_poEvent )
         {
             g_obLogger(cSeverity::INFO) << "User pressed CTRL + Q" << EOM;
             m_bCtrlPressed = false;
-            m_lblStatusLeft.setText( m_qsStatusText );
+            _setStatusText( m_qsStatusText );
             close();
         }
         else if( p_poEvent->key() == Qt::Key_S && action_DeviceStart->isEnabled() )
         {
             g_obLogger(cSeverity::INFO) << "User pressed CTRL + S" << EOM;
             m_bCtrlPressed = false;
-            m_lblStatusLeft.setText( m_qsStatusText );
+            _setStatusText( m_qsStatusText );
             on_KeyboardDisabled();
             on_action_DeviceStart_triggered();
         }
@@ -940,7 +940,7 @@ void cWndMain::keyPressEvent( QKeyEvent *p_poEvent )
         {
             g_obLogger(cSeverity::INFO) << "User pressed CTRL + T" << EOM;
             m_bCtrlPressed = false;
-            m_lblStatusLeft.setText( m_qsStatusText );
+            _setStatusText( m_qsStatusText );
             on_KeyboardDisabled();
             on_action_DeviceClear_triggered();
         }
@@ -948,7 +948,7 @@ void cWndMain::keyPressEvent( QKeyEvent *p_poEvent )
         {
             g_obLogger(cSeverity::INFO) << "User pressed CTRL + F" << EOM;
             m_bCtrlPressed = false;
-            m_lblStatusLeft.setText( m_qsStatusText );
+            _setStatusText( m_qsStatusText );
             on_KeyboardDisabled();
             on_action_PayCash_triggered();
         }
@@ -956,7 +956,7 @@ void cWndMain::keyPressEvent( QKeyEvent *p_poEvent )
         {
             g_obLogger(cSeverity::INFO) << "User pressed CTRL + K" << EOM;
             m_bCtrlPressed = false;
-            m_lblStatusLeft.setText( m_qsStatusText );
+            _setStatusText( m_qsStatusText );
             on_KeyboardDisabled();
             on_action_ShoppingCart_triggered();
         }
@@ -964,7 +964,7 @@ void cWndMain::keyPressEvent( QKeyEvent *p_poEvent )
         {
             g_obLogger(cSeverity::INFO) << "User pressed CTRL + N" << EOM;
             m_bCtrlPressed = false;
-            m_lblStatusLeft.setText( m_qsStatusText );
+            _setStatusText( m_qsStatusText );
             on_KeyboardDisabled();
             on_action_DeviceSkipStatus_triggered();
         }
@@ -972,7 +972,7 @@ void cWndMain::keyPressEvent( QKeyEvent *p_poEvent )
         {
             g_obLogger(cSeverity::INFO) << "User pressed CTRL + F12" << EOM;
             m_bCtrlPressed = false;
-            m_lblStatusLeft.setText( m_qsStatusText );
+            _setStatusText( m_qsStatusText );
             on_action_TestDlgStarted();
         }
     }
@@ -984,25 +984,25 @@ void cWndMain::keyPressEvent( QKeyEvent *p_poEvent )
             switch( m_nEnterAction )
             {
                 case cDBApplicationAction::APPACT_DEVICE_PAYCASH:
-                    m_lblStatusLeft.setText( m_qsStatusText );
+                    _setStatusText( m_qsStatusText );
                     on_KeyboardDisabled();
                     on_action_PayCash_triggered();
                     break;
 
                 case cDBApplicationAction::APPACT_DEVICE_START:
-                    m_lblStatusLeft.setText( m_qsStatusText );
+                    _setStatusText( m_qsStatusText );
                     on_KeyboardDisabled();
                     on_action_DeviceStart_triggered();
                     break;
 
                 case cDBApplicationAction::APPACT_DEVICE_SKIP:
-                    m_lblStatusLeft.setText( m_qsStatusText );
+                    _setStatusText( m_qsStatusText );
                     on_KeyboardDisabled();
                     on_action_DeviceSkipStatus_triggered();
                     break;
 
                 case cDBApplicationAction::APPACT_DEVICE_CLEAN:
-                    m_lblStatusLeft.setText( m_qsStatusText );
+                    _setStatusText( m_qsStatusText );
                     on_KeyboardDisabled();
                     on_action_DeviceClear_triggered();
                     break;
@@ -1011,7 +1011,7 @@ void cWndMain::keyPressEvent( QKeyEvent *p_poEvent )
         else if( ((p_poEvent->key() >= Qt::Key_0 && p_poEvent->key() <= Qt::Key_9) ||
                   (p_poEvent->key() >= Qt::Key_A && p_poEvent->key() <= Qt::Key_Z)) )
         {
-            m_lblStatusLeft.setText( m_qsStatusText );
+            _setStatusText( m_qsStatusText );
 
             cDlgInputStart  obDlgInputStart( this );
 
@@ -1040,7 +1040,7 @@ void cWndMain::keyPressEvent( QKeyEvent *p_poEvent )
         else if( p_poEvent->key() == Qt::Key_Escape && mdiPanels->isStatusCanBeReseted() )
         {
             g_obLogger(cSeverity::INFO) << "User pressed ESC" << EOM;
-            m_lblStatusLeft.setText( m_qsStatusText );
+            _setStatusText( m_qsStatusText );
             mdiPanels->clear();
         }
         else if( p_poEvent->key() == Qt::Key_Space )
@@ -1062,7 +1062,7 @@ void cWndMain::keyReleaseEvent( QKeyEvent *p_poEvent )
     if( p_poEvent->key() == Qt::Key_Control )
     {
         m_bCtrlPressed = false;
-        m_lblStatusLeft.setText( m_qsStatusText );
+        _setStatusText( m_qsStatusText );
     }
 
     QMainWindow::keyReleaseEvent( p_poEvent );
@@ -1167,7 +1167,7 @@ void cWndMain::updateStatusText( QString /*p_qsStatusText*/ )
         m_nEnterAction = cDBApplicationAction::APPACT_DEVICE_SKIP;
     }
 
-    m_lblStatusLeft.setText( m_qsStatusText );
+    _setStatusText( m_qsStatusText );
 }
 //====================================================================================
 void cWndMain::updateToolbar()
@@ -1276,7 +1276,6 @@ void cWndMain::timerEvent(QTimerEvent *)
         case 3:
             g_poHardware->ModuleTurnOn();
             g_poHardware->init( g_poPrefs->getCommunicationPort() );
-            m_lblStatusLeft.setStyleSheet( "QLabel {font: normal;}" );
             m_pbStatusCommunication.setIcon( QIcon( "./resources/77x40_on.png" ) );
             m_nCommResetStep++;
             break;
@@ -1325,8 +1324,7 @@ void cWndMain::timerEvent(QTimerEvent *)
                 m_pbStatusCommunication.setIcon( QIcon( "./resources/77x40_off.png" ) );
                 g_obLogger(cSeverity::WARNING) << "Communication stopped with hardware controller" << EOM;
     //            m_dlgProgress->showError( tr("Communication stopped with hardware controller") );
-                m_lblStatusLeft.setStyleSheet( "QLabel {font: bold; color: red;}" );
-                m_lblStatusLeft.setText( tr("Communication stopped with hardware controller") );
+                _setStatusText( tr("Communication stopped with hardware controller"), true );
             }
         }
         else
@@ -1492,10 +1490,6 @@ void cWndMain::on_action_Preferences_triggered()
             g_poPrefs->setSecondaryWindowSize( QSize( m_dlgSecondaryWindow->width(), m_dlgSecondaryWindow->height() ), true );
             m_dlgSecondaryWindow->hide();
         }
-//        if( g_poPrefs->isGibbigEnabled() )
-//        {
-//            g_poGibbig->gibbigAuthenticate();
-//        }
     }
 }
 //====================================================================================
@@ -2295,7 +2289,7 @@ void cWndMain::processInputPatientCard( QString p_stBarcode )
             case 1:
                 if( mdiPanels->isStatusCanBeReseted() )
                 {
-                    m_lblStatusLeft.setText( m_qsStatusText );
+                    _setStatusText( m_qsStatusText );
                     mdiPanels->clear();
                 }
                 else
@@ -2353,7 +2347,7 @@ void cWndMain::processInputTimePeriod( int p_inMinute )
             case 1:
                 if( mdiPanels->isStatusCanBeReseted() )
                 {
-                    m_lblStatusLeft.setText( m_qsStatusText );
+                    _setStatusText( m_qsStatusText );
                     mdiPanels->clear();
                 }
                 else
@@ -2382,7 +2376,14 @@ void cWndMain::processInputTimePeriod( int p_inMinute )
     }
     else
     {
-        on_action_UseDevice_triggered();
+        if( g_obUser.isInGroup( cAccessGroup::SYSTEM ) )
+        {
+            mdiPanels->setMainProcessTime( p_inMinute*60, 0 );
+        }
+        else
+        {
+            on_action_UseDevice_triggered();
+        }
     }
     on_KeyboardEnabled();
 }
@@ -2843,115 +2844,7 @@ void cWndMain::slotAssignPartnerCard( const QString &p_qsBarcode )
 
     cDlgPatientCardAssign obDlgPatientCardAssign( this, p_qsBarcode );
 
-    if( obDlgPatientCardAssign.exec() == QDialog::Accepted )
-    {
-        QString qsBarcodeMain;
-        QString qsBarcodeAssign;
-
-        obDlgPatientCardAssign.getCardsBarcode( &qsBarcodeMain, &qsBarcodeAssign );
-
-        try
-        {
-            cDBPatientCard  obDBPatientCardMain;
-            cDBPatientCard  obDBPatientCardAssign;
-
-            obDBPatientCardMain.load( qsBarcodeMain );
-            obDBPatientCardAssign.load( qsBarcodeAssign );
-
-            unsigned int uiTimeLeft = obDBPatientCardMain.timeLeft() + obDBPatientCardAssign.timeLeft();
-            unsigned int uiUnits    = obDBPatientCardMain.units() + obDBPatientCardAssign.units();
-
-            if( obDBPatientCardAssign.active() )
-            {
-                if( QMessageBox::question( this, tr("Question"),
-                                           tr("Are you sure about to merge these patientcards?\n"
-                                              "Main card: %1\n"
-                                              "Assigned card: %2").arg( obDBPatientCardMain.barcode() ).arg( obDBPatientCardAssign.barcode() ),
-                                           QMessageBox::Yes,QMessageBox::No ) == QMessageBox::Yes )
-                {
-                    obDBPatientCardMain.setUnits( uiUnits );
-                    obDBPatientCardMain.setTimeLeft( uiTimeLeft );
-                    obDBPatientCardMain.save();
-
-                    obDBPatientCardAssign.setParentId( obDBPatientCardMain.id() );
-                    obDBPatientCardAssign.setUnits( uiUnits );
-                    obDBPatientCardAssign.setTimeLeft( uiTimeLeft );
-                    obDBPatientCardAssign.setComment( tr("Partner card of \"%1\"").arg(obDBPatientCardMain.barcode()) );
-                    obDBPatientCardAssign.save();
-
-                    cDBPatientcardUnit  obDBPatientcardUnit;
-
-                    obDBPatientcardUnit.setPatientCardId( obDBPatientCardAssign.id() );
-                    obDBPatientcardUnit.replacePatientCard( obDBPatientCardMain.id() );
-                }
-            }
-            else
-            {
-                obDBPatientCardAssign.setActive( true );
-                obDBPatientCardAssign.setPatientCardTypeId( obDBPatientCardMain.patientCardTypeId() );
-                obDBPatientCardAssign.setParentId( obDBPatientCardMain.id() );
-                obDBPatientCardAssign.setPatientId( 0 );
-                obDBPatientCardAssign.setUnits( uiUnits );
-                obDBPatientCardAssign.setTimeLeft( uiTimeLeft );
-                obDBPatientCardAssign.setValidDateFrom( obDBPatientCardMain.validDateFrom() );
-                obDBPatientCardAssign.setValidDateTo( obDBPatientCardMain.validDateTo() );
-                obDBPatientCardAssign.setComment( tr("Partner card of \"%1\"").arg(obDBPatientCardMain.barcode()) );
-
-                cCurrency cPrice( QString::number(g_poPrefs->getPatientCardPartnerPrice()/100) );
-
-                cDBShoppingCart obDBShoppingCart;
-
-                obDBShoppingCart.setLicenceId( g_poPrefs->getLicenceId() );
-                obDBShoppingCart.setGuestId( obDBPatientCardAssign.patientId() );
-                obDBShoppingCart.setProductId( 0 );
-                obDBShoppingCart.setPatientCardId( obDBPatientCardAssign.id() );
-                obDBShoppingCart.setPatientCardTypeId( obDBPatientCardAssign.patientCardTypeId() );
-                obDBShoppingCart.setPanelId( 0 );
-                obDBShoppingCart.setLedgerTypeId( cDBLedger::LT_PC_ASSIGN_PARTNER );
-                obDBShoppingCart.setItemName( QString("%1 -> %2").arg(obDBPatientCardMain.barcode()).arg(obDBPatientCardAssign.barcode()) );
-                obDBShoppingCart.setItemCount( 1 );
-                obDBShoppingCart.setItemNetPrice( cPrice.currencyValue().toInt() );
-                obDBShoppingCart.setItemVAT( g_poPrefs->getPatientCardLostPriceVat() );
-                obDBShoppingCart.setItemDiscount( 0 );
-                obDBShoppingCart.setItemSumPrice( cPrice.currencyValue().toInt() );
-
-                cDlgCassaAction     obDlgCassaAction( this, &obDBShoppingCart );
-
-                obDlgCassaAction.setPayWithCash();
-
-                int             inCassaAction   = obDlgCassaAction.exec();
-                int             inPayType       = 0;
-                QString         qsComment       = tr("Assign patientcard [%1]<-[%2]").arg(obDBPatientCardMain.barcode()).arg(obDBPatientCardAssign.barcode());
-                bool            bShoppingCart   = false;
-                unsigned int    uiCouponId = 0;
-                cDBDiscount     obDBDiscount;
-
-                obDlgCassaAction.cassaResult( &inPayType, &bShoppingCart, &uiCouponId );
-
-                if( inCassaAction == QDialog::Accepted && !bShoppingCart )
-                {
-                    /*if( uiCouponId > 0 )
-                    {
-                        obDBDiscount.load( uiCouponId );
-
-                        obDBShoppingCart.setItemDiscount( obDBShoppingCart.itemDiscount()+obDBDiscount.discount(obDBShoppingCart.itemSumPrice()) );
-                    }*/
-                    g_obCassa.cassaProcessPatientCardSell( obDBPatientCardAssign, obDBShoppingCart, qsComment, true, inPayType );
-                }
-                else if( inCassaAction != QDialog::Accepted )
-                {
-                    // Nem tortent meg az eladas
-                    return;
-                }
-
-                obDBPatientCardAssign.save();
-            }
-        }
-        catch( cSevException &e )
-        {
-            g_obLogger(e.severity()) << e.what() << EOM;
-        }
-    }
+    obDlgPatientCardAssign.exec();
 }
 
 void cWndMain::on_action_PaymentMethods_triggered()
@@ -3148,47 +3041,56 @@ void cWndMain::on_action_Export_triggered()
 
 //    obDlgExportImport.exec();
 }
-/*
-void cWndMain::on_GibbigErrorOccured()
+
+void cWndMain::on_BlnsHttpErrorOccured()
 {
-    m_pbStatusGibbig.setIcon( QIcon( "./resources/20x20_gibbig_off.png" ) );
-    m_bGibbigConnected = false;
-    m_bProgressErrorVisible = true;
-    m_nProgressCounter = g_poPrefs->getGibbigMessageWaitTime()*4;
-    m_dlgProgress->showError( g_poGibbig->gibbigErrorStr() );
-//    m_lblStatusLeft.setStyleSheet( "QLabel {font: bold; color: red;}" );
-//    m_lblStatusLeft.setText( g_poGibbig->gibbigErrorStr() );
-    g_poGibbig->gibbigClearError();
-    g_poPrefs->setGibbigEnabled( false, true );
+    m_bBlnsHttpErrorVisible = true;
+    m_bBlnsHttpConnected = false;
+    m_uiBlnsErrorAppeared = QDateTime::currentDateTime().toTime_t();
+    g_poPrefs->setBlnsHttpEnabled( false, true );
+    m_pbStatusHttp.setIcon( QIcon( "./resources/40x40_http_disabled.png" ) );
+    _setStatusText( g_poBlnsHttp->errorMessage(), true );
 }
 
-void cWndMain::on_GibbigActionFinished(QString p_qsInfo)
+void cWndMain::on_BlnsHttpActionFinished(QString p_qsInfo)
 {
-    // GBMSG_XX
-    if( p_qsInfo.left(8).compare( "GBMSG_02" ) == 0 )
+    if( p_qsInfo.left(10).compare( "HTTPMSG_01" ) == 0 )
     {
-        m_pbStatusGibbig.setIcon( QIcon( "./resources/20x20_gibbig_on.png" ) );
-        m_bGibbigConnected = true;
+        m_pbStatusHttp.setIcon( QIcon( "./resources/40x40_http_enabled.png" ) );
+        m_bBlnsHttpConnected = true;
     }
-    g_obLogger(cSeverity::INFO) << "GIBBIG: " << p_qsInfo.right(p_qsInfo.length()-9) << EOM;
+    g_obLogger(cSeverity::INFO) << p_qsInfo << EOM;
 }
 
-// ez csak debug uzenetre kell, ha valamit ki akarunk irni pl log-ba
-void cWndMain::on_GibbigMessageArrived(QString p_qsMessage)
+void cWndMain::on_BlnsHttpStepProgress()
 {
-    g_obLogger(cSeverity::WARNING) << "GIBBIG: " << p_qsMessage << EOM;
+    m_dlgProgress->stepProgressBar();
 }
 
-void cWndMain::on_GibbigIconClicked()
+void cWndMain::on_BlnsHttpHideProgress()
+{
+    m_dlgProgress->hideProgress();
+}
+
+void cWndMain::on_BlnsHttpIconClicked()
 {
     QMenu   qmMenu;
 
-    if( g_poPrefs->isGibbigEnabled() )
+    if( g_poPrefs->isBlnsHttpEnabled() )
     {
-        if( m_bGibbigConnected )
-            qmMenu.addAction( QIcon( "./resources/40x40_refresh.png" ), tr("Process actions") );
+        if( m_bBlnsHttpConnected )
+        {
+            qmMenu.addAction( QIcon( "./resources/40x40_refresh.png" ), tr("Process remaining actions") );
+            qmMenu.addSeparator();
+            qmMenu.addAction( QIcon( "./resources/40x40_patientcard_info.png" ), tr("Update all patientcards") );
+            qmMenu.addSeparator();
+            qmMenu.addAction( QIcon( "./resources/40x40_report_patientcard_inactive.png" ), tr("Remove inactive patientcards") );
+            qmMenu.addAction( QIcon( "./resources/40x40_report_patientcard_inactive.png" ), tr("Remove patientcard") );
+        }
         else
+        {
             qmMenu.addAction( QIcon( "./resources/40x40_check_connection.png" ), tr("Test connection") );
+        }
         qmMenu.addSeparator();
         qmMenu.addAction( QIcon( "./resources/40x40_cancel.png" ), tr("Disable communication") );
     }
@@ -3201,24 +3103,59 @@ void cWndMain::on_GibbigIconClicked()
 
     if( qaRet )
     {
-        if( qaRet->text().compare( tr("Test connection") ) == 0 ||
-            qaRet->text().compare( tr("Process actions") ) == 0 )
+        if( qaRet->text().compare( tr("Process remaining actions") ) == 0 )
         {
-            g_poGibbig->gibbigAuthenticate();
+            if( QMessageBox::question( this, tr("Question"),
+                                       tr("Are you sure about to process all remaining actions?\n"
+                                          "This process may take long time and slow down the application." ),
+                                       QMessageBox::Yes,QMessageBox::No ) == QMessageBox::Yes )
+            {
+                _processHttpActions();
+            }
+        }
+        else if( qaRet->text().compare( tr("Update all patientcard") ) == 0 )
+        {
+            if( QMessageBox::question( this, tr("Question"),
+                                       tr("Are you sure about to update all patientcards on web?\n"
+                                          "This process may take long time and slow down the application." ),
+                                       QMessageBox::Yes,QMessageBox::No ) == QMessageBox::Yes )
+            {
+                _updateAllPatientcardToWeb();
+                _processHttpActions();
+            }
+        }
+        else if( qaRet->text().compare( tr("Remove inactive patientcards") ) == 0 )
+        {
+            if( QMessageBox::question( this, tr("Question"),
+                                       tr("Are you sure about to remove all inactive patientcards from web?\n"
+                                          "This process may take long time and slow down the application." ),
+                                       QMessageBox::Yes,QMessageBox::No ) == QMessageBox::Yes )
+            {
+                _removeAllPatientcardFromWeb();
+                _processHttpActions();
+            }
+        }
+        else if( qaRet->text().compare( tr("Remove patientcard") ) == 0 )
+        {
+            _removePatientcardFromWeb();
+        }
+        else if( qaRet->text().compare( tr("Test connection") ) == 0 )
+        {
+            g_poBlnsHttp->checkHttpServerAvailability();
         }
         else if( qaRet->text().compare( tr("Disable communication") ) == 0 )
         {
-            m_pbStatusGibbig.setIcon( QIcon( "./resources/20x20_gibbig_off.png" ) );
-            g_poPrefs->setGibbigEnabled( false, true );
+            m_pbStatusHttp.setIcon( QIcon( "./resources/40x40_http_disabled.png" ) );
+            g_poPrefs->setBlnsHttpEnabled( false, true );
         }
         else if( qaRet->text().compare( tr("Enable communication") ) == 0 )
         {
-            g_poPrefs->setGibbigEnabled( true, true );
-            g_poGibbig->gibbigAuthenticate();
+            g_poPrefs->setBlnsHttpEnabled( true, true );
+            g_poBlnsHttp->checkHttpServerAvailability();
         }
     }
 }
-*/
+
 void cWndMain::showAdWindows()
 {
     QSqlQuery *poQuery = g_poDB->executeQTQuery( QString( "SELECT advertisementId FROM advertisements WHERE active=1" ) );
@@ -3284,16 +3221,6 @@ void cWndMain::on_action_Advertisements_triggered()
 
     QMessageBox::warning( this, tr("Attention"),
                           tr("Please note that you should restart the application for the modifications to take effect."));
-}
-
-void cWndMain::on_GibbigPatientCardUpdate(QString p_qsMessage, QString p_qsId)
-{
-    QString qsBarcode = p_qsMessage.split("#").at(0);
-
-    cDBPatientCard  obDBPatientCard;
-
-    obDBPatientCard.load( qsBarcode );
-    obDBPatientCard.updateGibbigId( p_qsId );
 }
 
 void cWndMain::on_CommunicationButtonClicked()
@@ -3375,5 +3302,157 @@ void cWndMain::on_KeyboardDisabled()
 {
     m_bActionProcessing = true;
     m_pbStatusKeyboard.setIcon( QIcon( "./resources/40x40_keyboard_locked.png" ) );
+}
+
+void cWndMain::_updateAllPatientcardToWeb()
+{
+    m_dlgProgress->showProgress();
+
+    QSqlQuery *poQuery = g_poDB->executeQTQuery( "SELECT patientCardId "
+                                                 "FROM patientcards WHERE "
+                                                 "active = 1");
+
+    m_dlgProgress->showProgressBar( poQuery->size() );
+
+    while( poQuery->next() )
+    {
+        try
+        {
+            cDBPatientCard  obDBPatientCard;
+
+            obDBPatientCard.load( poQuery->value(0).toUInt() );
+            obDBPatientCard.sendDataToWeb( false );
+            m_dlgProgress->stepProgressBar();
+        }
+        catch( cSevException &e )
+        {
+            g_obLogger(e.severity()) << e.what() << EOM;
+        }
+    }
+
+    m_dlgProgress->hideProgress();
+}
+
+void cWndMain::_removeAllPatientcardFromWeb()
+{
+    m_dlgProgress->showProgress();
+
+    QSqlQuery *poQuery = g_poDB->executeQTQuery( "SELECT patientCardId "
+                                                 "FROM patientcards WHERE "
+                                                 "active = 0 AND "
+                                                 "patientCardId>1 AND "
+                                                 "barcode<>\"\" ");
+
+    m_dlgProgress->showProgressBar( poQuery->size() );
+
+    while( poQuery->next() )
+    {
+        try
+        {
+            cDBPatientCard  obDBPatientCard;
+
+            obDBPatientCard.load( poQuery->value(0).toUInt() );
+            g_poBlnsHttp->sendPatientCardData( obDBPatientCard.barcode(), "", false );
+            m_dlgProgress->stepProgressBar();
+        }
+        catch( cSevException &e )
+        {
+            g_obLogger(e.severity()) << e.what() << EOM;
+        }
+    }
+
+    m_dlgProgress->hideProgress();
+}
+
+void cWndMain::_removePatientcardFromWeb()
+{
+    cDlgInputStart  obDlgInputStart( this );
+
+    obDlgInputStart.m_bCard = true;
+    obDlgInputStart.init();
+
+    if( obDlgInputStart.exec() == QDialog::Accepted )
+    {
+        try
+        {
+            cDBPatientCard  obDBPatientCard;
+
+            obDBPatientCard.load( obDlgInputStart.getEditText() );
+            g_poBlnsHttp->sendPatientCardData( obDBPatientCard.barcode(), "" );
+        }
+        catch( cSevException &e )
+        {
+            g_obLogger(e.severity()) << e.what() << EOM;
+        }
+    }
+}
+
+void cWndMain::_setStatusText(QString p_qsText, bool p_bError)
+{
+    if( m_bBlnsHttpErrorVisible )
+    {
+        if( (QDateTime::currentDateTime().toTime_t()-m_uiBlnsErrorAppeared) < (unsigned int)(g_poPrefs->getBlnsHttpMessageWaitTime()*1000) )
+        {
+            return;
+        }
+        m_bBlnsHttpErrorVisible = false;
+    }
+
+    if( p_bError )
+    {
+        m_lblStatusLeft.setStyleSheet( "QLabel {font: bold; color: red;}" );
+    }
+    else
+    {
+        m_lblStatusLeft.setStyleSheet( "QLabel {font: normal;}" );
+    }
+
+    m_lblStatusLeft .setText( p_qsText );
+}
+
+void cWndMain::_processHttpActions()
+{
+    m_dlgProgress->showProgress();
+    m_dlgProgress->showProgressBar( g_poBlnsHttp->getNumberOfWaitingRecords() );
+    g_poBlnsHttp->processWaitingCardData();
+}
+
+void cWndMain::_checkVersions()
+{
+    QSqlQuery   *poQuery            = NULL;
+    QString      qsAppVersion       = "";
+    QString      qsDbVersion        = "";
+
+    poQuery = g_poDB->executeQTQuery( QString( "SELECT * FROM settings " ) );
+    while( poQuery->next() )
+    {
+        QString qsIdentifier = poQuery->value(1).toString();
+
+        if( qsIdentifier.compare("APPLICATION_VERSION") == 0 )
+            qsAppVersion = poQuery->value( 2 ).toString();
+        else if( qsIdentifier.compare("DATABASE_VERSION") == 0 )
+            qsDbVersion = poQuery->value( 2 ).toString();
+    }
+
+    qsAppVersion.replace( "_", "." );
+    qsDbVersion.replace( "_", "." );
+
+    if( qsAppVersion.compare( g_poPrefs->getVersion() ) ||
+        qsDbVersion.compare( g_poPrefs->getVersionDb() ) )
+    {
+        QMessageBox::warning( this, tr("Warning"),
+                              tr( "The version information stored in database is not match.\n\n"
+                                  "Correct version numbers:\n"
+                                  "Application version number: %1\n"
+                                  "Database version number: %2\n\n"
+                                  "Version numbers stored in database:\n"
+                                  "Application version number: %3\n"
+                                  "Database version number: %4\n\n"
+                                  "It is recommended to exit application and to contact system administrator.")
+                              .arg( g_poPrefs->getVersion() )
+                              .arg( g_poPrefs->getVersionDb() )
+                              .arg( qsAppVersion )
+                              .arg( qsDbVersion ) );
+    }
 }
 

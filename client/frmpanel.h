@@ -40,7 +40,7 @@ typedef struct _used_patientcard
     unsigned int    uiPatientCardId;
     QStringList     qslUnitIds;
     int             inUnitTime;
-} stUsedPatientCard;
+} stUsedPatientCards;
 
 typedef struct _waiting_queue
 {
@@ -121,7 +121,7 @@ private:
     int                          m_inMainProcessLength;
     int                          m_inCashLength;
     int                          m_inCashTimeRemains;
-    stUsedPatientCard            m_vrPatientCard;
+    vector<stUsedPatientCards*>  m_vrPatientCards;
     int                          m_inCardTimeRemains;
     int                          m_inCashToPay;
     int                          m_inCashNetToPay;

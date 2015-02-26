@@ -13,7 +13,8 @@
 // Alkalmazas fo allomanya.
 //====================================================================================
 
-#define APPLICATION_VERSION_NUMBER  "1.4.16"
+#define APPLICATION_VERSION_NUMBER  "1.5.0"
+#define DATABASE_VERSION_NUMBER     "1.7.0"
 
 //====================================================================================
 
@@ -39,7 +40,7 @@
 #include "cassa.h"
 #include "licenceManager.h"
 #include "general.h"
-#include "gibbig.h"
+#include "http.h"
 #ifdef __WIN32__
     #include "communication_serial.h"
 #endif
@@ -63,7 +64,7 @@ cCassa                   g_obCassa;
 cGeneral                 g_obGen;
 cDBGuest                 g_obGuest;
 cLicenceManager          g_obLicenceManager;
-//cGibbig                 *g_poGibbig;
+cBlnsHttp               *g_poBlnsHttp;
 
 // 'TO BE SOLVED' felirat, ahol még valamit meg kell oldani
 // g_obLogger(cSeverity::DEBUG) << QString("") << EOM;
@@ -89,6 +90,7 @@ int main( int argc, char *argv[] )
 
     g_poPrefs  = new cPreferences( QString::fromAscii( "./belenus.ini" ) );
     g_poPrefs->setVersion( APPLICATION_VERSION_NUMBER );
+    g_poPrefs->setVersionDb( DATABASE_VERSION_NUMBER );
     g_poPrefs->setLangFilePrefix( "belenus_" );
     g_poPrefs->setDBAccess( "localhost", "belenus", "belenus", "belenus" );
 

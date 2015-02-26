@@ -268,7 +268,11 @@ void cDlgManageDatabase::_actionDeleteLedgerEntries()
 
     try
     {
-        QSqlQuery   *poQuery = g_poDB->executeQTQuery( QString("SELECT ledgerId FROM ledger WHERE ledgerTime<\"%1\" AND ledgerId>0 ").arg(deFilterDate->date().toString("yyyy-MM-dd")) );
+        QSqlQuery   *poQuery = g_poDB->executeQTQuery( QString("SELECT ledgerId FROM "
+                                                               "ledger WHERE "
+                                                               "ledgerTime<\"%1\" AND "
+                                                               "ledgerId>0 ")
+                                                       .arg(deFilterDate->date().toString("yyyy-MM-dd")) );
         QStringList  qslIds;
 
         while( poQuery->next() )
@@ -276,31 +280,109 @@ void cDlgManageDatabase::_actionDeleteLedgerEntries()
             qslIds << poQuery->value(0).toString();
         }
 
-        int inNumRowPCUs = 0;
-        int inNumRowProd = 0;
-        int inNumRowCass = 0;
+        m_dlgProgress->showProgressBar( qslIds.count() );
+
+        int inNumRowDeviceLedger    = 0;
+        int inNumRowPCUs            = 0;
+        int inNumRowProd            = 0;
+        int inNumRowCass            = 0;
+        int inNumRowLedger          = 0;
+        int inNumRowCassa           = 0;
+        int inNumRowDenominations   = 0;
 
         for( int i=0; i<qslIds.count(); i++ )
         {
-            poQuery       = g_poDB->executeQTQuery( QString("UPDATE patientCardUnits SET ledgerId=0 WHERE ledgerId=%1 ").arg(qslIds.at(i)) );
+            poQuery       = g_poDB->executeQTQuery( QString("UPDATE patientCardUnits SET "
+                                                            "ledgerId=0 WHERE "
+                                                            "ledgerId=%1 ")
+                                                    .arg(qslIds.at(i)) );
             inNumRowPCUs += poQuery->numRowsAffected();
 
-            poQuery       = g_poDB->executeQTQuery( QString("UPDATE productHistory SET ledgerId=0 WHERE ledgerId=%1 ").arg(qslIds.at(i)) );
+            poQuery       = g_poDB->executeQTQuery( QString("UPDATE productHistory SET "
+                                                            "ledgerId=0 WHERE "
+                                                            "ledgerId=%1 ")
+                                                    .arg(qslIds.at(i)) );
             inNumRowProd += poQuery->numRowsAffected();
 
-            poQuery       = g_poDB->executeQTQuery( QString("UPDATE cassaHistory SET ledgerId=0 WHERE ledgerId=%1 ").arg(qslIds.at(i)) );
-            inNumRowCass += poQuery->numRowsAffected();
+            poQuery = g_poDB->executeQTQuery( QString("UPDATE cassaHistory SET "
+                                                      "ledgerId=0 WHERE "
+                                                      "ledgerId=%1")
+                                              .arg(qslIds.at(i)) );
+//            inNumRowCass += poQuery->numRowsAffected();
+
+            m_dlgProgress->stepProgressBar();
         }
 
-        poQuery = g_poDB->executeQTQuery( QString("DELETE FROM ledger WHERE ledgerTime<\"%1\" AND ledgerId>0 ").arg(deFilterDate->date().toString("yyyy-MM-dd")) );
+        poQuery = g_poDB->executeQTQuery( QString("DELETE FROM ledger WHERE "
+                                                  "ledgerTime<\"%1\" AND "
+                                                  "ledgerId>0 ")
+                                          .arg(deFilterDate->date().toString("yyyy-MM-dd")) );
+        inNumRowLedger = poQuery->numRowsAffected();
+
+        poQuery = g_poDB->executeQTQuery( QString("DELETE FROM ledgerdevice WHERE "
+                                                  "ledgerTime<\"%1\" AND "
+                                                  "ledgerDeviceId>0 ")
+                                          .arg( deFilterDate->date().toString("yyyy-MM-dd") ) );
+        inNumRowDeviceLedger += poQuery->numRowsAffected();
+
+        poQuery = g_poDB->executeQTQuery( QString("SELECT cassaId FROM "
+                                                  "cassa WHERE "
+                                                  "stopDateTime<\"%1\" AND "
+                                                  "cassaId>0 ")
+                                          .arg(deFilterDate->date().toString("yyyy-MM-dd")) );
+
+        qslIds.clear();
+        while( poQuery->next() )
+        {
+            qslIds << poQuery->value(0).toString();
+        }
+
+        m_dlgProgress->showProgressBar( qslIds.count() );
+
+        for( int i=0; i<qslIds.count(); i++ )
+        {
+            poQuery = g_poDB->executeQTQuery( QString("DELETE FROM cassaHistory WHERE "
+                                                      "cassaId=%1 ")
+                                              .arg(qslIds.at(i)) );
+            inNumRowCass += poQuery->numRowsAffected();
+
+            poQuery       = g_poDB->executeQTQuery( QString("DELETE FROM cassadenominations WHERE "
+                                                            "cassaId=%1 ")
+                                                    .arg(qslIds.at(i)) );
+            inNumRowDenominations += poQuery->numRowsAffected();
+
+            m_dlgProgress->stepProgressBar();
+        }
+
+        poQuery = g_poDB->executeQTQuery( QString("DELETE FROM "
+                                                  "cassa WHERE "
+                                                  "stopDateTime<\"%1\" AND "
+                                                  "cassaId>0 ")
+                                          .arg(deFilterDate->date().toString("yyyy-MM-dd")) );
+        inNumRowCassa = poQuery->numRowsAffected();
+
+
+        m_dlgProgress->hideProgress();
 
         QMessageBox::information( this, tr("Information"),
-                                  tr("The action successfully finished.\n"
+                                  tr("The action successfully finished.\n\n"
                                      "Number of affected records:\n"
                                      "PatientCardUnits -> %1 records\n"
                                      "ProductHistory -> %2 records\n"
                                      "CassaHistory -> %3 records\n"
-                                     "Ledger -> %4 records").arg(inNumRowPCUs).arg(inNumRowProd).arg(inNumRowCass).arg(poQuery->numRowsAffected()) );
+                                     "Ledger -> %4 records\n"
+                                     "LedgerDevice -> %5 records\n"
+                                     "Denominations -> %6 records\n"
+                                     "Cassa -> %7 records"
+                                     )
+                                  .arg(inNumRowPCUs)
+                                  .arg(inNumRowProd)
+                                  .arg(inNumRowCass)
+                                  .arg(inNumRowLedger)
+                                  .arg(inNumRowDeviceLedger)
+                                  .arg(inNumRowDenominations)
+                                  .arg(inNumRowCassa)
+                                  );
     }
     catch( cSevException &e )
     {

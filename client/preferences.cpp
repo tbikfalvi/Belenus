@@ -200,10 +200,8 @@ void cPreferences::loadConfFileSettings()
 
         setLogLevels( uiConsoleLevel, uiDBLevel, uiGUILevel, uiFileLevel );
 
-        m_qsGibbigName      = obPrefFile.value( QString::fromAscii( "Gibbig/User" ), "" ).toString();
-        m_qsGibbigPassword  = obPrefFile.value( QString::fromAscii( "Gibbig/Password" ), "" ).toString();
-        m_bGibbigEnabled    = obPrefFile.value( QString::fromAscii( "Gibbig/Enabled" ) ).toBool();
-        m_nGibbiWaitTime    = obPrefFile.value( QString::fromAscii( "Gibbig/MessageWaitTime" ), 12 ).toInt();
+        m_bBlnsHttpEnabled    = obPrefFile.value( QString::fromAscii( "BlnsHttp/Enabled" ) ).toBool();
+        m_nBlnsHttpWaitTime    = obPrefFile.value( QString::fromAscii( "BlnsHttp/MessageWaitTime" ), 12 ).toInt();
 
         m_qsDirDbBinaries       = obPrefFile.value( QString::fromAscii( "DbBackup/DirDbBinaries" ) ).toString();
         m_qsDirDbBackup         = obPrefFile.value( QString::fromAscii( "DbBackup/DirDbBackup" ) ).toString();
@@ -330,10 +328,8 @@ void cPreferences::save() const throw (cSevException)
     obPrefFile.setValue( QString::fromAscii( "Device/MaxTreatLength" ), m_uiMaxTreatLength );
     obPrefFile.setValue( QString::fromAscii( "Device/VAT" ), m_inDeviceUseVAT );
 
-    obPrefFile.setValue( QString::fromAscii( "Gibbig/User" ), m_qsGibbigName );
-    obPrefFile.setValue( QString::fromAscii( "Gibbig/Password" ), m_qsGibbigPassword );
-    obPrefFile.setValue( QString::fromAscii( "Gibbig/Enabled" ), m_bGibbigEnabled );
-    obPrefFile.setValue( QString::fromAscii( "Gibbig/MessageWaitTime" ), m_nGibbiWaitTime );
+    obPrefFile.setValue( QString::fromAscii( "BlnsHttp/Enabled" ), m_bBlnsHttpEnabled );
+    obPrefFile.setValue( QString::fromAscii( "BlnsHttp/MessageWaitTime" ), m_nBlnsHttpWaitTime );
 
     obPrefFile.setValue( QString::fromAscii( "DbBackup/DirDbBinaries" ), m_qsDirDbBinaries );
     obPrefFile.setValue( QString::fromAscii( "DbBackup/DirDbBackup" ), m_qsDirDbBackup );
@@ -379,6 +375,16 @@ void cPreferences::setVersion( const QString &p_qsVersion, bool p_boSaveNow )
 QString cPreferences::getVersion() const
 {
     return m_qsVersion;
+}
+
+void cPreferences::setVersionDb( const QString &p_qsVersion )
+{
+    m_qsVersionDb = p_qsVersion;
+}
+
+QString cPreferences::getVersionDb() const
+{
+    return m_qsVersionDb;
 }
 
 void cPreferences::setComponents( const unsigned int p_uiComponent, bool p_boSaveNow )
@@ -1136,68 +1142,33 @@ int cPreferences::getPatientCardPartnerPriceVat() const
     return m_nPatientCardPartnerPriceVat;
 }
 
-void cPreferences::setGibbigName( const QString &p_qsGibbigName, bool p_boSaveNow )
+void cPreferences::setBlnsHttpEnabled( bool p_bEnable, bool p_boSaveNow )
 {
-    m_qsGibbigName = p_qsGibbigName;
+    m_bBlnsHttpEnabled = p_bEnable;
 
     if( p_boSaveNow )
     {
         QSettings  obPrefFile( m_qsFileName, QSettings::IniFormat );
-        obPrefFile.setValue( QString::fromAscii( "Gibbig/User" ), m_qsGibbigName );
+        obPrefFile.setValue( QString::fromAscii( "BlnsHttp/Enabled" ), m_bBlnsHttpEnabled );
     }
 }
 
-QString cPreferences::getGibbigName() const
+bool cPreferences::isBlnsHttpEnabled()
 {
-    return m_qsGibbigName;
+    return m_bBlnsHttpEnabled;
 }
 
-void cPreferences::setGibbigPassword( const QString &p_qsGibbigPassword, bool p_boSaveNow )
+void cPreferences::setBlnsHttpMessageWaitTime(const int p_inWaitTime)
 {
-    m_qsGibbigPassword = p_qsGibbigPassword;
+    m_nBlnsHttpWaitTime = p_inWaitTime;
 
-    if( p_boSaveNow )
-    {
-        QSettings  obPrefFile( m_qsFileName, QSettings::IniFormat );
-        obPrefFile.setValue( QString::fromAscii( "Gibbig/Password" ), m_qsGibbigPassword );
-    }
+    QSettings  obPrefFile( m_qsFileName, QSettings::IniFormat );
+    obPrefFile.setValue( QString::fromAscii( "BlnsHttp/MessageWaitTime" ), m_nBlnsHttpWaitTime );
 }
 
-QString cPreferences::getGibbigPassword() const
+int cPreferences::getBlnsHttpMessageWaitTime() const
 {
-    return m_qsGibbigPassword;
-}
-
-void cPreferences::setGibbigEnabled( bool p_bEnable, bool p_boSaveNow )
-{
-    m_bGibbigEnabled = p_bEnable;
-
-    if( p_boSaveNow )
-    {
-        QSettings  obPrefFile( m_qsFileName, QSettings::IniFormat );
-        obPrefFile.setValue( QString::fromAscii( "Gibbig/Enabled" ), m_bGibbigEnabled );
-    }
-}
-
-bool cPreferences::isGibbigEnabled()
-{
-    return m_bGibbigEnabled;
-}
-
-void cPreferences::setGibbigMessageWaitTime(const int p_inWaitTime)
-{
-    m_nGibbiWaitTime = p_inWaitTime;
-/*
-    if( p_boSaveNow )
-    {
-        QSettings  obPrefFile( m_qsFileName, QSettings::IniFormat );
-        obPrefFile.setValue( QString::fromAscii( "Gibbig/MessageWaitTime" ), m_nGibbiWaitTime );
-    }*/
-}
-
-int cPreferences::getGibbigMessageWaitTime() const
-{
-    return m_nGibbiWaitTime;
+    return m_nBlnsHttpWaitTime;
 }
 
 void cPreferences::setLogLevels( const unsigned int p_uiConLevel,

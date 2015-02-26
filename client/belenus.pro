@@ -210,7 +210,7 @@ HEADERS = belenus.h \
     dsppanel.h \
     licenceManager.h \
     cdlgtest.h \
-    gibbig.h \
+    http.h \
     advertisementwindow.h
 
 SOURCES = main.cpp \
@@ -354,7 +354,7 @@ SOURCES = main.cpp \
     dsppanel.cpp \
     licenceManager.cpp \
     cdlgtest.cpp \
-    gibbig.cpp \
+    http.cpp \
     advertisementwindow.cpp
 
 win32 { 

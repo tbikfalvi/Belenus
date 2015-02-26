@@ -1,14 +1,9 @@
 -- -----------------------------------------------------------------------------------
---
 -- Belenus Szoftver Rendszer (c) Pagony Multimedia Studio Bt - 2013
---
 -- -----------------------------------------------------------------------------------
---
 -- Filename    : db_create.sql
--- AppVersion  : 1.4.14
--- DbVersion   : 1.6.1
--- Author      : Bikfalvi Tamas
---
+-- AppVersion  : 1.5.0
+-- DbVersion   : 1.7.0
 -- -----------------------------------------------------------------------------------
 -- Adatbazist letrehozo SQL script
 -- -----------------------------------------------------------------------------------
@@ -35,27 +30,16 @@ CREATE TABLE `licences` (
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
 -- -----------------------------------------------------------------------------------
--- A Gibbig rendszernek kuldendo uzeneteket tartalmazza
+-- A kiwisun web oldalnak kuldendo uzeneteket tartalmazza.
 -- -----------------------------------------------------------------------------------
-CREATE TABLE `gibbigMessageTypes` (
-  `gibbigMessageTypeId`     int(10) unsigned        NOT NULL AUTO_INCREMENT,
+CREATE TABLE `httppatientcardinfo` (
+  `httpPatientcardInfoId`   int(10) unsigned        NOT NULL AUTO_INCREMENT,
   `licenceId`               int(10) unsigned        NOT NULL,
-  `gibbigMessageType`       varchar(20)             NOT NULL,
+  `barcode`                 varchar(20)             NOT NULL,
+  `patientcardInfoText`     text                    NOT NULL,
   `active`                  tinyint(1)              DEFAULT 0,
-  `archive`                 varchar(10)             NOT NULL,
-  PRIMARY KEY (`gibbigMessageTypeId`,`licenceId`),
-  FOREIGN KEY (`licenceId`) REFERENCES `licences` (`licenceId`) ON UPDATE CASCADE ON DELETE RESTRICT
-) ENGINE=InnoDB DEFAULT CHARSET=utf8;
-
-CREATE TABLE `gibbigMessages` (
-  `gibbigMessageId`         int(10) unsigned        NOT NULL AUTO_INCREMENT,
-  `licenceId`               int(10) unsigned        NOT NULL,
-  `gibbigMessageTypeId`     int(10) unsigned        NOT NULL,
-  `gibbigMessage`           text                    NOT NULL,
-  `active`                  tinyint(1)              DEFAULT 0,
-  `archive`                 varchar(10)             NOT NULL,
-  PRIMARY KEY (`gibbigMessageId`,`licenceId`),
-  FOREIGN KEY (`gibbigMessageTypeId`) REFERENCES `gibbigMessageTypes` (`gibbigMessageTypeId`) ON UPDATE CASCADE ON DELETE RESTRICT,
+  `archive`                 varchar(10)             NOT NULL,  
+  PRIMARY KEY (`httpPatientcardInfoId`,`licenceId`),
   FOREIGN KEY (`licenceId`) REFERENCES `licences` (`licenceId`) ON UPDATE CASCADE ON DELETE RESTRICT
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
@@ -409,7 +393,6 @@ CREATE TABLE `patientCardUnits` (
   `patientCardTypeId`       int(10) unsigned        NOT NULL DEFAULT 0,
   `ledgerId`                int(10) unsigned        NOT NULL,
   `panelId`                 int(10) unsigned        NOT NULL,
-  `gibbigId`                int(10) unsigned        NOT NULL DEFAULT 0,
   `unitTime`                int(11)                 NOT NULL DEFAULT 0,
   `unitPrice`               int(11)                 NOT NULL DEFAULT 0,
   `validDateFrom`           date                    DEFAULT NULL,

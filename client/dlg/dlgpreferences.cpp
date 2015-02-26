@@ -26,7 +26,7 @@ cDlgPreferences::cDlgPreferences( QWidget *p_poParent )
     setWindowTitle( tr( "Preferences" ) );
     setWindowIcon( QIcon("./resources/40x40_settings.png") );
 
-    pbTestGibbig->setIcon( QIcon("./resources/40x40_check_connection.png") );
+    pbTestHttpConnection->setIcon( QIcon("./resources/40x40_check_connection.png") );
 
     QPoint  qpDlgSize = g_poPrefs->getDialogSize( "EditPreferences", QPoint(460,410) );
     resize( qpDlgSize.x(), qpDlgSize.y() );
@@ -114,9 +114,6 @@ cDlgPreferences::cDlgPreferences( QWidget *p_poParent )
     }
 
     ledServerHost->setText( g_poPrefs->getServerAddress() );
-    ledServerPort->setText( g_poPrefs->getServerPort() );
-    chkDBAutoSynchron->setChecked( g_poPrefs->getDBAutoArchive() );
-    chkDBGlobalAutoSynchron->setChecked( g_poPrefs->getDBGlobalAutoSynchronize() );
 
     spbCOM->setValue( g_poPrefs->getCommunicationPort() );
     chkForceSendTime->setChecked( g_poPrefs->isForceModuleSendTime() );
@@ -184,20 +181,10 @@ cDlgPreferences::cDlgPreferences( QWidget *p_poParent )
 
     pbPanelSettings->setIcon( QIcon("./resources/40x40_settings.png") );
 
-gbServerSettings->setVisible( false );
-gbUserSettings->setVisible( false );
-gbGibbigEnable->setVisible( false );
-    ledGibbigName->setText( g_poPrefs->getGibbigName() );
-    ledGibbigPassword->setText( g_poPrefs->getGibbigPassword() );
-
-    chkEnableGibbig->setChecked( g_poPrefs->isGibbigEnabled() );
-    pbTestGibbig->setEnabled( g_poPrefs->isGibbigEnabled() );
-    sbGibbigWaitTime->setEnabled( g_poPrefs->isGibbigEnabled() );
-    sbGibbigWaitTime->setValue( g_poPrefs->getGibbigMessageWaitTime() );
-
-    gbDBSynchron->setVisible( false );
-
-//    btbButtons->standardButton( QDialogButtonBox::Ok ).setIcon( QIcon("./resources/40x40_ok.png") );
+    chkEnableHttp->setChecked( g_poPrefs->isBlnsHttpEnabled() );
+    pbTestHttpConnection->setEnabled( g_poPrefs->isBlnsHttpEnabled() );
+    sbHttpWaitTime->setEnabled( g_poPrefs->isBlnsHttpEnabled() );
+    sbHttpWaitTime->setValue( g_poPrefs->getBlnsHttpMessageWaitTime() );
 
     ledBinaryLocation->setText( g_poPrefs->getDirDbBinaries() );
     ledBackupLocation->setText( g_poPrefs->getDirDbBackup() );
@@ -258,7 +245,6 @@ gbGibbigEnable->setVisible( false );
 
         tbwPreferences->setTabEnabled( 5, g_obUser.isInGroup( cAccessGroup::SYSTEM ) );
     }
-    tbwPreferences->setTabEnabled( 5, false );
 }
 
 cDlgPreferences::~cDlgPreferences()
@@ -274,15 +260,6 @@ void cDlgPreferences::timerEvent(QTimerEvent *)
     m_nTimer = 0;
 
     setCursor( Qt::ArrowCursor);
-
-/*
-    if( g_poGibbig->gibbigIsErrorOccured() )
-    {
-        QMessageBox::warning( this, tr("Warning"),
-                              tr("Authentication with server failed.\n"
-                                 "Please check your server and user settings.") );
-    }
-*/
 }
 
 void cDlgPreferences::on_sliConsoleLogLevel_valueChanged( int p_inValue )
@@ -423,9 +400,6 @@ void cDlgPreferences::accept()
     g_poPrefs->setStopInLine( rbStopInLine->isChecked() );
 
     g_poPrefs->setServerAddress( ledServerHost->text() );
-    g_poPrefs->setServerPort( ledServerPort->text() );
-    g_poPrefs->setDBAutoArchive( chkDBAutoSynchron->isChecked() );
-    g_poPrefs->setDBGlobalAutoSynchronize( chkDBGlobalAutoSynchron->isChecked() );
 
     g_poPrefs->setCommunicationPort( spbCOM->value() );
     g_poPrefs->setForceModuleSendTime( chkForceSendTime->isChecked() );
@@ -463,10 +437,8 @@ void cDlgPreferences::accept()
     g_poPrefs->setPatientCardPartnerPrice( cPricePartner.currencyValue().toInt() );
     g_poPrefs->setPatientCardPartnerPriceVat( ledPCPartnerVatpercent->text().toInt() );
 
-    g_poPrefs->setGibbigName( ledGibbigName->text() );
-    g_poPrefs->setGibbigPassword( ledGibbigPassword->text() );
-    g_poPrefs->setGibbigEnabled( chkEnableGibbig->isChecked() );
-    g_poPrefs->setGibbigMessageWaitTime( sbGibbigWaitTime->value() );
+    g_poPrefs->setBlnsHttpEnabled( chkEnableHttp->isChecked() );
+    g_poPrefs->setBlnsHttpMessageWaitTime( sbHttpWaitTime->value() );
 
     if( g_obUser.isInGroup( cAccessGroup::SYSTEM ) )
     {
@@ -718,19 +690,19 @@ void cDlgPreferences::_decreasePatientCardBarcodes(bool p_bCutBegin)
     }
     m_dlgProgress->hideProgress();
 }
-/*
-void cDlgPreferences::on_pbTestGibbig_clicked()
+
+void cDlgPreferences::on_pbTestHttpConnection_clicked()
 {
-    g_poGibbig->gibbigAuthenticate();
+    g_poBlnsHttp->checkHttpServerAvailability();
     setCursor( Qt::WaitCursor);
 
     m_nTimer = startTimer( 5000 );
 }
-*/
-void cDlgPreferences::on_chkEnableGibbig_clicked(bool checked)
+
+void cDlgPreferences::on_chkEnableHttp_clicked(bool checked)
 {
-    pbTestGibbig->setEnabled( checked );
-    sbGibbigWaitTime->setEnabled( checked );
+    pbTestHttpConnection->setEnabled( checked );
+    sbHttpWaitTime->setEnabled( checked );
 }
 
 void cDlgPreferences::on_btnSecondaryFrame_clicked()
