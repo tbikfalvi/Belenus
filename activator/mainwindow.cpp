@@ -162,11 +162,16 @@ MainWindow::MainWindow(QWidget *parent) : QMainWindow(parent), ui(new Ui::MainWi
                                      << "506231"
                                      << "794780";
 
-    _fillLicenceTree();
+//    _fillLicenceTree();
 
     QStringList qslHeader = QStringList() << tr("Licence string") << tr("Activation\ndate") << tr("Activation\ncode") << tr("Validation\ncode");
 
     ui->treeLicences->setHeaderLabels( qslHeader );
+
+    ui->lblCheckCodeOk->setVisible( false );
+    ui->lblCheckCodeCancel->setVisible( false );
+
+    ui->lblLicenceKeyString->setText( "BLNS..." );
 }
 
 MainWindow::~MainWindow()
@@ -225,6 +230,7 @@ void MainWindow::on_pbNewLicenceKey_clicked()
     if( qsRegKey.length() != 8 )
     {
         QMessageBox::warning( this, tr("Warning"), tr("Registration code length is invalid") );
+        ui->lblCheckCodeCancel->setVisible( true );
         return;
     }
 
@@ -244,7 +250,8 @@ void MainWindow::on_pbNewLicenceKey_clicked()
         m_qsCode = m_qslLicenceCodes.at(nOrder-1);
 
         ui->ledLicenceKeyName->setText( QString("BLNS%1%2_%3").arg(n1).arg(n2).arg(strLicenceRandomCode) );
-        ui->lblLicenceKeyString->setText( QString("BLNS%1%2_%3 (%4)").arg(n1).arg(n2).arg(strLicenceRandomCode).arg(m_qslLicenceCodes.at(nOrder-1)) );
+//        ui->lblLicenceKeyString->setText( QString("BLNS%1%2_%3 (%4)").arg(n1).arg(n2).arg(strLicenceRandomCode).arg(m_qslLicenceCodes.at(nOrder-1)) );
+        ui->lblLicenceKeyString->setText( QString("BLNS%1%2_%3").arg(n1).arg(n2).arg(strLicenceRandomCode) );
         ui->ledCode->setText( ui->ledRegistrationCode->text().right(6) );
         ui->deActivated->setDate( QDate::currentDate() );
         ui->pbValidateLicence->setFocus();
@@ -252,6 +259,7 @@ void MainWindow::on_pbNewLicenceKey_clicked()
     else
     {
         QMessageBox::warning( this, tr("Warning"), tr("Registration code is invalid - BLNS%1%2").arg(n1).arg(n2) );
+        ui->lblCheckCodeCancel->setVisible( true );
         return;
     }
 
@@ -292,7 +300,8 @@ void MainWindow::on_pbEditLicenceKey_clicked()
     int nOrder = n1*10+n2;
 
     m_qsCode = m_qslLicenceCodes.at(nOrder-1);
-    ui->lblLicenceKeyString->setText( QString("%1 (%2)").arg(ui->ledLicenceKeyName->text()).arg(m_qslLicenceCodes.at(nOrder-1)) );
+//    ui->lblLicenceKeyString->setText( QString("%1 (%2)").arg(ui->ledLicenceKeyName->text()).arg(m_qslLicenceCodes.at(nOrder-1)) );
+    ui->lblLicenceKeyString->setText( QString("%1").arg(ui->ledLicenceKeyName->text()) );
 
     if( item->text(2).length() > 0 )
     {
@@ -345,7 +354,7 @@ void MainWindow::on_pbSaveLicence_clicked()
 
 void MainWindow::on_pbCancelLicence_clicked()
 {
-    ui->treeLicences->setEnabled( true );
+//    ui->treeLicences->setEnabled( true );
 
     ui->pbNewLicenceKey->setEnabled( true );
 
@@ -355,21 +364,38 @@ void MainWindow::on_pbCancelLicence_clicked()
 
     ui->ledLicenceKeyName->setText( "" );
 
-    ui->lblLicenceKeyString->setText( "BLNSxx_AAAAAA" );
+//    ui->lblLicenceKeyString->setText( "BLNSxx_AAAAAA" );
+    ui->lblLicenceKeyString->setText( "BLNS..." );
     ui->ledCode->setText( "" );
     ui->ledValidator->setText( "" );
-    ui->deActivated->setDate( QDate::currentDate() );
+//    ui->deActivated->setDate( QDate::currentDate() );
+
+    ui->lblCheckCodeOk->setVisible( false );
+    ui->lblCheckCodeCancel->setVisible( false );
 }
 
 
 void MainWindow::on_ledLicenceKeyName_textChanged(const QString&)
 {
+    ui->lblCheckCodeOk->setVisible( false );
+    ui->lblCheckCodeCancel->setVisible( false );
+
     bool    bEnable = _validateLicenceStr( ui->ledLicenceKeyName->text() );
 
-    ui->ledCode->setEnabled( bEnable );
+//    ui->ledCode->setEnabled( bEnable );
     ui->ledValidator->setEnabled( bEnable );
-    ui->deActivated->setEnabled( bEnable );
+//    ui->deActivated->setEnabled( bEnable );
     ui->pbValidateLicence->setEnabled( bEnable );
+    if( bEnable )
+    {
+        ui->lblCheckCodeOk->setVisible( true );
+        ui->lblCheckCodeCancel->setVisible( false );
+    }
+    else
+    {
+        ui->lblCheckCodeOk->setVisible( false );
+        ui->lblCheckCodeCancel->setVisible( true );
+    }
 }
 
 bool MainWindow::_validateLicenceStr(QString p_qsLicenceString )
@@ -452,7 +478,8 @@ void MainWindow::on_pbValidateLicence_clicked()
         qsStringValidation.append( m_qslCode.at( i*10 + qsCodeValidation.at(i).digitValue() ) );
     }
 
-    ui->ledValidator->setText( QString("%1 (%2)").arg(qsStringValidation).arg(qsCodeValidation) );
+//    ui->ledValidator->setText( QString("%1 (%2)").arg(qsStringValidation).arg(qsCodeValidation) );
+    ui->ledValidator->setText( qsStringValidation );
 }
 
 void MainWindow::_fillLicenceTree()
@@ -492,4 +519,9 @@ void MainWindow::_saveLicenceTree()
         file.write( QString("%1\t%2\t%3\t%4\n").arg(item->text(0)).arg(item->text(1)).arg(item->text(2)).arg(item->text(3)).toStdString().c_str() );
     }
     file.close();
+}
+
+void MainWindow::on_ledRegistrationCode_textEdited(const QString &/*arg1*/)
+{
+    on_pbCancelLicence_clicked();
 }

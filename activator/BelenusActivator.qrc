@@ -7,5 +7,6 @@
         <file>edit.png</file>
         <file>delete.png</file>
         <file>cancel.png</file>
+        <file>ok.png</file>
     </qresource>
 </RCC>

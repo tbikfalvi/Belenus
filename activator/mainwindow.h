@@ -77,6 +77,7 @@ private slots:
     void on_pbCancelLicence_clicked();
     void on_ledLicenceKeyName_textChanged(const QString &arg1);
     void on_pbValidateLicence_clicked();
+    void on_ledRegistrationCode_textEdited(const QString &arg1);
 };
 
 #endif // MAINWINDOW_H
