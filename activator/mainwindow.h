@@ -51,6 +51,7 @@ private:
     QStringList     m_qslLicenceCodes;
     QStringList     m_qslCode;
     QStringList     m_qslCodeString;
+    QStringList     m_qslActiveKeys;
 
     licenceType     m_LicenceType;
     QString         m_qsLicenceString;

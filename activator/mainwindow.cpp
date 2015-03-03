@@ -100,6 +100,67 @@ MainWindow::MainWindow(QWidget *parent) : QMainWindow(parent), ui(new Ui::MainWi
                                      << "M@AHE]"  // BLNS59_FKJCNV <- BLNS59_506231
                                      << "C_RCX^";  // BLNS60_HTYHSU <- BLNS60_794780
 
+    m_qslActiveKeys = QStringList()  << "BLNS01"
+                                     << "BLNS02"
+                                     << "BLNS03"
+                                     << "BLNS04"
+                                     << "BLNS05"
+                                     << "BLNS06"
+                                     << "BLNS07"
+                                     << "BLNS08"
+                                     << "BLNS09"
+                                     << "BLNS10"
+                                     << "BLNS11"
+                                     << "BLNS12"
+                                     << "BLNS13"
+                                     << "BLNS14"
+                                     << "BLNS15"
+//                                     << "BLNS16"
+//                                     << "BLNS17"
+//                                     << "BLNS18"
+//                                     << "BLNS19"
+                                     << "BLNS20"
+                                     << "BLNS21"
+//                                     << "BLNS22"
+                                     << "BLNS23"
+//                                     << "BLNS24"
+//                                     << "BLNS25"
+                                     << "BLNS26"
+//                                     << "BLNS27"
+//                                     << "BLNS28"
+                                     << "BLNS29"
+//                                     << "BLNS30"
+//                                     << "BLNS31"
+                                     << "BLNS32"
+                                     << "BLNS33"
+//                                     << "BLNS34"
+//                                     << "BLNS35"
+//                                     << "BLNS36"
+//                                     << "BLNS37"
+//                                     << "BLNS38"
+//                                     << "BLNS39"
+//                                     << "BLNS40"
+//                                     << "BLNS41"
+//                                     << "BLNS42"
+//                                     << "BLNS43"
+//                                     << "BLNS44"
+//                                     << "BLNS45"
+//                                     << "BLNS46"
+//                                     << "BLNS47"
+//                                     << "BLNS48"
+//                                     << "BLNS49"
+                                     << "BLNS50"
+//                                     << "BLNS51"
+//                                     << "BLNS52"
+//                                     << "BLNS53"
+//                                     << "BLNS54"
+//                                     << "BLNS55"
+//                                     << "BLNS56"
+//                                     << "BLNS57"
+//                                     << "BLNS58"
+//                                     << "BLNS59"
+                                     << "BLNS60";
+
     // These are the random values
     m_qslLicenceCodes = QStringList()<< "358194"
                                      << "653212"
@@ -241,6 +302,13 @@ void MainWindow::on_pbNewLicenceKey_clicked()
 
     if( nOrder > 0 && nOrder < LICENCE_MAX_NUMBER+1 )
     {
+        if( !m_qslActiveKeys.contains( QString("BLNS%1%2").arg(n1).arg(n2) ) )
+        {
+            QMessageBox::warning( this, tr("Warning"),
+                                  tr("This licence string is not valid.") );
+            return;
+        }
+
         char    strLicenceRandomCode[7];
 
         strLicenceRandomCode[6] = 0;
