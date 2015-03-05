@@ -671,7 +671,7 @@ void cDlgPatientCardAssign::_processSelectedToMain()
         obDBPatientCard.load( ledMainBarcode->text() );
 
         g_poDB->executeQTQuery( QString( "UPDATE patientcardunits "
-                                         "SET patientCardId=%1 WHERE "
+                                         "SET parentCardId=%1 WHERE "
                                          "patientCardId=%2 AND "
                                          "active=1" ).arg( obDBPatientCard.id() )
                                                      .arg( obDBPatientCard.parentId() ) );

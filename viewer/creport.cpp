@@ -50,6 +50,7 @@ cReport::cReport(QWidget *parent, QString p_qsReportName) : QWidget(parent)
     //-----------------------------------------------------
     m_tcReport = new QTextCursor( &m_tdReport );
     m_teReport->setDocument( &m_tdReport );
+    m_teReport->setReadOnly( true );
 
     //-----------------------------------------------------
     // Report filter gui elemek beallitasa
