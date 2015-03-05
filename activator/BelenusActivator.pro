@@ -14,6 +14,5 @@ SOURCES        += main.cpp \
                   mainwindow.cpp
 HEADERS        += mainwindow.h
 FORMS          += mainwindow.ui
-TRANSLATIONS    = BelenusActivator_us.ts \
-                  BelenusActivator_hu.ts
+TRANSLATIONS    = BelenusActivator_hu.ts
 RESOURCES      += BelenusActivator.qrc
