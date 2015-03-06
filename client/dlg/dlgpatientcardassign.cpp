@@ -670,18 +670,21 @@ void cDlgPatientCardAssign::_processSelectedToMain()
     {
         obDBPatientCard.load( ledMainBarcode->text() );
 
-        g_poDB->executeQTQuery( QString( "UPDATE patientcardunits "
-                                         "SET parentCardId=%1 WHERE "
-                                         "patientCardId=%2 AND "
-                                         "active=1" ).arg( obDBPatientCard.id() )
-                                                     .arg( obDBPatientCard.parentId() ) );
-        g_poDB->executeQTQuery( QString( "UPDATE patientcards "
-                                         "SET parentCardId=%1 WHERE "
-                                         "patientCardId=%2 OR "
-                                         "parentCardId=%2").arg( obDBPatientCard.id() )
-                                                           .arg( obDBPatientCard.parentId() ) );
-        obDBPatientCard.setParentId( 0 );
-        obDBPatientCard.save();
+        if( obDBPatientCard.id() > 1 && obDBPatientCard.parentId() > 1 )
+        {
+            g_poDB->executeQTQuery( QString( "UPDATE patientcardunits "
+                                             "SET patientCardId=%1 WHERE "
+                                             "patientCardId=%2 AND "
+                                             "active=1" ).arg( obDBPatientCard.id() )
+                                                         .arg( obDBPatientCard.parentId() ) );
+            g_poDB->executeQTQuery( QString( "UPDATE patientcards "
+                                             "SET parentCardId=%1 WHERE "
+                                             "patientCardId=%2 OR "
+                                             "parentCardId=%2").arg( obDBPatientCard.id() )
+                                                               .arg( obDBPatientCard.parentId() ) );
+            obDBPatientCard.setParentId( 0 );
+            obDBPatientCard.save();
+        }
     }
     catch( cSevException &e )
     {
