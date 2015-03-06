@@ -131,6 +131,8 @@ cDlgPreferences::cDlgPreferences( QWidget *p_poParent )
     chkSecondaryCaption->setChecked( g_poPrefs->isSecondaryCaptionVisible() );
 
     ledVatPercent->setText( QString::number( g_poPrefs->getDeviceUseVAT() ) );
+    ledDeviceAdminPassword->setText( "123456789" );
+    ledDeviceAdminPasswordCheck->setText( "123456789" );
     ledDeviceAdminPassword->setEnabled( false );
     ledDeviceAdminPasswordCheck->setEnabled( false );
     pbModifyDevAdminPsw->setIcon( QIcon("./resources/40x40_key.png") );
@@ -774,6 +776,8 @@ void cDlgPreferences::on_pbModifyDevAdminPsw_clicked()
         }
         else
         {
+            ledDeviceAdminPassword->setText( "123456789" );
+            ledDeviceAdminPasswordCheck->setText( "123456789" );
             QMessageBox::warning( this, tr("Warning"),
                                   tr("The password you entered is not valid\n"
                                      "to modify device admin password.") );
@@ -783,8 +787,8 @@ void cDlgPreferences::on_pbModifyDevAdminPsw_clicked()
 
 void cDlgPreferences::on_pbCancelModifyPsw_clicked()
 {
-    ledDeviceAdminPassword->setText( "" );
-    ledDeviceAdminPasswordCheck->setText( "" );
+    ledDeviceAdminPassword->setText( "123456789" );
+    ledDeviceAdminPasswordCheck->setText( "123456789" );
     ledDeviceAdminPassword->setEnabled( false );
     ledDeviceAdminPasswordCheck->setEnabled( false );
     pbModifyDevAdminPsw->setIcon( QIcon("./resources/40x40_key.png") );

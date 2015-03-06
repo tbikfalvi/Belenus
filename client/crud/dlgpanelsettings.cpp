@@ -375,19 +375,17 @@ void cDlgPanelSettings::saveClicked( bool )
             obDBPanel.setPanelGroupId( cmbPanelGroup->itemData( cmbPanelGroup->currentIndex() ).toUInt() );
         }
 
-        if( g_obUser.isInGroup(cAccessGroup::SYSTEM) || cmbPanelType->isEnabled() )
-        {
-            int hour    = ledWorkTimeHour->text().toInt();
-            int minute  = ledWorkTimeMin->text().toInt();
-            int second  = ledWorkTimeSec->text().toInt();
+        int hour    = ledWorkTimeHour->text().toInt();
+        int minute  = ledWorkTimeMin->text().toInt();
+        int second  = ledWorkTimeSec->text().toInt();
 
-            if( cmbPanelType->isEnabled() )
-                obDBPanel.setPanelTypeId( cmbPanelType->itemData( cmbPanelType->currentIndex() ).toUInt() );
-            if( ledWorkTimeHour->isEnabled() )
-                obDBPanel.setWorkTime( hour*3600 + minute*60 + second );
-            if( ledMaxWorkTime->isEnabled() )
-                obDBPanel.setMaxWorkTime( ledMaxWorkTime->text().toUInt() );
-        }
+        if( cmbPanelType->isEnabled() )
+            obDBPanel.setPanelTypeId( cmbPanelType->itemData( cmbPanelType->currentIndex() ).toUInt() );
+        if( ledWorkTimeHour->isEnabled() || pbWTReset->isEnabled() )
+            obDBPanel.setWorkTime( hour*3600 + minute*60 + second );
+        if( ledMaxWorkTime->isEnabled() )
+            obDBPanel.setMaxWorkTime( ledMaxWorkTime->text().toUInt() );
+
         obDBPanel.save();
 
         QDialog::accept();
