@@ -23,6 +23,7 @@ public:
     bool            isPatientCardCanBeParent()                                  throw();
     bool            isPatientCardCanBeUsed(unsigned int p_uiPatientCardTypeId, QString *p_qsValid)                  throw();
     bool            isAssignedCardExists()                                      throw();
+    bool            isLedgerConnected()                                         throw();
     void            synchronizeUnits()                                          throw();
     void            synchronizeTime()                                           throw();
     void            synchronizeUnitTime( int p_nUnitTime )                      throw();

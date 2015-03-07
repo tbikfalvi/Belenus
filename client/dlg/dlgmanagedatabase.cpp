@@ -29,8 +29,6 @@ cDlgManageDatabase::cDlgManageDatabase( QWidget *p_poParent )
 
     deFilterDate->setDate( QDate::currentDate() );
 
-    rbDeleteInactivePCs->setEnabled( false );
-    rbDeleteInactivePCs->setVisible( false );
     rbDeleteNotUsedPCTs->setEnabled( false );
     rbDeleteNotUsedPCTs->setVisible( false );
 
@@ -166,16 +164,16 @@ void cDlgManageDatabase::_actionDeactivatePC()
 
 void cDlgManageDatabase::_actionDeleteInactivePC()
 {
+    m_dlgProgress->showProgress();
+
     try
     {
         QStringList qslCardId;
         QString qsQuery = QString( "SELECT patientCardId FROM patientcards WHERE "
+                                   "patientCardId>1 AND "
                                    "patientCardTypeId=0 AND "
                                    "patientId=0 AND "
-                                   "units=0 AND "
-                                   "amount=0 AND "
-                                   "timeLeft=0 AND "
-                                   "pincode!='LOST' AND "
+                                   "(pincode IS NULL OR pincode=\"\") AND "
                                    "active=0 "
                                   );
         QSqlQuery *poQuery = g_poDB->executeQTQuery( qsQuery );
@@ -185,9 +183,24 @@ void cDlgManageDatabase::_actionDeleteInactivePC()
             qslCardId.append( poQuery->value(0).toString() );
         }
 
+        m_dlgProgress->showProgressBar( qslCardId.count() );
+
+        unsigned int nCountSkipped = 0;
+
         for( int i=0; i<qslCardId.count(); i++ )
         {
-            unsigned int uiId = qslCardId.at(i).toUInt();
+            unsigned int    uiId = qslCardId.at(i).toUInt();
+            cDBPatientCard  obDBPatientCard;
+
+            obDBPatientCard.load( uiId );
+
+            if( obDBPatientCard.isAssignedCardExists() ||
+                obDBPatientCard.isLedgerConnected() )
+            {
+                nCountSkipped++;
+                m_dlgProgress->stepProgressBar();
+                continue;
+            }
 
             qsQuery = QString( "DELETE FROM connectPatientWithCard WHERE "
                                "patientCardId=%1 " ).arg( uiId );
@@ -205,19 +218,26 @@ void cDlgManageDatabase::_actionDeleteInactivePC()
                                "patientCardId=%1 " ).arg( uiId );
             g_poDB->executeQTQuery( qsQuery );
 
-            qsQuery = QString( "DELETE FROM ledger WHERE "
-                               "patientCardId=%1 " ).arg( uiId );
-            g_poDB->executeQTQuery( qsQuery );
-
             qsQuery = QString( "DELETE FROM patientCards WHERE "
                                "patientCardId=%1 " ).arg( uiId );
             g_poDB->executeQTQuery( qsQuery );
+
+            m_dlgProgress->stepProgressBar();
         }
+
+        QMessageBox::information( this, tr("Information"),
+                                  tr("The action successfully finished.\n"
+                                     "Number of affected records: %1\n"
+                                     "Number of skipped records: %2")
+                                  .arg( qslCardId.count()-nCountSkipped )
+                                  .arg( nCountSkipped ) );
     }
     catch( cSevException &e )
     {
         g_obLogger(e.severity()) << e.what() << EOM;
     }
+
+    m_dlgProgress->hideProgress();
 }
 
 void cDlgManageDatabase::_actionDeleteNotUsedPCT()
@@ -327,6 +347,7 @@ void cDlgManageDatabase::_actionDeleteLedgerEntries()
 
         poQuery = g_poDB->executeQTQuery( QString("SELECT cassaId FROM "
                                                   "cassa WHERE "
+                                                  "startDateTime<\"%1\" AND "
                                                   "stopDateTime<\"%1\" AND "
                                                   "cassaId>0 ")
                                           .arg(deFilterDate->date().toString("yyyy-MM-dd")) );
@@ -356,6 +377,7 @@ void cDlgManageDatabase::_actionDeleteLedgerEntries()
 
         poQuery = g_poDB->executeQTQuery( QString("DELETE FROM "
                                                   "cassa WHERE "
+                                                  "startDateTime<\"%1\" AND "
                                                   "stopDateTime<\"%1\" AND "
                                                   "cassaId>0 ")
                                           .arg(deFilterDate->date().toString("yyyy-MM-dd")) );

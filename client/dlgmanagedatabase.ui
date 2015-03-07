@@ -46,7 +46,7 @@
         <item>
          <widget class="QRadioButton" name="rbDeleteInactivePCs">
           <property name="text">
-           <string>Delete inactive patientcards and all related history</string>
+           <string>Delete deactivated patientcards and all related history</string>
           </property>
          </widget>
         </item>

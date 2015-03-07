@@ -298,6 +298,15 @@ bool cDBPatientCard::isAssignedCardExists() throw()
     return false;
 }
 
+bool cDBPatientCard::isLedgerConnected() throw()
+{
+    QSqlQuery *poQuery = g_poDB->executeQTQuery( QString( "SELECT * FROM ledger WHERE patientCardId = %1" ).arg( m_uiId ) );
+    if( poQuery->size() > 0 )
+        return true;
+
+    return false;
+}
+
 void cDBPatientCard::synchronizeUnits() throw()
 {
     QString qsQuery = "";
