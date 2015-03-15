@@ -348,7 +348,7 @@ void cDBPatientCard::synchronizeTime() throw()
     if( poQuery->size() > 0 )
         setTimeLeft( poQuery->value(0).toInt()*60 );
     else
-        setUnits( 0 );
+        setTimeLeft( 0 );
 }
 
 void cDBPatientCard::synchronizeUnitTime(int p_nUnitTime) throw()
