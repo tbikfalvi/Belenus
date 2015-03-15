@@ -21,10 +21,12 @@ cDlgManageDatabase::cDlgManageDatabase( QWidget *p_poParent )
     pbExecute->setIcon( QIcon("./resources/40x40_database_sync.png") );
     pbExit->setIcon( QIcon("./resources/40x40_exit.png") );
 
-    connect( rbUpdatePCUnitType,        SIGNAL(clicked()), this, SLOT(slotUpdateExecuteButton()) );
-    connect( rbDeactivatePCs,           SIGNAL(clicked()), this, SLOT(slotUpdateExecuteButton()) );
-    connect( rbDeleteInactivePCs,       SIGNAL(clicked()), this, SLOT(slotUpdateExecuteButton()) );
-    connect( rbDeleteNotUsedPCTs,       SIGNAL(clicked()), this, SLOT(slotUpdateExecuteButton()) );
+    connect( rbUpdatePCUnitType,    SIGNAL(clicked()), this, SLOT(slotUpdateExecuteButton()) );
+    connect( rbDeactivatePCs,       SIGNAL(clicked()), this, SLOT(slotUpdateExecuteButton()) );
+    connect( rbDeleteInactivePCs,   SIGNAL(clicked()), this, SLOT(slotUpdateExecuteButton()) );
+    connect( rbDeleteNotUsedPCTs,   SIGNAL(clicked()), this, SLOT(slotUpdateExecuteButton()) );
+    connect( rbAssignPCTToPC,       SIGNAL(clicked()), this, SLOT(slotUpdateExecuteButton()) );
+
     connect( rbDeleteLedgerBeforeDate,  SIGNAL(clicked()), this, SLOT(slotUpdateExecuteButton()) );
 
     deFilterDate->setDate( QDate::currentDate() );
@@ -50,6 +52,7 @@ void cDlgManageDatabase::slotUpdateExecuteButton()
         rbDeactivatePCs->isChecked() ||
         rbDeleteInactivePCs->isChecked() ||
         rbDeleteNotUsedPCTs->isChecked() ||
+        rbAssignPCTToPC->isChecked() ||
         rbDeleteLedgerBeforeDate->isChecked() )
     {
         pbExecute->setEnabled( true );
@@ -91,6 +94,10 @@ void cDlgManageDatabase::on_pbExecute_clicked()
         else if( rbDeleteNotUsedPCTs->isChecked() )
         {
             _actionDeleteNotUsedPCT();
+        }
+        else if( rbAssignPCTToPC->isChecked() )
+        {
+            _actionRepairPatientcardsWithoutType();
         }
         else if( rbDeleteLedgerBeforeDate->isChecked() )
         {
@@ -412,5 +419,10 @@ void cDlgManageDatabase::_actionDeleteLedgerEntries()
     }
 
     m_dlgProgress->hideProgress();
+}
+
+void cDlgManageDatabase::_actionRepairPatientcardsWithoutType()
+{
+
 }
 

@@ -285,6 +285,20 @@ void cDlgShoppingCart::deleteClicked( bool )
 
                     QStringList qslUnitIds = obDBShoppingCart.comment().split("#");
 
+                    QString     qsQuery = QString( "SELECT * FROM patientcardunits WHERE "
+                                                   "((prepared=1 AND active=1) OR active=0) AND "
+                                                   "patientCardUnitId IN (%1) " )
+                                          .arg( qslUnitIds.join(",") );
+                    QSqlQuery *poQuery = g_poDB->executeQTQuery( qsQuery );
+
+                    if( poQuery->size() > 0 )
+                    {
+                        QMessageBox::warning( this, tr("Warning"),
+                                              tr("Some of the units of this patientcard has been used or is in use.\n"
+                                                 "Deleting of this entry from shopping cart is not allowed.") );
+                        return;
+                    }
+
                     for( int i=0; i<qslUnitIds.count(); i++ )
                     {
                         cDBPatientcardUnit  obDBPatientcardUnit;

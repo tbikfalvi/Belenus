@@ -2807,35 +2807,35 @@ Kérem próbálkozzon újra.</translation>
         <translation>Adatbázis kezelés</translation>
     </message>
     <message>
-        <location filename="dlg/dlgmanagedatabase.cpp" line="74"/>
+        <location filename="dlg/dlgmanagedatabase.cpp" line="77"/>
         <source>Question</source>
         <translation>Kérdés</translation>
     </message>
     <message>
-        <location filename="dlg/dlgmanagedatabase.cpp" line="75"/>
+        <location filename="dlg/dlgmanagedatabase.cpp" line="78"/>
         <source>Are you sure you want to execute the action?
 Please note the action can not be revoked.</source>
         <translation>Biztos benne, hogy végre akarja hajtani a beavatkozást?
 Kérjük vegye figyelembe, hogy a beavatkozást nem lehet visszavonni.</translation>
     </message>
     <message>
-        <location filename="dlg/dlgmanagedatabase.cpp" line="155"/>
-        <location filename="dlg/dlgmanagedatabase.cpp" line="228"/>
-        <location filename="dlg/dlgmanagedatabase.cpp" line="274"/>
-        <location filename="dlg/dlgmanagedatabase.cpp" line="389"/>
+        <location filename="dlg/dlgmanagedatabase.cpp" line="162"/>
+        <location filename="dlg/dlgmanagedatabase.cpp" line="235"/>
+        <location filename="dlg/dlgmanagedatabase.cpp" line="281"/>
+        <location filename="dlg/dlgmanagedatabase.cpp" line="396"/>
         <source>Information</source>
         <translation>Információ</translation>
     </message>
     <message>
-        <location filename="dlg/dlgmanagedatabase.cpp" line="156"/>
-        <location filename="dlg/dlgmanagedatabase.cpp" line="275"/>
+        <location filename="dlg/dlgmanagedatabase.cpp" line="163"/>
+        <location filename="dlg/dlgmanagedatabase.cpp" line="282"/>
         <source>The action successfully finished.
 Number of affected records: %1</source>
         <translation>A beavatkozás sikeresen befejeződött.
 Az érintett adatbázis bejegyzések száma: %1</translation>
     </message>
     <message>
-        <location filename="dlg/dlgmanagedatabase.cpp" line="229"/>
+        <location filename="dlg/dlgmanagedatabase.cpp" line="236"/>
         <source>The action successfully finished.
 Number of affected records: %1
 Number of skipped records: %2</source>
@@ -2844,7 +2844,7 @@ Az érintett adatbázis bejegyzések száma: %1
 A kihagyott adatbázis bejegyzések száma: %2</translation>
     </message>
     <message>
-        <location filename="dlg/dlgmanagedatabase.cpp" line="390"/>
+        <location filename="dlg/dlgmanagedatabase.cpp" line="397"/>
         <source>The action successfully finished.
 
 Number of affected records:
@@ -11558,28 +11558,33 @@ El akarja menteni ezt a hármast az adatbázisba?</translation>
     </message>
     <message>
         <location filename="dlgmanagedatabase.ui" line="49"/>
-        <source>Delete deactivated patientcards and all related history</source>
-        <oldsource>Delete inactive patientcards and all related history</oldsource>
-        <translation>Deaktivált bérletek végleges törlése</translation>
+        <source>Delete deactivated patientcards and related history entries</source>
+        <oldsource>Delete deactivated patientcards and all related history</oldsource>
+        <translation>Deaktivált bérletek és kapcsolódó bejegyzések végleges törlése</translation>
     </message>
     <message>
         <location filename="dlgmanagedatabase.ui" line="56"/>
+        <source>Repair patientcards without patientcard type</source>
+        <translation>Típus nélküli bérletek javítása</translation>
+    </message>
+    <message>
+        <location filename="dlgmanagedatabase.ui" line="63"/>
         <source>Delete inactive patientcard types that is not assigned to any patientcard</source>
         <oldsource>Delete inactive patientcard types that is not assigned to any patient card</oldsource>
         <translation>Nem használt (nincs bérlet hozzárendellve), inaktív bérlettípusok törlése</translation>
     </message>
     <message>
-        <location filename="dlgmanagedatabase.ui" line="76"/>
+        <location filename="dlgmanagedatabase.ui" line="83"/>
         <source>Ledger related actions</source>
         <translation>Könyveléssel kapcsolatos beavatkozások</translation>
     </message>
     <message>
-        <location filename="dlgmanagedatabase.ui" line="83"/>
+        <location filename="dlgmanagedatabase.ui" line="90"/>
         <source>Delete ledger entries and cassa actions before date ...</source>
         <translation>Könyvelési és pénztár események törlése a megadott dátum elött</translation>
     </message>
     <message>
-        <location filename="dlgmanagedatabase.ui" line="128"/>
+        <location filename="dlgmanagedatabase.ui" line="135"/>
         <source>Execute</source>
         <translation>Végrehajtás</translation>
     </message>
@@ -11600,7 +11605,7 @@ El akarja menteni ezt a hármast az adatbázisba?</translation>
         <translation type="obsolete">...</translation>
     </message>
     <message>
-        <location filename="dlgmanagedatabase.ui" line="147"/>
+        <location filename="dlgmanagedatabase.ui" line="154"/>
         <source>Exit</source>
         <translation>Kilépés</translation>
     </message>
