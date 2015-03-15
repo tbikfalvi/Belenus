@@ -2036,6 +2036,13 @@ void cWndMain::on_action_SellProduct_triggered( QString p_qsBarcode )
 {
     cTracer obTrace( "cWndMain::on_action_SellProduct_triggered( QString )" );
 
+    if( !g_obCassa.isCassaEnabled() )
+    {
+        QMessageBox::warning( this, tr("Attention"),
+                              tr("Cassa is disabled!\n\n"
+                                 "Please relogin to enable cassa.") );
+        return;
+    }
     m_dlgProgress->showProgress();
 
     cDlgProductSell obDlgProductSell( this, p_qsBarcode );
