@@ -29,6 +29,18 @@ cDlgManageDatabase::cDlgManageDatabase( QWidget *p_poParent )
 
     connect( rbDeleteLedgerBeforeDate,  SIGNAL(clicked()), this, SLOT(slotUpdateExecuteButton()) );
 
+    QSqlQuery   *poQuery;
+    QString      qsQuery;
+
+    cmbPatientCardType->addItem( tr("<Not selected>"), -1 );
+    qsQuery = QString( "SELECT patientCardTypeId, name FROM patientCardTypes WHERE patientCardTypeId>1 AND licenceId!=0 AND active=1 AND archive<>\"DEL\"" );
+
+    poQuery = g_poDB->executeQTQuery( qsQuery );
+    while( poQuery->next() )
+    {
+        cmbPatientCardType->addItem( poQuery->value( 1 ).toString(), poQuery->value( 0 ) );
+    }
+
     deFilterDate->setDate( QDate::currentDate() );
 
     rbDeleteNotUsedPCTs->setEnabled( false );
@@ -60,6 +72,15 @@ void cDlgManageDatabase::slotUpdateExecuteButton()
     else
     {
         pbExecute->setEnabled( false );
+    }
+
+    if( rbAssignPCTToPC->isChecked() )
+    {
+        cmbPatientCardType->setEnabled( true );
+    }
+    else
+    {
+        cmbPatientCardType->setEnabled( false );
     }
 
     if( rbDeleteLedgerBeforeDate->isChecked() )
@@ -423,6 +444,10 @@ void cDlgManageDatabase::_actionDeleteLedgerEntries()
 
 void cDlgManageDatabase::_actionRepairPatientcardsWithoutType()
 {
+    int uiPatientCardTypeId = cmbPatientCardType->itemData( cmbPatientCardType->currentIndex() ).toInt();
 
+    if( uiPatientCardTypeId > -1 )
+    {
+    }
 }
 
