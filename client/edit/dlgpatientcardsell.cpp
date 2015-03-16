@@ -332,8 +332,6 @@ void cDlgPatientCardSell::on_pbSell_clicked()
             m_poPatientCard->setBarcode( ledBarcode->text() );
             m_poPatientCard->setPatientCardTypeId( cmbCardType->itemData( cmbCardType->currentIndex() ).toUInt() );
             m_poPatientCard->setPatientId( cmbPatient->itemData( cmbPatient->currentIndex() ).toUInt() );
-            m_poPatientCard->setUnits( ledUnits->text().toInt() );
-            m_poPatientCard->setTimeLeftStr( teTimeLeft->time().toString("hh:mm:ss") );
             m_poPatientCard->setValidDateFrom( deValidDateFrom->date().toString("yyyy-MM-dd") );
             m_poPatientCard->setValidDateTo( deValidDateTo->date().toString("yyyy-MM-dd") );
             m_poPatientCard->setComment( pteComment->toPlainText() );
@@ -439,6 +437,8 @@ void cDlgPatientCardSell::on_pbSell_clicked()
             }
 
             m_poPatientCard->synchronizeUnits();
+            m_poPatientCard->synchronizeTime();
+            m_poPatientCard->save();
 
             if( bShoppingCart )
             {

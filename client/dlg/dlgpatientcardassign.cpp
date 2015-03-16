@@ -537,20 +537,21 @@ void cDlgPatientCardAssign::_processAssignNewToOld()
 
     if( obDBPatientCardAssign.active() )
     {
-        obDBPatientCardMain.setUnits( uiUnits );
-        obDBPatientCardMain.setTimeLeft( uiTimeLeft );
-        obDBPatientCardMain.save();
-
-        obDBPatientCardAssign.setParentId( obDBPatientCardMain.id() );
-        obDBPatientCardAssign.setUnits( uiUnits );
-        obDBPatientCardAssign.setTimeLeft( uiTimeLeft );
-        obDBPatientCardAssign.setComment( tr("Partner card of \"%1\"").arg(obDBPatientCardMain.barcode()) );
-        obDBPatientCardAssign.save();
-
         cDBPatientcardUnit  obDBPatientcardUnit;
 
         obDBPatientcardUnit.setPatientCardId( obDBPatientCardAssign.id() );
         obDBPatientcardUnit.replacePatientCard( obDBPatientCardMain.id() );
+
+        obDBPatientCardMain.synchronizeUnits();
+        obDBPatientCardMain.synchronizeTime();
+        obDBPatientCardMain.save();
+
+        obDBPatientCardAssign.setParentId( obDBPatientCardMain.id() );
+        obDBPatientCardAssign.synchronizeUnits();
+        obDBPatientCardAssign.synchronizeTime();
+        obDBPatientCardAssign.setComment( tr("Partner card of \"%1\"").arg(obDBPatientCardMain.barcode()) );
+        obDBPatientCardAssign.save();
+
     }
     else
     {
@@ -558,8 +559,6 @@ void cDlgPatientCardAssign::_processAssignNewToOld()
         obDBPatientCardAssign.setPatientCardTypeId( obDBPatientCardMain.patientCardTypeId() );
         obDBPatientCardAssign.setParentId( obDBPatientCardMain.id() );
         obDBPatientCardAssign.setPatientId( 0 );
-        obDBPatientCardAssign.setUnits( uiUnits );
-        obDBPatientCardAssign.setTimeLeft( uiTimeLeft );
         obDBPatientCardAssign.setValidDateFrom( obDBPatientCardMain.validDateFrom() );
         obDBPatientCardAssign.setValidDateTo( obDBPatientCardMain.validDateTo() );
         obDBPatientCardAssign.setComment( tr("Partner card of \"%1\"").arg(obDBPatientCardMain.barcode()) );
@@ -604,6 +603,8 @@ void cDlgPatientCardAssign::_processAssignNewToOld()
             return;
         }
 
+        obDBPatientCardAssign.synchronizeUnits();
+        obDBPatientCardAssign.synchronizeTime();
         obDBPatientCardAssign.save();
     }
 }

@@ -61,6 +61,9 @@ void cDBPatientCard::init( const unsigned int p_uiId,
     m_qsModified            = p_qsModified;
     m_bActive               = p_bActive;
     m_qsArchive             = p_qsArchive;
+
+    synchronizeUnits();
+    synchronizeTime();
 }
 
 void cDBPatientCard::init( const QSqlRecord &p_obRecord ) throw()
@@ -111,7 +114,6 @@ void cDBPatientCard::load( const unsigned int p_uiId ) throw( cSevException )
 
     poQuery->first();
     init( poQuery->record() );
-    synchronizeUnits();
 }
 
 void cDBPatientCard::load( const QString &p_qsBarcode ) throw( cSevException )
@@ -125,7 +127,6 @@ void cDBPatientCard::load( const QString &p_qsBarcode ) throw( cSevException )
 
     poQuery->first();
     init( poQuery->record() );
-    synchronizeUnits();
 }
 
 void cDBPatientCard::loadPatient( const unsigned int p_uiId ) throw( cSevException )

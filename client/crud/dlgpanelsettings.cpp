@@ -70,6 +70,19 @@ cDlgPanelSettings::cDlgPanelSettings( QWidget *p_poParent, unsigned int p_uiPane
     ledWorkTimeSec->setEnabled( g_obUser.isInGroup( cAccessGroup::SYSTEM ) );
     horizontalLayout2->addWidget( ledWorkTimeSec );
 
+    if( g_obUser.isInGroup( cAccessGroup::ADMIN ) )
+    {
+        ledWorkTimeHour->setEchoMode( QLineEdit::Normal );
+        ledWorkTimeMin->setEchoMode( QLineEdit::Normal );
+        ledWorkTimeSec->setEchoMode( QLineEdit::Normal );
+    }
+    else
+    {
+        ledWorkTimeHour->setEchoMode( QLineEdit::Password );
+        ledWorkTimeMin->setEchoMode( QLineEdit::Password );
+        ledWorkTimeSec->setEchoMode( QLineEdit::Password );
+    }
+
     pbWTReset = new QPushButton( this );
     pbWTReset->setObjectName( QString::fromUtf8( "pbWTReset" ) );
     pbWTReset->setMinimumHeight( 30 );

@@ -101,6 +101,7 @@ private:
     void _setStatusText( QString p_qsText, bool p_bError = false );
     void _processHttpActions();
     void _checkVersions();
+    void _checkIsActivationNeeded();
 
 public slots:
     void processDeviceUsePayment( unsigned int p_uiPanelId, unsigned int p_uiLedgerId, int p_nPaymentType );
@@ -152,6 +153,7 @@ private slots:
     void on_action_ValidateSerialKey_triggered();
     void on_action_PatientCardSell_triggered();
     void on_action_PatientCardAssign_triggered();
+    void on_action_ReplaceLostCard_triggered();
     void on_action_EditActualPatient_triggered();
     void on_action_DeviceSettings_triggered();
     void on_action_PayCash_triggered();

@@ -23,6 +23,7 @@
 #include "../framework/logger/DatabaseWriter.h"
 #include "cdlgtest.h"
 #include "belenus.h"
+#include "licenceManager.h"
 
 //====================================================================================
 
@@ -98,8 +99,8 @@
 
 //====================================================================================
 
-extern DatabaseWriter g_obLogDBWriter;
-//extern LicenceManager g_obLicenceManager;
+extern DatabaseWriter   g_obLogDBWriter;
+extern cLicenceManager  g_obLicenceManager;
 
 //====================================================================================
 cWndMain::cWndMain( QWidget *parent ) : QMainWindow( parent )
@@ -181,6 +182,7 @@ cWndMain::cWndMain( QWidget *parent ) : QMainWindow( parent )
 
     action_PatientcardInformation->setIcon( QIcon("./resources/40x40_patientcard_info.png") );
     action_PatientCardAssign->setIcon( QIcon("./resources/40x40_patientcard_assign.png") );
+    action_ReplaceLostCard->setIcon( QIcon("./resources/40x40_patientcard_replace.png") );
 
     action_PatientCardSell->setIcon( QIcon("./resources/40x40_patientcard_sell.png") );
     action_ProductTypes->setIcon( QIcon("./resources/40x40_producttype.png") );
@@ -266,6 +268,7 @@ cWndMain::cWndMain( QWidget *parent ) : QMainWindow( parent )
 
     action_PatientcardInformation->setEnabled( false );
     action_PatientCardAssign->setEnabled( false );
+    action_ReplaceLostCard->setEnabled( false );
 
     action_PatientCardSell->setEnabled( false );
     action_PayCash->setEnabled( false );
@@ -415,6 +418,7 @@ bool cWndMain::showLogIn()
     ledPassword->setFocus();
 
     _checkVersions();
+    _checkIsActivationNeeded();
 
     return true;
 }
@@ -1185,7 +1189,7 @@ void cWndMain::updateToolbar()
         action_Guests->setEnabled( bIsUserLoggedIn );
         action_CardTypes->setEnabled( bIsUserLoggedIn );
         action_Cards->setEnabled( bIsUserLoggedIn );
-        menuAdministrator->setEnabled( bIsUserLoggedIn );
+        menuAdministrator->setEnabled( bIsUserLoggedIn && g_obUser.isInGroup(cAccessGroup::ADMIN) );
             action_Users->setEnabled( bIsUserLoggedIn );
             action_Company->setEnabled( bIsUserLoggedIn && g_poPrefs->isComponentKiwiSunInstalled() );
             action_HealthInsurance->setEnabled( bIsUserLoggedIn && g_poPrefs->isComponentKiwiSunInstalled() );
@@ -1220,6 +1224,7 @@ void cWndMain::updateToolbar()
             action_PatientcardInformation->setEnabled( bIsUserLoggedIn );
             action_PatientCardSell->setEnabled( bIsUserLoggedIn );
             action_PatientCardAssign->setEnabled( bIsUserLoggedIn );
+            action_ReplaceLostCard->setEnabled( bIsUserLoggedIn );
             action_PCSaveToDatabase->setEnabled( bIsUserLoggedIn );
         menuProduct->setEnabled( bIsUserLoggedIn );
             action_SellProduct->setEnabled( bIsUserLoggedIn );
@@ -2281,6 +2286,31 @@ void cWndMain::on_action_PatientCardAssign_triggered()
     slotAssignPartnerCard( "" );
 }
 //====================================================================================
+void cWndMain::on_action_ReplaceLostCard_triggered()
+{
+    if( !g_obCassa.isCassaEnabled() )
+    {
+        QMessageBox::warning( this, tr("Attention"),
+                              tr("Cassa is disabled!\n\n"
+                                 "Please relogin to enable cassa.") );
+        return;
+    }
+
+    QMessageBox::warning( this, tr("Request"), tr("Please enter the lost patientcard's barcode.") );
+
+    cDlgInputStart  obDlgInputStart( this );
+
+    obDlgInputStart.m_bCard = true;
+    obDlgInputStart.init();
+
+    m_dlgProgress->hideProgress();
+
+    if( obDlgInputStart.exec() == QDialog::Accepted )
+    {
+        slotReplacePatientCard( obDlgInputStart.getEditText() );
+    }
+}
+//====================================================================================
 void cWndMain::processInputPatientCard( QString p_stBarcode )
 {
     cTracer obTrace( "cWndMain::processInputPatientCard" );
@@ -2704,6 +2734,14 @@ void cWndMain::slotReplacePatientCard(const QString &p_qsBarcode)
 {
     cTracer obTrace( "cWndMain::slotReplacePatientCard" );
 
+    if( !g_obCassa.isCassaEnabled() )
+    {
+        QMessageBox::warning( this, tr("Attention"),
+                              tr("Cassa is disabled!\n\n"
+                                 "Please relogin to enable cassa.") );
+        return;
+    }
+
     m_dlgProgress->showProgress();
 
     cDBPatientCard  obDBPatientCardOld;
@@ -2766,8 +2804,6 @@ void cWndMain::slotReplacePatientCard(const QString &p_qsBarcode)
             obDBPatientCardNew.setPatientCardTypeId( obDBPatientCardOld.patientCardTypeId() );
             obDBPatientCardNew.setParentId( obDBPatientCardOld.parentId() );
             obDBPatientCardNew.setPatientId( obDBPatientCardOld.patientId() );
-            obDBPatientCardNew.setUnits( obDBPatientCardOld.units() );
-            obDBPatientCardNew.setTimeLeftStr( obDBPatientCardOld.timeLeftStr() );
             obDBPatientCardNew.setValidDateFrom( obDBPatientCardOld.validDateFrom() );
             obDBPatientCardNew.setValidDateTo( obDBPatientCardOld.validDateTo() );
             obDBPatientCardNew.setComment( obDBPatientCardOld.comment() );
@@ -2840,7 +2876,10 @@ void cWndMain::slotReplacePatientCard(const QString &p_qsBarcode)
             obDBPatientCardOld.setPincode( "LOST" );
             obDBPatientCardOld.setActive( false );
             obDBPatientCardOld.save();
+
             obDBPatientCardNew.synchronizeUnits();
+            obDBPatientCardNew.synchronizeTime();
+            obDBPatientCardNew.save();
         }
     }
 }
@@ -3460,6 +3499,29 @@ void cWndMain::_checkVersions()
                               .arg( g_poPrefs->getVersionDb() )
                               .arg( qsAppVersion )
                               .arg( qsDbVersion ) );
+    }
+}
+
+void cWndMain::_checkIsActivationNeeded()
+{
+    int     nDaysRemain = g_obLicenceManager.daysRemain();
+
+    if( nDaysRemain < cLicenceManager::EXPIRE_MAX_DAYS )
+    {
+        QMessageBox::warning( this, tr("Warning"),
+                              tr( "The validity of the application's licence\n"
+                                  "will be expire in %1 days.\n\n"
+                                  "Please contact your franchise provider\n"
+                                  "and extend your licence valid time period.")
+                              .arg( nDaysRemain ) );
+    }
+    if( g_obLicenceManager.ltLicenceType() == cLicenceManager::LTYPE_REGISTERED )
+    {
+        QMessageBox::warning( this, tr("Warning"),
+                              tr( "The application's licence is registered\n"
+                                  "but not validated by your franchise provider.\n\n"
+                                  "Please contact your franchise provider\n"
+                                  "and validate your application's licence" ) );
     }
 }
 
