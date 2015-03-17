@@ -296,7 +296,7 @@ unsigned int cCassa::cassaProcessPatientCardSell( const cDBPatientCard &p_DBPati
 
 //    if( (p_obDBShoppingCart.cash()+p_obDBShoppingCart.voucher()) > 0 )
 //    {
-        cassaAddMoneyAction( p_obDBShoppingCart.cash()+p_obDBShoppingCart.voucher(), p_obDBShoppingCart.card(), obDBLedger.id(), p_qsComment );
+        cassaAddMoneyAction( p_obDBShoppingCart.cash()+p_obDBShoppingCart.voucher(), p_obDBShoppingCart.card(), obDBLedger.id(), qsComment );
 //    }
 /*    if( p_obDBShoppingCart.card() > 0 )
     {
@@ -342,11 +342,11 @@ unsigned int cCassa::cassaProcessProductStorageChange( const cDBShoppingCart &p_
 
     if( !p_bGlobalCassa )
     {
-        cassaAddMoneyAction( p_obDBShoppingCart.itemSumPrice()-p_obDBShoppingCart.itemDiscount(), 0, obDBLedger.id(), p_qsComment );
+        cassaAddMoneyAction( p_obDBShoppingCart.itemSumPrice()-p_obDBShoppingCart.itemDiscount(), 0, obDBLedger.id(), qsComment );
     }
     else
     {
-        cassaAddMoneyAction( 0, p_obDBShoppingCart.itemSumPrice()-p_obDBShoppingCart.itemDiscount(), obDBLedger.id(), p_qsComment );
+        cassaAddMoneyAction( 0, p_obDBShoppingCart.itemSumPrice()-p_obDBShoppingCart.itemDiscount(), obDBLedger.id(), qsComment );
 //        cassaAddGlobalMoneyAction( p_obDBShoppingCart.itemSumPrice()-p_obDBShoppingCart.itemDiscount(), obDBLedger.id(), p_qsComment );
     }
 
@@ -383,7 +383,7 @@ unsigned int cCassa::cassaProcessDeviceUse( const cDBShoppingCart &p_obDBShoppin
 
 //    if( (p_obDBShoppingCart.cash()+p_obDBShoppingCart.voucher()) > 0 )
 //    {
-        cassaAddMoneyAction( p_obDBShoppingCart.cash()+p_obDBShoppingCart.voucher(), p_obDBShoppingCart.card(), obDBLedger.id(), p_qsComment );
+        cassaAddMoneyAction( p_obDBShoppingCart.cash()+p_obDBShoppingCart.voucher(), p_obDBShoppingCart.card(), obDBLedger.id(), qsComment );
 //    }
 /*    if( p_obDBShoppingCart.card() > 0 )
     {
@@ -425,7 +425,7 @@ void cCassa::cassaProcessProductSell( const cDBShoppingCart &p_obDBShoppingCart,
 
 //    if( (p_obDBShoppingCart.cash()+p_obDBShoppingCart.voucher()) > 0 )
 //    {
-        cassaAddMoneyAction( p_obDBShoppingCart.cash()+p_obDBShoppingCart.voucher(), p_obDBShoppingCart.card(), obDBLedger.id(), p_qsComment );
+        cassaAddMoneyAction( p_obDBShoppingCart.cash()+p_obDBShoppingCart.voucher(), p_obDBShoppingCart.card(), obDBLedger.id(), qsComment );
 //    }
 /*    if( p_obDBShoppingCart.card() > 0 )
     {
