@@ -83,6 +83,7 @@ private:
     unsigned int             m_uiBlnsErrorAppeared;
     int                      m_nCommunicationErrorCounter;
     int                      m_nCommResetStep;
+    bool                     m_bClosingShift;
 
     vector<cDlgAdvertisementWindow *>   m_obAdWnd;
 
@@ -128,6 +129,7 @@ private slots:
     void on_action_Logs_triggered();
     void on_action_Hardwaretest_triggered();
     void on_action_LogOut_triggered();
+    void on_action_CloseShift_triggered();
     void on_action_Paneltypes_triggered();
     void on_action_Panelgroups_triggered();
     void on_action_Patientorigin_triggered()        {}

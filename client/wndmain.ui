@@ -119,7 +119,7 @@
      <x>0</x>
      <y>0</y>
      <width>1361</width>
-     <height>21</height>
+     <height>26</height>
     </rect>
    </property>
    <widget class="QMenu" name="menu_System">
@@ -138,6 +138,7 @@
     <addaction name="menu_ExportImport"/>
     <addaction name="separator"/>
     <addaction name="action_LogOut"/>
+    <addaction name="action_CloseShift"/>
     <addaction name="action_Exit"/>
    </widget>
    <widget class="QMenu" name="menu_Edit">
@@ -292,6 +293,7 @@
    </attribute>
    <addaction name="action_Exit"/>
    <addaction name="action_LogOut"/>
+   <addaction name="action_CloseShift"/>
   </widget>
   <widget class="QToolBar" name="toolBarPatient">
    <property name="windowTitle">
@@ -842,6 +844,14 @@
    </property>
    <property name="toolTip">
     <string>Replace lost patientcard with a new card and inactivate the lost card</string>
+   </property>
+  </action>
+  <action name="action_CloseShift">
+   <property name="text">
+    <string>Close shift</string>
+   </property>
+   <property name="toolTip">
+    <string>Logout from application with closing cassa and current shift</string>
    </property>
   </action>
  </widget>

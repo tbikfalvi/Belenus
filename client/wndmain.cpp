@@ -126,6 +126,7 @@ cWndMain::cWndMain( QWidget *parent ) : QMainWindow( parent )
     m_nCommResetStep                = 0;
     m_bBlnsHttpErrorVisible         = false;
     m_uiBlnsErrorAppeared           = 0;
+    m_bClosingShift                 = false;
 
     pbLogin->setIcon( QIcon("./resources/40x40_ok.png") );
 
@@ -159,6 +160,7 @@ cWndMain::cWndMain( QWidget *parent ) : QMainWindow( parent )
     //--------------------------------------------------------------------------------
     action_Exit->setIcon( QIcon("./resources/40x40_shutdown.png") );
     action_LogOut->setIcon( QIcon("./resources/40x40_lock.png") );
+    action_CloseShift->setIcon( QIcon("./resources/40x40_exit.png") );
 
     menu_ExportImport->setIcon( QIcon("./resources/40x40_database_sync.png") );
     action_Export->setIcon( QIcon("./resources/35x35_export.png") );
@@ -248,6 +250,7 @@ cWndMain::cWndMain( QWidget *parent ) : QMainWindow( parent )
 
     action_LogOut->setEnabled( false );
     action_Exit->setEnabled( false );
+    action_CloseShift->setEnabled( false );
 
     menu_ExportImport->setEnabled( false );
     action_Export->setEnabled( false );
@@ -819,7 +822,7 @@ void cWndMain::logoutUser()
 
     if( g_obCassa.isCassaEnabled() )
     {
-        if( !g_poPrefs->getCassaAutoClose() )
+        if( !m_bClosingShift && !g_poPrefs->getCassaAutoClose() )
         {
             if( QMessageBox::question( this, tr("Question"),
                                        tr("Do you want to close your cassa?"),
@@ -1184,6 +1187,7 @@ void cWndMain::updateToolbar()
 
     action_LogOut->setEnabled( bIsUserLoggedIn );
     action_Exit->setEnabled( !mdiPanels->isPanelWorking() );
+    action_CloseShift->setEnabled( !mdiPanels->isPanelWorking() && bIsUserLoggedIn );
 
     menu_Edit->setEnabled( bIsUserLoggedIn );
         action_Guests->setEnabled( bIsUserLoggedIn );
@@ -1553,6 +1557,22 @@ void cWndMain::on_action_LogOut_triggered()
     updateTitle();
 
     if( !showLogIn() ) close();
+}
+//====================================================================================
+void cWndMain::on_action_CloseShift_triggered()
+{
+    if( QMessageBox::question( this, tr("Question"),
+                               tr("Are you sure you want to close the current shift?"),
+                               QMessageBox::Yes | QMessageBox::No, QMessageBox::No ) == QMessageBox::Yes )
+    {
+        m_bClosingShift = true;
+
+        on_action_LogOut_triggered();
+        on_action_ReportViewer_triggered();
+        close();
+
+        m_bClosingShift = false;
+    }
 }
 //====================================================================================
 void cWndMain::on_action_Panelgroups_triggered()
@@ -2930,7 +2950,8 @@ void cWndMain::on_action_ReportViewer_triggered()
 
     QProcess *qpReportViewer = new QProcess(this);
 
-    if( !qpReportViewer->startDetached( QString("ReportViewer.exe %1 %2").arg(g_obUser.name()).arg(ledPassword->text()) ) )
+//    if( !qpReportViewer->startDetached( QString("ReportViewer.exe %1 %2").arg(g_obUser.name()).arg(ledPassword->text()) ) )
+    if( !qpReportViewer->startDetached( QString("ReportViewer.exe") ) )
     {
         QMessageBox::warning( this, tr("Warning"),
                               tr("Error occured when starting process:ReportViewer.exe\n\nError code: %1\n"
