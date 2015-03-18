@@ -3,7 +3,7 @@
 #include "creportpatientcardtype.h"
 #include "currency.h"
 
-cReportPatientCardType::cReportPatientCardType(QWidget *parent, QString p_qsReportName) : cReport(parent,p_qsReportName)
+cReportPatientCardType::cReportPatientCardType(QWidget *parent, QString p_qsReportName, bool p_bIsAdmin) : cReport(parent,p_qsReportName,p_bIsAdmin)
 {
     cTracer obTrace( "cReportPatientCardType::cReportPatientCardType" );
 

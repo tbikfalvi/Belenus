@@ -3,7 +3,7 @@
 #include "creportproducthistory.h"
 #include "currency.h"
 
-cReportProductHistory::cReportProductHistory(QWidget *parent, QString p_qsReportName) : cReport(parent,p_qsReportName)
+cReportProductHistory::cReportProductHistory(QWidget *parent, QString p_qsReportName, bool p_bIsAdmin) : cReport(parent,p_qsReportName,p_bIsAdmin)
 {
     m_qsReportName          = tr(" Product history ");
     m_qsReportDescription   = tr( "This report shows the product history. Please select the product you are interested in from the list "

@@ -464,6 +464,7 @@ cWndMain::authType cWndMain::_authenticateUser()
                 {
                     atRet = AUTH_OK;
                     m_enGroup = poQuery->value(5).toInt();
+                    m_uiUserId = poQuery->value(0).toUInt();
                 }
                 else
                 {
@@ -497,15 +498,15 @@ void cWndMain::_setReportsEnabled(bool p_bEnable)
     action_MonthlyClosure->setEnabled( p_bEnable && _isInGroup( GROUP_USER ) );
     action_Bookkeeping_CassaHistory->setEnabled( p_bEnable && _isInGroup( GROUP_USER ) );
 
-    action_PatientcardTypes->setEnabled( p_bEnable && _isInGroup( GROUP_USER ) );
+    action_PatientcardTypes->setEnabled( p_bEnable && _isInGroup( GROUP_ADMIN ) );
     action_Patientcards_Inactive->setEnabled( p_bEnable && _isInGroup( GROUP_USER ) );
-    action_Patientcards_Details->setEnabled( p_bEnable && _isInGroup( GROUP_USER ) );
+    action_Patientcards_Details->setEnabled( p_bEnable && _isInGroup( GROUP_ADMIN ) );
     action_Patientcard_Usages->setEnabled( p_bEnable && _isInGroup( GROUP_USER ) );
     action_Patientcard_Sells->setEnabled( p_bEnable && _isInGroup( GROUP_USER ) );
     action_Patientcard_Debts->setEnabled( p_bEnable && _isInGroup( GROUP_ADMIN ) );
 
     action_Products->setEnabled( p_bEnable && _isInGroup( GROUP_USER ) );
-    action_Product_Status->setEnabled( p_bEnable && _isInGroup( GROUP_USER ) );
+    action_Product_Status->setEnabled( p_bEnable && _isInGroup( GROUP_ADMIN ) );
     action_Product_History->setEnabled( p_bEnable && _isInGroup( GROUP_USER ) );
 
     action_Guests->setEnabled( p_bEnable && _isInGroup( GROUP_USER ) );
@@ -518,15 +519,15 @@ void cWndMain::_setReportsEnabled(bool p_bEnable)
     pbBookkeepingMonth->setEnabled( p_bEnable && _isInGroup( GROUP_USER ) );
     pbBookkeepingCassaHistory->setEnabled( p_bEnable && _isInGroup( GROUP_USER ) );
 
-    pbPatientcardType->setEnabled( p_bEnable && _isInGroup( GROUP_USER ) );
+    pbPatientcardType->setEnabled( p_bEnable && _isInGroup( GROUP_ADMIN ) );
     pbPatientcardsInactive->setEnabled( p_bEnable && _isInGroup( GROUP_USER ) );
-    pbPatientcardsDetails->setEnabled( p_bEnable && _isInGroup( GROUP_USER ) );
+    pbPatientcardsDetails->setEnabled( p_bEnable && _isInGroup( GROUP_ADMIN ) );
     pbPatientcardUsages->setEnabled( p_bEnable && _isInGroup( GROUP_USER ) );
     pbPatientcardSells->setEnabled( p_bEnable && _isInGroup( GROUP_USER ) );
     pbPatientcardDebts->setEnabled( p_bEnable && _isInGroup( GROUP_ADMIN ) );
 
     pbProducts->setEnabled( p_bEnable && _isInGroup( GROUP_USER ) );
-    pbProductStatus->setEnabled( p_bEnable && _isInGroup( GROUP_USER ) );
+    pbProductStatus->setEnabled( p_bEnable && _isInGroup( GROUP_ADMIN ) );
     pbProductHistory->setEnabled( p_bEnable && _isInGroup( GROUP_USER ) );
 
     pbGuests->setEnabled( p_bEnable && _isInGroup( GROUP_USER ) );
@@ -553,7 +554,7 @@ void cWndMain::slotCheckReportDaily(bool p_bChecked)
 
     if( p_bChecked )
     {
-        m_repDaily = new cReportDaily();
+        m_repDaily = new cReportDaily( this, "", _isInGroup( GROUP_ADMIN ) );
 
         m_qvReports.append( m_repDaily );
         m_repDaily->setIndex( tabReports->addTab( m_repDaily, QIcon("./resources/40x40_book_daily.png"), m_repDaily->name() ) );
@@ -583,7 +584,7 @@ void cWndMain::slotCheckReportLedger( bool p_bChecked )
 
     if( p_bChecked )
     {
-        m_repLedger = new cReportLedger();
+        m_repLedger = new cReportLedger( this, "", _isInGroup( GROUP_ADMIN ) );
 
         m_qvReports.append( m_repLedger );
         m_repLedger->setIndex( tabReports->addTab( m_repLedger, QIcon("./resources/40x40_book_ledger.png"), m_repLedger->name() ) );
@@ -613,7 +614,7 @@ void cWndMain::slotCheckReportMonthClose(bool p_bChecked)
 
     if( p_bChecked )
     {
-        m_repMonthClose = new cReportMonthClose();
+        m_repMonthClose = new cReportMonthClose( this, "", _isInGroup( GROUP_ADMIN ) );
 
         m_qvReports.append( m_repMonthClose );
         m_repMonthClose->setIndex( tabReports->addTab( m_repMonthClose, QIcon("./resources/40x40_book.png"), m_repMonthClose->name() ) );
@@ -643,7 +644,7 @@ void cWndMain::slotCheckReportCassaHistory(bool p_bChecked)
 
     if( p_bChecked )
     {
-        m_repCassaHistory = new cReportCassaHistory( this, "", _isInGroup( GROUP_ADMIN ) );
+        m_repCassaHistory = new cReportCassaHistory( this, "", _isInGroup( GROUP_ADMIN ), m_uiUserId );
 
         m_qvReports.append( m_repCassaHistory );
         m_repCassaHistory->setIndex( tabReports->addTab( m_repCassaHistory, QIcon("./resources/40x40_cassa.png"), m_repCassaHistory->name() ) );
@@ -673,7 +674,7 @@ void cWndMain::slotCheckReportPatientcardType( bool p_bChecked )
 
     if( p_bChecked )
     {
-        m_repCardType = new cReportPatientCardType();
+        m_repCardType = new cReportPatientCardType( this, "", _isInGroup( GROUP_ADMIN ) );
 
         m_qvReports.append( m_repCardType );
         m_repCardType->setIndex( tabReports->addTab( m_repCardType, QIcon("./resources/40x40_report_patientcardtypes.png"), m_repCardType->name() ) );
@@ -703,7 +704,7 @@ void cWndMain::slotCheckReportPatientcardInactive( bool p_bChecked )
 
     if( p_bChecked )
     {
-        m_repCardInactive = new cReportCardInactive();
+        m_repCardInactive = new cReportCardInactive( this, "", _isInGroup( GROUP_ADMIN ) );
 
         m_qvReports.append( m_repCardInactive );
         m_repCardInactive->setIndex( tabReports->addTab( m_repCardInactive, QIcon("./resources/40x40_report_patientcard_inactive.png"), m_repCardInactive->name() ) );
@@ -733,7 +734,7 @@ void cWndMain::slotCheckReportPatientcardDetails( bool p_bChecked )
 
     if( p_bChecked )
     {
-        m_repCardDetails = new cReportCardDetails();
+        m_repCardDetails = new cReportCardDetails( this, "", _isInGroup( GROUP_ADMIN ) );
 
         m_qvReports.append( m_repCardDetails );
         m_repCardDetails->setIndex( tabReports->addTab( m_repCardDetails, QIcon("./resources/40x40_report_patientcard_details.png"), m_repCardDetails->name() ) );
@@ -763,7 +764,7 @@ void cWndMain::slotCheckReportPatientcardUsages( bool p_bChecked )
 
     if( p_bChecked )
     {
-        m_repCardUsages = new cReportPCUsages();
+        m_repCardUsages = new cReportPCUsages( this, "", _isInGroup( GROUP_ADMIN ) );
 
         m_qvReports.append( m_repCardUsages );
         m_repCardUsages->setIndex( tabReports->addTab( m_repCardUsages, QIcon("./resources/40x40_report_patientcard_usages.png"), m_repCardUsages->name() ) );
@@ -823,7 +824,7 @@ void cWndMain::slotCheckReportPatientcardDebts( bool p_bChecked )
 
     if( p_bChecked )
     {
-        m_repCardDebts = new cReportPatientcardDebts();
+        m_repCardDebts = new cReportPatientcardDebts( this, "", _isInGroup( GROUP_ADMIN ) );
 
         m_qvReports.append( m_repCardDebts );
         m_repCardDebts->setIndex( tabReports->addTab( m_repCardDebts, QIcon("./resources/40x40_report_patientcard_sell.png"), m_repCardDebts->name() ) );
@@ -853,7 +854,7 @@ void cWndMain::slotCheckReportProducts(bool p_bChecked)
 
     if( p_bChecked )
     {
-        m_repProducts = new cReportProducts();
+        m_repProducts = new cReportProducts( this, "", _isInGroup( GROUP_ADMIN ) );
 
         m_qvReports.append( m_repProducts );
         m_repProducts->setIndex( tabReports->addTab( m_repProducts, QIcon("./resources/40x40_report_products.png"), m_repProducts->name() ) );
@@ -883,7 +884,7 @@ void cWndMain::slotCheckReportProductStatus(bool p_bChecked)
 
     if( p_bChecked )
     {
-        m_repProdStatus = new cReportProductStatus();
+        m_repProdStatus = new cReportProductStatus( this, "", _isInGroup( GROUP_ADMIN ) );
 
         m_qvReports.append( m_repProdStatus );
         m_repProdStatus->setIndex( tabReports->addTab( m_repProdStatus, QIcon("./resources/40x40_report_product_status.png"), m_repProdStatus->name() ) );
@@ -913,7 +914,7 @@ void cWndMain::slotCheckReportProductHistory(bool p_bChecked)
 
     if( p_bChecked )
     {
-        m_repProdHistory = new cReportProductHistory();
+        m_repProdHistory = new cReportProductHistory( this, "", _isInGroup( GROUP_ADMIN ) );
 
         m_qvReports.append( m_repProdHistory );
         m_repProdHistory->setIndex( tabReports->addTab( m_repProdHistory, QIcon("./resources/40x40_report_product_history.png"), m_repProdHistory->name() ) );
@@ -943,7 +944,7 @@ void cWndMain::slotCheckReportGuests(bool p_bChecked)
 
     if( p_bChecked )
     {
-        m_repGuests = new cReportGuests();
+        m_repGuests = new cReportGuests( this, "", _isInGroup( GROUP_ADMIN ) );
 
         m_qvReports.append( m_repGuests );
         m_repGuests->setIndex( tabReports->addTab( m_repGuests, QIcon("./resources/40x40_patient.png"), m_repGuests->name() ) );
@@ -973,7 +974,7 @@ void cWndMain::slotCheckReportDeviceUsages(bool p_bChecked)
 
     if( p_bChecked )
     {
-        m_repDeviceUsages = new cReportDeviceUsages();
+        m_repDeviceUsages = new cReportDeviceUsages( this, "", _isInGroup( GROUP_ADMIN ) );
 
         m_qvReports.append( m_repDeviceUsages );
         m_repDeviceUsages->setIndex( tabReports->addTab( m_repDeviceUsages, QIcon("./resources/40x40_device.png"), m_repDeviceUsages->name() ) );

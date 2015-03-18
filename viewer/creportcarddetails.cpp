@@ -4,7 +4,7 @@
 #include "../framework/qtframework.h"
 #include "creportcarddetails.h"
 
-cReportCardDetails::cReportCardDetails(QWidget *parent, QString p_qsReportName) : cReport(parent,p_qsReportName)
+cReportCardDetails::cReportCardDetails(QWidget *parent, QString p_qsReportName, bool p_bIsAdmin) : cReport(parent,p_qsReportName,p_bIsAdmin)
 {
     m_qsReportName          = tr(" Patientcards details ");
     m_qsReportDescription   = tr( "This report shows the details of the selected patient card. "

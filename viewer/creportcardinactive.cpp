@@ -2,7 +2,7 @@
 #include "../framework/qtframework.h"
 #include "creportcardinactive.h"
 
-cReportCardInactive::cReportCardInactive(QWidget *parent, QString p_qsReportName) : cReport(parent,p_qsReportName)
+cReportCardInactive::cReportCardInactive(QWidget *parent, QString p_qsReportName, bool p_bIsAdmin) : cReport(parent,p_qsReportName,p_bIsAdmin)
 {
     m_qsReportName          = tr(" Not used patientcards ");
     m_qsReportDescription   = tr( "This report shows the currently inactive patient cards that registered into database but currently not used." );

@@ -9,7 +9,7 @@ class cReportMonthClose : public cReport
 {
     Q_OBJECT
 public:
-    explicit cReportMonthClose(QWidget *parent = 0, QString p_qsReportName = "");
+    explicit cReportMonthClose(QWidget *parent = 0, QString p_qsReportName = "", bool p_bIsAdmin = false );
     
 signals:
     

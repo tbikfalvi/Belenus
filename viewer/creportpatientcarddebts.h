@@ -9,7 +9,7 @@ class cReportPatientcardDebts : public cReport
 {
     Q_OBJECT
 public:
-    explicit cReportPatientcardDebts(QWidget *parent = 0, QString p_qsReportName = "");
+    explicit cReportPatientcardDebts(QWidget *parent = 0, QString p_qsReportName = "", bool p_bIsAdmin = false );
     
 signals:
     

@@ -56,7 +56,7 @@ public:
         PO_LANDSCAPE = QPrinter::Landscape
     };
 
-    explicit cReport(QWidget *parent = 0, QString p_qsReportName = "" );
+    explicit cReport(QWidget *parent = 0, QString p_qsReportName = "", bool p_bIsAdmin = false );
     ~cReport();
 
     virtual void         refreshReport();
@@ -136,6 +136,7 @@ protected:
 
     QString              m_qsReportName;
     QString              m_qsReportDescription;
+    bool                 m_bIsAdmin;
     int                  m_nIndex;
 
     bool                 m_bDateStartEnabled;

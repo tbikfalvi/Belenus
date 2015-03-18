@@ -9,7 +9,7 @@ class cReportCassaHistory : public cReport
 {
     Q_OBJECT
 public:
-    explicit cReportCassaHistory(QWidget *parent = 0, QString p_qsReportName = "", bool p_bFilterEnable = false );
+    explicit cReportCassaHistory(QWidget *parent = 0, QString p_qsReportName = "", bool p_bIsAdmin = false, unsigned int p_uiUserId = 0 );
     
 signals:
     

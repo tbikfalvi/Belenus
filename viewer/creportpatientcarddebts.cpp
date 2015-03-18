@@ -4,7 +4,7 @@
 #include "currency.h"
 
 //------------------------------------------------------------------------------------
-cReportPatientcardDebts::cReportPatientcardDebts(QWidget *parent, QString p_qsReportName) : cReport(parent,p_qsReportName)
+cReportPatientcardDebts::cReportPatientcardDebts(QWidget *parent, QString p_qsReportName, bool p_bIsAdmin) : cReport(parent,p_qsReportName,p_bIsAdmin)
 //------------------------------------------------------------------------------------
 {
     m_qsReportName          = tr(" Value of active patientcards ");

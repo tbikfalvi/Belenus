@@ -3,7 +3,7 @@
 #include "creportmonthclose.h"
 #include "currency.h"
 
-cReportMonthClose::cReportMonthClose(QWidget *parent, QString p_qsReportName) : cReport(parent,p_qsReportName)
+cReportMonthClose::cReportMonthClose(QWidget *parent, QString p_qsReportName, bool p_bIsAdmin) : cReport(parent,p_qsReportName,p_bIsAdmin)
 {
     m_qsReportName          = tr(" Monthly close ");
     m_qsReportDescription   = tr( "This report shows the product and patientcard related summaries for the selected date intervall. "

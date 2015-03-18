@@ -2,7 +2,7 @@
 #include "../framework/qtframework.h"
 #include "creportproductstatus.h"
 
-cReportProductStatus::cReportProductStatus(QWidget *parent, QString p_qsReportName) : cReport(parent,p_qsReportName)
+cReportProductStatus::cReportProductStatus(QWidget *parent, QString p_qsReportName, bool p_bIsAdmin) : cReport(parent,p_qsReportName,p_bIsAdmin)
 {
     m_qsReportName          = tr(" Product status ");
     m_qsReportDescription   = tr( "This report shows the product status on the selected date. "
