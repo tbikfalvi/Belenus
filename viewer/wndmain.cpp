@@ -507,9 +507,9 @@ void cWndMain::_setReportsEnabled(bool p_bEnable)
 
     action_Products->setEnabled( p_bEnable && _isInGroup( GROUP_USER ) );
     action_Product_Status->setEnabled( p_bEnable && _isInGroup( GROUP_ADMIN ) );
-    action_Product_History->setEnabled( p_bEnable && _isInGroup( GROUP_USER ) );
+    action_Product_History->setEnabled( p_bEnable && _isInGroup( GROUP_ADMIN ) );
 
-    action_Guests->setEnabled( p_bEnable && _isInGroup( GROUP_USER ) );
+    action_Guests->setEnabled( p_bEnable && _isInGroup( GROUP_ADMIN ) );
 
     action_DeviceUsages->setEnabled( p_bEnable && _isInGroup( GROUP_USER ) );
 
@@ -528,9 +528,9 @@ void cWndMain::_setReportsEnabled(bool p_bEnable)
 
     pbProducts->setEnabled( p_bEnable && _isInGroup( GROUP_USER ) );
     pbProductStatus->setEnabled( p_bEnable && _isInGroup( GROUP_ADMIN ) );
-    pbProductHistory->setEnabled( p_bEnable && _isInGroup( GROUP_USER ) );
+    pbProductHistory->setEnabled( p_bEnable && _isInGroup( GROUP_ADMIN ) );
 
-    pbGuests->setEnabled( p_bEnable && _isInGroup( GROUP_USER ) );
+    pbGuests->setEnabled( p_bEnable && _isInGroup( GROUP_ADMIN ) );
 
     pbDeviceUsages->setEnabled( p_bEnable && _isInGroup( GROUP_USER ) );
 
