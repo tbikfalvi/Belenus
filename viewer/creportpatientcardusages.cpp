@@ -3,7 +3,7 @@
 #include "creportpatientcardusages.h"
 #include "currency.h"
 
-cReportPCUsages::cReportPCUsages(QWidget *parent, QString p_qsReportName) : cReport(parent,p_qsReportName)
+cReportPCUsages::cReportPCUsages(QWidget *parent, QString p_qsReportName, bool p_bIsAdmin) : cReport(parent,p_qsReportName)
 {
     m_qsReportName          = tr(" Patientcard usages ");
     m_qsReportDescription   = tr( "This report shows the patientcard usages for the selected date intervall. "
