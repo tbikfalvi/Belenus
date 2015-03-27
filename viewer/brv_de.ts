@@ -874,41 +874,56 @@
     </message>
     <message>
         <location filename="creportpatientcardusages.cpp" line="13"/>
+        <source>Barcode contains :</source>
+        <translation type="unfinished">Strichcode enthällt : </translation>
+    </message>
+    <message>
+        <location filename="creportpatientcardusages.cpp" line="16"/>
         <source>First date of intervall :</source>
         <translation>Erster Tag des Zetraums :</translation>
     </message>
     <message>
-        <location filename="creportpatientcardusages.cpp" line="17"/>
+        <location filename="creportpatientcardusages.cpp" line="20"/>
         <source>Last date of intervall :</source>
         <translation>letzter Tag des Zeitraums :</translation>
     </message>
     <message>
-        <location filename="creportpatientcardusages.cpp" line="25"/>
+        <location filename="creportpatientcardusages.cpp" line="28"/>
         <source>Create selected report ...</source>
         <translation>Demonstration anzeigen…</translation>
     </message>
     <message>
-        <location filename="creportpatientcardusages.cpp" line="34"/>
+        <location filename="creportpatientcardusages.cpp" line="37"/>
         <source>Date intervall:</source>
         <translation>Zeitraum :</translation>
     </message>
     <message>
-        <location filename="creportpatientcardusages.cpp" line="55"/>
+        <location filename="creportpatientcardusages.cpp" line="80"/>
         <source>Date of usage</source>
         <translation>Datum der Benutzung</translation>
     </message>
     <message>
-        <location filename="creportpatientcardusages.cpp" line="56"/>
+        <location filename="creportpatientcardusages.cpp" line="81"/>
         <source>Patientcard barcode</source>
         <translation>Strichcode der Club-Karte</translation>
     </message>
     <message>
-        <location filename="creportpatientcardusages.cpp" line="57"/>
+        <location filename="creportpatientcardusages.cpp" line="82"/>
         <source>Unit count</source>
         <translation>Anzahl der Einheiten</translation>
     </message>
     <message>
-        <location filename="creportpatientcardusages.cpp" line="75"/>
+        <location filename="creportpatientcardusages.cpp" line="83"/>
+        <source>Unit type</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="creportpatientcardusages.cpp" line="84"/>
+        <source>Unit length</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="creportpatientcardusages.cpp" line="104"/>
         <source>Sum</source>
         <translation>Insgesammt</translation>
     </message>

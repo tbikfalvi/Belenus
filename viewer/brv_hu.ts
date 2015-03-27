@@ -976,41 +976,56 @@
     </message>
     <message>
         <location filename="creportpatientcardusages.cpp" line="13"/>
+        <source>Barcode contains :</source>
+        <translation>Vonalkód tartalmazza :</translation>
+    </message>
+    <message>
+        <location filename="creportpatientcardusages.cpp" line="16"/>
         <source>First date of intervall :</source>
         <translation>Az időintervallum első napja :</translation>
     </message>
     <message>
-        <location filename="creportpatientcardusages.cpp" line="17"/>
+        <location filename="creportpatientcardusages.cpp" line="20"/>
         <source>Last date of intervall :</source>
         <translation>Az időintervallum utolsó napja :</translation>
     </message>
     <message>
-        <location filename="creportpatientcardusages.cpp" line="25"/>
+        <location filename="creportpatientcardusages.cpp" line="28"/>
         <source>Create selected report ...</source>
         <translation>Kimutatás összeállítása ...</translation>
     </message>
     <message>
-        <location filename="creportpatientcardusages.cpp" line="34"/>
+        <location filename="creportpatientcardusages.cpp" line="37"/>
         <source>Date intervall:</source>
         <translation>Időintervallum:</translation>
     </message>
     <message>
-        <location filename="creportpatientcardusages.cpp" line="55"/>
+        <location filename="creportpatientcardusages.cpp" line="80"/>
         <source>Date of usage</source>
         <translation>Használat dátuma</translation>
     </message>
     <message>
-        <location filename="creportpatientcardusages.cpp" line="56"/>
+        <location filename="creportpatientcardusages.cpp" line="81"/>
         <source>Patientcard barcode</source>
         <translation>Bérlet vonalkód</translation>
     </message>
     <message>
-        <location filename="creportpatientcardusages.cpp" line="57"/>
+        <location filename="creportpatientcardusages.cpp" line="82"/>
         <source>Unit count</source>
         <translation>Egységek száma</translation>
     </message>
     <message>
-        <location filename="creportpatientcardusages.cpp" line="75"/>
+        <location filename="creportpatientcardusages.cpp" line="83"/>
+        <source>Unit type</source>
+        <translation>Egység típus</translation>
+    </message>
+    <message>
+        <location filename="creportpatientcardusages.cpp" line="84"/>
+        <source>Unit length</source>
+        <translation>Egység idő</translation>
+    </message>
+    <message>
+        <location filename="creportpatientcardusages.cpp" line="104"/>
         <source>Sum</source>
         <translation>Összesen</translation>
     </message>
