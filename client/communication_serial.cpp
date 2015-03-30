@@ -361,19 +361,26 @@ bool CS_Communication_Serial::getRelayStatus( const int nRelayCount )
     else
         return false;
 }
+
 void CS_Communication_Serial::setCurrentCommand( const int p_nIndex, const int p_nCurrentCommand )
 {
     pPanel[p_nIndex].cCurrStatus = p_nCurrentCommand;
 }
+
 void CS_Communication_Serial::setCounter(const int p_nIndex, const int p_nCounter , bool p_bUpdateTimer)
 {
     pPanel[p_nIndex].nTimeStatusCounter = p_nCounter;
-    if( p_bUpdateTimer &&
+
+    if( p_bUpdateTimer && pPanel[p_nIndex].cCurrStatus == STATUS_VARAKOZAS )
+/*    if( p_bUpdateTimer &&
         ( pPanel[p_nIndex].cCurrStatus == STATUS_VARAKOZAS ||
           pPanel[p_nIndex].cCurrStatus == STATUS_SZAUNAZAS ||
-          pPanel[p_nIndex].cCurrStatus == STATUS_BARNULAS ) )
+          pPanel[p_nIndex].cCurrStatus == STATUS_BARNULAS ) )*/
     {
-        g_obLogger(cSeverity::DEBUG) << "[SP] Force to send time to modul" << EOM;
+        g_obLogger(cSeverity::DEBUG) << "[SP] Force to send time to modul. Index: ["
+                                     << p_nIndex
+                                     << "]"
+                                     << EOM;
         pModul[p_nIndex].bSendIras = true;
         if( pPanel[p_nIndex].cCurrStatus != STATUS_VARAKOZAS )
         {
@@ -381,6 +388,7 @@ void CS_Communication_Serial::setCounter(const int p_nIndex, const int p_nCounte
         }
     }
 }
+
 bool CS_Communication_Serial::setMainActionTime(const int p_nIndex, const int p_nTime , BYTE *p_byStatus, bool p_bSend)
 {
     bool bRet = true;

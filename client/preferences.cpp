@@ -148,7 +148,7 @@ void cPreferences::loadConfFileSettings()
         m_inCommunicationPort           = obPrefFile.value( QString::fromAscii( "Hardware/ComPort" ), "1" ).toInt();
         m_bForceModuleSendTime          = obPrefFile.value( QString::fromAscii( "Hardware/ForceModuleSendTime") ).toBool();
         m_bForceModuleCheckButton       = obPrefFile.value( QString::fromAscii( "Hardware/ForceModuleCheckButton") ).toBool();
-
+        m_nForceTimeSendCounter         = obPrefFile.value( QString::fromAscii( "Hardware/ForceTimeSendCounter") ).toInt();
 
         m_qsCurrencyShort               = obPrefFile.value( QString::fromAscii( "Currency/Short" ), "Ft." ).toString();
         m_qsCurrencyLong                = obPrefFile.value( QString::fromAscii( "Currency/Long" ), "Forint" ).toString();
@@ -317,6 +317,7 @@ void cPreferences::save() const throw (cSevException)
     obPrefFile.setValue( QString::fromAscii( "Hardware/ComPort" ), m_inCommunicationPort );
     obPrefFile.setValue( QString::fromAscii( "Hardware/ForceModuleSendTime"), m_bForceModuleSendTime );
     obPrefFile.setValue( QString::fromAscii( "Hardware/ForceModuleCheckButton"), m_bForceModuleCheckButton );
+    obPrefFile.setValue( QString::fromAscii( "Hardware/ForceTimeSendCounter"), m_nForceTimeSendCounter );
 
     obPrefFile.setValue( QString::fromAscii( "UserInterface/MainBackground" ), m_qsMainBackground );
 
@@ -1556,4 +1557,15 @@ bool cPreferences::isForceModuleCheckButton()
 {
     return m_bForceModuleCheckButton;
 }
+
+void cPreferences::setForceTimeSendCounter( const int p_nForceTimeSendCounter )
+{
+    m_nForceTimeSendCounter = p_nForceTimeSendCounter;
+}
+
+int cPreferences::getForceTimeSendCounter() const
+{
+    return m_nForceTimeSendCounter;
+}
+
 
