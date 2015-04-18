@@ -117,6 +117,7 @@ cDlgPreferences::cDlgPreferences( QWidget *p_poParent )
 
     spbCOM->setValue( g_poPrefs->getCommunicationPort() );
     chkForceSendTime->setChecked( g_poPrefs->isForceModuleSendTime() );
+    ledForceTimeSendTime->setText( QString::number( g_poPrefs->getForceTimeSendCounter() ) );
     chkForceButtonRead->setChecked( g_poPrefs->isForceModuleCheckButton() );
 
     obColorIcon.fill( QColor( g_poPrefs->getMainBackground() ) );
@@ -405,6 +406,7 @@ void cDlgPreferences::accept()
 
     g_poPrefs->setCommunicationPort( spbCOM->value() );
     g_poPrefs->setForceModuleSendTime( chkForceSendTime->isChecked() );
+    g_poPrefs->setForceTimeSendCounter( ledForceTimeSendTime->text().toInt() );
     g_poPrefs->setForceModuleCheckButton( chkForceButtonRead->isChecked() );
 
     g_poPrefs->setDeviceUseVAT( ledVatPercent->text().toInt() );

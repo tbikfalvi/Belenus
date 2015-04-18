@@ -207,6 +207,8 @@ public:
     bool            isForceModuleSendTime();
     void            setForceModuleCheckButton( bool p_bForceModuleCheckButton, bool p_boSaveNow = false );
     bool            isForceModuleCheckButton();
+    void            setForceTimeSendCounter( const int p_nForceTimeSendCounter );
+    int             getForceTimeSendCounter() const;
 
     //    void            setXXX( const QString &p_qsXXX, bool p_boSaveNow = false );
     //    QString         getXXX() const;
@@ -294,6 +296,7 @@ private:
     bool            m_bEnableHWDebug;
     bool            m_bForceModuleSendTime;
     bool            m_bForceModuleCheckButton;
+    int             m_nForceTimeSendCounter;
 
     void init();
 };
