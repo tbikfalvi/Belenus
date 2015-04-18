@@ -18,4 +18,5 @@ Version_1_4_16  15-os verzio settings-be, minusz hiba, report to txt, demo ha ni
 Version_1_5_0   Berlet info megjelenites a KiwiSun weboldalan (gibbig helyett),
                 Rendszeradmin tud barmennyi percre inditani gepet
 Version_1_5_0_1 Gepido kuldes adott masodpercig vetkozesi idoben
-Version_1_5_1   Hibajavitasok: gep uzemora nullazas, konyveles torles
+Version_1_5_0_2 Exception-ok elkapasa a legfelso szinten
+Version_1_5_1   
