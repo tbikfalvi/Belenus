@@ -140,6 +140,7 @@ private:
     bool                         m_bIsTubeReplaceNeeded;
     QString                      m_qsTransactionId;
     int                          m_nMinuteOfPanel;
+    int                          m_nForceTimeSendCounter;
 
     QVBoxLayout                 *verticalLayout;
     QLabel                      *lblTitle;

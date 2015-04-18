@@ -158,6 +158,8 @@ cFrmPanel::cFrmPanel( const unsigned int p_uiPanelId ) : QFrame()
 
     m_nMinuteOfPanel                = 0;
 
+    m_nForceTimeSendCounter     = g_poPrefs->getForceTimeSendCounter();
+
     m_vrPatientCards.clear();
 
 //    m_uiAttendanceId        = 0;
@@ -275,6 +277,8 @@ void cFrmPanel::start()
                                 << EOM;
 
     m_nMinuteOfPanel = m_inMainProcessLength/60;
+
+    m_nForceTimeSendCounter = g_poPrefs->getForceTimeSendCounter();
 
     activateNextStatus();
     m_inTimerId = startTimer( 1000 );
@@ -624,13 +628,14 @@ void cFrmPanel::timerEvent ( QTimerEvent * )
     }
     bool bUpdatePanelTimer = false;
 
-    if( g_poPrefs->isForceModuleSendTime() )
+    if( g_poPrefs->isForceModuleSendTime() && m_nForceTimeSendCounter >= 0 )
     {
-        if( (m_inMainProcessLength/60 + 1) != m_nMinuteOfPanel )
-        {
+//        if( (m_inMainProcessLength/60 + 1) != m_nMinuteOfPanel )
+//        {
             bUpdatePanelTimer = true;
-            m_nMinuteOfPanel = m_inMainProcessLength/60 + 1;
-        }
+//            m_nMinuteOfPanel = m_inMainProcessLength/60 + 1;
+//        }
+            m_nForceTimeSendCounter--;
     }
 
     g_poHardware->setCounter( m_uiId-1, (int)m_uiCounter, bUpdatePanelTimer );
