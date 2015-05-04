@@ -405,6 +405,12 @@ void cBlnsHttp::_httpStartProcess()
         return;
     }
 
+    if( g_poPrefs->isBlnsHttpSuspended() )
+    {
+        g_obLogger(cSeverity::WARNING) << "HTTP: communication SUSPENDED" << EOM;
+        return;
+    }
+
     if( m_vrHttpActions.size() < 1 )
     {
         g_obLogger(cSeverity::ERROR) << "HTTP: actions not prepared correctly" << EOM;
