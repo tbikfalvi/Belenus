@@ -575,91 +575,98 @@ void cFrmPanel::mousePressEvent ( QMouseEvent * p_poEvent )
 //====================================================================================
 void cFrmPanel::timerEvent ( QTimerEvent * )
 {
-    if( g_poHardware->isHardwareMovedNextStatus( m_uiId-1 ) )
+    try
     {
-        g_poHardware->setHardwareMovedNextStatus( m_uiId-1 );
-        m_uiCounter = 0;
-    }
-    if( g_poHardware->isHardwareStopped( m_uiId-1 ) )
-    {
-        QString qsStatus = m_obStatuses.at( m_uiStatus )->name();
-
-        if( g_poPrefs->isStopInLine() )
+        if( g_poHardware->isHardwareMovedNextStatus( m_uiId-1 ) )
         {
-            qsStatus.append( " " );
+            g_poHardware->setHardwareMovedNextStatus( m_uiId-1 );
+            m_uiCounter = 0;
         }
-        else
+        if( g_poHardware->isHardwareStopped( m_uiId-1 ) )
         {
-            qsStatus.append( "<br>" );
-        }
-        qsStatus.append( QString( "!! %1 !!" ).arg( tr("PAUSED") ) );
-        formatStatusString( qsStatus );
-        m_bIsDeviceStopped = true;
-    }
-    else
-    {
-        formatStatusString( m_obStatuses.at( m_uiStatus )->name() );
-        m_bIsDeviceStopped = false;
-    }
+            QString qsStatus = m_obStatuses.at( m_uiStatus )->name();
 
-    if( m_uiCounter )
-    {
-        if( !g_poHardware->isHardwareStopped( m_uiId-1 ) )
-            m_uiCounter--;
-
-        if( isMainProcess() )
-        {
-            m_inMainProcessLength--;
-            if( m_inCashTimeRemains > 0 )
+            if( g_poPrefs->isStopInLine() )
             {
-                m_inCashTimeRemains--;
+                qsStatus.append( " " );
             }
             else
             {
-                m_inCardTimeRemains--;
+                qsStatus.append( "<br>" );
             }
+            qsStatus.append( QString( "!! %1 !!" ).arg( tr("PAUSED") ) );
+            formatStatusString( qsStatus );
+            m_bIsDeviceStopped = true;
+        }
+        else
+        {
+            formatStatusString( m_obStatuses.at( m_uiStatus )->name() );
+            m_bIsDeviceStopped = false;
         }
 
-        formatTimerString( QString( "%1:%2" ).arg( m_uiCounter / 60, 2, 10, QChar( '0' ) ).arg( m_uiCounter % 60, 2, 10, QChar( '0' ) ) );
-    }
-    else
-    {
-        activateNextStatus();
-    }
-    bool bUpdatePanelTimer = false;
+        if( m_uiCounter )
+        {
+            if( !g_poHardware->isHardwareStopped( m_uiId-1 ) )
+                m_uiCounter--;
 
-    if( g_poPrefs->isForceModuleSendTime() && m_nForceTimeSendCounter >= 0 )
-    {
-//        if( (m_inMainProcessLength/60 + 1) != m_nMinuteOfPanel )
-//        {
-            bUpdatePanelTimer = true;
-//            m_nMinuteOfPanel = m_inMainProcessLength/60 + 1;
-//        }
-            m_nForceTimeSendCounter--;
-    }
+            if( isMainProcess() )
+            {
+                m_inMainProcessLength--;
+                if( m_inCashTimeRemains > 0 )
+                {
+                    m_inCashTimeRemains--;
+                }
+                else
+                {
+                    m_inCardTimeRemains--;
+                }
+            }
 
-    g_poHardware->setCounter( m_uiId-1, (int)m_uiCounter, bUpdatePanelTimer );
+            formatTimerString( QString( "%1:%2" ).arg( m_uiCounter / 60, 2, 10, QChar( '0' ) ).arg( m_uiCounter % 60, 2, 10, QChar( '0' ) ) );
+        }
+        else
+        {
+            activateNextStatus();
+        }
+        bool bUpdatePanelTimer = false;
 
-    if( !isWorking() && mainProcessTime() > 0 && !isHasToPay() )
-    {
-        icoPanelStart->setVisible( true );
-    }
-    else
-    {
-        if( m_bIsDeviceStopped )
+        if( g_poPrefs->isForceModuleSendTime() && m_nForceTimeSendCounter >= 0 )
+        {
+    //        if( (m_inMainProcessLength/60 + 1) != m_nMinuteOfPanel )
+    //        {
+                bUpdatePanelTimer = true;
+    //            m_nMinuteOfPanel = m_inMainProcessLength/60 + 1;
+    //        }
+                m_nForceTimeSendCounter--;
+        }
+
+        g_poHardware->setCounter( m_uiId-1, (int)m_uiCounter, bUpdatePanelTimer );
+
+        if( !isWorking() && mainProcessTime() > 0 && !isHasToPay() )
         {
             icoPanelStart->setVisible( true );
         }
         else
         {
-            icoPanelStart->setVisible( false );
+            if( m_bIsDeviceStopped )
+            {
+                icoPanelStart->setVisible( true );
+            }
+            else
+            {
+                icoPanelStart->setVisible( false );
+            }
         }
+        icoPanelNext->setVisible( isStatusCanBeSkipped() );
+        icoPanelStop->setVisible( isMainProcess() );
+        icoPanelCassa->setVisible( isHasToPay() );
+        icoShoppingCart->setVisible( m_bIsItemInShoppingCart );
+        icoScheduledGuest->setVisible( m_bIsPatientWaiting );
     }
-    icoPanelNext->setVisible( isStatusCanBeSkipped() );
-    icoPanelStop->setVisible( isMainProcess() );
-    icoPanelCassa->setVisible( isHasToPay() );
-    icoShoppingCart->setVisible( m_bIsItemInShoppingCart );
-    icoScheduledGuest->setVisible( m_bIsPatientWaiting );
+    catch( cSevException &e )
+    {
+        g_obLogger(e.severity()) << e.what() << EOM;
+    }
 }
 //====================================================================================
 void cFrmPanel::load( const unsigned int p_uiPanelId )

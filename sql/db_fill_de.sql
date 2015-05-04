@@ -319,7 +319,7 @@ ALTER TABLE `shoppingcartitems` auto_increment=1;
 INSERT INTO `settings` (`settingId`, `identifier`, `value`) VALUES
  (NULL, 'GLOBAL_DATA_UPDATED', '2015-01-01 08:00:00'),
  (NULL, 'ABOUT_INFO_LINK', 'http://www.kiwisun.eu/elerhetosegeink.html'),
- (NULL, 'APPLICATION_VERSION', '1_5_0_1'),
+ (NULL, 'APPLICATION_VERSION', '1_5_0_2'),
  (NULL, 'DATABASE_VERSION', '1_7_0');
 
 -- -----------------------------------------------------------------------------------
