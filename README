@@ -19,4 +19,4 @@ Version_1_5_0   Berlet info megjelenites a KiwiSun weboldalan (gibbig helyett),
                 Rendszeradmin tud barmennyi percre inditani gepet
 Version_1_5_0_1 Gepido kuldes adott masodpercig vetkozesi idoben
 Version_1_5_0_2 Exception-ok elkapasa a legfelso szinten
-Version_1_5_1   
+Version_1_5_1_p Berlet szinkronizalas csak akkor, ha nem megy gep
