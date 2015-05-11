@@ -1293,6 +1293,9 @@ void cWndMain::timerEvent(QTimerEvent *)
             break;
     }
 
+    // Suspend patientcard synchronization if panels are in use
+    g_poPrefs->setBlnsHttpSuspended( mdiPanels->isPanelWorking() );
+
     QFile   fileCheck( "belenus.chk" );
 
     if( fileCheck.size() > 0 )
@@ -1499,6 +1502,15 @@ void cWndMain::on_action_Preferences_triggered()
             g_poPrefs->setSecondaryWindowSize( QSize( m_dlgSecondaryWindow->width(), m_dlgSecondaryWindow->height() ), true );
             m_dlgSecondaryWindow->hide();
         }
+    }
+
+    if( g_poPrefs->isBlnsHttpEnabled() )
+    {
+        m_pbStatusHttp.setIcon( QIcon( "./resources/40x40_http_enabled.png" ) );
+    }
+    else
+    {
+        m_pbStatusHttp.setIcon( QIcon( "./resources/40x40_http_disabled.png" ) );
     }
 }
 //====================================================================================
@@ -3148,10 +3160,13 @@ void cWndMain::on_BlnsHttpIconClicked()
         if( m_bBlnsHttpConnected )
         {
             qmMenu.addAction( QIcon( "./resources/40x40_refresh.png" ), tr("Process remaining actions") );
-            qmMenu.addSeparator();
-            qmMenu.addAction( QIcon( "./resources/40x40_patientcard_info.png" ), tr("Update all patientcards") );
-            qmMenu.addSeparator();
-            qmMenu.addAction( QIcon( "./resources/40x40_report_patientcard_inactive.png" ), tr("Remove inactive patientcards") );
+            if( g_obUser.isInGroup( cAccessGroup::SYSTEM ) )
+            {
+                qmMenu.addSeparator();
+                qmMenu.addAction( QIcon( "./resources/40x40_patientcard_info.png" ), tr("Update all patientcards") );
+                qmMenu.addSeparator();
+                qmMenu.addAction( QIcon( "./resources/40x40_report_patientcard_inactive.png" ), tr("Remove inactive patientcards") );
+            }
             qmMenu.addAction( QIcon( "./resources/40x40_report_patientcard_inactive.png" ), tr("Remove patientcard") );
         }
         else

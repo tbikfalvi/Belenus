@@ -143,6 +143,8 @@ public:
     bool            isBlnsHttpEnabled();
     int             getBlnsHttpMessageWaitTime() const;
     void            setBlnsHttpMessageWaitTime(const int p_inWaitTime );
+    bool            isBlnsHttpSuspended();
+    void            setBlnsHttpSuspended( bool p_bEnable );
 
     unsigned int    getPanelId( int p_nPanelIterator );
 
@@ -275,6 +277,7 @@ private:
     QStringList     m_qslPanelIds;
     bool            m_bBlnsHttpEnabled;
     int             m_nBlnsHttpWaitTime;
+    bool            m_bBlnsHttpSuspended;
     QString         m_qsDirDbBinaries;
     QString         m_qsDirDbBackup;
     bool            m_bForceBackupDatabase;
