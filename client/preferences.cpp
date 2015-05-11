@@ -82,6 +82,10 @@ void cPreferences::init()
     m_qsPanelTextTubeReplace        = "";
 
     m_bEnableHWDebug                = false;
+
+    m_bBlnsHttpEnabled              = false;
+    m_nBlnsHttpWaitTime             = 3;
+    m_bBlnsHttpSuspended            = false;
 }
 
 void cPreferences::loadConfFileSettings()
@@ -1165,6 +1169,16 @@ void cPreferences::setBlnsHttpMessageWaitTime(const int p_inWaitTime)
 
     QSettings  obPrefFile( m_qsFileName, QSettings::IniFormat );
     obPrefFile.setValue( QString::fromAscii( "BlnsHttp/MessageWaitTime" ), m_nBlnsHttpWaitTime );
+}
+
+bool cPreferences::isBlnsHttpSuspended()
+{
+    return m_bBlnsHttpSuspended;
+}
+
+void cPreferences::setBlnsHttpSuspended(bool p_bEnable)
+{
+    m_bBlnsHttpSuspended = p_bEnable;
 }
 
 int cPreferences::getBlnsHttpMessageWaitTime() const

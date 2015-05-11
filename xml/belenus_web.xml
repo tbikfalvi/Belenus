@@ -199,11 +199,14 @@
     </version>
 
     <version current="1.5.0.1" next="1.5.0.2">
+    </version>    
+    
+    <version current="1.5.0.2" next="1.5.1">
         <download>
-            <file path="http://download.bikfalvi.hu/belenus/official/Update_1_5_0_2.zip" />
+            <file path="http://download.bikfalvi.hu/belenus/official/Update_1_5_1.zip" />
         </download>
         <uncompress>
-            <file path="%DOWNLOAD_DIR%" name="Update_1_5_0_2.zip" />
+            <file path="%DOWNLOAD_DIR%" name="Update_1_5_1.zip" />
         </uncompress>
         <backup>
             <file path="%INSTALL_DIR%" directory="" name="belenus.exe" move="yes" />
@@ -212,7 +215,7 @@
             <file src="%DOWNLOAD_DIR%/belenus.exe" dst="%INSTALL_DIR%/belenus.exe" />
         </update>
         <execute>
-            <application home="%CURRENT_DIR%" name="DBBackup.exe" params='-execute "%DOWNLOAD_DIR%/sql/db_update_1_5_0_2.sql"' />
+            <application home="%CURRENT_DIR%" name="DBBackup.exe" params='-execute "%DOWNLOAD_DIR%/sql/db_update_1_5_1.sql"' />
         </execute>
     </version>    
     
