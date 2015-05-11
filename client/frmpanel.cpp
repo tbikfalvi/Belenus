@@ -1328,7 +1328,7 @@ void cFrmPanel::setUsageFromWaitingQueue()
                 setMainProcessTime( obDBWaitlist.PatientCardId(), obDBWaitlist.UnitIds().split('|'), obDBWaitlist.LengthCard() );
             }
 
-            if( obDBWaitlist.LedgerId() > 0 )
+            if( obDBWaitlist.LedgerId() > 0 || m_uiShoppingCartItemId > 0 )
             {
                 setPaymentMethod( obDBWaitlist.PayType() );
                 cashPayed( obDBWaitlist.LedgerId() );
