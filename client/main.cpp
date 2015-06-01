@@ -237,6 +237,29 @@ int main( int argc, char *argv[] )
         qsSpalsh += "-----------------------------------------------------\n";
         obSplash.showMessage(qsSpalsh,Qt::AlignLeft,QColor(59,44, 75));
 
+        qsSpalsh += QObject::tr("Checking database consistency: ");
+        obSplash.showMessage(qsSpalsh,Qt::AlignLeft,QColor(59,44,75));
+
+        poQuery = g_poDB->executeQTQuery( QString( "UPDATE patientcardunits SET "
+                                                   "prepared=0, "
+                                                   "active=0 "
+                                                   "WHERE "
+                                                   "prepared=1 AND "
+                                                   "patientCardId>1 AND "
+                                                   "dateTimeUsed>\"2000-01-01\" " ) );
+
+        poQuery = g_poDB->executeQTQuery( QString( "UPDATE patientcardunits SET "
+                                                   "prepared=0 "
+                                                   "WHERE "
+                                                   "prepared=1 AND "
+                                                   "active=1 ") );
+
+        qsSpalsh += QObject::tr("FINISHED\n");
+        obSplash.showMessage(qsSpalsh,Qt::AlignLeft,QColor(59,44,75));
+
+        qsSpalsh += "-----------------------------------------------------\n";
+        obSplash.showMessage(qsSpalsh,Qt::AlignLeft,QColor(59,44, 75));
+
 #ifdef __WIN32__
 
         //-------------------------------------------------------------------------------
