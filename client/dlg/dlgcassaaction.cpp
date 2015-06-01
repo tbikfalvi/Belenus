@@ -87,6 +87,19 @@ cDlgCassaAction::~cDlgCassaAction()
 {
 }
 
+void cDlgCassaAction::payShoppingCart()
+{
+    actionPayment();
+
+    cCurrency   cCash( m_poShoppingCart->cash() );
+    cCurrency   cCard( m_poShoppingCart->card() );
+    cCurrency   cVoucher( m_poShoppingCart->voucher() );
+
+    ledCashGiven->setText( cCash.currencyStringSeparator() );
+    ledCardGiven->setText( cCard.currencyStringSeparator() );
+    ledVoucherGiven->setText( cVoucher.currencyStringSeparator() );
+}
+
 void cDlgCassaAction::setPayWithCash()
 {
     on_pbPayCash_clicked();

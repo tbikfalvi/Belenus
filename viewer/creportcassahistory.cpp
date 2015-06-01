@@ -112,7 +112,9 @@ void cReportCassaHistory::refreshReport()
     addTableCell( tr( "Action amount" ), "center bold" );
     addTableCell( tr( "Description" ), "bold" );
 
-//    int nTotalAmount = 0;
+    int nTotalCash   = 0;
+    int nTotalCard   = 0;
+    int nTotalAmount = 0;
 
     while( poQueryResult->next() )
     {
@@ -130,7 +132,9 @@ void cReportCassaHistory::refreshReport()
             cCurrency   obCassaActionCard( poQueryResult->value(3).toInt() );
             cCurrency   obCassaActionValue( poQueryResult->value(4).toInt() );
 
-//            nTotalAmount += poQueryResult->value(2).toInt();
+            nTotalCash   += poQueryResult->value(2).toInt();
+            nTotalCard   += poQueryResult->value(3).toInt();
+            nTotalAmount += poQueryResult->value(4).toInt();
 
             addTableRow();
             addTableCell( poQueryResult->value(0).toString() );
@@ -142,15 +146,18 @@ void cReportCassaHistory::refreshReport()
         }
     }
 
-/*    cCurrency   obTotalAmount( nTotalAmount );
+    cCurrency   obTotalCash( nTotalCash );
+    cCurrency   obTotalCard( nTotalCard );
+    cCurrency   obTotalAmount( nTotalAmount );
 
     addTableRow();
-    addTableCell( tr( "Sum total" ), "bold" );
+    addTableCell( tr( "Sum" ), "bold" );
     addTableCell();
-    addTableCell();
+    addTableCell( obTotalCash.currencyFullStringShort(), "right bold" );
+    addTableCell( obTotalCard.currencyFullStringShort(), "right bold" );
     addTableCell( obTotalAmount.currencyFullStringShort(), "right bold" );
     addTableCell();
-*/
+
     finishReport();
 
     m_dlgProgress.hide();

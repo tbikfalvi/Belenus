@@ -126,7 +126,7 @@ void cReportProductHistory::refreshReport()
                                    "WHERE %1 %2 "
                                    "DATE(ledgerTime)>=\"%3\" AND "
                                    "DATE(ledgerTime)<=\"%4\" AND "
-                                   "ledger.active=1" ).arg( qsProductCondition ).arg( qsProductActionCondition ).arg(filterDateStart().toString( "yyyy-MM-dd" )).arg(filterDateStop().toString( "yyyy-MM-dd" ));
+                                   "ledger.active=1 " ).arg( qsProductCondition ).arg( qsProductActionCondition ).arg(filterDateStart().toString( "yyyy-MM-dd" )).arg(filterDateStop().toString( "yyyy-MM-dd" ));
         QSqlQuery *poQueryResult = g_poDB->executeQTQuery( qsQuery );
 
         m_dlgProgress.setProgressValue( 90 );

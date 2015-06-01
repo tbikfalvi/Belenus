@@ -333,6 +333,28 @@ void cGeneral::showPatientCardInformation(QString p_qsBarcode)
     }
 }
 //====================================================================================
+bool cGeneral::isShoppingCartHasItems()
+//------------------------------------------------------------------------------------
+{
+    bool bRet = false;
+
+    try
+    {
+        QSqlQuery  *poQuery = g_poDB->executeQTQuery( "SELECT * FROM `shoppingcartitems` WHERE shoppingCartItemId>0" );
+
+        if( poQuery->size() > 0 )
+        {
+            bRet = true;
+        }
+    }
+    catch( cSevException &e )
+    {
+        g_obLogger(e.severity()) << e.what() << EOM;
+    }
+
+    return bRet;
+}
+//====================================================================================
 //QString cGeneral::convertCurrency( int p_nCurrencyValue, QString p_qsCurrency )
 //====================================================================================
 /*{

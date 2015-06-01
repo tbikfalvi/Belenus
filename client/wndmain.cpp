@@ -127,6 +127,7 @@ cWndMain::cWndMain( QWidget *parent ) : QMainWindow( parent )
     m_bBlnsHttpErrorVisible         = false;
     m_uiBlnsErrorAppeared           = 0;
     m_bClosingShift                 = false;
+    m_bShoppingCartHasItem          = g_obGen.isShoppingCartHasItems();
 
     pbLogin->setIcon( QIcon("./resources/40x40_ok.png") );
 
@@ -1400,12 +1401,16 @@ void cWndMain::timerEvent(QTimerEvent *)
         }
     }
 
-//    if( m_uiPatientId != g_obGuest.id() )
-//    {
-        updateTitle();
+    if( m_bShoppingCartHasItem )
+    {
+        mdiPanels->itemAddedToShoppingCart();
+    }
+    else
+    {
+        mdiPanels->itemRemovedFromShoppingCart();
+    }
 
-//        m_uiPatientId = g_obGuest.id();
-//    }
+    updateTitle();
 }
 //====================================================================================
 void cWndMain::closeEvent( QCloseEvent *p_poEvent )
@@ -1991,6 +1996,8 @@ void cWndMain::on_action_UseDeviceLater_triggered()
 
         mdiPanels->addPatientToWaitingQueue( true );
 //        mdiPanels->addPatientToWaitingQueue( inLengthCash, inPrice, uiPatientCardId, qsUnitIds, inLengthCard, uiLedgerId, inPayType );
+
+        m_bShoppingCartHasItem = g_obGen.isShoppingCartHasItems();
     }
 }
 //====================================================================================
@@ -2112,12 +2119,15 @@ void cWndMain::slotOpenShoppingCart( unsigned int p_uiPanelId )
     connect( &obDlgShoppingCart, SIGNAL(signalSellPatientCard()), this, SLOT(on_action_PatientCardSell_triggered()) );
     connect( &obDlgShoppingCart, SIGNAL(signalSellProduct()), this, SLOT(on_action_SellProduct_triggered()) );
 
-    if( p_uiPanelId > 0 )
-        obDlgShoppingCart.setPanelFilter( p_uiPanelId );
+//    if( p_uiPanelId > 0 )
+//        obDlgShoppingCart.setPanelFilter( p_uiPanelId );
 
     m_dlgProgress->hideProgress();
 
     obDlgShoppingCart.exec();
+
+    m_bShoppingCartHasItem = g_obGen.isShoppingCartHasItems();
+
     on_KeyboardEnabled();
 }
 //====================================================================================
@@ -2310,6 +2320,7 @@ void cWndMain::on_action_PatientCardSell_triggered()
             obDlgPatientCardSell.setPatientCardOwner( g_obGuest.id() );
             obDlgPatientCardSell.exec();
         }
+        m_bShoppingCartHasItem = g_obGen.isShoppingCartHasItems();
     }
 }
 //====================================================================================
@@ -2556,6 +2567,7 @@ void cWndMain::on_action_PayCash_triggered()
         //mdiPanels->itemAddedToShoppingCart();
         mdiPanels->cashPayed( 0 );
     }
+    m_bShoppingCartHasItem = g_obGen.isShoppingCartHasItems();
     on_KeyboardEnabled();
 }
 //====================================================================================
@@ -2607,6 +2619,7 @@ void cWndMain::processProductSellPayment( const cDBShoppingCart &p_obDBShoppingC
 
         g_obCassa.cassaProcessProductSell( obDBShoppingCart, qsComment, inPayType );
     }
+    m_bShoppingCartHasItem = g_obGen.isShoppingCartHasItems();
 }
 //====================================================================================
 void cWndMain::on_action_CassaHistory_triggered()
@@ -2913,6 +2926,7 @@ void cWndMain::slotReplacePatientCard(const QString &p_qsBarcode)
             obDBPatientCardNew.synchronizeTime();
             obDBPatientCardNew.save();
         }
+        m_bShoppingCartHasItem = g_obGen.isShoppingCartHasItems();
     }
 }
 //====================================================================================
@@ -2923,6 +2937,8 @@ void cWndMain::slotAssignPartnerCard( const QString &p_qsBarcode )
     cDlgPatientCardAssign obDlgPatientCardAssign( this, p_qsBarcode );
 
     obDlgPatientCardAssign.exec();
+
+    m_bShoppingCartHasItem = g_obGen.isShoppingCartHasItems();
 }
 
 void cWndMain::on_action_PaymentMethods_triggered()

@@ -100,7 +100,7 @@ unsigned int cReportMonthClose::_reportPartProductSell()
                                                                    "ledgerTypeId=%2 AND "
                                                                    "ledger.active=1 "
                                                                    "GROUP BY productId" ).arg( m_qslCassaIds.join(",") ).arg( LT_PROD_SELL ) );
-    unsigned int uiTotalCassa = 0;
+    unsigned int uiTotal = 0;
     while( poQueryProducts->next() )
     {
 //        cCurrency   obPrice( poQueryProducts->value(2).toInt() );
@@ -109,19 +109,19 @@ unsigned int cReportMonthClose::_reportPartProductSell()
         addTableRow();
         addTableCell( poQueryProducts->value(0).toString() );
         addTableCell( poQueryProducts->value(1).toString(), "center" );
+        uiTotal += poQueryProducts->value(1).toUInt();
 //        addTableCell( obPrice.currencyFullStringShort(), "right" );
     }
 //    cCurrency   obTotalPriceAm( uiTotalCassa );
 
-//    addTableRow();
-//    addTableCell( tr("Sum"), "bold" );
-//    addTableCell();
-//    addTableCell( obTotalPriceAm.currencyFullStringShort(), "right bold" );
+    addTableRow();
+    addTableCell( tr("Sum"), "bold" );
+    addTableCell( QString::number(uiTotal), "center bold" );
 
     finishTable();
     finishSection();
 
-    return uiTotalCassa;
+    return uiTotal;
 }
 //------------------------------------------------------------------------------------
 unsigned int cReportMonthClose::_reportPartPatientCardSell()
@@ -134,6 +134,8 @@ unsigned int cReportMonthClose::_reportPartPatientCardSell()
     addTable();
 
     poQueryResult = g_poDB->executeQTQuery( "SELECT * FROM patientcardtypes WHERE patientCardTypeId>1" );
+
+    unsigned int    uiCountPCSum = 0;
 
     while( poQueryResult->next() )
     {
@@ -158,15 +160,16 @@ unsigned int cReportMonthClose::_reportPartPatientCardSell()
 //            addTableCell( QString( "%1 / %2" ).arg( uiCountPCTSum ).arg( qsPricePCTSum ) );
             addTableCell( QString( "%1" ).arg( uiCountPCTSum ) );
         }
+        uiCountPCSum += uiCountPCTSum;
 
 //        uiTotalCardSell += uiPricePCTSum;
     }
 
 //    cCurrency obTotalCardSell( uiTotalCardSell );
 
-//    addTableRow();
-//    addTableCell( tr("Sum total"), "bold" );
-//    addTableCell( obTotalCardSell.currencyFullStringShort(), "right bold" );
+    addTableRow();
+    addTableCell( tr("Sum"), "bold" );
+    addTableCell( QString::number( uiCountPCSum ), "center bold" );
 
     finishTable();
     finishSection();

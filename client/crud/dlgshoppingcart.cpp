@@ -348,7 +348,14 @@ void cDlgShoppingCart::on_pbPayment_clicked()
             qslIds << tbvCrud->selectionModel()->selectedRows().at(i).data().toString();
         }
 
-        QString     qsQuery = QString("SELECT SUM(itemSumPrice-discountValue) AS shoppingCartSum FROM shoppingcartitems WHERE shoppingCartItemId IN (%1) ").arg(qslIds.join(QString(",")));
+        QString     qsQuery = QString("SELECT SUM(itemSumPrice-discountValue) AS shoppingCartSum, "
+                                      "SUM(card) as card, "
+                                      "SUM(cash) as cash, "
+                                      "SUM(voucher) as voucher, "
+                                      "SUM(itemVAT) as Vat, "
+                                      "SUM(discountValue) as Discount "
+                                      "FROM shoppingcartitems "
+                                      "WHERE shoppingCartItemId IN (%1) ").arg(qslIds.join(QString(",")));
         QSqlQuery  *poQuery = g_poDB->executeQTQuery( qsQuery );
 
         cDBShoppingCart obDBShoppingCart;
@@ -358,14 +365,19 @@ void cDlgShoppingCart::on_pbPayment_clicked()
         if( poQuery->first() )
         {
             obDBShoppingCart.setItemSumPrice( poQuery->value( 0 ).toInt() );
+            obDBShoppingCart.setCard( poQuery->value( 1 ).toInt() );
+            obDBShoppingCart.setCash( poQuery->value( 2 ).toInt() );
+            obDBShoppingCart.setVoucher( poQuery->value( 3 ).toInt() );
+            obDBShoppingCart.setItemVAT( poQuery->value( 4 ).toInt() );
+            obDBShoppingCart.setItemDiscount( poQuery->value( 5 ).toInt() );
         }
 
         cDlgCassaAction obDlgCassaAction( this, &obDBShoppingCart );
-        obDlgCassaAction.actionPayment();
-        obDlgCassaAction.setPayWithCash();
+        obDlgCassaAction.payShoppingCart();
+
         if( obDlgCassaAction.exec() == QDialog::Accepted )
         {
-            for( int i=0; i< tbvCrud->selectionModel()->selectedRows().count(); i++ )
+            for( int i=0; i<tbvCrud->selectionModel()->selectedRows().count(); i++ )
             {
                 obDBShoppingCart.load( tbvCrud->selectionModel()->selectedRows().at(i).data().toUInt() );
 
@@ -373,16 +385,8 @@ void cDlgShoppingCart::on_pbPayment_clicked()
                 QString         qsComment = "";
                 bool            bShoppingCart = false;
                 unsigned int    uiCouponId = 0;
-                cDBDiscount     obDBDiscount;
 
                 obDlgCassaAction.cassaResult( &inPayType, &bShoppingCart, &uiCouponId );
-
-                /*if( uiCouponId > 0 )
-                {
-                    obDBDiscount.load( uiCouponId );
-
-                    obDBShoppingCart.setItemDiscount( obDBShoppingCart.itemDiscount()+obDBDiscount.discount(obDBShoppingCart.itemSumPrice()) );
-                }*/
 
                 if( obDBShoppingCart.panelId() > 0 &&
                     obDBShoppingCart.productId() == 0 &&

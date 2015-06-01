@@ -51,30 +51,36 @@
     </message>
     <message>
         <location filename="creportcarddetails.cpp" line="105"/>
-        <location filename="creportcarddetails.cpp" line="278"/>
+        <location filename="creportcarddetails.cpp" line="303"/>
         <source>Barcode</source>
         <translation>Strichcode</translation>
     </message>
     <message>
         <location filename="creportcarddetails.cpp" line="187"/>
-        <location filename="creportcarddetails.cpp" line="235"/>
+        <location filename="creportcarddetails.cpp" line="248"/>
         <source>Unit type</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="creportcarddetails.cpp" line="282"/>
+        <location filename="creportcarddetails.cpp" line="268"/>
+        <location filename="creportcarddetails.cpp" line="338"/>
+        <source>Sum</source>
+        <translation type="unfinished">Insgesammt</translation>
+    </message>
+    <message>
+        <location filename="creportcarddetails.cpp" line="307"/>
         <source>Patientcard type</source>
         <translation>Club Karten Typ</translation>
     </message>
     <message>
         <location filename="creportcarddetails.cpp" line="117"/>
-        <location filename="creportcarddetails.cpp" line="283"/>
+        <location filename="creportcarddetails.cpp" line="308"/>
         <source>Owner</source>
         <translation>Besitzer</translation>
     </message>
     <message>
         <location filename="creportcarddetails.cpp" line="185"/>
-        <location filename="creportcarddetails.cpp" line="279"/>
+        <location filename="creportcarddetails.cpp" line="304"/>
         <source>No. units</source>
         <translation>Anzahl der Einheiten</translation>
     </message>
@@ -85,13 +91,13 @@
     <message>
         <location filename="creportcarddetails.cpp" line="138"/>
         <location filename="creportcarddetails.cpp" line="188"/>
-        <location filename="creportcarddetails.cpp" line="281"/>
+        <location filename="creportcarddetails.cpp" line="306"/>
         <source>Valid</source>
         <translation>Gültig</translation>
     </message>
     <message>
         <location filename="creportcarddetails.cpp" line="144"/>
-        <location filename="creportcarddetails.cpp" line="284"/>
+        <location filename="creportcarddetails.cpp" line="309"/>
         <source>Comment</source>
         <translation>Bemerkung</translation>
     </message>
@@ -102,7 +108,7 @@
     </message>
     <message>
         <location filename="creportcarddetails.cpp" line="186"/>
-        <location filename="creportcarddetails.cpp" line="234"/>
+        <location filename="creportcarddetails.cpp" line="247"/>
         <source>Unit time</source>
         <translation>Zeit pro Einheit</translation>
     </message>
@@ -112,27 +118,27 @@
         <translation>Gültigkeit …</translation>
     </message>
     <message>
-        <location filename="creportcarddetails.cpp" line="200"/>
+        <location filename="creportcarddetails.cpp" line="202"/>
         <source>%1 day(s)</source>
         <translation>%1 Tage</translation>
     </message>
     <message>
-        <location filename="creportcarddetails.cpp" line="207"/>
+        <location filename="creportcarddetails.cpp" line="220"/>
         <source>Patientcard unit usages</source>
         <translation>Benutzung der Club Karten Einheit</translation>
     </message>
     <message>
-        <location filename="creportcarddetails.cpp" line="232"/>
+        <location filename="creportcarddetails.cpp" line="245"/>
         <source>Date of usage</source>
         <translation>Datum der Benutzung</translation>
     </message>
     <message>
-        <location filename="creportcarddetails.cpp" line="233"/>
+        <location filename="creportcarddetails.cpp" line="246"/>
         <source>Unit count</source>
         <translation>Anzahl der Einheiten</translation>
     </message>
     <message>
-        <location filename="creportcarddetails.cpp" line="280"/>
+        <location filename="creportcarddetails.cpp" line="305"/>
         <source>Time</source>
         <translation>Zeit</translation>
     </message>
@@ -221,60 +227,65 @@
         <translation>Besitzer der Kasse :</translation>
     </message>
     <message>
-        <location filename="creportcassahistory.cpp" line="27"/>
-        <location filename="creportcassahistory.cpp" line="36"/>
+        <location filename="creportcassahistory.cpp" line="29"/>
+        <location filename="creportcassahistory.cpp" line="38"/>
         <source>All users</source>
         <translation>Alle Benutzer</translation>
     </message>
     <message>
-        <location filename="creportcassahistory.cpp" line="41"/>
+        <location filename="creportcassahistory.cpp" line="51"/>
         <source>Hide storno entries</source>
         <translation>Verbergen der stornierten Einträge</translation>
     </message>
     <message>
-        <location filename="creportcassahistory.cpp" line="46"/>
+        <location filename="creportcassahistory.cpp" line="56"/>
         <source>Create selected report ...</source>
         <translation>Demonstration anzeigen…</translation>
     </message>
     <message>
-        <location filename="creportcassahistory.cpp" line="80"/>
+        <location filename="creportcassahistory.cpp" line="90"/>
         <source>Date intervall:</source>
         <translation>Zeitraum :</translation>
     </message>
     <message>
-        <location filename="creportcassahistory.cpp" line="84"/>
+        <location filename="creportcassahistory.cpp" line="94"/>
         <source>  -  Related to user: %1</source>
         <translation>  - Benutzer: %1</translation>
     </message>
     <message>
-        <location filename="creportcassahistory.cpp" line="98"/>
+        <location filename="creportcassahistory.cpp" line="108"/>
         <source>Cassa owner</source>
         <translation>Besitzer der Kasse</translation>
     </message>
     <message>
-        <location filename="creportcassahistory.cpp" line="99"/>
+        <location filename="creportcassahistory.cpp" line="109"/>
         <source>Date/time</source>
         <translation>Datum/Zeit</translation>
     </message>
     <message>
-        <location filename="creportcassahistory.cpp" line="100"/>
+        <location filename="creportcassahistory.cpp" line="110"/>
         <source>Cash</source>
         <translation>Bargeld</translation>
     </message>
     <message>
-        <location filename="creportcassahistory.cpp" line="101"/>
+        <location filename="creportcassahistory.cpp" line="111"/>
         <source>Card</source>
         <translation>Bankkarte</translation>
     </message>
     <message>
-        <location filename="creportcassahistory.cpp" line="102"/>
+        <location filename="creportcassahistory.cpp" line="112"/>
         <source>Action amount</source>
         <translation>Eingriff Summe</translation>
     </message>
     <message>
-        <location filename="creportcassahistory.cpp" line="103"/>
+        <location filename="creportcassahistory.cpp" line="113"/>
         <source>Description</source>
         <translation>Abbuchung</translation>
+    </message>
+    <message>
+        <location filename="creportcassahistory.cpp" line="154"/>
+        <source>Sum</source>
+        <translation type="unfinished">Insgesammt</translation>
     </message>
 </context>
 <context>
@@ -859,6 +870,12 @@
         <source>Count</source>
         <translation>Stückzahl</translation>
     </message>
+    <message>
+        <location filename="creportmonthclose.cpp" line="118"/>
+        <location filename="creportmonthclose.cpp" line="171"/>
+        <source>Sum</source>
+        <translation type="unfinished">Insgesammt</translation>
+    </message>
 </context>
 <context>
     <name>cReportPCUsages</name>
@@ -1296,42 +1313,51 @@
         <translation>Date :</translation>
     </message>
     <message>
-        <location filename="creportproductstatus.cpp" line="18"/>
+        <location filename="creportproductstatus.cpp" line="16"/>
+        <source>Name contains :</source>
+        <translation type="unfinished">Der Name enthällt :</translation>
+    </message>
+    <message>
+        <location filename="creportproductstatus.cpp" line="22"/>
         <source>Create selected report ...</source>
         <translation>Demonstration anzeigen…</translation>
     </message>
     <message>
-        <location filename="creportproductstatus.cpp" line="34"/>
+        <location filename="creportproductstatus.cpp" line="38"/>
         <source>On date: %1</source>
         <translation>Der angegebene Tag: %1</translation>
     </message>
     <message>
-        <location filename="creportproductstatus.cpp" line="40"/>
+        <location filename="creportproductstatus.cpp" line="44"/>
         <source>Products with no type</source>
         <translation>Nicht eingerechnete Artikel</translation>
     </message>
     <message>
-        <location filename="creportproductstatus.cpp" line="89"/>
+        <location filename="creportproductstatus.cpp" line="112"/>
         <source>Product name</source>
         <translation>Bezeichnung des Produkts</translation>
     </message>
     <message>
-        <location filename="creportproductstatus.cpp" line="90"/>
+        <location filename="creportproductstatus.cpp" line="113"/>
         <source>Barcode</source>
         <translation>Strichcode</translation>
     </message>
     <message>
-        <location filename="creportproductstatus.cpp" line="91"/>
-        <source>Count</source>
-        <translation>Stückzahl</translation>
+        <location filename="creportproductstatus.cpp" line="114"/>
+        <source>Count on selected day</source>
+        <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="creportproductstatus.cpp" line="92"/>
+        <source>Count</source>
+        <translation type="obsolete">Stückzahl</translation>
+    </message>
+    <message>
+        <location filename="creportproductstatus.cpp" line="115"/>
         <source>Actual count</source>
         <translation>Eingriff Summe</translation>
     </message>
     <message>
-        <location filename="creportproductstatus.cpp" line="112"/>
+        <location filename="creportproductstatus.cpp" line="135"/>
         <source>Sum</source>
         <translation>Insgesammt</translation>
     </message>
@@ -1413,9 +1439,13 @@
 <context>
     <name>cReport__Template_ClassName__</name>
     <message>
-        <location filename="creporttemplate.cpp" line="7"/>
         <source> Inactive patientcards </source>
-        <translation> Ungültige Club Karten </translation>
+        <translation type="obsolete"> Ungültige Club Karten </translation>
+    </message>
+    <message>
+        <location filename="creporttemplate.cpp" line="7"/>
+        <source> __template_report_name__ </source>
+        <translation type="unfinished"></translation>
     </message>
     <message>
         <location filename="creporttemplate.cpp" line="8"/>
@@ -1472,17 +1502,17 @@
         <translation>Die Verbindung ist fehlgeschlagen. Bitte versuchen Sie es später.</translation>
     </message>
     <message>
-        <location filename="wndmain.cpp" line="1007"/>
+        <location filename="wndmain.cpp" line="1008"/>
         <source>&lt;i&gt;Please select a report to show the related filters ...&lt;/i&gt;</source>
         <translation>&lt;i&gt;Bitte wählen Sie eine Demonstration mit den dazugehörigen Filter-Eigenschaften…&lt;/i&gt;</translation>
     </message>
     <message>
-        <location filename="wndmain.cpp" line="1338"/>
+        <location filename="wndmain.cpp" line="1339"/>
         <source>Save report to ...</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="wndmain.cpp" line="1340"/>
+        <location filename="wndmain.cpp" line="1341"/>
         <source>Html files (*.html);;Text files (*.txt)</source>
         <oldsource>Html files (*.html)</oldsource>
         <translation type="unfinished"></translation>

@@ -375,12 +375,18 @@ bool cMdiPanels::isItemInShoppingCart()
 //====================================================================================
 void cMdiPanels::itemAddedToShoppingCart()
 {
-    m_obPanels.at( m_uiActivePanel )->itemAddedToShoppingCart();
+    for( unsigned int i=0; i<m_obPanels.size(); i++ )
+    {
+        m_obPanels.at( i )->itemAddedToShoppingCart();
+    }
 }
 //====================================================================================
 void cMdiPanels::itemRemovedFromShoppingCart()
 {
-    m_obPanels.at( m_uiActivePanel )->itemRemovedFromShoppingCart();
+    for( unsigned int i=0; i<m_obPanels.size(); i++ )
+    {
+        m_obPanels.at( i )->itemRemovedFromShoppingCart();
+    }
 }
 //====================================================================================
 void cMdiPanels::itemRemovedFromShoppingCart( const unsigned int p_uiPanelId )

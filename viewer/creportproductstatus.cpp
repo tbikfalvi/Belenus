@@ -11,6 +11,10 @@ cReportProductStatus::cReportProductStatus(QWidget *parent, QString p_qsReportNa
     _setDateStartEnabled( true );
     _setDateStartLabelText( tr("Date :") );
     m_qdStartDate = QDate::currentDate();
+
+    _setDataNameEnabled( true );
+    _setDataNameLabelText( tr("Name contains :") );
+
 }
 
 void cReportProductStatus::refreshReport()
@@ -52,6 +56,20 @@ void cReportProductStatus::refreshReport()
 void cReportProductStatus::_reportPartProductTypeGroup(QString p_qsSubTitle, unsigned int p_uiProductTypeId)
 {
     QString qsQuery;
+    QString qsCondition = "";
+
+    g_obLogger(cSeverity::DEBUG) << "Name: "
+                                 << filterName()
+                                 << EOM;
+
+    if( filterName().length() > 0 )
+    {
+        qsCondition.append( QString( " AND products.name LIKE \"\%%1\%\" ").arg( filterName() ) );
+    }
+
+    g_obLogger(cSeverity::DEBUG) << "Condition: "
+                                 << qsCondition
+                                 << EOM;
 
     if( p_uiProductTypeId == 0 )
     {
@@ -64,7 +82,9 @@ void cReportProductStatus::_reportPartProductTypeGroup(QString p_qsSubTitle, uns
                            "ON products.productId=connectproductwithtype.productId WHERE "
                            "products.active=1 AND "
                            "ISNULL(connectproductwithtype.productTypeId) "
-                           "GROUP BY products.productId" );
+                           "%1 "
+                           "GROUP BY products.productId "
+                           "ORDER BY products.name " ).arg( qsCondition );
     }
     else
     {
@@ -72,7 +92,10 @@ void cReportProductStatus::_reportPartProductTypeGroup(QString p_qsSubTitle, uns
                            "FROM products, connectproductwithtype WHERE "
                            "products.productId = connectproductwithtype.productId AND "
                            "productTypeId=%1 AND "
-                           "products.active=1 ").arg( p_uiProductTypeId );
+                           "products.active=1 "
+                           "%2 "
+                           "ORDER BY products.name " ).arg( p_uiProductTypeId )
+                                                      .arg( qsCondition );
     }
     QSqlQuery *poQueryResult = g_poDB->executeQTQuery( qsQuery );
 
@@ -88,7 +111,7 @@ void cReportProductStatus::_reportPartProductTypeGroup(QString p_qsSubTitle, uns
     addTableRow();
     addTableCell( tr("Product name"), "bold" );
     addTableCell( tr("Barcode"), "bold" );
-    addTableCell( tr("Count"), "center bold" );
+    addTableCell( tr("Count on selected day"), "center bold" );
     addTableCell( tr("Actual count"), "center bold" );
 
     int nCountDateSum   = 0;

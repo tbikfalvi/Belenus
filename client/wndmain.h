@@ -84,6 +84,7 @@ private:
     int                      m_nCommunicationErrorCounter;
     int                      m_nCommResetStep;
     bool                     m_bClosingShift;
+    bool                     m_bShoppingCartHasItem;
 
     vector<cDlgAdvertisementWindow *>   m_obAdWnd;
 
