@@ -217,6 +217,8 @@ public:
     bool            isTextSterilVisible();
     void            setStartHttpSyncAuto( bool p_bStartHttpSyncAuto, bool p_boSaveNow = false );
     bool            isStartHttpSyncAuto();
+    void            setStartHttpSyncAutoSeconds( const int p_nStartHttpSyncAutoSeconds );
+    int             getStartHttpSyncAutoSeconds() const;
 
 //void            setXXX( const QString &p_qsXXX, bool p_boSaveNow = false );
 //QString         getXXX() const;
@@ -309,6 +311,7 @@ private:
     bool            m_bIsTextTubeReplaceVisible;
     bool            m_bIsTextSterilVisible;
     bool            m_bIsStartHttpSyncAuto;
+    int             m_nStartHttpSyncAutoSeconds;
 
     void init();
 };

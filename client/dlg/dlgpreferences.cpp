@@ -114,6 +114,8 @@ cDlgPreferences::cDlgPreferences( QWidget *p_poParent )
     }
 
     ledServerHost->setText( g_poPrefs->getServerAddress() );
+    chkHttpEnableAutoSync->setChecked( g_poPrefs->isStartHttpSyncAuto() );
+    ledAutoSyncSeconds->setText( QString::number( g_poPrefs->getStartHttpSyncAutoSeconds() ) );
 
     spbCOM->setValue( g_poPrefs->getCommunicationPort() );
     chkForceSendTime->setChecked( g_poPrefs->isForceModuleSendTime() );
@@ -141,6 +143,8 @@ cDlgPreferences::cDlgPreferences( QWidget *p_poParent )
     pbCancelModifyPsw->setVisible( false );
     ledPanelTextSterile->setText( g_poPrefs->getPanelTextSteril() );
     ledPanelTextTubeReplacement->setText( g_poPrefs->getPanelTextTubeReplace() );
+    chkVisibleSecSteril->setChecked( g_poPrefs->isTextSterilVisible() );
+    chkVisibleSecTubeReplace->setChecked( g_poPrefs->isTextTubeReplaceVisible() );
 
     chkAutoCloseCassa->setChecked( g_poPrefs->getCassaAutoClose() );
     chkCassaAutoWithdrawal->setChecked( g_poPrefs->getCassaAutoWithdrawal() );
@@ -379,6 +383,8 @@ void cDlgPreferences::accept()
                               tr("'Tube replacement needed' text can not be empty.") );
         return;
     }
+    g_poPrefs->setTextSterilVisible( chkVisibleSecSteril->isChecked() );
+    g_poPrefs->setTextTubeReplaceVisible( chkVisibleSecTubeReplace->isChecked() );
 
     g_poPrefs->setLogLevels( sliConsoleLogLevel->value(),
                              sliDBLogLevel->value(),
@@ -402,7 +408,9 @@ void cDlgPreferences::accept()
 
     g_poPrefs->setStopInLine( rbStopInLine->isChecked() );
 
-    g_poPrefs->setServerAddress( ledServerHost->text() );
+    g_poPrefs->setServerAddress( ledServerHost->text().trimmed() );
+    g_poPrefs->setStartHttpSyncAuto( chkHttpEnableAutoSync->isChecked() );
+    g_poPrefs->setStartHttpSyncAutoSeconds( ledAutoSyncSeconds->text().toInt() );
 
     g_poPrefs->setCommunicationPort( spbCOM->value() );
     g_poPrefs->setForceModuleSendTime( chkForceSendTime->isChecked() );

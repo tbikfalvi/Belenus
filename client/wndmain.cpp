@@ -128,6 +128,7 @@ cWndMain::cWndMain( QWidget *parent ) : QMainWindow( parent )
     m_uiBlnsErrorAppeared           = 0;
     m_bClosingShift                 = false;
     m_bShoppingCartHasItem          = g_obGen.isShoppingCartHasItems();
+    m_nHttpCommCounter              = 0;
 
     pbLogin->setIcon( QIcon("./resources/40x40_ok.png") );
 
@@ -317,7 +318,7 @@ cWndMain::cWndMain( QWidget *parent ) : QMainWindow( parent )
     }
 
     m_lblStatusRight.setAlignment( Qt::AlignRight );
-    m_lblStatusRight.setStyleSheet( "QLabel {font: bold; font-size:14px;}" );
+    m_lblStatusRight.setStyleSheet( "QLabel {font:bold; font-size:14px;}" );
 
     m_pbStatusCommunication.setIcon( QIcon( "./resources/77x40_off.png" ) );
     m_pbStatusCommunication.setFlat( true );
@@ -347,6 +348,8 @@ cWndMain::cWndMain( QWidget *parent ) : QMainWindow( parent )
         m_pbStatusHttp.setIconSize( QSize(20,20) );
         m_pbStatusHttp.setFixedSize( 22, 22 );
 
+        m_lblHttpCount.setStyleSheet( "QLabel {font-size:8px;}" );
+
         connect( &m_pbStatusHttp, SIGNAL(clicked()), this, SLOT(on_BlnsHttpIconClicked()) );
     }
 
@@ -356,6 +359,7 @@ cWndMain::cWndMain( QWidget *parent ) : QMainWindow( parent )
     if( !g_poPrefs->isFapados() )
     {
         statusbar->addPermanentWidget( &m_pbStatusHttp, 0 );
+        statusbar->addPermanentWidget( &m_lblHttpCount );
     }
     statusbar->addPermanentWidget( &m_lblStatusRight, 1 );
 
@@ -367,8 +371,14 @@ cWndMain::cWndMain( QWidget *parent ) : QMainWindow( parent )
         connect( g_poBlnsHttp, SIGNAL(signalActionProcessed(QString)),  this, SLOT(on_BlnsHttpActionFinished(QString)) );
         connect( g_poBlnsHttp, SIGNAL(signalStepProgress()),            this, SLOT(on_BlnsHttpStepProgress()) );
         connect( g_poBlnsHttp, SIGNAL(signalHideProgress()),            this, SLOT(on_BlnsHttpHideProgress()) );
+        connect( g_poBlnsHttp, SIGNAL(signalHttpProcessDisabled()),     this, SLOT(on_BlnsHttpProcessStopped()) );
+        connect( g_poBlnsHttp, SIGNAL(signalHttpProcessSuspended()),    this, SLOT(on_BlnsHttpProcessStopped()) );
 
         g_poBlnsHttp->setTimeout( g_poPrefs->getBlnsHttpMessageWaitTime()*1000 );
+
+        m_lblHttpCount.setText( QString::number( g_poBlnsHttp->getNumberOfWaitingRecords() ) );
+        m_pbStatusHttp.setToolTip( tr("Number of records to process: %1")
+                                   .arg( m_lblHttpCount.text() ) );
     }
 
     this->setFocus();
@@ -907,6 +917,10 @@ void cWndMain::logoutUser()
 //====================================================================================
 void cWndMain::keyPressEvent( QKeyEvent *p_poEvent )
 {
+    m_nHttpCommCounter = 0;
+    g_poPrefs->setBlnsHttpSuspended( true );
+    setCursor( Qt::ArrowCursor);
+
     if( !g_obUser.isLoggedIn() )
     {
         return;
@@ -1295,7 +1309,31 @@ void cWndMain::timerEvent(QTimerEvent *)
     }
 
     // Suspend patientcard synchronization if panels are in use
-    g_poPrefs->setBlnsHttpSuspended( mdiPanels->isPanelWorking() );
+    bool bIsPanelWorking    = mdiPanels->isPanelWorking();
+    int  nCountHttpRecord   = m_lblHttpCount.text().toInt();
+    int  nHttpSyncAutoSecs  = g_poPrefs->getStartHttpSyncAutoSeconds()*4+2;
+
+    if( bIsPanelWorking )
+    {
+        m_nHttpCommCounter = 0;
+        g_poPrefs->setBlnsHttpSuspended( true );
+        setCursor( Qt::ArrowCursor);
+    }
+    else
+    {
+        m_nHttpCommCounter++;
+    }
+
+    // 15 masodpercenkent 250 tizedmasodperces timer -> 4 * 15 + 2 = 60
+    // 15 -> ini file-bol jon
+    if( g_poPrefs->isStartHttpSyncAuto() &&
+        m_nHttpCommCounter == nHttpSyncAutoSecs &&
+        nCountHttpRecord > 0 )
+    {
+        g_poPrefs->setBlnsHttpSuspended( false );
+        _processHttpActions();
+    }
+
 
     QFile   fileCheck( "belenus.chk" );
 
@@ -3159,7 +3197,11 @@ void cWndMain::on_BlnsHttpActionFinished(QString p_qsInfo)
 
 void cWndMain::on_BlnsHttpStepProgress()
 {
+    m_lblHttpCount.setStyleSheet( "QLabel {font:bold; font-size:12px;}" );
     m_dlgProgress->stepProgressBar();
+    m_lblHttpCount.setText( QString::number( g_poBlnsHttp->getNumberOfWaitingRecords() ) );
+    m_pbStatusHttp.setToolTip( tr("Number of records to process: %1")
+                               .arg( m_lblHttpCount.text() ) );
 }
 
 void cWndMain::on_BlnsHttpHideProgress()
@@ -3191,6 +3233,8 @@ void cWndMain::on_BlnsHttpIconClicked()
         }
         qmMenu.addSeparator();
         qmMenu.addAction( QIcon( "./resources/40x40_cancel.png" ), tr("Disable communication") );
+        qmMenu.addSeparator();
+        qmMenu.addAction( QIcon( "./resources/40x40_pause.png" ), tr("Suspend communication") );
     }
     else
     {
@@ -3250,6 +3294,12 @@ void cWndMain::on_BlnsHttpIconClicked()
         {
             g_poPrefs->setBlnsHttpEnabled( true, true );
             g_poBlnsHttp->checkHttpServerAvailability();
+        }
+        else if( qaRet->text().compare( tr("Suspend communication") ) == 0 )
+        {
+            m_nHttpCommCounter = 0;
+            g_poPrefs->setBlnsHttpSuspended( true );
+            setCursor( Qt::ArrowCursor);
         }
     }
 }
@@ -3575,5 +3625,10 @@ void cWndMain::_checkIsActivationNeeded()
                                   "Please contact your franchise provider\n"
                                   "and validate your application's licence" ) );
     }
+}
+
+void cWndMain::on_BlnsHttpProcessStopped()
+{
+    m_lblHttpCount.setStyleSheet( "QLabel {font:normal; font-size:8px;}" );
 }
 

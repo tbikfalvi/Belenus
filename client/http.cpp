@@ -163,14 +163,15 @@ QString cBlnsHttp::errorMessage()
 int cBlnsHttp::getNumberOfWaitingRecords()
 //-------------------------------------------------------------------------------------------------
 {
-    QString      qsQuery    = "SELECT httpPatientcardInfoId, barcode, patientcardInfoText FROM "
+    QString      qsQuery    = "SELECT COUNT(httpPatientcardInfoId) FROM "
                               "httppatientcardinfo WHERE "
                               "active=1 AND "
-                              "archive='NEW' "
-                              "LIMIT 1 ";
+                              "archive='NEW' ";
     QSqlQuery   *poQuery    = g_poDB->executeQTQuery( qsQuery );
 
-    return poQuery->size();
+    poQuery->first();
+
+    return poQuery->value(0).toInt();
 }
 //=================================================================================================
 void cBlnsHttp::timerEvent(QTimerEvent *)
@@ -402,12 +403,14 @@ void cBlnsHttp::_httpStartProcess()
     if( !g_poPrefs->isBlnsHttpEnabled() )
     {
         g_obLogger(cSeverity::WARNING) << "HTTP: communication DISABLED" << EOM;
+        emit signalHttpProcessDisabled();
         return;
     }
 
     if( g_poPrefs->isBlnsHttpSuspended() )
     {
         g_obLogger(cSeverity::WARNING) << "HTTP: communication SUSPENDED" << EOM;
+        emit signalHttpProcessSuspended();
         return;
     }
 

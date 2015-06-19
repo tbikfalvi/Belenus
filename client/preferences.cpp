@@ -89,6 +89,8 @@ void cPreferences::init()
 
     m_bIsTextSterilVisible          = false;
     m_bIsTextTubeReplaceVisible     = false;
+
+    m_nStartHttpSyncAutoSeconds     = 15;
 }
 
 void cPreferences::loadConfFileSettings()
@@ -209,18 +211,20 @@ void cPreferences::loadConfFileSettings()
 
         setLogLevels( uiConsoleLevel, uiDBLevel, uiGUILevel, uiFileLevel );
 
-        m_bBlnsHttpEnabled    = obPrefFile.value( QString::fromAscii( "BlnsHttp/Enabled" ) ).toBool();
-        m_nBlnsHttpWaitTime    = obPrefFile.value( QString::fromAscii( "BlnsHttp/MessageWaitTime" ), 12 ).toInt();
+        m_bBlnsHttpEnabled          = obPrefFile.value( QString::fromAscii( "BlnsHttp/Enabled" ) ).toBool();
+        m_nBlnsHttpWaitTime         = obPrefFile.value( QString::fromAscii( "BlnsHttp/MessageWaitTime" ), 12 ).toInt();
+        m_bIsStartHttpSyncAuto      = obPrefFile.value( QString::fromAscii( "BlnsHttp/IsAutoStartSync"), false ).toBool();
+        m_nStartHttpSyncAutoSeconds = obPrefFile.value( QString::fromAscii( "BlnsHttp/AutoStartSyncSeconds"), 15 ).toInt();
 
-        m_qsDirDbBinaries       = obPrefFile.value( QString::fromAscii( "DbBackup/DirDbBinaries" ) ).toString();
-        m_qsDirDbBackup         = obPrefFile.value( QString::fromAscii( "DbBackup/DirDbBackup" ) ).toString();
-        m_bBackupDatabase       = obPrefFile.value( QString::fromAscii( "DbBackup/BackupDb" ) ).toBool();
-        m_nBackupDatabaseType   = obPrefFile.value( QString::fromAscii( "DbBackup/DbBackupType" ) ).toInt();
-        m_qsBackupDatabaseDays  = obPrefFile.value( QString::fromAscii( "DbBackup/DbBackupDays" ) ).toString();
+        m_qsDirDbBinaries           = obPrefFile.value( QString::fromAscii( "DbBackup/DirDbBinaries" ) ).toString();
+        m_qsDirDbBackup             = obPrefFile.value( QString::fromAscii( "DbBackup/DirDbBackup" ) ).toString();
+        m_bBackupDatabase           = obPrefFile.value( QString::fromAscii( "DbBackup/BackupDb" ) ).toBool();
+        m_nBackupDatabaseType       = obPrefFile.value( QString::fromAscii( "DbBackup/DbBackupType" ) ).toInt();
+        m_qsBackupDatabaseDays      = obPrefFile.value( QString::fromAscii( "DbBackup/DbBackupDays" ) ).toString();
 
-        m_qsDateFormat          = obPrefFile.value( QString::fromAscii( "DateFormat" ), "yyyy-MM-dd" ).toString();
+        m_qsDateFormat              = obPrefFile.value( QString::fromAscii( "DateFormat" ), "yyyy-MM-dd" ).toString();
 
-        m_bFapados              = obPrefFile.value( QString::fromAscii( "Component" ), false ).toBool();
+        m_bFapados                  = obPrefFile.value( QString::fromAscii( "Component" ), false ).toBool();
     }
 }
 
@@ -342,6 +346,8 @@ void cPreferences::save() const throw (cSevException)
 
     obPrefFile.setValue( QString::fromAscii( "BlnsHttp/Enabled" ), m_bBlnsHttpEnabled );
     obPrefFile.setValue( QString::fromAscii( "BlnsHttp/MessageWaitTime" ), m_nBlnsHttpWaitTime );
+    obPrefFile.setValue( QString::fromAscii( "BlnsHttp/IsAutoStartSync"), m_bIsStartHttpSyncAuto );
+    obPrefFile.setValue( QString::fromAscii( "BlnsHttp/AutoStartSyncSeconds"), m_nStartHttpSyncAutoSeconds );
 
     obPrefFile.setValue( QString::fromAscii( "DbBackup/DirDbBinaries" ), m_qsDirDbBinaries );
     obPrefFile.setValue( QString::fromAscii( "DbBackup/DirDbBackup" ), m_qsDirDbBackup );
@@ -1635,3 +1641,14 @@ bool cPreferences::isStartHttpSyncAuto()
 {
     return m_bIsStartHttpSyncAuto;
 }
+
+void cPreferences::setStartHttpSyncAutoSeconds( const int p_nStartHttpSyncAutoSeconds )
+{
+    m_nStartHttpSyncAutoSeconds = p_nStartHttpSyncAutoSeconds;
+}
+
+int cPreferences::getStartHttpSyncAutoSeconds() const
+{
+    return m_nStartHttpSyncAutoSeconds;
+}
+

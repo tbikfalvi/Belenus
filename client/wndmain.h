@@ -58,6 +58,7 @@ private:
     QPushButton              m_pbStatusHttp;
     QPushButton              m_pbStatusCommunication;
     QPushButton              m_pbStatusKeyboard;
+    QLabel                   m_lblHttpCount;
     QLabel                   m_lblStatusRight;
     cMdiPanels              *mdiPanels;
     cDlgProgress            *m_dlgProgress;
@@ -85,6 +86,7 @@ private:
     int                      m_nCommResetStep;
     bool                     m_bClosingShift;
     bool                     m_bShoppingCartHasItem;
+    int                      m_nHttpCommCounter;
 
     vector<cDlgAdvertisementWindow *>   m_obAdWnd;
 
@@ -197,6 +199,7 @@ private slots:
     void on_action_PatientcardInformation_triggered();
     void on_KeyboardEnabled();
     void on_KeyboardDisabled();
+    void on_BlnsHttpProcessStopped();
 };
 
 #endif

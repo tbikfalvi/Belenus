@@ -125,6 +125,8 @@ signals:
     void             signalActionProcessed( QString p_qsInfo );
     void             signalStepProgress();
     void             signalHideProgress();
+    void             signalHttpProcessSuspended();
+    void             signalHttpProcessDisabled();
 
 private slots:
     void            _slotHttpRequestFinished(int requestId, bool error);
