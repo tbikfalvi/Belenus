@@ -86,6 +86,9 @@ void cPreferences::init()
     m_bBlnsHttpEnabled              = false;
     m_nBlnsHttpWaitTime             = 3;
     m_bBlnsHttpSuspended            = false;
+
+    m_bIsTextSterilVisible          = false;
+    m_bIsTextTubeReplaceVisible     = false;
 }
 
 void cPreferences::loadConfFileSettings()
@@ -121,6 +124,8 @@ void cPreferences::loadConfFileSettings()
         m_qsSecondaryBackground         = obPrefFile.value( QString::fromAscii( "SecondaryWindow/Background" ), "#000000"  ).toString();
         m_qsSecondaryFrame              = obPrefFile.value( QString::fromAscii( "SecondaryWindow/FrameColor" ), "#555555" ).toString();
         m_bIsSecondaryCaptionVisible    = obPrefFile.value( QString::fromAscii( "SecondaryWindow/IsSecondaryCaptionVisible"), true ).toBool();
+        m_bIsTextTubeReplaceVisible     = obPrefFile.value( QString::fromAscii( "SecondaryWindow/IsTextTubeReplaceVisible"), false ).toBool();
+        m_bIsTextSterilVisible          = obPrefFile.value( QString::fromAscii( "SecondaryWindow/IsTextSterilVisible"), false ).toBool();
 
         m_qsActiveCaptionBackground     = obPrefFile.value( QString::fromAscii( "Panels/ActiveCaptionBackground" ), "#000099" ).toString();
         m_qsActiveCaptionColor          = obPrefFile.value( QString::fromAscii( "Panels/ActiveCaptionColor" ), "#FFFFFF" ).toString();
@@ -289,6 +294,8 @@ void cPreferences::save() const throw (cSevException)
     obPrefFile.setValue( QString::fromAscii( "SecondaryWindow/Width" ), m_qsSecondarySize.width() );
     obPrefFile.setValue( QString::fromAscii( "SecondaryWindow/Height" ), m_qsSecondarySize.height() );
     obPrefFile.setValue( QString::fromAscii( "SecondaryWindow/Background" ), m_qsSecondaryBackground );
+    obPrefFile.setValue( QString::fromAscii( "SecondaryWindow/IsTextTubeReplaceVisible"), m_bIsTextTubeReplaceVisible );
+    obPrefFile.setValue( QString::fromAscii( "SecondaryWindow/IsTextSterilVisible"), m_bIsTextSterilVisible );
 
     obPrefFile.setValue( QString::fromAscii( "Panels/ActiveCaptionBackground" ), m_qsActiveCaptionBackground );
     obPrefFile.setValue( QString::fromAscii( "Panels/ActiveCaptionColor" ), m_qsActiveCaptionColor );
@@ -1582,4 +1589,49 @@ int cPreferences::getForceTimeSendCounter() const
     return m_nForceTimeSendCounter;
 }
 
+void cPreferences::setTextTubeReplaceVisible( bool p_bTextTubeReplaceVisible, bool p_boSaveNow )
+{
+    m_bIsTextTubeReplaceVisible = p_bTextTubeReplaceVisible;
 
+    if( p_boSaveNow )
+    {
+        QSettings  obPrefFile( m_qsFileName, QSettings::IniFormat );
+        obPrefFile.setValue( QString::fromAscii( "SecondaryWindow/IsTextTubeReplaceVisible"), m_bIsTextTubeReplaceVisible );
+    }
+}
+
+bool cPreferences::isTextTubeReplaceVisible()
+{
+    return m_bIsTextTubeReplaceVisible;
+}
+
+void cPreferences::setTextSterilVisible( bool p_bTextSterilVisible, bool p_boSaveNow )
+{
+    m_bIsTextSterilVisible = p_bTextSterilVisible;
+
+    if( p_boSaveNow )
+    {
+        QSettings  obPrefFile( m_qsFileName, QSettings::IniFormat );
+        obPrefFile.setValue( QString::fromAscii( "SecondaryWindow/IsTextSterilVisible"), m_bIsTextSterilVisible );
+    }
+}
+bool cPreferences::isTextSterilVisible()
+{
+    return m_bIsTextSterilVisible;
+}
+
+void cPreferences::setStartHttpSyncAuto( bool p_bStartHttpSyncAuto, bool p_boSaveNow )
+{
+    m_bIsStartHttpSyncAuto = p_bStartHttpSyncAuto;
+
+    if( p_boSaveNow )
+    {
+        QSettings  obPrefFile( m_qsFileName, QSettings::IniFormat );
+        obPrefFile.setValue( QString::fromAscii( "BlnsHttp/IsAutoStartSync"), m_bIsStartHttpSyncAuto );
+    }
+}
+
+bool cPreferences::isStartHttpSyncAuto()
+{
+    return m_bIsStartHttpSyncAuto;
+}

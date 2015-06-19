@@ -166,6 +166,7 @@ private:
     QString                         m_qsTimer;
     QString                         m_qsTimerNextStatus;
     QString                         m_qsInfo;
+    QString                         m_qsCashToPay;
 
     vector<cDBPanelStatuses*>       m_obStatuses;
     vector<cDBPanelStatusSettings*> m_obStatusSettings;

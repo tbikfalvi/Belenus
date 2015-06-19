@@ -154,9 +154,10 @@ cFrmPanel::cFrmPanel( const unsigned int p_uiPanelId ) : QFrame()
     m_bIsDeviceStopped      = false;
     m_bIsTubeReplaceNeeded  = false;
 
-    m_qsTransactionId               = "";
+    m_qsCashToPay               = "";
+    m_qsTransactionId           = "";
 
-    m_nMinuteOfPanel                = 0;
+    m_nMinuteOfPanel            = 0;
 
     m_nForceTimeSendCounter     = g_poPrefs->getForceTimeSendCounter();
 
@@ -798,7 +799,7 @@ void cFrmPanel::displayStatus()
     {
         cCurrency   cPrice( m_inCashToPay );
 
-        setTextInformation( tr("Cash to pay: ") + cPrice.currencyFullStringShort() );
+        m_qsCashToPay = QString( tr("Cash to pay: ") + cPrice.currencyFullStringShort() );
     }
 
     QString     qsBackgroundColor = m_obStatusSettings.at(m_uiStatus)->backgroundColor();
@@ -811,9 +812,6 @@ void cFrmPanel::displayStatus()
     formatTimerString( m_qsTimer );
     formatNextLengthString( m_qsTimerNextStatus );
     formatInfoString();
-
-//    if( m_inCashToPay < 1 )
-//        emit signalSetInfoText( m_uiId-1, m_qsInfo );
 
     emit signalStatusChanged( m_uiId-1, m_obStatuses.at(m_uiStatus)->id(), m_qsStatus );
 
@@ -912,36 +910,60 @@ void cFrmPanel::formatInfoString()
     obFont.setPixelSize( m_obStatusSettings.at(m_uiStatus)->infoFontSize() );
     obFont.setBold( true );
 
-    QString qsInfoText = "";
+    QString qsMainInfoText      = "";
+    QString qsSecondaryInfoText = "";
 
     if( m_bIsTubeReplaceNeeded )
     {
-        qsInfoText.append( g_poPrefs->getPanelTextTubeReplace() );
+        qsMainInfoText.append( g_poPrefs->getPanelTextTubeReplace() );
+
+        if( g_poPrefs->isTextTubeReplaceVisible() )
+        {
+            qsSecondaryInfoText.append( g_poPrefs->getPanelTextTubeReplace() );
+        }
     }
 
     if( m_bIsNeedToBeCleaned )
     {
-        if( qsInfoText.length() > 0 ) qsInfoText.append( "<br>" );
-        qsInfoText.append( g_poPrefs->getPanelTextSteril() );
+        if( qsMainInfoText.length() > 0 ) qsMainInfoText.append( "<br>" );
+        qsMainInfoText.append( g_poPrefs->getPanelTextSteril() );
+
+        if( qsSecondaryInfoText.length() > 0 ) qsSecondaryInfoText.append( "<br>" );
+        if( g_poPrefs->isTextSterilVisible() )
+        {
+            qsSecondaryInfoText.append( g_poPrefs->getPanelTextSteril() );
+        }
+    }
+
+    if( m_qsCashToPay.length() > 0 )
+    {
+        if( qsMainInfoText.length() > 0 ) qsMainInfoText.append( "<br>" );
+        qsMainInfoText.append( m_qsCashToPay );
     }
 
     if( m_qsInfo.length() > 0 )
     {
-        if( qsInfoText.length() > 0 ) qsInfoText.append( "<br>" );
-        qsInfoText.append( m_qsInfo );
+        if( qsMainInfoText.length() > 0 ) qsMainInfoText.append( "<br>" );
+        qsMainInfoText.append( m_qsInfo );
+
+        if( qsSecondaryInfoText.length() > 0 ) qsSecondaryInfoText.append( "<br>" );
+        qsSecondaryInfoText.append( m_qsInfo );
     }
 
     lblInfo->setAlignment( Qt::AlignCenter );
     lblInfo->setFont( obFont );
     lblInfo->setText( QString("<font color=%1>%2</font>")
                       .arg(QColor( m_obStatusSettings.at(m_uiStatus)->infoFontColor()).name())
-                      .arg(qsInfoText) );
+                      .arg(qsMainInfoText) );
 
-    g_obLogger(cSeverity::DEBUG) << "Info: "
-                                 << qsInfoText
+    g_obLogger(cSeverity::DEBUG) << "MainInfo: "
+                                 << qsMainInfoText
+                                 << EOM;
+    g_obLogger(cSeverity::DEBUG) << "SecondaryInfo: "
+                                 << qsSecondaryInfoText
                                  << EOM;
 
-    emit signalSetInfoText( m_uiId-1, qsInfoText );
+    emit signalSetInfoText( m_uiId-1, qsSecondaryInfoText );
 }
 //====================================================================================
 /*QString cFrmPanel::convertCurrency( int p_nCurrencyValue, QString p_qsCurrency )
@@ -1015,8 +1037,8 @@ void cFrmPanel::cashPayed( const unsigned int p_uiLedgerId )
     m_inCashDiscountToPay   = 0;
     m_uiPatientToPay        = 0;
     m_uiLedgerId            = p_uiLedgerId;
+    m_qsCashToPay           = "";
 
-    setTextInformation( "" );
     displayStatus();
 }
 //====================================================================================

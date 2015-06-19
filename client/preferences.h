@@ -211,13 +211,19 @@ public:
     bool            isForceModuleCheckButton();
     void            setForceTimeSendCounter( const int p_nForceTimeSendCounter );
     int             getForceTimeSendCounter() const;
+    void            setTextTubeReplaceVisible( bool p_bTextTubeReplaceVisible, bool p_boSaveNow = false );
+    bool            isTextTubeReplaceVisible();
+    void            setTextSterilVisible( bool p_bTextSterilVisible, bool p_boSaveNow = false );
+    bool            isTextSterilVisible();
+    void            setStartHttpSyncAuto( bool p_bStartHttpSyncAuto, bool p_boSaveNow = false );
+    bool            isStartHttpSyncAuto();
 
-    //    void            setXXX( const QString &p_qsXXX, bool p_boSaveNow = false );
-    //    QString         getXXX() const;
-    //    void            setXXX( const int p_nXXX );
-    //    int             getXXX() const;
-    //    void            setXXX( bool p_bXXX, bool p_boSaveNow = false );
-    //    bool            isXXX();
+//void            setXXX( const QString &p_qsXXX, bool p_boSaveNow = false );
+//QString         getXXX() const;
+//void            setXXX( const int p_nXXX );
+//int             getXXX() const;
+//void            setXXX( bool p_bXXX, bool p_boSaveNow = false );
+//bool            isXXX();
 
 private:
     QString         m_qsFileName;
@@ -300,6 +306,9 @@ private:
     bool            m_bForceModuleSendTime;
     bool            m_bForceModuleCheckButton;
     int             m_nForceTimeSendCounter;
+    bool            m_bIsTextTubeReplaceVisible;
+    bool            m_bIsTextSterilVisible;
+    bool            m_bIsStartHttpSyncAuto;
 
     void init();
 };
