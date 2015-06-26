@@ -194,6 +194,7 @@ signals:
     void            signalSetWaitTime( unsigned int p_uiPanelId, const unsigned int p_uiWaitTime );
     void            signalSetInfoText( unsigned int p_uiPanelId, const QString &p_qsInfo );
     void            signalSelectedFromWaitingQueue();
+    void            signalMainWindowActivated();
 
 private slots:
     void            slotPanelStartClicked();

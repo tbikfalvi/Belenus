@@ -570,6 +570,7 @@ bool cFrmPanel::isTimeIntervallValid(const int p_inLength)
 //====================================================================================
 void cFrmPanel::mousePressEvent ( QMouseEvent * p_poEvent )
 {
+    emit signalMainWindowActivated();
     emit panelClicked( m_uiId - 1 );
     p_poEvent->ignore();
 }
@@ -1246,6 +1247,7 @@ void cFrmPanel::slotPanelStartClicked()
 {
     cTracer obTrace( "cFrmPanel::slotPanelStartClicked" );
 
+    emit signalMainWindowActivated();
     start();
 }
 //====================================================================================
@@ -1253,6 +1255,7 @@ void cFrmPanel::slotPanelNextClicked()
 {
     cTracer obTrace( "cFrmPanel::slotPanelNextClicked" );
 
+    emit signalMainWindowActivated();
     if( QMessageBox::question( this, tr("Question"),
                                tr("Do you want to jump to the next status of the device?"),
                                QMessageBox::Yes,QMessageBox::No ) == QMessageBox::Yes )
@@ -1265,6 +1268,7 @@ void cFrmPanel::slotPanelStopClicked()
 {
     cTracer obTrace( "cFrmPanel::slotPanelStopClicked" );
 
+    emit signalMainWindowActivated();
     reset();
 }
 //====================================================================================

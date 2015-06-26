@@ -87,6 +87,7 @@ private:
     bool                     m_bClosingShift;
     bool                     m_bShoppingCartHasItem;
     int                      m_nHttpCommCounter;
+    bool                     m_bMainWindowActive;
 
     vector<cDlgAdvertisementWindow *>   m_obAdWnd;
 
@@ -110,6 +111,8 @@ private:
 public slots:
     void processDeviceUsePayment( unsigned int p_uiPanelId, unsigned int p_uiLedgerId, int p_nPaymentType );
     void processProductSellPayment( const cDBShoppingCart &p_obDBShoppingCart );
+
+    void slotMainWindowActivated();
 
 private slots:
     void on_action_SellProduct_triggered();

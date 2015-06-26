@@ -377,16 +377,37 @@ void cDlgShoppingCart::on_pbPayment_clicked()
 
         if( obDlgCassaAction.exec() == QDialog::Accepted )
         {
+            int             inPayType = 0;
+            bool            bShoppingCart = false;
+            unsigned int    uiCouponId = 0;
+
+            obDlgCassaAction.cassaResult( &inPayType, &bShoppingCart, &uiCouponId );
+
             for( int i=0; i<tbvCrud->selectionModel()->selectedRows().count(); i++ )
             {
+                QString         qsComment = "";
+
                 obDBShoppingCart.load( tbvCrud->selectionModel()->selectedRows().at(i).data().toUInt() );
 
-                int             inPayType = 0;
-                QString         qsComment = "";
-                bool            bShoppingCart = false;
-                unsigned int    uiCouponId = 0;
-
-                obDlgCassaAction.cassaResult( &inPayType, &bShoppingCart, &uiCouponId );
+                // Restructure the payment category based on selection
+                if( inPayType == 1 )
+                { // Payed with card
+                    obDBShoppingCart.setCard( obDBShoppingCart.card() +
+                                              obDBShoppingCart.cash() +
+                                              obDBShoppingCart.voucher() );
+                }
+                else if( inPayType == 2 )
+                {// Payed with cash
+                    obDBShoppingCart.setCash( obDBShoppingCart.card() +
+                                              obDBShoppingCart.cash() +
+                                              obDBShoppingCart.voucher() );
+                }
+                else
+                {// Payed with other
+                    obDBShoppingCart.setVoucher( obDBShoppingCart.card() +
+                                                 obDBShoppingCart.cash() +
+                                                 obDBShoppingCart.voucher() );
+                }
 
                 if( obDBShoppingCart.panelId() > 0 &&
                     obDBShoppingCart.productId() == 0 &&
