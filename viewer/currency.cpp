@@ -148,9 +148,20 @@ QString cCurrency::currencyString(currType p_ctCurrencyType)
     QString qsRet = "";
 
     if( m_nValueRight > 0 )
-        qsRet = QString( "%1%2%3%4" ).arg(m_bIsNegative?"-":"").arg(m_nValueLeft).arg(_currencyDecimalSeparator()).arg(m_nValueRight);
+    {
+        QString qsRight = "";
+
+        if( m_nValueRight < 10 )
+            qsRight.append( "0" );
+
+        qsRight.append( QString::number(m_nValueRight) );
+
+        qsRet = QString( "%1%2%3%4" ).arg(m_bIsNegative?"-":"").arg(m_nValueLeft).arg(_currencyDecimalSeparator()).arg(qsRight);
+    }
     else
+    {
         qsRet = QString( "%1%2" ).arg(m_bIsNegative?"-":"").arg(m_nValueLeft);
+    }
 
     return qsRet;
 }
@@ -162,9 +173,20 @@ QString cCurrency::currencyStringSeparator(currType p_ctCurrencyType)
     QString qsRet = "";
 
     if( m_nValueRight > 0 )
-        qsRet = QString( "%1%2%3%4" ).arg(m_bIsNegative?"-":"").arg(_separatedValue(m_nValueLeft)).arg(_currencyDecimalSeparator()).arg(m_nValueRight);
+    {
+        QString qsRight = "";
+
+        if( m_nValueRight < 10 )
+            qsRight.append( "0" );
+
+        qsRight.append( QString::number(m_nValueRight) );
+
+        qsRet = QString( "%1%2%3%4" ).arg(m_bIsNegative?"-":"").arg(_separatedValue(m_nValueLeft)).arg(_currencyDecimalSeparator()).arg(qsRight);
+    }
     else
+    {
         qsRet = QString( "%1%2" ).arg(m_bIsNegative?"-":"").arg(_separatedValue(m_nValueLeft));
+    }
 
     return qsRet;
 }
