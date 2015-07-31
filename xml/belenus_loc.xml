@@ -195,9 +195,9 @@
         </execute>
     </version>
     
-    <version current="1.5.1" next="1.5.1.5">
+    <version current="1.5.1" next="1.5.2">
         <uncompress>
-            <file path="%DOWNLOAD_DIR%" name="Update_1_5_1_5.zip" />
+            <file path="%DOWNLOAD_DIR%" name="Update_1_5_2.zip" />
         </uncompress>
         <backup>
             <file path="%INSTALL_DIR%" directory="" name="belenus.exe" move="yes" />
@@ -206,9 +206,11 @@
         <update>
             <file src="%DOWNLOAD_DIR%/belenus.exe" dst="%INSTALL_DIR%/belenus.exe" />
             <file src="%DOWNLOAD_DIR%/ReportViewer.exe" dst="%INSTALL_DIR%/ReportViewer.exe" />
+            <file src="%DOWNLOAD_DIR%/lang/belenus_hu.qm" dst="%INSTALL_DIR%/lang/belenus_hu.qm" />
+            <file src="%DOWNLOAD_DIR%/lang/brv_hu.qm" dst="%INSTALL_DIR%/lang/brv_hu.qm" />
         </update>
         <execute>
-            <application home="%CURRENT_DIR%" name="DBBackup.exe" params='-execute "%DOWNLOAD_DIR%/sql/db_update_1_5_1_5.sql"' />
+            <application home="%CURRENT_DIR%" name="DBBackup.exe" params='-execute "%DOWNLOAD_DIR%/sql/db_update_1_5_2.sql"' />
         </execute>
     </version>    
     
