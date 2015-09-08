@@ -166,6 +166,7 @@ private:
     QString                         m_qsTimer;
     QString                         m_qsTimerNextStatus;
     QString                         m_qsInfo;
+    QString                         m_qsCashToPay;
 
     vector<cDBPanelStatuses*>       m_obStatuses;
     vector<cDBPanelStatusSettings*> m_obStatusSettings;
@@ -193,6 +194,7 @@ signals:
     void            signalSetWaitTime( unsigned int p_uiPanelId, const unsigned int p_uiWaitTime );
     void            signalSetInfoText( unsigned int p_uiPanelId, const QString &p_qsInfo );
     void            signalSelectedFromWaitingQueue();
+    void            signalMainWindowActivated();
 
 private slots:
     void            slotPanelStartClicked();

@@ -3,7 +3,7 @@
 #include "creportproducthistory.h"
 #include "currency.h"
 
-cReportProductHistory::cReportProductHistory(QWidget *parent, QString p_qsReportName) : cReport(parent,p_qsReportName)
+cReportProductHistory::cReportProductHistory(QWidget *parent, QString p_qsReportName, bool p_bIsAdmin) : cReport(parent,p_qsReportName,p_bIsAdmin)
 {
     m_qsReportName          = tr(" Product history ");
     m_qsReportDescription   = tr( "This report shows the product history. Please select the product you are interested in from the list "
@@ -126,7 +126,7 @@ void cReportProductHistory::refreshReport()
                                    "WHERE %1 %2 "
                                    "DATE(ledgerTime)>=\"%3\" AND "
                                    "DATE(ledgerTime)<=\"%4\" AND "
-                                   "ledger.active=1" ).arg( qsProductCondition ).arg( qsProductActionCondition ).arg(filterDateStart().toString( "yyyy-MM-dd" )).arg(filterDateStop().toString( "yyyy-MM-dd" ));
+                                   "ledger.active=1 " ).arg( qsProductCondition ).arg( qsProductActionCondition ).arg(filterDateStart().toString( "yyyy-MM-dd" )).arg(filterDateStop().toString( "yyyy-MM-dd" ));
         QSqlQuery *poQueryResult = g_poDB->executeQTQuery( qsQuery );
 
         m_dlgProgress.setProgressValue( 90 );

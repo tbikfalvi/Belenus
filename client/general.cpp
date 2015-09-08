@@ -278,7 +278,6 @@ void cGeneral::showPatientCardInformation(QString p_qsBarcode)
         QString         qsText = "";
 
         obDBPatientCard.load( p_qsBarcode );
-        obDBPatientCard.synchronizeUnits();
         obDBGuest.load( obDBPatientCard.patientId() );
 
         qsText.append( QString("<table>") );
@@ -286,6 +285,8 @@ void cGeneral::showPatientCardInformation(QString p_qsBarcode)
         qsText.append( QObject::tr("<tr><td><b>Valid:</b></td><td>%1 -> %2</td></tr>").arg( obDBPatientCard.validDateFrom() )
                                                                              .arg( obDBPatientCard.validDateTo() ) );
         qsText.append( QObject::tr("<tr><td><b>Units:</b></td><td>%1</td></tr>").arg( obDBPatientCard.units() ) );
+        qsText.append( QObject::tr("<tr><td><b>Comment:</b></td></tr>") );
+        qsText.append( QString("<tr><td>%1</td></tr>").arg( obDBPatientCard.comment() ) );
         qsText.append( QString("</table>") );
 
         QString qsQuery = QString( "SELECT patientCardUnitId, patientCardTypeId, unitTime, validDateFrom, validDateTo, COUNT(unitTime) "
@@ -297,7 +298,7 @@ void cGeneral::showPatientCardInformation(QString p_qsBarcode)
                                    "GROUP BY unitTime, validDateTo, patientCardTypeId ORDER BY validDateTo, patientCardUnitId" ).arg( obDBPatientCard.id() );
         QSqlQuery  *poQuery = g_poDB->executeQTQuery( qsQuery );
 
-        qsText.append( QObject::tr("<p><b>Valid time periods:</b><br>") );
+        qsText.append( QObject::tr("<p><b>Valid units:</b><br>") );
 
         while( poQuery->next() )
         {
@@ -330,6 +331,28 @@ void cGeneral::showPatientCardInformation(QString p_qsBarcode)
     {
         g_obLogger(e.severity()) << e.what() << EOM;
     }
+}
+//====================================================================================
+bool cGeneral::isShoppingCartHasItems()
+//------------------------------------------------------------------------------------
+{
+    bool bRet = false;
+
+    try
+    {
+        QSqlQuery  *poQuery = g_poDB->executeQTQuery( "SELECT * FROM `shoppingcartitems` WHERE shoppingCartItemId>0" );
+
+        if( poQuery->size() > 0 )
+        {
+            bRet = true;
+        }
+    }
+    catch( cSevException &e )
+    {
+        g_obLogger(e.severity()) << e.what() << EOM;
+    }
+
+    return bRet;
 }
 //====================================================================================
 //QString cGeneral::convertCurrency( int p_nCurrencyValue, QString p_qsCurrency )

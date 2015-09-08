@@ -58,6 +58,7 @@ private:
     QPushButton              m_pbStatusHttp;
     QPushButton              m_pbStatusCommunication;
     QPushButton              m_pbStatusKeyboard;
+    QLabel                   m_lblHttpCount;
     QLabel                   m_lblStatusRight;
     cMdiPanels              *mdiPanels;
     cDlgProgress            *m_dlgProgress;
@@ -83,6 +84,10 @@ private:
     unsigned int             m_uiBlnsErrorAppeared;
     int                      m_nCommunicationErrorCounter;
     int                      m_nCommResetStep;
+    bool                     m_bClosingShift;
+    bool                     m_bShoppingCartHasItem;
+    int                      m_nHttpCommCounter;
+    bool                     m_bMainWindowActive;
 
     vector<cDlgAdvertisementWindow *>   m_obAdWnd;
 
@@ -101,10 +106,13 @@ private:
     void _setStatusText( QString p_qsText, bool p_bError = false );
     void _processHttpActions();
     void _checkVersions();
+    void _checkIsActivationNeeded();
 
 public slots:
     void processDeviceUsePayment( unsigned int p_uiPanelId, unsigned int p_uiLedgerId, int p_nPaymentType );
     void processProductSellPayment( const cDBShoppingCart &p_obDBShoppingCart );
+
+    void slotMainWindowActivated();
 
 private slots:
     void on_action_SellProduct_triggered();
@@ -127,6 +135,7 @@ private slots:
     void on_action_Logs_triggered();
     void on_action_Hardwaretest_triggered();
     void on_action_LogOut_triggered();
+    void on_action_CloseShift_triggered();
     void on_action_Paneltypes_triggered();
     void on_action_Panelgroups_triggered();
     void on_action_Patientorigin_triggered()        {}
@@ -152,6 +161,7 @@ private slots:
     void on_action_ValidateSerialKey_triggered();
     void on_action_PatientCardSell_triggered();
     void on_action_PatientCardAssign_triggered();
+    void on_action_ReplaceLostCard_triggered();
     void on_action_EditActualPatient_triggered();
     void on_action_DeviceSettings_triggered();
     void on_action_PayCash_triggered();
@@ -192,6 +202,7 @@ private slots:
     void on_action_PatientcardInformation_triggered();
     void on_KeyboardEnabled();
     void on_KeyboardDisabled();
+    void on_BlnsHttpProcessStopped();
 };
 
 #endif

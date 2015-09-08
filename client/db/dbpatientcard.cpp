@@ -61,6 +61,9 @@ void cDBPatientCard::init( const unsigned int p_uiId,
     m_qsModified            = p_qsModified;
     m_bActive               = p_bActive;
     m_qsArchive             = p_qsArchive;
+
+    synchronizeUnits();
+    synchronizeTime();
 }
 
 void cDBPatientCard::init( const QSqlRecord &p_obRecord ) throw()
@@ -111,7 +114,6 @@ void cDBPatientCard::load( const unsigned int p_uiId ) throw( cSevException )
 
     poQuery->first();
     init( poQuery->record() );
-    synchronizeUnits();
 }
 
 void cDBPatientCard::load( const QString &p_qsBarcode ) throw( cSevException )
@@ -125,7 +127,6 @@ void cDBPatientCard::load( const QString &p_qsBarcode ) throw( cSevException )
 
     poQuery->first();
     init( poQuery->record() );
-    synchronizeUnits();
 }
 
 void cDBPatientCard::loadPatient( const unsigned int p_uiId ) throw( cSevException )
@@ -298,6 +299,15 @@ bool cDBPatientCard::isAssignedCardExists() throw()
     return false;
 }
 
+bool cDBPatientCard::isLedgerConnected() throw()
+{
+    QSqlQuery *poQuery = g_poDB->executeQTQuery( QString( "SELECT * FROM ledger WHERE patientCardId = %1" ).arg( m_uiId ) );
+    if( poQuery->size() > 0 )
+        return true;
+
+    return false;
+}
+
 void cDBPatientCard::synchronizeUnits() throw()
 {
     QString qsQuery = "";
@@ -339,7 +349,7 @@ void cDBPatientCard::synchronizeTime() throw()
     if( poQuery->size() > 0 )
         setTimeLeft( poQuery->value(0).toInt()*60 );
     else
-        setUnits( 0 );
+        setTimeLeft( 0 );
 }
 
 void cDBPatientCard::synchronizeUnitTime(int p_nUnitTime) throw()

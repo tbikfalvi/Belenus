@@ -7,7 +7,7 @@
     <x>0</x>
     <y>0</y>
     <width>500</width>
-    <height>350</height>
+    <height>356</height>
    </rect>
   </property>
   <property name="minimumSize">
@@ -148,6 +148,17 @@
           </property>
           <property name="text">
            <string>Owner : </string>
+          </property>
+         </widget>
+        </item>
+        <item>
+         <widget class="QLabel" name="lblComment">
+          <property name="text">
+           <string>Comment :
+</string>
+          </property>
+          <property name="wordWrap">
+           <bool>true</bool>
           </property>
          </widget>
         </item>

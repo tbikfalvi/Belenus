@@ -19,7 +19,7 @@
 #include "creport.h"
 
 //====================================================================================
-cReport::cReport(QWidget *parent, QString p_qsReportName) : QWidget(parent)
+cReport::cReport(QWidget *parent, QString p_qsReportName, bool p_bIsAdmin) : QWidget(parent)
 //====================================================================================
 {
     cTracer obTrace( "cReport::cReport" );
@@ -33,6 +33,7 @@ cReport::cReport(QWidget *parent, QString p_qsReportName) : QWidget(parent)
     m_nSectionLevel         = 0;
     m_bIsTableStarted       = false;
     m_bIsTableRowStarted    = false;
+    m_bIsAdmin              = p_bIsAdmin;
 
     //-----------------------------------------------------
     // Report gui elemek inicializalasa
@@ -50,6 +51,7 @@ cReport::cReport(QWidget *parent, QString p_qsReportName) : QWidget(parent)
     //-----------------------------------------------------
     m_tcReport = new QTextCursor( &m_tdReport );
     m_teReport->setDocument( &m_tdReport );
+    m_teReport->setReadOnly( true );
 
     //-----------------------------------------------------
     // Report filter gui elemek beallitasa
@@ -82,29 +84,29 @@ void cReport::refreshReport()
 //=================================================================================================
 // Adatokat szolgaltato fuggvenyek
 //------------------------------------------------------------------------------------
-QString cReport::name() const                   { return m_qsReportName;        }
-QString cReport::description() const            { return m_qsReportDescription; }
-int     cReport::index()                        { return m_nIndex;              }
-bool    cReport::isDateStartEnabled()           { return m_bDateStartEnabled;   }
-bool    cReport::isDateStopEnabled()            { return m_bDateStopEnabled;    }
-bool    cReport::isDataNameEnabled()            { return m_bDataNameEnabled;    }
-bool    cReport::isDataTypeEnabled()            { return m_bDataTypeEnabled;    }
-bool    cReport::isDataSubTypeEnabled()         { return m_bDataSubTypeEnabled; }
-bool    cReport::isDataIsVisibleEnabled()       { return m_bIsVisibleEnabled;   }
-QString cReport::labelDateStartText() const     { return m_qsLabelDateStart;    }
-QString cReport::labelDateStopText() const      { return m_qsLabelDateStop;     }
-QString cReport::labelDataNameText() const      { return m_qsLabelDataName;     }
-QString cReport::labelDataTypeText() const      { return m_qsLabelDataType;     }
-QString cReport::labelDataSubTypeText() const   { return m_qsLabelDataSubType;  }
-QString cReport::labelIsVisibleText() const     { return m_qsLabelIsVisible;    }
-QDate   cReport::filterDateStart() const        { return m_qdStartDate;         }
-QDate   cReport::filterDateStop() const         { return m_qdStopDate;          }
-QString cReport::filterName() const             { return m_qsName;              }
-QString cReport::filterType() const             { return m_qsType;              }
-QString cReport::filterSubType() const          { return m_qsSubType;           }
-bool    cReport::filterIsVisible() const        { return m_bIsVisible;          }
-QString cReport::filterTypeList() const         { return m_qsTypeList;          }
-QString cReport::filterSubTypeList() const      { return m_qsSubTypeList;       }
+QString cReport::name() const                   { return m_qsReportName;            }
+QString cReport::description() const            { return m_qsReportDescription;     }
+int     cReport::index()                        { return m_nIndex;                  }
+bool    cReport::isDateStartEnabled()           { return m_bDateStartEnabled;       }
+bool    cReport::isDateStopEnabled()            { return m_bDateStopEnabled;        }
+bool    cReport::isDataNameEnabled()            { return m_bDataNameEnabled;        }
+bool    cReport::isDataTypeEnabled()            { return m_bDataTypeEnabled;        }
+bool    cReport::isDataSubTypeEnabled()         { return m_bDataSubTypeEnabled;     }
+bool    cReport::isDataIsVisibleEnabled()       { return m_bIsVisibleEnabled;       }
+QString cReport::labelDateStartText() const     { return m_qsLabelDateStart;        }
+QString cReport::labelDateStopText() const      { return m_qsLabelDateStop;         }
+QString cReport::labelDataNameText() const      { return m_qsLabelDataName;         }
+QString cReport::labelDataTypeText() const      { return m_qsLabelDataType;         }
+QString cReport::labelDataSubTypeText() const   { return m_qsLabelDataSubType;      }
+QString cReport::labelIsVisibleText() const     { return m_qsLabelIsVisible;        }
+QDate   cReport::filterDateStart() const        { return m_qdStartDate;             }
+QDate   cReport::filterDateStop() const         { return m_qdStopDate;              }
+QString cReport::filterName() const             { return m_qsName;                  }
+QString cReport::filterType() const             { return m_qsType;                  }
+QString cReport::filterSubType() const          { return m_qsSubType;               }
+bool    cReport::filterIsVisible() const        { return m_bIsVisible;              }
+QString cReport::filterTypeList() const         { return m_qsTypeList;              }
+QString cReport::filterSubTypeList() const      { return m_qsSubTypeList;           }
 //=================================================================================================
 QPrinter::Orientation cReport::pageOrientation()   { return m_tePageOrientation;   }
 //=================================================================================================

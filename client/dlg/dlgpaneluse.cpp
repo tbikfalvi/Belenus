@@ -191,6 +191,7 @@ cDlgPanelUse::cDlgPanelUse( QWidget *p_poParent, unsigned int p_uiPanelId ) : QD
 
 //    lblCardType->setText( tr("Card type : ") );
     lblCardOwner->setText( tr("Owner : ") );
+    lblComment->setText( tr("Comment :\n") );
 
     m_poParent                  = p_poParent;
     m_poMsg                     = p_poParent;
@@ -389,7 +390,7 @@ void cDlgPanelUse::setPanelUsePatientCard(unsigned int p_uiPatientCardId)
 //                                                             "JOIN patients ON "
 //                                                             "patientcards.patientId=patients.patientId "
 //                                                             "WHERE patientcards.patientCardId=%1").arg(m_obDBPatientCard.id()) );
-        QSqlQuery *poQuery = g_poDB->executeQTQuery( QString("SELECT patients.name AS owner "
+        QSqlQuery *poQuery = g_poDB->executeQTQuery( QString("SELECT patients.name AS owner, patientcards.comment "
                                                              "FROM patientcards, patients "
                                                              "WHERE patientcards.patientId=patients.patientId "
                                                              "AND patientcards.patientCardId=%1").arg(m_obDBPatientCard.id()) );
@@ -399,6 +400,7 @@ void cDlgPanelUse::setPanelUsePatientCard(unsigned int p_uiPatientCardId)
         pbInformation->setEnabled( true );
 //        lblCardType->setText( tr("Type : %1").arg( poQuery->value(0).toString() ) );
         lblCardOwner->setText( tr("Owner : %1").arg( poQuery->value(0).toString() ) );
+        lblComment->setText( tr("Comment :\n%1").arg( poQuery->value(1).toString() ) );
     }
 
     int nUnitHeight = (qvPanelUseUnits.count()-1)*50;
@@ -712,6 +714,7 @@ void cDlgPanelUse::on_ledPatientCardBarcode_textEdited(const QString &/*arg1*/)
         pbInformation->setEnabled( false );
 //        lblCardType->setText( "" );
         lblCardOwner->setText( "" );
+        lblComment->setText( tr("Comment :\n") );
     }
 }
 //----------------------------------------------------------------------------------------------

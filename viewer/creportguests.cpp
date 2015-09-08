@@ -2,7 +2,7 @@
 #include "../framework/qtframework.h"
 #include "creportguests.h"
 
-cReportGuests::cReportGuests(QWidget *parent, QString p_qsReportName) : cReport(parent,p_qsReportName)
+cReportGuests::cReportGuests(QWidget *parent, QString p_qsReportName, bool p_bIsAdmin) : cReport(parent,p_qsReportName,p_bIsAdmin)
 {
     m_qsReportName          = tr(" Guest list ");
     m_qsReportDescription   = tr( "This report shows the summarized list of data of the registered guests." );

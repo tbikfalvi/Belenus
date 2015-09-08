@@ -343,8 +343,6 @@ void cDlgPatientCardRefill::on_pbSell_clicked()
             if( m_poPatientCard->patientCardTypeId() == 0 )
                 m_poPatientCard->setPatientCardTypeId( cmbCardType->itemData( cmbCardType->currentIndex() ).toUInt() );
             m_poPatientCard->setPatientId( cmbPatient->itemData( cmbPatient->currentIndex() ).toUInt() );
-            m_poPatientCard->setUnits( uiUnits );
-            m_poPatientCard->setTimeLeft( uiUnitTime );
             if( deValidDateTo->date() > QDate::fromString(m_poPatientCard->validDateTo(),"yyyy-MM-dd") )
             {
                 m_poPatientCard->setValidDateTo( deValidDateTo->date().toString("yyyy-MM-dd") );
@@ -451,6 +449,8 @@ void cDlgPatientCardRefill::on_pbSell_clicked()
             }
 
             m_poPatientCard->synchronizeUnits();
+            m_poPatientCard->synchronizeTime();
+            m_poPatientCard->save();
 
             if( bShoppingCart )
             {

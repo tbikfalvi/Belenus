@@ -3,7 +3,7 @@
 #include "creportledger.h"
 #include "currency.h"
 
-cReportLedger::cReportLedger(QWidget *parent, QString p_qsReportName) : cReport(parent,p_qsReportName)
+cReportLedger::cReportLedger(QWidget *parent, QString p_qsReportName, bool p_bIsAdmin) : cReport(parent,p_qsReportName,p_bIsAdmin)
 {
     m_qsReportName          = tr(" Main ledger ");
     m_qsReportDescription   = tr( "This report shows the bookkeepings, the cash book and every accounting data for the selected date intervall. "

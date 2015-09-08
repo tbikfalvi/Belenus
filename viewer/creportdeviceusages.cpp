@@ -2,7 +2,7 @@
 #include "../framework/qtframework.h"
 #include "creportdeviceusages.h"
 
-cReportDeviceUsages::cReportDeviceUsages(QWidget *parent, QString p_qsReportName) : cReport(parent,p_qsReportName)
+cReportDeviceUsages::cReportDeviceUsages(QWidget *parent, QString p_qsReportName, bool p_bIsAdmin) : cReport(parent,p_qsReportName,p_bIsAdmin)
 {
     m_qsReportName          = tr(" Device usages ");
     m_qsReportDescription   = tr( "This report shows the usage of the devices on the selected date intervall." );

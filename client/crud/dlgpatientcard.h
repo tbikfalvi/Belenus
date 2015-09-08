@@ -16,8 +16,8 @@ public:
     virtual ~cDlgPatientCard();
 
     QHBoxLayout     *horizontalLayout;
-    QLabel          *lblPatientCardType;
-    QComboBox       *cmbPatientCardType;
+//    QLabel          *lblPatientCardType;
+//    QComboBox       *cmbPatientCardType;
     QLabel          *lblBarcode;
     QLineEdit       *ledBarcode;
     QLabel          *lblOwner;

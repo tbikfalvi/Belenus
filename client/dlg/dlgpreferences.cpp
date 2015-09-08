@@ -114,6 +114,8 @@ cDlgPreferences::cDlgPreferences( QWidget *p_poParent )
     }
 
     ledServerHost->setText( g_poPrefs->getServerAddress() );
+    chkHttpEnableAutoSync->setChecked( g_poPrefs->isStartHttpSyncAuto() );
+    ledAutoSyncSeconds->setText( QString::number( g_poPrefs->getStartHttpSyncAutoSeconds() ) );
 
     spbCOM->setValue( g_poPrefs->getCommunicationPort() );
     chkForceSendTime->setChecked( g_poPrefs->isForceModuleSendTime() );
@@ -132,6 +134,8 @@ cDlgPreferences::cDlgPreferences( QWidget *p_poParent )
     chkSecondaryCaption->setChecked( g_poPrefs->isSecondaryCaptionVisible() );
 
     ledVatPercent->setText( QString::number( g_poPrefs->getDeviceUseVAT() ) );
+    ledDeviceAdminPassword->setText( "123456789" );
+    ledDeviceAdminPasswordCheck->setText( "123456789" );
     ledDeviceAdminPassword->setEnabled( false );
     ledDeviceAdminPasswordCheck->setEnabled( false );
     pbModifyDevAdminPsw->setIcon( QIcon("./resources/40x40_key.png") );
@@ -139,6 +143,8 @@ cDlgPreferences::cDlgPreferences( QWidget *p_poParent )
     pbCancelModifyPsw->setVisible( false );
     ledPanelTextSterile->setText( g_poPrefs->getPanelTextSteril() );
     ledPanelTextTubeReplacement->setText( g_poPrefs->getPanelTextTubeReplace() );
+    chkVisibleSecSteril->setChecked( g_poPrefs->isTextSterilVisible() );
+    chkVisibleSecTubeReplace->setChecked( g_poPrefs->isTextTubeReplaceVisible() );
 
     chkAutoCloseCassa->setChecked( g_poPrefs->getCassaAutoClose() );
     chkCassaAutoWithdrawal->setChecked( g_poPrefs->getCassaAutoWithdrawal() );
@@ -377,6 +383,8 @@ void cDlgPreferences::accept()
                               tr("'Tube replacement needed' text can not be empty.") );
         return;
     }
+    g_poPrefs->setTextSterilVisible( chkVisibleSecSteril->isChecked() );
+    g_poPrefs->setTextTubeReplaceVisible( chkVisibleSecTubeReplace->isChecked() );
 
     g_poPrefs->setLogLevels( sliConsoleLogLevel->value(),
                              sliDBLogLevel->value(),
@@ -400,7 +408,9 @@ void cDlgPreferences::accept()
 
     g_poPrefs->setStopInLine( rbStopInLine->isChecked() );
 
-    g_poPrefs->setServerAddress( ledServerHost->text() );
+    g_poPrefs->setServerAddress( ledServerHost->text().trimmed() );
+    g_poPrefs->setStartHttpSyncAuto( chkHttpEnableAutoSync->isChecked() );
+    g_poPrefs->setStartHttpSyncAutoSeconds( ledAutoSyncSeconds->text().toInt() );
 
     g_poPrefs->setCommunicationPort( spbCOM->value() );
     g_poPrefs->setForceModuleSendTime( chkForceSendTime->isChecked() );
@@ -776,6 +786,8 @@ void cDlgPreferences::on_pbModifyDevAdminPsw_clicked()
         }
         else
         {
+            ledDeviceAdminPassword->setText( "123456789" );
+            ledDeviceAdminPasswordCheck->setText( "123456789" );
             QMessageBox::warning( this, tr("Warning"),
                                   tr("The password you entered is not valid\n"
                                      "to modify device admin password.") );
@@ -785,8 +797,8 @@ void cDlgPreferences::on_pbModifyDevAdminPsw_clicked()
 
 void cDlgPreferences::on_pbCancelModifyPsw_clicked()
 {
-    ledDeviceAdminPassword->setText( "" );
-    ledDeviceAdminPasswordCheck->setText( "" );
+    ledDeviceAdminPassword->setText( "123456789" );
+    ledDeviceAdminPasswordCheck->setText( "123456789" );
     ledDeviceAdminPassword->setEnabled( false );
     ledDeviceAdminPasswordCheck->setEnabled( false );
     pbModifyDevAdminPsw->setIcon( QIcon("./resources/40x40_key.png") );

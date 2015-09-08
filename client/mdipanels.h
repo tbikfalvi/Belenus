@@ -76,6 +76,7 @@ signals:
     void            signalSetCounterText( unsigned int p_uiPanelId, const QString &p_qsCounter );
     void            signalSetWaitTime( unsigned int p_uiPanelId, const unsigned int p_uiWaitTime );
     void            signalSetInfoText( unsigned int p_uiPanelId, const QString &p_qsInfo );
+    void            signalMainWindowActivated();
 
 private:
     vector<cFrmPanel*>  m_obPanels;
@@ -93,6 +94,7 @@ private slots:
     void slotSetWaitTime( unsigned int p_uiPanelId, const unsigned int p_uiWaitTime );
     void slotSetInfoText( unsigned int p_uiPanelId, const QString &p_qsInfo );
     void slotSelectedFromWaitingQueue();
+    void slotMainWindowActivated();
 
 protected:
     void resizeEvent ( QResizeEvent *p_poEvent );

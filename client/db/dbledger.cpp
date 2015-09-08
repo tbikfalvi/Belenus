@@ -236,7 +236,7 @@ void cDBLedger::revoke() throw( cSevException )
     {
         try
         {
-            cDBPatientCardType  obDBPatientCardType;
+/*            cDBPatientCardType  obDBPatientCardType;
             cDBPatientCard      obDBPatientCard;
 
             obDBPatientCardType.load( patientCardTypeId() );
@@ -249,12 +249,13 @@ void cDBLedger::revoke() throw( cSevException )
             if( obDBPatientCard.timeLeft() < 0 ) obDBPatientCard.setTimeLeft( 0 );
 
             obDBPatientCard.save();
-
-            cDBPatientcardUnit obDBPatientcardUnit;
+*/
+            cDBPatientcardUnit  obDBPatientcardUnit;
+            cDBPatientCard      obDBPatientCard;
 
             obDBPatientcardUnit.removeLedgerUnits( m_uiId );
-
-            obDBPatientCard.synchronizeUnits();
+            obDBPatientCard.load( patientCardId() );
+            obDBPatientCard.save();
         }
         catch( cSevException &e )
         {

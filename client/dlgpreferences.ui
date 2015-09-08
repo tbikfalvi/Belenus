@@ -23,7 +23,7 @@
    <item>
     <widget class="QTabWidget" name="tbwPreferences">
      <property name="currentIndex">
-      <number>6</number>
+      <number>5</number>
      </property>
      <widget class="QWidget" name="tab_General">
       <attribute name="title">
@@ -1099,7 +1099,7 @@
          <property name="title">
           <string> Status text </string>
          </property>
-         <layout class="QVBoxLayout" name="verticalLayout_24">
+         <layout class="QVBoxLayout" name="verticalLayout_6">
           <item>
            <widget class="QLabel" name="lblShowPanelText">
             <property name="text">
@@ -1117,7 +1117,18 @@
              </widget>
             </item>
             <item row="0" column="1">
-             <widget class="QLineEdit" name="ledPanelTextSterile"/>
+             <layout class="QHBoxLayout" name="horizontalLayout_34">
+              <item>
+               <widget class="QLineEdit" name="ledPanelTextSterile"/>
+              </item>
+              <item>
+               <widget class="QCheckBox" name="chkVisibleSecSteril">
+                <property name="text">
+                 <string>Visible on secondary window</string>
+                </property>
+               </widget>
+              </item>
+             </layout>
             </item>
             <item row="1" column="0">
              <widget class="QLabel" name="lblPanelTextTubeReplacement">
@@ -1127,7 +1138,18 @@
              </widget>
             </item>
             <item row="1" column="1">
-             <widget class="QLineEdit" name="ledPanelTextTubeReplacement"/>
+             <layout class="QHBoxLayout" name="horizontalLayout_35">
+              <item>
+               <widget class="QLineEdit" name="ledPanelTextTubeReplacement"/>
+              </item>
+              <item>
+               <widget class="QCheckBox" name="chkVisibleSecTubeReplace">
+                <property name="text">
+                 <string>Visible on secondary window</string>
+                </property>
+               </widget>
+              </item>
+             </layout>
             </item>
            </layout>
           </item>
@@ -1789,6 +1811,53 @@ is different :</string>
             </item>
             <item>
              <spacer name="horizontalSpacer_23">
+              <property name="orientation">
+               <enum>Qt::Horizontal</enum>
+              </property>
+              <property name="sizeHint" stdset="0">
+               <size>
+                <width>40</width>
+                <height>20</height>
+               </size>
+              </property>
+             </spacer>
+            </item>
+           </layout>
+          </item>
+          <item>
+           <layout class="QHBoxLayout" name="horizontalLayout_36">
+            <item>
+             <widget class="QCheckBox" name="chkHttpEnableAutoSync">
+              <property name="text">
+               <string>Synchronization automatically starts after</string>
+              </property>
+             </widget>
+            </item>
+            <item>
+             <widget class="QLineEdit" name="ledAutoSyncSeconds">
+              <property name="minimumSize">
+               <size>
+                <width>30</width>
+                <height>0</height>
+               </size>
+              </property>
+              <property name="maximumSize">
+               <size>
+                <width>30</width>
+                <height>16777215</height>
+               </size>
+              </property>
+             </widget>
+            </item>
+            <item>
+             <widget class="QLabel" name="lblAutoSync">
+              <property name="text">
+               <string>seconds if devices are not working</string>
+              </property>
+             </widget>
+            </item>
+            <item>
+             <spacer name="horizontalSpacer_27">
               <property name="orientation">
                <enum>Qt::Horizontal</enum>
               </property>

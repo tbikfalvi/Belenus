@@ -114,6 +114,7 @@ private:
     bool                     m_bReportTabSwitching;
 
     int                      m_enGroup;
+    unsigned int             m_uiUserId;
 
     bool                    _isInGroup( groupUser p_enGroup );
     void                    _initActions();

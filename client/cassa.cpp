@@ -296,7 +296,7 @@ unsigned int cCassa::cassaProcessPatientCardSell( const cDBPatientCard &p_DBPati
 
 //    if( (p_obDBShoppingCart.cash()+p_obDBShoppingCart.voucher()) > 0 )
 //    {
-        cassaAddMoneyAction( p_obDBShoppingCart.cash()+p_obDBShoppingCart.voucher(), p_obDBShoppingCart.card(), obDBLedger.id(), p_qsComment );
+        cassaAddMoneyAction( p_obDBShoppingCart.cash()+p_obDBShoppingCart.voucher(), p_obDBShoppingCart.card(), obDBLedger.id(), qsComment );
 //    }
 /*    if( p_obDBShoppingCart.card() > 0 )
     {
@@ -342,11 +342,11 @@ unsigned int cCassa::cassaProcessProductStorageChange( const cDBShoppingCart &p_
 
     if( !p_bGlobalCassa )
     {
-        cassaAddMoneyAction( p_obDBShoppingCart.itemSumPrice()-p_obDBShoppingCart.itemDiscount(), 0, obDBLedger.id(), p_qsComment );
+        cassaAddMoneyAction( p_obDBShoppingCart.itemSumPrice()-p_obDBShoppingCart.itemDiscount(), 0, obDBLedger.id(), qsComment );
     }
     else
     {
-        cassaAddMoneyAction( 0, p_obDBShoppingCart.itemSumPrice()-p_obDBShoppingCart.itemDiscount(), obDBLedger.id(), p_qsComment );
+        cassaAddMoneyAction( p_obDBShoppingCart.itemSumPrice()-p_obDBShoppingCart.itemDiscount(), 0, obDBLedger.id(), qsComment, 0, true );
 //        cassaAddGlobalMoneyAction( p_obDBShoppingCart.itemSumPrice()-p_obDBShoppingCart.itemDiscount(), obDBLedger.id(), p_qsComment );
     }
 
@@ -381,14 +381,7 @@ unsigned int cCassa::cassaProcessDeviceUse( const cDBShoppingCart &p_obDBShoppin
     obDBLedger.setComment( qsComment );
     obDBLedger.save();
 
-//    if( (p_obDBShoppingCart.cash()+p_obDBShoppingCart.voucher()) > 0 )
-//    {
-        cassaAddMoneyAction( p_obDBShoppingCart.cash()+p_obDBShoppingCart.voucher(), p_obDBShoppingCart.card(), obDBLedger.id(), p_qsComment );
-//    }
-/*    if( p_obDBShoppingCart.card() > 0 )
-    {
-        cassaAddGlobalMoneyAction( p_obDBShoppingCart.card(), obDBLedger.id(), p_qsComment );
-    }*/
+    cassaAddMoneyAction( p_obDBShoppingCart.cash()+p_obDBShoppingCart.voucher(), p_obDBShoppingCart.card(), obDBLedger.id(), qsComment );
 
     return obDBLedger.id();
 }
@@ -423,14 +416,7 @@ void cCassa::cassaProcessProductSell( const cDBShoppingCart &p_obDBShoppingCart,
     obDBLedger.setComment( qsComment );
     obDBLedger.save();
 
-//    if( (p_obDBShoppingCart.cash()+p_obDBShoppingCart.voucher()) > 0 )
-//    {
-        cassaAddMoneyAction( p_obDBShoppingCart.cash()+p_obDBShoppingCart.voucher(), p_obDBShoppingCart.card(), obDBLedger.id(), p_qsComment );
-//    }
-/*    if( p_obDBShoppingCart.card() > 0 )
-    {
-        cassaAddGlobalMoneyAction( p_obDBShoppingCart.card(), obDBLedger.id(), p_qsComment );
-    }*/
+    cassaAddMoneyAction( p_obDBShoppingCart.cash()+p_obDBShoppingCart.voucher(), p_obDBShoppingCart.card(), obDBLedger.id(), qsComment );
 
     cDBProduct  obDBProduct;
 
@@ -605,17 +591,26 @@ void cCassa::cassaDecreaseMoney( unsigned int p_uiUserId, int p_nMoney, QString 
     obDBCassaHistory.save();
 }
 //====================================================================================
-void cCassa::cassaAddMoneyAction( int p_nCash, int p_nCard, unsigned int p_uiLedgerId, QString p_qsComment, unsigned int p_uiParentId )
+void cCassa::cassaAddMoneyAction( int p_nCash, int p_nCard, unsigned int p_uiLedgerId, QString p_qsComment, unsigned int p_uiParentId, bool p_bGlobalCassa )
 //====================================================================================
 {
-    m_pCassa->setCurrentBalance( m_pCassa->currentBalance()+p_nCash );
-    m_pCassa->save();
+    unsigned int uiCassaId = m_pCassa->id();
+
+    if( !p_bGlobalCassa )
+    {
+        m_pCassa->setCurrentBalance( m_pCassa->currentBalance()+p_nCash );
+        m_pCassa->save();
+    }
+    else
+    {
+        uiCassaId = 0;
+    }
 
     cDBCassaHistory obDBCassaHistory;
 
     obDBCassaHistory.setLicenceId( g_poPrefs->getLicenceId() );
     obDBCassaHistory.setParentId( p_uiParentId );
-    obDBCassaHistory.setCassaId( m_pCassa->id() );
+    obDBCassaHistory.setCassaId( uiCassaId );
     obDBCassaHistory.setLedgerId( p_uiLedgerId );
     obDBCassaHistory.setUserId( g_obUser.id() );
     obDBCassaHistory.setActionValue( p_nCash+p_nCard );

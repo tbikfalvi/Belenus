@@ -9,7 +9,7 @@ class cReportPatientcardSell : public cReport
 {
     Q_OBJECT
 public:
-    explicit cReportPatientcardSell(QWidget *parent = 0, QString p_qsReportName = "", bool p_bFilterEnable = false );
+    explicit cReportPatientcardSell(QWidget *parent = 0, QString p_qsReportName = "", bool p_bIsAdmin = false );
     
 signals:
     

@@ -2,9 +2,9 @@
 #include "../framework/qtframework.h"
 #include "creporttemplate.h"
 
-cReport__Template_ClassName__::cReport__Template_ClassName__(QWidget *parent, QString p_qsReportName) : cReport(parent,p_qsReportName)
+cReport__Template_ClassName__::cReport__Template_ClassName__(QWidget *parent, QString p_qsReportName, bool p_bIsAdmin) : cReport(parent,p_qsReportName,p_bIsAdmin)
 {
-    m_qsReportName          = tr(" Inactive patientcards ");
+    m_qsReportName          = tr(" __template_report_name__ ");
     m_qsReportDescription   = tr( "This report shows the __template_description__." );
 }
 

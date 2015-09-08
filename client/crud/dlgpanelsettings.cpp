@@ -70,6 +70,19 @@ cDlgPanelSettings::cDlgPanelSettings( QWidget *p_poParent, unsigned int p_uiPane
     ledWorkTimeSec->setEnabled( g_obUser.isInGroup( cAccessGroup::SYSTEM ) );
     horizontalLayout2->addWidget( ledWorkTimeSec );
 
+    if( g_obUser.isInGroup( cAccessGroup::ADMIN ) )
+    {
+        ledWorkTimeHour->setEchoMode( QLineEdit::Normal );
+        ledWorkTimeMin->setEchoMode( QLineEdit::Normal );
+        ledWorkTimeSec->setEchoMode( QLineEdit::Normal );
+    }
+    else
+    {
+        ledWorkTimeHour->setEchoMode( QLineEdit::Password );
+        ledWorkTimeMin->setEchoMode( QLineEdit::Password );
+        ledWorkTimeSec->setEchoMode( QLineEdit::Password );
+    }
+
     pbWTReset = new QPushButton( this );
     pbWTReset->setObjectName( QString::fromUtf8( "pbWTReset" ) );
     pbWTReset->setMinimumHeight( 30 );
@@ -375,19 +388,17 @@ void cDlgPanelSettings::saveClicked( bool )
             obDBPanel.setPanelGroupId( cmbPanelGroup->itemData( cmbPanelGroup->currentIndex() ).toUInt() );
         }
 
-        if( g_obUser.isInGroup(cAccessGroup::SYSTEM) || cmbPanelType->isEnabled() )
-        {
-            int hour    = ledWorkTimeHour->text().toInt();
-            int minute  = ledWorkTimeMin->text().toInt();
-            int second  = ledWorkTimeSec->text().toInt();
+        int hour    = ledWorkTimeHour->text().toInt();
+        int minute  = ledWorkTimeMin->text().toInt();
+        int second  = ledWorkTimeSec->text().toInt();
 
-            if( cmbPanelType->isEnabled() )
-                obDBPanel.setPanelTypeId( cmbPanelType->itemData( cmbPanelType->currentIndex() ).toUInt() );
-            if( ledWorkTimeHour->isEnabled() )
-                obDBPanel.setWorkTime( hour*3600 + minute*60 + second );
-            if( ledMaxWorkTime->isEnabled() )
-                obDBPanel.setMaxWorkTime( ledMaxWorkTime->text().toUInt() );
-        }
+        if( cmbPanelType->isEnabled() )
+            obDBPanel.setPanelTypeId( cmbPanelType->itemData( cmbPanelType->currentIndex() ).toUInt() );
+        if( ledWorkTimeHour->isEnabled() || pbWTReset->isEnabled() )
+            obDBPanel.setWorkTime( hour*3600 + minute*60 + second );
+        if( ledMaxWorkTime->isEnabled() )
+            obDBPanel.setMaxWorkTime( ledMaxWorkTime->text().toUInt() );
+
         obDBPanel.save();
 
         QDialog::accept();

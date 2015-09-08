@@ -4,6 +4,7 @@
 #include <QStringList>
 
 #include "dlgmanagedatabase.h"
+#include "../db/dbpatientcardtype.h"
 
 cDlgManageDatabase::cDlgManageDatabase( QWidget *p_poParent )
     : QDialog( p_poParent )
@@ -21,16 +22,28 @@ cDlgManageDatabase::cDlgManageDatabase( QWidget *p_poParent )
     pbExecute->setIcon( QIcon("./resources/40x40_database_sync.png") );
     pbExit->setIcon( QIcon("./resources/40x40_exit.png") );
 
-    connect( rbUpdatePCUnitType,        SIGNAL(clicked()), this, SLOT(slotUpdateExecuteButton()) );
-    connect( rbDeactivatePCs,           SIGNAL(clicked()), this, SLOT(slotUpdateExecuteButton()) );
-    connect( rbDeleteInactivePCs,       SIGNAL(clicked()), this, SLOT(slotUpdateExecuteButton()) );
-    connect( rbDeleteNotUsedPCTs,       SIGNAL(clicked()), this, SLOT(slotUpdateExecuteButton()) );
+    connect( rbUpdatePCUnitType,    SIGNAL(clicked()), this, SLOT(slotUpdateExecuteButton()) );
+    connect( rbDeactivatePCs,       SIGNAL(clicked()), this, SLOT(slotUpdateExecuteButton()) );
+    connect( rbDeleteInactivePCs,   SIGNAL(clicked()), this, SLOT(slotUpdateExecuteButton()) );
+    connect( rbDeleteNotUsedPCTs,   SIGNAL(clicked()), this, SLOT(slotUpdateExecuteButton()) );
+    connect( rbAssignPCTToPC,       SIGNAL(clicked()), this, SLOT(slotUpdateExecuteButton()) );
+
     connect( rbDeleteLedgerBeforeDate,  SIGNAL(clicked()), this, SLOT(slotUpdateExecuteButton()) );
+
+    QSqlQuery   *poQuery;
+    QString      qsQuery;
+
+    cmbPatientCardType->addItem( tr("<Not selected>"), -1 );
+    qsQuery = QString( "SELECT patientCardTypeId, name FROM patientCardTypes WHERE patientCardTypeId>1 AND licenceId!=0 AND active=1 AND archive<>\"DEL\" ORDER BY name " );
+
+    poQuery = g_poDB->executeQTQuery( qsQuery );
+    while( poQuery->next() )
+    {
+        cmbPatientCardType->addItem( poQuery->value( 1 ).toString(), poQuery->value( 0 ) );
+    }
 
     deFilterDate->setDate( QDate::currentDate() );
 
-    rbDeleteInactivePCs->setEnabled( false );
-    rbDeleteInactivePCs->setVisible( false );
     rbDeleteNotUsedPCTs->setEnabled( false );
     rbDeleteNotUsedPCTs->setVisible( false );
 
@@ -52,6 +65,7 @@ void cDlgManageDatabase::slotUpdateExecuteButton()
         rbDeactivatePCs->isChecked() ||
         rbDeleteInactivePCs->isChecked() ||
         rbDeleteNotUsedPCTs->isChecked() ||
+        rbAssignPCTToPC->isChecked() ||
         rbDeleteLedgerBeforeDate->isChecked() )
     {
         pbExecute->setEnabled( true );
@@ -59,6 +73,15 @@ void cDlgManageDatabase::slotUpdateExecuteButton()
     else
     {
         pbExecute->setEnabled( false );
+    }
+
+    if( rbAssignPCTToPC->isChecked() )
+    {
+        cmbPatientCardType->setEnabled( true );
+    }
+    else
+    {
+        cmbPatientCardType->setEnabled( false );
     }
 
     if( rbDeleteLedgerBeforeDate->isChecked() )
@@ -93,6 +116,10 @@ void cDlgManageDatabase::on_pbExecute_clicked()
         else if( rbDeleteNotUsedPCTs->isChecked() )
         {
             _actionDeleteNotUsedPCT();
+        }
+        else if( rbAssignPCTToPC->isChecked() )
+        {
+            _actionRepairPatientcardsWithoutType();
         }
         else if( rbDeleteLedgerBeforeDate->isChecked() )
         {
@@ -166,16 +193,16 @@ void cDlgManageDatabase::_actionDeactivatePC()
 
 void cDlgManageDatabase::_actionDeleteInactivePC()
 {
+    m_dlgProgress->showProgress();
+
     try
     {
         QStringList qslCardId;
         QString qsQuery = QString( "SELECT patientCardId FROM patientcards WHERE "
+                                   "patientCardId>1 AND "
                                    "patientCardTypeId=0 AND "
                                    "patientId=0 AND "
-                                   "units=0 AND "
-                                   "amount=0 AND "
-                                   "timeLeft=0 AND "
-                                   "pincode!='LOST' AND "
+                                   "(pincode IS NULL OR pincode=\"\") AND "
                                    "active=0 "
                                   );
         QSqlQuery *poQuery = g_poDB->executeQTQuery( qsQuery );
@@ -185,9 +212,24 @@ void cDlgManageDatabase::_actionDeleteInactivePC()
             qslCardId.append( poQuery->value(0).toString() );
         }
 
+        m_dlgProgress->showProgressBar( qslCardId.count() );
+
+        unsigned int nCountSkipped = 0;
+
         for( int i=0; i<qslCardId.count(); i++ )
         {
-            unsigned int uiId = qslCardId.at(i).toUInt();
+            unsigned int    uiId = qslCardId.at(i).toUInt();
+            cDBPatientCard  obDBPatientCard;
+
+            obDBPatientCard.load( uiId );
+
+            if( obDBPatientCard.isAssignedCardExists() ||
+                obDBPatientCard.isLedgerConnected() )
+            {
+                nCountSkipped++;
+                m_dlgProgress->stepProgressBar();
+                continue;
+            }
 
             qsQuery = QString( "DELETE FROM connectPatientWithCard WHERE "
                                "patientCardId=%1 " ).arg( uiId );
@@ -205,19 +247,26 @@ void cDlgManageDatabase::_actionDeleteInactivePC()
                                "patientCardId=%1 " ).arg( uiId );
             g_poDB->executeQTQuery( qsQuery );
 
-            qsQuery = QString( "DELETE FROM ledger WHERE "
-                               "patientCardId=%1 " ).arg( uiId );
-            g_poDB->executeQTQuery( qsQuery );
-
             qsQuery = QString( "DELETE FROM patientCards WHERE "
                                "patientCardId=%1 " ).arg( uiId );
             g_poDB->executeQTQuery( qsQuery );
+
+            m_dlgProgress->stepProgressBar();
         }
+
+        QMessageBox::information( this, tr("Information"),
+                                  tr("The action successfully finished.\n"
+                                     "Number of affected records: %1\n"
+                                     "Number of skipped records: %2")
+                                  .arg( qslCardId.count()-nCountSkipped )
+                                  .arg( nCountSkipped ) );
     }
     catch( cSevException &e )
     {
         g_obLogger(e.severity()) << e.what() << EOM;
     }
+
+    m_dlgProgress->hideProgress();
 }
 
 void cDlgManageDatabase::_actionDeleteNotUsedPCT()
@@ -327,6 +376,7 @@ void cDlgManageDatabase::_actionDeleteLedgerEntries()
 
         poQuery = g_poDB->executeQTQuery( QString("SELECT cassaId FROM "
                                                   "cassa WHERE "
+                                                  "startDateTime<\"%1\" AND "
                                                   "stopDateTime<\"%1\" AND "
                                                   "cassaId>0 ")
                                           .arg(deFilterDate->date().toString("yyyy-MM-dd")) );
@@ -356,6 +406,7 @@ void cDlgManageDatabase::_actionDeleteLedgerEntries()
 
         poQuery = g_poDB->executeQTQuery( QString("DELETE FROM "
                                                   "cassa WHERE "
+                                                  "startDateTime<\"%1\" AND "
                                                   "stopDateTime<\"%1\" AND "
                                                   "cassaId>0 ")
                                           .arg(deFilterDate->date().toString("yyyy-MM-dd")) );
@@ -390,5 +441,79 @@ void cDlgManageDatabase::_actionDeleteLedgerEntries()
     }
 
     m_dlgProgress->hideProgress();
+}
+
+void cDlgManageDatabase::_actionRepairPatientcardsWithoutType()
+{
+    int uiPatientCardTypeId = cmbPatientCardType->itemData( cmbPatientCardType->currentIndex() ).toInt();
+
+    if( uiPatientCardTypeId > -1 )
+    {
+        m_dlgProgress->showProgress();
+
+        try
+        {
+            cDBPatientCardType  obDBPatientCardType;
+
+            obDBPatientCardType.load( uiPatientCardTypeId );
+
+            QStringList qslCardId;
+            QString qsQuery = QString( "SELECT patientCardId FROM patientcards WHERE "
+                                       "patientCardId>1 AND "
+                                       "patientCardTypeId=0 AND "
+                                       "active=1 "
+                                      );
+            QSqlQuery *poQuery = g_poDB->executeQTQuery( qsQuery );
+
+            while( poQuery->next() )
+            {
+                qslCardId.append( poQuery->value(0).toString() );
+            }
+
+            m_dlgProgress->showProgressBar( qslCardId.count() );
+
+            for( int i=0; i<qslCardId.count(); i++ )
+            {
+                unsigned int    uiId = qslCardId.at(i).toUInt();
+                cDBPatientCard  obDBPatientCard;
+
+                obDBPatientCard.load( uiId );
+                obDBPatientCard.setPatientCardTypeId( uiPatientCardTypeId );
+                obDBPatientCard.save();
+
+                qsQuery = QString( "UPDATE patientcardunits SET "
+                                   "patientCardTypeId=%1, "
+                                   "unitTime=%2, "
+                                   "unitPrice=%3 "
+                                   "WHERE "
+                                   "patientCardId=%4 AND "
+                                   "(patientCardTypeId=0 OR "
+                                   "unitTime=0 OR "
+                                   "unitPrice=0) ")
+                                .arg( uiPatientCardTypeId )
+                                .arg( obDBPatientCardType.unitTime() )
+                                .arg( obDBPatientCardType.price() )
+                                .arg( obDBPatientCard.id() );
+
+                m_dlgProgress->stepProgressBar();
+            }
+
+            QMessageBox::information( this, tr("Information"),
+                                      tr("The action successfully finished.\n"
+                                         "Number of repaired patientcards: %1")
+                                      .arg( qslCardId.count() ) );
+        }
+        catch( cSevException &e )
+        {
+            g_obLogger(e.severity()) << e.what() << EOM;
+        }
+
+        m_dlgProgress->hideProgress();
+    }
+    else
+    {
+        QMessageBox::warning( this, tr("Warning"),
+                              tr("Please select patientcard type to repair with the patientcards.") );
+    }
 }
 

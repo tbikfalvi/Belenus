@@ -2,7 +2,7 @@
 -- Belenus Szoftver Rendszer (c) Pagony Multimedia Studio Bt - 2013
 -- -----------------------------------------------------------------------------------
 -- Filename    : db_fill_de.sql
--- AppVersion  : 1.5.1.5
+-- AppVersion  : 1.5.2
 -- DbVersion   : 1.7.0
 -- Author      : Bikfalvi Tamas
 -- -----------------------------------------------------------------------------------
@@ -319,7 +319,7 @@ ALTER TABLE `shoppingcartitems` auto_increment=1;
 INSERT INTO `settings` (`settingId`, `identifier`, `value`) VALUES
  (NULL, 'GLOBAL_DATA_UPDATED', '2015-01-01 08:00:00'),
  (NULL, 'ABOUT_INFO_LINK', 'http://www.kiwisun.eu/elerhetosegeink.html'),
- (NULL, 'APPLICATION_VERSION', '1_5_1'),
+ (NULL, 'APPLICATION_VERSION', '1_5_2')
  (NULL, 'DATABASE_VERSION', '1_7_0');
 
 -- -----------------------------------------------------------------------------------

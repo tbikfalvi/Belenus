@@ -4,7 +4,7 @@
 #include "../framework/qtframework.h"
 #include "creportcarddetails.h"
 
-cReportCardDetails::cReportCardDetails(QWidget *parent, QString p_qsReportName) : cReport(parent,p_qsReportName)
+cReportCardDetails::cReportCardDetails(QWidget *parent, QString p_qsReportName, bool p_bIsAdmin) : cReport(parent,p_qsReportName,p_bIsAdmin)
 {
     m_qsReportName          = tr(" Patientcards details ");
     m_qsReportDescription   = tr( "This report shows the details of the selected patient card. "
@@ -190,6 +190,8 @@ void cReportCardDetails::refreshReport()
 
         m_dlgProgress.setProgressMax( poQueryResultCards->size()+10 );
 
+        int nSumUnits = 0;
+
         while( poQueryResultCards->next() )
         {
             addTableRow();
@@ -198,8 +200,19 @@ void cReportCardDetails::refreshReport()
             addTableCell( poQueryResultCards->value(5).toString(), "center" );
             addTableCell( QString("%1 -> %2").arg( poQueryResultCards->value(2).toString() ).arg( poQueryResultCards->value(3).toString() ), "center" );
             addTableCell( tr("%1 day(s)").arg( QDate::currentDate().daysTo( QDate::fromString(poQueryResultCards->value(3).toString(), "yyyy-MM-dd") ) ), "center" );
+
+            nSumUnits += poQueryResultCards->value(4).toInt();
+
             m_dlgProgress.increaseProgressValue();
         }
+
+        addTableRow();
+        addTableCell( QString::number( nSumUnits ), "center bold" );
+        addTableCell( "", "" );
+        addTableCell( "", "" );
+        addTableCell( "", "" );
+        addTableCell( "", "" );
+
         finishTable();
         finishSection();
 
@@ -236,6 +249,8 @@ void cReportCardDetails::refreshReport()
 
         m_dlgProgress.setProgressMax( poQueryResultCards->size()+10 );
 
+        nSumUnits = 0;
+
         while( poQueryResultCards->next() )
         {
             addTableRow();
@@ -243,8 +258,18 @@ void cReportCardDetails::refreshReport()
             addTableCell( poQueryResultCards->value(1).toString(), "center" );
             addTableCell( poQueryResultCards->value(2).toString(), "center" );
             addTableCell( poQueryResultCards->value(3).toString(), "center" );
+
+            nSumUnits += poQueryResultCards->value(1).toInt();
+
             m_dlgProgress.increaseProgressValue();
         }
+
+        addTableRow();
+        addTableCell( tr( "Sum" ), "center bold" );
+        addTableCell( QString::number( nSumUnits ), "center bold" );
+        addTableCell( "", "" );
+        addTableCell( "", "" );
+
         finishTable();
         finishSection();
     }
@@ -283,6 +308,8 @@ void cReportCardDetails::refreshReport()
         addTableCell( tr( "Owner" ), "bold" );
         addTableCell( tr( "Comment" ), "bold" );
 
+        int nSumUnits = 0;
+
         for( int i=0; i<qslQueryResult.size(); i++ )
         {
             QStringList     qslRecord = qslQueryResult.at(i).split('#');
@@ -302,8 +329,20 @@ void cReportCardDetails::refreshReport()
             addTableCell( qslRecord.at(6) );
             addTableCell( qslRecord.at(7) );
 
+            nSumUnits += nUnits;
+
             m_dlgProgress.increaseProgressValue();
         }
+
+        addTableRow();
+        addTableCell( tr( "Sum" ), "center bold" );
+        addTableCell( QString::number(nSumUnits), "center bold"  );
+        addTableCell( "", "" );
+        addTableCell( "", "" );
+        addTableCell( "", "" );
+        addTableCell( "", "" );
+        addTableCell( "", "" );
+
         finishTable();
         finishSection();
     }

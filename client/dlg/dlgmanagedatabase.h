@@ -25,6 +25,7 @@ private slots:
     void _actionDeleteInactivePC();
     void _actionDeleteNotUsedPCT();
     void _actionDeleteLedgerEntries();
+    void _actionRepairPatientcardsWithoutType();
 };
 
 #endif // CDLGMANAGEDATABASE_H

@@ -86,6 +86,11 @@ void cPreferences::init()
     m_bBlnsHttpEnabled              = false;
     m_nBlnsHttpWaitTime             = 3;
     m_bBlnsHttpSuspended            = false;
+
+    m_bIsTextSterilVisible          = false;
+    m_bIsTextTubeReplaceVisible     = false;
+
+    m_nStartHttpSyncAutoSeconds     = 15;
 }
 
 void cPreferences::loadConfFileSettings()
@@ -121,6 +126,8 @@ void cPreferences::loadConfFileSettings()
         m_qsSecondaryBackground         = obPrefFile.value( QString::fromAscii( "SecondaryWindow/Background" ), "#000000"  ).toString();
         m_qsSecondaryFrame              = obPrefFile.value( QString::fromAscii( "SecondaryWindow/FrameColor" ), "#555555" ).toString();
         m_bIsSecondaryCaptionVisible    = obPrefFile.value( QString::fromAscii( "SecondaryWindow/IsSecondaryCaptionVisible"), true ).toBool();
+        m_bIsTextTubeReplaceVisible     = obPrefFile.value( QString::fromAscii( "SecondaryWindow/IsTextTubeReplaceVisible"), false ).toBool();
+        m_bIsTextSterilVisible          = obPrefFile.value( QString::fromAscii( "SecondaryWindow/IsTextSterilVisible"), false ).toBool();
 
         m_qsActiveCaptionBackground     = obPrefFile.value( QString::fromAscii( "Panels/ActiveCaptionBackground" ), "#000099" ).toString();
         m_qsActiveCaptionColor          = obPrefFile.value( QString::fromAscii( "Panels/ActiveCaptionColor" ), "#FFFFFF" ).toString();
@@ -204,18 +211,20 @@ void cPreferences::loadConfFileSettings()
 
         setLogLevels( uiConsoleLevel, uiDBLevel, uiGUILevel, uiFileLevel );
 
-        m_bBlnsHttpEnabled    = obPrefFile.value( QString::fromAscii( "BlnsHttp/Enabled" ) ).toBool();
-        m_nBlnsHttpWaitTime    = obPrefFile.value( QString::fromAscii( "BlnsHttp/MessageWaitTime" ), 12 ).toInt();
+        m_bBlnsHttpEnabled          = obPrefFile.value( QString::fromAscii( "BlnsHttp/Enabled" ) ).toBool();
+        m_nBlnsHttpWaitTime         = obPrefFile.value( QString::fromAscii( "BlnsHttp/MessageWaitTime" ), 12 ).toInt();
+        m_bIsStartHttpSyncAuto      = obPrefFile.value( QString::fromAscii( "BlnsHttp/IsAutoStartSync"), false ).toBool();
+        m_nStartHttpSyncAutoSeconds = obPrefFile.value( QString::fromAscii( "BlnsHttp/AutoStartSyncSeconds"), 15 ).toInt();
 
-        m_qsDirDbBinaries       = obPrefFile.value( QString::fromAscii( "DbBackup/DirDbBinaries" ) ).toString();
-        m_qsDirDbBackup         = obPrefFile.value( QString::fromAscii( "DbBackup/DirDbBackup" ) ).toString();
-        m_bBackupDatabase       = obPrefFile.value( QString::fromAscii( "DbBackup/BackupDb" ) ).toBool();
-        m_nBackupDatabaseType   = obPrefFile.value( QString::fromAscii( "DbBackup/DbBackupType" ) ).toInt();
-        m_qsBackupDatabaseDays  = obPrefFile.value( QString::fromAscii( "DbBackup/DbBackupDays" ) ).toString();
+        m_qsDirDbBinaries           = obPrefFile.value( QString::fromAscii( "DbBackup/DirDbBinaries" ) ).toString();
+        m_qsDirDbBackup             = obPrefFile.value( QString::fromAscii( "DbBackup/DirDbBackup" ) ).toString();
+        m_bBackupDatabase           = obPrefFile.value( QString::fromAscii( "DbBackup/BackupDb" ) ).toBool();
+        m_nBackupDatabaseType       = obPrefFile.value( QString::fromAscii( "DbBackup/DbBackupType" ) ).toInt();
+        m_qsBackupDatabaseDays      = obPrefFile.value( QString::fromAscii( "DbBackup/DbBackupDays" ) ).toString();
 
-        m_qsDateFormat          = obPrefFile.value( QString::fromAscii( "DateFormat" ), "yyyy-MM-dd" ).toString();
+        m_qsDateFormat              = obPrefFile.value( QString::fromAscii( "DateFormat" ), "yyyy-MM-dd" ).toString();
 
-        m_bFapados              = obPrefFile.value( QString::fromAscii( "Component" ), false ).toBool();
+        m_bFapados                  = obPrefFile.value( QString::fromAscii( "Component" ), false ).toBool();
     }
 }
 
@@ -289,6 +298,8 @@ void cPreferences::save() const throw (cSevException)
     obPrefFile.setValue( QString::fromAscii( "SecondaryWindow/Width" ), m_qsSecondarySize.width() );
     obPrefFile.setValue( QString::fromAscii( "SecondaryWindow/Height" ), m_qsSecondarySize.height() );
     obPrefFile.setValue( QString::fromAscii( "SecondaryWindow/Background" ), m_qsSecondaryBackground );
+    obPrefFile.setValue( QString::fromAscii( "SecondaryWindow/IsTextTubeReplaceVisible"), m_bIsTextTubeReplaceVisible );
+    obPrefFile.setValue( QString::fromAscii( "SecondaryWindow/IsTextSterilVisible"), m_bIsTextSterilVisible );
 
     obPrefFile.setValue( QString::fromAscii( "Panels/ActiveCaptionBackground" ), m_qsActiveCaptionBackground );
     obPrefFile.setValue( QString::fromAscii( "Panels/ActiveCaptionColor" ), m_qsActiveCaptionColor );
@@ -335,6 +346,8 @@ void cPreferences::save() const throw (cSevException)
 
     obPrefFile.setValue( QString::fromAscii( "BlnsHttp/Enabled" ), m_bBlnsHttpEnabled );
     obPrefFile.setValue( QString::fromAscii( "BlnsHttp/MessageWaitTime" ), m_nBlnsHttpWaitTime );
+    obPrefFile.setValue( QString::fromAscii( "BlnsHttp/IsAutoStartSync"), m_bIsStartHttpSyncAuto );
+    obPrefFile.setValue( QString::fromAscii( "BlnsHttp/AutoStartSyncSeconds"), m_nStartHttpSyncAutoSeconds );
 
     obPrefFile.setValue( QString::fromAscii( "DbBackup/DirDbBinaries" ), m_qsDirDbBinaries );
     obPrefFile.setValue( QString::fromAscii( "DbBackup/DirDbBackup" ), m_qsDirDbBackup );
@@ -1582,4 +1595,60 @@ int cPreferences::getForceTimeSendCounter() const
     return m_nForceTimeSendCounter;
 }
 
+void cPreferences::setTextTubeReplaceVisible( bool p_bTextTubeReplaceVisible, bool p_boSaveNow )
+{
+    m_bIsTextTubeReplaceVisible = p_bTextTubeReplaceVisible;
+
+    if( p_boSaveNow )
+    {
+        QSettings  obPrefFile( m_qsFileName, QSettings::IniFormat );
+        obPrefFile.setValue( QString::fromAscii( "SecondaryWindow/IsTextTubeReplaceVisible"), m_bIsTextTubeReplaceVisible );
+    }
+}
+
+bool cPreferences::isTextTubeReplaceVisible()
+{
+    return m_bIsTextTubeReplaceVisible;
+}
+
+void cPreferences::setTextSterilVisible( bool p_bTextSterilVisible, bool p_boSaveNow )
+{
+    m_bIsTextSterilVisible = p_bTextSterilVisible;
+
+    if( p_boSaveNow )
+    {
+        QSettings  obPrefFile( m_qsFileName, QSettings::IniFormat );
+        obPrefFile.setValue( QString::fromAscii( "SecondaryWindow/IsTextSterilVisible"), m_bIsTextSterilVisible );
+    }
+}
+bool cPreferences::isTextSterilVisible()
+{
+    return m_bIsTextSterilVisible;
+}
+
+void cPreferences::setStartHttpSyncAuto( bool p_bStartHttpSyncAuto, bool p_boSaveNow )
+{
+    m_bIsStartHttpSyncAuto = p_bStartHttpSyncAuto;
+
+    if( p_boSaveNow )
+    {
+        QSettings  obPrefFile( m_qsFileName, QSettings::IniFormat );
+        obPrefFile.setValue( QString::fromAscii( "BlnsHttp/IsAutoStartSync"), m_bIsStartHttpSyncAuto );
+    }
+}
+
+bool cPreferences::isStartHttpSyncAuto()
+{
+    return m_bIsStartHttpSyncAuto;
+}
+
+void cPreferences::setStartHttpSyncAutoSeconds( const int p_nStartHttpSyncAutoSeconds )
+{
+    m_nStartHttpSyncAutoSeconds = p_nStartHttpSyncAutoSeconds;
+}
+
+int cPreferences::getStartHttpSyncAutoSeconds() const
+{
+    return m_nStartHttpSyncAutoSeconds;
+}
 

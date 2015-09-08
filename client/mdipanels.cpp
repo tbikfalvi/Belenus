@@ -53,6 +53,7 @@ void cMdiPanels::initPanels()
         connect( poFrame, SIGNAL( signalSetWaitTime(uint,uint) ),           this, SLOT( slotSetWaitTime(uint,uint) ) );
         connect( poFrame, SIGNAL( signalSetInfoText(uint,QString) ),        this, SLOT( slotSetInfoText(uint,QString) ) );
         connect( poFrame, SIGNAL( signalSelectedFromWaitingQueue()),        this, SLOT( slotSelectedFromWaitingQueue()) );
+        connect( poFrame, SIGNAL( signalMainWindowActivated()),             this, SLOT( slotMainWindowActivated()) );
 
         poPanel = new QMdiSubWindow( 0, Qt::FramelessWindowHint );
         poPanel->setWidget( poFrame );
@@ -277,6 +278,8 @@ void cMdiPanels::resizeEvent ( QResizeEvent *p_poEvent )
 
 void cMdiPanels::keyPressEvent ( QKeyEvent *p_poEvent )
 {
+    emit signalMainWindowActivated();
+
     int inNewPanel = m_uiActivePanel;
 
     switch( p_poEvent->key() )
@@ -375,12 +378,18 @@ bool cMdiPanels::isItemInShoppingCart()
 //====================================================================================
 void cMdiPanels::itemAddedToShoppingCart()
 {
-    m_obPanels.at( m_uiActivePanel )->itemAddedToShoppingCart();
+    for( unsigned int i=0; i<m_obPanels.size(); i++ )
+    {
+        m_obPanels.at( i )->itemAddedToShoppingCart();
+    }
 }
 //====================================================================================
 void cMdiPanels::itemRemovedFromShoppingCart()
 {
-    m_obPanels.at( m_uiActivePanel )->itemRemovedFromShoppingCart();
+    for( unsigned int i=0; i<m_obPanels.size(); i++ )
+    {
+        m_obPanels.at( i )->itemRemovedFromShoppingCart();
+    }
 }
 //====================================================================================
 void cMdiPanels::itemRemovedFromShoppingCart( const unsigned int p_uiPanelId )
@@ -486,3 +495,9 @@ void cMdiPanels::slotSelectedFromWaitingQueue()
         addPatientToWaitingQueue( true );
     }
 }
+//====================================================================================
+void cMdiPanels::slotMainWindowActivated()
+{
+    emit signalMainWindowActivated();
+}
+//====================================================================================

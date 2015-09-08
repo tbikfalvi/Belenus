@@ -50,6 +50,7 @@ public:
     bool             isExtendedAdmin();
     bool             isExtendedOrSystemAdmin();
     void             showPatientCardInformation( QString p_qsBarcode );
+    bool             isShoppingCartHasItems();
 
 private:
     QApplication    *m_poMainApplication;

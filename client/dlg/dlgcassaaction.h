@@ -21,6 +21,7 @@ public:
     cDlgCassaAction( QWidget *p_poParent = 0, cDBShoppingCart *p_poShoppingCart = NULL );
     virtual ~cDlgCassaAction();
 
+    void payShoppingCart();
     void setPayWithCash();
     void setPayWithVoucher();
     void setPayWithCreditcard();
