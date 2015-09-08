@@ -1,4 +1,4 @@
-<installer version="1.5.2">
+<installer version="1.5.2.1">
 
     <files>
 
@@ -66,16 +66,18 @@
         <file src="%CURRENT_DIR%/resources/40x40_panel.png" dst="%INSTALL_DIR%/resources/40x40_panel.png" />
         <file src="%CURRENT_DIR%/resources/40x40_patient.png" dst="%INSTALL_DIR%/resources/40x40_patient.png" />
         <file src="%CURRENT_DIR%/resources/40x40_patientcard.png" dst="%INSTALL_DIR%/resources/40x40_patientcard.png" />
-        <file src="%CURRENT_DIR%/resources/40x40_patientcardadd.png" dst="%INSTALL_DIR%/resources/40x40_patientcardadd.png" />
-        <file src="%CURRENT_DIR%/resources/40x40_patientcards.png" dst="%INSTALL_DIR%/resources/40x40_patientcards.png" />
-        <file src="%CURRENT_DIR%/resources/40x40_patientcardtype.png" dst="%INSTALL_DIR%/resources/40x40_patientcardtype.png" />
         <file src="%CURRENT_DIR%/resources/40x40_patientcard_active.png" dst="%INSTALL_DIR%/resources/40x40_patientcard_active.png" />
         <file src="%CURRENT_DIR%/resources/40x40_patientcard_assign.png" dst="%INSTALL_DIR%/resources/40x40_patientcard_assign.png" />
         <file src="%CURRENT_DIR%/resources/40x40_patientcard_disjoin.png" dst="%INSTALL_DIR%/resources/40x40_patientcard_disjoin.png" />
         <file src="%CURRENT_DIR%/resources/40x40_patientcard_inactive.png" dst="%INSTALL_DIR%/resources/40x40_patientcard_inactive.png" />
+        <file src="%CURRENT_DIR%/resources/40x40_patientcard_info.png" dst="%INSTALL_DIR%/resources/40x40_patientcard_info.png" />
         <file src="%CURRENT_DIR%/resources/40x40_patientcard_join.png" dst="%INSTALL_DIR%/resources/40x40_patientcard_join.png" />
+        <file src="%CURRENT_DIR%/resources/40x40_patientcard_replace.png" dst="%INSTALL_DIR%/resources/40x40_patientcard_replace.png" />
         <file src="%CURRENT_DIR%/resources/40x40_patientcard_sell.png" dst="%INSTALL_DIR%/resources/40x40_patientcard_sell.png" />
         <file src="%CURRENT_DIR%/resources/40x40_patientcard_usage.png" dst="%INSTALL_DIR%/resources/40x40_patientcard_usage.png" />
+        <file src="%CURRENT_DIR%/resources/40x40_patientcardadd.png" dst="%INSTALL_DIR%/resources/40x40_patientcardadd.png" />
+        <file src="%CURRENT_DIR%/resources/40x40_patientcards.png" dst="%INSTALL_DIR%/resources/40x40_patientcards.png" />
+        <file src="%CURRENT_DIR%/resources/40x40_patientcardtype.png" dst="%INSTALL_DIR%/resources/40x40_patientcardtype.png" />
         <file src="%CURRENT_DIR%/resources/40x40_patientorigin.png" dst="%INSTALL_DIR%/resources/40x40_patientorigin.png" />
         <file src="%CURRENT_DIR%/resources/40x40_patient_deselect.png" dst="%INSTALL_DIR%/resources/40x40_patient_deselect.png" />
         <file src="%CURRENT_DIR%/resources/40x40_patient_edit.png" dst="%INSTALL_DIR%/resources/40x40_patient_edit.png" />
@@ -127,7 +129,6 @@
         <file src="%CURRENT_DIR%/resources/40x40_keyboard.png" dst="%INSTALL_DIR%/resources/40x40_keyboard.png" />
         <file src="%CURRENT_DIR%/resources/40x40_keyboard_enabled.png" dst="%INSTALL_DIR%/resources/40x40_keyboard_enabled.png" />
         <file src="%CURRENT_DIR%/resources/40x40_keyboard_locked.png" dst="%INSTALL_DIR%/resources/40x40_keyboard_locked.png" />
-        <file src="%CURRENT_DIR%/resources/40x40_patientcard_info.png" dst="%INSTALL_DIR%/resources/40x40_patientcard_info.png" />
         <file src="%CURRENT_DIR%/resources/40x40_http_disabled.png" dst="%INSTALL_DIR%/resources/40x40_http_disabled.png" />
         <file src="%CURRENT_DIR%/resources/40x40_http_enabled.png" dst="%INSTALL_DIR%/resources/40x40_http_enabled.png" />
         

@@ -384,6 +384,7 @@ void cFrmPanel::clear()
     }
     m_inCashToPay           = 0;
     m_inCashNetToPay        = 0;
+    m_qsCashToPay           = "";
     m_inCashDiscountToPay   = 0;
     m_uiPatientToPay        = 0;
     m_uiCurrentPatient      = 0;
