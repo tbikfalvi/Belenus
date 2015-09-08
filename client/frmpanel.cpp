@@ -989,6 +989,8 @@ void cFrmPanel::formatInfoString()
 //====================================================================================
 void cFrmPanel::activateNextStatus()
 {
+    m_bIsDeviceStopped = false;
+
     if( m_uiStatus == 0 )
     {
         // Gep hasznalat inditas

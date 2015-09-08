@@ -7542,22 +7542,22 @@ Deleting of this entry from shopping cart is not allowed.</source>
 A kosárból ezt a bejegyzést nem lehet törölni.</translation>
     </message>
     <message>
-        <location filename="crud/dlgshoppingcart.cpp" line="398"/>
+        <location filename="crud/dlgshoppingcart.cpp" line="419"/>
         <source>Using device: %1</source>
         <translation>Géphasználat: %1</translation>
     </message>
     <message>
-        <location filename="crud/dlgshoppingcart.cpp" line="406"/>
+        <location filename="crud/dlgshoppingcart.cpp" line="427"/>
         <source>Selling product: %1</source>
         <translation>Termék eladás: %1</translation>
     </message>
     <message>
-        <location filename="crud/dlgshoppingcart.cpp" line="417"/>
+        <location filename="crud/dlgshoppingcart.cpp" line="438"/>
         <source>Sell patientcard [%1]</source>
         <translation>Bérlet eladás [%1]</translation>
     </message>
     <message>
-        <location filename="crud/dlgshoppingcart.cpp" line="421"/>
+        <location filename="crud/dlgshoppingcart.cpp" line="442"/>
         <source>Refill patientcard [%1]</source>
         <translation>Bérlet feltöltés [%1]</translation>
     </message>
