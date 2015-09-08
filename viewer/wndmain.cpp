@@ -500,7 +500,7 @@ void cWndMain::_setReportsEnabled(bool p_bEnable)
 
     action_PatientcardTypes->setEnabled( p_bEnable && _isInGroup( GROUP_ADMIN ) );
     action_Patientcards_Inactive->setEnabled( p_bEnable && _isInGroup( GROUP_USER ) );
-    action_Patientcards_Details->setEnabled( p_bEnable && _isInGroup( GROUP_ADMIN ) );
+    action_Patientcards_Details->setEnabled( p_bEnable && _isInGroup( GROUP_USER ) );
     action_Patientcard_Usages->setEnabled( p_bEnable && _isInGroup( GROUP_USER ) );
     action_Patientcard_Sells->setEnabled( p_bEnable && _isInGroup( GROUP_USER ) );
     action_Patientcard_Debts->setEnabled( p_bEnable && _isInGroup( GROUP_ADMIN ) );
@@ -521,7 +521,7 @@ void cWndMain::_setReportsEnabled(bool p_bEnable)
 
     pbPatientcardType->setEnabled( p_bEnable && _isInGroup( GROUP_ADMIN ) );
     pbPatientcardsInactive->setEnabled( p_bEnable && _isInGroup( GROUP_USER ) );
-    pbPatientcardsDetails->setEnabled( p_bEnable && _isInGroup( GROUP_ADMIN ) );
+    pbPatientcardsDetails->setEnabled( p_bEnable && _isInGroup( GROUP_USER ) );
     pbPatientcardUsages->setEnabled( p_bEnable && _isInGroup( GROUP_USER ) );
     pbPatientcardSells->setEnabled( p_bEnable && _isInGroup( GROUP_USER ) );
     pbPatientcardDebts->setEnabled( p_bEnable && _isInGroup( GROUP_ADMIN ) );

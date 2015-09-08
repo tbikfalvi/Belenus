@@ -143,6 +143,7 @@ cDlgPreferences::cDlgPreferences( QWidget *p_poParent )
     pbCancelModifyPsw->setVisible( false );
     ledPanelTextSterile->setText( g_poPrefs->getPanelTextSteril() );
     ledPanelTextTubeReplacement->setText( g_poPrefs->getPanelTextTubeReplace() );
+    ledPanelTextTubeReplacement->setEnabled( g_obUser.isInGroup( cAccessGroup::SYSTEM ) );
     chkVisibleSecSteril->setChecked( g_poPrefs->isTextSterilVisible() );
     chkVisibleSecTubeReplace->setChecked( g_poPrefs->isTextTubeReplaceVisible() );
 
