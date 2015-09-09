@@ -251,11 +251,12 @@ int CS_Communication_Serial::getPanelCount( void )
 //---------------------------------------------------------------------------
 void CS_Communication_Serial::setApplicationModuleCount( int nCount )
 {
-    char    strTemp[100];
+    //char    strTemp[100];
 
-    nHWModuleCount = getHardwareModuleCount();
-    HW_ReadEEProm( 0, strTemp );
-    m_stCustomCaption = strTemp+2;
+    // Temporary not reading modul number from hardware
+    nHWModuleCount = 12; //getHardwareModuleCount();
+    //HW_ReadEEProm( 0, strTemp );
+    m_stCustomCaption = ""; //strTemp+2;
 
     if( nCount < nHWModuleCount )
         nHWModuleCount = nCount;
