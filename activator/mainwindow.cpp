@@ -121,13 +121,13 @@ MainWindow::MainWindow(QWidget *parent) : QMainWindow(parent), ui(new Ui::MainWi
 //                                     << "BLNS19"
                                      << "BLNS20"
                                      << "BLNS21"
-//                                     << "BLNS22"
+                                     << "BLNS22"
                                      << "BLNS23"
                                      << "BLNS24"
                                      << "BLNS25"
                                      << "BLNS26"
 //                                     << "BLNS27"
-//                                     << "BLNS28"
+                                     << "BLNS28"
                                      << "BLNS29"
 //                                     << "BLNS30"
 //                                     << "BLNS31"
@@ -468,11 +468,11 @@ void MainWindow::on_ledLicenceKeyName_textChanged(const QString&)
 
 bool MainWindow::_validateLicenceStr(QString p_qsLicenceString )
 {
-    int nRet = ERR_NO_ERROR;
+//    int nRet = ERR_NO_ERROR;
 
     if( p_qsLicenceString.length() != 13 )
     {
-        nRet = ERR_KEY_FORMAT_MISMATCH;
+//        nRet = ERR_KEY_FORMAT_MISMATCH;
         return false;
     }
 
@@ -485,7 +485,7 @@ bool MainWindow::_validateLicenceStr(QString p_qsLicenceString )
 //        g_obLogger(cSeverity::INFO) << "Licence 4 digit: " << (p_qsLicenceString.at(4).isDigit()?"true":"false") << EOM;
 //        g_obLogger(cSeverity::INFO) << "Licence 5 digit: " << (p_qsLicenceString.at(5).isDigit()?"true":"false") << EOM;
 //        g_obLogger(cSeverity::INFO) << "Licence 7th char is '" << p_qsLicenceString.at(6) << "'" << EOM;
-        nRet = ERR_KEY_FORMAT_MISMATCH;
+//        nRet = ERR_KEY_FORMAT_MISMATCH;
         return false;
     }
 
@@ -500,13 +500,13 @@ bool MainWindow::_validateLicenceStr(QString p_qsLicenceString )
     if( nLicenceNumber < 1 || nLicenceNumber > LICENCE_MAX_NUMBER )
     {
 //        g_obLogger(cSeverity::INFO) << "Licence order number is: " << nLicenceNumber << EOM;
-        nRet = ERR_KEY_NUMBER_INCORRECT;
+//        nRet = ERR_KEY_NUMBER_INCORRECT;
         return false;
     }
 
     if( m_qslLicenceKeys.at( nLicenceNumber-1 ).compare( QString( strLicenceRandomCode ) ) != 0 )
     {
-        nRet = ERR_KEY_NOT_EXISTS;
+//        nRet = ERR_KEY_NOT_EXISTS;
         return false;
     }
 
