@@ -93,6 +93,15 @@ void cBlnsHttp::sendPatientCardData(QString p_qsBarcode, QString p_qsPatientCard
 {
 //  cTracer obTrace( "cBlnsHttp::sendPatientCardData" );
 
+    if( !g_poPrefs->isBlnsHttpEnabled() )
+    {
+        m_qsError = tr("HTTP connection disabled.");
+        m_inHttpProcessStep = HTTP_STATUS_DEFAULT;
+        g_obLogger(cSeverity::WARNING) << "HTTP: abort sendPatientCardData - connection disabled" << EOM;
+        emit signalErrorOccured();
+        return;
+    }
+
     QString  qsQuery;
 
     qsQuery = "INSERT INTO httppatientcardinfo SET ";
@@ -106,15 +115,6 @@ void cBlnsHttp::sendPatientCardData(QString p_qsBarcode, QString p_qsPatientCard
 
     if( !p_bSendNow )
     {
-        return;
-    }
-
-    if( !g_poPrefs->isBlnsHttpEnabled() )
-    {
-        m_qsError = tr("HTTP connection disabled.");
-        m_inHttpProcessStep = HTTP_STATUS_DEFAULT;
-        g_obLogger(cSeverity::WARNING) << "HTTP: abort sendPatientCardData - connection disabled" << EOM;
-        emit signalErrorOccured();
         return;
     }
 
@@ -133,11 +133,13 @@ void cBlnsHttp::sendPatientCardData(QString p_qsBarcode, QString p_qsPatientCard
 void cBlnsHttp::processWaitingCardData()
 //-------------------------------------------------------------------------------------------------
 {
+    cTracer obTrace( "cBlnsHttp::processWaitingCardData" );
+
     if( !g_poPrefs->isBlnsHttpEnabled() )
     {
-        m_qsError = tr("HTTP connection disabled.");
+        m_qsError = tr("HTTP connection disabled");
         m_inHttpProcessStep = HTTP_STATUS_DEFAULT;
-        g_obLogger(cSeverity::WARNING) << "HTTP: " << EOM;
+        g_obLogger(cSeverity::WARNING) << "HTTP: " << m_qsError << EOM;
         emit signalErrorOccured();
         return;
     }
@@ -177,7 +179,7 @@ int cBlnsHttp::getNumberOfWaitingRecords()
 void cBlnsHttp::timerEvent(QTimerEvent *)
 //-------------------------------------------------------------------------------------------------
 {
-//  cTracer obTrace( "cBlnsHttp::timerEvent" );
+  cTracer obTrace( "cBlnsHttp::timerEvent" );
 
     killTimer( m_inTimer );
     m_inTimer = 0;
@@ -194,7 +196,7 @@ void cBlnsHttp::timerEvent(QTimerEvent *)
 bool cBlnsHttp::_downloadFile(QString p_qsFileName)
 //-------------------------------------------------------------------------------------------------
 {
-//  cTracer obTrace( "cBlnsHttp::_downloadFile" );
+  cTracer obTrace( "cBlnsHttp::_downloadFile" );
 
 /*    g_obLogger(cSeverity::DEBUG) << "HTTP Download file ["
                                  << p_qsFileName
@@ -265,7 +267,7 @@ bool cBlnsHttp::_downloadFile(QString p_qsFileName)
 //-------------------------------------------------------------------------------------------------
 void cBlnsHttp::_slotHttpRequestFinished(int requestId, bool error)
 {
-//  cTracer obTrace( "cBlnsHttp::_slotHttpRequestFinished" );
+  cTracer obTrace( "cBlnsHttp::_slotHttpRequestFinished" );
 
     killTimer( m_inTimer );
     m_inTimer = 0;
@@ -390,7 +392,7 @@ void cBlnsHttp::_slotSslErrors(const QList<QSslError> &/*errors*/)
 void cBlnsHttp::_httpStartProcess()
 //-------------------------------------------------------------------------------------------------
 {
-//  cTracer obTrace( "cBlnsHttp::_httpStartProcess" );
+  cTracer obTrace( "cBlnsHttp::_httpStartProcess" );
 
     g_obLogger(cSeverity::DEBUG) << "HTTP: Start HTTP process ["
                                  << cBlnsHttpAction::toStr( m_teBlnsHttpProcess )
@@ -463,7 +465,7 @@ void cBlnsHttp::_httpStartProcess()
 void cBlnsHttp::_httpExecuteProcess()
 //-------------------------------------------------------------------------------------------------
 {
-//  cTracer obTrace( "cBlnsHttp::_httpExecuteProcess" );
+  cTracer obTrace( "cBlnsHttp::_httpExecuteProcess" );
 
     g_obLogger(cSeverity::DEBUG) << "HTTP: Execute process step ["
                                  << m_inHttpProcessStep
@@ -503,7 +505,7 @@ void cBlnsHttp::_httpExecuteProcess()
 void cBlnsHttp::_httpProcessResponse()
 //-------------------------------------------------------------------------------------------------
 {
-//  cTracer obTrace( "cBlnsHttp::_httpProcessResponse" );
+  cTracer obTrace( "cBlnsHttp::_httpProcessResponse" );
 
     g_obLogger(cSeverity::DEBUG) << "HTTP: Process response for step ["
                                  << m_inHttpProcessStep
@@ -561,7 +563,7 @@ void cBlnsHttp::_httpProcessResponse()
 void cBlnsHttp::_httpGetToken()
 //-------------------------------------------------------------------------------------------------
 {
-//  cTracer obTrace( "cBlnsHttp::_httpGetToken" );
+  cTracer obTrace( "cBlnsHttp::_httpGetToken" );
 
     // Empty token and request new from server
     m_qsToken = "";
@@ -584,7 +586,7 @@ void cBlnsHttp::_httpGetToken()
 void cBlnsHttp::_httpSendCardData()
 //-------------------------------------------------------------------------------------------------
 {
-//  cTracer obTrace( "cBlnsHttp::_httpSendCardData" );
+  cTracer obTrace( "cBlnsHttp::_httpSendCardData" );
 
     // http://www.kiwisun.hu/kiwi_ticket/save.php
     QString qsFileName  = g_poPrefs->getServerAddress();
@@ -625,7 +627,7 @@ void cBlnsHttp::_httpSendCardData()
 void cBlnsHttp::_readTokenFromFile()
 //-------------------------------------------------------------------------------------------------
 {
-//  cTracer obTrace( "cBlnsHttp::_readTokenFromFile" );
+  cTracer obTrace( "cBlnsHttp::_readTokenFromFile" );
 
     QString fileName = QString("%1\\token.php").arg( QDir::currentPath() );
     QFile   file( fileName );
@@ -647,7 +649,7 @@ void cBlnsHttp::_readTokenFromFile()
 void cBlnsHttp::_readCardSendResponseFromFile()
 //-------------------------------------------------------------------------------------------------
 {
-//  cTracer obTrace( "cBlnsHttp::_readCardSendResponseFromFile" );
+  cTracer obTrace( "cBlnsHttp::_readCardSendResponseFromFile" );
 
     QString fileName = QString("%1\\save.php").arg( QDir::currentPath() );
     QFile   file( fileName );
@@ -662,7 +664,7 @@ void cBlnsHttp::_readCardSendResponseFromFile()
 void cBlnsHttp::_sendProcessFinished()
 //-------------------------------------------------------------------------------------------------
 {
-//  cTracer obTrace( "cBlnsHttp::_sendProcessFinished" );
+  cTracer obTrace( "cBlnsHttp::_sendProcessFinished" );
     g_obLogger(cSeverity::DEBUG) << "HTTP: Current process ["
                                  << cBlnsHttpAction::toStr( m_teBlnsHttpProcess )
                                  << "] last step finished" << EOM;
@@ -697,7 +699,7 @@ void cBlnsHttp::_sendProcessFinished()
 void cBlnsHttp::_readResponseFromFile()
 //-------------------------------------------------------------------------------------------------
 {
-    //  cTracer obTrace( "cBlnsHttp::_readResponseFromFile" );
+    cTracer obTrace( "cBlnsHttp::_readResponseFromFile" );
 
     g_obLogger(cSeverity::DEBUG) << "HTTP: Read save.php" << EOM;
 
@@ -775,7 +777,7 @@ void cBlnsHttp::_readResponseFromFile()
 void cBlnsHttp::_updateProcessedRecord()
 //-------------------------------------------------------------------------------------------------
 {
-    //  cTracer obTrace( "cBlnsHttp::_updateProcessedRecord" );
+    cTracer obTrace( "cBlnsHttp::_updateProcessedRecord" );
     g_poDB->executeQTQuery( "DELETE FROM httppatientcardinfo WHERE active = 0 AND archive = \"ARC\" " );
 }
 

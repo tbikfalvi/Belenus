@@ -10,9 +10,10 @@ USE `belenus`;
 
 -- -----------------------------------------------------------------------------------
 
+ALTER TABLE `waitlist` CHANGE `unitIds` `unitIds` TEXT;
 
 -- -----------------------------------------------------------------------------------
 
 UPDATE settings SET value=NOW() WHERE identifier="GLOBAL_DATA_UPDATED";
-UPDATE settings SET value='1_5_2_2' WHERE identifier='APPLICATION_VERSION';
-UPDATE settings SET value='1_7_0' WHERE identifier='DATABASE_VERSION';
+UPDATE settings SET value='1_5_2_3' WHERE identifier='APPLICATION_VERSION';
+UPDATE settings SET value='1_7_1' WHERE identifier='DATABASE_VERSION';

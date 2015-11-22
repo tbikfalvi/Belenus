@@ -94,15 +94,11 @@ void cDlgPatientCardSelect::setupTableView()
         m_poModel->setHeaderData( 1, Qt::Horizontal, tr( "LicenceId" ) );
         m_poModel->setHeaderData( 2, Qt::Horizontal, tr( "Barcode" ) );
         m_poModel->setHeaderData( 3, Qt::Horizontal, tr( "Owner" ) );
-        m_poModel->setHeaderData( 4, Qt::Horizontal, tr( "Units" ) );
-        m_poModel->setHeaderData( 5, Qt::Horizontal, tr( "Amount" ) );
-        m_poModel->setHeaderData( 6, Qt::Horizontal, tr( "Patientcard type" ) );
-        m_poModel->setHeaderData( 7, Qt::Horizontal, tr( "All units" ) );
-        m_poModel->setHeaderData( 8, Qt::Horizontal, tr( "Valid from" ) );
-        m_poModel->setHeaderData( 9, Qt::Horizontal, tr( "Valid to" ) );
-        m_poModel->setHeaderData( 10, Qt::Horizontal, tr( "Comment" ) );
-        m_poModel->setHeaderData( 11, Qt::Horizontal, tr( "Active" ) );
-        m_poModel->setHeaderData( 12, Qt::Horizontal, tr( "Archive" ) );
+        m_poModel->setHeaderData( 4, Qt::Horizontal, tr( "Valid from" ) );
+        m_poModel->setHeaderData( 5, Qt::Horizontal, tr( "Valid to" ) );
+        m_poModel->setHeaderData( 6, Qt::Horizontal, tr( "Comment" ) );
+        m_poModel->setHeaderData( 7, Qt::Horizontal, tr( "Active" ) );
+        m_poModel->setHeaderData( 8, Qt::Horizontal, tr( "Archive" ) );
 
         tbvCrud->resizeColumnToContents( 0 );
         tbvCrud->resizeColumnToContents( 1 );
@@ -113,10 +109,6 @@ void cDlgPatientCardSelect::setupTableView()
         tbvCrud->resizeColumnToContents( 6 );
         tbvCrud->resizeColumnToContents( 7 );
         tbvCrud->resizeColumnToContents( 8 );
-        tbvCrud->resizeColumnToContents( 9 );
-        tbvCrud->resizeColumnToContents( 10 );
-        tbvCrud->resizeColumnToContents( 11 );
-        tbvCrud->resizeColumnToContents( 12 );
 
         tbvCrud->sortByColumn( 2, Qt::AscendingOrder );
     }
@@ -124,14 +116,10 @@ void cDlgPatientCardSelect::setupTableView()
     {
         m_poModel->setHeaderData( 1, Qt::Horizontal, tr( "Barcode" ) );
         m_poModel->setHeaderData( 2, Qt::Horizontal, tr( "Owner" ) );
-        m_poModel->setHeaderData( 3, Qt::Horizontal, tr( "Units" ) );
-        m_poModel->setHeaderData( 4, Qt::Horizontal, tr( "Amount" ) );
-        m_poModel->setHeaderData( 5, Qt::Horizontal, tr( "Patientcard type" ) );
-        m_poModel->setHeaderData( 6, Qt::Horizontal, tr( "All units" ) );
-        m_poModel->setHeaderData( 7, Qt::Horizontal, tr( "Valid from" ) );
-        m_poModel->setHeaderData( 8, Qt::Horizontal, tr( "Valid to" ) );
-        m_poModel->setHeaderData( 9, Qt::Horizontal, tr( "Comment" ) );
-        m_poModel->setHeaderData( 10, Qt::Horizontal, tr( "Active" ) );
+        m_poModel->setHeaderData( 3, Qt::Horizontal, tr( "Valid from" ) );
+        m_poModel->setHeaderData( 4, Qt::Horizontal, tr( "Valid to" ) );
+        m_poModel->setHeaderData( 5, Qt::Horizontal, tr( "Comment" ) );
+        m_poModel->setHeaderData( 6, Qt::Horizontal, tr( "Active" ) );
 
         tbvCrud->resizeColumnToContents( 1 );
         tbvCrud->resizeColumnToContents( 2 );
@@ -139,10 +127,6 @@ void cDlgPatientCardSelect::setupTableView()
         tbvCrud->resizeColumnToContents( 4 );
         tbvCrud->resizeColumnToContents( 5 );
         tbvCrud->resizeColumnToContents( 6 );
-        tbvCrud->resizeColumnToContents( 7 );
-        tbvCrud->resizeColumnToContents( 8 );
-        tbvCrud->resizeColumnToContents( 9 );
-        tbvCrud->resizeColumnToContents( 10 );
 
         tbvCrud->sortByColumn( 1, Qt::AscendingOrder );
     }

@@ -2,8 +2,8 @@
 -- Belenus Szoftver Rendszer (c) Pagony Multimedia Studio Bt - 2013
 -- -----------------------------------------------------------------------------------
 -- Filename    : db_create.sql
--- AppVersion  : 1.5.2.2
--- DbVersion   : 1.7.0
+-- AppVersion  : 1.5.2.3
+-- DbVersion   : 1.7.1
 -- -----------------------------------------------------------------------------------
 -- Adatbazist letrehozo SQL script
 -- -----------------------------------------------------------------------------------
@@ -877,7 +877,7 @@ CREATE TABLE `waitlist` (
   `panelTypeId`             int(10) unsigned        NOT NULL,
   `payType`                 int(10) unsigned        NOT NULL,
   `barcode`                 varchar(20)             NOT NULL,
-  `unitIds`                 varchar(100)            NOT NULL,
+  `unitIds`                 text                    NOT NULL,
   `lengthCash`              decimal(10,0)           NOT NULL,
   `lengthCard`              decimal(10,0)           NOT NULL,
   `useTime`                 int(11)                 NOT NULL,

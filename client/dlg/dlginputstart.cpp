@@ -32,6 +32,15 @@ cDlgInputStart::cDlgInputStart( QWidget *p_poParent )
     pbPatient->setEnabled( false );
 
     pbPatient->setVisible( false );
+
+    if( g_poPrefs->isBarcodeHidden() && !g_obUser.isInGroup( cAccessGroup::ADMIN ) )
+    {
+        ledInputStart->setEchoMode( QLineEdit::Password );
+    }
+    else
+    {
+        ledInputStart->setEchoMode( QLineEdit::Normal );
+    }
 }
 
 cDlgInputStart::~cDlgInputStart()

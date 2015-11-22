@@ -3431,6 +3431,11 @@ void cWndMain::on_BlnsHttpIconClicked()
     {
         qmMenu.addAction( QIcon( "./resources/40x40_ok.png" ), tr("Enable communication") );
     }
+    if( g_obUser.isInGroup( cAccessGroup::ADMIN ) )
+    {
+        qmMenu.addSeparator();
+        qmMenu.addAction( QIcon( "./resources/40x40_delete.png" ), tr("Clear waiting queue") );
+    }
 
     QAction *qaRet = qmMenu.exec( QCursor::pos() );
 
@@ -3491,6 +3496,14 @@ void cWndMain::on_BlnsHttpIconClicked()
             m_nHttpCommCounter = 0;
             g_poPrefs->setBlnsHttpSuspended( true );
             setCursor( Qt::ArrowCursor);
+        }
+        else if( qaRet->text().compare( tr("Clear waiting queue") ) == 0 )
+        {
+            setCursor( Qt::ArrowCursor);
+            g_poDB->executeQTQuery( "DELETE FROM httppatientcardinfo" );
+            m_lblHttpCount.setText( QString::number( g_poBlnsHttp->getNumberOfWaitingRecords() ) );
+            m_pbStatusHttp.setToolTip( tr("Number of records to process: %1")
+                                       .arg( m_lblHttpCount.text() ) );
         }
     }
 }
@@ -3759,9 +3772,12 @@ void cWndMain::_setStatusText(QString p_qsText, bool p_bError)
 
 void cWndMain::_processHttpActions()
 {
-    m_dlgProgress->showProgress();
-    m_dlgProgress->showProgressBar( g_poBlnsHttp->getNumberOfWaitingRecords() );
-    g_poBlnsHttp->processWaitingCardData();
+    if( g_poPrefs->isBlnsHttpEnabled() )
+    {
+        m_dlgProgress->showProgress();
+        m_dlgProgress->showProgressBar( g_poBlnsHttp->getNumberOfWaitingRecords() );
+        g_poBlnsHttp->processWaitingCardData();
+    }
 }
 
 void cWndMain::_checkVersions()
@@ -3829,9 +3845,13 @@ void cWndMain::_checkIsActivationNeeded()
 void cWndMain::on_BlnsHttpProcessStopped()
 {
     m_lblHttpCount.setStyleSheet( "QLabel {font:normal; font-size:8px;}" );
+    m_lblHttpCount.setText( QString::number( g_poBlnsHttp->getNumberOfWaitingRecords() ) );
+    m_pbStatusHttp.setToolTip( tr("Number of records to process: %1")
+                               .arg( m_lblHttpCount.text() ) );
 }
 
 void cWndMain::slotMainWindowActivated()
 {
     m_bMainWindowActive = true;
+    setCursor( Qt::ArrowCursor);
 }
