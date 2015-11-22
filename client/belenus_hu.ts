@@ -2166,57 +2166,57 @@ A már létező vonalkódok illetve a nem megfelelő hosszúságúak kimaradnak 
         <translation type="obsolete">Hiba</translation>
     </message>
     <message>
-        <location filename="edit/dlgguestedit.cpp" line="243"/>
-        <location filename="edit/dlgguestedit.cpp" line="281"/>
+        <location filename="edit/dlgguestedit.cpp" line="252"/>
+        <location filename="edit/dlgguestedit.cpp" line="290"/>
         <source>Guest name cannot be empty.</source>
         <translation>Vendég neve nem lehet üres.</translation>
     </message>
     <message>
-        <location filename="edit/dlgguestedit.cpp" line="249"/>
-        <location filename="edit/dlgguestedit.cpp" line="287"/>
+        <location filename="edit/dlgguestedit.cpp" line="258"/>
+        <location filename="edit/dlgguestedit.cpp" line="296"/>
         <source>Gender of the guest must be set.</source>
         <translation>A vendég nemét meg kell adni.</translation>
     </message>
     <message>
-        <location filename="edit/dlgguestedit.cpp" line="259"/>
-        <location filename="edit/dlgguestedit.cpp" line="296"/>
+        <location filename="edit/dlgguestedit.cpp" line="268"/>
+        <location filename="edit/dlgguestedit.cpp" line="305"/>
         <source>Warning</source>
         <translation>Figyelmeztetés</translation>
     </message>
     <message>
-        <location filename="edit/dlgguestedit.cpp" line="357"/>
-        <location filename="edit/dlgguestedit.cpp" line="364"/>
+        <location filename="edit/dlgguestedit.cpp" line="366"/>
+        <location filename="edit/dlgguestedit.cpp" line="373"/>
         <source>Attention</source>
         <translation>Figyelmeztetés</translation>
     </message>
     <message>
-        <location filename="edit/dlgguestedit.cpp" line="358"/>
+        <location filename="edit/dlgguestedit.cpp" line="367"/>
         <source>This patientcard has been lost and replaced
 and can not be used or sold again.</source>
         <translation>Ez a bérlet elveszett és lecserélték másik bérletre
 ezért nem lehet használni vagy eladni újra.</translation>
     </message>
     <message>
-        <location filename="edit/dlgguestedit.cpp" line="365"/>
+        <location filename="edit/dlgguestedit.cpp" line="374"/>
         <source>This patientcard is in use. Active patientcard can not be sold again.</source>
         <oldsource>This patientcard is in use. Active patientcard can not be sold.
 Please refill the card if you want to add additional units.</oldsource>
         <translation>Ez a bérlet már használatban van. Aktív bérletet nem lehet eladni újra.</translation>
     </message>
     <message>
-        <location filename="edit/dlgguestedit.cpp" line="378"/>
+        <location filename="edit/dlgguestedit.cpp" line="387"/>
         <source>This barcode has not found in the database.
 Do you want to register it for a new patientcard?</source>
         <translation>Ez a vonalkód nincs elmentve az adatbázisban.
 Regisztrálni akarja a vonalkódot egy új bérlethez?</translation>
     </message>
     <message>
-        <location filename="edit/dlgguestedit.cpp" line="446"/>
+        <location filename="edit/dlgguestedit.cpp" line="455"/>
         <source>Are you sure you want to disjoin the selected card from patient?</source>
         <translation>Biztos benne, hogy leválasztja a kiválasztott bérletet a vendégről?</translation>
     </message>
     <message>
-        <location filename="edit/dlgguestedit.cpp" line="517"/>
+        <location filename="edit/dlgguestedit.cpp" line="526"/>
         <source>Assigned patientcards:
 Barcode	Patientcard type</source>
         <translation>Hozzárendelt bérletek:
@@ -2233,12 +2233,12 @@ Vonalkód	Bérlettípus</translation>
         <translation type="obsolete">El akarja menteni a változtatásokat és be akarja zárni a dialógus ablakot?</translation>
     </message>
     <message>
-        <location filename="edit/dlgguestedit.cpp" line="468"/>
+        <location filename="edit/dlgguestedit.cpp" line="477"/>
         <source>Information</source>
         <translation>Információ</translation>
     </message>
     <message>
-        <location filename="edit/dlgguestedit.cpp" line="468"/>
+        <location filename="edit/dlgguestedit.cpp" line="477"/>
         <source>Not implemented yet.</source>
         <translation>Nincs kész</translation>
     </message>
@@ -2247,14 +2247,14 @@ Vonalkód	Bérlettípus</translation>
         <translation type="obsolete">%1 Ft.</translation>
     </message>
     <message>
-        <location filename="edit/dlgguestedit.cpp" line="377"/>
-        <location filename="edit/dlgguestedit.cpp" line="418"/>
-        <location filename="edit/dlgguestedit.cpp" line="445"/>
+        <location filename="edit/dlgguestedit.cpp" line="386"/>
+        <location filename="edit/dlgguestedit.cpp" line="427"/>
+        <location filename="edit/dlgguestedit.cpp" line="454"/>
         <source>Question</source>
         <translation>Kérdés</translation>
     </message>
     <message>
-        <location filename="edit/dlgguestedit.cpp" line="419"/>
+        <location filename="edit/dlgguestedit.cpp" line="428"/>
         <source>Do you want to save changes then close the dialog?</source>
         <translation>El akarja menteni a változtatásokat és be akarja zárni a dialógus ablakot?</translation>
     </message>
@@ -2536,52 +2536,52 @@ El akarja menteni ezt a hármast az adatbázisba?</translation>
         <translation>Kód beírása ...</translation>
     </message>
     <message>
-        <location filename="dlg/dlginputstart.cpp" line="48"/>
-        <location filename="dlg/dlginputstart.cpp" line="142"/>
+        <location filename="dlg/dlginputstart.cpp" line="57"/>
+        <location filename="dlg/dlginputstart.cpp" line="151"/>
         <source>Entering time period ...</source>
         <translation>Idő intervallum beírása ...</translation>
     </message>
     <message>
-        <location filename="dlg/dlginputstart.cpp" line="53"/>
-        <location filename="dlg/dlginputstart.cpp" line="146"/>
+        <location filename="dlg/dlginputstart.cpp" line="62"/>
+        <location filename="dlg/dlginputstart.cpp" line="155"/>
         <source>Entering barcode ...</source>
         <translation>Vonalkód beírása ...</translation>
     </message>
     <message>
-        <location filename="dlg/dlginputstart.cpp" line="62"/>
-        <location filename="dlg/dlginputstart.cpp" line="150"/>
+        <location filename="dlg/dlginputstart.cpp" line="71"/>
+        <location filename="dlg/dlginputstart.cpp" line="159"/>
         <source>Entering patient name ...</source>
         <translation>Vendég nevének beírása ...</translation>
     </message>
     <message>
-        <location filename="dlg/dlginputstart.cpp" line="169"/>
-        <location filename="dlg/dlginputstart.cpp" line="206"/>
-        <location filename="dlg/dlginputstart.cpp" line="214"/>
-        <location filename="dlg/dlginputstart.cpp" line="241"/>
+        <location filename="dlg/dlginputstart.cpp" line="178"/>
+        <location filename="dlg/dlginputstart.cpp" line="215"/>
+        <location filename="dlg/dlginputstart.cpp" line="223"/>
+        <location filename="dlg/dlginputstart.cpp" line="250"/>
         <source>Attention</source>
         <translation>Figyelmeztetés</translation>
     </message>
     <message>
-        <location filename="dlg/dlginputstart.cpp" line="170"/>
+        <location filename="dlg/dlginputstart.cpp" line="179"/>
         <source>Barcode of patientcard should be %1 character length.</source>
         <translation>A kártya vonalkódjának %1 karakter hosszúnak kell lennie.</translation>
     </message>
     <message>
-        <location filename="dlg/dlginputstart.cpp" line="207"/>
+        <location filename="dlg/dlginputstart.cpp" line="216"/>
         <source>Invalid value entered.
 Please use only numbers.</source>
         <translation>Érvénytelen a megadott érték.
 Kérem csak számokat használjon.</translation>
     </message>
     <message>
-        <location filename="dlg/dlginputstart.cpp" line="215"/>
+        <location filename="dlg/dlginputstart.cpp" line="224"/>
         <source>Invalid value entered.
 Time value can not be greater than %1 minutes.</source>
         <translation>Érvénytelen a megadott érték.
 Az időintervallum nem lehet nagyobb, mint %1 perc.</translation>
     </message>
     <message>
-        <location filename="dlg/dlginputstart.cpp" line="241"/>
+        <location filename="dlg/dlginputstart.cpp" line="250"/>
         <source>Please click on the desired button for the defined search value!</source>
         <translation>Kérem kattintson a megfelelő gombra a kívánt keresés indításához!</translation>
     </message>
@@ -3479,7 +3479,7 @@ amihez egy vagy több gép van hozzárendelve.</translation>
     </message>
     <message>
         <location filename="dlg/dlgpaneluse.cpp" line="194"/>
-        <location filename="dlg/dlgpaneluse.cpp" line="717"/>
+        <location filename="dlg/dlgpaneluse.cpp" line="727"/>
         <source>Comment :
 </source>
         <translation>Megjegyzés :
@@ -3501,27 +3501,27 @@ amihez egy vagy több gép van hozzárendelve.</translation>
         <translation type="obsolete">&lt;h3&gt;%1&lt;/h3&gt;&lt;b&gt;Tulajdonos:&lt;/b&gt; %2&lt;br&gt;&lt;b&gt;Érvényes:&lt;/b&gt; %3&lt;br&gt;&lt;b&gt;Felhasználható:&lt;/b&gt;%4</translation>
     </message>
     <message>
-        <location filename="dlg/dlgpaneluse.cpp" line="337"/>
+        <location filename="dlg/dlgpaneluse.cpp" line="347"/>
         <source>
 &lt;b&gt;%1 units (%2 minutes) valid on&lt;/b&gt;%3</source>
         <translation>
 &lt;b&gt;%1 egység (%2 perc) érvényes &lt;/b&gt;%3</translation>
     </message>
     <message>
-        <location filename="dlg/dlgpaneluse.cpp" line="403"/>
+        <location filename="dlg/dlgpaneluse.cpp" line="413"/>
         <source>Comment :
 %1</source>
         <translation>Megjegyzés :
 %1</translation>
     </message>
     <message>
-        <location filename="dlg/dlgpaneluse.cpp" line="450"/>
-        <location filename="dlg/dlgpaneluse.cpp" line="585"/>
+        <location filename="dlg/dlgpaneluse.cpp" line="460"/>
+        <location filename="dlg/dlgpaneluse.cpp" line="595"/>
         <source>Warning</source>
         <translation>Figyelmeztetés</translation>
     </message>
     <message>
-        <location filename="dlg/dlgpaneluse.cpp" line="451"/>
+        <location filename="dlg/dlgpaneluse.cpp" line="461"/>
         <source>This time period did not saved in the database
 for the actually selected device.
 Please select valid value from the list.</source>
@@ -3530,39 +3530,39 @@ az aktuálisan kiválasztott géphez.
 Kérem válasszon egy helyes értéket a listából.</translation>
     </message>
     <message>
-        <location filename="dlg/dlgpaneluse.cpp" line="539"/>
+        <location filename="dlg/dlgpaneluse.cpp" line="549"/>
         <source>Ok</source>
         <translation>Rendben</translation>
     </message>
     <message>
-        <location filename="dlg/dlgpaneluse.cpp" line="586"/>
+        <location filename="dlg/dlgpaneluse.cpp" line="596"/>
         <source>Invalid barcode length.
 The length of the barcode should be %1.</source>
         <translation>Nem megfelelő vonalkód hosszúság.
 A vonalkódnak %1 karakter hosszúnak kell lennie.</translation>
     </message>
     <message>
-        <location filename="dlg/dlgpaneluse.cpp" line="599"/>
-        <location filename="dlg/dlgpaneluse.cpp" line="607"/>
+        <location filename="dlg/dlgpaneluse.cpp" line="609"/>
+        <location filename="dlg/dlgpaneluse.cpp" line="617"/>
         <source>Attention</source>
         <translation>Figyelmeztetés</translation>
     </message>
     <message>
-        <location filename="dlg/dlgpaneluse.cpp" line="600"/>
+        <location filename="dlg/dlgpaneluse.cpp" line="610"/>
         <source>You are not allowed to use system administrator card.
 Please log in as a system administrator if you want to use this card.</source>
         <translation>Nincs jogosultsága szervízkártya használatára.
 Ha használni akarja a kártyát, jelentkezzen be rendszer adminisztrátorként.</translation>
     </message>
     <message>
-        <location filename="dlg/dlgpaneluse.cpp" line="608"/>
+        <location filename="dlg/dlgpaneluse.cpp" line="618"/>
         <source>This patientcard has been lost and replaced
 and can not be used or sold again.</source>
         <translation>Ez a bérlet elveszett és lecserélték másik bérletre
 ezért nem lehet használni vagy eladni újra.</translation>
     </message>
     <message>
-        <location filename="dlg/dlgpaneluse.cpp" line="624"/>
+        <location filename="dlg/dlgpaneluse.cpp" line="634"/>
         <source>
 
 Due to there is no time left, the patientcard will be reseted and deactivated.</source>
@@ -3571,14 +3571,14 @@ Due to there is no time left, the patientcard will be reseted and deactivated.</
 A bérleten nincs felhasználható idő, ezért a bérlet deaktiválásra kerül.</translation>
     </message>
     <message>
-        <location filename="dlg/dlgpaneluse.cpp" line="626"/>
-        <location filename="dlg/dlgpaneluse.cpp" line="660"/>
-        <location filename="dlg/dlgpaneluse.cpp" line="679"/>
+        <location filename="dlg/dlgpaneluse.cpp" line="636"/>
+        <location filename="dlg/dlgpaneluse.cpp" line="670"/>
+        <location filename="dlg/dlgpaneluse.cpp" line="689"/>
         <source>Question</source>
         <translation>Kérdés</translation>
     </message>
     <message>
-        <location filename="dlg/dlgpaneluse.cpp" line="627"/>
+        <location filename="dlg/dlgpaneluse.cpp" line="637"/>
         <source>This patientcard can not be used with these settings:
 
 Available units: %1
@@ -3603,14 +3603,14 @@ Kérem ellenőrizze a bérlet érvényességi időintervallumát.
 %1</translation>
     </message>
     <message>
-        <location filename="dlg/dlgpaneluse.cpp" line="661"/>
+        <location filename="dlg/dlgpaneluse.cpp" line="671"/>
         <source>This barcode has not been activated yet.
 Do you want to activate and sell it now?</source>
         <translation>Ilyen vonalkóddal bérlet még nincs aktiválva.
 Akarja aktiválni és eladni most?</translation>
     </message>
     <message>
-        <location filename="dlg/dlgpaneluse.cpp" line="680"/>
+        <location filename="dlg/dlgpaneluse.cpp" line="690"/>
         <source>This barcode has not found in the database.
 Do you want to save it and sell it now?</source>
         <translation>Ez a vonalkód nincs elmentve az adatbázisban.
@@ -3625,7 +3625,7 @@ Do you want to save it and sell it now?</source>
         <translation type="obsolete">Típus : %1</translation>
     </message>
     <message>
-        <location filename="dlg/dlgpaneluse.cpp" line="402"/>
+        <location filename="dlg/dlgpaneluse.cpp" line="412"/>
         <source>Owner : %1</source>
         <translation>Tulajdonos : %1</translation>
     </message>
@@ -4259,39 +4259,39 @@ Regisztrálni akarja a vonalkódot egy új bérlethez?</translation>
         <translation>%1 egység ˙(%2 perc)</translation>
     </message>
     <message>
-        <location filename="edit/dlgpatientcardedit.cpp" line="176"/>
+        <location filename="edit/dlgpatientcardedit.cpp" line="185"/>
         <source>Click this button to verify if the barcode is valid.</source>
         <translation>Kattintson erre a gombra, hogy ellenőrizze a vonalkódot.</translation>
     </message>
     <message>
-        <location filename="edit/dlgpatientcardedit.cpp" line="187"/>
+        <location filename="edit/dlgpatientcardedit.cpp" line="196"/>
         <source>Barcode is ok.</source>
         <translation>A vonalkód rendben.</translation>
     </message>
     <message>
-        <location filename="edit/dlgpatientcardedit.cpp" line="235"/>
+        <location filename="edit/dlgpatientcardedit.cpp" line="244"/>
         <source>Are you sure you want to change the validity date
 from:  %1  to:  %2  ?</source>
         <translation>Biztos benne, hogy megváltoztatja az érvényesség végét
 erről: %1  erre:  %2  ?</translation>
     </message>
     <message>
-        <location filename="edit/dlgpatientcardedit.cpp" line="390"/>
+        <location filename="edit/dlgpatientcardedit.cpp" line="399"/>
         <source>Barcode cannot be empty.</source>
         <translation>A vonalkód megadása kötelező.</translation>
     </message>
     <message>
-        <location filename="edit/dlgpatientcardedit.cpp" line="397"/>
+        <location filename="edit/dlgpatientcardedit.cpp" line="406"/>
         <source>Invalid barcode. Barcode should be %1 character length.</source>
         <translation>Nem megfelelő vonalkód. A vonalkódnak %1 karakter hosszúnak kell lennie.</translation>
     </message>
     <message>
-        <location filename="edit/dlgpatientcardedit.cpp" line="409"/>
+        <location filename="edit/dlgpatientcardedit.cpp" line="418"/>
         <source>Invalid barcode. This barcode already saved into database.</source>
         <translation>Hibás vonalkód. Ez a vonalkód már regisztrálva van az adatbázisban.</translation>
     </message>
     <message>
-        <location filename="edit/dlgpatientcardedit.cpp" line="273"/>
+        <location filename="edit/dlgpatientcardedit.cpp" line="282"/>
         <source>Invalid Patientcard type.
 For active patientcard other type should be selected.
 If you want to connect the card to this type,
@@ -4327,7 +4327,7 @@ Ha érvénytelenné akarja tenni a kártyát,
 deaktiválja a bérletet az Aktivál szöveg melletti pipa eltüntetésével.</translation>
     </message>
     <message>
-        <location filename="edit/dlgpatientcardedit.cpp" line="310"/>
+        <location filename="edit/dlgpatientcardedit.cpp" line="319"/>
         <source>Are you sure you want to deactivate this patientcard?</source>
         <translation>Biztos benne, hogy deaktiválni akarja ezt a bérletet?</translation>
     </message>
@@ -4422,8 +4422,8 @@ deaktiválja a bérletet az Aktivál szöveg melletti pipa eltüntetésével.
 Kattintson az Ignore gombra, ha nem akar további hibaüzenetet kapni.</translation>
     </message>
     <message>
-        <location filename="edit/dlgpatientcardedit.cpp" line="234"/>
-        <location filename="edit/dlgpatientcardedit.cpp" line="309"/>
+        <location filename="edit/dlgpatientcardedit.cpp" line="243"/>
+        <location filename="edit/dlgpatientcardedit.cpp" line="318"/>
         <source>Attention</source>
         <translation>Figyelmeztetés</translation>
     </message>
@@ -4436,8 +4436,8 @@ Please relogin to enable cassa.</source>
 Kérem jelentkezzen ki és vissza a pénztárműveletek engedélyezéséhez.</translation>
     </message>
     <message>
-        <location filename="edit/dlgpatientcardedit.cpp" line="301"/>
-        <location filename="edit/dlgpatientcardedit.cpp" line="357"/>
+        <location filename="edit/dlgpatientcardedit.cpp" line="310"/>
+        <location filename="edit/dlgpatientcardedit.cpp" line="366"/>
         <source>Warning</source>
         <translation>Figyelmeztetés</translation>
     </message>
@@ -4465,7 +4465,7 @@ Kérem jelentkezzen ki és vissza a pénztárműveletek engedélyezéséhez.</tr
         <translation>&lt;Nincs kiválasztva&gt;</translation>
     </message>
     <message>
-        <location filename="edit/dlgpatientcardrefill.cpp" line="168"/>
+        <location filename="edit/dlgpatientcardrefill.cpp" line="177"/>
         <source>This patientcard attached to another card therefore it can not be refilled.
 
 Please refill the main patientcard with barcode: %1</source>
@@ -4477,32 +4477,32 @@ Please refill the main patientcard with barcode: %1</oldsource>
 Kérem töltse fel a fő kártyát a következő vonalkódot használva: %1</translation>
     </message>
     <message>
-        <location filename="edit/dlgpatientcardrefill.cpp" line="175"/>
+        <location filename="edit/dlgpatientcardrefill.cpp" line="184"/>
         <source>Warning</source>
         <translation>Figyelmeztetés</translation>
     </message>
     <message>
-        <location filename="edit/dlgpatientcardrefill.cpp" line="176"/>
+        <location filename="edit/dlgpatientcardrefill.cpp" line="185"/>
         <source>You are not allowed to create System Service Patientcard.</source>
         <translation>Nincs jogosultsága ahhoz, hogy szervíz bérletet hozzon létre.</translation>
     </message>
     <message>
-        <location filename="edit/dlgpatientcardrefill.cpp" line="273"/>
+        <location filename="edit/dlgpatientcardrefill.cpp" line="282"/>
         <source>Barcode cannot be empty.</source>
         <translation>A vonalkód megadása kötelező.</translation>
     </message>
     <message>
-        <location filename="edit/dlgpatientcardrefill.cpp" line="281"/>
+        <location filename="edit/dlgpatientcardrefill.cpp" line="290"/>
         <source>Invalid barcode. Barcode should be %1 character length.</source>
         <translation>Nem megfelelő vonalkód. A vonalkódnak %1 karakter hosszúnak kell lennie.</translation>
     </message>
     <message>
-        <location filename="edit/dlgpatientcardrefill.cpp" line="294"/>
+        <location filename="edit/dlgpatientcardrefill.cpp" line="303"/>
         <source>Invalid barcode. This barcode already saved into database.</source>
         <translation>Hibás vonalkód. Ez a vonalkód már regisztrálva van az adatbázisban.</translation>
     </message>
     <message>
-        <location filename="edit/dlgpatientcardrefill.cpp" line="304"/>
+        <location filename="edit/dlgpatientcardrefill.cpp" line="313"/>
         <source>Invalid Patientcard type.
 For active patientcard other type should be selected.
 If you want to connect the card to this type,
@@ -4513,12 +4513,12 @@ Ha a bérletet ehhez a bérlettípushoz akarja kötni,
 deaktiválja a bérletet.</translation>
     </message>
     <message>
-        <location filename="edit/dlgpatientcardrefill.cpp" line="315"/>
+        <location filename="edit/dlgpatientcardrefill.cpp" line="324"/>
         <source>Available units cannot be empty.</source>
         <translation>A felhasználható egységek száma nem lehet üres.</translation>
     </message>
     <message>
-        <location filename="edit/dlgpatientcardrefill.cpp" line="322"/>
+        <location filename="edit/dlgpatientcardrefill.cpp" line="331"/>
         <source>Number of available units can not be less then 1.
 If you want to reset the number of available units
 deactivate the card.</source>
@@ -4527,7 +4527,7 @@ Ha le akarja nullázni a kártya egységeinek számát,
 deaktiválja a bérletet.</translation>
     </message>
     <message>
-        <location filename="edit/dlgpatientcardrefill.cpp" line="329"/>
+        <location filename="edit/dlgpatientcardrefill.cpp" line="338"/>
         <source>Incorrect validation date.
 The patientcard with the selected units would not be used.</source>
         <translation>Nem megfelelő az érvényesség dátuma.
@@ -4542,13 +4542,13 @@ Ha érvénytelenné akarja tenni a kártyát,
 deaktiválja a bérletet.</translation>
     </message>
     <message>
-        <location filename="edit/dlgpatientcardrefill.cpp" line="167"/>
-        <location filename="edit/dlgpatientcardrefill.cpp" line="361"/>
+        <location filename="edit/dlgpatientcardrefill.cpp" line="176"/>
+        <location filename="edit/dlgpatientcardrefill.cpp" line="370"/>
         <source>Attention</source>
         <translation>Figyelmeztetés</translation>
     </message>
     <message>
-        <location filename="edit/dlgpatientcardrefill.cpp" line="362"/>
+        <location filename="edit/dlgpatientcardrefill.cpp" line="371"/>
         <source>Cassa is disabled!
 
 Please relogin to enable cassa.</source>
@@ -4557,12 +4557,12 @@ Please relogin to enable cassa.</source>
 Kérem jelentkezzen ki és vissza a pénztárműveletek engedélyezéséhez.</translation>
     </message>
     <message>
-        <location filename="edit/dlgpatientcardrefill.cpp" line="406"/>
+        <location filename="edit/dlgpatientcardrefill.cpp" line="415"/>
         <source>Refill patientcard [%1]</source>
         <translation>Bérlet feltöltés [%1]</translation>
     </message>
     <message>
-        <location filename="edit/dlgpatientcardrefill.cpp" line="473"/>
+        <location filename="edit/dlgpatientcardrefill.cpp" line="482"/>
         <source>Error</source>
         <translation>Hiba</translation>
     </message>
@@ -4596,66 +4596,58 @@ Kérem jelentkezzen ki és vissza a pénztárműveletek engedélyezéséhez.</tr
     </message>
     <message>
         <location filename="crud/dlgpatientcardselect.cpp" line="95"/>
-        <location filename="crud/dlgpatientcardselect.cpp" line="125"/>
+        <location filename="crud/dlgpatientcardselect.cpp" line="117"/>
         <source>Barcode</source>
         <translation>Vonalkód</translation>
     </message>
     <message>
         <location filename="crud/dlgpatientcardselect.cpp" line="96"/>
-        <location filename="crud/dlgpatientcardselect.cpp" line="126"/>
+        <location filename="crud/dlgpatientcardselect.cpp" line="118"/>
         <source>Owner</source>
         <translation>Tulajdonos</translation>
     </message>
     <message>
-        <location filename="crud/dlgpatientcardselect.cpp" line="97"/>
-        <location filename="crud/dlgpatientcardselect.cpp" line="127"/>
         <source>Units</source>
-        <translation>Egységek</translation>
+        <translation type="obsolete">Egységek</translation>
     </message>
     <message>
-        <location filename="crud/dlgpatientcardselect.cpp" line="98"/>
-        <location filename="crud/dlgpatientcardselect.cpp" line="128"/>
         <source>Amount</source>
-        <translation>Összeg</translation>
+        <translation type="obsolete">Összeg</translation>
     </message>
     <message>
-        <location filename="crud/dlgpatientcardselect.cpp" line="99"/>
-        <location filename="crud/dlgpatientcardselect.cpp" line="129"/>
         <source>Patientcard type</source>
-        <translation>Bérlettípus</translation>
+        <translation type="obsolete">Bérlettípus</translation>
     </message>
     <message>
-        <location filename="crud/dlgpatientcardselect.cpp" line="100"/>
-        <location filename="crud/dlgpatientcardselect.cpp" line="130"/>
         <source>All units</source>
-        <translation>Összes egység</translation>
+        <translation type="obsolete">Összes egység</translation>
     </message>
     <message>
-        <location filename="crud/dlgpatientcardselect.cpp" line="101"/>
-        <location filename="crud/dlgpatientcardselect.cpp" line="131"/>
+        <location filename="crud/dlgpatientcardselect.cpp" line="97"/>
+        <location filename="crud/dlgpatientcardselect.cpp" line="119"/>
         <source>Valid from</source>
         <translation>Érvényes -tól</translation>
     </message>
     <message>
-        <location filename="crud/dlgpatientcardselect.cpp" line="102"/>
-        <location filename="crud/dlgpatientcardselect.cpp" line="132"/>
+        <location filename="crud/dlgpatientcardselect.cpp" line="98"/>
+        <location filename="crud/dlgpatientcardselect.cpp" line="120"/>
         <source>Valid to</source>
         <translation>Érvényes -ig</translation>
     </message>
     <message>
-        <location filename="crud/dlgpatientcardselect.cpp" line="103"/>
-        <location filename="crud/dlgpatientcardselect.cpp" line="133"/>
+        <location filename="crud/dlgpatientcardselect.cpp" line="99"/>
+        <location filename="crud/dlgpatientcardselect.cpp" line="121"/>
         <source>Comment</source>
         <translation>Megjegyzés</translation>
     </message>
     <message>
-        <location filename="crud/dlgpatientcardselect.cpp" line="104"/>
-        <location filename="crud/dlgpatientcardselect.cpp" line="134"/>
+        <location filename="crud/dlgpatientcardselect.cpp" line="100"/>
+        <location filename="crud/dlgpatientcardselect.cpp" line="122"/>
         <source>Active</source>
         <translation>Aktív</translation>
     </message>
     <message>
-        <location filename="crud/dlgpatientcardselect.cpp" line="105"/>
+        <location filename="crud/dlgpatientcardselect.cpp" line="101"/>
         <source>Archive</source>
         <translation>Státusz</translation>
     </message>
@@ -4670,7 +4662,7 @@ Kérem jelentkezzen ki és vissza a pénztárműveletek engedélyezéséhez.</tr
     <message>
         <location filename="edit/dlgpatientcardsell.cpp" line="59"/>
         <location filename="edit/dlgpatientcardsell.cpp" line="71"/>
-        <location filename="edit/dlgpatientcardsell.cpp" line="503"/>
+        <location filename="edit/dlgpatientcardsell.cpp" line="512"/>
         <source>&lt;Not selected&gt;</source>
         <translation>&lt;Nincs kiválasztva&gt;</translation>
     </message>
@@ -4682,32 +4674,32 @@ Please refill the card if you want to add additional units.</source>
 Kérem válassza a bérlet feltöltést ha további egységeket akar adni a bérletnek.</translation>
     </message>
     <message>
-        <location filename="edit/dlgpatientcardsell.cpp" line="222"/>
+        <location filename="edit/dlgpatientcardsell.cpp" line="231"/>
         <source>Warning</source>
         <translation>Figyelmeztetés</translation>
     </message>
     <message>
-        <location filename="edit/dlgpatientcardsell.cpp" line="223"/>
+        <location filename="edit/dlgpatientcardsell.cpp" line="232"/>
         <source>You are not allowed to create System Service Patientcard.</source>
         <translation>Nincs jogosultsága ahhoz, hogy szervíz bérletet hozzon létre.</translation>
     </message>
     <message>
-        <location filename="edit/dlgpatientcardsell.cpp" line="267"/>
+        <location filename="edit/dlgpatientcardsell.cpp" line="276"/>
         <source>Barcode cannot be empty.</source>
         <translation>A vonalkód megadása kötelező.</translation>
     </message>
     <message>
-        <location filename="edit/dlgpatientcardsell.cpp" line="275"/>
+        <location filename="edit/dlgpatientcardsell.cpp" line="284"/>
         <source>Invalid barcode. Barcode should be %1 character length.</source>
         <translation>Nem megfelelő vonalkód. A vonalkódnak %1 karakter hosszúnak kell lennie.</translation>
     </message>
     <message>
-        <location filename="edit/dlgpatientcardsell.cpp" line="288"/>
+        <location filename="edit/dlgpatientcardsell.cpp" line="297"/>
         <source>Invalid barcode. This barcode already saved into database.</source>
         <translation>Hibás vonalkód. Ez a vonalkód már regisztrálva van az adatbázisban.</translation>
     </message>
     <message>
-        <location filename="edit/dlgpatientcardsell.cpp" line="298"/>
+        <location filename="edit/dlgpatientcardsell.cpp" line="307"/>
         <source>Invalid Patientcard type.
 For active patientcard other type should be selected.
 If you want to connect the card to this type,
@@ -4718,12 +4710,12 @@ Ha a bérletet ehhez a bérlettípushoz akarja kötni,
 deaktiválja a bérletet.</translation>
     </message>
     <message>
-        <location filename="edit/dlgpatientcardsell.cpp" line="309"/>
+        <location filename="edit/dlgpatientcardsell.cpp" line="318"/>
         <source>Available units cannot be empty.</source>
         <translation>A felhasználható egységek száma nem lehet üres.</translation>
     </message>
     <message>
-        <location filename="edit/dlgpatientcardsell.cpp" line="316"/>
+        <location filename="edit/dlgpatientcardsell.cpp" line="325"/>
         <source>Number of available units can not be less then 1.
 If you want to reset the number of available units
 deactivate the card.</source>
@@ -4732,7 +4724,7 @@ Ha le akarja nullázni a kártya egységeinek számát,
 deaktiválja a bérletet.</translation>
     </message>
     <message>
-        <location filename="edit/dlgpatientcardsell.cpp" line="323"/>
+        <location filename="edit/dlgpatientcardsell.cpp" line="332"/>
         <source>Incorrect validation date.
 If you want to reset the date of validation
 deactivate the card.</source>
@@ -4741,18 +4733,18 @@ Ha érvénytelenné akarja tenni a kártyát,
 deaktiválja a bérletet.</translation>
     </message>
     <message>
-        <location filename="edit/dlgpatientcardsell.cpp" line="493"/>
+        <location filename="edit/dlgpatientcardsell.cpp" line="502"/>
         <source>New Patient</source>
         <translation>Új vendég</translation>
     </message>
     <message>
         <location filename="edit/dlgpatientcardsell.cpp" line="88"/>
-        <location filename="edit/dlgpatientcardsell.cpp" line="348"/>
+        <location filename="edit/dlgpatientcardsell.cpp" line="357"/>
         <source>Attention</source>
         <translation>Figyelmeztetés</translation>
     </message>
     <message>
-        <location filename="edit/dlgpatientcardsell.cpp" line="349"/>
+        <location filename="edit/dlgpatientcardsell.cpp" line="358"/>
         <source>Cassa is disabled!
 
 Please relogin to enable cassa.</source>
@@ -4761,12 +4753,12 @@ Please relogin to enable cassa.</source>
 Kérem jelentkezzen ki és vissza a pénztárműveletek engedélyezéséhez.</translation>
     </message>
     <message>
-        <location filename="edit/dlgpatientcardsell.cpp" line="393"/>
+        <location filename="edit/dlgpatientcardsell.cpp" line="402"/>
         <source>Sell patientcard [%1]</source>
         <translation>Bérlet eladás [%1]</translation>
     </message>
     <message>
-        <location filename="edit/dlgpatientcardsell.cpp" line="461"/>
+        <location filename="edit/dlgpatientcardsell.cpp" line="470"/>
         <source>Error</source>
         <translation>Hiba</translation>
     </message>
@@ -5012,7 +5004,7 @@ amelyek ehhez a bérlettípushoz tartoznak?</translation>
     <message>
         <location filename="edit/dlgpatientcarduse.cpp" line="82"/>
         <location filename="edit/dlgpatientcarduse.cpp" line="90"/>
-        <location filename="edit/dlgpatientcarduse.cpp" line="135"/>
+        <location filename="edit/dlgpatientcarduse.cpp" line="144"/>
         <source>Warning</source>
         <translation>Figyelmeztetés</translation>
     </message>
@@ -5031,7 +5023,7 @@ Please check it&apos;s validation date.</source>
 Kérem ellenőrizze a bérlet érvényességi dátumát.</translation>
     </message>
     <message>
-        <location filename="edit/dlgpatientcarduse.cpp" line="136"/>
+        <location filename="edit/dlgpatientcarduse.cpp" line="145"/>
         <source>This patientcard has less time to use.
 Please select another time interval or
 refill the patientcard before use.</source>
