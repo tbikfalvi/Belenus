@@ -91,6 +91,8 @@ void cPreferences::init()
     m_bIsTextTubeReplaceVisible     = false;
 
     m_nStartHttpSyncAutoSeconds     = 15;
+
+    m_bBarcodeHidden                = false;
 }
 
 void cPreferences::loadConfFileSettings()
@@ -173,6 +175,7 @@ void cPreferences::loadConfFileSettings()
         m_nPatientCardLostPriceVat      = obPrefFile.value( QString::fromAscii( "PatientCard/PriceLostVat" ), 0 ).toUInt();
         m_nPatientCardPartnerPrice      = obPrefFile.value( QString::fromAscii( "PatientCard/PricePartner" ), 0 ).toUInt();
         m_nPatientCardPartnerPriceVat   = obPrefFile.value( QString::fromAscii( "PatientCard/PricePartnerVat" ), 0 ).toUInt();
+        m_bBarcodeHidden               = obPrefFile.value( QString::fromAscii( "PatientCard/Hidden"), false ).toBool();
 
         unsigned int uiConsoleLevel = obPrefFile.value( QString::fromAscii( "LogLevels/ConsoleLogLevel" ), cSeverity::WARNING ).toUInt();
         if( (uiConsoleLevel >= cSeverity::MAX) ||
@@ -318,6 +321,7 @@ void cPreferences::save() const throw (cSevException)
     obPrefFile.setValue( QString::fromAscii( "PatientCard/PriceLostVat" ), m_nPatientCardLostPriceVat );
     obPrefFile.setValue( QString::fromAscii( "PatientCard/PricePartner" ), m_nPatientCardPartnerPrice );
     obPrefFile.setValue( QString::fromAscii( "PatientCard/PricePartnerVat" ), m_nPatientCardPartnerPriceVat );
+    obPrefFile.setValue( QString::fromAscii( "PatientCard/Hidden"), m_bBarcodeHidden );
 
     unsigned int  uiConLevel, uiDBLevel, uiGUILevel, uiFileLevel;
     getLogLevels( &uiConLevel, &uiDBLevel, &uiGUILevel, &uiFileLevel );
@@ -1652,3 +1656,18 @@ int cPreferences::getStartHttpSyncAutoSeconds() const
     return m_nStartHttpSyncAutoSeconds;
 }
 
+void cPreferences::setBarcodeHidden( bool p_bBarcodeHidden, bool p_boSaveNow )
+{
+    m_bBarcodeHidden = p_bBarcodeHidden;
+
+    if( p_boSaveNow )
+    {
+        QSettings  obPrefFile( m_qsFileName, QSettings::IniFormat );
+        obPrefFile.setValue( QString::fromAscii( "PatientCard/Hidden"), m_bBarcodeHidden );
+    }
+}
+
+bool cPreferences::isBarcodeHidden()
+{
+    return m_bBarcodeHidden;
+}

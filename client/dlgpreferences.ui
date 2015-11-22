@@ -23,7 +23,7 @@
    <item>
     <widget class="QTabWidget" name="tbwPreferences">
      <property name="currentIndex">
-      <number>5</number>
+      <number>3</number>
      </property>
      <widget class="QWidget" name="tab_General">
       <attribute name="title">
@@ -1262,6 +1262,20 @@ is different :</string>
           </item>
           <item row="2" column="1">
            <widget class="QCheckBox" name="chkCardProductBarcodeLength">
+            <property name="text">
+             <string/>
+            </property>
+           </widget>
+          </item>
+          <item row="3" column="0">
+           <widget class="QLabel" name="lblBarcodeHidden">
+            <property name="text">
+             <string>Hidden for general users: </string>
+            </property>
+           </widget>
+          </item>
+          <item row="3" column="1">
+           <widget class="QCheckBox" name="chkBarcodeHidden">
             <property name="text">
              <string/>
             </property>

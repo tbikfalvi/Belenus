@@ -219,6 +219,8 @@ public:
     bool            isStartHttpSyncAuto();
     void            setStartHttpSyncAutoSeconds( const int p_nStartHttpSyncAutoSeconds );
     int             getStartHttpSyncAutoSeconds() const;
+    void            setBarcodeHidden( bool p_bBarcodeHidden, bool p_boSaveNow = false );
+    bool            isBarcodeHidden();
 
 //void            setXXX( const QString &p_qsXXX, bool p_boSaveNow = false );
 //QString         getXXX() const;
@@ -312,6 +314,7 @@ private:
     bool            m_bIsTextSterilVisible;
     bool            m_bIsStartHttpSyncAuto;
     int             m_nStartHttpSyncAutoSeconds;
+    bool            m_bBarcodeHidden;
 
     void init();
 };

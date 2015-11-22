@@ -129,6 +129,15 @@ cDlgPatientCardEdit::cDlgPatientCardEdit( QWidget *p_poParent, cDBPatientCard *p
 
     slotRefreshWarningColors();
 
+    if( g_poPrefs->isBarcodeHidden() && !g_obUser.isInGroup( cAccessGroup::ADMIN ) )
+    {
+        ledBarcode->setEchoMode( QLineEdit::Password );
+    }
+    else
+    {
+        ledBarcode->setEchoMode( QLineEdit::Normal );
+    }
+
     QPoint  qpDlgSize = g_poPrefs->getDialogSize( "EditPatientCard", QPoint(440,380) );
     resize( qpDlgSize.x(), qpDlgSize.y() );
 }

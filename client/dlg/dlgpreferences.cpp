@@ -78,6 +78,8 @@ cDlgPreferences::cDlgPreferences( QWidget *p_poParent )
     spbBarcodeLen->setValue( g_poPrefs->getBarcodeLength() );
     ledBarcodePrefix->setText( g_poPrefs->getBarcodePrefix() );
     chkCardProductBarcodeLength->setChecked( g_poPrefs->isBarcodeLengthDifferent() );
+    chkBarcodeHidden->setChecked( g_poPrefs->isBarcodeHidden() );
+    chkBarcodeHidden->setEnabled( g_obUser.isInGroup( cAccessGroup::ADMIN ) );
 
     spbPanels->setMaximum( g_poPrefs->getPanelCount() );
     spbPanels->setValue( g_poPrefs->getPanelsPerRow() );
@@ -406,6 +408,7 @@ void cDlgPreferences::accept()
     g_poPrefs->setBarcodeLength( spbBarcodeLen->value() );
     g_poPrefs->setBarcodePrefix( ledBarcodePrefix->text() );
     g_poPrefs->setBarcodeLengthDifferent( chkCardProductBarcodeLength->isChecked() );
+    g_poPrefs->setBarcodeHidden( chkBarcodeHidden->isChecked() );
 
     g_poPrefs->setStopInLine( rbStopInLine->isChecked() );
 
