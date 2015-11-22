@@ -217,6 +217,15 @@ cDlgGuestEdit::cDlgGuestEdit( QWidget *p_poParent, cDBGuest *p_poGuest, cDBPostp
     // Temporary until patient history will be implemented
     pbHistory->setVisible( false );
 
+    if( g_poPrefs->isBarcodeHidden() && !g_obUser.isInGroup( cAccessGroup::ADMIN ) )
+    {
+        ledBarcode->setEchoMode( QLineEdit::Password );
+    }
+    else
+    {
+        ledBarcode->setEchoMode( QLineEdit::Normal );
+    }
+
     m_bInit = false;
 }
 //===========================================================================================================
@@ -516,11 +525,7 @@ void cDlgGuestEdit::_fillPatientCardData()
     QString     qsBarcodes      = "";
     QString     qsPatientCards  = tr("Assigned patientcards:\nBarcode\tPatientcard type");
 
-    poQuery = g_poDB->executeQTQuery( QString( "SELECT barcode, patientcardtypes.name FROM "
-                                               "patientcards, patientcardtypes WHERE "
-                                               "patientcards.patientcardtypeid=patientcardtypes.patientcardtypeid AND "
-                                               "patientcards.patientId=%1 AND "
-                                               "patientcards.licenceId=%2 " ).arg( m_poGuest->id() ).arg( g_poPrefs->getLicenceId() ) );
+    poQuery = g_poDB->executeQTQuery( QString( "SELECT barcode FROM patientcards WHERE patientcards.patientId=%1 " ).arg( m_poGuest->id() ) );
 
     while( poQuery->next() )
     {
@@ -531,18 +536,17 @@ void cDlgGuestEdit::_fillPatientCardData()
         }
     }
 
-    poQuery = g_poDB->executeQTQuery( QString( "SELECT barcode, patientcardtypes.name FROM "
-                                               "patientcards, connectpatientwithcard, patientcardtypes WHERE "
+    poQuery = g_poDB->executeQTQuery( QString( "SELECT barcode FROM "
+                                               "patientcards, connectpatientwithcard WHERE "
                                                "patientcards.patientcardid=connectpatientwithcard.patientcardid AND "
-                                               "patientcards.patientcardtypeid=patientcardtypes.patientcardtypeid AND "
-                                               "connectpatientwithcard.patientId=%1 AND "
-                                               "patientcards.licenceId=%2 " ).arg( m_poGuest->id() ).arg( g_poPrefs->getLicenceId() ) );
+                                               "connectpatientwithcard.patientId=%1 " ).arg( m_poGuest->id() ) );
     while( poQuery->next() )
     {
         if( !qsBarcodes.contains( poQuery->value(0).toString() ) )
         {
             qsBarcodes.append( QString("%1, ").arg( poQuery->value(0).toString() ) );
-            qsPatientCards.append( QString("\n%1\t%2").arg( poQuery->value(0).toString() ).arg( poQuery->value(1).toString() ) );
+            qsPatientCards.append( QString("\n%1").arg( poQuery->value(0).toString() ) );
+//            qsPatientCards.append( QString("\n%1\t%2").arg( poQuery->value(0).toString() ).arg( poQuery->value(1).toString() ) );
         }
     }
 
