@@ -237,6 +237,16 @@ cDlgPanelUse::cDlgPanelUse( QWidget *p_poParent, unsigned int p_uiPanelId ) : QD
     setPanelUseTime();
     setPanelUsePrice();
 
+
+    if( g_poPrefs->isBarcodeHidden() && !g_obUser.isInGroup( cAccessGroup::ADMIN ) )
+    {
+        ledPatientCardBarcode->setEchoMode( QLineEdit::Password );
+    }
+    else
+    {
+        ledPatientCardBarcode->setEchoMode( QLineEdit::Normal );
+    }
+
     QPoint  qpDlgSize = g_poPrefs->getDialogSize( "PanelUse", QPoint(500,360) );
     resize( qpDlgSize.x(), qpDlgSize.y() );
 }

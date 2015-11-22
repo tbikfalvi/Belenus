@@ -98,6 +98,15 @@ cDlgPatientCardUse::cDlgPatientCardUse( QWidget *p_poParent, cDBPatientCard *p_p
     {
         on_cmbNoUnits_currentIndexChanged( 0 );
     }
+
+    if( g_poPrefs->isBarcodeHidden() && !g_obUser.isInGroup( cAccessGroup::ADMIN ) )
+    {
+        ledBarcode->setEchoMode( QLineEdit::Password );
+    }
+    else
+    {
+        ledBarcode->setEchoMode( QLineEdit::Normal );
+    }
 }
 
 cDlgPatientCardUse::~cDlgPatientCardUse()
