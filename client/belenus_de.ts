@@ -422,53 +422,57 @@ Please start WampServer application then restart Belenus application.</source>
 <context>
     <name>cBlnsHttp</name>
     <message>
-        <location filename="http.cpp" line="114"/>
-        <location filename="http.cpp" line="138"/>
+        <location filename="http.cpp" line="98"/>
         <source>HTTP connection disabled.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="http.cpp" line="185"/>
+        <location filename="http.cpp" line="140"/>
+        <source>HTTP connection disabled</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="http.cpp" line="187"/>
         <source>HTTP timeout occured.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="http.cpp" line="221"/>
+        <location filename="http.cpp" line="223"/>
         <source>Unable to save HTTP communication file.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="http.cpp" line="296"/>
+        <location filename="http.cpp" line="298"/>
         <source>Error occured during downloading HTTP file.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="http.cpp" line="520"/>
+        <location filename="http.cpp" line="522"/>
         <source>Invalid token received: </source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="http.cpp" line="740"/>
+        <location filename="http.cpp" line="742"/>
         <source>Unknown error occured on server side.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="http.cpp" line="747"/>
+        <location filename="http.cpp" line="749"/>
         <source>HTTP Session expired</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="http.cpp" line="754"/>
+        <location filename="http.cpp" line="756"/>
         <source>HTTP security check failed</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="http.cpp" line="761"/>
+        <location filename="http.cpp" line="763"/>
         <source>Unknown studio Id</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="http.cpp" line="768"/>
+        <location filename="http.cpp" line="770"/>
         <source>Database error occured on server side</source>
         <translation type="unfinished"></translation>
     </message>
@@ -5963,9 +5967,9 @@ Click the &apos;Start new cassa&apos; if you don&apos;t want to use the previous
         <location filename="wndmain.cpp" line="2437"/>
         <location filename="wndmain.cpp" line="2460"/>
         <location filename="wndmain.cpp" line="3023"/>
-        <location filename="wndmain.cpp" line="3441"/>
-        <location filename="wndmain.cpp" line="3451"/>
-        <location filename="wndmain.cpp" line="3462"/>
+        <location filename="wndmain.cpp" line="3446"/>
+        <location filename="wndmain.cpp" line="3456"/>
+        <location filename="wndmain.cpp" line="3467"/>
         <source>Question</source>
         <translation type="unfinished"></translation>
     </message>
@@ -6062,11 +6066,11 @@ Do you want to update application users and attach them to the newly registered 
         <location filename="wndmain.cpp" line="2363"/>
         <location filename="wndmain.cpp" line="3038"/>
         <location filename="wndmain.cpp" line="3197"/>
-        <location filename="wndmain.cpp" line="3519"/>
-        <location filename="wndmain.cpp" line="3551"/>
-        <location filename="wndmain.cpp" line="3790"/>
-        <location filename="wndmain.cpp" line="3812"/>
-        <location filename="wndmain.cpp" line="3821"/>
+        <location filename="wndmain.cpp" line="3532"/>
+        <location filename="wndmain.cpp" line="3564"/>
+        <location filename="wndmain.cpp" line="3806"/>
+        <location filename="wndmain.cpp" line="3828"/>
+        <location filename="wndmain.cpp" line="3837"/>
         <source>Warning</source>
         <translation type="unfinished"></translation>
     </message>
@@ -6089,7 +6093,7 @@ Please also check whether the defined licence key is valid and not used by someb
         <location filename="wndmain.cpp" line="3008"/>
         <location filename="wndmain.cpp" line="3353"/>
         <location filename="wndmain.cpp" line="3362"/>
-        <location filename="wndmain.cpp" line="3563"/>
+        <location filename="wndmain.cpp" line="3576"/>
         <source>Attention</source>
         <translation type="unfinished"></translation>
     </message>
@@ -6198,12 +6202,18 @@ Please relogin to enable cassa.</source>
     </message>
     <message>
         <location filename="wndmain.cpp" line="3428"/>
-        <location filename="wndmain.cpp" line="3489"/>
+        <location filename="wndmain.cpp" line="3494"/>
         <source>Suspend communication</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="wndmain.cpp" line="3791"/>
+        <location filename="wndmain.cpp" line="3437"/>
+        <location filename="wndmain.cpp" line="3500"/>
+        <source>Clear waiting queue</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="wndmain.cpp" line="3807"/>
         <source>The version information stored in database is not match.
 
 Correct version numbers:
@@ -6218,7 +6228,7 @@ It is recommended to exit application and to contact system administrator.</sour
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="wndmain.cpp" line="3813"/>
+        <location filename="wndmain.cpp" line="3829"/>
         <source>The validity of the application&apos;s licence
 will be expire in %1 days.
 
@@ -6227,7 +6237,7 @@ and extend your licence valid time period.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="wndmain.cpp" line="3822"/>
+        <location filename="wndmain.cpp" line="3838"/>
         <source>The application&apos;s licence is registered
 but not validated by your franchise provider.
 
@@ -6332,6 +6342,8 @@ reset the device first with pushing the ESC button.</source>
     <message>
         <location filename="wndmain.cpp" line="382"/>
         <location filename="wndmain.cpp" line="3394"/>
+        <location filename="wndmain.cpp" line="3505"/>
+        <location filename="wndmain.cpp" line="3849"/>
         <source>Number of records to process: %1</source>
         <translation type="unfinished"></translation>
     </message>
@@ -6391,7 +6403,7 @@ Error code: %1
     </message>
     <message>
         <location filename="wndmain.cpp" line="3411"/>
-        <location filename="wndmain.cpp" line="3439"/>
+        <location filename="wndmain.cpp" line="3444"/>
         <source>Process remaining actions</source>
         <translation type="unfinished"></translation>
     </message>
@@ -6402,47 +6414,47 @@ Error code: %1
     </message>
     <message>
         <location filename="wndmain.cpp" line="3417"/>
-        <location filename="wndmain.cpp" line="3460"/>
+        <location filename="wndmain.cpp" line="3465"/>
         <source>Remove inactive patientcards</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
         <location filename="wndmain.cpp" line="3419"/>
-        <location filename="wndmain.cpp" line="3471"/>
+        <location filename="wndmain.cpp" line="3476"/>
         <source>Remove patientcard</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
         <location filename="wndmain.cpp" line="3423"/>
-        <location filename="wndmain.cpp" line="3475"/>
+        <location filename="wndmain.cpp" line="3480"/>
         <source>Test connection</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
         <location filename="wndmain.cpp" line="3426"/>
-        <location filename="wndmain.cpp" line="3479"/>
+        <location filename="wndmain.cpp" line="3484"/>
         <source>Disable communication</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
         <location filename="wndmain.cpp" line="3432"/>
-        <location filename="wndmain.cpp" line="3484"/>
+        <location filename="wndmain.cpp" line="3489"/>
         <source>Enable communication</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="wndmain.cpp" line="3442"/>
+        <location filename="wndmain.cpp" line="3447"/>
         <source>Are you sure about to process all remaining actions?
 This process may take long time and slow down the application.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="wndmain.cpp" line="3449"/>
+        <location filename="wndmain.cpp" line="3454"/>
         <source>Update all patientcard</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="wndmain.cpp" line="3452"/>
+        <location filename="wndmain.cpp" line="3457"/>
         <source>Are you sure about to update all patientcards on web?
 This process may take long time and slow down the application.</source>
         <oldsource>Are you sure about to update all patientcards on web?
@@ -6450,7 +6462,7 @@ This process may take long time and slow down the appliation.</oldsource>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="wndmain.cpp" line="3463"/>
+        <location filename="wndmain.cpp" line="3468"/>
         <source>Are you sure about to remove all inactive patientcards from web?
 This process may take long time and slow down the application.</source>
         <oldsource>Are you sure about to remove all inactive patientcards from web?
@@ -6458,8 +6470,8 @@ This process may take long time and slow down the appliation.</oldsource>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="wndmain.cpp" line="3520"/>
-        <location filename="wndmain.cpp" line="3552"/>
+        <location filename="wndmain.cpp" line="3533"/>
+        <location filename="wndmain.cpp" line="3565"/>
         <source>Error occured when starting process:Advertisement.exe
 
 Error code: %1
@@ -6472,25 +6484,25 @@ Error code: %1
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="wndmain.cpp" line="3564"/>
+        <location filename="wndmain.cpp" line="3577"/>
         <source>Please note that you should restart the application for the modifications to take effect.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="wndmain.cpp" line="3577"/>
-        <location filename="wndmain.cpp" line="3606"/>
+        <location filename="wndmain.cpp" line="3590"/>
+        <location filename="wndmain.cpp" line="3619"/>
         <source>Disable HW Debug</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="wndmain.cpp" line="3582"/>
-        <location filename="wndmain.cpp" line="3602"/>
+        <location filename="wndmain.cpp" line="3595"/>
+        <location filename="wndmain.cpp" line="3615"/>
         <source>Enable HW Debug</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="wndmain.cpp" line="3586"/>
-        <location filename="wndmain.cpp" line="3597"/>
+        <location filename="wndmain.cpp" line="3599"/>
+        <location filename="wndmain.cpp" line="3610"/>
         <source>Reset communication</source>
         <translation type="unfinished"></translation>
     </message>

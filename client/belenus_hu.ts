@@ -597,8 +597,7 @@ Kérem indítsa el a WampServer alkalmazást, majd indítsa újra a Belenus alka
 %2.</translation>
     </message>
     <message>
-        <location filename="http.cpp" line="114"/>
-        <location filename="http.cpp" line="138"/>
+        <location filename="http.cpp" line="98"/>
         <source>HTTP connection disabled.</source>
         <translation>HTTP kapcsolad letiltva.</translation>
     </message>
@@ -612,47 +611,52 @@ Kérem indítsa el a WampServer alkalmazást, majd indítsa újra a Belenus alka
         <translation type="obsolete">%1 SIKERTELEN.</translation>
     </message>
     <message>
-        <location filename="http.cpp" line="185"/>
+        <location filename="http.cpp" line="140"/>
+        <source>HTTP connection disabled</source>
+        <translation>HTTP kapcsolat letiltva</translation>
+    </message>
+    <message>
+        <location filename="http.cpp" line="187"/>
         <source>HTTP timeout occured.</source>
         <translation>HTTP Időtúllépés.</translation>
     </message>
     <message>
-        <location filename="http.cpp" line="221"/>
+        <location filename="http.cpp" line="223"/>
         <source>Unable to save HTTP communication file.</source>
         <translation>Nem sikerült menteni a HTTP kommunikációs állományt.</translation>
     </message>
     <message>
-        <location filename="http.cpp" line="296"/>
+        <location filename="http.cpp" line="298"/>
         <source>Error occured during downloading HTTP file.</source>
         <translation>Hiba történt a HTTP állomány letöltése közben.</translation>
     </message>
     <message>
-        <location filename="http.cpp" line="520"/>
+        <location filename="http.cpp" line="522"/>
         <source>Invalid token received: </source>
         <translation>Nem megfelelő token érkezett: </translation>
     </message>
     <message>
-        <location filename="http.cpp" line="740"/>
+        <location filename="http.cpp" line="742"/>
         <source>Unknown error occured on server side.</source>
         <translation>Ismeretlen hiba következett be a szerveren.</translation>
     </message>
     <message>
-        <location filename="http.cpp" line="747"/>
+        <location filename="http.cpp" line="749"/>
         <source>HTTP Session expired</source>
         <translation>HTTP folyamat időtúllépés</translation>
     </message>
     <message>
-        <location filename="http.cpp" line="754"/>
+        <location filename="http.cpp" line="756"/>
         <source>HTTP security check failed</source>
         <translation>HTTP biztonsági kulcs hiba</translation>
     </message>
     <message>
-        <location filename="http.cpp" line="761"/>
+        <location filename="http.cpp" line="763"/>
         <source>Unknown studio Id</source>
         <translation>Ismeretlen szalon azonosító</translation>
     </message>
     <message>
-        <location filename="http.cpp" line="768"/>
+        <location filename="http.cpp" line="770"/>
         <source>Database error occured on server side</source>
         <translation>Adatbázis hiba a szerveren</translation>
     </message>
@@ -8605,7 +8609,7 @@ Megjegyzés: Ha a NEM gombra kattint, új kassza nyílik az Ön nevére és ehhe
         <location filename="wndmain.cpp" line="3008"/>
         <location filename="wndmain.cpp" line="3353"/>
         <location filename="wndmain.cpp" line="3362"/>
-        <location filename="wndmain.cpp" line="3563"/>
+        <location filename="wndmain.cpp" line="3576"/>
         <source>Attention</source>
         <translation>Figyelmeztetés</translation>
     </message>
@@ -8635,9 +8639,9 @@ Figyelem: a regisztrációhoz élő internet kapcsolatra van szükség.</transla
         <location filename="wndmain.cpp" line="2437"/>
         <location filename="wndmain.cpp" line="2460"/>
         <location filename="wndmain.cpp" line="3023"/>
-        <location filename="wndmain.cpp" line="3441"/>
-        <location filename="wndmain.cpp" line="3451"/>
-        <location filename="wndmain.cpp" line="3462"/>
+        <location filename="wndmain.cpp" line="3446"/>
+        <location filename="wndmain.cpp" line="3456"/>
+        <location filename="wndmain.cpp" line="3467"/>
         <source>Question</source>
         <translation>Kérdés</translation>
     </message>
@@ -8651,11 +8655,11 @@ Figyelem: a regisztrációhoz élő internet kapcsolatra van szükség.</transla
         <location filename="wndmain.cpp" line="2363"/>
         <location filename="wndmain.cpp" line="3038"/>
         <location filename="wndmain.cpp" line="3197"/>
-        <location filename="wndmain.cpp" line="3519"/>
-        <location filename="wndmain.cpp" line="3551"/>
-        <location filename="wndmain.cpp" line="3790"/>
-        <location filename="wndmain.cpp" line="3812"/>
-        <location filename="wndmain.cpp" line="3821"/>
+        <location filename="wndmain.cpp" line="3532"/>
+        <location filename="wndmain.cpp" line="3564"/>
+        <location filename="wndmain.cpp" line="3806"/>
+        <location filename="wndmain.cpp" line="3828"/>
+        <location filename="wndmain.cpp" line="3837"/>
         <source>Warning</source>
         <translation>Figyelmeztetés</translation>
     </message>
@@ -8973,7 +8977,7 @@ Biztos, hogy fel akarja tölteni?</translation>
     </message>
     <message>
         <location filename="wndmain.cpp" line="3411"/>
-        <location filename="wndmain.cpp" line="3439"/>
+        <location filename="wndmain.cpp" line="3444"/>
         <source>Process remaining actions</source>
         <translation>Várakozó adatok elküldése</translation>
     </message>
@@ -8984,24 +8988,30 @@ Biztos, hogy fel akarja tölteni?</translation>
     </message>
     <message>
         <location filename="wndmain.cpp" line="3417"/>
-        <location filename="wndmain.cpp" line="3460"/>
+        <location filename="wndmain.cpp" line="3465"/>
         <source>Remove inactive patientcards</source>
         <translation>Inaktív bérletek adatainak eltávolítása</translation>
     </message>
     <message>
         <location filename="wndmain.cpp" line="3419"/>
-        <location filename="wndmain.cpp" line="3471"/>
+        <location filename="wndmain.cpp" line="3476"/>
         <source>Remove patientcard</source>
         <translation>Bérlet adatainak eltávolítása</translation>
     </message>
     <message>
         <location filename="wndmain.cpp" line="3428"/>
-        <location filename="wndmain.cpp" line="3489"/>
+        <location filename="wndmain.cpp" line="3494"/>
         <source>Suspend communication</source>
         <translation>Kommunikáció szüneteltetése</translation>
     </message>
     <message>
-        <location filename="wndmain.cpp" line="3791"/>
+        <location filename="wndmain.cpp" line="3437"/>
+        <location filename="wndmain.cpp" line="3500"/>
+        <source>Clear waiting queue</source>
+        <translation>Várakozó adatok törlése</translation>
+    </message>
+    <message>
+        <location filename="wndmain.cpp" line="3807"/>
         <source>The version information stored in database is not match.
 
 Correct version numbers:
@@ -9026,7 +9036,7 @@ Adatbázis verziószám: %4
 Ajánlott kilépni az alkalmazásból és kapcsolatba lépni a rendszer adminisztrátorral.</translation>
     </message>
     <message>
-        <location filename="wndmain.cpp" line="3813"/>
+        <location filename="wndmain.cpp" line="3829"/>
         <source>The validity of the application&apos;s licence
 will be expire in %1 days.
 
@@ -9039,7 +9049,7 @@ Kérem lépjen kapcsolatba a franchise szolgáltatójával
 és növelje meg az érvényességi időintervallumot.</translation>
     </message>
     <message>
-        <location filename="wndmain.cpp" line="3822"/>
+        <location filename="wndmain.cpp" line="3838"/>
         <source>The application&apos;s licence is registered
 but not validated by your franchise provider.
 
@@ -9059,36 +9069,36 @@ Kérem lépjen kapcsolatba a franchise szolgáltatójával
     </message>
     <message>
         <location filename="wndmain.cpp" line="3423"/>
-        <location filename="wndmain.cpp" line="3475"/>
+        <location filename="wndmain.cpp" line="3480"/>
         <source>Test connection</source>
         <translation>Kapcsolat tesztelés</translation>
     </message>
     <message>
         <location filename="wndmain.cpp" line="3426"/>
-        <location filename="wndmain.cpp" line="3479"/>
+        <location filename="wndmain.cpp" line="3484"/>
         <source>Disable communication</source>
         <translation>Kommunikáció letiltása</translation>
     </message>
     <message>
         <location filename="wndmain.cpp" line="3432"/>
-        <location filename="wndmain.cpp" line="3484"/>
+        <location filename="wndmain.cpp" line="3489"/>
         <source>Enable communication</source>
         <translation>Kommunikáció engedélyezése</translation>
     </message>
     <message>
-        <location filename="wndmain.cpp" line="3442"/>
+        <location filename="wndmain.cpp" line="3447"/>
         <source>Are you sure about to process all remaining actions?
 This process may take long time and slow down the application.</source>
         <translation>Biztos benne, hogy végre akarja hajtani az összes várakozó adatot?
 A folyamat hosszabb ideig is eltarthat és lelassíthatja az alkalmazást.</translation>
     </message>
     <message>
-        <location filename="wndmain.cpp" line="3449"/>
+        <location filename="wndmain.cpp" line="3454"/>
         <source>Update all patientcard</source>
         <translation>Összes bérlet adatának frissítése</translation>
     </message>
     <message>
-        <location filename="wndmain.cpp" line="3452"/>
+        <location filename="wndmain.cpp" line="3457"/>
         <source>Are you sure about to update all patientcards on web?
 This process may take long time and slow down the application.</source>
         <oldsource>Are you sure about to update all patientcards on web?
@@ -9097,7 +9107,7 @@ This process may take long time and slow down the appliation.</oldsource>
 A folyamat hosszabb ideig is eltarthat és lelassíthatja az alkalmazást.</translation>
     </message>
     <message>
-        <location filename="wndmain.cpp" line="3463"/>
+        <location filename="wndmain.cpp" line="3468"/>
         <source>Are you sure about to remove all inactive patientcards from web?
 This process may take long time and slow down the application.</source>
         <oldsource>Are you sure about to remove all inactive patientcards from web?
@@ -9106,8 +9116,8 @@ This process may take long time and slow down the appliation.</oldsource>
 A folyamat hosszabb ideig is eltarthat és lelassíthatja az alkalmazást.</translation>
     </message>
     <message>
-        <location filename="wndmain.cpp" line="3520"/>
-        <location filename="wndmain.cpp" line="3552"/>
+        <location filename="wndmain.cpp" line="3533"/>
+        <location filename="wndmain.cpp" line="3565"/>
         <source>Error occured when starting process:Advertisement.exe
 
 Error code: %1
@@ -9128,25 +9138,25 @@ Hibakód: %1
 5 &gt; Ismeretlen hiba következett be.</translation>
     </message>
     <message>
-        <location filename="wndmain.cpp" line="3564"/>
+        <location filename="wndmain.cpp" line="3577"/>
         <source>Please note that you should restart the application for the modifications to take effect.</source>
         <translation>Kérem vegye figyelembe, hogy újra kell indítani az alkalmazást a változások életbelépéséhez.</translation>
     </message>
     <message>
-        <location filename="wndmain.cpp" line="3577"/>
-        <location filename="wndmain.cpp" line="3606"/>
+        <location filename="wndmain.cpp" line="3590"/>
+        <location filename="wndmain.cpp" line="3619"/>
         <source>Disable HW Debug</source>
         <translation>HW nyomkövetés kikapcsolása</translation>
     </message>
     <message>
-        <location filename="wndmain.cpp" line="3582"/>
-        <location filename="wndmain.cpp" line="3602"/>
+        <location filename="wndmain.cpp" line="3595"/>
+        <location filename="wndmain.cpp" line="3615"/>
         <source>Enable HW Debug</source>
         <translation>HW nyomkövetés bekapcsolása</translation>
     </message>
     <message>
-        <location filename="wndmain.cpp" line="3586"/>
-        <location filename="wndmain.cpp" line="3597"/>
+        <location filename="wndmain.cpp" line="3599"/>
+        <location filename="wndmain.cpp" line="3610"/>
         <source>Reset communication</source>
         <translation>Kommunikáció újraindítása</translation>
     </message>
@@ -9232,6 +9242,8 @@ kérem az ESC gomb lenyomásával törölje a géphasználatot.</translation>
     <message>
         <location filename="wndmain.cpp" line="382"/>
         <location filename="wndmain.cpp" line="3394"/>
+        <location filename="wndmain.cpp" line="3505"/>
+        <location filename="wndmain.cpp" line="3849"/>
         <source>Number of records to process: %1</source>
         <translation>Feldolgozásra váró adatok száma: %1</translation>
     </message>
