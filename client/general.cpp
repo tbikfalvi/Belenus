@@ -323,7 +323,15 @@ void cGeneral::showPatientCardInformation(QString p_qsBarcode)
             }
         }
 
-        obDlgInformation.setInformationTitle( obDBPatientCard.barcode() );
+        if( g_poPrefs->isBarcodeHidden() && !g_obUser.isInGroup( cAccessGroup::ADMIN ) )
+        {
+            QString qsBarcode = obDBPatientCard.barcode();
+            obDlgInformation.setInformationTitle( qsBarcode.fill('*') );
+        }
+        else
+        {
+            obDlgInformation.setInformationTitle( obDBPatientCard.barcode() );
+        }
         obDlgInformation.setInformationText( qsText );
         obDlgInformation.exec();
     }
