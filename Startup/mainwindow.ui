@@ -329,6 +329,9 @@
           </item>
           <item>
            <widget class="QRadioButton" name="rbAppDemo">
+            <property name="enabled">
+             <bool>false</bool>
+            </property>
             <property name="text">
              <string>Demo</string>
             </property>
@@ -558,7 +561,7 @@
               <bool>false</bool>
              </property>
              <property name="text">
-              <string notr="true">c:/Program Files/Belenus</string>
+              <string notr="true">c:/KiwiSun/Belenus</string>
              </property>
              <property name="readOnly">
               <bool>false</bool>
@@ -651,7 +654,7 @@
               <bool>false</bool>
              </property>
              <property name="text">
-              <string notr="true">c:/BelenusUpdate</string>
+              <string notr="true">c:/KiwiSun/BelenusUpdate</string>
              </property>
              <property name="readOnly">
               <bool>false</bool>

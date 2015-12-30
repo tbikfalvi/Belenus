@@ -40,8 +40,8 @@ MainWindow::MainWindow(QWidget *parent) : QMainWindow(parent), ui(new Ui::MainWi
 
     QProcessEnvironment qpeInfo = QProcessEnvironment::systemEnvironment();
 
-    ui->ledDirectoryStartup->setText( qpeInfo.value( "BelenusStartup", "C:/BelenusUpdate" ) );
-    ui->ledDirectoryTarget->setText( qpeInfo.value( "BelenusTarget", "C:/Program Files/Belenus" ) );
+    ui->ledDirectoryStartup->setText( qpeInfo.value( "BelenusStartup", "c:/KiwiSun/BelenusUpdate" ) );
+    ui->ledDirectoryTarget->setText( qpeInfo.value( "BelenusTarget", "c:/KiwiSun/Belenus" ) );
     ui->ledDirectoryResource->setText( qpeInfo.value( "BelenusResource", "Download" ) );
     ui->ledDirectoryBackup->setText( qpeInfo.value( "BelenusBackup", "Backup" ) );
 
