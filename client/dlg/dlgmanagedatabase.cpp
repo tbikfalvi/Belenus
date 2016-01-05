@@ -139,7 +139,7 @@ void cDlgManageDatabase::_actionUpdatePatientCardUnits()
 
     try
     {
-        QString      qsQuery = QString( "SELECT patientCardId FROM patientcards WHERE patientCardId>0 AND active=1" );
+        QString      qsQuery = QString( "SELECT patientCardId FROM patientcards WHERE patientCardId>1 AND active=1" );
         QSqlQuery   *poQuery = g_poDB->executeQTQuery( qsQuery );
 
         m_dlgProgress->showProgressBar( poQuery->size() );
