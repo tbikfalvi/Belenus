@@ -130,7 +130,7 @@ MainWindow::MainWindow(QWidget *parent) : QMainWindow(parent), ui(new Ui::MainWi
                                      << "BLNS28"
                                      << "BLNS29"
 //                                     << "BLNS30"
-//                                     << "BLNS31"
+                                     << "BLNS31"
                                      << "BLNS32"
                                      << "BLNS33"
                                      << "BLNS34"
