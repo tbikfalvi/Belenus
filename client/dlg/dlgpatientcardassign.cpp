@@ -119,12 +119,16 @@ void cDlgPatientCardAssign::on_ledAssignBarcode_returnPressed()
 void cDlgPatientCardAssign::on_pbCheckCards_clicked()
 //-----------------------------------------------------------------------------------------------------------
 {
-    m_bMainCardOk       = true;
-    m_bAssignCardOk     = true;
-    m_uiParentGroupM    = 0;
-    m_uiParentGroupA    = 0;
-    m_bCanBeParentM     = true;
-    m_bCanBeParentA     = true;
+    m_bMainCardOk               = true;
+    m_bAssignCardOk             = true;
+    m_bCanBeParentM             = true;
+    m_bCanBeParentA             = true;
+    m_uiMainCardId              = 0;
+    m_uiMainCardParentId        = 0;
+    m_uiAssignedCardId          = 0;
+    m_uiAssignedCardParentId    = 0;
+    m_uiParentGroupM            = 0;
+    m_uiParentGroupA            = 0;
 
     if( ledMainBarcode->text().length() != g_poPrefs->getBarcodeLength() )
     {
@@ -221,8 +225,14 @@ void cDlgPatientCardAssign::on_pbCheckCards_clicked()
 
     if( _isCardsCanBeAssigned() )
     {
-        rbActAssign->setEnabled( true );
-        rbActAssignOld->setEnabled( true );
+        if( m_uiMainCardParentId == 0 )
+        {
+            rbActAssign->setEnabled( true );
+        }
+        if( m_uiAssignedCardParentId == 0 )
+        {
+            rbActAssignOld->setEnabled( true );
+        }
     }
     pbCheckCards->setIcon( QIcon("./resources/40x40_ok.png") );
 }
@@ -269,11 +279,17 @@ void cDlgPatientCardAssign::_fillOldCardAssignStructure()
         cDBPatientCard  obDBPatientCard;
 
         obDBPatientCard.load( ledMainBarcode->text() );
+        m_uiMainCardId          = obDBPatientCard.id();
+        m_uiMainCardParentId    = obDBPatientCard.parentId();
 
         if( obDBPatientCard.isAssignedCardExists() )
         {
+            g_obLogger(cSeverity::DEBUG) << "Assigned cards exists" << EOM;
+
             if( obDBPatientCard.parentId() == 0 )
             {
+                g_obLogger(cSeverity::DEBUG) << "Parent not exists" << EOM;
+
                 m_uiParentGroupM = obDBPatientCard.id();
 
                 QTreeWidgetItem *itemParent = new QTreeWidgetItem( tvAssignStructure );
@@ -298,6 +314,8 @@ void cDlgPatientCardAssign::_fillOldCardAssignStructure()
             }
             else
             {
+                g_obLogger(cSeverity::DEBUG) << "Parent exists" << EOM;
+
                 m_uiParentGroupM = obDBPatientCard.parentId();
 
                 cDBPatientCard  obParent;
@@ -453,6 +471,8 @@ void cDlgPatientCardAssign::_loadAssignedCard()
     try
     {
         obDBPatientCard.load( ledAssignBarcode->text() );
+        m_uiAssignedCardId          = obDBPatientCard.id();
+        m_uiAssignedCardParentId    = obDBPatientCard.parentId();
 
         if( obDBPatientCard.isAssignedCardExists() )
         {
