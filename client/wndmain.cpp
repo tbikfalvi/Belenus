@@ -1478,7 +1478,8 @@ void cWndMain::closeEvent( QCloseEvent *p_poEvent )
     }
     else
     {
-        if( QMessageBox::question( this, tr("Question"),
+        if( m_bClosingShift ||
+            QMessageBox::question( this, tr("Question"),
                                    tr("Are you sure you want to close the application?"),
                                    QMessageBox::Yes | QMessageBox::No, QMessageBox::No ) == QMessageBox::Yes )
         {
@@ -3821,6 +3822,9 @@ void cWndMain::_checkVersions()
 
 void cWndMain::_checkIsActivationNeeded()
 {
+    if( m_bClosingShift )
+        return;
+
     int     nDaysRemain = g_obLicenceManager.daysRemain();
 
     if( nDaysRemain < cLicenceManager::EXPIRE_MAX_DAYS )
