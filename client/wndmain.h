@@ -123,7 +123,7 @@ private slots:
     void slotSetCounterText( unsigned int p_uiPanelId, const QString &p_qsCounter );
     void slotSetWaitTime( unsigned int p_uiPanelId, const unsigned int p_uiWaitTime );
     void slotSetInfoText( unsigned int p_uiPanelId, const QString &p_qsInfo );
-    void slotReplacePatientCard( const QString &p_qsBarcode );
+    void slotReplacePatientCard( const QString &p_qsBarcode, const unsigned int p_uiPCId = 0 );
     void slotAssignPartnerCard( const QString &p_qsBarcode );
     void on_action_CassaActionStorno_triggered();
     void on_action_ShoppingCart_triggered();
