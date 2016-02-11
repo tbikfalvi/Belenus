@@ -37,6 +37,10 @@ private:
     bool             m_bAssignCardOk;
     QString          m_qsBarcodeMain;
     QString          m_qsBarcodeAssign;
+    unsigned int     m_uiMainCardId;
+    unsigned int     m_uiMainCardParentId;
+    unsigned int     m_uiAssignedCardId;
+    unsigned int     m_uiAssignedCardParentId;
     unsigned int     m_uiParentGroupM;
     unsigned int     m_uiParentGroupA;
     bool             m_bCanBeParentM;
