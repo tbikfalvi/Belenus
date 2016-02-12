@@ -128,6 +128,7 @@ cFrmPanel::cFrmPanel( const unsigned int p_uiPanelId ) : QFrame()
     prgUsageMonitor->setValue( 0 );
     prgUsageMonitor->setFixedHeight( 11 );
     prgUsageMonitor->setStyleSheet( "QProgressBar { border: 2px solid grey; border-radius: 0.5px; } QProgressBar::chunk { background-color: #0000FF; }" );
+    prgUsageMonitor->setVisible( g_poPrefs->isUsageVisibleOnMain() );
 
     m_uiId                  = 0;
     m_uiType                = 0;
@@ -700,6 +701,7 @@ void cFrmPanel::load( const unsigned int p_uiPanelId )
             prgUsageMonitor->setValue( prgUsageMonitor->maximum() );
             m_bIsTubeReplaceNeeded = true;
         }
+        prgUsageMonitor->setVisible( g_poPrefs->isUsageVisibleOnMain() );
 
         delete poQuery;
         poQuery = NULL;
@@ -753,6 +755,7 @@ void cFrmPanel::reload()
                 m_bIsTubeReplaceNeeded = true;
             }
             formatInfoString();
+            prgUsageMonitor->setVisible( g_poPrefs->isUsageVisibleOnMain() );
         }
         delete poQuery;
     }
@@ -766,6 +769,7 @@ void cFrmPanel::reload()
 void cFrmPanel::refreshDisplay()
 //====================================================================================
 {
+    prgUsageMonitor->setVisible( g_poPrefs->isUsageVisibleOnMain() );
     displayStatus();
 }
 //====================================================================================

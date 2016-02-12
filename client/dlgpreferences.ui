@@ -23,7 +23,7 @@
    <item>
     <widget class="QTabWidget" name="tbwPreferences">
      <property name="currentIndex">
-      <number>3</number>
+      <number>1</number>
      </property>
      <widget class="QWidget" name="tab_General">
       <attribute name="title">
@@ -891,6 +891,16 @@
               </property>
               <property name="maximum">
                <number>5</number>
+              </property>
+             </widget>
+            </item>
+            <item>
+             <widget class="QCheckBox" name="chkUsageVisibleOnMain">
+              <property name="layoutDirection">
+               <enum>Qt::RightToLeft</enum>
+              </property>
+              <property name="text">
+               <string>    Device usage is visible on main window</string>
               </property>
              </widget>
             </item>

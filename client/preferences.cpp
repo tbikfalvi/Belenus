@@ -228,6 +228,8 @@ void cPreferences::loadConfFileSettings()
         m_qsDateFormat              = obPrefFile.value( QString::fromAscii( "DateFormat" ), "yyyy-MM-dd" ).toString();
 
         m_bFapados                  = obPrefFile.value( QString::fromAscii( "Component" ), false ).toBool();
+
+        m_bUsageVisibleOnMain       = obPrefFile.value( QString::fromAscii( "PanelSettings/UsageVisibleOnMain"), true ).toBool();
     }
 }
 
@@ -362,6 +364,8 @@ void cPreferences::save() const throw (cSevException)
     obPrefFile.setValue( QString::fromAscii( "DateFormat" ), m_qsDateFormat );
 
     obPrefFile.setValue( QString::fromAscii( "Component" ), m_bFapados );
+
+    obPrefFile.setValue( QString::fromAscii( "PanelSettings/UsageVisibleOnMain"), m_bUsageVisibleOnMain );
 
     if( m_bFapados )
     {
@@ -1671,3 +1675,20 @@ bool cPreferences::isBarcodeHidden()
 {
     return m_bBarcodeHidden;
 }
+
+void cPreferences::setUsageVisibleOnMain( bool p_bUsageVisibleOnMain, bool p_boSaveNow )
+{
+    m_bUsageVisibleOnMain = p_bUsageVisibleOnMain;
+
+    if( p_boSaveNow )
+    {
+        QSettings  obPrefFile( m_qsFileName, QSettings::IniFormat );
+        obPrefFile.setValue( QString::fromAscii( "PanelSettings/UsageVisibleOnMain"), m_bUsageVisibleOnMain );
+    }
+}
+
+bool cPreferences::isUsageVisibleOnMain()
+{
+    return m_bUsageVisibleOnMain;
+}
+
