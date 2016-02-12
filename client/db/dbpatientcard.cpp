@@ -504,8 +504,20 @@ void cDBPatientCard::setComment( const QString &p_qsComment ) throw()
     m_qsComment = p_qsComment;
 }
 
-int cDBPatientCard::units() const throw()
+int cDBPatientCard::units() throw()
 {
+    QString qsQuery = QString( "SELECT COUNT(unitTime) "
+                               "FROM patientcardunits "
+                               "WHERE patientCardId=%1 AND "
+                               "validDateFrom<=CURDATE() AND "
+                               "validDateTo>=CURDATE() AND prepared=0 AND active=1" )
+                                .arg( m_uiId );
+    QSqlQuery  *poQuery = g_poDB->executeQTQuery( qsQuery );
+    if( poQuery->first() )
+    {
+        m_nUnits = poQuery->value( 0 ).toInt();
+    }
+
     return m_nUnits;
 }
 
