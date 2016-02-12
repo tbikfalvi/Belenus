@@ -42,7 +42,7 @@ public:
     void            setBarcode( const QString &p_qsBarcode )                    throw();
     QString         comment() const                                             throw();
     void            setComment( const QString &p_qsComment )                    throw();
-    int             units() const                                               throw();
+    int             units()                                               throw();
     void            setUnits( const int p_nUnits )                              throw();
     int             amount() const                                              throw();
     void            setAmount( const int p_nAmount )                            throw();
