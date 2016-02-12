@@ -83,6 +83,7 @@ cDlgPreferences::cDlgPreferences( QWidget *p_poParent )
 
     spbPanels->setMaximum( g_poPrefs->getPanelCount() );
     spbPanels->setValue( g_poPrefs->getPanelsPerRow() );
+    chkUsageVisibleOnMain->setChecked( g_poPrefs->isUsageVisibleOnMain() );
     pbSecondaryWindow->setChecked( g_poPrefs->isSecondaryWindowVisible() );
     if( g_poPrefs->isSecondaryWindowVisible() )
     {
@@ -405,6 +406,7 @@ void cDlgPreferences::accept()
 
 
     g_poPrefs->setPanelsPerRow( spbPanels->value() );
+    g_poPrefs->setUsageVisibleOnMain( chkUsageVisibleOnMain->isChecked() );
     g_poPrefs->setBarcodeLength( spbBarcodeLen->value() );
     g_poPrefs->setBarcodePrefix( ledBarcodePrefix->text() );
     g_poPrefs->setBarcodeLengthDifferent( chkCardProductBarcodeLength->isChecked() );
