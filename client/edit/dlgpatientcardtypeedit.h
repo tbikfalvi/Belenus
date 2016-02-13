@@ -2,8 +2,9 @@
 #define DLGPATIENTCARDTYPEEDIT_H
 
 #include "belenus.h"
-#include "../../build/Belenus/ui_dlgpatientcardtypeedit.h"
+#include "ui_dlgpatientcardtypeedit.h"
 #include "../db/dbpatientcardtype.h"
+#include "../dlg/dlgprogress.h"
 
 class cDlgPatientCardTypeEdit : public QDialog, protected Ui::dlgPatientCardTypeEdit
 {
@@ -25,6 +26,9 @@ private slots:
     void on_pbSave_clicked();
     void on_rbInterval_toggled(bool checked);
     void on_ledPrice_textChanged(const QString &arg1);
+
+private:
+    cDlgProgress            *m_dlgProgress;
 };
 
 #endif

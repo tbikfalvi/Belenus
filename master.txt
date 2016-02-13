@@ -1,7 +1,0 @@
-'Master' branch
-¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨
-Elkészült, publikált verziók fõ ága.
-
-Belenus v1.0	- KiwiSun Szolárium stúdiók vezérlõ alkalmazása, a korábbi 
-		  'Szolárium Vezérlõ' program tudásával rendelkezõ alkalmazás 
-		  SQL adatbázissal.

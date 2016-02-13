@@ -41,6 +41,7 @@ private:
     QString     m_qsCurrencyLong;
     QString     m_qsCurrencySeparator;
     QString     m_qsCurrencyDecimalSeparator;
+    bool        m_bIsNegative;
 
     void        _init( const QString &p_qsCurrencyString = "", currType p_ctCurrencyType = CURR_GROSS, int p_nVat = 0 );
     QString     _separatedValue( int p_nValue );

@@ -4,17 +4,17 @@
 #include "currency.h"
 
 //------------------------------------------------------------------------------------
-cReportPatientcardSell::cReportPatientcardSell(QWidget *parent, QString p_qsReportName, bool p_bFilterEnable) : cReport(parent,p_qsReportName)
+cReportPatientcardSell::cReportPatientcardSell(QWidget *parent, QString p_qsReportName, bool p_bIsAdmin) : cReport(parent,p_qsReportName,p_bIsAdmin)
 //------------------------------------------------------------------------------------
 {
     m_qsReportName          = tr(" Patientcard sells ");
     m_qsReportDescription   = tr( "This report shows the patientcard related actions on the selected date interval." );
 
-    _setDateStartEnabled( p_bFilterEnable );
+    _setDateStartEnabled( p_bIsAdmin );
     _setDateStartLabelText( tr("First date of intervall :") );
     m_qdStartDate = QDate::currentDate();
 
-    _setDateStopEnabled( p_bFilterEnable );
+    _setDateStopEnabled( p_bIsAdmin );
     _setDateStopLabelText( tr("Last date of intervall :") );
     m_qdStopDate = QDate::currentDate();
 }

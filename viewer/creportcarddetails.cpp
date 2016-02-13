@@ -4,7 +4,7 @@
 #include "../framework/qtframework.h"
 #include "creportcarddetails.h"
 
-cReportCardDetails::cReportCardDetails(QWidget *parent, QString p_qsReportName) : cReport(parent,p_qsReportName)
+cReportCardDetails::cReportCardDetails(QWidget *parent, QString p_qsReportName, bool p_bIsAdmin) : cReport(parent,p_qsReportName,p_bIsAdmin)
 {
     m_qsReportName          = tr(" Patientcards details ");
     m_qsReportDescription   = tr( "This report shows the details of the selected patient card. "
@@ -106,19 +106,19 @@ void cReportCardDetails::refreshReport()
         addTableCell( " : ", "bold" );
         addTableCell( poQueryResultCards->value(5).toString() );
         m_dlgProgress.increaseProgressValue();
-
+/*
         addTableRow();
         addTableCell( tr( "Patientcard type" ), "bold" );
         addTableCell( " : ", "bold" );
         addTableCell( poQueryResultCards->value(18).toString() );
         m_dlgProgress.increaseProgressValue();
-
+*/
         addTableRow();
         addTableCell( tr( "Owner" ), "bold" );
         addTableCell( " : ", "bold" );
         addTableCell( poQueryResultCards->value(33).toString() );
         m_dlgProgress.increaseProgressValue();
-
+/*
         addTableRow();
         addTableCell( tr( "No. units" ), "bold" );
         addTableCell( " : ", "bold" );
@@ -133,7 +133,7 @@ void cReportCardDetails::refreshReport()
         addTableCell( " : ", "bold" );
         addTableCell( qtTemp.toString( "hh:mm:ss" ) );
         m_dlgProgress.increaseProgressValue();
-
+*/
         addTableRow();
         addTableCell( tr( "Valid" ), "bold" );
         addTableCell( " : ", "bold" );
@@ -155,12 +155,25 @@ void cReportCardDetails::refreshReport()
         m_dlgProgress.setProgressMax( 100 );
         m_dlgProgress.setProgressValue( 0 );
 
-        qsQueryCards = QString( "SELECT patientCardUnitId, unitTime, validDateFrom, validDateTo, COUNT(unitTime) "
-                                "FROM patientcardunits "
-                                "WHERE patientCardId=%1 "
-                                "AND validDateFrom<=CURDATE() AND validDateTo>=CURDATE() "
-                                "AND active=1 "
-                                "GROUP BY unitTime, validDateTo ORDER BY validDateTo" ).arg( uiPatientCardId );
+        qsQueryCards = QString( "SELECT "
+                                "patientCardUnitId, "
+                                "patientcardunits.unitTime, "
+                                "patientcardunits.validDateFrom, "
+                                "patientcardunits.validDateTo, "
+                                "COUNT(patientcardunits.unitTime), "
+                                "name "
+                                "FROM patientcardunits, patientcardtypes "
+                                "WHERE "
+                                "patientcardunits.patientCardTypeId=patientcardtypes.patientCardTypeId AND "
+                                "patientCardId=%1 AND "
+                                "patientcardunits.validDateFrom<=CURDATE() AND "
+                                "patientcardunits.validDateTo>=CURDATE() AND "
+                                "patientcardunits.active=1 "
+                                "GROUP BY "
+                                "patientcardunits.unitTime, "
+                                "patientcardunits.validDateTo, "
+                                "patientcardunits.patientCardTypeId "
+                                "ORDER BY validDateTo" ).arg( uiPatientCardId );
         poQueryResultCards = g_poDB->executeQTQuery( qsQueryCards );
 
         m_dlgProgress.setProgressValue( 10 );
@@ -169,22 +182,37 @@ void cReportCardDetails::refreshReport()
         addTable();
 
         addTableRow();
+        addTableCell( tr( "No. units" ), "center bold" );
         addTableCell( tr( "Unit time" ), "center bold" );
+        addTableCell( tr( "Unit type" ), "center bold" );
         addTableCell( tr( "Valid" ), "center bold" );
         addTableCell( tr( "Valid till ..." ), "center bold" );
-        addTableCell( tr( "No. units" ), "center bold" );
 
         m_dlgProgress.setProgressMax( poQueryResultCards->size()+10 );
+
+        int nSumUnits = 0;
 
         while( poQueryResultCards->next() )
         {
             addTableRow();
+            addTableCell( poQueryResultCards->value(4).toString(), "center" );
             addTableCell( poQueryResultCards->value(1).toString(), "center" );
+            addTableCell( poQueryResultCards->value(5).toString(), "center" );
             addTableCell( QString("%1 -> %2").arg( poQueryResultCards->value(2).toString() ).arg( poQueryResultCards->value(3).toString() ), "center" );
             addTableCell( tr("%1 day(s)").arg( QDate::currentDate().daysTo( QDate::fromString(poQueryResultCards->value(3).toString(), "yyyy-MM-dd") ) ), "center" );
-            addTableCell( poQueryResultCards->value(4).toString(), "center" );
+
+            nSumUnits += poQueryResultCards->value(4).toInt();
+
             m_dlgProgress.increaseProgressValue();
         }
+
+        addTableRow();
+        addTableCell( QString::number( nSumUnits ), "center bold" );
+        addTableCell( "", "" );
+        addTableCell( "", "" );
+        addTableCell( "", "" );
+        addTableCell( "", "" );
+
         finishTable();
         finishSection();
 
@@ -194,11 +222,18 @@ void cReportCardDetails::refreshReport()
         m_dlgProgress.setProgressMax( 100 );
         m_dlgProgress.setProgressValue( 0 );
 
-        qsQueryCards = QString( "SELECT dateTimeUsed, COUNT(dateTimeUsed) "
-                                "FROM patientcardunits "
-                                "WHERE patientCardId=%1 "
-                                "AND active=0 "
-                                "GROUP BY dateTimeUsed" ).arg( uiPatientCardId );
+        qsQueryCards = QString( "SELECT "
+                                "patientcardunits.dateTimeUsed, "
+                                "COUNT(patientcardunits.dateTimeUsed), "
+                                "patientcardunits.unitTime, "
+                                "name "
+                                "FROM patientcardunits, patientcardtypes WHERE "
+                                "patientcardunits.patientCardTypeId=patientcardtypes.patientCardTypeId AND "
+                                "patientCardId=%1 AND "
+                                "patientcardunits.active=0 "
+                                "GROUP BY "
+                                "patientcardunits.dateTimeUsed, "
+                                "patientcardunits.patientCardTypeId " ).arg( uiPatientCardId );
         poQueryResultCards = g_poDB->executeQTQuery( qsQueryCards );
 
         m_dlgProgress.setProgressValue( 10 );
@@ -209,16 +244,32 @@ void cReportCardDetails::refreshReport()
         addTableRow();
         addTableCell( tr( "Date of usage" ), "center bold" );
         addTableCell( tr( "Unit count" ), "center bold" );
+        addTableCell( tr( "Unit time" ), "center bold" );
+        addTableCell( tr( "Unit type" ), "center bold" );
 
         m_dlgProgress.setProgressMax( poQueryResultCards->size()+10 );
+
+        nSumUnits = 0;
 
         while( poQueryResultCards->next() )
         {
             addTableRow();
             addTableCell( poQueryResultCards->value(0).toDateTime().toString( "yyyy-MM-dd hh:mm" ), "center" );
             addTableCell( poQueryResultCards->value(1).toString(), "center" );
+            addTableCell( poQueryResultCards->value(2).toString(), "center" );
+            addTableCell( poQueryResultCards->value(3).toString(), "center" );
+
+            nSumUnits += poQueryResultCards->value(1).toInt();
+
             m_dlgProgress.increaseProgressValue();
         }
+
+        addTableRow();
+        addTableCell( tr( "Sum" ), "center bold" );
+        addTableCell( QString::number( nSumUnits ), "center bold" );
+        addTableCell( "", "" );
+        addTableCell( "", "" );
+
         finishTable();
         finishSection();
     }
@@ -237,6 +288,7 @@ void cReportCardDetails::refreshReport()
             qslRecord << poQueryResultCards->value(10).toString();
             qslRecord << poQueryResultCards->value(11).toString();
             qslRecord << poQueryResultCards->value(18).toString();
+            qslRecord << poQueryResultCards->value(33).toString();
             qslRecord << poQueryResultCards->value(6).toString();
 
             qslQueryResult << qslRecord.join("#");
@@ -253,24 +305,44 @@ void cReportCardDetails::refreshReport()
         addTableCell( tr( "Time" ), "center bold" );
         addTableCell( tr( "Valid" ), "center bold" );
         addTableCell( tr( "Patientcard type" ), "bold" );
+        addTableCell( tr( "Owner" ), "bold" );
         addTableCell( tr( "Comment" ), "bold" );
+
+        int nSumUnits = 0;
 
         for( int i=0; i<qslQueryResult.size(); i++ )
         {
             QStringList     qslRecord = qslQueryResult.at(i).split('#');
             unsigned int    uiTimeLeft = qslRecord.at(2).toInt();
             QTime           qtTemp( uiTimeLeft/3600, (uiTimeLeft%3600)/60, (uiTimeLeft%3600)%60, 0 );
+            int             nUnits = qslRecord.at(1).toInt();
+
+            if( nUnits < 0 )
+                nUnits = 0;
 
             addTableRow();
             addTableCell( qslRecord.at(0), "center" );
-            addTableCell( qslRecord.at(1), "center" );
+            addTableCell( QString::number(nUnits), "center" );
             addTableCell( qtTemp.toString( "hh:mm:ss" ), "center" );
             addTableCell( QString("%1 -> %2").arg( qslRecord.at(3) ).arg( qslRecord.at(4) ), "center" );
             addTableCell( qslRecord.at(5) );
             addTableCell( qslRecord.at(6) );
+            addTableCell( qslRecord.at(7) );
+
+            nSumUnits += nUnits;
 
             m_dlgProgress.increaseProgressValue();
         }
+
+        addTableRow();
+        addTableCell( tr( "Sum" ), "center bold" );
+        addTableCell( QString::number(nSumUnits), "center bold"  );
+        addTableCell( "", "" );
+        addTableCell( "", "" );
+        addTableCell( "", "" );
+        addTableCell( "", "" );
+        addTableCell( "", "" );
+
         finishTable();
         finishSection();
     }

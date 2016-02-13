@@ -28,6 +28,7 @@ cDBPatientcardUnit::~cDBPatientcardUnit()
 void cDBPatientcardUnit::init( const unsigned int p_uiId,
                                const unsigned int p_uiLicenceId,
                                const unsigned int p_uiPatientCardId,
+                               const unsigned int p_uiPatientCardTypeId,
                                const unsigned int p_uiLedgerId,
                                const unsigned int p_uiPanelId,
                                const int p_nUnitTime,
@@ -35,41 +36,47 @@ void cDBPatientcardUnit::init( const unsigned int p_uiId,
                                const QString &p_qsValidDateFrom,
                                const QString &p_qsValidDateTo,
                                const QString &p_qsDateTime,
+                               const bool p_bPrepared,
                                const bool p_bActive,
                                const QString &p_qsArchive) throw()
 {
-    m_uiId              = p_uiId;
-    m_uiLicenceId       = p_uiLicenceId;
-    m_uiPatientCardId   = p_uiPatientCardId;
-    m_uiLedgerId        = p_uiLedgerId;
-    m_uiPanelId         = p_uiPanelId;
-    m_nUnitTime         = p_nUnitTime;
-    m_nUnitPrice        = p_nUnitPrice;
-    m_qsValidDateFrom   = p_qsValidDateFrom;
-    m_qsValidDateTo     = p_qsValidDateTo;
-    m_qsDateTime        = p_qsDateTime;
-    m_bActive           = p_bActive;
-    m_qsArchive         = p_qsArchive;
+    m_uiId                  = p_uiId;
+    m_uiLicenceId           = p_uiLicenceId;
+    m_uiPatientCardId       = p_uiPatientCardId;
+    m_uiPatientCardTypeId   = p_uiPatientCardTypeId;
+    m_uiLedgerId            = p_uiLedgerId;
+    m_uiPanelId             = p_uiPanelId;
+    m_nUnitTime             = p_nUnitTime;
+    m_nUnitPrice            = p_nUnitPrice;
+    m_qsValidDateFrom       = p_qsValidDateFrom;
+    m_qsValidDateTo         = p_qsValidDateTo;
+    m_qsDateTime            = p_qsDateTime;
+    m_bPrepared             = p_bPrepared;
+    m_bActive               = p_bActive;
+    m_qsArchive             = p_qsArchive;
 }
 
 void cDBPatientcardUnit::init( const QSqlRecord &p_obRecord ) throw()
 {
-    int inIdIdx             = p_obRecord.indexOf( "patientCardUnitId" );
-    int inLicenceIdIdx      = p_obRecord.indexOf( "licenceId" );
-    int inPatientCardIdIdx  = p_obRecord.indexOf( "patientCardId" );
-    int inLedgerIdIdx       = p_obRecord.indexOf( "ledgerId" );
-    int inPanelIdIdx        = p_obRecord.indexOf( "panelId" );
-    int inUnitTimeIdx       = p_obRecord.indexOf( "unitTime" );
-    int inUnitPriceIdx      = p_obRecord.indexOf( "unitPrice" );
-    int inValidDateFromIdx  = p_obRecord.indexOf( "validDateFrom" );
-    int inValidDateToIdx    = p_obRecord.indexOf( "validDateTo" );
-    int inDateTimeUsedIdx   = p_obRecord.indexOf( "dateTimeUsed" );
-    int inActiveIdx         = p_obRecord.indexOf( "active" );
-    int inArchiveIdx        = p_obRecord.indexOf( "archive" );
+    int inIdIdx                 = p_obRecord.indexOf( "patientCardUnitId" );
+    int inLicenceIdIdx          = p_obRecord.indexOf( "licenceId" );
+    int inPatientCardIdIdx      = p_obRecord.indexOf( "patientCardId" );
+    int inPatientCardTypeIdIdx  = p_obRecord.indexOf( "patientCardTypeId" );
+    int inLedgerIdIdx           = p_obRecord.indexOf( "ledgerId" );
+    int inPanelIdIdx            = p_obRecord.indexOf( "panelId" );
+    int inUnitTimeIdx           = p_obRecord.indexOf( "unitTime" );
+    int inUnitPriceIdx          = p_obRecord.indexOf( "unitPrice" );
+    int inValidDateFromIdx      = p_obRecord.indexOf( "validDateFrom" );
+    int inValidDateToIdx        = p_obRecord.indexOf( "validDateTo" );
+    int inDateTimeUsedIdx       = p_obRecord.indexOf( "dateTimeUsed" );
+    int inPreparedIdx           = p_obRecord.indexOf( "prepared" );
+    int inActiveIdx             = p_obRecord.indexOf( "active" );
+    int inArchiveIdx            = p_obRecord.indexOf( "archive" );
 
     init( p_obRecord.value( inIdIdx ).toInt(),
           p_obRecord.value( inLicenceIdIdx ).toInt(),
           p_obRecord.value( inPatientCardIdIdx ).toInt(),
+          p_obRecord.value( inPatientCardTypeIdIdx ).toInt(),
           p_obRecord.value( inLedgerIdIdx ).toInt(),
           p_obRecord.value( inPanelIdIdx ).toInt(),
           p_obRecord.value( inUnitTimeIdx ).toInt(),
@@ -77,6 +84,7 @@ void cDBPatientcardUnit::init( const QSqlRecord &p_obRecord ) throw()
           p_obRecord.value( inValidDateFromIdx ).toString(),
           p_obRecord.value( inValidDateToIdx ).toString(),
           p_obRecord.value( inDateTimeUsedIdx ).toString(),
+          p_obRecord.value( inPreparedIdx ).toBool(),
           p_obRecord.value( inActiveIdx ).toBool(),
           p_obRecord.value( inArchiveIdx ).toString() );
 }
@@ -131,6 +139,10 @@ QStringList cDBPatientcardUnit::loadPCId( const unsigned int p_uiId ) throw( cSe
         qsPCUnit.append( poQuery->value(10).toString() );
         qsPCUnit.append( "\t" );
         qsPCUnit.append( poQuery->value(11).toString() );
+        qsPCUnit.append( "\t" );
+        qsPCUnit.append( poQuery->value(12).toString() );
+        qsPCUnit.append( "\t" );
+        qsPCUnit.append( poQuery->value(13).toString() );
         qslRet.append( qsPCUnit );
     }
 
@@ -158,11 +170,7 @@ void cDBPatientcardUnit::save() throw( cSevException )
     if( m_uiId )
     {
         qsQuery = "UPDATE";
-
-        if( m_qsArchive != "NEW" )
-        {
-            m_qsArchive = "MOD";
-        }
+        m_qsArchive = "MOD";
     }
     else
     {
@@ -172,6 +180,7 @@ void cDBPatientcardUnit::save() throw( cSevException )
     qsQuery += " patientCardUnits SET ";
     qsQuery += QString( "licenceId = \"%1\", " ).arg( m_uiLicenceId );
     qsQuery += QString( "patientCardId = \"%1\", " ).arg( m_uiPatientCardId );
+    qsQuery += QString( "patientCardTypeId = \"%1\", " ).arg( m_uiPatientCardTypeId );
     qsQuery += QString( "ledgerId = \"%1\", " ).arg( m_uiLedgerId );
     qsQuery += QString( "panelId = \"%1\", " ).arg( m_uiPanelId );
     qsQuery += QString( "unitTime = \"%1\", " ).arg( m_nUnitTime );
@@ -179,6 +188,7 @@ void cDBPatientcardUnit::save() throw( cSevException )
     qsQuery += QString( "validDateFrom = \"%1\", " ).arg( m_qsValidDateFrom );
     qsQuery += QString( "validDateTo = \"%1\", " ).arg( m_qsValidDateTo );
     qsQuery += QString( "dateTimeUsed = \"%1\", " ).arg( m_qsDateTime );
+    qsQuery += QString( "prepared = %1, " ).arg( m_bPrepared );
     qsQuery += QString( "active = %1, " ).arg( m_bActive );
     qsQuery += QString( "archive = \"%1\" " ).arg( m_qsArchive );
     if( m_uiId )
@@ -246,7 +256,7 @@ void cDBPatientcardUnit::deactivateUnits(const unsigned int p_uiId) throw( cSevE
     {
         QString     qsQuery;
 
-        qsQuery = QString( "UPDATE patientCardUnits SET validDateFrom='0000-00-00', validDateTo='0000-00-00', dateTimeUsed='0000-00-00 00:00:00', active=0, archive=\"MOD\" WHERE patientCardId=%1" ).arg( p_uiId );
+        qsQuery = QString( "UPDATE patientCardUnits SET validDateFrom='0000-00-00', validDateTo='0000-00-00', dateTimeUsed='0000-00-00 00:00:00', active=0, archive=\"MOD\" WHERE patientCardId=%1 AND active=1" ).arg( p_uiId );
 
         QSqlQuery *poQuery = g_poDB->executeQTQuery( qsQuery );
 
@@ -282,6 +292,16 @@ unsigned int cDBPatientcardUnit::patientCardId() const throw()
 void cDBPatientcardUnit::setPatientCardId( const unsigned int p_nPatientCardId ) throw()
 {
     m_uiPatientCardId = p_nPatientCardId;
+}
+
+unsigned int cDBPatientcardUnit::patientCardTypeId() const throw()
+{
+    return m_uiPatientCardTypeId;
+}
+
+void cDBPatientcardUnit::setPatientCardTypeId( const unsigned int p_nPatientCardTypeId ) throw()
+{
+    m_uiPatientCardTypeId = p_nPatientCardTypeId;
 }
 
 unsigned int cDBPatientcardUnit::ledgerId() const throw()
@@ -352,6 +372,16 @@ QString cDBPatientcardUnit::dateTime() const throw()
 void cDBPatientcardUnit::setDateTime(const QString &p_qsDateTime) throw()
 {
     m_qsDateTime = p_qsDateTime;
+}
+
+bool cDBPatientcardUnit::prepared() const throw()
+{
+    return m_bPrepared;
+}
+
+void cDBPatientcardUnit::setPrepared( const bool p_bPrepared ) throw()
+{
+    m_bPrepared = p_bPrepared;
 }
 
 bool cDBPatientcardUnit::active() const throw()

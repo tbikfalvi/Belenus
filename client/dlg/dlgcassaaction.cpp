@@ -26,6 +26,11 @@ cDlgCassaAction::cDlgCassaAction( QWidget *p_poParent, cDBShoppingCart *p_poShop
     pbShoppingCart->setIcon( QIcon("./resources/40x40_shoppingcart.png") );
     pbCancel->setIcon( QIcon("./resources/40x40_cancel.png") );
 
+    lblCashCurrency->setText( g_poPrefs->getCurrencyShort() );
+    lblCardCurrency->setText( g_poPrefs->getCurrencyShort() );
+    lblVoucherCurrency->setText( g_poPrefs->getCurrencyShort() );
+    lblCurrencyToPay->setText( g_poPrefs->getCurrencyShort() );
+
     gbComment->setVisible( false );
     teComment->setEnabled( false );
 
@@ -80,6 +85,19 @@ cDlgCassaAction::cDlgCassaAction( QWidget *p_poParent, cDBShoppingCart *p_poShop
 
 cDlgCassaAction::~cDlgCassaAction()
 {
+}
+
+void cDlgCassaAction::payShoppingCart()
+{
+    actionPayment();
+
+    cCurrency   cCash( m_poShoppingCart->cash() );
+    cCurrency   cCard( m_poShoppingCart->card() );
+    cCurrency   cVoucher( m_poShoppingCart->voucher() );
+
+    ledCashGiven->setText( cCash.currencyStringSeparator() );
+    ledCardGiven->setText( cCard.currencyStringSeparator() );
+    ledVoucherGiven->setText( cVoucher.currencyStringSeparator() );
 }
 
 void cDlgCassaAction::setPayWithCash()
@@ -337,9 +355,13 @@ void cDlgCassaAction::updateShoppingCartItem()
 {
     unsigned int uiCouponId = cmbCoupon->itemData( cmbCoupon->currentIndex() ).toUInt();
 
-    m_poShoppingCart->setCash( ledCashGiven->text().remove( QChar(',') ).toInt() * 100 );
-    m_poShoppingCart->setCard( ledCardGiven->text().remove( QChar(',') ).toInt() * 100 );
-    m_poShoppingCart->setVoucher( ledVoucherGiven->text().remove( QChar(',') ).toInt() * 100 );
+    cCurrency   cCash( ledCashGiven->text() );
+    cCurrency   cCard( ledCardGiven->text() );
+    cCurrency   cVoucher( ledVoucherGiven->text() );
+
+    m_poShoppingCart->setCash( cCash.currencyValue().toInt() );
+    m_poShoppingCart->setCard( cCard.currencyValue().toInt() );
+    m_poShoppingCart->setVoucher( cVoucher.currencyValue().toInt() );
 
     if( uiCouponId > 0 )
     {

@@ -35,8 +35,8 @@ public:
     bool getRelayStatus( const int nRelayCount );
 
     void setCurrentCommand( const int p_nIndex, const int p_nCurrentCommand );
-    void setCounter( const int p_nIndex, const int p_nCounter );
-    void setMainActionTime( const int p_nIndex, const int p_nTime );
+    void setCounter(const int p_nIndex, const int p_nCounter , bool p_bUpdateTimer = false );
+    bool setMainActionTime(const int p_nIndex, const int p_nTime, unsigned char *p_byStatus, bool p_bSend = false );
     bool isHardwareMovedNextStatus( const int p_nIndex );
     void setHardwareMovedNextStatus( const int p_nIndex );
     bool isHardwareStopped( const int p_nIndex );
@@ -47,6 +47,12 @@ public:
     void HW_Kezel();
 
     bool isCommunicationStopped();
+
+    void ModuleTurnOn();
+    void ModuleTurnOff();
+
+    void EnableModulIRQ();
+    void DisableModulIRQ();
 };
 
 #endif // COMMUNICATION_DEMO_H

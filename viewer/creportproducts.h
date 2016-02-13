@@ -9,7 +9,7 @@ class cReportProducts : public cReport
 {
     Q_OBJECT
 public:
-    explicit cReportProducts(QWidget *parent = 0, QString p_qsReportName = "");
+    explicit cReportProducts(QWidget *parent = 0, QString p_qsReportName = "", bool p_bIsAdmin = false );
     
 signals:
     

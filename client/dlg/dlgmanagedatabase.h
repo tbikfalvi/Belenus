@@ -20,9 +20,12 @@ private slots:
     void slotUpdateExecuteButton();
     void on_pbExecute_clicked();
     void on_pbExit_clicked();
+    void _actionUpdatePatientCardUnits();
     void _actionDeactivatePC();
+    void _actionDeleteInactivePC();
     void _actionDeleteNotUsedPCT();
     void _actionDeleteLedgerEntries();
+    void _actionRepairPatientcardsWithoutType();
 };
 
 #endif // CDLGMANAGEDATABASE_H

@@ -45,6 +45,12 @@ public:
     void             setApplicationLanguage( const QString &p_qsLang );
     int              customMsgBox( QWidget *parent, msgBoxType msgtype, QString buttonstext, QString msg, QString details = "" );
 //    QString          convertCurrency( int p_nCurrencyValue, QString p_qsCurrency );
+    void             backupDatabase( QWidget *parent );
+    bool             isSystemAdmin();
+    bool             isExtendedAdmin();
+    bool             isExtendedOrSystemAdmin();
+    void             showPatientCardInformation( QString p_qsBarcode );
+    bool             isShoppingCartHasItems();
 
 private:
     QApplication    *m_poMainApplication;
@@ -82,6 +88,7 @@ private:
     int         m_nValue;
     int         m_nValueNet;
     int         m_nValueGross;
+    bool        m_bIsNegative;
 
     void        _init( const QString &p_qsCurrencyString = "", currType p_ctCurrencyType = CURR_GROSS, int p_nVat = 0 );
     QString     _separatedValue( int p_nValue );

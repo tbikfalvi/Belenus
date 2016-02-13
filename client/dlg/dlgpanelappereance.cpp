@@ -62,6 +62,27 @@ cDlgPanelAppereance::cDlgPanelAppereance( QWidget *p_poParent ) : QDialog( p_poP
 
     frmPanelTitle->setStyleSheet( QString("QFrame { background-color: lightgray }") );
 
+    QPixmap obColorIcon( 24, 24 );
+    QColor  colorFill;
+
+    colorFill = QColor( g_poPrefs->getActiveCaptionBackground() );
+    obColorIcon.fill( colorFill );
+    pbCaptionBackgroundActive->setIcon( QIcon( obColorIcon ) );
+
+    colorFill = QColor( g_poPrefs->getActiveCaptionColor() );
+    obColorIcon.fill( colorFill );
+    pbTextColorActive->setIcon( QIcon( obColorIcon ) );
+
+    colorFill = QColor( g_poPrefs->getInactiveCaptionBackground() );
+    obColorIcon.fill( colorFill );
+    pbCaptionBackgroundInactive->setIcon( QIcon( obColorIcon ) );
+
+    colorFill = QColor( g_poPrefs->getInactiveCaptionColor() );
+    obColorIcon.fill( colorFill );
+    pbTextColorInactive->setIcon( QIcon( obColorIcon ) );
+
+    on_rbActive_clicked();
+
     updatePanelSettings();
 
     QPoint  qpDlgSize = g_poPrefs->getDialogSize( "EditPanelAppereance", QPoint(455,400) );
@@ -82,20 +103,6 @@ void cDlgPanelAppereance::on_cmbPanelStatus_currentIndexChanged(int)
     updatePanelSettings();
 }
 //====================================================================================
-void cDlgPanelAppereance::on_pbBackgroundColor_clicked()
-//====================================================================================
-{
-    QColor obNewColor = QColorDialog::getColor( QColor( m_obStatusSettings.at(cmbPanelStatus->currentIndex())->backgroundColor() ), this );
-    if( obNewColor.isValid() )
-        m_obStatusSettings.at(cmbPanelStatus->currentIndex())->setBackgroundColor( obNewColor.name() );
-
-    QPixmap  obColorIcon( 24, 24 );
-    QColor  colorFill = QColor( m_obStatusSettings.at(cmbPanelStatus->currentIndex())->backgroundColor() );
-    obColorIcon.fill( colorFill );
-    pbBackgroundColor->setIcon( QIcon( obColorIcon ) );
-    frmPanelBody->setStyleSheet( QString("QFrame { background-color: %1 }").arg( colorFill.name() ) );
-}
-//====================================================================================
 void cDlgPanelAppereance::on_cmbPanelText_currentIndexChanged(int)
 //====================================================================================
 {
@@ -104,7 +111,7 @@ void cDlgPanelAppereance::on_cmbPanelText_currentIndexChanged(int)
     updatePanelSettings();
 }
 //====================================================================================
-void cDlgPanelAppereance::on_cmbFontNames_currentIndexChanged(int index)
+void cDlgPanelAppereance::on_cmbFontNames_currentIndexChanged(int /*index*/)
 //====================================================================================
 {
     if( m_bInit ) return;
@@ -206,14 +213,64 @@ void cDlgPanelAppereance::on_pbFont_clicked()
     updatePanelSettings();
 }
 //====================================================================================
+void cDlgPanelAppereance::on_pbBackgroundColor_clicked()
+//====================================================================================
+{
+    if( m_bInit ) return;
+
+    QColor obNewColor = QColorDialog::getColor( QColor( m_obStatusSettings.at(cmbPanelStatus->currentIndex())->backgroundColor() ), this );
+    if( obNewColor.isValid() )
+        m_obStatusSettings.at(cmbPanelStatus->currentIndex())->setBackgroundColor( obNewColor.name() );
+
+    QPixmap  obColorIcon( 24, 24 );
+    QColor  colorFill = QColor( m_obStatusSettings.at(cmbPanelStatus->currentIndex())->backgroundColor() );
+    obColorIcon.fill( colorFill );
+    pbBackgroundColor->setIcon( QIcon( obColorIcon ) );
+    frmPanelBody->setStyleSheet( QString("QFrame { background-color: %1 }").arg( colorFill.name() ) );
+}
+//====================================================================================
 void cDlgPanelAppereance::on_pbTextColor_clicked()
 //====================================================================================
 {
     if( m_bInit ) return;
 
-    QColor obNewColor = QColorDialog::getColor( QColor( m_obStatusSettings.at(cmbPanelStatus->currentIndex())->statusFontColor() ), this );
+    QString qsColor = "";
+
+    switch( cmbPanelText->currentIndex() )
+    {
+        case 0:
+            qsColor = m_obStatusSettings.at(cmbPanelStatus->currentIndex())->statusFontColor();
+            break;
+        case 1:
+            qsColor = m_obStatusSettings.at(cmbPanelStatus->currentIndex())->timerFontColor();
+            break;
+        case 2:
+            qsColor = m_obStatusSettings.at(cmbPanelStatus->currentIndex())->nextFontColor();
+            break;
+        case 3:
+            qsColor = m_obStatusSettings.at(cmbPanelStatus->currentIndex())->infoFontColor();
+            break;
+    }
+
+    QColor obNewColor = QColorDialog::getColor( QColor( qsColor ), this );
     if( obNewColor.isValid() )
-        m_obStatusSettings.at(cmbPanelStatus->currentIndex())->setStatusFontColor( obNewColor.name() );
+    {
+        switch( cmbPanelText->currentIndex() )
+        {
+            case 0:
+                m_obStatusSettings.at(cmbPanelStatus->currentIndex())->setStatusFontColor( obNewColor.name() );
+                break;
+            case 1:
+                m_obStatusSettings.at(cmbPanelStatus->currentIndex())->setTimerFontColor( obNewColor.name() );
+                break;
+            case 2:
+                m_obStatusSettings.at(cmbPanelStatus->currentIndex())->setNextFontColor( obNewColor.name() );
+                break;
+            case 3:
+                m_obStatusSettings.at(cmbPanelStatus->currentIndex())->setInfoFontColor( obNewColor.name() );
+                break;
+        }
+    }
 
     QPixmap  obColorIcon( 24, 24 );
     obColorIcon.fill( QColor( m_obStatusSettings.at(cmbPanelStatus->currentIndex())->statusFontColor() ) );
@@ -296,3 +353,75 @@ void cDlgPanelAppereance::accept ()
     QDialog::accept();
 }
 //====================================================================================
+
+void cDlgPanelAppereance::on_rbActive_clicked()
+{
+    frmPanelTitle->setStyleSheet( QString("QFrame { background-color: %1 }").arg( g_poPrefs->getActiveCaptionBackground() ) );
+    lblPanelTitle->setStyleSheet( QString("QLabel { color: %1 }").arg( g_poPrefs->getActiveCaptionColor() ) );
+}
+
+void cDlgPanelAppereance::on_pbCaptionBackgroundActive_clicked()
+{
+    if( m_bInit ) return;
+
+    QColor obNewColor = QColorDialog::getColor( QColor( g_poPrefs->getActiveCaptionBackground() ), this );
+    if( obNewColor.isValid() )
+        g_poPrefs->setActiveCaptionBackground( obNewColor.name() );
+
+    QPixmap  obColorIcon( 24, 24 );
+    QColor  colorFill = QColor( g_poPrefs->getActiveCaptionBackground() );
+    obColorIcon.fill( colorFill );
+    pbCaptionBackgroundActive->setIcon( QIcon( obColorIcon ) );
+    frmPanelTitle->setStyleSheet( QString("QFrame { background-color: %1 }").arg( colorFill.name() ) );
+}
+
+void cDlgPanelAppereance::on_pbTextColorActive_clicked()
+{
+    if( m_bInit ) return;
+
+    QColor obNewColor = QColorDialog::getColor( QColor( g_poPrefs->getActiveCaptionColor() ), this );
+    if( obNewColor.isValid() )
+        g_poPrefs->setActiveCaptionColor( obNewColor.name() );
+
+    QPixmap  obColorIcon( 24, 24 );
+    QColor  colorFill = QColor( g_poPrefs->getActiveCaptionColor() );
+    obColorIcon.fill( colorFill );
+    pbTextColorActive->setIcon( QIcon( obColorIcon ) );
+    lblPanelTitle->setStyleSheet( QString("QLabel { color: %1 }").arg( colorFill.name() ) );
+}
+
+void cDlgPanelAppereance::on_rbInactive_clicked()
+{
+    frmPanelTitle->setStyleSheet( QString("QFrame { background-color: %1 }").arg( g_poPrefs->getInactiveCaptionBackground() ) );
+    lblPanelTitle->setStyleSheet( QString("QLabel { color: %1 }").arg( g_poPrefs->getInactiveCaptionColor() ) );
+}
+
+void cDlgPanelAppereance::on_pbCaptionBackgroundInactive_clicked()
+{
+    if( m_bInit ) return;
+
+    QColor obNewColor = QColorDialog::getColor( QColor( g_poPrefs->getInactiveCaptionBackground() ), this );
+    if( obNewColor.isValid() )
+        g_poPrefs->setInactiveCaptionBackground( obNewColor.name() );
+
+    QPixmap  obColorIcon( 24, 24 );
+    QColor  colorFill = QColor( g_poPrefs->getInactiveCaptionBackground() );
+    obColorIcon.fill( colorFill );
+    pbCaptionBackgroundInactive->setIcon( QIcon( obColorIcon ) );
+    frmPanelTitle->setStyleSheet( QString("QFrame { background-color: %1 }").arg( colorFill.name() ) );
+}
+
+void cDlgPanelAppereance::on_pbTextColorInactive_clicked()
+{
+    if( m_bInit ) return;
+
+    QColor obNewColor = QColorDialog::getColor( QColor( g_poPrefs->getInactiveCaptionColor() ), this );
+    if( obNewColor.isValid() )
+        g_poPrefs->setInactiveCaptionColor( obNewColor.name() );
+
+    QPixmap  obColorIcon( 24, 24 );
+    QColor  colorFill = QColor( g_poPrefs->getInactiveCaptionColor() );
+    obColorIcon.fill( colorFill );
+    pbTextColorInactive->setIcon( QIcon( obColorIcon ) );
+    lblPanelTitle->setStyleSheet( QString("QLabel { color: %1 }").arg( colorFill.name() ) );
+}

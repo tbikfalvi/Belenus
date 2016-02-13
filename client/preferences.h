@@ -17,6 +17,7 @@
 #define PREFERENCES_H
 
 #include <QString>
+#include <QStringList>
 #include <QPoint>
 #include <QSize>
 #include "../framework/sevexception.h"
@@ -32,6 +33,8 @@ public:
     QString         getFileName() const;
     void            setVersion( const QString &p_qsVersion, bool p_boSaveNow = false );
     QString         getVersion() const;
+    void            setVersionDb(const QString &p_qsVersion);
+    QString         getVersionDb() const;
     void            setComponents( const unsigned int p_uiComponent, bool p_boSaveNow = false );
     unsigned int    getComponents() const;
     void            processComponentID();
@@ -92,6 +95,10 @@ public:
     bool            getCassaAutoClose() const;
     void            setCassaAutoWithdrawal( const bool p_bCassaAutoWithdrawal, bool p_boSaveNow = false );
     bool            getCassaAutoWithdrawal() const;
+    void            setCassaAutoCreate( const bool p_bCassaAutoCreate, bool p_boSaveNow = false );
+    bool            getCassaAutoCreate() const;
+    void            setCassaCreateType( const int p_inCassaCreateType, bool p_boSaveNow = false );
+    int             getCassaCreateType() const;
     void            setDefaultCountry( const QString &p_qsDefaultCountry, bool p_boSaveNow = false );
     QString         getDefaultCountry() const;
     void            setZipLength( const int p_inZip, bool p_boSaveNow = false );
@@ -108,6 +115,22 @@ public:
     QSize           secondaryWindowSize() const;
     void            setSecondaryBackground( const QString &p_qsColor, bool p_boSaveNow = false );
     QString         getSecondaryBackground() const;
+    void            setSecondaryFrame( const QString &p_qsColor, bool p_boSaveNow = false );
+    QString         getSecondaryFrame() const;
+    void            setSecondaryCaptionVisibility( const bool p_bIsSecondaryCaptionVisible, bool p_boSaveNow = false );
+    bool            isSecondaryCaptionVisible() const;
+    void            setActiveCaptionBackground( const QString &p_qsColor, bool p_boSaveNow = false );
+    QString         getActiveCaptionBackground() const;
+    void            setActiveCaptionColor( const QString &p_qsColor, bool p_boSaveNow = false );
+    QString         getActiveCaptionColor() const;
+    void            setInactiveCaptionBackground( const QString &p_qsColor, bool p_boSaveNow = false );
+    QString         getInactiveCaptionBackground() const;
+    void            setInactiveCaptionColor( const QString &p_qsColor, bool p_boSaveNow = false );
+    QString         getInactiveCaptionColor() const;
+    void            setSecondaryCaptionBackground( const QString &p_qsColor, bool p_boSaveNow = false );
+    QString         getSecondaryCaptionBackground() const;
+    void            setSecondaryCaptionColor( const QString &p_qsColor, bool p_boSaveNow = false );
+    QString         getSecondaryCaptionColor() const;
     void            setPatientCardLostPrice( const int p_inPrice );
     int             getPatientCardLostPrice() const;
     void            setPatientCardLostPriceVat(const int p_inVat );
@@ -116,6 +139,14 @@ public:
     int             getPatientCardPartnerPrice() const;
     void            setPatientCardPartnerPriceVat(const int p_inVat );
     int             getPatientCardPartnerPriceVat() const;
+    void            setBlnsHttpEnabled( bool p_bEnable, bool p_boSaveNow = false );
+    bool            isBlnsHttpEnabled();
+    int             getBlnsHttpMessageWaitTime() const;
+    void            setBlnsHttpMessageWaitTime(const int p_inWaitTime );
+    bool            isBlnsHttpSuspended();
+    void            setBlnsHttpSuspended( bool p_bEnable );
+
+    unsigned int    getPanelId( int p_nPanelIterator );
 
     void            setLogLevels( const unsigned int p_uiConLevel,
                                   const unsigned int p_uiDBLevel,
@@ -142,10 +173,68 @@ public:
     void            setPostponedAttendances( const unsigned int p_uiPostponedAttendances );
     void            setDialogSize( const QString &p_qsDialogName, const QPoint &p_qpDlgSize );
     QPoint          getDialogSize( const QString &p_qsDialogName, const QPoint &p_qpDlgSizeDefault ) const;
+    void            setDialogPosition(const QString &p_qsDialogName, const QPoint &p_qpPosition );
+    QPoint          dialogPosition(const QString &p_qsDialogName) const;
+
+    void            setDirDbBinaries( const QString &p_qsDirDbBinaries, bool p_boSaveNow = false );
+    QString         getDirDbBinaries() const;
+    void            setDirDbBackup( const QString &p_qsDirDbBackup, bool p_boSaveNow = false );
+    QString         getDirDbBackup() const;
+    void            setForceBackupDatabase( bool p_bForceBackupDatabase );
+    bool            isForceBackupDatabase();
+    void            setBackupDatabase( bool p_bBackupDatabase, bool p_boSaveNow = false );
+    bool            isBackupDatabase();
+    void            setBackupDatabaseType( const int p_nBackupDatabaseType, bool p_boSaveNow = false );
+    int             getBackupDatabaseType() const;
+    void            setBackupDatabaseDays( const QString &p_qsBackupDatabaseDays, bool p_boSaveNow = false );
+    QString         getBackupDatabaseDays() const;
+    void            setDateFormat( const QString &p_qsDateFormat, bool p_boSaveNow = false );
+    QString         getDateFormat() const;
+    void            setFapados( bool p_bFapados, bool p_boSaveNow = false );
+    bool            isFapados();
+    void            setPanelSterile( int p_nPanelId, bool p_bSterile );
+    bool            isPanelSterile( int p_nPanelId );
+    void            createExtendedAdminPassword( const QString &p_qsExtendedAdminPassword );
+    void            setExtendedAdminPassword( const QString &p_qsExtendedAdminPassword );
+    bool            checkExtendedAdminPassword( const QString &p_qsExtendedAdminPassword ) const;
+    void            setStopInLine( bool p_bStopInLine, bool p_boSaveNow = false );
+    bool            isStopInLine();
+    void            setPanelTextSteril( const QString &p_qsPanelTextSteril, bool p_boSaveNow = false );
+    QString         getPanelTextSteril() const;
+    void            setPanelTextTubeReplace( const QString &p_qsPanelTextTubeReplace, bool p_boSaveNow = false );
+    QString         getPanelTextTubeReplace() const;
+    void            setHWDebug( bool p_bHWDebug );
+    bool            isHWDebugEnabled();
+    void            setForceModuleSendTime( bool p_bForceModuleSendTime, bool p_boSaveNow = false );
+    bool            isForceModuleSendTime();
+    void            setForceModuleCheckButton( bool p_bForceModuleCheckButton, bool p_boSaveNow = false );
+    bool            isForceModuleCheckButton();
+    void            setForceTimeSendCounter( const int p_nForceTimeSendCounter );
+    int             getForceTimeSendCounter() const;
+    void            setTextTubeReplaceVisible( bool p_bTextTubeReplaceVisible, bool p_boSaveNow = false );
+    bool            isTextTubeReplaceVisible();
+    void            setTextSterilVisible( bool p_bTextSterilVisible, bool p_boSaveNow = false );
+    bool            isTextSterilVisible();
+    void            setStartHttpSyncAuto( bool p_bStartHttpSyncAuto, bool p_boSaveNow = false );
+    bool            isStartHttpSyncAuto();
+    void            setStartHttpSyncAutoSeconds( const int p_nStartHttpSyncAutoSeconds );
+    int             getStartHttpSyncAutoSeconds() const;
+    void            setBarcodeHidden( bool p_bBarcodeHidden, bool p_boSaveNow = false );
+    bool            isBarcodeHidden();
+    void            setUsageVisibleOnMain( bool p_bUsageVisibleOnMain, bool p_boSaveNow = false );
+    bool            isUsageVisibleOnMain();
+
+//void            setXXX( const QString &p_qsXXX, bool p_boSaveNow = false );
+//QString         getXXX() const;
+//void            setXXX( const int p_nXXX );
+//int             getXXX() const;
+//void            setXXX( bool p_bXXX, bool p_boSaveNow = false );
+//bool            isXXX();
 
 private:
     QString         m_qsFileName;
     QString         m_qsVersion;
+    QString         m_qsVersionDb;
     unsigned int    m_uiComponent;
     bool            m_bComponentSensolite;
     bool            m_bComponentKiwiSun;
@@ -180,6 +269,8 @@ private:
     int             m_inDeviceUseVAT;
     bool            m_bCassaAutoClose;
     bool            m_bCassaAutoWithdrawal;
+    bool            m_bCassaAutoCreateNew;
+    int             m_inCassaCreateType;
     QString         m_qsDefaultCountry;
     int             m_inZipLength;
     bool            m_bDBAutoArchive;
@@ -188,11 +279,45 @@ private:
     QPoint          m_qpSecondaryPosition;
     QSize           m_qsSecondarySize;
     QString         m_qsSecondaryBackground;
+    QString         m_qsSecondaryFrame;
+    bool            m_bIsSecondaryCaptionVisible;
     bool            m_bBarcodeLengthDifferent;
     int             m_nPatientCardLostPrice;
     int             m_nPatientCardLostPriceVat;
     int             m_nPatientCardPartnerPrice;
     int             m_nPatientCardPartnerPriceVat;
+    QStringList     m_qslPanelIds;
+    bool            m_bBlnsHttpEnabled;
+    int             m_nBlnsHttpWaitTime;
+    bool            m_bBlnsHttpSuspended;
+    QString         m_qsDirDbBinaries;
+    QString         m_qsDirDbBackup;
+    bool            m_bForceBackupDatabase;
+    bool            m_bBackupDatabase;
+    int             m_nBackupDatabaseType;
+    QString         m_qsBackupDatabaseDays;
+    QString         m_qsDateFormat;
+    bool            m_bFapados;
+    int             m_nFapados;
+    QString         m_qsActiveCaptionBackground;
+    QString         m_qsActiveCaptionColor;
+    QString         m_qsInactiveCaptionBackground;
+    QString         m_qsInactiveCaptionColor;
+    QString         m_qsSecondaryCaptionBackground;
+    QString         m_qsSecondaryCaptionColor;
+    bool            m_bIsStopInLine;
+    QString         m_qsPanelTextSteril;
+    QString         m_qsPanelTextTubeReplace;
+    bool            m_bEnableHWDebug;
+    bool            m_bForceModuleSendTime;
+    bool            m_bForceModuleCheckButton;
+    int             m_nForceTimeSendCounter;
+    bool            m_bIsTextTubeReplaceVisible;
+    bool            m_bIsTextSterilVisible;
+    bool            m_bIsStartHttpSyncAuto;
+    int             m_nStartHttpSyncAutoSeconds;
+    bool            m_bBarcodeHidden;
+    bool            m_bUsageVisibleOnMain;
 
     void init();
 };

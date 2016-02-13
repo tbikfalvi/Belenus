@@ -27,6 +27,7 @@
 #include "../db/dbpatientcardunits.h"
 #include "../db/dbdiscount.h"
 #include "../crud/dlgpatientselect.h"
+#include "../edit/dlgguestedit.h"
 
 //===========================================================================================================
 //
@@ -44,6 +45,10 @@ cDlgPatientCardSell::cDlgPatientCardSell( QWidget *p_poParent, cDBPatientCard *p
     pbSell->setIcon( QIcon("./resources/40x40_cassa.png") );
     pbCancel->setIcon( QIcon("./resources/40x40_cancel.png") );
     pbSelectPatient->setIcon( QIcon("./resources/40x40_search.png") );
+    pbCreatePatient->setIcon( QIcon("./resources/40x40_patient_new.png") );
+
+    deValidDateFrom->setDisplayFormat( g_poPrefs->getDateFormat().replace("-",".") );
+    deValidDateTo->setDisplayFormat( g_poPrefs->getDateFormat().replace("-",".") );
 
     if( m_poPatientCard )
     {
@@ -89,6 +94,15 @@ cDlgPatientCardSell::cDlgPatientCardSell( QWidget *p_poParent, cDBPatientCard *p
 
     slotRefreshWarningColors();
     slotEnableButtons();
+
+    if( g_poPrefs->isBarcodeHidden() && !g_obUser.isInGroup( cAccessGroup::ADMIN ) )
+    {
+        ledBarcode->setEchoMode( QLineEdit::Password );
+    }
+    else
+    {
+        ledBarcode->setEchoMode( QLineEdit::Normal );
+    }
 
     QPoint  qpDlgSize = g_poPrefs->getDialogSize( "SellPatientCard", QPoint(440,380) );
     resize( qpDlgSize.x(), qpDlgSize.y() );
@@ -327,8 +341,6 @@ void cDlgPatientCardSell::on_pbSell_clicked()
             m_poPatientCard->setBarcode( ledBarcode->text() );
             m_poPatientCard->setPatientCardTypeId( cmbCardType->itemData( cmbCardType->currentIndex() ).toUInt() );
             m_poPatientCard->setPatientId( cmbPatient->itemData( cmbPatient->currentIndex() ).toUInt() );
-            m_poPatientCard->setUnits( ledUnits->text().toInt() );
-            m_poPatientCard->setTimeLeftStr( teTimeLeft->time().toString("hh:mm:ss") );
             m_poPatientCard->setValidDateFrom( deValidDateFrom->date().toString("yyyy-MM-dd") );
             m_poPatientCard->setValidDateTo( deValidDateTo->date().toString("yyyy-MM-dd") );
             m_poPatientCard->setComment( pteComment->toPlainText() );
@@ -421,6 +433,7 @@ void cDlgPatientCardSell::on_pbSell_clicked()
                 obDBPatientcardUnit.createNew();
                 obDBPatientcardUnit.setLicenceId( m_poPatientCard->licenceId() );
                 obDBPatientcardUnit.setPatientCardId( m_poPatientCard->id() );
+                obDBPatientcardUnit.setPatientCardTypeId( m_poPatientCard->patientCardTypeId() );
                 obDBPatientcardUnit.setLedgerId( uiLedgerId );
                 obDBPatientcardUnit.setUnitTime( m_poPatientCardType->unitTime() );
                 obDBPatientcardUnit.setUnitPrice( m_poPatientCardType->price()/ledUnits->text().toInt() );
@@ -433,12 +446,16 @@ void cDlgPatientCardSell::on_pbSell_clicked()
             }
 
             m_poPatientCard->synchronizeUnits();
+            m_poPatientCard->synchronizeTime();
+            m_poPatientCard->save();
 
             if( bShoppingCart )
             {
                 obDBShoppingCart.setComment( qslUnitIds.join("#") );
                 obDBShoppingCart.save();
             }
+
+            m_poPatientCard->sendDataToWeb();
 
             QDialog::accept();
 
@@ -472,4 +489,34 @@ void cDlgPatientCardSell::on_pbSelectPatient_clicked()
             cmbPatient->setCurrentIndex( cmbPatient->findData( obDlgPatientSelect.selectedPatientId() ) );
         }
     }
+}
+
+void cDlgPatientCardSell::on_pbCreatePatient_clicked()
+{
+    QSqlQuery *poQuery;
+
+    cDBGuest *poGuest = new cDBGuest;
+    poGuest->createNew();
+
+    cDlgGuestEdit  obDlgEdit( this, poGuest );
+    obDlgEdit.setWindowTitle( tr( "New Patient" ) );
+
+    unsigned int    uiGuestId = 0;
+
+    if( obDlgEdit.exec() == QDialog::Accepted )
+    {
+        uiGuestId = obDlgEdit.guestId();
+    }
+
+    cmbPatient->clear();
+    cmbPatient->addItem( tr("<Not selected>"), 0 );
+    poQuery = g_poDB->executeQTQuery( QString( "SELECT patientId, name FROM patients WHERE active=1 AND archive<>\"DEL\" ORDER BY name " ) );
+    while( poQuery->next() )
+    {
+        cmbPatient->addItem( poQuery->value( 1 ).toString(), poQuery->value( 0 ) );
+        if( uiGuestId == poQuery->value( 0 ) )
+            cmbPatient->setCurrentIndex( cmbPatient->count()-1 );
+    }
+
+    delete poGuest;
 }

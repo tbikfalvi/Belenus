@@ -15,6 +15,7 @@
 
 #include "belenus.h"
 #include "dbpatientcardtype.h"
+#include "dbpatientcard.h"
 
 cDBPatientCardType::cDBPatientCardType()
 {
@@ -119,11 +120,7 @@ void cDBPatientCardType::save() throw( cSevException )
     if( m_uiId )
     {
         qsQuery = "UPDATE";
-
-        if( m_qsArchive != "NEW" )
-        {
-            m_qsArchive = "MOD";
-        }
+        m_qsArchive = "MOD";
     }
     else
     {
@@ -308,3 +305,22 @@ void cDBPatientCardType::setArchive( const QString &p_qsArchive ) throw()
     m_qsArchive = p_qsArchive;
 }
 
+void cDBPatientCardType::updatePatientCardUnits( int p_nUnitTime ) throw()
+{
+    QSqlQuery *poQuery = g_poDB->executeQTQuery( QString( "SELECT patientCardId FROM patientcards WHERE patientCardTypeId = %1" ).arg( m_uiId ) );
+
+    while( poQuery->next() )
+    {
+        try
+        {
+            cDBPatientCard  obDBPatientCard;
+
+            obDBPatientCard.load( poQuery->value( 0 ).toUInt() );
+            obDBPatientCard.synchronizeUnitTime( p_nUnitTime );
+        }
+        catch( cSevException &e )
+        {
+            g_obLogger(e.severity()) << e.what() << EOM;
+        }
+    }
+}

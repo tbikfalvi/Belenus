@@ -32,44 +32,44 @@
         <translation>Új pénztár nyitás.</translation>
     </message>
     <message>
-        <location filename="cassa.cpp" line="230"/>
+        <location filename="cassa.cpp" line="224"/>
         <source>Reopen cassa record.</source>
         <translation>Lezárt pénztár folytatása.</translation>
     </message>
     <message>
-        <location filename="cassa.cpp" line="263"/>
+        <location filename="cassa.cpp" line="253"/>
         <source>Close cassa record.</source>
         <translation>Pénztár zárás.</translation>
     </message>
     <message>
-        <location filename="cassa.cpp" line="180"/>
-        <location filename="cassa.cpp" line="206"/>
+        <location filename="cassa.cpp" line="178"/>
+        <location filename="cassa.cpp" line="202"/>
         <source>Continue cassa record.</source>
         <translation>Pénztár folytatás.</translation>
     </message>
     <message>
-        <location filename="cassa.cpp" line="519"/>
+        <location filename="cassa.cpp" line="495"/>
         <source>Cassa expense</source>
         <translation>Pénztár kiadás</translation>
     </message>
     <message>
-        <location filename="cassa.cpp" line="537"/>
+        <location filename="cassa.cpp" line="513"/>
         <source>Add money to cassa.</source>
         <translation>Pénztár bevétel.</translation>
     </message>
     <message>
-        <location filename="cassa.cpp" line="565"/>
-        <location filename="cassa.cpp" line="593"/>
+        <location filename="cassa.cpp" line="541"/>
+        <location filename="cassa.cpp" line="569"/>
         <source>Remove money from cassa.</source>
         <translation>Pénztár kiadás.</translation>
     </message>
     <message>
-        <location filename="main.cpp" line="125"/>
+        <location filename="main.cpp" line="129"/>
         <source>Connecting to database ...</source>
         <translation>Kapcsolódás az adatbázishoz ...</translation>
     </message>
     <message>
-        <location filename="main.cpp" line="134"/>
+        <location filename="main.cpp" line="138"/>
         <source> SUCCEEDED.
 </source>
         <oldsource> CONNECTED.
@@ -124,17 +124,17 @@ Probléma van az internet kapcsolattal?
         <translation type="obsolete">SIKERTELEN</translation>
     </message>
     <message>
-        <location filename="main.cpp" line="140"/>
+        <location filename="main.cpp" line="180"/>
         <source>License is ... </source>
         <translation>Az alkalmazás ... </translation>
     </message>
     <message>
-        <location filename="main.cpp" line="158"/>
+        <location filename="main.cpp" line="198"/>
         <source>DEMO</source>
         <translation>DEMO</translation>
     </message>
     <message>
-        <location filename="main.cpp" line="160"/>
+        <location filename="main.cpp" line="200"/>
         <source>OK</source>
         <translation>RENDBEN</translation>
     </message>
@@ -151,12 +151,12 @@ Probléma van az internet kapcsolattal?
         <translation type="obsolete"> (liszensz a szerver által elutasítva)</translation>
     </message>
     <message>
-        <location filename="main.cpp" line="206"/>
+        <location filename="main.cpp" line="272"/>
         <source>Checking hardware connection ...</source>
         <translation>Hardver kapcsolat ellenőrzése ...</translation>
     </message>
     <message>
-        <location filename="main.cpp" line="215"/>
+        <location filename="main.cpp" line="281"/>
         <source>FAILED
 </source>
         <translation>SIKERTELEN
@@ -203,31 +203,58 @@ Probléma van az internet kapcsolattal?
 </translation>
     </message>
     <message>
-        <location filename="main.cpp" line="106"/>
+        <location filename="main.cpp" line="110"/>
         <source>SystemID: </source>
         <translation>RendszerAzonosító: </translation>
     </message>
     <message>
         <location filename="main.cpp" line="144"/>
+        <source>Another instance of application ... </source>
+        <translation>Az alkalmazás másik példánya ... </translation>
+    </message>
+    <message>
+        <location filename="main.cpp" line="159"/>
+        <source> NOT RUNNING.
+</source>
+        <translation> MÉG NEM FUT.</translation>
+    </message>
+    <message>
+        <location filename="main.cpp" line="164"/>
+        <source> ALREADY RUNNING.
+</source>
+        <translation> MÁR FUT.</translation>
+    </message>
+    <message>
+        <location filename="main.cpp" line="165"/>
+        <source>
+
+Please use the currently running application.
+</source>
+        <translation>
+
+Kérem használja a korábban elindított alkalmazást.</translation>
+    </message>
+    <message>
+        <location filename="main.cpp" line="184"/>
         <source>NO_SERIAL_DETECTED</source>
         <translation>LISZENSZ_KULCS_HIÁNYZIK</translation>
     </message>
     <message>
-        <location filename="main.cpp" line="164"/>
+        <location filename="main.cpp" line="204"/>
         <source>Serial: %1
 </source>
         <translation>Liszensz kulcs: %1
 </translation>
     </message>
     <message>
-        <location filename="main.cpp" line="171"/>
+        <location filename="main.cpp" line="211"/>
         <source>Days remains: %1
 </source>
         <translation>Hátralévő napok: %1
 </translation>
     </message>
     <message>
-        <location filename="main.cpp" line="176"/>
+        <location filename="main.cpp" line="216"/>
         <source>
 VALIDATE YOUR APPLICATION
 WITH YOUR FRANCHISE PROVIDER
@@ -240,7 +267,7 @@ A FRANCHISE SZOLGÁLTATÓJÁVAL
 </translation>
     </message>
     <message>
-        <location filename="main.cpp" line="181"/>
+        <location filename="main.cpp" line="221"/>
         <source>The application validity has been expired.
 The application can be used only in DEMO mode.
 
@@ -251,76 +278,82 @@ Az alkalmazás csak DEMÓ módban használható.
 </translation>
     </message>
     <message>
-        <location filename="main.cpp" line="217"/>
-        <location filename="main.cpp" line="264"/>
-        <location filename="main.cpp" line="271"/>
+        <location filename="main.cpp" line="240"/>
+        <source>Checking database consistency: </source>
+        <translation>Adatbázis ellenőrzése: </translation>
+    </message>
+    <message>
+        <location filename="main.cpp" line="283"/>
+        <location filename="main.cpp" line="330"/>
+        <location filename="main.cpp" line="337"/>
         <source>Starting application in DEMO mode.
 </source>
         <translation>Alkalmazás indítása DEMÓ módban.
 </translation>
     </message>
     <message>
-        <location filename="main.cpp" line="225"/>
+        <location filename="main.cpp" line="291"/>
         <source>CONNECTED
 </source>
         <translation>KAPCSOLÓDVA
 </translation>
     </message>
     <message>
-        <location filename="main.cpp" line="228"/>
+        <location filename="main.cpp" line="294"/>
         <source>Initializing hardware device ... </source>
         <translation>Hardver eszköz beállítása ...</translation>
     </message>
     <message>
-        <location filename="main.cpp" line="232"/>
+        <location filename="main.cpp" line="257"/>
+        <location filename="main.cpp" line="298"/>
         <source>FINISHED
 </source>
         <translation>BEFEJEZŐDÖTT
 </translation>
     </message>
     <message>
-        <location filename="main.cpp" line="235"/>
+        <location filename="main.cpp" line="301"/>
         <source>Caption stored in hardware: %1
 </source>
         <translation>Hardver eszközben tárolt fejléc szöveg: %1
 </translation>
     </message>
     <message>
-        <location filename="main.cpp" line="238"/>
+        <location filename="main.cpp" line="304"/>
         <source>Number of hardware panels: %1
 </source>
         <translation>Hardver panelok száma: %1
 </translation>
     </message>
     <message>
-        <location filename="main.cpp" line="241"/>
+        <location filename="main.cpp" line="307"/>
         <source>Checking hardware panels:
 </source>
         <translation>Hardver panelok ellenőrzése:
 </translation>
     </message>
     <message>
-        <location filename="main.cpp" line="246"/>
+        <location filename="main.cpp" line="312"/>
         <source>     Checking hardware panel -%1- </source>
         <translation>     Hardver panel ellenőrzése -%1-</translation>
     </message>
     <message>
-        <location filename="main.cpp" line="251"/>
+        <location filename="main.cpp" line="317"/>
         <source> SUCCEEDED
 </source>
         <translation>SIKERES
 </translation>
     </message>
     <message>
-        <location filename="main.cpp" line="256"/>
-        <location filename="main.cpp" line="315"/>
+        <location filename="main.cpp" line="322"/>
+        <location filename="main.cpp" line="383"/>
         <source> FAILED
 </source>
         <translation>SIKERTELEN
 </translation>
     </message>
     <message>
-        <location filename="main.cpp" line="322"/>
+        <location filename="main.cpp" line="390"/>
         <source>Database server application is not running.
 Belenus application can not be started without active database server.
 Please start WampServer application then restart Belenus application.</source>
@@ -362,12 +395,12 @@ Kérem indítsa el a WampServer alkalmazást, majd indítsa újra a Belenus alka
         <translation>Pozitív</translation>
     </message>
     <message>
-        <location filename="db/dbledger.cpp" line="293"/>
+        <location filename="db/dbledger.cpp" line="291"/>
         <source>Revoking action: %1</source>
         <translation>Sztornó: %1</translation>
     </message>
     <message>
-        <location filename="db/dbcassahistory.cpp" line="202"/>
+        <location filename="db/dbcassahistory.cpp" line="197"/>
         <source>Revoking cassa action: %1</source>
         <translation>Pénztár sztornó: %1</translation>
     </message>
@@ -407,81 +440,225 @@ Kérem indítsa el a WampServer alkalmazást, majd indítsa újra a Belenus alka
         <translation> Vas</translation>
     </message>
     <message>
-        <location filename="db/dbpatientcard.cpp" line="320"/>
-        <location filename="db/dbvalidtimeperiods.cpp" line="168"/>
+        <location filename="db/dbpatientcard.cpp" line="391"/>
+        <location filename="db/dbvalidtimeperiods.cpp" line="164"/>
+        <location filename="general.cpp" line="139"/>
         <source>Mon</source>
         <translation>Hé</translation>
     </message>
     <message>
-        <location filename="db/dbpatientcard.cpp" line="320"/>
-        <location filename="db/dbvalidtimeperiods.cpp" line="169"/>
+        <location filename="db/dbpatientcard.cpp" line="391"/>
+        <location filename="db/dbvalidtimeperiods.cpp" line="165"/>
+        <location filename="general.cpp" line="140"/>
         <source>Tue</source>
         <translation>Ke</translation>
     </message>
     <message>
-        <location filename="db/dbpatientcard.cpp" line="320"/>
-        <location filename="db/dbvalidtimeperiods.cpp" line="170"/>
+        <location filename="db/dbpatientcard.cpp" line="391"/>
+        <location filename="db/dbvalidtimeperiods.cpp" line="166"/>
+        <location filename="general.cpp" line="141"/>
         <source>Wed</source>
         <translation>Sze</translation>
     </message>
     <message>
-        <location filename="db/dbpatientcard.cpp" line="320"/>
-        <location filename="db/dbvalidtimeperiods.cpp" line="171"/>
+        <location filename="db/dbpatientcard.cpp" line="391"/>
+        <location filename="db/dbvalidtimeperiods.cpp" line="167"/>
+        <location filename="general.cpp" line="142"/>
         <source>Thu</source>
         <translation>Csü</translation>
     </message>
     <message>
-        <location filename="db/dbpatientcard.cpp" line="320"/>
-        <location filename="db/dbvalidtimeperiods.cpp" line="172"/>
+        <location filename="db/dbpatientcard.cpp" line="391"/>
+        <location filename="db/dbvalidtimeperiods.cpp" line="168"/>
+        <location filename="general.cpp" line="143"/>
         <source>Fri</source>
         <translation>Pé</translation>
     </message>
     <message>
-        <location filename="db/dbpatientcard.cpp" line="320"/>
-        <location filename="db/dbvalidtimeperiods.cpp" line="173"/>
+        <location filename="db/dbpatientcard.cpp" line="391"/>
+        <location filename="db/dbvalidtimeperiods.cpp" line="169"/>
+        <location filename="general.cpp" line="144"/>
         <source>Sat</source>
         <translation>Szo</translation>
     </message>
     <message>
-        <location filename="db/dbpatientcard.cpp" line="320"/>
-        <location filename="db/dbvalidtimeperiods.cpp" line="174"/>
+        <location filename="db/dbpatientcard.cpp" line="391"/>
+        <location filename="db/dbvalidtimeperiods.cpp" line="170"/>
+        <location filename="general.cpp" line="145"/>
         <source>Sun</source>
         <translation>Vas</translation>
     </message>
     <message>
-        <location filename="db/dbpatientcard.cpp" line="333"/>
         <source>Patientcard can be used:</source>
-        <translation>A bérlet használható:</translation>
+        <translation type="obsolete">A bérlet használható:</translation>
     </message>
     <message>
-        <location filename="general.cpp" line="71"/>
-        <location filename="wndmain.cpp" line="2702"/>
+        <location filename="general.cpp" line="78"/>
+        <location filename="wndmain.cpp" line="3291"/>
         <source>Information</source>
         <translation>Információ</translation>
     </message>
     <message>
-        <location filename="general.cpp" line="75"/>
-        <location filename="wndmain.cpp" line="2706"/>
+        <location filename="general.cpp" line="82"/>
+        <location filename="wndmain.cpp" line="3295"/>
         <source>Warning</source>
         <translation>Figyelmeztetés</translation>
     </message>
     <message>
-        <location filename="general.cpp" line="79"/>
-        <location filename="wndmain.cpp" line="2710"/>
+        <location filename="general.cpp" line="86"/>
+        <location filename="wndmain.cpp" line="3299"/>
         <source>Attention</source>
         <translation>Figyelmeztetés</translation>
     </message>
     <message>
-        <location filename="general.cpp" line="83"/>
-        <location filename="wndmain.cpp" line="2714"/>
+        <location filename="general.cpp" line="90"/>
+        <location filename="wndmain.cpp" line="3303"/>
         <source>Error</source>
         <translation>Hiba</translation>
     </message>
     <message>
-        <location filename="general.cpp" line="87"/>
-        <location filename="wndmain.cpp" line="2718"/>
+        <location filename="general.cpp" line="94"/>
+        <location filename="general.cpp" line="182"/>
+        <location filename="wndmain.cpp" line="3307"/>
         <source>Question</source>
         <translation>Kérdés</translation>
+    </message>
+    <message>
+        <location filename="general.cpp" line="183"/>
+        <source>Do you want to backup database now?</source>
+        <translation>Archiválni akarja most az adatbázist?</translation>
+    </message>
+    <message>
+        <location filename="general.cpp" line="284"/>
+        <source>&lt;tr&gt;&lt;td width=&quot;100&quot;&gt;&lt;b&gt;Owner:&lt;/b&gt;&lt;/td&gt;&lt;td&gt;%1&lt;/td&gt;&lt;/tr&gt;</source>
+        <translation>&lt;tr&gt;&lt;td width=&quot;100&quot;&gt;&lt;b&gt;Tulajdonos:&lt;/b&gt;&lt;/td&gt;&lt;td&gt;%1&lt;/td&gt;&lt;/tr&gt;</translation>
+    </message>
+    <message>
+        <location filename="general.cpp" line="285"/>
+        <source>&lt;tr&gt;&lt;td&gt;&lt;b&gt;Valid:&lt;/b&gt;&lt;/td&gt;&lt;td&gt;%1 -&gt; %2&lt;/td&gt;&lt;/tr&gt;</source>
+        <translation>&lt;tr&gt;&lt;td&gt;&lt;b&gt;Érvényes:&lt;/b&gt;&lt;/td&gt;&lt;td&gt;%1 -&gt; %2&lt;/td&gt;&lt;/tr&gt;</translation>
+    </message>
+    <message>
+        <location filename="general.cpp" line="288"/>
+        <source>&lt;tr&gt;&lt;td&gt;&lt;b&gt;Comment:&lt;/b&gt;&lt;/td&gt;&lt;/tr&gt;</source>
+        <translation>&lt;tr&gt;&lt;td&gt;&lt;b&gt;Megjegyzés:&lt;/b&gt;&lt;/td&gt;&lt;/tr&gt;</translation>
+    </message>
+    <message>
+        <location filename="general.cpp" line="287"/>
+        <source>&lt;tr&gt;&lt;td&gt;&lt;b&gt;Units:&lt;/b&gt;&lt;/td&gt;&lt;td&gt;%1&lt;/td&gt;&lt;/tr&gt;</source>
+        <translation>&lt;tr&gt;&lt;td&gt;&lt;b&gt;Egységek:&lt;/b&gt;&lt;/td&gt;&lt;td&gt;%1&lt;/td&gt;&lt;/tr&gt;</translation>
+    </message>
+    <message>
+        <location filename="general.cpp" line="301"/>
+        <source>&lt;p&gt;&lt;b&gt;Valid units:&lt;/b&gt;&lt;br&gt;</source>
+        <oldsource>&lt;p&gt;&lt;b&gt;Valid time periods:&lt;/b&gt;&lt;br&gt;</oldsource>
+        <translation>&lt;p&gt;&lt;b&gt;Érvényes egységek:&lt;/b&gt;&lt;br&gt;</translation>
+    </message>
+    <message>
+        <location filename="general.cpp" line="318"/>
+        <source>&lt;br&gt;&lt;b&gt;%1 units (%2 minutes) (%3) valid on&lt;/b&gt;%4</source>
+        <translation>&lt;br&gt;&lt;b&gt;%1 egység (%2 perc) (%3) érvényes &lt;/b&gt;%4</translation>
+    </message>
+    <message>
+        <location filename="preferences.cpp" line="141"/>
+        <source> NOT STERILE </source>
+        <oldsource>NOT STERILE</oldsource>
+        <translation>NEM STERIL</translation>
+    </message>
+    <message>
+        <location filename="preferences.cpp" line="142"/>
+        <source> TUBE REPLACEMENT NEEDED </source>
+        <oldsource>TUBE REPLACEMENT NEEDED</oldsource>
+        <translation>CSŐCSERE SZÜKSÉGES</translation>
+    </message>
+    <message>
+        <source>Error occured during downloading file:
+%1.</source>
+        <translation type="obsolete">Hiba történt az állomány letöltése közben:
+%1.</translation>
+    </message>
+</context>
+<context>
+    <name>cBlnsHttp</name>
+    <message>
+        <source>Warning</source>
+        <translation type="obsolete">Figyelmeztetés</translation>
+    </message>
+    <message>
+        <source>Unable to save the file
+
+%1
+
+%2.</source>
+        <translation type="obsolete">Nem sikerült elmenteni az állományt
+
+%1
+
+%2.</translation>
+    </message>
+    <message>
+        <location filename="http.cpp" line="98"/>
+        <source>HTTP connection disabled.</source>
+        <translation>HTTP kapcsolad letiltva.</translation>
+    </message>
+    <message>
+        <source>HTTP timeout.
+</source>
+        <translation type="obsolete">HTTP Időtúllépés.</translation>
+    </message>
+    <message>
+        <source>%1 FAILED.</source>
+        <translation type="obsolete">%1 SIKERTELEN.</translation>
+    </message>
+    <message>
+        <location filename="http.cpp" line="140"/>
+        <source>HTTP connection disabled</source>
+        <translation>HTTP kapcsolat letiltva</translation>
+    </message>
+    <message>
+        <location filename="http.cpp" line="187"/>
+        <source>HTTP timeout occured.</source>
+        <translation>HTTP Időtúllépés.</translation>
+    </message>
+    <message>
+        <location filename="http.cpp" line="223"/>
+        <source>Unable to save HTTP communication file.</source>
+        <translation>Nem sikerült menteni a HTTP kommunikációs állományt.</translation>
+    </message>
+    <message>
+        <location filename="http.cpp" line="298"/>
+        <source>Error occured during downloading HTTP file.</source>
+        <translation>Hiba történt a HTTP állomány letöltése közben.</translation>
+    </message>
+    <message>
+        <location filename="http.cpp" line="522"/>
+        <source>Invalid token received: </source>
+        <translation>Nem megfelelő token érkezett: </translation>
+    </message>
+    <message>
+        <location filename="http.cpp" line="742"/>
+        <source>Unknown error occured on server side.</source>
+        <translation>Ismeretlen hiba következett be a szerveren.</translation>
+    </message>
+    <message>
+        <location filename="http.cpp" line="749"/>
+        <source>HTTP Session expired</source>
+        <translation>HTTP folyamat időtúllépés</translation>
+    </message>
+    <message>
+        <location filename="http.cpp" line="756"/>
+        <source>HTTP security check failed</source>
+        <translation>HTTP biztonsági kulcs hiba</translation>
+    </message>
+    <message>
+        <location filename="http.cpp" line="763"/>
+        <source>Unknown studio Id</source>
+        <translation>Ismeretlen szalon azonosító</translation>
+    </message>
+    <message>
+        <location filename="http.cpp" line="770"/>
+        <source>Database error occured on server side</source>
+        <translation>Adatbázis hiba a szerveren</translation>
     </message>
 </context>
 <context>
@@ -707,6 +884,128 @@ El akarja menteni ezt a hármast az adatbázisba?</translation>
     </message>
 </context>
 <context>
+    <name>cDlgAdvertisementEdit</name>
+    <message>
+        <location filename="edit/dlgadvertisementedit.cpp" line="15"/>
+        <source>Advertisement</source>
+        <oldsource>Adwertisement</oldsource>
+        <translation>Hírdetés</translation>
+    </message>
+    <message>
+        <location filename="edit/dlgadvertisementedit.cpp" line="18"/>
+        <source>&amp;Save</source>
+        <translation>&amp;Mentés</translation>
+    </message>
+    <message>
+        <location filename="edit/dlgadvertisementedit.cpp" line="19"/>
+        <source>&amp;Cancel</source>
+        <translation>&amp;Mégsem</translation>
+    </message>
+    <message>
+        <location filename="edit/dlgadvertisementedit.cpp" line="86"/>
+        <location filename="edit/dlgadvertisementedit.cpp" line="106"/>
+        <location filename="edit/dlgadvertisementedit.cpp" line="112"/>
+        <source>Error</source>
+        <translation>Hiba</translation>
+    </message>
+    <message>
+        <location filename="edit/dlgadvertisementedit.cpp" line="86"/>
+        <source>Advertisement name cannot be empty.</source>
+        <translation>A hírdetés neve nem lehet üres</translation>
+    </message>
+    <message>
+        <source>Advertisement caption cannot be empty.</source>
+        <translation type="obsolete">A hírdetés fejléce nem lehet üres</translation>
+    </message>
+    <message>
+        <location filename="edit/dlgadvertisementedit.cpp" line="106"/>
+        <source>The defined image path is not exists.</source>
+        <translation>A megadott könyvtár nem létezik.</translation>
+    </message>
+    <message>
+        <location filename="edit/dlgadvertisementedit.cpp" line="112"/>
+        <source>At least one image must be added to the list.</source>
+        <translation>Legalább egy képet meg kell adni a listában.</translation>
+    </message>
+    <message>
+        <location filename="edit/dlgadvertisementedit.cpp" line="158"/>
+        <source>Select Directory</source>
+        <translation>Könyvtár kiválasztás</translation>
+    </message>
+</context>
+<context>
+    <name>cDlgAdvertisements</name>
+    <message>
+        <location filename="crud/dlgadvertisements.cpp" line="10"/>
+        <source>Advertisement List</source>
+        <translation>Hírdetések</translation>
+    </message>
+    <message>
+        <location filename="crud/dlgadvertisements.cpp" line="30"/>
+        <source>Id</source>
+        <translation>Id</translation>
+    </message>
+    <message>
+        <location filename="crud/dlgadvertisements.cpp" line="31"/>
+        <source>LicenceId</source>
+        <translation>LiszenszId</translation>
+    </message>
+    <message>
+        <location filename="crud/dlgadvertisements.cpp" line="32"/>
+        <location filename="crud/dlgadvertisements.cpp" line="48"/>
+        <source>Name</source>
+        <translation>Név</translation>
+    </message>
+    <message>
+        <location filename="crud/dlgadvertisements.cpp" line="33"/>
+        <location filename="crud/dlgadvertisements.cpp" line="49"/>
+        <source>Caption</source>
+        <translation>Fejléc</translation>
+    </message>
+    <message>
+        <location filename="crud/dlgadvertisements.cpp" line="34"/>
+        <location filename="crud/dlgadvertisements.cpp" line="50"/>
+        <source>Timer</source>
+        <translation>Időzítő</translation>
+    </message>
+    <message>
+        <location filename="crud/dlgadvertisements.cpp" line="35"/>
+        <location filename="crud/dlgadvertisements.cpp" line="51"/>
+        <source>Active</source>
+        <translation>Aktív</translation>
+    </message>
+    <message>
+        <location filename="crud/dlgadvertisements.cpp" line="36"/>
+        <source>Archive</source>
+        <translation>Státusz</translation>
+    </message>
+    <message>
+        <location filename="crud/dlgadvertisements.cpp" line="93"/>
+        <source>New Advertisement</source>
+        <translation>Új hírdetés</translation>
+    </message>
+    <message>
+        <location filename="crud/dlgadvertisements.cpp" line="135"/>
+        <source>Question</source>
+        <translation>Kérdés</translation>
+    </message>
+    <message>
+        <location filename="crud/dlgadvertisements.cpp" line="136"/>
+        <source>Are you sure you want to delete this Advertisement?</source>
+        <translation>Biztos benne, hogy törölni akarja ezt a hírdetést?</translation>
+    </message>
+    <message>
+        <location filename="crud/dlgadvertisements.cpp" line="145"/>
+        <source>Warning</source>
+        <translation>Figyelmeztetés</translation>
+    </message>
+    <message>
+        <location filename="crud/dlgadvertisements.cpp" line="146"/>
+        <source>You are not allowed to delete studio independent data.</source>
+        <translation>Nincs jogosultsága törölni stúdió független adatot.</translation>
+    </message>
+</context>
+<context>
     <name>cDlgAttendance</name>
     <message>
         <source>Attendance List</source>
@@ -869,8 +1168,8 @@ and fill mandatory data later?</source>
         <translation>Pénztár művelet</translation>
     </message>
     <message>
-        <location filename="dlg/dlgcassaaction.cpp" line="54"/>
-        <location filename="dlg/dlgcassaaction.cpp" line="63"/>
+        <location filename="dlg/dlgcassaaction.cpp" line="59"/>
+        <location filename="dlg/dlgcassaaction.cpp" line="68"/>
         <source>&lt;Not selected&gt;</source>
         <translation>&lt;Nincs kiválasztva&gt;</translation>
     </message>
@@ -883,18 +1182,18 @@ and fill mandatory data later?</source>
         <translation type="obsolete">Rendben</translation>
     </message>
     <message>
-        <location filename="dlg/dlgcassaaction.cpp" line="353"/>
+        <location filename="dlg/dlgcassaaction.cpp" line="375"/>
         <source>Coupon used: %1</source>
         <translation>Kupon használat: %1</translation>
     </message>
     <message>
-        <location filename="dlg/dlgcassaaction.cpp" line="122"/>
-        <location filename="dlg/dlgcassaaction.cpp" line="135"/>
+        <location filename="dlg/dlgcassaaction.cpp" line="140"/>
+        <location filename="dlg/dlgcassaaction.cpp" line="153"/>
         <source>Comment &gt;&gt;</source>
         <translation>Megjegyzés &gt;&gt;</translation>
     </message>
     <message>
-        <location filename="dlg/dlgcassaaction.cpp" line="126"/>
+        <location filename="dlg/dlgcassaaction.cpp" line="144"/>
         <source>Comment &lt;&lt;</source>
         <translation>Megjegyzés &lt;&lt;</translation>
     </message>
@@ -1375,19 +1674,19 @@ Please modify the existing discount.</source>
 Kérem módosítsa a korábban elmentett kedvezményt.</translation>
     </message>
     <message>
-        <location filename="edit/dlgdiscountedit.cpp" line="234"/>
+        <location filename="edit/dlgdiscountedit.cpp" line="235"/>
         <source>Discount for selected product already exists!
 Please modify the existing discount.</source>
         <translation>A kiválasztott termékhez már létezik kedvezmény!
 Kérem módosítsa a korábban elmentett kedvezményt.</translation>
     </message>
     <message>
-        <location filename="edit/dlgdiscountedit.cpp" line="295"/>
+        <location filename="edit/dlgdiscountedit.cpp" line="305"/>
         <source>Guest discount - %1</source>
         <translation>Vendég kedvezmény - %1</translation>
     </message>
     <message>
-        <location filename="edit/dlgdiscountedit.cpp" line="300"/>
+        <location filename="edit/dlgdiscountedit.cpp" line="310"/>
         <source>Company discount - %1</source>
         <translation>Céges kedvezmény - %1</translation>
     </message>
@@ -1396,107 +1695,107 @@ Kérem módosítsa a korábban elmentett kedvezményt.</translation>
         <translation type="obsolete">Termék típus kedvezmény - %1</translation>
     </message>
     <message>
-        <location filename="edit/dlgdiscountedit.cpp" line="224"/>
+        <location filename="edit/dlgdiscountedit.cpp" line="225"/>
         <source>Discount for selected payment method already exists!
 Please modify the existing discount.</source>
         <translation>A kiválasztott fizetési módhoz már létezik kedvezmény!
 Kérem módosítsa a korábban elmentett kedvezményt.</translation>
     </message>
     <message>
-        <location filename="edit/dlgdiscountedit.cpp" line="244"/>
+        <location filename="edit/dlgdiscountedit.cpp" line="245"/>
         <source>Discount with the name defined already exists!
 Please modify the existing discount.</source>
         <translation>A megadott névvel már létezik kedvezmény!
 Kérem módosítsa a korábban elmentett kedvezményt.</translation>
     </message>
     <message>
-        <location filename="edit/dlgdiscountedit.cpp" line="305"/>
+        <location filename="edit/dlgdiscountedit.cpp" line="315"/>
         <source>Payment method discount - %1</source>
         <translation>Fizetési mód kedvezmény - %1</translation>
     </message>
     <message>
-        <location filename="edit/dlgdiscountedit.cpp" line="310"/>
+        <location filename="edit/dlgdiscountedit.cpp" line="320"/>
         <source>Product discount - %1</source>
         <translation>Termék kedvezmény - %1</translation>
     </message>
     <message>
-        <location filename="edit/dlgdiscountedit.cpp" line="337"/>
+        <location filename="edit/dlgdiscountedit.cpp" line="348"/>
         <source>Warning</source>
         <translation>Figyelmeztetés</translation>
     </message>
     <message>
-        <location filename="edit/dlgdiscountedit.cpp" line="370"/>
+        <location filename="edit/dlgdiscountedit.cpp" line="381"/>
         <source>Regular customer discount</source>
         <translation>Törzsvendég kedvezmény</translation>
     </message>
     <message>
-        <location filename="edit/dlgdiscountedit.cpp" line="372"/>
+        <location filename="edit/dlgdiscountedit.cpp" line="383"/>
         <source>Employee discount</source>
         <translation>Alkalmazotti kedvezmény</translation>
     </message>
     <message>
-        <location filename="edit/dlgdiscountedit.cpp" line="374"/>
+        <location filename="edit/dlgdiscountedit.cpp" line="385"/>
         <source>Service discount</source>
         <translation>Szerviz kedvezmény</translation>
     </message>
     <message>
-        <location filename="edit/dlgdiscountedit.cpp" line="380"/>
+        <location filename="edit/dlgdiscountedit.cpp" line="391"/>
         <source>Guest discount</source>
         <translation>Vendég kedvezmény</translation>
     </message>
     <message>
-        <location filename="edit/dlgdiscountedit.cpp" line="392"/>
+        <location filename="edit/dlgdiscountedit.cpp" line="403"/>
         <source>Company discount</source>
         <translation>Céges kedvezmény</translation>
     </message>
     <message>
-        <location filename="edit/dlgdiscountedit.cpp" line="404"/>
+        <location filename="edit/dlgdiscountedit.cpp" line="415"/>
         <source>Payment method discount</source>
         <oldsource>Product type discount</oldsource>
         <translation>Fizetéstípus kedvezmény</translation>
     </message>
     <message>
-        <location filename="edit/dlgdiscountedit.cpp" line="416"/>
+        <location filename="edit/dlgdiscountedit.cpp" line="427"/>
         <source>Product discount</source>
         <translation>Termék kedvezmény</translation>
     </message>
     <message>
-        <location filename="edit/dlgdiscountedit.cpp" line="174"/>
+        <location filename="edit/dlgdiscountedit.cpp" line="175"/>
         <source>Discount for regular customer already exists!
 Please modify the existing discount.</source>
         <translation>A törzsvásárlói kedvezmény már létezik.
 Kérem módosítsa a korábban elmentett kedvezményt.</translation>
     </message>
     <message>
-        <location filename="edit/dlgdiscountedit.cpp" line="164"/>
+        <location filename="edit/dlgdiscountedit.cpp" line="165"/>
         <source>Name of the discount can not be empty!
 Please add a name to the discount.</source>
         <translation>A kedvezmény megnevezése nem lehet üres!
 Kérem adjon meg nevezze el a kedvezményt.</translation>
     </message>
     <message>
-        <location filename="edit/dlgdiscountedit.cpp" line="184"/>
+        <location filename="edit/dlgdiscountedit.cpp" line="185"/>
         <source>Discount for employee already exists!
 Please modify the existing discount.</source>
         <translation>Az alkalmazotti kedvezmény már létezik.
 Kérem módosítsa a korábban elmentett kedvezményt.</translation>
     </message>
     <message>
-        <location filename="edit/dlgdiscountedit.cpp" line="194"/>
+        <location filename="edit/dlgdiscountedit.cpp" line="195"/>
         <source>Discount for service person already exists!
 Please modify the existing discount.</source>
         <translation>A szerviz kedvezmény már létezik.
 Kérem módosítsa a korábban elmentett kedvezményt.</translation>
     </message>
     <message>
-        <location filename="edit/dlgdiscountedit.cpp" line="204"/>
+        <location filename="edit/dlgdiscountedit.cpp" line="205"/>
         <source>Discount for selected guest already exists!
 Please modify the existing discount.</source>
         <translation>A kiválasztott vendéghez már létezik kedvezmény!
 Kérem módosítsa a korábban elmentett kedvezményt.</translation>
     </message>
     <message>
-        <location filename="edit/dlgdiscountedit.cpp" line="214"/>
+        <location filename="edit/dlgdiscountedit.cpp" line="215"/>
         <source>Discount for selected company already exists!
 Please modify the existing discount.</source>
         <translation>A kiválasztott céghez már létezik kedvezmény.
@@ -1515,12 +1814,12 @@ Please modify the existing discount.</source>
 Kérem módosítsa a korábban elmentett kedvezményt.</translation>
     </message>
     <message>
-        <location filename="edit/dlgdiscountedit.cpp" line="257"/>
+        <location filename="edit/dlgdiscountedit.cpp" line="258"/>
         <source>One of the item from the list must be selected!</source>
         <translation>A lista valamelyik elemét ki kell választani!</translation>
     </message>
     <message>
-        <location filename="edit/dlgdiscountedit.cpp" line="267"/>
+        <location filename="edit/dlgdiscountedit.cpp" line="277"/>
         <source>Value of discount is invalid.
 Please use only numbers.</source>
         <translation>A kedvezmény értéke nem megfelelő.
@@ -1539,11 +1838,11 @@ Kérem csak számokat használjon.</translation>
         <translation type="obsolete">Szerviz szakember</translation>
     </message>
     <message>
-        <location filename="edit/dlgdiscountedit.cpp" line="376"/>
-        <location filename="edit/dlgdiscountedit.cpp" line="382"/>
-        <location filename="edit/dlgdiscountedit.cpp" line="394"/>
-        <location filename="edit/dlgdiscountedit.cpp" line="406"/>
-        <location filename="edit/dlgdiscountedit.cpp" line="418"/>
+        <location filename="edit/dlgdiscountedit.cpp" line="387"/>
+        <location filename="edit/dlgdiscountedit.cpp" line="393"/>
+        <location filename="edit/dlgdiscountedit.cpp" line="405"/>
+        <location filename="edit/dlgdiscountedit.cpp" line="417"/>
+        <location filename="edit/dlgdiscountedit.cpp" line="429"/>
         <source>&lt;Not selected&gt;</source>
         <translation>&lt;Nincs kiválasztva&gt;</translation>
     </message>
@@ -1652,6 +1951,110 @@ Kérem csak számokat használjon.</translation>
     </message>
 </context>
 <context>
+    <name>cDlgExportImport</name>
+    <message>
+        <location filename="dlg/dlgexportimport.cpp" line="39"/>
+        <source>Data export</source>
+        <translation>Adat exportálás</translation>
+    </message>
+    <message>
+        <location filename="dlg/dlgexportimport.cpp" line="40"/>
+        <source>Select destination directory</source>
+        <translation>Válassza ki a célkönyvtárat</translation>
+    </message>
+    <message>
+        <location filename="dlg/dlgexportimport.cpp" line="46"/>
+        <source>Data import</source>
+        <translation>Adat importálás</translation>
+    </message>
+    <message>
+        <location filename="dlg/dlgexportimport.cpp" line="47"/>
+        <source>Select file to be imported</source>
+        <translation>Válassza ki az importálandó állományt</translation>
+    </message>
+    <message>
+        <location filename="dlg/dlgexportimport.cpp" line="129"/>
+        <source>Please note that only the barcode of the patientcards will be imported.
+Duplicated barcodes or barcodes with invalid length will be skipped.</source>
+        <translation>Kérjük vegye figyelembe, hogy csak a vonalkódok kerülnek importálásra.
+A már létező vonalkódok illetve a nem megfelelő hosszúságúak kimaradnak az importálásból.</translation>
+    </message>
+    <message>
+        <location filename="dlg/dlgexportimport.cpp" line="142"/>
+        <source>Products with duplicated barcodes will be skipped.</source>
+        <translation>A már létező vonalkódú termékek kimaradnak az importálásból.</translation>
+    </message>
+    <message>
+        <location filename="dlg/dlgexportimport.cpp" line="185"/>
+        <source>Exporting guest data to the following file:
+
+%1</source>
+        <translation>Vendég adatok exportálása a következő állományba:
+
+%1</translation>
+    </message>
+    <message>
+        <location filename="dlg/dlgexportimport.cpp" line="189"/>
+        <source>Exporting patientcard data to the following file:
+
+%1</source>
+        <translation>Bérlet adatok exportálása a következő állományba:
+
+%1</translation>
+    </message>
+    <message>
+        <location filename="dlg/dlgexportimport.cpp" line="193"/>
+        <source>Exporting product data to the following file:
+
+%1</source>
+        <translation>Termék adatok exportálása a következő állományba:
+
+%1</translation>
+    </message>
+    <message>
+        <location filename="dlg/dlgexportimport.cpp" line="203"/>
+        <source>Importing guest data from the following file:
+
+%1</source>
+        <translation>Vendég adatok importálása a következő állományból:
+
+%1</translation>
+    </message>
+    <message>
+        <location filename="dlg/dlgexportimport.cpp" line="207"/>
+        <source>Importing patientcard barcodes from the following file:
+
+%1</source>
+        <translation>Bérlet vonalkódok importálása a következő állományból:
+
+%1</translation>
+    </message>
+    <message>
+        <location filename="dlg/dlgexportimport.cpp" line="211"/>
+        <source>Importing product data from the following file:
+
+%1</source>
+        <translation>Termék adatok importálása a következő állományból:
+
+%1</translation>
+    </message>
+    <message>
+        <location filename="dlg/dlgexportimport.cpp" line="243"/>
+        <source>Select target directory</source>
+        <translation>Válassza ki a célkönyvtárat</translation>
+    </message>
+    <message>
+        <location filename="dlg/dlgexportimport.cpp" line="319"/>
+        <source>Information</source>
+        <translation>Információ</translation>
+    </message>
+    <message>
+        <location filename="dlg/dlgexportimport.cpp" line="320"/>
+        <source>Export process has been finished.</source>
+        <translation>Az exportálás befejeződött.</translation>
+    </message>
+</context>
+<context>
     <name>cDlgGuest</name>
     <message>
         <location filename="crud/dlgguest.cpp" line="10"/>
@@ -1754,7 +2157,7 @@ Kérem csak számokat használjon.</translation>
 <context>
     <name>cDlgGuestEdit</name>
     <message>
-        <location filename="edit/dlgguestedit.cpp" line="51"/>
+        <location filename="edit/dlgguestedit.cpp" line="53"/>
         <source>Attendance List</source>
         <translation>Kezelések</translation>
     </message>
@@ -1763,83 +2166,95 @@ Kérem csak számokat használjon.</translation>
         <translation type="obsolete">Hiba</translation>
     </message>
     <message>
-        <location filename="edit/dlgguestedit.cpp" line="205"/>
-        <location filename="edit/dlgguestedit.cpp" line="243"/>
+        <location filename="edit/dlgguestedit.cpp" line="252"/>
+        <location filename="edit/dlgguestedit.cpp" line="290"/>
         <source>Guest name cannot be empty.</source>
         <translation>Vendég neve nem lehet üres.</translation>
     </message>
     <message>
-        <location filename="edit/dlgguestedit.cpp" line="211"/>
-        <location filename="edit/dlgguestedit.cpp" line="249"/>
+        <location filename="edit/dlgguestedit.cpp" line="258"/>
+        <location filename="edit/dlgguestedit.cpp" line="296"/>
         <source>Gender of the guest must be set.</source>
         <translation>A vendég nemét meg kell adni.</translation>
     </message>
     <message>
-        <location filename="edit/dlgguestedit.cpp" line="221"/>
-        <location filename="edit/dlgguestedit.cpp" line="258"/>
+        <location filename="edit/dlgguestedit.cpp" line="268"/>
+        <location filename="edit/dlgguestedit.cpp" line="305"/>
         <source>Warning</source>
         <translation>Figyelmeztetés</translation>
     </message>
     <message>
-        <location filename="edit/dlgguestedit.cpp" line="315"/>
-        <location filename="edit/dlgguestedit.cpp" line="322"/>
+        <location filename="edit/dlgguestedit.cpp" line="366"/>
+        <location filename="edit/dlgguestedit.cpp" line="373"/>
         <source>Attention</source>
         <translation>Figyelmeztetés</translation>
     </message>
     <message>
-        <location filename="edit/dlgguestedit.cpp" line="316"/>
+        <location filename="edit/dlgguestedit.cpp" line="367"/>
         <source>This patientcard has been lost and replaced
 and can not be used or sold again.</source>
         <translation>Ez a bérlet elveszett és lecserélték másik bérletre
 ezért nem lehet használni vagy eladni újra.</translation>
     </message>
     <message>
-        <location filename="edit/dlgguestedit.cpp" line="323"/>
+        <location filename="edit/dlgguestedit.cpp" line="374"/>
         <source>This patientcard is in use. Active patientcard can not be sold again.</source>
         <oldsource>This patientcard is in use. Active patientcard can not be sold.
 Please refill the card if you want to add additional units.</oldsource>
         <translation>Ez a bérlet már használatban van. Aktív bérletet nem lehet eladni újra.</translation>
     </message>
     <message>
-        <location filename="edit/dlgguestedit.cpp" line="336"/>
+        <location filename="edit/dlgguestedit.cpp" line="387"/>
         <source>This barcode has not found in the database.
 Do you want to register it for a new patientcard?</source>
         <translation>Ez a vonalkód nincs elmentve az adatbázisban.
 Regisztrálni akarja a vonalkódot egy új bérlethez?</translation>
     </message>
     <message>
-        <location filename="edit/dlgguestedit.cpp" line="401"/>
+        <location filename="edit/dlgguestedit.cpp" line="455"/>
         <source>Are you sure you want to disjoin the selected card from patient?</source>
         <translation>Biztos benne, hogy leválasztja a kiválasztott bérletet a vendégről?</translation>
+    </message>
+    <message>
+        <location filename="edit/dlgguestedit.cpp" line="526"/>
+        <source>Assigned patientcards:
+Barcode	Patientcard type</source>
+        <translation>Hozzárendelt bérletek:
+Vonalkód	Bérlettípus</translation>
+    </message>
+    <message>
+        <source>Assigned patientcards:
+</source>
+        <translation type="obsolete">Társított bérletek:
+</translation>
     </message>
     <message>
         <source>Do you want to save changes and close the dialog?</source>
         <translation type="obsolete">El akarja menteni a változtatásokat és be akarja zárni a dialógus ablakot?</translation>
     </message>
     <message>
-        <location filename="edit/dlgguestedit.cpp" line="426"/>
+        <location filename="edit/dlgguestedit.cpp" line="477"/>
         <source>Information</source>
         <translation>Információ</translation>
     </message>
     <message>
-        <location filename="edit/dlgguestedit.cpp" line="426"/>
+        <location filename="edit/dlgguestedit.cpp" line="477"/>
         <source>Not implemented yet.</source>
         <translation>Nincs kész</translation>
     </message>
     <message>
-        <location filename="edit/dlgguestedit.cpp" line="580"/>
         <source>%1 $</source>
-        <translation>%1 Ft.</translation>
+        <translation type="obsolete">%1 Ft.</translation>
     </message>
     <message>
-        <location filename="edit/dlgguestedit.cpp" line="335"/>
-        <location filename="edit/dlgguestedit.cpp" line="376"/>
-        <location filename="edit/dlgguestedit.cpp" line="400"/>
+        <location filename="edit/dlgguestedit.cpp" line="386"/>
+        <location filename="edit/dlgguestedit.cpp" line="427"/>
+        <location filename="edit/dlgguestedit.cpp" line="454"/>
         <source>Question</source>
         <translation>Kérdés</translation>
     </message>
     <message>
-        <location filename="edit/dlgguestedit.cpp" line="377"/>
+        <location filename="edit/dlgguestedit.cpp" line="428"/>
         <source>Do you want to save changes then close the dialog?</source>
         <translation>El akarja menteni a változtatásokat és be akarja zárni a dialógus ablakot?</translation>
     </message>
@@ -1851,19 +2266,25 @@ Regisztrálni akarja a vonalkódot egy új bérlethez?</translation>
 <context>
     <name>cDlgHardwareTest</name>
     <message>
-        <location filename="dlg/dlghardwaretest.cpp" line="14"/>
+        <location filename="dlg/dlghardwaretest.cpp" line="18"/>
         <source>Hardware Test</source>
         <translation>Hardver teszt</translation>
     </message>
     <message>
-        <location filename="dlg/dlghardwaretest.cpp" line="205"/>
+        <location filename="dlg/dlghardwaretest.cpp" line="280"/>
         <source>Hardware available</source>
         <translation>A hardver rendelkezésre áll</translation>
     </message>
     <message>
-        <location filename="dlg/dlghardwaretest.cpp" line="210"/>
+        <location filename="dlg/dlghardwaretest.cpp" line="285"/>
+        <location filename="dlg/dlghardwaretest.cpp" line="293"/>
         <source>Hardware unavailable</source>
         <translation>A hardver nem elérhető</translation>
+    </message>
+    <message>
+        <location filename="dlg/dlghardwaretest.cpp" line="571"/>
+        <source>Not implemented yet</source>
+        <translation>Nincs kész</translation>
     </message>
 </context>
 <context>
@@ -2115,52 +2536,52 @@ El akarja menteni ezt a hármast az adatbázisba?</translation>
         <translation>Kód beírása ...</translation>
     </message>
     <message>
-        <location filename="dlg/dlginputstart.cpp" line="48"/>
-        <location filename="dlg/dlginputstart.cpp" line="142"/>
+        <location filename="dlg/dlginputstart.cpp" line="57"/>
+        <location filename="dlg/dlginputstart.cpp" line="151"/>
         <source>Entering time period ...</source>
         <translation>Idő intervallum beírása ...</translation>
     </message>
     <message>
-        <location filename="dlg/dlginputstart.cpp" line="53"/>
-        <location filename="dlg/dlginputstart.cpp" line="146"/>
+        <location filename="dlg/dlginputstart.cpp" line="62"/>
+        <location filename="dlg/dlginputstart.cpp" line="155"/>
         <source>Entering barcode ...</source>
         <translation>Vonalkód beírása ...</translation>
     </message>
     <message>
-        <location filename="dlg/dlginputstart.cpp" line="62"/>
-        <location filename="dlg/dlginputstart.cpp" line="150"/>
+        <location filename="dlg/dlginputstart.cpp" line="71"/>
+        <location filename="dlg/dlginputstart.cpp" line="159"/>
         <source>Entering patient name ...</source>
         <translation>Vendég nevének beírása ...</translation>
     </message>
     <message>
-        <location filename="dlg/dlginputstart.cpp" line="169"/>
-        <location filename="dlg/dlginputstart.cpp" line="206"/>
-        <location filename="dlg/dlginputstart.cpp" line="214"/>
-        <location filename="dlg/dlginputstart.cpp" line="241"/>
+        <location filename="dlg/dlginputstart.cpp" line="178"/>
+        <location filename="dlg/dlginputstart.cpp" line="215"/>
+        <location filename="dlg/dlginputstart.cpp" line="223"/>
+        <location filename="dlg/dlginputstart.cpp" line="250"/>
         <source>Attention</source>
         <translation>Figyelmeztetés</translation>
     </message>
     <message>
-        <location filename="dlg/dlginputstart.cpp" line="170"/>
+        <location filename="dlg/dlginputstart.cpp" line="179"/>
         <source>Barcode of patientcard should be %1 character length.</source>
         <translation>A kártya vonalkódjának %1 karakter hosszúnak kell lennie.</translation>
     </message>
     <message>
-        <location filename="dlg/dlginputstart.cpp" line="207"/>
+        <location filename="dlg/dlginputstart.cpp" line="216"/>
         <source>Invalid value entered.
 Please use only numbers.</source>
         <translation>Érvénytelen a megadott érték.
 Kérem csak számokat használjon.</translation>
     </message>
     <message>
-        <location filename="dlg/dlginputstart.cpp" line="215"/>
+        <location filename="dlg/dlginputstart.cpp" line="224"/>
         <source>Invalid value entered.
 Time value can not be greater than %1 minutes.</source>
         <translation>Érvénytelen a megadott érték.
 Az időintervallum nem lehet nagyobb, mint %1 perc.</translation>
     </message>
     <message>
-        <location filename="dlg/dlginputstart.cpp" line="241"/>
+        <location filename="dlg/dlginputstart.cpp" line="250"/>
         <source>Please click on the desired button for the defined search value!</source>
         <translation>Kérem kattintson a megfelelő gombra a kívánt keresés indításához!</translation>
     </message>
@@ -2330,30 +2751,40 @@ discounts</source>
 <context>
     <name>cDlgLogIn</name>
     <message>
-        <location filename="dlg/dlglogin.cpp" line="13"/>
         <source>Log In</source>
-        <translation>Bejelentkezés</translation>
+        <translation type="obsolete">Bejelentkezés</translation>
     </message>
     <message>
-        <location filename="dlg/dlglogin.cpp" line="16"/>
         <source>&amp;Log In</source>
-        <translation>&amp;Bejelentkezés</translation>
+        <translation type="obsolete">&amp;Bejelentkezés</translation>
     </message>
     <message>
-        <location filename="dlg/dlglogin.cpp" line="20"/>
         <source>&amp;Quit</source>
-        <translation>&amp;Kilépés</translation>
+        <translation type="obsolete">&amp;Kilépés</translation>
     </message>
     <message>
-        <location filename="dlg/dlglogin.cpp" line="60"/>
         <source>Login failed</source>
-        <translation>A bejelentkezés sikertelen</translation>
+        <translation type="obsolete">A bejelentkezés sikertelen</translation>
     </message>
     <message>
-        <location filename="dlg/dlglogin.cpp" line="61"/>
         <source>Incorrect User Name and/or Password. Please try again.</source>
-        <translation>Nem megfelelő felhasználó név és/vagy jelszó.
+        <translation type="obsolete">Nem megfelelő felhasználó név és/vagy jelszó.
 Kérem próbálkozzon újra.</translation>
+    </message>
+    <message>
+        <location filename="dlg/dlglogin.cpp" line="15"/>
+        <source>Enter password</source>
+        <translation>Adja meg a jelszót</translation>
+    </message>
+    <message>
+        <location filename="dlg/dlglogin.cpp" line="18"/>
+        <source>&amp;Ok</source>
+        <translation>&amp;Ok</translation>
+    </message>
+    <message>
+        <location filename="dlg/dlglogin.cpp" line="22"/>
+        <source>&amp;Cancel</source>
+        <translation>&amp;Mégsem</translation>
     </message>
 </context>
 <context>
@@ -2387,51 +2818,110 @@ Kérem próbálkozzon újra.</translation>
 <context>
     <name>cDlgManageDatabase</name>
     <message>
-        <location filename="dlg/dlgmanagedatabase.cpp" line="18"/>
+        <location filename="dlg/dlgmanagedatabase.cpp" line="19"/>
         <source>Manage database</source>
         <translation>Adatbázis kezelés</translation>
     </message>
     <message>
-        <location filename="dlg/dlgmanagedatabase.cpp" line="67"/>
+        <location filename="dlg/dlgmanagedatabase.cpp" line="36"/>
+        <source>&lt;Not selected&gt;</source>
+        <translation>&lt;Nincs kiválasztva&gt;</translation>
+    </message>
+    <message>
+        <location filename="dlg/dlgmanagedatabase.cpp" line="99"/>
         <source>Question</source>
         <translation>Kérdés</translation>
     </message>
     <message>
-        <location filename="dlg/dlgmanagedatabase.cpp" line="68"/>
+        <location filename="dlg/dlgmanagedatabase.cpp" line="100"/>
         <source>Are you sure you want to execute the action?
 Please note the action can not be revoked.</source>
         <translation>Biztos benne, hogy végre akarja hajtani a beavatkozást?
 Kérjük vegye figyelembe, hogy a beavatkozást nem lehet visszavonni.</translation>
     </message>
     <message>
-        <location filename="dlg/dlgmanagedatabase.cpp" line="110"/>
-        <location filename="dlg/dlgmanagedatabase.cpp" line="131"/>
-        <location filename="dlg/dlgmanagedatabase.cpp" line="169"/>
+        <location filename="dlg/dlgmanagedatabase.cpp" line="184"/>
+        <location filename="dlg/dlgmanagedatabase.cpp" line="257"/>
+        <location filename="dlg/dlgmanagedatabase.cpp" line="303"/>
+        <location filename="dlg/dlgmanagedatabase.cpp" line="418"/>
+        <location filename="dlg/dlgmanagedatabase.cpp" line="501"/>
         <source>Information</source>
         <translation>Információ</translation>
     </message>
     <message>
-        <location filename="dlg/dlgmanagedatabase.cpp" line="111"/>
-        <location filename="dlg/dlgmanagedatabase.cpp" line="132"/>
+        <location filename="dlg/dlgmanagedatabase.cpp" line="185"/>
+        <location filename="dlg/dlgmanagedatabase.cpp" line="304"/>
         <source>The action successfully finished.
 Number of affected records: %1</source>
         <translation>A beavatkozás sikeresen befejeződött.
 Az érintett adatbázis bejegyzések száma: %1</translation>
     </message>
     <message>
-        <location filename="dlg/dlgmanagedatabase.cpp" line="170"/>
+        <location filename="dlg/dlgmanagedatabase.cpp" line="258"/>
+        <source>The action successfully finished.
+Number of affected records: %1
+Number of skipped records: %2</source>
+        <translation>A beavatkozás sikeresen befejeződött.
+Az érintett adatbázis bejegyzések száma: %1
+A kihagyott adatbázis bejegyzések száma: %2</translation>
+    </message>
+    <message>
+        <location filename="dlg/dlgmanagedatabase.cpp" line="419"/>
+        <source>The action successfully finished.
+
+Number of affected records:
+PatientCardUnits -&gt; %1 records
+ProductHistory -&gt; %2 records
+CassaHistory -&gt; %3 records
+Ledger -&gt; %4 records
+LedgerDevice -&gt; %5 records
+Denominations -&gt; %6 records
+Cassa -&gt; %7 records</source>
+        <translation>A beavatkozás sikeresen befejeződött.
+
+Az érintett adatbázis bejegyzések száma:
+Bérlet egységek: %1 bejegyzés
+Termék történet: %2 bejegyzés
+Pénztár történet: %3 bejegyzés
+Könyvelés: %4 bejegyzés
+Gépkönyv: %5 bejegyzés
+Névérték: %6 bejegyzés
+Pénztár: %7 bejegyzés</translation>
+    </message>
+    <message>
+        <location filename="dlg/dlgmanagedatabase.cpp" line="502"/>
+        <source>The action successfully finished.
+Number of repaired patientcards: %1</source>
+        <translation>A beavatkozás sikeresen befejeződött.
+A megjavított bérletek száma: %1</translation>
+    </message>
+    <message>
+        <location filename="dlg/dlgmanagedatabase.cpp" line="515"/>
+        <source>Warning</source>
+        <translation>Figyelmeztetés</translation>
+    </message>
+    <message>
+        <location filename="dlg/dlgmanagedatabase.cpp" line="516"/>
+        <source>Please select patientcard type to repair with the patientcards.</source>
+        <translation>Kérem válassza ki a bérlettípust a javítani kívánt bérletekhez.</translation>
+    </message>
+    <message>
         <source>The action successfully finished.
 Number of affected records:
 PatientCardUnits -&gt; %1 records
 ProductHistory -&gt; %2 records
 CassaHistory -&gt; %3 records
 Ledger -&gt; %4 records</source>
-        <translation>A beavatkozás sikeresen befejeződött.
+        <translation type="obsolete">A beavatkozás sikeresen befejeződött.
 Az érintett adatbázis bejegyzések száma:
 Bérlet egységek: %1 bejegyzés
 Termék történet: %2 bejegyzés
 Pénztár történet: %3 bejegyzés
 Könyvelés: %4 bejegyzés</translation>
+    </message>
+    <message>
+        <source>Select Directory</source>
+        <translation type="obsolete">Könyvtár kiválasztás</translation>
     </message>
 </context>
 <context>
@@ -2462,24 +2952,42 @@ Könyvelés: %4 bejegyzés</translation>
         <translation>Információs szöveg</translation>
     </message>
     <message>
-        <location filename="dlg/dlgpanelappereance.cpp" line="248"/>
+        <location filename="dlg/dlgpanelappereance.cpp" line="305"/>
         <source>status</source>
         <translation>státusz</translation>
     </message>
     <message>
-        <location filename="dlg/dlgpanelappereance.cpp" line="257"/>
+        <location filename="dlg/dlgpanelappereance.cpp" line="314"/>
         <source>current length</source>
         <translation>időtartam</translation>
     </message>
     <message>
-        <location filename="dlg/dlgpanelappereance.cpp" line="266"/>
+        <location filename="dlg/dlgpanelappereance.cpp" line="323"/>
         <source>next length</source>
         <translation>időtartam</translation>
     </message>
     <message>
-        <location filename="dlg/dlgpanelappereance.cpp" line="275"/>
+        <location filename="dlg/dlgpanelappereance.cpp" line="332"/>
         <source>information</source>
         <translation>információ</translation>
+    </message>
+</context>
+<context>
+    <name>cDlgPanelEdit</name>
+    <message>
+        <location filename="edit/dlgpaneledit.cpp" line="13"/>
+        <source>Panel</source>
+        <translation>Gép</translation>
+    </message>
+    <message>
+        <location filename="edit/dlgpaneledit.cpp" line="51"/>
+        <source>Error</source>
+        <translation>Hiba</translation>
+    </message>
+    <message>
+        <location filename="edit/dlgpaneledit.cpp" line="51"/>
+        <source>Title of Panel can not be empty.</source>
+        <translation>A gépet azonosító fejléc szövege nem lehet üres.</translation>
     </message>
 </context>
 <context>
@@ -2567,17 +3075,17 @@ Könyvelés: %4 bejegyzés</translation>
 <context>
     <name>cDlgPanelSettings</name>
     <message>
-        <location filename="crud/dlgpanelsettings.cpp" line="12"/>
+        <location filename="crud/dlgpanelsettings.cpp" line="11"/>
         <source>Panel settings</source>
         <translation>Gép beállítások</translation>
     </message>
     <message>
-        <location filename="crud/dlgpanelsettings.cpp" line="25"/>
+        <location filename="crud/dlgpanelsettings.cpp" line="24"/>
         <source>Title: </source>
         <translation>Fejléc:</translation>
     </message>
     <message>
-        <location filename="crud/dlgpanelsettings.cpp" line="34"/>
+        <location filename="crud/dlgpanelsettings.cpp" line="33"/>
         <source>Type: </source>
         <translation>Típus:</translation>
     </message>
@@ -2590,96 +3098,106 @@ Könyvelés: %4 bejegyzés</translation>
         <translation type="obsolete">&amp;Mégsem</translation>
     </message>
     <message>
-        <location filename="crud/dlgpanelsettings.cpp" line="47"/>
+        <location filename="crud/dlgpanelsettings.cpp" line="46"/>
         <source>Work time (hh:mm:ss): </source>
         <translation>Üzemóra (óó:pp:mp) : </translation>
     </message>
     <message>
-        <location filename="crud/dlgpanelsettings.cpp" line="78"/>
+        <location filename="crud/dlgpanelsettings.cpp" line="90"/>
         <source>Reset</source>
         <translation>Nullázás</translation>
     </message>
     <message>
-        <location filename="crud/dlgpanelsettings.cpp" line="79"/>
+        <location filename="crud/dlgpanelsettings.cpp" line="91"/>
         <source>Reset the worktime of the device.</source>
         <translation>A gép működési idejének lenullázása.</translation>
     </message>
     <message>
-        <location filename="crud/dlgpanelsettings.cpp" line="87"/>
+        <location filename="crud/dlgpanelsettings.cpp" line="112"/>
         <source>Maximum work time (hour): </source>
         <translation>Maximum üzemóra (óra) : </translation>
     </message>
     <message>
-        <location filename="crud/dlgpanelsettings.cpp" line="99"/>
+        <location filename="crud/dlgpanelsettings.cpp" line="159"/>
+        <source>Enable temporary controls can be used by System Administrator.</source>
+        <translation>Rendszer Adminisztrátori hozzáférés ideiglenes engedélyezése</translation>
+    </message>
+    <message>
+        <location filename="crud/dlgpanelsettings.cpp" line="127"/>
         <source>Group: </source>
         <translation>Csoport: </translation>
     </message>
     <message>
-        <location filename="crud/dlgpanelsettings.cpp" line="120"/>
+        <location filename="crud/dlgpanelsettings.cpp" line="104"/>
+        <source>Enable to reset work time for Device Administrator.</source>
+        <translation>Üzemóra nullázás engedélyezése Gép Adminisztrátor számára.</translation>
+    </message>
+    <message>
+        <location filename="crud/dlgpanelsettings.cpp" line="145"/>
         <source> Copy to all </source>
         <oldsource>Copy to all</oldsource>
         <translation> Másolás a többihez </translation>
     </message>
     <message>
-        <location filename="crud/dlgpanelsettings.cpp" line="121"/>
+        <location filename="crud/dlgpanelsettings.cpp" line="146"/>
         <source>Copy and assign all device usages to all other devices.</source>
         <translation>A géphasználatok másolása az összes többi géphez.</translation>
     </message>
     <message>
-        <location filename="crud/dlgpanelsettings.cpp" line="195"/>
+        <location filename="crud/dlgpanelsettings.cpp" line="235"/>
         <source>Id</source>
         <translation>Id</translation>
     </message>
     <message>
-        <location filename="crud/dlgpanelsettings.cpp" line="196"/>
+        <location filename="crud/dlgpanelsettings.cpp" line="236"/>
         <source>LicenceId</source>
         <translation>LiszenszId</translation>
     </message>
     <message>
-        <location filename="crud/dlgpanelsettings.cpp" line="197"/>
-        <location filename="crud/dlgpanelsettings.cpp" line="213"/>
+        <location filename="crud/dlgpanelsettings.cpp" line="237"/>
+        <location filename="crud/dlgpanelsettings.cpp" line="253"/>
         <source>Name</source>
         <translation>Név</translation>
     </message>
     <message>
-        <location filename="crud/dlgpanelsettings.cpp" line="198"/>
-        <location filename="crud/dlgpanelsettings.cpp" line="214"/>
+        <location filename="crud/dlgpanelsettings.cpp" line="238"/>
+        <location filename="crud/dlgpanelsettings.cpp" line="254"/>
         <source>Time length</source>
         <translation>Idő intervallum</translation>
     </message>
     <message>
-        <location filename="crud/dlgpanelsettings.cpp" line="199"/>
-        <location filename="crud/dlgpanelsettings.cpp" line="215"/>
+        <location filename="crud/dlgpanelsettings.cpp" line="239"/>
+        <location filename="crud/dlgpanelsettings.cpp" line="255"/>
         <source>Price</source>
         <translation>Fizetendő</translation>
     </message>
     <message>
-        <location filename="crud/dlgpanelsettings.cpp" line="200"/>
+        <location filename="crud/dlgpanelsettings.cpp" line="240"/>
         <source>Archive</source>
         <translation>Státusz</translation>
     </message>
     <message>
-        <location filename="crud/dlgpanelsettings.cpp" line="256"/>
+        <location filename="crud/dlgpanelsettings.cpp" line="296"/>
         <source>New paneluse</source>
         <translation>Új kezelési idő</translation>
     </message>
     <message>
-        <location filename="crud/dlgpanelsettings.cpp" line="276"/>
+        <location filename="crud/dlgpanelsettings.cpp" line="316"/>
         <source>Edit paneluse</source>
         <translation>Kezelési idő szerkesztése</translation>
     </message>
     <message>
-        <location filename="crud/dlgpanelsettings.cpp" line="295"/>
+        <location filename="crud/dlgpanelsettings.cpp" line="335"/>
         <source>Question</source>
         <translation>Kérdés</translation>
     </message>
     <message>
-        <location filename="crud/dlgpanelsettings.cpp" line="330"/>
+        <location filename="crud/dlgpanelsettings.cpp" line="370"/>
         <source>Maximum worktime of panel can not be empty.</source>
         <translation>A maximum üzemóra nem lehet üres.</translation>
     </message>
     <message>
-        <location filename="crud/dlgpanelsettings.cpp" line="335"/>
+        <location filename="crud/dlgpanelsettings.cpp" line="375"/>
         <source>Maximum worktime has to be greater than zero.</source>
         <translation>A maximum üzemórának nagyobbnak kell lennie nullánál.</translation>
     </message>
@@ -2696,19 +3214,19 @@ Könyvelés: %4 bejegyzés</translation>
         <translation type="obsolete">Kérdés</translation>
     </message>
     <message>
-        <location filename="crud/dlgpanelsettings.cpp" line="296"/>
+        <location filename="crud/dlgpanelsettings.cpp" line="336"/>
         <source>Are you sure you want to delete this paneluse?</source>
         <translation>Biztos benne, hogy törölni akarja ezt a kezelési időt?</translation>
     </message>
     <message>
-        <location filename="crud/dlgpanelsettings.cpp" line="323"/>
-        <location filename="crud/dlgpanelsettings.cpp" line="330"/>
-        <location filename="crud/dlgpanelsettings.cpp" line="335"/>
+        <location filename="crud/dlgpanelsettings.cpp" line="363"/>
+        <location filename="crud/dlgpanelsettings.cpp" line="370"/>
+        <location filename="crud/dlgpanelsettings.cpp" line="375"/>
         <source>Error</source>
         <translation>Hiba</translation>
     </message>
     <message>
-        <location filename="crud/dlgpanelsettings.cpp" line="323"/>
+        <location filename="crud/dlgpanelsettings.cpp" line="363"/>
         <source>Title of panel can not be empty.</source>
         <translation>A gépet azonosító fejléc szövege nem lehet üres.</translation>
     </message>
@@ -2834,12 +3352,12 @@ Kérem adjon meg egy másik sorszámot.</translation>
         <translation>Panelhasználatok másolása</translation>
     </message>
     <message>
-        <location filename="dlg/dlgpaneltimecopy.cpp" line="103"/>
+        <location filename="dlg/dlgpaneltimecopy.cpp" line="104"/>
         <source>Information</source>
         <translation>Információ</translation>
     </message>
     <message>
-        <location filename="dlg/dlgpaneltimecopy.cpp" line="104"/>
+        <location filename="dlg/dlgpaneltimecopy.cpp" line="105"/>
         <source>Copy of the selected panel uses has been finished.
 Number of copied items: %1
 Number of skipped items (due to avoid duplication): %2</source>
@@ -2944,31 +3462,66 @@ amihez egy vagy több gép van hozzárendelve.</translation>
 <context>
     <name>cDlgPanelUse</name>
     <message>
-        <location filename="dlg/dlgpaneluse.cpp" line="170"/>
-        <source>Card type : </source>
-        <oldsource>Type :</oldsource>
-        <translation>Bérlettípus : </translation>
+        <location filename="dlg/dlgpaneluse.cpp" line="188"/>
+        <source>Start</source>
+        <translation>Indítás</translation>
     </message>
     <message>
-        <location filename="dlg/dlgpaneluse.cpp" line="171"/>
+        <source>Card type : </source>
+        <oldsource>Type :</oldsource>
+        <translation type="obsolete">Bérlettípus : </translation>
+    </message>
+    <message>
+        <location filename="dlg/dlgpaneluse.cpp" line="193"/>
         <source>Owner : </source>
         <oldsource>Owner :</oldsource>
         <translation>Tulajdonos : </translation>
     </message>
     <message>
-        <location filename="dlg/dlgpaneluse.cpp" line="196"/>
+        <location filename="dlg/dlgpaneluse.cpp" line="194"/>
+        <location filename="dlg/dlgpaneluse.cpp" line="741"/>
+        <source>Comment :
+</source>
+        <translation>Megjegyzés :
+</translation>
+    </message>
+    <message>
+        <location filename="dlg/dlgpaneluse.cpp" line="222"/>
         <source>&lt;No time intervall selected&gt;</source>
         <translation>&lt;Nincs időintervallum kiválasztva&gt;</translation>
     </message>
     <message>
-        <location filename="dlg/dlgpaneluse.cpp" line="360"/>
-        <location filename="dlg/dlgpaneluse.cpp" line="483"/>
-        <location filename="dlg/dlgpaneluse.cpp" line="546"/>
+        <source>
+&lt;b&gt;%1 units valid on&lt;/b&gt;%2</source>
+        <translation type="obsolete">
+&lt;b&gt;%1 egység érvényes&lt;/b&gt;%2</translation>
+    </message>
+    <message>
+        <source>&lt;h3&gt;%1&lt;/h3&gt;&lt;b&gt;Owner:&lt;/b&gt; %2&lt;br&gt;&lt;b&gt;Valid until:&lt;/b&gt; %3&lt;br&gt;&lt;b&gt;Valid time periods:&lt;/b&gt;%4</source>
+        <translation type="obsolete">&lt;h3&gt;%1&lt;/h3&gt;&lt;b&gt;Tulajdonos:&lt;/b&gt; %2&lt;br&gt;&lt;b&gt;Érvényes:&lt;/b&gt; %3&lt;br&gt;&lt;b&gt;Felhasználható:&lt;/b&gt;%4</translation>
+    </message>
+    <message>
+        <location filename="dlg/dlgpaneluse.cpp" line="347"/>
+        <source>
+&lt;b&gt;%1 units (%2 minutes) valid on&lt;/b&gt;%3</source>
+        <translation>
+&lt;b&gt;%1 egység (%2 perc) érvényes &lt;/b&gt;%3</translation>
+    </message>
+    <message>
+        <location filename="dlg/dlgpaneluse.cpp" line="413"/>
+        <source>Comment :
+%1</source>
+        <translation>Megjegyzés :
+%1</translation>
+    </message>
+    <message>
+        <location filename="dlg/dlgpaneluse.cpp" line="460"/>
+        <location filename="dlg/dlgpaneluse.cpp" line="609"/>
         <source>Warning</source>
         <translation>Figyelmeztetés</translation>
     </message>
     <message>
-        <location filename="dlg/dlgpaneluse.cpp" line="361"/>
+        <location filename="dlg/dlgpaneluse.cpp" line="461"/>
         <source>This time period did not saved in the database
 for the actually selected device.
 Please select valid value from the list.</source>
@@ -2977,34 +3530,39 @@ az aktuálisan kiválasztott géphez.
 Kérem válasszon egy helyes értéket a listából.</translation>
     </message>
     <message>
-        <location filename="dlg/dlgpaneluse.cpp" line="484"/>
+        <location filename="dlg/dlgpaneluse.cpp" line="563"/>
+        <source>Ok</source>
+        <translation>Rendben</translation>
+    </message>
+    <message>
+        <location filename="dlg/dlgpaneluse.cpp" line="610"/>
         <source>Invalid barcode length.
 The length of the barcode should be %1.</source>
         <translation>Nem megfelelő vonalkód hosszúság.
 A vonalkódnak %1 karakter hosszúnak kell lennie.</translation>
     </message>
     <message>
-        <location filename="dlg/dlgpaneluse.cpp" line="495"/>
-        <location filename="dlg/dlgpaneluse.cpp" line="502"/>
+        <location filename="dlg/dlgpaneluse.cpp" line="623"/>
+        <location filename="dlg/dlgpaneluse.cpp" line="631"/>
         <source>Attention</source>
         <translation>Figyelmeztetés</translation>
     </message>
     <message>
-        <location filename="dlg/dlgpaneluse.cpp" line="496"/>
+        <location filename="dlg/dlgpaneluse.cpp" line="624"/>
         <source>You are not allowed to use system administrator card.
 Please log in as a system administrator if you want to use this card.</source>
         <translation>Nincs jogosultsága szervízkártya használatára.
 Ha használni akarja a kártyát, jelentkezzen be rendszer adminisztrátorként.</translation>
     </message>
     <message>
-        <location filename="dlg/dlgpaneluse.cpp" line="503"/>
+        <location filename="dlg/dlgpaneluse.cpp" line="632"/>
         <source>This patientcard has been lost and replaced
 and can not be used or sold again.</source>
         <translation>Ez a bérlet elveszett és lecserélték másik bérletre
 ezért nem lehet használni vagy eladni újra.</translation>
     </message>
     <message>
-        <location filename="dlg/dlgpaneluse.cpp" line="518"/>
+        <location filename="dlg/dlgpaneluse.cpp" line="648"/>
         <source>
 
 Due to there is no time left, the patientcard will be reseted and deactivated.</source>
@@ -3013,14 +3571,14 @@ Due to there is no time left, the patientcard will be reseted and deactivated.</
 A bérleten nincs felhasználható idő, ezért a bérlet deaktiválásra kerül.</translation>
     </message>
     <message>
-        <location filename="dlg/dlgpaneluse.cpp" line="520"/>
-        <location filename="dlg/dlgpaneluse.cpp" line="555"/>
-        <location filename="dlg/dlgpaneluse.cpp" line="574"/>
+        <location filename="dlg/dlgpaneluse.cpp" line="650"/>
+        <location filename="dlg/dlgpaneluse.cpp" line="684"/>
+        <location filename="dlg/dlgpaneluse.cpp" line="703"/>
         <source>Question</source>
         <translation>Kérdés</translation>
     </message>
     <message>
-        <location filename="dlg/dlgpaneluse.cpp" line="521"/>
+        <location filename="dlg/dlgpaneluse.cpp" line="651"/>
         <source>This patientcard can not be used with these settings:
 
 Available units: %1
@@ -3035,42 +3593,39 @@ Felhasználható idő: %2 (óó:pp:mm)
 Fel akarja most tölteni a bérletet?%3</translation>
     </message>
     <message>
-        <location filename="dlg/dlgpaneluse.cpp" line="547"/>
         <source>This patientcard currently can not be used.
 Please check it&apos;s validity time period.
 
 %1</source>
-        <translation>Ez a bérlet pillanatnyilag nem használható.
+        <translation type="obsolete">Ez a bérlet pillanatnyilag nem használható.
 Kérem ellenőrizze a bérlet érvényességi időintervallumát.
 
 %1</translation>
     </message>
     <message>
-        <location filename="dlg/dlgpaneluse.cpp" line="556"/>
+        <location filename="dlg/dlgpaneluse.cpp" line="685"/>
         <source>This barcode has not been activated yet.
 Do you want to activate and sell it now?</source>
         <translation>Ilyen vonalkóddal bérlet még nincs aktiválva.
 Akarja aktiválni és eladni most?</translation>
     </message>
     <message>
-        <location filename="dlg/dlgpaneluse.cpp" line="575"/>
+        <location filename="dlg/dlgpaneluse.cpp" line="704"/>
         <source>This barcode has not found in the database.
 Do you want to save it and sell it now?</source>
         <translation>Ez a vonalkód nincs elmentve az adatbázisban.
 Ěl akarja menteni és utána eladni a bérletet?</translation>
     </message>
     <message>
-        <location filename="dlg/dlgpaneluse.cpp" line="313"/>
         <source>&lt;h3&gt;%1&lt;/h3&gt;&lt;b&gt;Type:&lt;/b&gt; %2&lt;br&gt;&lt;b&gt;Owner:&lt;/b&gt; %3&lt;br&gt;&lt;b&gt;Valid until:&lt;/b&gt; %4</source>
-        <translation>&lt;h3&gt;%1&lt;/h3&gt;&lt;b&gt;Típus:&lt;/b&gt; %2&lt;br&gt;&lt;b&gt;Tulajdonos:&lt;/b&gt; %3&lt;br&gt;&lt;b&gt;Érvényes:&lt;/b&gt; %4</translation>
+        <translation type="obsolete">&lt;h3&gt;%1&lt;/h3&gt;&lt;b&gt;Típus:&lt;/b&gt; %2&lt;br&gt;&lt;b&gt;Tulajdonos:&lt;/b&gt; %3&lt;br&gt;&lt;b&gt;Érvényes:&lt;/b&gt; %4</translation>
     </message>
     <message>
-        <location filename="dlg/dlgpaneluse.cpp" line="317"/>
         <source>Type : %1</source>
-        <translation>Típus : %1</translation>
+        <translation type="obsolete">Típus : %1</translation>
     </message>
     <message>
-        <location filename="dlg/dlgpaneluse.cpp" line="318"/>
+        <location filename="dlg/dlgpaneluse.cpp" line="412"/>
         <source>Owner : %1</source>
         <translation>Tulajdonos : %1</translation>
     </message>
@@ -3084,53 +3639,53 @@ Do you want to save it and sell it now?</source>
         <translation>Gép használat</translation>
     </message>
     <message>
-        <location filename="edit/dlgpaneluseedit.cpp" line="44"/>
-        <location filename="edit/dlgpaneluseedit.cpp" line="51"/>
-        <location filename="edit/dlgpaneluseedit.cpp" line="56"/>
-        <location filename="edit/dlgpaneluseedit.cpp" line="61"/>
-        <location filename="edit/dlgpaneluseedit.cpp" line="70"/>
-        <location filename="edit/dlgpaneluseedit.cpp" line="75"/>
-        <location filename="edit/dlgpaneluseedit.cpp" line="80"/>
+        <location filename="edit/dlgpaneluseedit.cpp" line="48"/>
+        <location filename="edit/dlgpaneluseedit.cpp" line="55"/>
+        <location filename="edit/dlgpaneluseedit.cpp" line="60"/>
+        <location filename="edit/dlgpaneluseedit.cpp" line="65"/>
+        <location filename="edit/dlgpaneluseedit.cpp" line="74"/>
+        <location filename="edit/dlgpaneluseedit.cpp" line="79"/>
+        <location filename="edit/dlgpaneluseedit.cpp" line="84"/>
         <source>Error</source>
         <translation>Hiba</translation>
     </message>
     <message>
-        <location filename="edit/dlgpaneluseedit.cpp" line="44"/>
+        <location filename="edit/dlgpaneluseedit.cpp" line="48"/>
         <source>Name can not be empty.</source>
         <translation>A név nem lehet üres.</translation>
     </message>
     <message>
-        <location filename="edit/dlgpaneluseedit.cpp" line="51"/>
+        <location filename="edit/dlgpaneluseedit.cpp" line="55"/>
         <source>Use time can not be empty.</source>
         <translation>Az időintervallum nem lehet üres.</translation>
     </message>
     <message>
-        <location filename="edit/dlgpaneluseedit.cpp" line="56"/>
+        <location filename="edit/dlgpaneluseedit.cpp" line="60"/>
         <source>Use time value is invalid.</source>
         <translation>A megadott időintervallum érték nem megfelelő.</translation>
     </message>
     <message>
-        <location filename="edit/dlgpaneluseedit.cpp" line="61"/>
+        <location filename="edit/dlgpaneluseedit.cpp" line="65"/>
         <source>Use time must be greater than zero.</source>
         <translation>Az időintervallum értéke nem lehet nulla.</translation>
     </message>
     <message>
-        <location filename="edit/dlgpaneluseedit.cpp" line="70"/>
+        <location filename="edit/dlgpaneluseedit.cpp" line="74"/>
         <source>Use price can not be empty.</source>
         <translation>A fizetendő összeg nem lehet üres.</translation>
     </message>
     <message>
-        <location filename="edit/dlgpaneluseedit.cpp" line="75"/>
+        <location filename="edit/dlgpaneluseedit.cpp" line="79"/>
         <source>Use price value is invalid.</source>
         <translation>A megadott fizetendő összeg értéke nem megfelelő.</translation>
     </message>
     <message>
-        <location filename="edit/dlgpaneluseedit.cpp" line="80"/>
+        <location filename="edit/dlgpaneluseedit.cpp" line="84"/>
         <source>Price of usage must be greater than zero.</source>
         <translation>A géphasználat ára nem lehet nulla.</translation>
     </message>
     <message>
-        <location filename="edit/dlgpaneluseedit.cpp" line="105"/>
+        <location filename="edit/dlgpaneluseedit.cpp" line="109"/>
         <source>(%1 + %2 % VAT)</source>
         <translation>(%1 + %2 % ÁFA)</translation>
     </message>
@@ -3155,6 +3710,50 @@ Do you want to save it and sell it now?</source>
         <location filename="crud/dlgpaneluseselect.cpp" line="67"/>
         <source>Cancel</source>
         <translation>Mégsem</translation>
+    </message>
+</context>
+<context>
+    <name>cDlgPanels</name>
+    <message>
+        <location filename="crud/dlgpanels.cpp" line="9"/>
+        <source>Panels List</source>
+        <translation>Gépek listája</translation>
+    </message>
+    <message>
+        <location filename="crud/dlgpanels.cpp" line="38"/>
+        <source>Id</source>
+        <translation>Id</translation>
+    </message>
+    <message>
+        <location filename="crud/dlgpanels.cpp" line="39"/>
+        <location filename="crud/dlgpanels.cpp" line="52"/>
+        <source>Title</source>
+        <translation>Fejléc</translation>
+    </message>
+    <message>
+        <location filename="crud/dlgpanels.cpp" line="40"/>
+        <source>Active</source>
+        <translation>Aktív</translation>
+    </message>
+    <message>
+        <location filename="crud/dlgpanels.cpp" line="41"/>
+        <source>Archive</source>
+        <translation>Státusz</translation>
+    </message>
+    <message>
+        <location filename="crud/dlgpanels.cpp" line="91"/>
+        <source>New Panel</source>
+        <translation>Új gép</translation>
+    </message>
+    <message>
+        <location filename="crud/dlgpanels.cpp" line="96"/>
+        <source>Information</source>
+        <translation>Információ</translation>
+    </message>
+    <message>
+        <location filename="crud/dlgpanels.cpp" line="97"/>
+        <source>You must restart the application.</source>
+        <translation>Újra kell indítania az alkalmazást.</translation>
     </message>
 </context>
 <context>
@@ -3220,9 +3819,8 @@ Do you want to save it and sell it now?</source>
         <translation>Bérletek</translation>
     </message>
     <message>
-        <location filename="crud/dlgpatientcard.cpp" line="19"/>
         <source>Patientcard type: </source>
-        <translation>Bérlet típus:</translation>
+        <translation type="obsolete">Bérlet típus:</translation>
     </message>
     <message>
         <location filename="crud/dlgpatientcard.cpp" line="28"/>
@@ -3230,84 +3828,84 @@ Do you want to save it and sell it now?</source>
         <translation>Vonalkód:</translation>
     </message>
     <message>
-        <location filename="crud/dlgpatientcard.cpp" line="43"/>
+        <location filename="crud/dlgpatientcard.cpp" line="38"/>
+        <source>Owner: </source>
+        <translation>Tulajdonos :</translation>
+    </message>
+    <message>
         <source>&lt;All patientcard types&gt;</source>
         <oldsource>&lt;All patientcard type&gt;</oldsource>
-        <translation>&lt;Összes bérlettípus&gt;</translation>
+        <translation type="obsolete">&lt;Összes bérlettípus&gt;</translation>
     </message>
     <message>
         <source>Patientcard types</source>
         <translation type="obsolete">Bérlet típusok</translation>
     </message>
     <message>
-        <location filename="crud/dlgpatientcard.cpp" line="66"/>
+        <location filename="crud/dlgpatientcard.cpp" line="76"/>
         <source>Replace lost</source>
         <translation>Elveszett cseréje</translation>
     </message>
     <message>
-        <location filename="crud/dlgpatientcard.cpp" line="73"/>
+        <location filename="crud/dlgpatientcard.cpp" line="83"/>
         <source>Assign partner</source>
         <translation>Társkártya kapcsolás</translation>
     </message>
     <message>
-        <location filename="crud/dlgpatientcard.cpp" line="106"/>
+        <location filename="crud/dlgpatientcard.cpp" line="117"/>
         <source>Id</source>
         <translation>Id</translation>
     </message>
     <message>
-        <location filename="crud/dlgpatientcard.cpp" line="107"/>
+        <location filename="crud/dlgpatientcard.cpp" line="118"/>
         <source>LicenceId</source>
         <translation>LiszenszId</translation>
     </message>
     <message>
-        <location filename="crud/dlgpatientcard.cpp" line="108"/>
-        <location filename="crud/dlgpatientcard.cpp" line="138"/>
+        <location filename="crud/dlgpatientcard.cpp" line="119"/>
+        <location filename="crud/dlgpatientcard.cpp" line="141"/>
         <source>Barcode</source>
         <translation>Vonalkód</translation>
     </message>
     <message>
-        <location filename="crud/dlgpatientcard.cpp" line="109"/>
-        <location filename="crud/dlgpatientcard.cpp" line="139"/>
+        <location filename="crud/dlgpatientcard.cpp" line="120"/>
+        <location filename="crud/dlgpatientcard.cpp" line="142"/>
         <source>Owner</source>
         <translation>Tulajdonos</translation>
     </message>
     <message>
-        <location filename="crud/dlgpatientcard.cpp" line="110"/>
-        <location filename="crud/dlgpatientcard.cpp" line="140"/>
         <source>Units</source>
-        <translation>Egységek</translation>
+        <translation type="obsolete">Egységek</translation>
     </message>
     <message>
-        <location filename="crud/dlgpatientcard.cpp" line="111"/>
-        <location filename="crud/dlgpatientcard.cpp" line="141"/>
         <source>Amount</source>
-        <translation>Összeg</translation>
+        <translation type="obsolete">Összeg</translation>
     </message>
     <message>
-        <location filename="crud/dlgpatientcard.cpp" line="114"/>
-        <location filename="crud/dlgpatientcard.cpp" line="144"/>
+        <location filename="crud/dlgpatientcard.cpp" line="121"/>
+        <location filename="crud/dlgpatientcard.cpp" line="143"/>
         <source>Valid from</source>
         <translation>Érvényes -tól</translation>
     </message>
     <message>
-        <location filename="crud/dlgpatientcard.cpp" line="115"/>
-        <location filename="crud/dlgpatientcard.cpp" line="145"/>
+        <location filename="crud/dlgpatientcard.cpp" line="122"/>
+        <location filename="crud/dlgpatientcard.cpp" line="144"/>
         <source>Valid to</source>
         <translation>Érvényes -ig</translation>
     </message>
     <message>
-        <location filename="crud/dlgpatientcard.cpp" line="116"/>
-        <location filename="crud/dlgpatientcard.cpp" line="146"/>
+        <location filename="crud/dlgpatientcard.cpp" line="123"/>
+        <location filename="crud/dlgpatientcard.cpp" line="145"/>
         <source>Comment</source>
         <translation>Megjegyzés</translation>
     </message>
     <message>
-        <location filename="crud/dlgpatientcard.cpp" line="294"/>
+        <location filename="crud/dlgpatientcard.cpp" line="296"/>
         <source>Warning</source>
         <translation>Figyelmeztetés</translation>
     </message>
     <message>
-        <location filename="crud/dlgpatientcard.cpp" line="295"/>
+        <location filename="crud/dlgpatientcard.cpp" line="297"/>
         <source>You are not allowed to delete studio independent data.</source>
         <translation>Nincs jogosultsága törölni stúdió független adatot.</translation>
     </message>
@@ -3316,35 +3914,31 @@ Do you want to save it and sell it now?</source>
         <translation type="obsolete">Felhasználható egységek</translation>
     </message>
     <message>
-        <location filename="crud/dlgpatientcard.cpp" line="112"/>
-        <location filename="crud/dlgpatientcard.cpp" line="142"/>
         <source>Patientcard type</source>
-        <translation>Bérlettípus</translation>
+        <translation type="obsolete">Bérlettípus</translation>
     </message>
     <message>
-        <location filename="crud/dlgpatientcard.cpp" line="113"/>
-        <location filename="crud/dlgpatientcard.cpp" line="143"/>
         <source>All units</source>
-        <translation>Összes egység</translation>
+        <translation type="obsolete">Összes egység</translation>
     </message>
     <message>
-        <location filename="crud/dlgpatientcard.cpp" line="117"/>
-        <location filename="crud/dlgpatientcard.cpp" line="147"/>
+        <location filename="crud/dlgpatientcard.cpp" line="124"/>
+        <location filename="crud/dlgpatientcard.cpp" line="146"/>
         <source>Active</source>
         <translation>Aktív</translation>
     </message>
     <message>
-        <location filename="crud/dlgpatientcard.cpp" line="118"/>
+        <location filename="crud/dlgpatientcard.cpp" line="125"/>
         <source>Archive</source>
         <translation>Státusz</translation>
     </message>
     <message>
-        <location filename="crud/dlgpatientcard.cpp" line="247"/>
+        <location filename="crud/dlgpatientcard.cpp" line="249"/>
         <source>New Patientcard</source>
         <translation>Új bérlet</translation>
     </message>
     <message>
-        <location filename="crud/dlgpatientcard.cpp" line="284"/>
+        <location filename="crud/dlgpatientcard.cpp" line="286"/>
         <source>Question</source>
         <translation>Kérdés</translation>
     </message>
@@ -3353,7 +3947,7 @@ Do you want to save it and sell it now?</source>
         <translation type="obsolete">Kérdés</translation>
     </message>
     <message>
-        <location filename="crud/dlgpatientcard.cpp" line="285"/>
+        <location filename="crud/dlgpatientcard.cpp" line="287"/>
         <source>Are you sure you want to delete this Patientcard?</source>
         <translation>Biztos benne, hogy törölni akarja ezt a bérletet?</translation>
     </message>
@@ -3403,117 +3997,246 @@ A vonalkódnak %1 karakter hosszúnak kell lennie.</translation>
 <context>
     <name>cDlgPatientCardAssign</name>
     <message>
-        <location filename="dlg/dlgpatientcardassign.cpp" line="70"/>
-        <location filename="dlg/dlgpatientcardassign.cpp" line="77"/>
-        <location filename="dlg/dlgpatientcardassign.cpp" line="155"/>
-        <location filename="dlg/dlgpatientcardassign.cpp" line="162"/>
+        <location filename="dlg/dlgpatientcardassign.cpp" line="135"/>
+        <location filename="dlg/dlgpatientcardassign.cpp" line="143"/>
+        <location filename="dlg/dlgpatientcardassign.cpp" line="164"/>
+        <location filename="dlg/dlgpatientcardassign.cpp" line="180"/>
+        <location filename="dlg/dlgpatientcardassign.cpp" line="186"/>
+        <location filename="dlg/dlgpatientcardassign.cpp" line="193"/>
         <source>Error</source>
         <translation>Hiba</translation>
     </message>
     <message>
-        <location filename="dlg/dlgpatientcardassign.cpp" line="71"/>
-        <location filename="dlg/dlgpatientcardassign.cpp" line="156"/>
+        <location filename="dlg/dlgpatientcardassign.cpp" line="136"/>
+        <location filename="dlg/dlgpatientcardassign.cpp" line="158"/>
         <source>Invalid barcode length.
 The length of the barcode should be %1.</source>
         <translation>Nem megfelelő vonalkód hosszúság.
 A vonalkódnak %1 karakter hosszúnak kell lennie.</translation>
     </message>
     <message>
-        <location filename="dlg/dlgpatientcardassign.cpp" line="78"/>
-        <location filename="dlg/dlgpatientcardassign.cpp" line="163"/>
+        <location filename="dlg/dlgpatientcardassign.cpp" line="144"/>
+        <location filename="dlg/dlgpatientcardassign.cpp" line="165"/>
         <source>Barcode of the Main card and Assigned card can not be the same.</source>
         <translation>A Fő kártya és a Társkártya vonalkódja nem lehet ugyanaz.</translation>
     </message>
     <message>
-        <location filename="dlg/dlgpatientcardassign.cpp" line="97"/>
+        <location filename="dlg/dlgpatientcardassign.cpp" line="181"/>
+        <source>These cards has already been assigned to each other.</source>
+        <translation>Ezek a bérletek már egymáshoz vannak társítva.</translation>
+    </message>
+    <message>
+        <location filename="dlg/dlgpatientcardassign.cpp" line="187"/>
+        <source>These cards has already been assigned to another cards.</source>
+        <translation>Ezek a bérletek már társítva vannak különböző bérletekhez.</translation>
+    </message>
+    <message>
+        <location filename="dlg/dlgpatientcardassign.cpp" line="194"/>
+        <source>Both cards has issues prevent to assign them
+
+.&apos;Old&apos; card: 
+%1
+&apos;New&apos; card: 
+%2</source>
+        <translation>Egyik bérletet sem lehet társítani
+
+&apos;Régi&apos; bérlet: 
+%1
+&apos;Új&apos; bérlet: 
+%2</translation>
+    </message>
+    <message>
+        <location filename="dlg/dlgpatientcardassign.cpp" line="529"/>
+        <source>Are you sure you want to assign the selected cards?
+
+The old (existing) card will be the main (parent) card and
+the new card will be the assigned (child) card.</source>
+        <translation>Biztos benne, hogy társítani akarja a kiválasztott kártyákat?
+
+A régi (létező) kártya lesz a fő (szülő) kártya és
+az új kártya lesz a társított (gyerek) kártya.</translation>
+    </message>
+    <message>
+        <location filename="dlg/dlgpatientcardassign.cpp" line="572"/>
+        <location filename="dlg/dlgpatientcardassign.cpp" line="584"/>
+        <source>Partner card of &quot;%1&quot;</source>
+        <translation>&quot;%1&quot; bérlet társkártyája</translation>
+    </message>
+    <message>
+        <location filename="dlg/dlgpatientcardassign.cpp" line="610"/>
+        <source>Assign patientcard [%1]&lt;-[%2]</source>
+        <translation>Társkártya kapcsolás [%1]&lt;-[%2]</translation>
+    </message>
+    <message>
+        <location filename="dlg/dlgpatientcardassign.cpp" line="636"/>
+        <source>Are you sure you want to assign the selected cards?
+
+The new card will be the main (parent) card and
+the old (existing) card will be the assigned (child) card.
+All of the currently assigned card will be linked to the new card.</source>
+        <translation>Biztos benne, hogy társítani akarja a kiválasztott kártyákat?
+
+Az új kártya lesz a fő (szülő) kártya és
+a régi (létező) kártya lesz a társított (gyerek) kártya.
+Az összes régihez társított kártya az új kártyához lesz társítva.</translation>
+    </message>
+    <message>
+        <location filename="dlg/dlgpatientcardassign.cpp" line="667"/>
+        <source>Are you sure you want to set the selected card to main cards?
+
+All of the assigned card will be linked to this selected card.</source>
+        <translation>Biztos benne, hogy a kiválasztott kártyát akarja megtenni fő (szülő) kártyának?
+
+Az összes társított kártya ehhez a kártyához lesz átirányítva.</translation>
+    </message>
+    <message>
+        <location filename="dlg/dlgpatientcardassign.cpp" line="720"/>
+        <source>Are you sure you want to unlink the assigned cards?
+
+All of the assigned card will be deactivated.</source>
+        <translation>Biztos benne, hogy le akarja választani a társított kártyákat?
+
+Az összes eddig társított kártya deaktiválásra kerül.</translation>
+    </message>
+    <message>
+        <source>Are you sure you want to unlink the assigned cards?
+All of the assigned card will be deactivated.</source>
+        <translation type="obsolete">Biztos benne, hogy le akarja választani a társított kártyákat?
+Az összes eddig társított kártya deaktiválásra kerül.</translation>
+    </message>
+    <message>
+        <source>Are you sure you want to set the selected card to main cards?
+All of the assigned card will be linked to this selected card.</source>
+        <translation type="obsolete">Biztos benne, hogy a kiválasztott kártyát akarja megtenni fő (szülő) kártyának?
+Az összes társított kártya ehhez a kártyához lesz átirányítva.</translation>
+    </message>
+    <message>
+        <source>&apos;%1&apos; card can not be assigned.
+%2</source>
+        <translation type="obsolete">&apos;%1&apos; bérletet nem lehet társítani.
+%2</translation>
+    </message>
+    <message>
+        <source>&apos;%1&apos; card can not be processed.
+%2</source>
+        <translation type="obsolete">&apos;%1&apos; bérlet nem használható.
+%2</translation>
+    </message>
+    <message>
+        <location filename="dlg/dlgpatientcardassign.cpp" line="375"/>
+        <location filename="dlg/dlgpatientcardassign.cpp" line="515"/>
         <source>Patientcard is inactive.</source>
         <translation>A bérlet inaktív, érvénytelen.</translation>
     </message>
     <message>
-        <location filename="dlg/dlgpatientcardassign.cpp" line="101"/>
+        <location filename="dlg/dlgpatientcardassign.cpp" line="448"/>
+        <source>&apos;%1&apos; barcode has not found in the database.
+Do you want to register it for a new patientcard?</source>
+        <translation>&apos;%1&apos; vonalkód nincs elmentve az adatbázisban.
+Regisztrálni akarja a vonalkódot egy új bérlethez?</translation>
+    </message>
+    <message>
+        <location filename="dlg/dlgpatientcardassign.cpp" line="367"/>
+        <location filename="dlg/dlgpatientcardassign.cpp" line="507"/>
         <source>Patientcard is empty.</source>
         <translation>A bérlet üres.</translation>
     </message>
     <message>
-        <location filename="dlg/dlgpatientcardassign.cpp" line="105"/>
+        <location filename="dlg/dlgpatientcardassign.cpp" line="202"/>
+        <location filename="dlg/dlgpatientcardassign.cpp" line="209"/>
+        <source>&apos;%1&apos; card can not be assigned.
+
+%2</source>
+        <translation>&apos;%1&apos; bérletet nem lehet társítani.
+
+%2</translation>
+    </message>
+    <message>
+        <location filename="dlg/dlgpatientcardassign.cpp" line="219"/>
+        <source>&apos;%1&apos; card can not be processed.
+
+%2</source>
+        <translation>&apos;%1&apos; bérlet nem használható.
+
+%2</translation>
+    </message>
+    <message>
+        <location filename="dlg/dlgpatientcardassign.cpp" line="362"/>
+        <location filename="dlg/dlgpatientcardassign.cpp" line="497"/>
         <source>Service cards can not be main card.</source>
         <translation>Szervíz bérlet nem lehet fő kártya.</translation>
     </message>
     <message>
-        <location filename="dlg/dlgpatientcardassign.cpp" line="109"/>
         <source>This card has been assigned to another card.</source>
-        <translation>Ez a bérlet már egy másik bérlettel van társítva.</translation>
+        <translation type="obsolete">Ez a bérlet már egy másik bérlettel van társítva.</translation>
     </message>
     <message>
-        <location filename="dlg/dlgpatientcardassign.cpp" line="113"/>
-        <location filename="dlg/dlgpatientcardassign.cpp" line="195"/>
+        <location filename="dlg/dlgpatientcardassign.cpp" line="357"/>
+        <location filename="dlg/dlgpatientcardassign.cpp" line="502"/>
         <source>This patientcard has been lost and replaced
 and can not be used or sold again.</source>
         <translation>Ez a bérlet elveszett és lecserélték másik bérletre
 ezért nem lehet használni vagy eladni újra.</translation>
     </message>
     <message>
-        <location filename="dlg/dlgpatientcardassign.cpp" line="117"/>
-        <location filename="dlg/dlgpatientcardassign.cpp" line="199"/>
+        <location filename="dlg/dlgpatientcardassign.cpp" line="371"/>
+        <location filename="dlg/dlgpatientcardassign.cpp" line="511"/>
         <source>The validity of this patientcard has been expired on %1</source>
         <translation>A bérlet érvényességi ideje lejárt %1</translation>
     </message>
     <message>
-        <location filename="dlg/dlgpatientcardassign.cpp" line="120"/>
-        <location filename="dlg/dlgpatientcardassign.cpp" line="132"/>
-        <location filename="dlg/dlgpatientcardassign.cpp" line="209"/>
+        <location filename="dlg/dlgpatientcardassign.cpp" line="201"/>
+        <location filename="dlg/dlgpatientcardassign.cpp" line="208"/>
+        <location filename="dlg/dlgpatientcardassign.cpp" line="218"/>
         <source>Warning</source>
         <translation>Figyelmeztetés</translation>
     </message>
     <message>
-        <location filename="dlg/dlgpatientcardassign.cpp" line="121"/>
         <source>This card can not be main card.
 %1</source>
-        <translation>Ez a bérlet nem lehet fő kártya.
+        <translation type="obsolete">Ez a bérlet nem lehet fő kártya.
 %1</translation>
     </message>
     <message>
-        <location filename="dlg/dlgpatientcardassign.cpp" line="132"/>
         <source>This barcode has not found in the database.
 Please select an existing barcode for main card.</source>
-        <translation>Ez a vonalkód nincs elmentve az adatbázisban.
+        <translation type="obsolete">Ez a vonalkód nincs elmentve az adatbázisban.
 Kérem válasszon egy létező vonalkódot fő kártyának.</translation>
     </message>
     <message>
-        <location filename="dlg/dlgpatientcardassign.cpp" line="182"/>
         <source>This patientcard has been already assigned to another card.
 The main card barcode is: %1
 </source>
-        <translation>Ez a bérlet már egy másik bérlethez lett társítva.
+        <translation type="obsolete">Ez a bérlet már egy másik bérlethez lett társítva.
 A főkártya vonalkódja: %1</translation>
     </message>
     <message>
-        <location filename="dlg/dlgpatientcardassign.cpp" line="187"/>
         <source>This patientcard is already a main card.</source>
-        <translation>Ehhez a bérlethez már társítottak kártyát.</translation>
+        <translation type="obsolete">Ehhez a bérlethez már társítottak kártyát.</translation>
     </message>
     <message>
-        <location filename="dlg/dlgpatientcardassign.cpp" line="191"/>
         <source>Service cards can not be assigned card.</source>
-        <translation>Szervíz bérlet nem lehet társított kártya.</translation>
+        <translation type="obsolete">Szervíz bérlet nem lehet társított kártya.</translation>
     </message>
     <message>
-        <location filename="dlg/dlgpatientcardassign.cpp" line="210"/>
         <source>This card can not be assigned to the main card.
 %1</source>
-        <translation>Ezt a bérletet nem lehet társítani a fő kártyához.
+        <translation type="obsolete">Ezt a bérletet nem lehet társítani a fő kártyához.
 %1</translation>
     </message>
     <message>
-        <location filename="dlg/dlgpatientcardassign.cpp" line="221"/>
+        <location filename="dlg/dlgpatientcardassign.cpp" line="447"/>
+        <location filename="dlg/dlgpatientcardassign.cpp" line="528"/>
+        <location filename="dlg/dlgpatientcardassign.cpp" line="635"/>
+        <location filename="dlg/dlgpatientcardassign.cpp" line="666"/>
+        <location filename="dlg/dlgpatientcardassign.cpp" line="719"/>
         <source>Question</source>
         <translation>Kérdés</translation>
     </message>
     <message>
-        <location filename="dlg/dlgpatientcardassign.cpp" line="222"/>
         <source>This barcode has not found in the database.
 Do you want to register it for a new patientcard?</source>
-        <translation>Ez a vonalkód nincs elmentve az adatbázisban.
+        <translation type="obsolete">Ez a vonalkód nincs elmentve az adatbázisban.
 Regisztrálni akarja a vonalkódot egy új bérlethez?</translation>
     </message>
 </context>
@@ -3525,50 +4248,50 @@ Regisztrálni akarja a vonalkódot egy új bérlethez?</translation>
         <translation>Bérlet</translation>
     </message>
     <message>
-        <location filename="edit/dlgpatientcardedit.cpp" line="60"/>
-        <location filename="edit/dlgpatientcardedit.cpp" line="61"/>
+        <location filename="edit/dlgpatientcardedit.cpp" line="63"/>
+        <location filename="edit/dlgpatientcardedit.cpp" line="64"/>
         <source>&lt;Not selected&gt;</source>
         <translation>&lt;Nincs kiválasztva&gt;</translation>
     </message>
     <message>
-        <location filename="edit/dlgpatientcardedit.cpp" line="89"/>
+        <location filename="edit/dlgpatientcardedit.cpp" line="92"/>
         <source>%1 unit(s) including %2 minutes</source>
         <translation>%1 egység ˙(%2 perc)</translation>
     </message>
     <message>
-        <location filename="edit/dlgpatientcardedit.cpp" line="173"/>
+        <location filename="edit/dlgpatientcardedit.cpp" line="185"/>
         <source>Click this button to verify if the barcode is valid.</source>
         <translation>Kattintson erre a gombra, hogy ellenőrizze a vonalkódot.</translation>
     </message>
     <message>
-        <location filename="edit/dlgpatientcardedit.cpp" line="184"/>
+        <location filename="edit/dlgpatientcardedit.cpp" line="196"/>
         <source>Barcode is ok.</source>
         <translation>A vonalkód rendben.</translation>
     </message>
     <message>
-        <location filename="edit/dlgpatientcardedit.cpp" line="232"/>
+        <location filename="edit/dlgpatientcardedit.cpp" line="244"/>
         <source>Are you sure you want to change the validity date
 from:  %1  to:  %2  ?</source>
         <translation>Biztos benne, hogy megváltoztatja az érvényesség végét
 erről: %1  erre:  %2  ?</translation>
     </message>
     <message>
-        <location filename="edit/dlgpatientcardedit.cpp" line="398"/>
+        <location filename="edit/dlgpatientcardedit.cpp" line="399"/>
         <source>Barcode cannot be empty.</source>
         <translation>A vonalkód megadása kötelező.</translation>
     </message>
     <message>
-        <location filename="edit/dlgpatientcardedit.cpp" line="405"/>
+        <location filename="edit/dlgpatientcardedit.cpp" line="406"/>
         <source>Invalid barcode. Barcode should be %1 character length.</source>
         <translation>Nem megfelelő vonalkód. A vonalkódnak %1 karakter hosszúnak kell lennie.</translation>
     </message>
     <message>
-        <location filename="edit/dlgpatientcardedit.cpp" line="417"/>
+        <location filename="edit/dlgpatientcardedit.cpp" line="418"/>
         <source>Invalid barcode. This barcode already saved into database.</source>
         <translation>Hibás vonalkód. Ez a vonalkód már regisztrálva van az adatbázisban.</translation>
     </message>
     <message>
-        <location filename="edit/dlgpatientcardedit.cpp" line="268"/>
+        <location filename="edit/dlgpatientcardedit.cpp" line="282"/>
         <source>Invalid Patientcard type.
 For active patientcard other type should be selected.
 If you want to connect the card to this type,
@@ -3604,7 +4327,7 @@ Ha érvénytelenné akarja tenni a kártyát,
 deaktiválja a bérletet az Aktivál szöveg melletti pipa eltüntetésével.</translation>
     </message>
     <message>
-        <location filename="edit/dlgpatientcardedit.cpp" line="305"/>
+        <location filename="edit/dlgpatientcardedit.cpp" line="319"/>
         <source>Are you sure you want to deactivate this patientcard?</source>
         <translation>Biztos benne, hogy deaktiválni akarja ezt a bérletet?</translation>
     </message>
@@ -3699,8 +4422,8 @@ deaktiválja a bérletet az Aktivál szöveg melletti pipa eltüntetésével.
 Kattintson az Ignore gombra, ha nem akar további hibaüzenetet kapni.</translation>
     </message>
     <message>
-        <location filename="edit/dlgpatientcardedit.cpp" line="231"/>
-        <location filename="edit/dlgpatientcardedit.cpp" line="304"/>
+        <location filename="edit/dlgpatientcardedit.cpp" line="243"/>
+        <location filename="edit/dlgpatientcardedit.cpp" line="318"/>
         <source>Attention</source>
         <translation>Figyelmeztetés</translation>
     </message>
@@ -3713,8 +4436,8 @@ Please relogin to enable cassa.</source>
 Kérem jelentkezzen ki és vissza a pénztárműveletek engedélyezéséhez.</translation>
     </message>
     <message>
-        <location filename="edit/dlgpatientcardedit.cpp" line="296"/>
-        <location filename="edit/dlgpatientcardedit.cpp" line="365"/>
+        <location filename="edit/dlgpatientcardedit.cpp" line="310"/>
+        <location filename="edit/dlgpatientcardedit.cpp" line="366"/>
         <source>Warning</source>
         <translation>Figyelmeztetés</translation>
     </message>
@@ -3736,38 +4459,50 @@ Kérem jelentkezzen ki és vissza a pénztárműveletek engedélyezéséhez.</tr
         <translation>Bérlet feltöltés</translation>
     </message>
     <message>
-        <location filename="edit/dlgpatientcardrefill.cpp" line="54"/>
+        <location filename="edit/dlgpatientcardrefill.cpp" line="56"/>
         <location filename="edit/dlgpatientcardrefill.cpp" line="66"/>
         <source>&lt;Not selected&gt;</source>
         <translation>&lt;Nincs kiválasztva&gt;</translation>
     </message>
     <message>
-        <location filename="edit/dlgpatientcardrefill.cpp" line="213"/>
+        <location filename="edit/dlgpatientcardrefill.cpp" line="177"/>
+        <source>This patientcard attached to another card therefore it can not be refilled.
+
+Please refill the main patientcard with barcode: %1</source>
+        <oldsource>This patientcard attached to another card therefore
+it can not be refilled.
+Please refill the main patientcard with barcode: %1</oldsource>
+        <translation>Ez a bérlet társítva lett egy másik bérlethez ezért nem tölthető fel.
+
+Kérem töltse fel a fő kártyát a következő vonalkódot használva: %1</translation>
+    </message>
+    <message>
+        <location filename="edit/dlgpatientcardrefill.cpp" line="184"/>
         <source>Warning</source>
         <translation>Figyelmeztetés</translation>
     </message>
     <message>
-        <location filename="edit/dlgpatientcardrefill.cpp" line="214"/>
+        <location filename="edit/dlgpatientcardrefill.cpp" line="185"/>
         <source>You are not allowed to create System Service Patientcard.</source>
         <translation>Nincs jogosultsága ahhoz, hogy szervíz bérletet hozzon létre.</translation>
     </message>
     <message>
-        <location filename="edit/dlgpatientcardrefill.cpp" line="258"/>
+        <location filename="edit/dlgpatientcardrefill.cpp" line="282"/>
         <source>Barcode cannot be empty.</source>
         <translation>A vonalkód megadása kötelező.</translation>
     </message>
     <message>
-        <location filename="edit/dlgpatientcardrefill.cpp" line="266"/>
+        <location filename="edit/dlgpatientcardrefill.cpp" line="290"/>
         <source>Invalid barcode. Barcode should be %1 character length.</source>
         <translation>Nem megfelelő vonalkód. A vonalkódnak %1 karakter hosszúnak kell lennie.</translation>
     </message>
     <message>
-        <location filename="edit/dlgpatientcardrefill.cpp" line="279"/>
+        <location filename="edit/dlgpatientcardrefill.cpp" line="303"/>
         <source>Invalid barcode. This barcode already saved into database.</source>
         <translation>Hibás vonalkód. Ez a vonalkód már regisztrálva van az adatbázisban.</translation>
     </message>
     <message>
-        <location filename="edit/dlgpatientcardrefill.cpp" line="289"/>
+        <location filename="edit/dlgpatientcardrefill.cpp" line="313"/>
         <source>Invalid Patientcard type.
 For active patientcard other type should be selected.
 If you want to connect the card to this type,
@@ -3778,12 +4513,12 @@ Ha a bérletet ehhez a bérlettípushoz akarja kötni,
 deaktiválja a bérletet.</translation>
     </message>
     <message>
-        <location filename="edit/dlgpatientcardrefill.cpp" line="300"/>
+        <location filename="edit/dlgpatientcardrefill.cpp" line="324"/>
         <source>Available units cannot be empty.</source>
         <translation>A felhasználható egységek száma nem lehet üres.</translation>
     </message>
     <message>
-        <location filename="edit/dlgpatientcardrefill.cpp" line="307"/>
+        <location filename="edit/dlgpatientcardrefill.cpp" line="331"/>
         <source>Number of available units can not be less then 1.
 If you want to reset the number of available units
 deactivate the card.</source>
@@ -3792,7 +4527,7 @@ Ha le akarja nullázni a kártya egységeinek számát,
 deaktiválja a bérletet.</translation>
     </message>
     <message>
-        <location filename="edit/dlgpatientcardrefill.cpp" line="314"/>
+        <location filename="edit/dlgpatientcardrefill.cpp" line="338"/>
         <source>Incorrect validation date.
 The patientcard with the selected units would not be used.</source>
         <translation>Nem megfelelő az érvényesség dátuma.
@@ -3807,12 +4542,13 @@ Ha érvénytelenné akarja tenni a kártyát,
 deaktiválja a bérletet.</translation>
     </message>
     <message>
-        <location filename="edit/dlgpatientcardrefill.cpp" line="349"/>
+        <location filename="edit/dlgpatientcardrefill.cpp" line="176"/>
+        <location filename="edit/dlgpatientcardrefill.cpp" line="370"/>
         <source>Attention</source>
         <translation>Figyelmeztetés</translation>
     </message>
     <message>
-        <location filename="edit/dlgpatientcardrefill.cpp" line="350"/>
+        <location filename="edit/dlgpatientcardrefill.cpp" line="371"/>
         <source>Cassa is disabled!
 
 Please relogin to enable cassa.</source>
@@ -3821,12 +4557,12 @@ Please relogin to enable cassa.</source>
 Kérem jelentkezzen ki és vissza a pénztárműveletek engedélyezéséhez.</translation>
     </message>
     <message>
-        <location filename="edit/dlgpatientcardrefill.cpp" line="394"/>
+        <location filename="edit/dlgpatientcardrefill.cpp" line="415"/>
         <source>Refill patientcard [%1]</source>
         <translation>Bérlet feltöltés [%1]</translation>
     </message>
     <message>
-        <location filename="edit/dlgpatientcardrefill.cpp" line="456"/>
+        <location filename="edit/dlgpatientcardrefill.cpp" line="482"/>
         <source>Error</source>
         <translation>Hiba</translation>
     </message>
@@ -3860,66 +4596,58 @@ Kérem jelentkezzen ki és vissza a pénztárműveletek engedélyezéséhez.</tr
     </message>
     <message>
         <location filename="crud/dlgpatientcardselect.cpp" line="95"/>
-        <location filename="crud/dlgpatientcardselect.cpp" line="125"/>
+        <location filename="crud/dlgpatientcardselect.cpp" line="117"/>
         <source>Barcode</source>
         <translation>Vonalkód</translation>
     </message>
     <message>
         <location filename="crud/dlgpatientcardselect.cpp" line="96"/>
-        <location filename="crud/dlgpatientcardselect.cpp" line="126"/>
+        <location filename="crud/dlgpatientcardselect.cpp" line="118"/>
         <source>Owner</source>
         <translation>Tulajdonos</translation>
     </message>
     <message>
-        <location filename="crud/dlgpatientcardselect.cpp" line="97"/>
-        <location filename="crud/dlgpatientcardselect.cpp" line="127"/>
         <source>Units</source>
-        <translation>Egységek</translation>
+        <translation type="obsolete">Egységek</translation>
     </message>
     <message>
-        <location filename="crud/dlgpatientcardselect.cpp" line="98"/>
-        <location filename="crud/dlgpatientcardselect.cpp" line="128"/>
         <source>Amount</source>
-        <translation>Összeg</translation>
+        <translation type="obsolete">Összeg</translation>
     </message>
     <message>
-        <location filename="crud/dlgpatientcardselect.cpp" line="99"/>
-        <location filename="crud/dlgpatientcardselect.cpp" line="129"/>
         <source>Patientcard type</source>
-        <translation>Bérlettípus</translation>
+        <translation type="obsolete">Bérlettípus</translation>
     </message>
     <message>
-        <location filename="crud/dlgpatientcardselect.cpp" line="100"/>
-        <location filename="crud/dlgpatientcardselect.cpp" line="130"/>
         <source>All units</source>
-        <translation>Összes egység</translation>
+        <translation type="obsolete">Összes egység</translation>
     </message>
     <message>
-        <location filename="crud/dlgpatientcardselect.cpp" line="101"/>
-        <location filename="crud/dlgpatientcardselect.cpp" line="131"/>
+        <location filename="crud/dlgpatientcardselect.cpp" line="97"/>
+        <location filename="crud/dlgpatientcardselect.cpp" line="119"/>
         <source>Valid from</source>
         <translation>Érvényes -tól</translation>
     </message>
     <message>
-        <location filename="crud/dlgpatientcardselect.cpp" line="102"/>
-        <location filename="crud/dlgpatientcardselect.cpp" line="132"/>
+        <location filename="crud/dlgpatientcardselect.cpp" line="98"/>
+        <location filename="crud/dlgpatientcardselect.cpp" line="120"/>
         <source>Valid to</source>
         <translation>Érvényes -ig</translation>
     </message>
     <message>
-        <location filename="crud/dlgpatientcardselect.cpp" line="103"/>
-        <location filename="crud/dlgpatientcardselect.cpp" line="133"/>
+        <location filename="crud/dlgpatientcardselect.cpp" line="99"/>
+        <location filename="crud/dlgpatientcardselect.cpp" line="121"/>
         <source>Comment</source>
         <translation>Megjegyzés</translation>
     </message>
     <message>
-        <location filename="crud/dlgpatientcardselect.cpp" line="104"/>
-        <location filename="crud/dlgpatientcardselect.cpp" line="134"/>
+        <location filename="crud/dlgpatientcardselect.cpp" line="100"/>
+        <location filename="crud/dlgpatientcardselect.cpp" line="122"/>
         <source>Active</source>
         <translation>Aktív</translation>
     </message>
     <message>
-        <location filename="crud/dlgpatientcardselect.cpp" line="105"/>
+        <location filename="crud/dlgpatientcardselect.cpp" line="101"/>
         <source>Archive</source>
         <translation>Státusz</translation>
     </message>
@@ -3927,50 +4655,51 @@ Kérem jelentkezzen ki és vissza a pénztárműveletek engedélyezéséhez.</tr
 <context>
     <name>cDlgPatientCardSell</name>
     <message>
-        <location filename="edit/dlgpatientcardsell.cpp" line="42"/>
+        <location filename="edit/dlgpatientcardsell.cpp" line="43"/>
         <source>Selling Patientcard</source>
         <translation>Bérlet eladás</translation>
     </message>
     <message>
-        <location filename="edit/dlgpatientcardsell.cpp" line="54"/>
-        <location filename="edit/dlgpatientcardsell.cpp" line="66"/>
+        <location filename="edit/dlgpatientcardsell.cpp" line="59"/>
+        <location filename="edit/dlgpatientcardsell.cpp" line="71"/>
+        <location filename="edit/dlgpatientcardsell.cpp" line="512"/>
         <source>&lt;Not selected&gt;</source>
         <translation>&lt;Nincs kiválasztva&gt;</translation>
     </message>
     <message>
-        <location filename="edit/dlgpatientcardsell.cpp" line="84"/>
+        <location filename="edit/dlgpatientcardsell.cpp" line="89"/>
         <source>This patientcard is in use. Active patientcard can not be sold.
 Please refill the card if you want to add additional units.</source>
         <translation>Ez a bérlet már használatban van. Aktív bérletet nem lehet eladni.
 Kérem válassza a bérlet feltöltést ha további egységeket akar adni a bérletnek.</translation>
     </message>
     <message>
-        <location filename="edit/dlgpatientcardsell.cpp" line="217"/>
+        <location filename="edit/dlgpatientcardsell.cpp" line="231"/>
         <source>Warning</source>
         <translation>Figyelmeztetés</translation>
     </message>
     <message>
-        <location filename="edit/dlgpatientcardsell.cpp" line="218"/>
+        <location filename="edit/dlgpatientcardsell.cpp" line="232"/>
         <source>You are not allowed to create System Service Patientcard.</source>
         <translation>Nincs jogosultsága ahhoz, hogy szervíz bérletet hozzon létre.</translation>
     </message>
     <message>
-        <location filename="edit/dlgpatientcardsell.cpp" line="262"/>
+        <location filename="edit/dlgpatientcardsell.cpp" line="276"/>
         <source>Barcode cannot be empty.</source>
         <translation>A vonalkód megadása kötelező.</translation>
     </message>
     <message>
-        <location filename="edit/dlgpatientcardsell.cpp" line="270"/>
+        <location filename="edit/dlgpatientcardsell.cpp" line="284"/>
         <source>Invalid barcode. Barcode should be %1 character length.</source>
         <translation>Nem megfelelő vonalkód. A vonalkódnak %1 karakter hosszúnak kell lennie.</translation>
     </message>
     <message>
-        <location filename="edit/dlgpatientcardsell.cpp" line="283"/>
+        <location filename="edit/dlgpatientcardsell.cpp" line="297"/>
         <source>Invalid barcode. This barcode already saved into database.</source>
         <translation>Hibás vonalkód. Ez a vonalkód már regisztrálva van az adatbázisban.</translation>
     </message>
     <message>
-        <location filename="edit/dlgpatientcardsell.cpp" line="293"/>
+        <location filename="edit/dlgpatientcardsell.cpp" line="307"/>
         <source>Invalid Patientcard type.
 For active patientcard other type should be selected.
 If you want to connect the card to this type,
@@ -3981,12 +4710,12 @@ Ha a bérletet ehhez a bérlettípushoz akarja kötni,
 deaktiválja a bérletet.</translation>
     </message>
     <message>
-        <location filename="edit/dlgpatientcardsell.cpp" line="304"/>
+        <location filename="edit/dlgpatientcardsell.cpp" line="318"/>
         <source>Available units cannot be empty.</source>
         <translation>A felhasználható egységek száma nem lehet üres.</translation>
     </message>
     <message>
-        <location filename="edit/dlgpatientcardsell.cpp" line="311"/>
+        <location filename="edit/dlgpatientcardsell.cpp" line="325"/>
         <source>Number of available units can not be less then 1.
 If you want to reset the number of available units
 deactivate the card.</source>
@@ -3995,7 +4724,7 @@ Ha le akarja nullázni a kártya egységeinek számát,
 deaktiválja a bérletet.</translation>
     </message>
     <message>
-        <location filename="edit/dlgpatientcardsell.cpp" line="318"/>
+        <location filename="edit/dlgpatientcardsell.cpp" line="332"/>
         <source>Incorrect validation date.
 If you want to reset the date of validation
 deactivate the card.</source>
@@ -4004,13 +4733,18 @@ Ha érvénytelenné akarja tenni a kártyát,
 deaktiválja a bérletet.</translation>
     </message>
     <message>
-        <location filename="edit/dlgpatientcardsell.cpp" line="83"/>
-        <location filename="edit/dlgpatientcardsell.cpp" line="345"/>
+        <location filename="edit/dlgpatientcardsell.cpp" line="502"/>
+        <source>New Patient</source>
+        <translation>Új vendég</translation>
+    </message>
+    <message>
+        <location filename="edit/dlgpatientcardsell.cpp" line="88"/>
+        <location filename="edit/dlgpatientcardsell.cpp" line="357"/>
         <source>Attention</source>
         <translation>Figyelmeztetés</translation>
     </message>
     <message>
-        <location filename="edit/dlgpatientcardsell.cpp" line="346"/>
+        <location filename="edit/dlgpatientcardsell.cpp" line="358"/>
         <source>Cassa is disabled!
 
 Please relogin to enable cassa.</source>
@@ -4019,12 +4753,12 @@ Please relogin to enable cassa.</source>
 Kérem jelentkezzen ki és vissza a pénztárműveletek engedélyezéséhez.</translation>
     </message>
     <message>
-        <location filename="edit/dlgpatientcardsell.cpp" line="390"/>
+        <location filename="edit/dlgpatientcardsell.cpp" line="402"/>
         <source>Sell patientcard [%1]</source>
         <translation>Bérlet eladás [%1]</translation>
     </message>
     <message>
-        <location filename="edit/dlgpatientcardsell.cpp" line="453"/>
+        <location filename="edit/dlgpatientcardsell.cpp" line="470"/>
         <source>Error</source>
         <translation>Hiba</translation>
     </message>
@@ -4168,69 +4902,89 @@ A bérlet típushoz bérletek vannak hozzárendelve.</translation>
         <translation type="obsolete">A hét napjaiból legalább az egyiket ki kell választani.</translation>
     </message>
     <message>
-        <location filename="edit/dlgpatientcardtypeedit.cpp" line="193"/>
+        <location filename="edit/dlgpatientcardtypeedit.cpp" line="199"/>
         <source>One time period must be set.</source>
         <translation>Legalább egy idő intervallumot meg kell adnia.</translation>
     </message>
     <message>
-        <location filename="edit/dlgpatientcardtypeedit.cpp" line="246"/>
+        <location filename="edit/dlgpatientcardtypeedit.cpp" line="270"/>
         <source>Error</source>
         <translation>Hiba</translation>
     </message>
     <message>
-        <location filename="edit/dlgpatientcardtypeedit.cpp" line="141"/>
+        <location filename="edit/dlgpatientcardtypeedit.cpp" line="147"/>
         <source>Name of patientcard type must be set.</source>
         <translation>A bérlet típus neve nem lehet üres.</translation>
     </message>
     <message>
-        <location filename="edit/dlgpatientcardtypeedit.cpp" line="48"/>
+        <location filename="edit/dlgpatientcardtypeedit.cpp" line="51"/>
         <source>00:00 =&gt; 23:59 Mon Tue Wed Thu Fri Sat Sun</source>
         <translation>00:00 =&gt; 23 59 Hé Ke Sze Csü Pé Szo Vas</translation>
     </message>
     <message>
-        <location filename="edit/dlgpatientcardtypeedit.cpp" line="148"/>
+        <location filename="edit/dlgpatientcardtypeedit.cpp" line="154"/>
         <source>Price of patientcard type must be set.</source>
         <translation>A bérlet típus ára nem lehet üres.</translation>
     </message>
     <message>
-        <location filename="edit/dlgpatientcardtypeedit.cpp" line="157"/>
+        <location filename="edit/dlgpatientcardtypeedit.cpp" line="163"/>
         <source>Number of units of patientcard type must be set.</source>
         <translation>A felhasználható egységek száma nem lehet üres.</translation>
     </message>
     <message>
-        <location filename="edit/dlgpatientcardtypeedit.cpp" line="164"/>
+        <location filename="edit/dlgpatientcardtypeedit.cpp" line="170"/>
         <source>Unittime of patientcard type must be set.</source>
         <translation>Az egységhez tartozó kezelési idő nem lehet üres.</translation>
     </message>
     <message>
-        <location filename="edit/dlgpatientcardtypeedit.cpp" line="171"/>
+        <location filename="edit/dlgpatientcardtypeedit.cpp" line="177"/>
         <source>Number of validation days of patientcard type must be set.</source>
         <translation>A bérlettípus érvényességét meghatározó napok száma nem lehet üres.</translation>
     </message>
     <message>
-        <location filename="edit/dlgpatientcardtypeedit.cpp" line="178"/>
+        <location filename="edit/dlgpatientcardtypeedit.cpp" line="184"/>
         <source>Invalid end date. End date must be in the future.</source>
         <translation>Nem megfelelő az érvényesség lejártát jelző dátum. A dátumnak a jövőbe kell mutatnia.</translation>
     </message>
     <message>
-        <location filename="edit/dlgpatientcardtypeedit.cpp" line="185"/>
+        <location filename="edit/dlgpatientcardtypeedit.cpp" line="191"/>
         <source>FROM date must be before TO date.</source>
         <translation>Az érvényesség kezdeti dátumának meg kell előznie a lejárati dátumot.</translation>
     </message>
     <message>
-        <location filename="edit/dlgpatientcardtypeedit.cpp" line="263"/>
-        <location filename="edit/dlgpatientcardtypeedit.cpp" line="284"/>
+        <location filename="edit/dlgpatientcardtypeedit.cpp" line="210"/>
+        <source>Question</source>
+        <translation>Kérdés</translation>
+    </message>
+    <message>
+        <location filename="edit/dlgpatientcardtypeedit.cpp" line="211"/>
+        <source>The unit time of this patientcard was different.
+Old unit time: %1
+New unit time: %2
+
+Do you want to update all of the units of all patientcard
+assigned to this patientcard type?</source>
+        <translation>A bérlettípus egységideje megváltozott.
+Régi egységidő: %1
+Új egységidő: %2
+
+Át akarja állítani az összes olyan bérlet egységeinek egységidejét
+amelyek ehhez a bérlettípushoz tartoznak?</translation>
+    </message>
+    <message>
+        <location filename="edit/dlgpatientcardtypeedit.cpp" line="287"/>
+        <location filename="edit/dlgpatientcardtypeedit.cpp" line="308"/>
         <source>Warning</source>
         <translation>Figyelmeztetés</translation>
     </message>
     <message>
-        <location filename="edit/dlgpatientcardtypeedit.cpp" line="264"/>
-        <location filename="edit/dlgpatientcardtypeedit.cpp" line="285"/>
+        <location filename="edit/dlgpatientcardtypeedit.cpp" line="288"/>
+        <location filename="edit/dlgpatientcardtypeedit.cpp" line="309"/>
         <source>The selected time period already present in the list.</source>
         <translation>A kiválasztott időintervallum már szerepel a listában.</translation>
     </message>
     <message>
-        <location filename="edit/dlgpatientcardtypeedit.cpp" line="311"/>
+        <location filename="edit/dlgpatientcardtypeedit.cpp" line="335"/>
         <source>(%1 + %2 % VAT)</source>
         <oldsource>(%1 + %2 VAT)</oldsource>
         <translation>(%1 + %2 % ÁFA)</translation>
@@ -4239,7 +4993,7 @@ A bérlet típushoz bérletek vannak hozzárendelve.</translation>
 <context>
     <name>cDlgPatientCardUse</name>
     <message>
-        <location filename="edit/dlgpatientcarduse.cpp" line="13"/>
+        <location filename="edit/dlgpatientcarduse.cpp" line="12"/>
         <source>Patient card use</source>
         <translation>Bérlet használat</translation>
     </message>
@@ -4248,28 +5002,28 @@ A bérlet típushoz bérletek vannak hozzárendelve.</translation>
         <translation type="obsolete">%1 perc</translation>
     </message>
     <message>
-        <location filename="edit/dlgpatientcarduse.cpp" line="80"/>
-        <location filename="edit/dlgpatientcarduse.cpp" line="88"/>
-        <location filename="edit/dlgpatientcarduse.cpp" line="133"/>
+        <location filename="edit/dlgpatientcarduse.cpp" line="82"/>
+        <location filename="edit/dlgpatientcarduse.cpp" line="90"/>
+        <location filename="edit/dlgpatientcarduse.cpp" line="144"/>
         <source>Warning</source>
         <translation>Figyelmeztetés</translation>
     </message>
     <message>
-        <location filename="edit/dlgpatientcarduse.cpp" line="81"/>
+        <location filename="edit/dlgpatientcarduse.cpp" line="83"/>
         <source>This patientcard has no available units to use.
 Please refill the patientcard before use.</source>
         <translation>Ezen a bérleten nincs több felhasználható egység.
 Kérem töltse fel a kártyát további használat elött.</translation>
     </message>
     <message>
-        <location filename="edit/dlgpatientcarduse.cpp" line="89"/>
+        <location filename="edit/dlgpatientcarduse.cpp" line="91"/>
         <source>This patientcard can not be used today.
 Please check it&apos;s validation date.</source>
         <translation>A bérlet nem érvényes a mai napra.
 Kérem ellenőrizze a bérlet érvényességi dátumát.</translation>
     </message>
     <message>
-        <location filename="edit/dlgpatientcarduse.cpp" line="134"/>
+        <location filename="edit/dlgpatientcarduse.cpp" line="145"/>
         <source>This patientcard has less time to use.
 Please select another time interval or
 refill the patientcard before use.</source>
@@ -4762,55 +5516,354 @@ El akarja menteni ezt a hármast az adatbázisba?</translation>
 <context>
     <name>cDlgPreferences</name>
     <message>
-        <location filename="dlg/dlgpreferences.cpp" line="22"/>
+        <location filename="dlg/dlgpreferences.cpp" line="26"/>
         <source>Preferences</source>
         <translation>Beállítások</translation>
     </message>
     <message>
-        <location filename="dlg/dlgpreferences.cpp" line="30"/>
+        <location filename="dlg/dlgpreferences.cpp" line="36"/>
         <source>&amp;Save</source>
         <translation>&amp;Mentés</translation>
     </message>
     <message>
-        <location filename="dlg/dlgpreferences.cpp" line="31"/>
+        <location filename="dlg/dlgpreferences.cpp" line="37"/>
         <source>&amp;Cancel</source>
         <translation>&amp;Mégsem</translation>
     </message>
     <message>
-        <location filename="dlg/dlgpreferences.cpp" line="190"/>
+        <location filename="dlg/dlgpreferences.cpp" line="242"/>
+        <source>Mon</source>
+        <translation>Hé</translation>
+    </message>
+    <message>
+        <location filename="dlg/dlgpreferences.cpp" line="243"/>
+        <source>Tue</source>
+        <translation>Ke</translation>
+    </message>
+    <message>
+        <location filename="dlg/dlgpreferences.cpp" line="244"/>
+        <source>Wed</source>
+        <translation>Sze</translation>
+    </message>
+    <message>
+        <location filename="dlg/dlgpreferences.cpp" line="245"/>
+        <source>Thu</source>
+        <translation>Csü</translation>
+    </message>
+    <message>
+        <location filename="dlg/dlgpreferences.cpp" line="246"/>
+        <source>Fri</source>
+        <translation>Pé</translation>
+    </message>
+    <message>
+        <location filename="dlg/dlgpreferences.cpp" line="247"/>
+        <source>Sat</source>
+        <translation>Szo</translation>
+    </message>
+    <message>
+        <location filename="dlg/dlgpreferences.cpp" line="248"/>
+        <source>Sun</source>
+        <translation>Vas</translation>
+    </message>
+    <message>
+        <location filename="dlg/dlgpreferences.cpp" line="379"/>
+        <location filename="dlg/dlgpreferences.cpp" line="386"/>
+        <location filename="dlg/dlgpreferences.cpp" line="797"/>
+        <source>Warning</source>
+        <translation>Figyelmeztetés</translation>
+    </message>
+    <message>
+        <source>Authentication with server failed.
+Please check your server and user settings.</source>
+        <translation type="obsolete">A kapcsolatfelvétel a szerverrel sikertelen volt.
+Kérem ellenőrizze a szerver és felhasználói beállításokat.</translation>
+    </message>
+    <message>
+        <location filename="dlg/dlgpreferences.cpp" line="328"/>
         <source>Attention</source>
         <translation>Figyelmeztetés</translation>
     </message>
     <message>
-        <location filename="dlg/dlgpreferences.cpp" line="191"/>
+        <location filename="dlg/dlgpreferences.cpp" line="329"/>
         <source>Decimal symbol and Digit grouping symbol can not be the same.</source>
         <translation>A Tizedes jel és az Ezres elválasztó nem egyezhet meg.</translation>
     </message>
     <message>
-        <location filename="dlg/dlgpreferences.cpp" line="293"/>
-        <location filename="dlg/dlgpreferences.cpp" line="300"/>
+        <location filename="dlg/dlgpreferences.cpp" line="335"/>
+        <source>Question</source>
+        <translation>Kérdés</translation>
+    </message>
+    <message>
+        <location filename="dlg/dlgpreferences.cpp" line="336"/>
+        <source>Are you sure want to increase the length of the barcode of the patientcard?
+
+Please note that the barcodes will be supplemented with additional &apos;0&apos; characters at the beginning of the barcode for every patientcards, where the barcode is shorter than %1 characters.</source>
+        <translation>Biztos benne, hogy növelni akarja a bérlet vonalkódjának hosszát?
+
+Vegye figyelembe, hogy a vonalkód eleje kiegészül majd &apos;0&apos; karakterekkel minden olyan bérletnél, amelyiknek a vonalkódja rövidebb mint %1 karakter.</translation>
+    </message>
+    <message>
+        <location filename="dlg/dlgpreferences.cpp" line="348"/>
+        <source> Cut the beginning | Cut the end | Abort  </source>
+        <translation> Levágás az elejéről | Levágás a végéről | Félbeszakít </translation>
+    </message>
+    <message>
+        <location filename="dlg/dlgpreferences.cpp" line="349"/>
+        <source>Are you sure you want to decrease the length of the barcode of the patientcard?
+
+Please note that all of the patientcards will be affectedwhere the length of the barcode is longer than %1 characters</source>
+        <translation>Biztos benne, hogy csökkenteni akarja a bérletek vonalkódjának hosszát?
+
+Vegye figyelembe, hogy a változtatás minden olyan bérletet érint, amelynek a vonalkódja hosszabb, mint %1 karakter</translation>
+    </message>
+    <message>
+        <location filename="dlg/dlgpreferences.cpp" line="353"/>
+        <source>If you select &apos;Cut the beginning&apos; the first %1 characters will be removed from the beginning of the barcode
+If you select &apos;Cut the end&apos; the last %1 characters willbe removed at the end of the barcode</source>
+        <translation>Ha a &apos;Levágás az elejéről&apos; gombot választja, az első %1 karakter eltűnik a vonalkód elejéről
+Ha a &apos;Levágás a végéről&apos; gombot választja, az utolsó %1 karakter tűnik el a vonalkód végéről</translation>
+    </message>
+    <message>
+        <location filename="dlg/dlgpreferences.cpp" line="380"/>
+        <source>&apos;Not sterile&apos; text can not be empty.</source>
+        <translation>A &apos;Nem steril&apos; felirat nem lehet üres.</translation>
+    </message>
+    <message>
+        <location filename="dlg/dlgpreferences.cpp" line="387"/>
+        <source>&apos;Tube replacement needed&apos; text can not be empty.</source>
+        <translation>A &apos;Csőcsere szükséges&apos; felirat nem lehet üres.</translation>
+    </message>
+    <message>
+        <location filename="dlg/dlgpreferences.cpp" line="479"/>
+        <source> Mon</source>
+        <translation> Hé</translation>
+    </message>
+    <message>
+        <location filename="dlg/dlgpreferences.cpp" line="480"/>
+        <source> Tue</source>
+        <translation> Ke</translation>
+    </message>
+    <message>
+        <location filename="dlg/dlgpreferences.cpp" line="481"/>
+        <source> Wed</source>
+        <translation> Sze</translation>
+    </message>
+    <message>
+        <location filename="dlg/dlgpreferences.cpp" line="482"/>
+        <source> Thu</source>
+        <translation> Csü</translation>
+    </message>
+    <message>
+        <location filename="dlg/dlgpreferences.cpp" line="483"/>
+        <source> Fri</source>
+        <translation> Pé</translation>
+    </message>
+    <message>
+        <location filename="dlg/dlgpreferences.cpp" line="484"/>
+        <source> Sat</source>
+        <translation> Szo</translation>
+    </message>
+    <message>
+        <location filename="dlg/dlgpreferences.cpp" line="485"/>
+        <source> Sun</source>
+        <translation> Vas</translation>
+    </message>
+    <message>
+        <location filename="dlg/dlgpreferences.cpp" line="538"/>
+        <location filename="dlg/dlgpreferences.cpp" line="545"/>
         <source>(%1 + %2 % VAT)</source>
         <translation>(%1 + %2 % ÁFA)</translation>
     </message>
     <message>
-        <location filename="dlg/dlgpreferences.cpp" line="260"/>
+        <location filename="dlg/dlgpreferences.cpp" line="574"/>
+        <location filename="dlg/dlgpreferences.cpp" line="588"/>
+        <source>Select Directory</source>
+        <translation>Könyvtár kiválasztás</translation>
+    </message>
+    <message>
+        <location filename="dlg/dlgpreferences.cpp" line="601"/>
+        <location filename="dlg/dlgpreferences.cpp" line="605"/>
+        <location filename="dlg/dlgpreferences.cpp" line="609"/>
+        <source>Not defined</source>
+        <translation>Nincs megadva</translation>
+    </message>
+    <message>
+        <location filename="dlg/dlgpreferences.cpp" line="602"/>
+        <source>Younger than 18</source>
+        <translation>18-nál fiatalabb</translation>
+    </message>
+    <message>
+        <location filename="dlg/dlgpreferences.cpp" line="603"/>
+        <source>Above 60</source>
+        <translation>60 fölött</translation>
+    </message>
+    <message>
+        <location filename="dlg/dlgpreferences.cpp" line="606"/>
+        <source>Male</source>
+        <translation>Férfi</translation>
+    </message>
+    <message>
+        <location filename="dlg/dlgpreferences.cpp" line="607"/>
+        <source>Female</source>
+        <translation>Nő</translation>
+    </message>
+    <message>
+        <location filename="dlg/dlgpreferences.cpp" line="611"/>
+        <source>Service cards</source>
+        <translation>Szervíz kártyák</translation>
+    </message>
+    <message>
+        <location filename="dlg/dlgpreferences.cpp" line="613"/>
+        <source>Service card, only for service usage.</source>
+        <translation>Szervíz kártya, csak szerviz használatra</translation>
+    </message>
+    <message>
+        <location filename="dlg/dlgpreferences.cpp" line="615"/>
+        <source>&lt;No group associated&gt;</source>
+        <translation>&lt;Nincs csoporthoz rendelve&gt;</translation>
+    </message>
+    <message>
+        <location filename="dlg/dlgpreferences.cpp" line="617"/>
+        <source>Using solarium</source>
+        <translation>Géphasználat</translation>
+    </message>
+    <message>
+        <location filename="dlg/dlgpreferences.cpp" line="618"/>
+        <source>Selling patientcard</source>
+        <translation>Bérlet eladás</translation>
+    </message>
+    <message>
+        <location filename="dlg/dlgpreferences.cpp" line="619"/>
+        <source>Filling patientcard</source>
+        <translation>Bérlet feltöltés</translation>
+    </message>
+    <message>
+        <location filename="dlg/dlgpreferences.cpp" line="620"/>
+        <source>Selling product</source>
+        <translation>Termék eladás</translation>
+    </message>
+    <message>
+        <location filename="dlg/dlgpreferences.cpp" line="621"/>
+        <source>Replacing lost patientcard</source>
+        <translation>Elveszett bérlet csere</translation>
+    </message>
+    <message>
+        <location filename="dlg/dlgpreferences.cpp" line="622"/>
+        <source>Assign patientcard</source>
+        <translation>Kártya összekapcsolás</translation>
+    </message>
+    <message>
+        <location filename="dlg/dlgpreferences.cpp" line="623"/>
+        <location filename="dlg/dlgpreferences.cpp" line="624"/>
+        <source>Other</source>
+        <translation>Egyéb</translation>
+    </message>
+    <message>
+        <location filename="dlg/dlgpreferences.cpp" line="625"/>
+        <source>Storage action</source>
+        <translation>Raktár esemény</translation>
+    </message>
+    <message>
+        <location filename="dlg/dlgpreferences.cpp" line="626"/>
+        <source>Casssa expense</source>
+        <translation>Pénztár kiadás</translation>
+    </message>
+    <message>
+        <location filename="dlg/dlgpreferences.cpp" line="628"/>
+        <source>Add product to storage</source>
+        <translation>Termék felvétele raktárba</translation>
+    </message>
+    <message>
+        <location filename="dlg/dlgpreferences.cpp" line="629"/>
+        <source>Product disposal</source>
+        <translation>Termék leselejtezése</translation>
+    </message>
+    <message>
+        <location filename="dlg/dlgpreferences.cpp" line="630"/>
+        <source>Product donate</source>
+        <translation>Termék ajándékozása</translation>
+    </message>
+    <message>
+        <location filename="dlg/dlgpreferences.cpp" line="632"/>
+        <source>Cash</source>
+        <translation>Készpénz</translation>
+    </message>
+    <message>
+        <location filename="dlg/dlgpreferences.cpp" line="633"/>
+        <source>Credit card</source>
+        <translation>Bankkártya</translation>
+    </message>
+    <message>
+        <location filename="dlg/dlgpreferences.cpp" line="635"/>
+        <source>Guest entered into database</source>
+        <translation>Vendég felvétele az adatbázisba</translation>
+    </message>
+    <message>
+        <location filename="dlg/dlgpreferences.cpp" line="636"/>
+        <source>Purchase patientcard</source>
+        <translation>Bérlet vásárlás</translation>
+    </message>
+    <message>
+        <location filename="dlg/dlgpreferences.cpp" line="637"/>
+        <source>Refill patientcard</source>
+        <translation>Bérlet feltöltés</translation>
+    </message>
+    <message>
+        <location filename="dlg/dlgpreferences.cpp" line="638"/>
+        <source>Purchase product</source>
+        <translation>Termék vásárlás</translation>
+    </message>
+    <message>
+        <location filename="dlg/dlgpreferences.cpp" line="639"/>
+        <source>Using device with card</source>
+        <translation>Gép használat kártyával</translation>
+    </message>
+    <message>
+        <location filename="dlg/dlgpreferences.cpp" line="640"/>
+        <source>Using device with cash</source>
+        <translation>Gép használat készpénzzel</translation>
+    </message>
+    <message>
+        <location filename="dlg/dlgpreferences.cpp" line="645"/>
+        <source>(example %1)</source>
+        <translation>(példa: %1)</translation>
+    </message>
+    <message>
+        <location filename="dlg/dlgpreferences.cpp" line="743"/>
+        <source>Error</source>
+        <translation>Hiba</translation>
+    </message>
+    <message>
+        <location filename="dlg/dlgpreferences.cpp" line="744"/>
+        <source>Values of the Password and Retype Password fields are not the same</source>
+        <translation>A Jelszó és a Jelszó megint mezők értéke nem egyezik meg</translation>
+    </message>
+    <message>
+        <location filename="dlg/dlgpreferences.cpp" line="798"/>
+        <source>The password you entered is not valid
+to modify device admin password.</source>
+        <translation>Az Ön által megadott jelszó nem megfelelő
+a Gép adminisztrátori jelszó módosításához.</translation>
+    </message>
+    <message>
+        <location filename="dlg/dlgpreferences.cpp" line="505"/>
         <source>Information</source>
         <translation>Információ</translation>
     </message>
     <message>
-        <location filename="dlg/dlgpreferences.cpp" line="261"/>
+        <location filename="dlg/dlgpreferences.cpp" line="506"/>
         <source>Some of the changes you made will only be applied after the application is restarted.</source>
         <translation>A változtatások életbe léptetéséhez az alkalmazást újra kell indítani.</translation>
     </message>
     <message>
-        <location filename="dlg/dlgpreferences.cpp" line="77"/>
-        <location filename="dlg/dlgpreferences.cpp" line="270"/>
+        <location filename="dlg/dlgpreferences.cpp" line="91"/>
+        <location filename="dlg/dlgpreferences.cpp" line="515"/>
         <source>Visible</source>
         <translation>Látható</translation>
     </message>
     <message>
-        <location filename="dlg/dlgpreferences.cpp" line="82"/>
-        <location filename="dlg/dlgpreferences.cpp" line="275"/>
+        <location filename="dlg/dlgpreferences.cpp" line="96"/>
+        <location filename="dlg/dlgpreferences.cpp" line="520"/>
         <source>Hidden</source>
         <translation>Kikapcsolva</translation>
     </message>
@@ -4853,12 +5906,12 @@ Az állomány neve: %1</translation>
 <context>
     <name>cDlgProduct</name>
     <message>
-        <location filename="crud/dlgproduct.cpp" line="12"/>
+        <location filename="crud/dlgproduct.cpp" line="13"/>
         <source>Product List</source>
         <translation>Termékek listája</translation>
     </message>
     <message>
-        <location filename="crud/dlgproduct.cpp" line="21"/>
+        <location filename="crud/dlgproduct.cpp" line="22"/>
         <source>Product type: </source>
         <translation>Termék típus: </translation>
     </message>
@@ -4867,82 +5920,88 @@ Az állomány neve: %1</translation>
         <translation type="obsolete">Termék neve: </translation>
     </message>
     <message>
-        <location filename="crud/dlgproduct.cpp" line="28"/>
+        <location filename="crud/dlgproduct.cpp" line="29"/>
         <source>Name: </source>
         <translation>Név: </translation>
     </message>
     <message>
-        <location filename="crud/dlgproduct.cpp" line="36"/>
+        <location filename="crud/dlgproduct.cpp" line="37"/>
         <source>Barcode: </source>
         <translation>Vonalkód: </translation>
     </message>
     <message>
-        <location filename="crud/dlgproduct.cpp" line="44"/>
+        <location filename="crud/dlgproduct.cpp" line="45"/>
         <source>Product count minimum: </source>
         <translation>Termék darabszám minimum: </translation>
     </message>
     <message>
-        <location filename="crud/dlgproduct.cpp" line="52"/>
+        <location filename="crud/dlgproduct.cpp" line="53"/>
         <source>maximum: </source>
         <translation>maximum: </translation>
     </message>
     <message>
-        <location filename="crud/dlgproduct.cpp" line="67"/>
+        <location filename="crud/dlgproduct.cpp" line="68"/>
         <source>&lt;All product types&gt;</source>
         <translation>&lt;Összes termék típus&gt;</translation>
     </message>
     <message>
-        <location filename="crud/dlgproduct.cpp" line="74"/>
+        <location filename="crud/dlgproduct.cpp" line="75"/>
         <source>Product types</source>
         <translation>Termék típusok</translation>
     </message>
     <message>
-        <location filename="crud/dlgproduct.cpp" line="81"/>
+        <location filename="crud/dlgproduct.cpp" line="82"/>
         <source>Product action types</source>
         <translation>Termék-események</translation>
     </message>
     <message>
-        <location filename="crud/dlgproduct.cpp" line="89"/>
+        <location filename="crud/dlgproduct.cpp" line="90"/>
+        <location filename="crud/dlgproduct.cpp" line="379"/>
+        <source>Stock process</source>
+        <translation>Készlet módosítás</translation>
+    </message>
+    <message>
+        <location filename="crud/dlgproduct.cpp" line="99"/>
         <source>Increase stock</source>
         <translation>Készlet növelés</translation>
     </message>
     <message>
-        <location filename="crud/dlgproduct.cpp" line="96"/>
+        <location filename="crud/dlgproduct.cpp" line="106"/>
         <source>Decrease stock</source>
         <translation>Készlet csökkentés</translation>
     </message>
     <message>
-        <location filename="crud/dlgproduct.cpp" line="134"/>
+        <location filename="crud/dlgproduct.cpp" line="144"/>
         <source>Id</source>
         <translation>Id</translation>
     </message>
     <message>
-        <location filename="crud/dlgproduct.cpp" line="135"/>
+        <location filename="crud/dlgproduct.cpp" line="145"/>
         <source>LicenceId</source>
         <translation>LiszenszId</translation>
     </message>
     <message>
-        <location filename="crud/dlgproduct.cpp" line="136"/>
-        <location filename="crud/dlgproduct.cpp" line="158"/>
+        <location filename="crud/dlgproduct.cpp" line="146"/>
+        <location filename="crud/dlgproduct.cpp" line="168"/>
         <source>Name</source>
         <translation>Név</translation>
     </message>
     <message>
-        <location filename="crud/dlgproduct.cpp" line="137"/>
-        <location filename="crud/dlgproduct.cpp" line="159"/>
+        <location filename="crud/dlgproduct.cpp" line="147"/>
+        <location filename="crud/dlgproduct.cpp" line="169"/>
         <source>Barcode</source>
         <translation>Vonalkód</translation>
     </message>
     <message>
-        <location filename="crud/dlgproduct.cpp" line="138"/>
-        <location filename="crud/dlgproduct.cpp" line="160"/>
+        <location filename="crud/dlgproduct.cpp" line="148"/>
+        <location filename="crud/dlgproduct.cpp" line="170"/>
         <source>Price</source>
         <oldsource>Net price</oldsource>
         <translation>Ár</translation>
     </message>
     <message>
-        <location filename="crud/dlgproduct.cpp" line="139"/>
-        <location filename="crud/dlgproduct.cpp" line="161"/>
+        <location filename="crud/dlgproduct.cpp" line="149"/>
+        <location filename="crud/dlgproduct.cpp" line="171"/>
         <source>VAT percent</source>
         <translation>ÁFA</translation>
     </message>
@@ -4951,33 +6010,33 @@ Az állomány neve: %1</translation>
         <translation type="obsolete">Bruttó ár</translation>
     </message>
     <message>
-        <location filename="crud/dlgproduct.cpp" line="140"/>
-        <location filename="crud/dlgproduct.cpp" line="162"/>
+        <location filename="crud/dlgproduct.cpp" line="150"/>
+        <location filename="crud/dlgproduct.cpp" line="172"/>
         <source>Product count</source>
         <translation>Darabszám</translation>
     </message>
     <message>
-        <location filename="crud/dlgproduct.cpp" line="141"/>
+        <location filename="crud/dlgproduct.cpp" line="151"/>
         <source>Active</source>
         <translation>Aktív</translation>
     </message>
     <message>
-        <location filename="crud/dlgproduct.cpp" line="142"/>
+        <location filename="crud/dlgproduct.cpp" line="152"/>
         <source>Archive</source>
         <translation>Státusz</translation>
     </message>
     <message>
-        <location filename="crud/dlgproduct.cpp" line="245"/>
+        <location filename="crud/dlgproduct.cpp" line="255"/>
         <source>New Product</source>
         <translation>Új Termék</translation>
     </message>
     <message>
-        <location filename="crud/dlgproduct.cpp" line="285"/>
+        <location filename="crud/dlgproduct.cpp" line="295"/>
         <source>Are you sure you want to delete this Product?</source>
         <translation>Biztos benne, hogy törölni akarja ezt a terméket?</translation>
     </message>
     <message>
-        <location filename="crud/dlgproduct.cpp" line="288"/>
+        <location filename="crud/dlgproduct.cpp" line="298"/>
         <source>This product is linked to one or more product type.
 Are you sure you want to delete this product?
 
@@ -4988,17 +6047,17 @@ Biztos benne, hogy törölni akarja a terméket?
 A termék törlésével nem törli a kapcsolt terméktípust/terméktípusokat.</translation>
     </message>
     <message>
-        <location filename="crud/dlgproduct.cpp" line="293"/>
+        <location filename="crud/dlgproduct.cpp" line="303"/>
         <source>Question</source>
         <translation>Kérdés</translation>
     </message>
     <message>
-        <location filename="crud/dlgproduct.cpp" line="301"/>
+        <location filename="crud/dlgproduct.cpp" line="311"/>
         <source>Warning</source>
         <translation>Figyelmeztetés</translation>
     </message>
     <message>
-        <location filename="crud/dlgproduct.cpp" line="302"/>
+        <location filename="crud/dlgproduct.cpp" line="312"/>
         <source>You are not allowed to delete studio independent data.</source>
         <translation>Nincs jogosultsága törölni stúdió független adatot.</translation>
     </message>
@@ -5128,43 +6187,43 @@ csökkentheti az adott termék darabszámát egyszerre.</translation>
         <translation type="obsolete">Hiba</translation>
     </message>
     <message>
-        <location filename="edit/dlgproductedit.cpp" line="117"/>
+        <location filename="edit/dlgproductedit.cpp" line="119"/>
         <source>Name of product must be set.</source>
         <translation>A Termék neve nem lehet üres.</translation>
     </message>
     <message>
-        <location filename="edit/dlgproductedit.cpp" line="128"/>
+        <location filename="edit/dlgproductedit.cpp" line="130"/>
         <source>Product with this name already exists.
 Please set another one.</source>
         <translation>Ilyen nevü Termék már létezik.
 Kérem válasszon egy másik nevet.</translation>
     </message>
     <message>
-        <location filename="edit/dlgproductedit.cpp" line="136"/>
+        <location filename="edit/dlgproductedit.cpp" line="138"/>
         <source>Product with this barcode already exists.
 Please set another one.</source>
         <translation>Ilyen vonalkóddal már létezik termék.
 Kérem válasszon egy másikat.</translation>
     </message>
     <message>
-        <location filename="edit/dlgproductedit.cpp" line="151"/>
+        <location filename="edit/dlgproductedit.cpp" line="153"/>
         <source>Sell price of product must be set.</source>
         <translation>A Termék eladási ára nem lehet üres.</translation>
     </message>
     <message>
-        <location filename="edit/dlgproductedit.cpp" line="205"/>
+        <location filename="edit/dlgproductedit.cpp" line="207"/>
         <source>Warning</source>
         <translation>Figyelmeztetés</translation>
     </message>
     <message>
-        <location filename="edit/dlgproductedit.cpp" line="257"/>
-        <location filename="edit/dlgproductedit.cpp" line="289"/>
+        <location filename="edit/dlgproductedit.cpp" line="259"/>
+        <location filename="edit/dlgproductedit.cpp" line="291"/>
         <source>Attention</source>
         <translation>Figyelmeztetés</translation>
     </message>
     <message>
-        <location filename="edit/dlgproductedit.cpp" line="258"/>
-        <location filename="edit/dlgproductedit.cpp" line="290"/>
+        <location filename="edit/dlgproductedit.cpp" line="260"/>
+        <location filename="edit/dlgproductedit.cpp" line="292"/>
         <source>This product has not been saved yet.
 Changing the product storage data is not allowed
 for newly created products.Do you want to save the product data now?</source>
@@ -5173,7 +6232,7 @@ A termék darabszámának megváltoztatása nem engedélyezett az újonnan létr
 El akarja menteni most a termék adatait?</translation>
     </message>
     <message>
-        <location filename="edit/dlgproductedit.cpp" line="320"/>
+        <location filename="edit/dlgproductedit.cpp" line="322"/>
         <source>(%1 + %2 % VAT)</source>
         <translation>(%1 + %2 % ÁFA)</translation>
     </message>
@@ -5190,14 +6249,19 @@ El akarja menteni most a termék adatait?</translation>
         <translation>Termék eladás</translation>
     </message>
     <message>
-        <location filename="crud/dlgproductsell.cpp" line="521"/>
+        <location filename="crud/dlgproductsell.cpp" line="526"/>
         <source>&lt;Select product to sell&gt;</source>
         <translation>&lt;Válassza ki az eladni kívánt terméket&gt;</translation>
     </message>
     <message>
-        <location filename="crud/dlgproductsell.cpp" line="536"/>
+        <location filename="crud/dlgproductsell.cpp" line="541"/>
         <source>&lt;No product found for selected filter conditions&gt;</source>
         <translation>&lt;Nincs a szűrőfeltételeknek megfelelő termék&gt;</translation>
+    </message>
+    <message>
+        <location filename="crud/dlgproductsell.cpp" line="583"/>
+        <source>&lt;Choose ...&gt;</source>
+        <translation>&lt;Válasszon ...&gt;</translation>
     </message>
     <message>
         <source> Search filters </source>
@@ -5394,6 +6458,14 @@ A terméktípus törlésével nem törli a kapcsolt terméket/termékeket.</tran
 Please set another one.</source>
         <translation>Ilyen nevü Terméktípus már létezik.
 Kérem válasszon egy másik nevet.</translation>
+    </message>
+</context>
+<context>
+    <name>cDlgProgress</name>
+    <message>
+        <location filename="dlg/dlgprogress.cpp" line="48"/>
+        <source>Please wait while the requested process ends ...</source>
+        <translation>Kérem várjon amíg az elindított folyamat befejeződik ...</translation>
     </message>
 </context>
 <context>
@@ -6205,13 +7277,13 @@ total income</source>
         <translation type="obsolete">Írja be a liszensz kulcsot</translation>
     </message>
     <message>
-        <location filename="dlg/dlgserialreg.cpp" line="59"/>
-        <location filename="dlg/dlgserialreg.cpp" line="107"/>
+        <location filename="dlg/dlgserialreg.cpp" line="66"/>
+        <location filename="dlg/dlgserialreg.cpp" line="114"/>
         <source>Information</source>
         <translation>Információ</translation>
     </message>
     <message>
-        <location filename="dlg/dlgserialreg.cpp" line="60"/>
+        <location filename="dlg/dlgserialreg.cpp" line="67"/>
         <source>Your licence key has been verified successfully.
 Please send the &apos;Activation code&apos; to the
 provider of the Belenus application and
@@ -6228,7 +7300,7 @@ visszakapott kódot írja be az &apos;Érvényesítő kód&apos; mezőbe.
 Végül kattintson az &apos;Érvényesítés&apos; gombra.</translation>
     </message>
     <message>
-        <location filename="dlg/dlgserialreg.cpp" line="108"/>
+        <location filename="dlg/dlgserialreg.cpp" line="115"/>
         <source>Your licence key has been activated successfully.
 
 Please note that you have to validate your application
@@ -6245,14 +7317,14 @@ Az érvényesítés nélkül az alkalmazás csak DEMÓ módban tud működni.
 Önnek %1 napja van még a következő érvényesítésig.</translation>
     </message>
     <message>
-        <location filename="dlg/dlgserialreg.cpp" line="117"/>
+        <location filename="dlg/dlgserialreg.cpp" line="126"/>
         <source>The validation code you entered does not match with the requested.
 Please check your code and retype it if necessary.</source>
         <translation>A megadott ellenőrző kód nem egyezik meg az elvárt kóddal.
 Kérem ellenőrizze a kódot és írja be mégegyszer.</translation>
     </message>
     <message>
-        <location filename="dlg/dlgserialreg.cpp" line="128"/>
+        <location filename="dlg/dlgserialreg.cpp" line="137"/>
         <source>You are not authorized to validate the application.</source>
         <translation>Nincs jogosultsága az alkalmazás érvényesítéséhez.</translation>
     </message>
@@ -6273,25 +7345,25 @@ majd írja be az aktiváló kulcsot a beviteli mezőbe.
 Ellenőrző kód: %1</translation>
     </message>
     <message>
-        <location filename="dlg/dlgserialreg.cpp" line="76"/>
+        <location filename="dlg/dlgserialreg.cpp" line="83"/>
         <source>The format of the licence key you entered is not valid.
 Please check your licence key and retype it if necessary.</source>
         <translation>A megadott liszensz kulcs formátuma nem megfelelő.
 Kérem ellenőrizze a liszensz kulcsot és írja be mégegyszer ha szükséges.</translation>
     </message>
     <message>
-        <location filename="dlg/dlgserialreg.cpp" line="84"/>
+        <location filename="dlg/dlgserialreg.cpp" line="91"/>
         <source>The order number of the licence key you entered is not correct.
 Please check your licence key and retype it if necessary.</source>
         <translation>A liszensz kulcsban szereplő szám nem megfelelő.
 Kérem ellenőrizze a liszensz kulcsot és írja be mégegyszer ha szükséges.</translation>
     </message>
     <message>
-        <location filename="dlg/dlgserialreg.cpp" line="75"/>
-        <location filename="dlg/dlgserialreg.cpp" line="83"/>
-        <location filename="dlg/dlgserialreg.cpp" line="91"/>
-        <location filename="dlg/dlgserialreg.cpp" line="116"/>
-        <location filename="dlg/dlgserialreg.cpp" line="127"/>
+        <location filename="dlg/dlgserialreg.cpp" line="82"/>
+        <location filename="dlg/dlgserialreg.cpp" line="90"/>
+        <location filename="dlg/dlgserialreg.cpp" line="98"/>
+        <location filename="dlg/dlgserialreg.cpp" line="125"/>
+        <location filename="dlg/dlgserialreg.cpp" line="136"/>
         <source>Warning</source>
         <translation>Figyelmeztetés</translation>
     </message>
@@ -6308,7 +7380,7 @@ Please check your licence key and retype it if necessary..</source>
 Kérem ellenőrizze a liszensz kulcsot és írja be mégegyszer ha szükséges.</translation>
     </message>
     <message>
-        <location filename="dlg/dlgserialreg.cpp" line="92"/>
+        <location filename="dlg/dlgserialreg.cpp" line="99"/>
         <source>The licence key you entered is not valid.
 Please check your licence key and retype it if necessary..</source>
         <translation>A megadott liszensz kulcs érvénytelen.
@@ -6459,22 +7531,29 @@ Kérem ellenőrizze a liszensz kulcsot és írja be mégegyszer ha szükséges.<
         <translation>Státusz</translation>
     </message>
     <message>
-        <location filename="crud/dlgshoppingcart.cpp" line="385"/>
+        <location filename="crud/dlgshoppingcart.cpp" line="297"/>
+        <source>Some of the units of this patientcard has been used or is in use.
+Deleting of this entry from shopping cart is not allowed.</source>
+        <translation>A bérlet egységei már fel lettek használva, vagy éppen használatban vannak.
+A kosárból ezt a bejegyzést nem lehet törölni.</translation>
+    </message>
+    <message>
+        <location filename="crud/dlgshoppingcart.cpp" line="419"/>
         <source>Using device: %1</source>
         <translation>Géphasználat: %1</translation>
     </message>
     <message>
-        <location filename="crud/dlgshoppingcart.cpp" line="393"/>
+        <location filename="crud/dlgshoppingcart.cpp" line="427"/>
         <source>Selling product: %1</source>
         <translation>Termék eladás: %1</translation>
     </message>
     <message>
-        <location filename="crud/dlgshoppingcart.cpp" line="404"/>
+        <location filename="crud/dlgshoppingcart.cpp" line="438"/>
         <source>Sell patientcard [%1]</source>
         <translation>Bérlet eladás [%1]</translation>
     </message>
     <message>
-        <location filename="crud/dlgshoppingcart.cpp" line="408"/>
+        <location filename="crud/dlgshoppingcart.cpp" line="442"/>
         <source>Refill patientcard [%1]</source>
         <translation>Bérlet feltöltés [%1]</translation>
     </message>
@@ -6488,6 +7567,7 @@ Kérem ellenőrizze a liszensz kulcsot és írja be mégegyszer ha szükséges.<
     </message>
     <message>
         <location filename="crud/dlgshoppingcart.cpp" line="263"/>
+        <location filename="crud/dlgshoppingcart.cpp" line="296"/>
         <source>Warning</source>
         <translation>Figyelmeztetés</translation>
     </message>
@@ -6507,6 +7587,85 @@ Kérem lépjen ki és a kiválasztott gépnél az ESC gombbal törölje a gépha
         <location filename="crud/dlgshoppingcart.cpp" line="245"/>
         <source>Are you sure you want to delete the selected items?</source>
         <translation>Biztos benne, hogy törölni akarja a kiválasztott sorokat?</translation>
+    </message>
+</context>
+<context>
+    <name>cDlgSkinTypeEdit</name>
+    <message>
+        <location filename="edit/dlgskintypeedit.cpp" line="13"/>
+        <source>Skin type</source>
+        <translation>Bőrtípus</translation>
+    </message>
+    <message>
+        <location filename="edit/dlgskintypeedit.cpp" line="41"/>
+        <source>Error</source>
+        <translation>Hiba</translation>
+    </message>
+    <message>
+        <location filename="edit/dlgskintypeedit.cpp" line="41"/>
+        <source>Name of Skin Type can not be empty.</source>
+        <translation>A bőrtípus megnevezése nem lehet üres.</translation>
+    </message>
+</context>
+<context>
+    <name>cDlgSkinTypes</name>
+    <message>
+        <location filename="crud/dlgskintypes.cpp" line="10"/>
+        <source>Skin Types List</source>
+        <translation>Bőrtípusok listája</translation>
+    </message>
+    <message>
+        <location filename="crud/dlgskintypes.cpp" line="34"/>
+        <source>Id</source>
+        <translation>Id</translation>
+    </message>
+    <message>
+        <location filename="crud/dlgskintypes.cpp" line="35"/>
+        <location filename="crud/dlgskintypes.cpp" line="48"/>
+        <source>Name</source>
+        <translation>Név</translation>
+    </message>
+    <message>
+        <location filename="crud/dlgskintypes.cpp" line="36"/>
+        <source>Active</source>
+        <translation>Aktív</translation>
+    </message>
+    <message>
+        <location filename="crud/dlgskintypes.cpp" line="37"/>
+        <source>Archive</source>
+        <translation>Státusz</translation>
+    </message>
+    <message>
+        <location filename="crud/dlgskintypes.cpp" line="87"/>
+        <source>New Skin Type</source>
+        <translation>Új bőrtípus</translation>
+    </message>
+    <message>
+        <location filename="crud/dlgskintypes.cpp" line="107"/>
+        <source>Edit skintype</source>
+        <translation>Bőrtípus szerkesztése</translation>
+    </message>
+    <message>
+        <location filename="crud/dlgskintypes.cpp" line="126"/>
+        <source>Question</source>
+        <translation>Kérdés</translation>
+    </message>
+    <message>
+        <location filename="crud/dlgskintypes.cpp" line="127"/>
+        <source>Are you sure you want to delete this Skin Type?</source>
+        <translation>Biztos benne, hogy törölni akarja ezt a bőrtípust?</translation>
+    </message>
+    <message>
+        <location filename="crud/dlgskintypes.cpp" line="135"/>
+        <source>Warning</source>
+        <translation>Figyelmeztetés</translation>
+    </message>
+    <message>
+        <location filename="crud/dlgskintypes.cpp" line="136"/>
+        <source>You are not allowed to delete skin type
+linked to one or more patients.</source>
+        <translation>Nem tud törölni olyan bőrtípust
+amihez egy vagy több vendég van hozzárendelve.</translation>
     </message>
 </context>
 <context>
@@ -6680,6 +7839,46 @@ Kérem lépjen ki és a kiválasztott gépnél az ESC gombbal törölje a gépha
         <location filename="cdlgtest.ui" line="102"/>
         <source>value</source>
         <translation>érték</translation>
+    </message>
+    <message>
+        <location filename="cdlgtest.ui" line="245"/>
+        <source> MD5 hash test </source>
+        <translation>MD5 hash teszt</translation>
+    </message>
+    <message>
+        <location filename="cdlgtest.ui" line="253"/>
+        <source>Token</source>
+        <translation>Token</translation>
+    </message>
+    <message>
+        <location filename="cdlgtest.ui" line="263"/>
+        <source>Timestamp</source>
+        <translation>Timestamp</translation>
+    </message>
+    <message>
+        <location filename="cdlgtest.ui" line="273"/>
+        <source>Barcode</source>
+        <translation>Vonalkód</translation>
+    </message>
+    <message>
+        <location filename="cdlgtest.ui" line="300"/>
+        <source>Generate MD5 hash</source>
+        <translation>MD5 hash generálás</translation>
+    </message>
+    <message>
+        <location filename="cdlgtest.cpp" line="43"/>
+        <source>Test connection</source>
+        <translation>Kapcsolat tesztelés</translation>
+    </message>
+    <message>
+        <location filename="cdlgtest.cpp" line="44"/>
+        <source>Enable</source>
+        <translation>Engedélyezés</translation>
+    </message>
+    <message>
+        <location filename="cdlgtest.cpp" line="45"/>
+        <source>Disable</source>
+        <translation>Tiltás</translation>
     </message>
 </context>
 <context>
@@ -6888,6 +8087,66 @@ Kérem válasszon egy másik bejelentkezési nevet.</translation>
     </message>
 </context>
 <context>
+    <name>cDlgWaitlist</name>
+    <message>
+        <location filename="crud/dlgwaitlist.cpp" line="11"/>
+        <source>Waiting guests</source>
+        <translation>Várakozó vendégek</translation>
+    </message>
+    <message>
+        <location filename="crud/dlgwaitlist.cpp" line="24"/>
+        <source>Select</source>
+        <translation>Kiválaszt</translation>
+    </message>
+    <message>
+        <location filename="crud/dlgwaitlist.cpp" line="29"/>
+        <source>Cancel</source>
+        <translation>Mégsem</translation>
+    </message>
+    <message>
+        <location filename="crud/dlgwaitlist.cpp" line="58"/>
+        <source>Id</source>
+        <translation>Id</translation>
+    </message>
+    <message>
+        <location filename="crud/dlgwaitlist.cpp" line="59"/>
+        <source>LicenceId</source>
+        <translation>LiszenszId</translation>
+    </message>
+    <message>
+        <location filename="crud/dlgwaitlist.cpp" line="60"/>
+        <location filename="crud/dlgwaitlist.cpp" line="76"/>
+        <source>Comment</source>
+        <translation>Megjegyzés</translation>
+    </message>
+    <message>
+        <location filename="crud/dlgwaitlist.cpp" line="61"/>
+        <location filename="crud/dlgwaitlist.cpp" line="77"/>
+        <source>Barcode</source>
+        <translation>Vonalkód</translation>
+    </message>
+    <message>
+        <location filename="crud/dlgwaitlist.cpp" line="62"/>
+        <location filename="crud/dlgwaitlist.cpp" line="78"/>
+        <source>Paneltype name</source>
+        <translation>Géptípus neve</translation>
+    </message>
+    <message>
+        <location filename="crud/dlgwaitlist.cpp" line="63"/>
+        <location filename="crud/dlgwaitlist.cpp" line="79"/>
+        <source>Device usage (minutes)</source>
+        <translation>Géphasználat (perc)</translation>
+    </message>
+    <message>
+        <source>Question</source>
+        <translation type="obsolete">Kérdés</translation>
+    </message>
+    <message>
+        <source>Are you sure you want to delete this device usage from the waiting queue?</source>
+        <translation type="obsolete">Biztos benne, hogy törölni akarja a kiválasztott géphasználatot a várakozási listából?</translation>
+    </message>
+</context>
+<context>
     <name>cDlgZipRegionCity</name>
     <message>
         <location filename="crud/dlgzipregioncity.cpp" line="11"/>
@@ -7090,7 +8349,7 @@ Biztos benne, hogy el akarja menteni ezt a megyét és várost együtt?</transla
 <context>
     <name>cDspPanel</name>
     <message>
-        <location filename="dsppanel.cpp" line="185"/>
+        <location filename="dsppanel.cpp" line="187"/>
         <source>Panel Not Found in Database</source>
         <translation>A gép nem található az adatbázisban</translation>
     </message>
@@ -7102,7 +8361,7 @@ Biztos benne, hogy el akarja menteni ezt a megyét és várost együtt?</transla
         <translation type="obsolete">Géphasználat (%1) visszavonása.</translation>
     </message>
     <message>
-        <location filename="frmpanel.cpp" line="1034"/>
+        <location filename="frmpanel.cpp" line="1266"/>
         <source>Question</source>
         <translation>Kérdés</translation>
     </message>
@@ -7113,12 +8372,12 @@ Do you want to revoke the payment from the cassa?</source>
 Vissza akarja vonni a pénztárbevételt?</translation>
     </message>
     <message>
-        <location filename="frmpanel.cpp" line="405"/>
+        <location filename="frmpanel.cpp" line="481"/>
         <source>Attention</source>
         <translation>Figyelmeztetés</translation>
     </message>
     <message>
-        <location filename="frmpanel.cpp" line="406"/>
+        <location filename="frmpanel.cpp" line="482"/>
         <source>Cassa is disabled!
 
 Please relogin to enable cassa.</source>
@@ -7133,36 +8392,103 @@ Kérem jelentkezzen ki és vissza a pénztárműveletek engedélyezéséhez.</tr
         <translation type="obsolete">SZÜNETEL</translation>
     </message>
     <message>
-        <location filename="frmpanel.cpp" line="334"/>
-        <location filename="frmpanel.cpp" line="355"/>
-        <location filename="frmpanel.cpp" line="789"/>
         <source>NOT STERILE</source>
-        <translation>NEM STERIL</translation>
+        <translation type="obsolete">NEM STERIL</translation>
     </message>
     <message>
-        <location filename="frmpanel.cpp" line="485"/>
+        <location filename="frmpanel.cpp" line="601"/>
         <source>PAUSED</source>
         <translation>SZÜNETEL</translation>
     </message>
     <message>
-        <location filename="frmpanel.cpp" line="553"/>
+        <location filename="frmpanel.cpp" line="692"/>
         <source>Panel Not Found in Database</source>
         <translation>A gép nem található az adatbázisban</translation>
     </message>
     <message>
-        <location filename="frmpanel.cpp" line="653"/>
+        <location filename="frmpanel.cpp" line="808"/>
         <source>Cash to pay: </source>
         <translation>Fizetendő : </translation>
     </message>
     <message>
-        <location filename="frmpanel.cpp" line="848"/>
+        <source>TUBE REPLACEMENT NEEDED</source>
+        <translation type="obsolete">CSŐCSERE SZÜKSÉGES</translation>
+    </message>
+    <message>
+        <location filename="frmpanel.cpp" line="1066"/>
         <source>Device usage stopped after %1 minutes. Unused time: %2 minutes.</source>
         <translation>A kezelés %1 másodperc után meg lett szakítva. Fel nem használt idő: %2 másodperc.</translation>
     </message>
     <message>
-        <location filename="frmpanel.cpp" line="1035"/>
+        <location filename="frmpanel.cpp" line="1267"/>
         <source>Do you want to jump to the next status of the device?</source>
         <translation>Biztos benne, hogy át akar ugrani a gép következő státuszára?</translation>
+    </message>
+    <message>
+        <location filename="frmpanel.cpp" line="1338"/>
+        <location filename="frmpanel.cpp" line="1346"/>
+        <source>Warning</source>
+        <translation>Figyelmeztetés</translation>
+    </message>
+    <message>
+        <location filename="frmpanel.cpp" line="1339"/>
+        <source>This time period did not saved in the database
+for the actually selected device.
+Please select valid value from the list.</source>
+        <translation>Ez az idő intervallum nem szerepel az adatbázisban
+az aktuálisan kiválasztott géphez.
+Kérem válasszon egy helyes értéket a listából.</translation>
+    </message>
+    <message>
+        <location filename="frmpanel.cpp" line="1347"/>
+        <source>The selected device usage has been scheduled
+for a different device type.
+
+Are you sure you want to start the device with the selected usage?</source>
+        <translation>A kiválasztott géphasználat egy másik géptípus várakozó listájához tartozik.
+
+Biztos benne, hogy ezzel a beállítással akarja indítani a gépet?</translation>
+    </message>
+</context>
+<context>
+    <name>cGibbig</name>
+    <message>
+        <source>Timeout error occured during Gibbig communication after %1 milliseconds.
+</source>
+        <translation type="obsolete">Időtúllépés (%1 másodperc) miatt hiba következett be a Gibbig kommunikációban.</translation>
+    </message>
+    <message>
+        <source>%1 FAILED due to timeout error.</source>
+        <translation type="obsolete">%1 SIKERTELEN időtúllépés hiba miatt.</translation>
+    </message>
+    <message>
+        <source>Gibbig timeout.
+</source>
+        <translation type="obsolete">Gibbig időtúllépés.</translation>
+    </message>
+    <message>
+        <source>%1 FAILED.</source>
+        <translation type="obsolete">%1 SIKERTELEN.</translation>
+    </message>
+    <message>
+        <source>Rest error: %1
+</source>
+        <translation type="obsolete">Rest hiba: %1
+</translation>
+    </message>
+    <message>
+        <source>Invalid format, token string not received. &apos;%1&apos;
+</source>
+        <translation type="obsolete">Nem megfelelő formátum, token karaktersorozat nem érkezett. &apos;%1&apos;
+</translation>
+    </message>
+    <message>
+        <source>Unexpected message received.
+&apos;%1&apos;
+</source>
+        <translation type="obsolete">Váratlan üzenet érkezett.
+&apos;%1&apos;
+</translation>
     </message>
 </context>
 <context>
@@ -7185,45 +8511,65 @@ Az alkalmazás csak %1 gép kezelését teszi lehetővé.</translation>
 <context>
     <name>cPanelPCUnitUse</name>
     <message>
-        <location filename="dlg/dlgpaneluse.cpp" line="30"/>
         <source>%1 minute(s) unit</source>
-        <translation>%1 perces egység</translation>
+        <translation type="obsolete">%1 perces egység</translation>
     </message>
     <message>
-        <location filename="dlg/dlgpaneluse.cpp" line="31"/>
         <source>Using this patient card unit type gives %1 minute(s) device usage.</source>
-        <translation>A megadott bérletegységgel %1 percig használható a gép.</translation>
+        <translation type="obsolete">A megadott bérletegységgel %1 percig használható a gép.</translation>
     </message>
     <message>
-        <location filename="dlg/dlgpaneluse.cpp" line="58"/>
+        <location filename="dlg/dlgpaneluse.cpp" line="27"/>
+        <source>&lt;b&gt;Number of units:&lt;/b&gt; %1&lt;br&gt;&lt;b&gt;Card type:&lt;/b&gt; %2&lt;br&gt;&lt;b&gt;Unit time:&lt;/b&gt; %3 minute(s)&lt;br&gt;&lt;b&gt;Valid:&lt;/b&gt; %4</source>
+        <oldsource>&lt;b&gt;Number of units:&lt;/b&gt; %1&lt;br&gt;&lt;b&gt;Card type:&lt;/b&gt;%2&lt;br&gt;&lt;b&gt;Unit time:&lt;/b&gt; %3 minute(s)&lt;br&gt;&lt;b&gt;Valid:&lt;/b&gt; %4</oldsource>
+        <translation>&lt;b&gt;Egységek száma:&lt;/b&gt; %1&lt;br&gt;&lt;b&gt;Bérlettípus:&lt;/b&gt; %2&lt;br&gt;&lt;b&gt;Egységidő:&lt;/b&gt; %3 perc&lt;br&gt;&lt;b&gt;Érvényes:&lt;/b&gt; %4</translation>
+    </message>
+    <message>
+        <location filename="dlg/dlgpaneluse.cpp" line="40"/>
+        <source>%1 min. (%2)</source>
+        <translation>%1 perc (%2)</translation>
+    </message>
+    <message>
+        <location filename="dlg/dlgpaneluse.cpp" line="69"/>
         <source>Valid for </source>
         <translation>Érvényes </translation>
     </message>
     <message>
-        <location filename="dlg/dlgpaneluse.cpp" line="63"/>
+        <location filename="dlg/dlgpaneluse.cpp" line="74"/>
         <source>%1 day(s)</source>
         <translation>%1 nap</translation>
     </message>
 </context>
 <context>
+    <name>cPreferences</name>
+    <message>
+        <source>NOT STERILE</source>
+        <translation type="obsolete">NEM STERIL</translation>
+    </message>
+    <message>
+        <source>TUBE REPLACEMENT NEEDED</source>
+        <translation type="obsolete">CSŐCSERE SZÜKSÉGES</translation>
+    </message>
+</context>
+<context>
     <name>cWndMain</name>
     <message>
-        <location filename="wndmain.cpp" line="351"/>
+        <location filename="wndmain.cpp" line="466"/>
         <source>Password</source>
         <translation>Jelszó</translation>
     </message>
     <message>
-        <location filename="wndmain.cpp" line="352"/>
+        <location filename="wndmain.cpp" line="467"/>
         <source>Your password is empty. Please change it to a valid password.</source>
         <translation>Az Ön jelszava üres. Kérem adjon meg egy érvényes jelszót.</translation>
     </message>
     <message>
-        <location filename="wndmain.cpp" line="367"/>
+        <location filename="wndmain.cpp" line="486"/>
         <source>Login failed</source>
         <translation>A bejelentkezés sikertelen</translation>
     </message>
     <message>
-        <location filename="wndmain.cpp" line="368"/>
+        <location filename="wndmain.cpp" line="487"/>
         <source>Incorrect User Name and/or Password. Please try again.</source>
         <translation>Nem megfelelő felhasználó név és/vagy jelszó.
 Kérem próbálkozzon újra.</translation>
@@ -7245,11 +8591,17 @@ Folytatni akarja ezt a kasszát?
 Megjegyzés: Ha a NEM gombra kattint, új kassza nyílik az Ön nevére és ehhez a kasszához az egyenlegének megfelelő pénztárkivét lekönyvelésre kerül.</translation>
     </message>
     <message>
-        <location filename="wndmain.cpp" line="1119"/>
-        <location filename="wndmain.cpp" line="1552"/>
-        <location filename="wndmain.cpp" line="1848"/>
-        <location filename="wndmain.cpp" line="2069"/>
-        <location filename="wndmain.cpp" line="2364"/>
+        <location filename="wndmain.cpp" line="1474"/>
+        <location filename="wndmain.cpp" line="2002"/>
+        <location filename="wndmain.cpp" line="2207"/>
+        <location filename="wndmain.cpp" line="2402"/>
+        <location filename="wndmain.cpp" line="2494"/>
+        <location filename="wndmain.cpp" line="2692"/>
+        <location filename="wndmain.cpp" line="2994"/>
+        <location filename="wndmain.cpp" line="3031"/>
+        <location filename="wndmain.cpp" line="3376"/>
+        <location filename="wndmain.cpp" line="3385"/>
+        <location filename="wndmain.cpp" line="3599"/>
         <source>Attention</source>
         <translation>Figyelmeztetés</translation>
     </message>
@@ -7266,19 +8618,22 @@ Meg akarja most adni a liszensz kulcsát és regisztrálja a Belenus szerverrel?
 Figyelem: a regisztrációhoz élő internet kapcsolatra van szükség.</translation>
     </message>
     <message>
-        <location filename="wndmain.cpp" line="624"/>
-        <location filename="wndmain.cpp" line="1055"/>
-        <location filename="wndmain.cpp" line="1068"/>
-        <location filename="wndmain.cpp" line="1127"/>
-        <location filename="wndmain.cpp" line="1336"/>
-        <location filename="wndmain.cpp" line="1484"/>
-        <location filename="wndmain.cpp" line="1495"/>
-        <location filename="wndmain.cpp" line="1800"/>
-        <location filename="wndmain.cpp" line="1861"/>
-        <location filename="wndmain.cpp" line="1883"/>
-        <location filename="wndmain.cpp" line="1905"/>
-        <location filename="wndmain.cpp" line="2377"/>
-        <location filename="wndmain.cpp" line="2507"/>
+        <location filename="wndmain.cpp" line="845"/>
+        <location filename="wndmain.cpp" line="1408"/>
+        <location filename="wndmain.cpp" line="1421"/>
+        <location filename="wndmain.cpp" line="1483"/>
+        <location filename="wndmain.cpp" line="1648"/>
+        <location filename="wndmain.cpp" line="1761"/>
+        <location filename="wndmain.cpp" line="1918"/>
+        <location filename="wndmain.cpp" line="1930"/>
+        <location filename="wndmain.cpp" line="2348"/>
+        <location filename="wndmain.cpp" line="2417"/>
+        <location filename="wndmain.cpp" line="2439"/>
+        <location filename="wndmain.cpp" line="2462"/>
+        <location filename="wndmain.cpp" line="3046"/>
+        <location filename="wndmain.cpp" line="3469"/>
+        <location filename="wndmain.cpp" line="3479"/>
+        <location filename="wndmain.cpp" line="3490"/>
         <source>Question</source>
         <translation>Kérdés</translation>
     </message>
@@ -7287,11 +8642,16 @@ Figyelem: a regisztrációhoz élő internet kapcsolatra van szükség.</transla
         <translation type="obsolete">Folytatni akarja a korábban lezárt pénztár műveleteket?</translation>
     </message>
     <message>
-        <location filename="wndmain.cpp" line="1084"/>
-        <location filename="wndmain.cpp" line="1361"/>
-        <location filename="wndmain.cpp" line="1815"/>
-        <location filename="wndmain.cpp" line="2392"/>
-        <location filename="wndmain.cpp" line="2637"/>
+        <location filename="wndmain.cpp" line="1437"/>
+        <location filename="wndmain.cpp" line="1786"/>
+        <location filename="wndmain.cpp" line="2365"/>
+        <location filename="wndmain.cpp" line="3061"/>
+        <location filename="wndmain.cpp" line="3220"/>
+        <location filename="wndmain.cpp" line="3555"/>
+        <location filename="wndmain.cpp" line="3587"/>
+        <location filename="wndmain.cpp" line="3829"/>
+        <location filename="wndmain.cpp" line="3854"/>
+        <location filename="wndmain.cpp" line="3863"/>
         <source>Warning</source>
         <translation>Figyelmeztetés</translation>
     </message>
@@ -7332,17 +8692,17 @@ Ha másik felhasználóval szeretne új pénztárat nyitni,
 kérem jelentkezzen ki és jelentkezzen be a kívánt felhasználóval.</translation>
     </message>
     <message>
-        <location filename="wndmain.cpp" line="882"/>
+        <location filename="wndmain.cpp" line="1132"/>
         <source>Belenus </source>
         <translation>Belenus </translation>
     </message>
     <message>
-        <location filename="wndmain.cpp" line="904"/>
+        <location filename="wndmain.cpp" line="1154"/>
         <source> &lt;=&gt; Current patient: [</source>
         <translation> &lt;==&gt; Aktuális vendég: [</translation>
     </message>
     <message>
-        <location filename="wndmain.cpp" line="910"/>
+        <location filename="wndmain.cpp" line="1160"/>
         <source> &lt;=&gt; NO PATIENT SELECTED</source>
         <translation> &lt;=&gt; NINCS VENDÉG KIVÁLASZTVA</translation>
     </message>
@@ -7373,8 +8733,8 @@ Folytatni akarja ezt a kasszát?
 Megjegyzés: Ha a NEM gombra kattint, új kassza nyílik az Ön nevére és a nyitva hagyott kassza lezárásra kerül az egyenlegének megfelelő pénztárkivéttel lekönyvelve.</translation>
     </message>
     <message>
-        <location filename="wndmain.cpp" line="501"/>
-        <location filename="wndmain.cpp" line="510"/>
+        <location filename="wndmain.cpp" line="681"/>
+        <location filename="wndmain.cpp" line="690"/>
         <source>Cassa left in open.</source>
         <translation>Nyitva felejtett kassza.</translation>
     </message>
@@ -7395,10 +8755,16 @@ Folytatni akarja ezt a kasszát?
 Megjegyzés: Ha a NEM gombra kattint, új kassza nyílik az Ön nevére és ehhez a kasszához az egyenlegének megfelelő pénztárkivét lekönyvelésre kerül.</translation>
     </message>
     <message>
-        <location filename="wndmain.cpp" line="440"/>
-        <location filename="wndmain.cpp" line="449"/>
-        <location filename="wndmain.cpp" line="554"/>
-        <location filename="wndmain.cpp" line="563"/>
+        <location filename="wndmain.cpp" line="542"/>
+        <location filename="wndmain.cpp" line="552"/>
+        <location filename="wndmain.cpp" line="588"/>
+        <location filename="wndmain.cpp" line="598"/>
+        <location filename="wndmain.cpp" line="630"/>
+        <location filename="wndmain.cpp" line="640"/>
+        <location filename="wndmain.cpp" line="714"/>
+        <location filename="wndmain.cpp" line="723"/>
+        <location filename="wndmain.cpp" line="762"/>
+        <location filename="wndmain.cpp" line="771"/>
         <source>Cash left in cassa.</source>
         <translation>Készpénz maradt a kasszában.</translation>
     </message>
@@ -7407,7 +8773,7 @@ Megjegyzés: Ha a NEM gombra kattint, új kassza nyílik az Ön nevére és ehhe
         <translation type="obsolete">Kassza újraindítása|Új kassza indítása</translation>
     </message>
     <message>
-        <location filename="wndmain.cpp" line="580"/>
+        <location filename="wndmain.cpp" line="798"/>
         <source>The latest cassa record used:
 
 from %1 to %2
@@ -7420,7 +8786,7 @@ Do you want to continue this cassa?</source>
 Folytatni akarja ezt a kasszát?</translation>
     </message>
     <message>
-        <location filename="wndmain.cpp" line="583"/>
+        <location filename="wndmain.cpp" line="801"/>
         <source>It is possible to use your latest cassa with reopening it for example if you closed it previously for security reasons.
 Click the &apos;Reopen cassa&apos; if you want to use your previously closed cassa.
 Click the &apos;Start new cassa&apos; if you don&apos;t want to use the previously closed cassa. In this case a new cassa will be opened for you.</source>
@@ -7443,7 +8809,7 @@ Le akarja zárni a kasszát az egyenlegnek megfelelő automatikus pénzkivéttel
 Megjegyzés: Ha a NEM gombra kattint, a kassza az aktuális egyenleggel lesz lezárva.</translation>
     </message>
     <message>
-        <location filename="wndmain.cpp" line="479"/>
+        <location filename="wndmain.cpp" line="659"/>
         <source>Cassa still not closed means the cassa owner did not closed his/her cassa and possibly would like to continue the work with the cassa.
 But it is possible that the cassa owner forgot to close his/her cassa.
 You can decide how to start your work:
@@ -7457,13 +8823,13 @@ Kattintson az &apos;Új kassza indítása előző egyenleggel&apos; gombra, amen
 Kattintson az &apos;Új kassza indítása&apos; gombra, ha új kasszát akar kezdeni. Ebben az esetben a kassza le lesz zárva az egyenlegnek megfelelő készpénz kivétellel és új kassza nyílik az Ön nevére.</translation>
     </message>
     <message>
-        <location filename="wndmain.cpp" line="528"/>
+        <location filename="wndmain.cpp" line="736"/>
         <source> Reopen cassa | Start new cassa with balance | Start new cassa </source>
         <oldsource> Continue cassa | Start new cassa </oldsource>
         <translation> Kassza újranyitása | Új kassza indítása előző egyenleggel | Új kassza indítása </translation>
     </message>
     <message>
-        <location filename="wndmain.cpp" line="533"/>
+        <location filename="wndmain.cpp" line="741"/>
         <source>Cassa closed with balance means that previously the owner closed the cassa but there are cash left in cassa. The default action when closing the cassa is to withdraw money from the cassa therefore the cassa balance will be zero.
 Click the &apos;Reopen cassa&apos; if previously the cassa closed with reason without money withdraw and now you want to use that cassa again.
 Click the &apos;Start new cassa with balance&apos; button if you want to use a new cassa but you want to use the balance of the old cassa as a starting balance. In this case the previous cassa balance will be reseted and a new cassa will be opened for you with balance of the previous cassa
@@ -7474,47 +8840,47 @@ Kattintson az &apos;Új kassza indítása előző egyenleggel&apos; gombra, amen
 Kattintson az &apos;Új kassza indítása&apos; gombra, ha új kasszát akar kezdeni. Ebben az esetben a kassza le lesz zárva az egyenlegnek megfelelő készpénz kivétellel és új kassza nyílik az Ön nevére.</translation>
     </message>
     <message>
-        <location filename="wndmain.cpp" line="556"/>
+        <location filename="wndmain.cpp" line="764"/>
         <source>Start cassa with balance</source>
         <translation>Kassza nyitása előző egyenleggel</translation>
     </message>
     <message>
-        <location filename="wndmain.cpp" line="579"/>
+        <location filename="wndmain.cpp" line="797"/>
         <source> Reopen cassa | Start new cassa </source>
         <translation> Kassza újranyitása | Új kassza indítása </translation>
     </message>
     <message>
-        <location filename="wndmain.cpp" line="646"/>
-        <location filename="wndmain.cpp" line="683"/>
-        <location filename="wndmain.cpp" line="695"/>
+        <location filename="wndmain.cpp" line="867"/>
+        <location filename="wndmain.cpp" line="904"/>
+        <location filename="wndmain.cpp" line="916"/>
         <source>Automatic cassa close.</source>
         <translation>Automatikus kassza zárás.</translation>
     </message>
     <message>
-        <location filename="wndmain.cpp" line="714"/>
+        <location filename="wndmain.cpp" line="951"/>
         <source>Q -&gt; Exit application | F -&gt; pay device usage | S -&gt; start device | N -&gt; skip status | T -&gt; device cleared | K -&gt; open shopping kart</source>
         <translation>Q -&gt; Kilépés a programból | F -&gt; géphasználat kifizetése | S -&gt; gép indítása | N -&gt; ugrás a következő státuszra | T -&gt; gép kitisztítva | K -&gt; kosár megnyitása</translation>
     </message>
     <message>
-        <location filename="wndmain.cpp" line="928"/>
+        <location filename="wndmain.cpp" line="1178"/>
         <source>SPACE -&gt; Enter time/barcode ...</source>
         <translation>SPACE -&gt; Géphasználat idő/vonalkód beírása ...</translation>
     </message>
     <message>
-        <location filename="wndmain.cpp" line="933"/>
-        <location filename="wndmain.cpp" line="938"/>
-        <location filename="wndmain.cpp" line="943"/>
-        <location filename="wndmain.cpp" line="948"/>
+        <location filename="wndmain.cpp" line="1183"/>
+        <location filename="wndmain.cpp" line="1188"/>
+        <location filename="wndmain.cpp" line="1193"/>
+        <location filename="wndmain.cpp" line="1198"/>
         <source> | ENTER -&gt; %1</source>
         <translation> | ENTER -&gt; %1</translation>
     </message>
     <message>
-        <location filename="wndmain.cpp" line="1042"/>
+        <location filename="wndmain.cpp" line="1388"/>
         <source>Communication stopped with hardware controller</source>
         <translation>Megszakadt a kapcsolat a hardver vezérlővel</translation>
     </message>
     <message>
-        <location filename="wndmain.cpp" line="1056"/>
+        <location filename="wndmain.cpp" line="1409"/>
         <source>Application licence key successfully registered.
 The application users currently attached to DEMO licence key.
 
@@ -7525,12 +8891,12 @@ Az alkalmazás jelenlegi felhasználói a DEMO liszensz kulcshoz vannak kötve.
 Át akarja kötni a felhasználókat az újonnan érvényesített liszensz kulcshoz?</translation>
     </message>
     <message>
-        <location filename="wndmain.cpp" line="1069"/>
+        <location filename="wndmain.cpp" line="1422"/>
         <source>Do you want to set the additional information of the studio now?</source>
         <translation>Meg akarja adni a stúdió kiegészítő adatait most?</translation>
     </message>
     <message>
-        <location filename="wndmain.cpp" line="1085"/>
+        <location filename="wndmain.cpp" line="1438"/>
         <source>Registration of the licence key has been failed.
 
 Please check your internet connection and try to restart the application.
@@ -7541,35 +8907,269 @@ Kérem ellenőrizze az internet kapcsolatot és próbálja meg újraindítani az
 Kérem ellenőrizze azt is, hogy a liszensz kulcs nincs elgépelve és valódi-e illetve nincs-e más által használva. Ennek ellenőrzésére kérem lépjen kapcsolatba a franchise szolgáltatójával.</translation>
     </message>
     <message>
-        <location filename="wndmain.cpp" line="1337"/>
+        <location filename="wndmain.cpp" line="1649"/>
+        <source>Are you sure you want to close the current shift?</source>
+        <translation>Biztos benne, hogy lezárja az aktuális műszakot?</translation>
+    </message>
+    <message>
+        <location filename="wndmain.cpp" line="1762"/>
         <source>Do you want to prepare the device from the waiting queue?</source>
         <translation>Elő akarja készíteni a gépet használatra a várakozó listából?</translation>
     </message>
     <message>
-        <location filename="wndmain.cpp" line="1816"/>
+        <location filename="wndmain.cpp" line="2038"/>
+        <source>Using device later</source>
+        <translation>Géphasználat később</translation>
+    </message>
+    <message>
+        <location filename="wndmain.cpp" line="2062"/>
+        <source>Enter comment</source>
+        <translation>Megjegyzés</translation>
+    </message>
+    <message>
+        <location filename="wndmain.cpp" line="2366"/>
         <source>You are not authorized to activate or modify
 the licence key or the application&apos;s validity.</source>
         <translation>Nincs jogosultsága aktiválni vagy módosítani
 a liszensz kulcsot vagy az alkalmazás érvényességét.</translation>
     </message>
     <message>
-        <location filename="wndmain.cpp" line="1849"/>
-        <location filename="wndmain.cpp" line="2365"/>
+        <location filename="wndmain.cpp" line="2403"/>
+        <location filename="wndmain.cpp" line="3032"/>
         <source>This patientcard has been lost and replaced
 and can not be used or sold again.</source>
         <translation>Ez a bérlet elveszett és lecserélték másik bérletre ezért nem lehet használni vagy eladni újra.</translation>
     </message>
     <message>
-        <location filename="wndmain.cpp" line="1906"/>
+        <location filename="wndmain.cpp" line="2463"/>
         <source>This patientcard still can be used.
 Do you want to refill anyway?</source>
         <translation>Ez a bérlet még nincs elhasználva.
 Biztos, hogy fel akarja tölteni?</translation>
     </message>
     <message>
-        <location filename="wndmain.cpp" line="2679"/>
+        <source>Please enter the lost patientcard&apos;s barcode.</source>
+        <translation type="obsolete">Kérem adja meg az elvezett bérlet vonalkódját.</translation>
+    </message>
+    <message>
+        <location filename="wndmain.cpp" line="3264"/>
         <source>&lt;h2&gt;Belenus Software Application System&lt;/h2&gt;&lt;p&gt;Application version : %1&lt;br&gt;Database version : %2&lt;p&gt;Copyright 2013 Tamas Bikfalvi. All rights reserved.&lt;p&gt;Application Licence : %3&lt;p&gt;The application and all of its related products&lt;br&gt;is the property of KiwiSun Franchise.&lt;br&gt;For more information visit the &lt;a href=&quot;%4&quot;&gt;KiwiSun website&lt;/a&gt;</source>
         <translation>&lt;h2&gt;Belenus Szoftver Rendszer&lt;/h2&gt;&lt;p&gt;Alkalmazás verzió : %1&lt;br&gt;Adatbázis verzió : %2&lt;p&gt;Copyright 2013 Bikfalvi Tamás. Minden jog fenntartva.&lt;p&gt;Alkalmazás liszenszkulcs : %3&lt;p&gt;Az alkalmazás és minden hozzá kapcsolódó eszköz&lt;br&gt;a KiwiSun Franchise kizárólagos tulajdona.&lt;br&gt;További információkért látogasson el a &lt;a href=&quot;%4&quot;&gt;KiwiSun honlapjára&lt;/a&gt;</translation>
+    </message>
+    <message>
+        <location filename="wndmain.cpp" line="3376"/>
+        <source>Currently not allowed to use. Please contact your franchise provider.</source>
+        <translation>Jelenleg nem használható. Kérem lépjen kapcsolatba a franchise szolgáltatóval.</translation>
+    </message>
+    <message>
+        <location filename="wndmain.cpp" line="3385"/>
+        <source>Use report viewer application to display and export program related data.</source>
+        <translation>Kérem használja a Kimutatás kezelő alkalmazást az adatok megjelenítéséhez és exportálásához.</translation>
+    </message>
+    <message>
+        <location filename="wndmain.cpp" line="3434"/>
+        <location filename="wndmain.cpp" line="3467"/>
+        <source>Process remaining actions</source>
+        <translation>Várakozó adatok elküldése</translation>
+    </message>
+    <message>
+        <location filename="wndmain.cpp" line="3438"/>
+        <source>Update all patientcards</source>
+        <translation>Összes bérlet adatának frissítése</translation>
+    </message>
+    <message>
+        <location filename="wndmain.cpp" line="3440"/>
+        <location filename="wndmain.cpp" line="3488"/>
+        <source>Remove inactive patientcards</source>
+        <translation>Inaktív bérletek adatainak eltávolítása</translation>
+    </message>
+    <message>
+        <location filename="wndmain.cpp" line="3442"/>
+        <location filename="wndmain.cpp" line="3499"/>
+        <source>Remove patientcard</source>
+        <translation>Bérlet adatainak eltávolítása</translation>
+    </message>
+    <message>
+        <location filename="wndmain.cpp" line="3451"/>
+        <location filename="wndmain.cpp" line="3517"/>
+        <source>Suspend communication</source>
+        <translation>Kommunikáció szüneteltetése</translation>
+    </message>
+    <message>
+        <location filename="wndmain.cpp" line="3460"/>
+        <location filename="wndmain.cpp" line="3523"/>
+        <source>Clear waiting queue</source>
+        <translation>Várakozó adatok törlése</translation>
+    </message>
+    <message>
+        <location filename="wndmain.cpp" line="3830"/>
+        <source>The version information stored in database is not match.
+
+Correct version numbers:
+Application version number: %1
+Database version number: %2
+
+Version numbers stored in database:
+Application version number: %3
+Database version number: %4
+
+It is recommended to exit application and to contact system administrator.</source>
+        <translation>Az adatbázisban tárolt verzió információk nem egyeznek meg.
+
+Helyes verziószámok:
+Alkalmazás verziószám: %1
+Adatbázis verziószám: %2
+
+Adatbázisban tárolt verziószámok:
+Alkalmazás verziószám: %3
+Adatbázis verziószám: %4
+
+Ajánlott kilépni az alkalmazásból és kapcsolatba lépni a rendszer adminisztrátorral.</translation>
+    </message>
+    <message>
+        <location filename="wndmain.cpp" line="3855"/>
+        <source>The validity of the application&apos;s licence
+will be expire in %1 days.
+
+Please contact your franchise provider
+and extend your licence valid time period.</source>
+        <translation>Az alkalmazás liszenszének érvényessége
+%1 nap múlva le fog járni.
+
+Kérem lépjen kapcsolatba a franchise szolgáltatójával
+és növelje meg az érvényességi időintervallumot.</translation>
+    </message>
+    <message>
+        <location filename="wndmain.cpp" line="3864"/>
+        <source>The application&apos;s licence is registered
+but not validated by your franchise provider.
+
+Please contact your franchise provider
+and validate your application&apos;s licence</source>
+        <oldsource>The application&apos;s licence is registered
+but not validated by your franchise provider.Please contact your franchise provider
+and validate your application&apos;s licence</oldsource>
+        <translation>Az alkalmazás liszensz kulcsa nincs aktiválva.
+
+Kérem lépjen kapcsolatba a franchise szolgáltatójával
+és aktiválja az alkalmazás liszensz kulcsát.</translation>
+    </message>
+    <message>
+        <source>Process actions</source>
+        <translation type="obsolete">Feladatok végrehajtása</translation>
+    </message>
+    <message>
+        <location filename="wndmain.cpp" line="3446"/>
+        <location filename="wndmain.cpp" line="3503"/>
+        <source>Test connection</source>
+        <translation>Kapcsolat tesztelés</translation>
+    </message>
+    <message>
+        <location filename="wndmain.cpp" line="3449"/>
+        <location filename="wndmain.cpp" line="3507"/>
+        <source>Disable communication</source>
+        <translation>Kommunikáció letiltása</translation>
+    </message>
+    <message>
+        <location filename="wndmain.cpp" line="3455"/>
+        <location filename="wndmain.cpp" line="3512"/>
+        <source>Enable communication</source>
+        <translation>Kommunikáció engedélyezése</translation>
+    </message>
+    <message>
+        <location filename="wndmain.cpp" line="3470"/>
+        <source>Are you sure about to process all remaining actions?
+This process may take long time and slow down the application.</source>
+        <translation>Biztos benne, hogy végre akarja hajtani az összes várakozó adatot?
+A folyamat hosszabb ideig is eltarthat és lelassíthatja az alkalmazást.</translation>
+    </message>
+    <message>
+        <location filename="wndmain.cpp" line="3477"/>
+        <source>Update all patientcard</source>
+        <translation>Összes bérlet adatának frissítése</translation>
+    </message>
+    <message>
+        <location filename="wndmain.cpp" line="3480"/>
+        <source>Are you sure about to update all patientcards on web?
+This process may take long time and slow down the application.</source>
+        <oldsource>Are you sure about to update all patientcards on web?
+This process may take long time and slow down the appliation.</oldsource>
+        <translation>Biztos benne, hogy frissíteni akarja az összes bérlet adatát a web-en?
+A folyamat hosszabb ideig is eltarthat és lelassíthatja az alkalmazást.</translation>
+    </message>
+    <message>
+        <location filename="wndmain.cpp" line="3491"/>
+        <source>Are you sure about to remove all inactive patientcards from web?
+This process may take long time and slow down the application.</source>
+        <oldsource>Are you sure about to remove all inactive patientcards from web?
+This process may take long time and slow down the appliation.</oldsource>
+        <translation>Biztos bene, hogy el akarja távolítani az inaktív bérletek adatait a web-ről?
+A folyamat hosszabb ideig is eltarthat és lelassíthatja az alkalmazást.</translation>
+    </message>
+    <message>
+        <location filename="wndmain.cpp" line="3556"/>
+        <location filename="wndmain.cpp" line="3588"/>
+        <source>Error occured when starting process:Advertisement.exe
+
+Error code: %1
+0 &gt; The process failed to start.
+1 &gt; The process crashed some time after starting successfully.
+2 &gt; The last waitFor...() function timed out.
+4 &gt; An error occurred when attempting to write to the process.
+3 &gt; An error occurred when attempting to read from the process.
+5 &gt; An unknown error occurred.</source>
+        <translation>Az Advertisement alkalmazás indításakor hiba következett be.
+
+Hibakód: %1
+0 &gt; Az alkalmazás nem indult el.
+1 &gt; Az alkalmazás összeomlott indulás után.
+2 &gt; Az utolsó waitFor...() procedúra timeout-ra futott.
+3 &gt; Hiba történt a process írása közben.
+4 &gt; Hiba történt a process olvasása közben.
+5 &gt; Ismeretlen hiba következett be.</translation>
+    </message>
+    <message>
+        <location filename="wndmain.cpp" line="3600"/>
+        <source>Please note that you should restart the application for the modifications to take effect.</source>
+        <translation>Kérem vegye figyelembe, hogy újra kell indítani az alkalmazást a változások életbelépéséhez.</translation>
+    </message>
+    <message>
+        <location filename="wndmain.cpp" line="3613"/>
+        <location filename="wndmain.cpp" line="3642"/>
+        <source>Disable HW Debug</source>
+        <translation>HW nyomkövetés kikapcsolása</translation>
+    </message>
+    <message>
+        <location filename="wndmain.cpp" line="3618"/>
+        <location filename="wndmain.cpp" line="3638"/>
+        <source>Enable HW Debug</source>
+        <translation>HW nyomkövetés bekapcsolása</translation>
+    </message>
+    <message>
+        <location filename="wndmain.cpp" line="3622"/>
+        <location filename="wndmain.cpp" line="3633"/>
+        <source>Reset communication</source>
+        <translation>Kommunikáció újraindítása</translation>
+    </message>
+    <message>
+        <source>&lt;tr&gt;&lt;td width=&quot;100&quot;&gt;&lt;b&gt;Owner:&lt;/b&gt;&lt;/td&gt;&lt;td&gt;%1&lt;/td&gt;&lt;/tr&gt;</source>
+        <translation type="obsolete">&lt;tr&gt;&lt;td width=&quot;100&quot;&gt;&lt;b&gt;Tulajdonos:&lt;/b&gt;&lt;/td&gt;&lt;td&gt;%1&lt;/td&gt;&lt;/tr&gt;</translation>
+    </message>
+    <message>
+        <source>&lt;tr&gt;&lt;td&gt;&lt;b&gt;Valid:&lt;/b&gt;&lt;/td&gt;&lt;td&gt;%1 -&gt; %2&lt;/td&gt;&lt;/tr&gt;</source>
+        <translation type="obsolete">&lt;tr&gt;&lt;td&gt;&lt;b&gt;Érvényes:&lt;/b&gt;&lt;/td&gt;&lt;td&gt;%1 -&gt; %2&lt;/td&gt;&lt;/tr&gt;</translation>
+    </message>
+    <message>
+        <source>&lt;tr&gt;&lt;td&gt;&lt;b&gt;Units:&lt;/b&gt;&lt;/td&gt;&lt;td&gt;%1&lt;/td&gt;&lt;/tr&gt;</source>
+        <translation type="obsolete">&lt;tr&gt;&lt;td&gt;&lt;b&gt;Egységek:&lt;/b&gt;&lt;/td&gt;&lt;td&gt;%1&lt;/td&gt;&lt;/tr&gt;</translation>
+    </message>
+    <message>
+        <source>&lt;p&gt;&lt;b&gt;Valid time periods:&lt;/b&gt;&lt;br&gt;</source>
+        <translation type="obsolete">&lt;p&gt;&lt;b&gt;Érvényességi idő intervallumok:&lt;/b&gt;&lt;br&gt;</translation>
+    </message>
+    <message>
+        <source>&lt;br&gt;&lt;b&gt;%1 units valid on&lt;/b&gt;%2</source>
+        <translation type="obsolete">&lt;br&gt;&lt;b&gt;%1 egység érvényes&lt;/b&gt;%2</translation>
     </message>
     <message>
         <source>&lt;h2&gt;Belenus Software Application System&lt;/h2&gt;&lt;p&gt;Version : %1&lt;p&gt;Copyright 2013 Tamas Bikfalvi. All rights reserved.&lt;p&gt;Application Licence : %2&lt;p&gt;The application and all of its related products&lt;br&gt;is the property of KiwiSun Franchise.&lt;br&gt;For more information visit the &lt;a href=&quot;%3&quot;&gt;KiwiSun website&lt;/a&gt;</source>
@@ -7590,7 +9190,7 @@ Due to there is no time left, the patientcard will be reseted and deactivated.</
 A bérleten nincs felhasználható idő, ezért a bérlet deaktiválásra kerül.</translation>
     </message>
     <message>
-        <location filename="wndmain.cpp" line="1508"/>
+        <location filename="wndmain.cpp" line="1949"/>
         <source>%1 units left on the selected card</source>
         <translation>%1 egység használható még a bérleten</translation>
     </message>
@@ -7607,39 +9207,52 @@ Do you want to save it and sell it now?</source>
 Ěl akarja menteni és utána eladni a bérletet?</translation>
     </message>
     <message>
-        <location filename="wndmain.cpp" line="1937"/>
-        <location filename="wndmain.cpp" line="1992"/>
+        <location filename="wndmain.cpp" line="2539"/>
+        <location filename="wndmain.cpp" line="2597"/>
         <source>Reset device|Add to wait list ...|Cancel</source>
         <translation>Géphasználat törlés|Várakozó sorba ...|Mégsem</translation>
     </message>
     <message>
-        <location filename="wndmain.cpp" line="1993"/>
+        <location filename="wndmain.cpp" line="2598"/>
         <source>This device already prepared with a time period.</source>
         <translation>Ez a gép már elő lett készítve készpénzes használatra.</translation>
     </message>
     <message>
-        <location filename="wndmain.cpp" line="1939"/>
-        <location filename="wndmain.cpp" line="1994"/>
+        <location filename="wndmain.cpp" line="2541"/>
+        <location filename="wndmain.cpp" line="2599"/>
         <source>To start the device with other conditions, please
 reset the device first with pushing the ESC button.</source>
         <translation>Ha más paraméterekkel akarja indítani a gépet,
 kérem az ESC gomb lenyomásával törölje a géphasználatot.</translation>
     </message>
     <message>
-        <location filename="wndmain.cpp" line="416"/>
-        <location filename="wndmain.cpp" line="474"/>
+        <location filename="wndmain.cpp" line="313"/>
+        <source>Belenus Software System - %1 - (c) Pagony Multimedia Studio Bt.</source>
+        <translation>Belenus Szoftver Rendszer - %1 - (c) Pagony Multimédia Stúdió Bt.</translation>
+    </message>
+    <message>
+        <location filename="wndmain.cpp" line="383"/>
+        <location filename="wndmain.cpp" line="3417"/>
+        <location filename="wndmain.cpp" line="3528"/>
+        <location filename="wndmain.cpp" line="3875"/>
+        <source>Number of records to process: %1</source>
+        <translation>Feldolgozásra váró adatok száma: %1</translation>
+    </message>
+    <message>
+        <location filename="wndmain.cpp" line="564"/>
+        <location filename="wndmain.cpp" line="654"/>
         <source> Use opened cassa | Start new cassa with balance | Start new cassa </source>
         <translation> Nyitott kassza folytatása | Új kassza indítása előző egyenleggel | Új kassza indítása </translation>
     </message>
     <message>
-        <location filename="wndmain.cpp" line="417"/>
+        <location filename="wndmain.cpp" line="565"/>
         <source>The latest cassa opened on a different date.
 What would you like to do?</source>
         <translation>A legutóbbi kassza másik napon volt megnyitva.
 Mit szeretne csinálni?</translation>
     </message>
     <message>
-        <location filename="wndmain.cpp" line="419"/>
+        <location filename="wndmain.cpp" line="567"/>
         <source>The previously created and not closed cassa started to be used on a different date. If you continue to use that cassa, your daily report will include summary of more than one day.
 Click the &apos;Use opened cassa&apos; button if you want to use the opened cassa. In this case the start and the end date will be different of the cassa and the cassa daily report could be misleading.
 Click the &apos;Start new cassa with balance&apos; button if you want to use a new cassa but you want to use the balance of the old cassa as a starting balance. In this case the previous cassa balance will be reseted and a new cassa will be opened for you with balance of the previous cassa
@@ -7650,8 +9263,11 @@ Kattintson az &apos;Új kassza indítása előző egyenleggel&apos; gombra, amen
 Kattintson az &apos;Új kassza indítása&apos; gombra, ha új kasszát akar kezdeni. Ebben az esetben a kassza le lesz zárva az egyenlegnek megfelelő készpénz kivétellel és új kassza nyílik az Ön nevére.</translation>
     </message>
     <message>
-        <location filename="wndmain.cpp" line="443"/>
-        <location filename="wndmain.cpp" line="504"/>
+        <location filename="wndmain.cpp" line="555"/>
+        <location filename="wndmain.cpp" line="591"/>
+        <location filename="wndmain.cpp" line="643"/>
+        <location filename="wndmain.cpp" line="684"/>
+        <location filename="wndmain.cpp" line="725"/>
         <source>Cassa continue with balance</source>
         <translation>Kassza folytatása előző egyenleggel</translation>
     </message>
@@ -7660,7 +9276,7 @@ Kattintson az &apos;Új kassza indítása&apos; gombra, ha új kasszát akar kez
         <translation type="obsolete">Nyitott kassza folytatása|Saját kassza használata</translation>
     </message>
     <message>
-        <location filename="wndmain.cpp" line="475"/>
+        <location filename="wndmain.cpp" line="655"/>
         <source>The latest cassa record still not closed:
 
 Owner: %1
@@ -7689,7 +9305,7 @@ Kattintson a &apos;Saját kassza használata&apos; gombra, ha Ön fogja használ
         <translation type="obsolete">Kassza folytatása|Új kassza indítása</translation>
     </message>
     <message>
-        <location filename="wndmain.cpp" line="529"/>
+        <location filename="wndmain.cpp" line="737"/>
         <source>The latest cassa record closed with balance:
 
 Owner: %1
@@ -7720,14 +9336,14 @@ Kattintson a &apos;Kassza folytatása&apos; gombra, ha korábban okkal nem vette
 Kattintson az &apos;Új kassza indítása&apos; gombra, ha új kasszát akar kezdeni. Ebben az esetben a kassza le lesz zárva az egyenlegnek megfelelő készpénz kivétellel és új kassza nyílik az Ön nevére.</translation>
     </message>
     <message>
-        <location filename="wndmain.cpp" line="634"/>
-        <location filename="wndmain.cpp" line="671"/>
+        <location filename="wndmain.cpp" line="855"/>
+        <location filename="wndmain.cpp" line="892"/>
         <source>Withdraw cash|Leave cash in cassa</source>
         <translation>Készpénz kivét|Készpénz kasszában marad</translation>
     </message>
     <message>
-        <location filename="wndmain.cpp" line="635"/>
-        <location filename="wndmain.cpp" line="672"/>
+        <location filename="wndmain.cpp" line="856"/>
+        <location filename="wndmain.cpp" line="893"/>
         <source>There are some cash left in your cassa.
 Current balance: %1
 
@@ -7739,8 +9355,8 @@ Jelenlegi egyenleg: %1
 Le akarja zárni a kasszát automatikus készpénz kivéttel?</translation>
     </message>
     <message>
-        <location filename="wndmain.cpp" line="638"/>
-        <location filename="wndmain.cpp" line="675"/>
+        <location filename="wndmain.cpp" line="859"/>
+        <location filename="wndmain.cpp" line="896"/>
         <source>You can decide if you want to leave the cash in the cassa or withdraw cash from the cassa.
 Click on the &apos;Withdraw cash&apos; button if you want to withdraw cash from cassa before closing it
 Click on the &apos;Leave cash in cassa&apos; if you want to leave the cash in the cassa before closing it</source>
@@ -7749,43 +9365,54 @@ Kattintson a &apos;Készpénz kivét&apos; gombra ha a kasszát automatikus kés
 Kattintson a &apos;Készpénz kasszában marad&apos; gombra, ha úgy zárja le a kasszát, hogy a készpénzt benne hagyja</translation>
     </message>
     <message>
-        <location filename="wndmain.cpp" line="1938"/>
+        <location filename="wndmain.cpp" line="2540"/>
         <source>This device already prepared with a patientcard.</source>
         <translation>Ez a gép már elő lett készítve bérletegységes használatra.</translation>
     </message>
     <message>
-        <location filename="wndmain.cpp" line="2346"/>
+        <location filename="wndmain.cpp" line="2502"/>
+        <location filename="wndmain.cpp" line="2510"/>
+        <location filename="wndmain.cpp" line="3013"/>
         <source>Request</source>
         <translation>Kérés</translation>
     </message>
     <message>
-        <location filename="wndmain.cpp" line="2346"/>
+        <location filename="wndmain.cpp" line="2502"/>
+        <source>Please select the guest from the list</source>
+        <translation>Kérem válassza ki a vendéget a listából</translation>
+    </message>
+    <message>
+        <location filename="wndmain.cpp" line="2510"/>
+        <source>Please select the patientcard from the list</source>
+        <translation>Kérem válassza ki a bérletet a listából</translation>
+    </message>
+    <message>
+        <location filename="wndmain.cpp" line="3013"/>
         <source>Please enter the new patientcard&apos;s barcode.</source>
         <translation>Kérem adja meg az új bérlet vonalkódját.</translation>
     </message>
     <message>
-        <location filename="wndmain.cpp" line="2392"/>
+        <location filename="wndmain.cpp" line="3061"/>
         <source>This patientcard already in use.
 Please select a non-active patientcard.</source>
         <translation>Ez a bérlet már használatban van.
 Kérem válasszon egy másik, inaktív bérletet.</translation>
     </message>
     <message>
-        <location filename="wndmain.cpp" line="2432"/>
+        <location filename="wndmain.cpp" line="3101"/>
         <source>Replace patientcard [%1]-&gt;[%2]</source>
         <translation>Elveszett bérlet csere [%1]-&gt;[%2]</translation>
     </message>
     <message>
-        <location filename="wndmain.cpp" line="2472"/>
+        <location filename="wndmain.cpp" line="3142"/>
         <source>Lost and replaced with card: %1</source>
         <translation>Elveszett és lecserélték erre: %1</translation>
     </message>
     <message>
-        <location filename="wndmain.cpp" line="2508"/>
         <source>Are you sure about to merge these patientcards?
 Main card: %1
 Assigned card: %2</source>
-        <translation>Biztosan társítani akarja az alábbi kártyákat?
+        <translation type="obsolete">Biztosan társítani akarja az alábbi kártyákat?
 Fő kártya: %1
 Társkártya: %2</translation>
     </message>
@@ -7794,18 +9421,15 @@ Társkártya: %2</translation>
         <translation type="obsolete">Kérem adja meg a társkártya vonalkódját.</translation>
     </message>
     <message>
-        <location filename="wndmain.cpp" line="2520"/>
-        <location filename="wndmain.cpp" line="2539"/>
         <source>Partner card of &quot;%1&quot;</source>
-        <translation>&quot;%1&quot; bérlet társkártyája</translation>
+        <translation type="obsolete">&quot;%1&quot; bérlet társkártyája</translation>
     </message>
     <message>
-        <location filename="wndmain.cpp" line="2565"/>
         <source>Assign patientcard [%1]&lt;-[%2]</source>
-        <translation>Társkártya kapcsolás [%1]&lt;-[%2]</translation>
+        <translation type="obsolete">Társkártya kapcsolás [%1]&lt;-[%2]</translation>
     </message>
     <message>
-        <location filename="wndmain.cpp" line="2638"/>
+        <location filename="wndmain.cpp" line="3221"/>
         <source>Error occured when starting process:ReportViewer.exe
 
 Error code: %1
@@ -7826,7 +9450,7 @@ Hibakód: %1
 5 &gt; Ismeretlen hiba következett be.</translation>
     </message>
     <message>
-        <location filename="wndmain.cpp" line="2678"/>
+        <location filename="wndmain.cpp" line="3263"/>
         <source>About</source>
         <translation>Névjegy</translation>
     </message>
@@ -7845,14 +9469,14 @@ Kattintson az Ignore gombra, ha egy korábban elmentett,
 a vendéghez tartozó kezelést akar kiválasztani aktuálisnak.</translation>
     </message>
     <message>
-        <location filename="wndmain.cpp" line="1120"/>
+        <location filename="wndmain.cpp" line="1475"/>
         <source>At least one Panel is still working.
 Please stop them before closing the application.</source>
         <translation>Az összes gépnek alap állapotban kell lennie.
 Kérem állítsa le a gépeket, mielőtt kilépne az alkalmazásból.</translation>
     </message>
     <message>
-        <location filename="wndmain.cpp" line="1128"/>
+        <location filename="wndmain.cpp" line="1484"/>
         <source>Are you sure you want to close the application?</source>
         <translation>Biztos benne, hogy ki akar lépni az alkalmazásból?</translation>
     </message>
@@ -7863,9 +9487,9 @@ Do you want to synchronize database with server?</source>
 Akarja most szinkronizálni az adatbázist a szerverrel?</translation>
     </message>
     <message>
-        <location filename="wndmain.cpp" line="1240"/>
-        <location filename="wndmain.cpp" line="1428"/>
-        <location filename="wndmain.cpp" line="2304"/>
+        <location filename="wndmain.cpp" line="1621"/>
+        <location filename="wndmain.cpp" line="1859"/>
+        <location filename="wndmain.cpp" line="2951"/>
         <source>Information</source>
         <translation>Információ</translation>
     </message>
@@ -7878,7 +9502,7 @@ Akarja most szinkronizálni az adatbázist a szerverrel?</translation>
         <translation type="obsolete">A Belenus szerver nem elérhető.</translation>
     </message>
     <message>
-        <location filename="wndmain.cpp" line="1241"/>
+        <location filename="wndmain.cpp" line="1622"/>
         <source>This area is restricted for system administrators only!</source>
         <translation>A megadott szolgáltatás csak Rendszer adminisztrátorok számára elérhető!</translation>
     </message>
@@ -7887,7 +9511,7 @@ Akarja most szinkronizálni az adatbázist a szerverrel?</translation>
         <translation type="obsolete">Ki akarja választani aktuálisnak a létrehozott vendéget?</translation>
     </message>
     <message>
-        <location filename="wndmain.cpp" line="1362"/>
+        <location filename="wndmain.cpp" line="1787"/>
         <source>The device usage has to be payed.
 Please process the payment first.</source>
         <translation>A géphasználatot ki kell fizetni.
@@ -7898,7 +9522,7 @@ Kérem először fejezze be a pénztár műveletet.</translation>
         <translation type="obsolete">Ki akarja választani a létrehozott kezelést aktuálisnak?</translation>
     </message>
     <message>
-        <location filename="wndmain.cpp" line="1429"/>
+        <location filename="wndmain.cpp" line="1860"/>
         <source>Some of the changes you made will only be applied after the application is restarted.</source>
         <translation>A változtatások életbe léptetéséhez az alkalmazást újra kell indítani.</translation>
     </message>
@@ -7923,18 +9547,18 @@ Do you want to sell a patientcard for the actual patient?</source>
 El akar adni egy bérletet a vendégnek?</translation>
     </message>
     <message>
-        <location filename="wndmain.cpp" line="1801"/>
+        <location filename="wndmain.cpp" line="2349"/>
         <source>Do you want to jump to the next status of the device?</source>
         <translation>Biztos benne, hogy át akar ugrani a gép következő státuszára?</translation>
     </message>
     <message>
-        <location filename="wndmain.cpp" line="1881"/>
+        <location filename="wndmain.cpp" line="2437"/>
         <source>
 Due to there is no time left, the patientcard will be reseted and deactivated.</source>
         <translation>A bérleten nincs felhasználható idő, ezért a bérlet deaktiválásra kerül.</translation>
     </message>
     <message>
-        <location filename="wndmain.cpp" line="1884"/>
+        <location filename="wndmain.cpp" line="2440"/>
         <source>This patientcard has the following settings:
 
 Available units: %1
@@ -7997,14 +9621,14 @@ Do you want to select this patient as actual?</source>
 Ki akarja választani a vendéget aktuálisnak?</translation>
     </message>
     <message>
-        <location filename="wndmain.cpp" line="1485"/>
+        <location filename="wndmain.cpp" line="1919"/>
         <source>This patientcard has been assigned to a different patient.
 Are you sure you want to use this patientcard?</source>
         <translation>Ez a bérlet egy másik vendéghez van társítva.
 Biztos, hogy ezt a bérletet akarja használni?</translation>
     </message>
     <message>
-        <location filename="wndmain.cpp" line="1496"/>
+        <location filename="wndmain.cpp" line="1931"/>
         <source>There is no patient assigned to this patientcard.
 Do you want to assign this patientcard to the actual patient?</source>
         <translation>Ehhez a bérlethez nincs vendég társítva.
@@ -8039,8 +9663,11 @@ Ha más paraméterekkel akarja indítani a gépet,
 kérem az ESC gomb lenyomásával törölje a géphasználatot.</translation>
     </message>
     <message>
-        <location filename="wndmain.cpp" line="1553"/>
-        <location filename="wndmain.cpp" line="2070"/>
+        <location filename="wndmain.cpp" line="2003"/>
+        <location filename="wndmain.cpp" line="2208"/>
+        <location filename="wndmain.cpp" line="2495"/>
+        <location filename="wndmain.cpp" line="2693"/>
+        <location filename="wndmain.cpp" line="2995"/>
         <source>Cassa is disabled!
 
 Please relogin to enable cassa.</source>
@@ -8049,25 +9676,24 @@ Please relogin to enable cassa.</source>
 Kérem jelentkezzen ki és vissza a pénztárműveletek engedélyezéséhez.</translation>
     </message>
     <message>
-        <location filename="wndmain.cpp" line="1574"/>
-        <location filename="wndmain.cpp" line="2095"/>
+        <location filename="wndmain.cpp" line="2026"/>
+        <location filename="wndmain.cpp" line="2720"/>
         <source>Using panel</source>
         <translation>Géphasználat</translation>
     </message>
     <message>
-        <location filename="wndmain.cpp" line="1586"/>
-        <location filename="wndmain.cpp" line="2108"/>
+        <location filename="wndmain.cpp" line="2733"/>
         <source>Using device: %1</source>
         <oldsource>Using device: %1 - </oldsource>
         <translation>Géphasználat: %1</translation>
     </message>
     <message>
-        <location filename="wndmain.cpp" line="2154"/>
+        <location filename="wndmain.cpp" line="2784"/>
         <source>Selling product: %1</source>
         <translation>Termék eladás: %1</translation>
     </message>
     <message>
-        <location filename="wndmain.cpp" line="2305"/>
+        <location filename="wndmain.cpp" line="2952"/>
         <source>Deleting data attached to DEMO licence key has been finished.</source>
         <translation>A DEMO kulcshoz tartozó adatok törlése befejeződött.</translation>
     </message>
@@ -8109,7 +9735,7 @@ for the actually selected device.</source>
 az aktuálisan kiválasztott géphez.</translation>
     </message>
     <message>
-        <location filename="wndmain.cpp" line="625"/>
+        <location filename="wndmain.cpp" line="846"/>
         <source>Do you want to close your cassa?</source>
         <translation>Le akarja zárni a pénztárat?</translation>
     </message>
@@ -8162,7 +9788,7 @@ Meg akar adni egy regisztrált liszensz kulcsot és ellenőrizni azt a szerverre
 Fontos: a liszensz kulcs ellenőrzéséhez élő internet kapcsolat szükséges.</translation>
     </message>
     <message>
-        <location filename="wndmain.cpp" line="1309"/>
+        <location filename="wndmain.cpp" line="1726"/>
         <source>New Patient</source>
         <translation>Új vendég</translation>
     </message>
@@ -8189,8 +9815,8 @@ Akarja aktiválni most?</translation>
         <translation type="obsolete">Hozzá akarja rendelni ezt a bérletet az aktuális vendéghez?</translation>
     </message>
     <message>
-        <location filename="wndmain.cpp" line="1862"/>
-        <location filename="wndmain.cpp" line="2378"/>
+        <location filename="wndmain.cpp" line="2418"/>
+        <location filename="wndmain.cpp" line="3047"/>
         <source>This barcode has not found in the database.
 Do you want to register it for a new patientcard?</source>
         <translation>Ez a vonalkód nincs elmentve az adatbázisban.
@@ -8258,6 +9884,97 @@ Regisztrálni akarja a vonalkódot egy új bérlethez?</translation>
         <location filename="dlgaddressedit.ui" line="268"/>
         <source>Cancel</source>
         <translation>Mégsem</translation>
+    </message>
+</context>
+<context>
+    <name>dlgAdvertisement</name>
+    <message>
+        <location filename="dlgAdvertisement.ui" line="14"/>
+        <source>Advertisement</source>
+        <translation>Hírdetés</translation>
+    </message>
+    <message>
+        <location filename="dlgAdvertisement.ui" line="57"/>
+        <source>TextLabel</source>
+        <translation>mintaszöveg</translation>
+    </message>
+</context>
+<context>
+    <name>dlgAdvertisementEdit</name>
+    <message>
+        <location filename="dlgAdvertisementedit.ui" line="14"/>
+        <source>Dialog</source>
+        <translation></translation>
+    </message>
+    <message>
+        <location filename="dlgAdvertisementedit.ui" line="20"/>
+        <source> Identification </source>
+        <translation> Azonosítás </translation>
+    </message>
+    <message>
+        <location filename="dlgAdvertisementedit.ui" line="26"/>
+        <source>Name :</source>
+        <translation>Név :</translation>
+    </message>
+    <message>
+        <location filename="dlgAdvertisementedit.ui" line="52"/>
+        <source> Settings </source>
+        <translation> Beállítások </translation>
+    </message>
+    <message>
+        <location filename="dlgAdvertisementedit.ui" line="58"/>
+        <source>Caption :</source>
+        <translation>Fejléc :</translation>
+    </message>
+    <message>
+        <location filename="dlgAdvertisementedit.ui" line="68"/>
+        <source>Image path :</source>
+        <translation>Képek könyvtára :</translation>
+    </message>
+    <message>
+        <location filename="dlgAdvertisementedit.ui" line="105"/>
+        <source>Images :</source>
+        <translation>Képek :</translation>
+    </message>
+    <message>
+        <location filename="dlgAdvertisementedit.ui" line="119"/>
+        <source>Add</source>
+        <translation>Hozzáadás</translation>
+    </message>
+    <message>
+        <location filename="dlgAdvertisementedit.ui" line="126"/>
+        <source>Remove</source>
+        <translation>Eltávolítás</translation>
+    </message>
+    <message>
+        <location filename="dlgAdvertisementedit.ui" line="149"/>
+        <source>Move up</source>
+        <translation>Mozgatás felfelé</translation>
+    </message>
+    <message>
+        <location filename="dlgAdvertisementedit.ui" line="156"/>
+        <source>Move down</source>
+        <translation>Mozgatás lefelé</translation>
+    </message>
+    <message>
+        <location filename="dlgAdvertisementedit.ui" line="193"/>
+        <source>Active :</source>
+        <translation>Aktív :</translation>
+    </message>
+    <message>
+        <location filename="dlgAdvertisementedit.ui" line="207"/>
+        <source>Timer length (sec) :</source>
+        <translation>Időzítő hossza (mp) :</translation>
+    </message>
+    <message>
+        <location filename="dlgAdvertisementedit.ui" line="230"/>
+        <source>Background color :</source>
+        <translation>Háttér szín : </translation>
+    </message>
+    <message>
+        <location filename="dlgAdvertisementedit.ui" line="251"/>
+        <source>Choose ...</source>
+        <translation>Válasszon ...</translation>
     </message>
 </context>
 <context>
@@ -8529,6 +10246,34 @@ allergia :</translation>
         <translation>1,000,000</translation>
     </message>
     <message>
+        <location filename="dlgcassa.ui" line="123"/>
+        <source>Adding cash to cassa does not modify the ledger.</source>
+        <translation>A váltópénz hozzáadása a pénztárhoz nem befolyásolja a könyvelési adatokat.</translation>
+    </message>
+    <message>
+        <location filename="dlgcassa.ui" line="126"/>
+        <source>Increase balance
+with adding cash</source>
+        <oldsource>Start cassa with
+adding cash</oldsource>
+        <translation>Pénztáregyenleg növelése
+váltópénz hozzáadással</translation>
+    </message>
+    <message>
+        <location filename="dlgcassa.ui" line="149"/>
+        <source>Removing cash from cassa does not modify the ledger.</source>
+        <translation>A váltópénz kivétele a pénztárból nem befolyásolja a könyvelési adatokat.</translation>
+    </message>
+    <message>
+        <location filename="dlgcassa.ui" line="152"/>
+        <source>Decrease balance
+with removing cash</source>
+        <oldsource>End cassa with
+removing cash</oldsource>
+        <translation>Pénztáregyenleg csökkentése
+váltópénz kivételével</translation>
+    </message>
+    <message>
         <source>Responsible :</source>
         <translation type="obsolete">Felelős felhasználó :</translation>
     </message>
@@ -8537,7 +10282,7 @@ allergia :</translation>
         <translation type="obsolete">Részletek &gt;&gt;</translation>
     </message>
     <message>
-        <location filename="dlgcassa.ui" line="209"/>
+        <location filename="dlgcassa.ui" line="217"/>
         <source>Close</source>
         <translation>Bezárás</translation>
     </message>
@@ -8556,18 +10301,16 @@ allergia :</translation>
         <translation>...</translation>
     </message>
     <message>
-        <location filename="dlgcassa.ui" line="123"/>
         <source>Put cash into cassa</source>
-        <translation>Készpénz berakás kasszába</translation>
+        <translation type="obsolete">Készpénz berakás kasszába</translation>
     </message>
     <message>
-        <location filename="dlgcassa.ui" line="145"/>
         <source>Remove cash from cassa</source>
         <oldsource>Remove cash</oldsource>
-        <translation>Készpénz kivétel kasszából</translation>
+        <translation type="obsolete">Készpénz kivétel kasszából</translation>
     </message>
     <message>
-        <location filename="dlgcassa.ui" line="177"/>
+        <location filename="dlgcassa.ui" line="185"/>
         <source>Expense</source>
         <translation>Kiadás</translation>
     </message>
@@ -8659,6 +10402,24 @@ allergia :</translation>
     </message>
     <message>
         <location filename="dlgchangepcvalidity.ui" line="133"/>
+        <source>Cancel</source>
+        <translation>Mégsem</translation>
+    </message>
+</context>
+<context>
+    <name>dlgComment</name>
+    <message>
+        <location filename="dlgcomment.ui" line="20"/>
+        <source>Enter comment :</source>
+        <translation>Írjon le megjegyzést :</translation>
+    </message>
+    <message>
+        <location filename="dlgcomment.ui" line="52"/>
+        <source>Ok</source>
+        <translation>Rendben</translation>
+    </message>
+    <message>
+        <location filename="dlgcomment.ui" line="59"/>
         <source>Cancel</source>
         <translation>Mégsem</translation>
     </message>
@@ -8973,6 +10734,60 @@ allergia :</translation>
     </message>
 </context>
 <context>
+    <name>dlgExportImport</name>
+    <message>
+        <location filename="dlgExportImport.ui" line="14"/>
+        <location filename="dlgExportImport.ui" line="45"/>
+        <source>Export / Import</source>
+        <translation>Export / Import</translation>
+    </message>
+    <message>
+        <location filename="dlgExportImport.ui" line="52"/>
+        <source>Guests</source>
+        <translation>Vendégek</translation>
+    </message>
+    <message>
+        <location filename="dlgExportImport.ui" line="59"/>
+        <source>Patientcards</source>
+        <translation>Bérletek</translation>
+    </message>
+    <message>
+        <location filename="dlgExportImport.ui" line="66"/>
+        <source>Products</source>
+        <translation>Termékek</translation>
+    </message>
+    <message>
+        <location filename="dlgExportImport.ui" line="104"/>
+        <source>Select source / destination</source>
+        <translation>Válassza ki a forrás / célkönyvtárat</translation>
+    </message>
+    <message>
+        <location filename="dlgExportImport.ui" line="159"/>
+        <source>Summary</source>
+        <translation>Összegzés</translation>
+    </message>
+    <message>
+        <location filename="dlgExportImport.ui" line="188"/>
+        <source>Execute</source>
+        <translation>Végrehajtás</translation>
+    </message>
+    <message>
+        <location filename="dlgExportImport.ui" line="206"/>
+        <source>Back</source>
+        <translation>Vissza</translation>
+    </message>
+    <message>
+        <location filename="dlgExportImport.ui" line="232"/>
+        <source>Next</source>
+        <translation>Előre</translation>
+    </message>
+    <message>
+        <location filename="dlgExportImport.ui" line="251"/>
+        <source>Close</source>
+        <translation>Bezárás</translation>
+    </message>
+</context>
+<context>
     <name>dlgGuestEdit</name>
     <message>
         <location filename="dlgguestedit.ui" line="20"/>
@@ -8985,27 +10800,37 @@ allergia :</translation>
         <translation> Azonosítás </translation>
     </message>
     <message>
-        <location filename="dlgguestedit.ui" line="34"/>
+        <location filename="dlgguestedit.ui" line="36"/>
         <source>Name :</source>
         <translation>Név :</translation>
     </message>
     <message>
-        <location filename="dlgguestedit.ui" line="51"/>
+        <location filename="dlgguestedit.ui" line="69"/>
         <source>Gender :</source>
         <translation>Nem :</translation>
     </message>
     <message>
-        <location filename="dlgguestedit.ui" line="60"/>
+        <location filename="dlgguestedit.ui" line="76"/>
         <source>Male</source>
         <translation>Férfi</translation>
     </message>
     <message>
-        <location filename="dlgguestedit.ui" line="67"/>
+        <location filename="dlgguestedit.ui" line="83"/>
         <source>Female</source>
         <translation>Nő</translation>
     </message>
     <message>
-        <location filename="dlgguestedit.ui" line="89"/>
+        <location filename="dlgguestedit.ui" line="149"/>
+        <source>Membership Id :</source>
+        <translation>Egyedi azonosító :</translation>
+    </message>
+    <message>
+        <location filename="dlgguestedit.ui" line="190"/>
+        <source> Additional data </source>
+        <translation> Egyéb adatok </translation>
+    </message>
+    <message>
+        <location filename="dlgguestedit.ui" line="198"/>
         <source>E-Mail :</source>
         <translation>E-Mail :</translation>
     </message>
@@ -9014,198 +10839,228 @@ allergia :</translation>
         <translation type="obsolete">Egyedi azonosító :</translation>
     </message>
     <message>
+        <location filename="dlgguestedit.ui" line="106"/>
         <source>Date of birth :</source>
-        <translation type="obsolete">Szül. dátum :</translation>
+        <translation>Szül. dátum :</translation>
     </message>
     <message>
         <source>yyyy/MM/dd</source>
         <translation type="obsolete">yyyy/MM/dd</translation>
     </message>
     <message>
-        <location filename="dlgguestedit.ui" line="109"/>
+        <location filename="dlgguestedit.ui" line="399"/>
         <source>Age :</source>
         <translation>Életkor :</translation>
     </message>
     <message>
-        <location filename="dlgguestedit.ui" line="118"/>
+        <location filename="dlgguestedit.ui" line="408"/>
         <source>Not defined</source>
         <translation>Nincs megadva</translation>
     </message>
     <message>
-        <location filename="dlgguestedit.ui" line="124"/>
-        <location filename="dlgguestedit.ui" line="134"/>
-        <location filename="dlgguestedit.ui" line="144"/>
-        <location filename="dlgguestedit.ui" line="154"/>
-        <location filename="dlgguestedit.ui" line="164"/>
-        <location filename="dlgguestedit.ui" line="174"/>
-        <location filename="dlgguestedit.ui" line="184"/>
-        <location filename="dlgguestedit.ui" line="194"/>
         <source>buttonGroup</source>
-        <translation>buttonGroup</translation>
+        <translation type="obsolete">buttonGroup</translation>
     </message>
     <message>
-        <location filename="dlgguestedit.ui" line="131"/>
+        <location filename="dlgguestedit.ui" line="421"/>
         <source>Under 18</source>
         <translation>18-nál fiatalabb</translation>
     </message>
     <message>
-        <location filename="dlgguestedit.ui" line="141"/>
+        <location filename="dlgguestedit.ui" line="431"/>
         <source>18 - 20</source>
         <translation>18 - 20</translation>
     </message>
     <message>
-        <location filename="dlgguestedit.ui" line="151"/>
+        <location filename="dlgguestedit.ui" line="441"/>
         <source>21 - 30</source>
         <translation>21 - 30</translation>
     </message>
     <message>
-        <location filename="dlgguestedit.ui" line="161"/>
+        <location filename="dlgguestedit.ui" line="451"/>
         <source>31 - 40</source>
         <translation>31 - 40</translation>
     </message>
     <message>
-        <location filename="dlgguestedit.ui" line="171"/>
+        <location filename="dlgguestedit.ui" line="461"/>
         <source>41 - 50</source>
         <translation>41 - 50</translation>
     </message>
     <message>
-        <location filename="dlgguestedit.ui" line="181"/>
+        <location filename="dlgguestedit.ui" line="471"/>
         <source>51 - 60</source>
         <translation>51 - 60</translation>
     </message>
     <message>
-        <location filename="dlgguestedit.ui" line="191"/>
+        <location filename="dlgguestedit.ui" line="481"/>
         <source>Above 60</source>
         <translation>60 fölött</translation>
     </message>
     <message>
-        <location filename="dlgguestedit.ui" line="212"/>
-        <source> Guest&apos;s card </source>
-        <translation> Bérlet </translation>
+        <location filename="dlgguestedit.ui" line="289"/>
+        <source> Assigned card(s) </source>
+        <oldsource> Guest&apos;s card </oldsource>
+        <translation> Bérlet(ek) </translation>
     </message>
     <message>
-        <location filename="dlgguestedit.ui" line="220"/>
         <source>Barcode :</source>
-        <translation>Vonalkód :</translation>
+        <translation type="obsolete">Vonalkód :</translation>
     </message>
     <message>
-        <location filename="dlgguestedit.ui" line="283"/>
+        <location filename="dlgguestedit.ui" line="331"/>
         <source>Disjoin card</source>
         <translation>Bérlet leválasztás</translation>
     </message>
     <message>
-        <location filename="dlgguestedit.ui" line="252"/>
         <source>Type of card :</source>
-        <translation>Bérlet típusa :</translation>
+        <translation type="obsolete">Bérlet típusa :</translation>
     </message>
     <message>
-        <location filename="dlgguestedit.ui" line="554"/>
+        <location filename="dlgguestedit.ui" line="350"/>
         <source> Statistical data </source>
         <translation> Statisztikai adatok </translation>
     </message>
     <message>
-        <location filename="dlgguestedit.ui" line="560"/>
         <source>Returning guest</source>
-        <translation>Visszatérő vendég</translation>
+        <translation type="obsolete">Visszatérő vendég</translation>
     </message>
     <message>
-        <location filename="dlgguestedit.ui" line="323"/>
+        <location filename="dlgguestedit.ui" line="529"/>
         <source> Discount </source>
         <translation> Kedvezmény </translation>
     </message>
     <message>
-        <location filename="dlgguestedit.ui" line="351"/>
+        <location filename="dlgguestedit.ui" line="557"/>
         <source>KiwiSun service</source>
         <translation>KiwiSun szerviz szakember</translation>
     </message>
     <message>
-        <location filename="dlgguestedit.ui" line="344"/>
+        <location filename="dlgguestedit.ui" line="550"/>
         <source>Employee</source>
         <translation>Alkalmazott</translation>
     </message>
     <message>
-        <location filename="dlgguestedit.ui" line="337"/>
+        <location filename="dlgguestedit.ui" line="224"/>
+        <source>Phone :</source>
+        <translation>Telefonszám :</translation>
+    </message>
+    <message>
+        <location filename="dlgguestedit.ui" line="247"/>
+        <source>Address :</source>
+        <translation>Cím :</translation>
+    </message>
+    <message>
+        <location filename="dlgguestedit.ui" line="268"/>
+        <source>Notes :</source>
+        <translation>Megjegyzések :</translation>
+    </message>
+    <message>
+        <location filename="dlgguestedit.ui" line="356"/>
+        <source>Returning guest :</source>
+        <translation>Visszatérő vendég :</translation>
+    </message>
+    <message>
+        <location filename="dlgguestedit.ui" line="370"/>
+        <source>Date of registration :</source>
+        <translation>Regisztráció dátuma :</translation>
+    </message>
+    <message>
+        <location filename="dlgguestedit.ui" line="493"/>
+        <source>Type of skin :</source>
+        <translation>Bőrtípus :</translation>
+    </message>
+    <message>
+        <location filename="dlgguestedit.ui" line="543"/>
         <source>Regular customer</source>
         <translation>Törzsvendég</translation>
     </message>
     <message>
-        <location filename="dlgguestedit.ui" line="519"/>
+        <location filename="dlgguestedit.ui" line="701"/>
         <source>Loyalty points :</source>
         <translation>Hűségpontok :</translation>
     </message>
     <message>
-        <location filename="dlgguestedit.ui" line="577"/>
+        <location filename="dlgguestedit.ui" line="743"/>
         <source>Ok</source>
         <translation>Ok</translation>
     </message>
     <message>
-        <location filename="dlgguestedit.ui" line="625"/>
+        <location filename="dlgguestedit.ui" line="791"/>
         <source>Save</source>
         <translation>Mentés</translation>
     </message>
     <message>
-        <location filename="dlgguestedit.ui" line="593"/>
+        <location filename="dlgguestedit.ui" line="759"/>
         <source>Cancel</source>
         <translation>Mégsem</translation>
     </message>
     <message>
-        <location filename="dlgguestedit.ui" line="381"/>
+        <location filename="dlgguestedit.ui" line="295"/>
+        <source>Barcode(s) :</source>
+        <translation>Vonalkód(ok) :</translation>
+    </message>
+    <message>
+        <source>...</source>
+        <translation type="obsolete">...</translation>
+    </message>
+    <message>
+        <location filename="dlgguestedit.ui" line="570"/>
         <source>Private discount :</source>
         <translation>Egyéni kedvezmény :</translation>
     </message>
     <message>
-        <location filename="dlgguestedit.ui" line="391"/>
+        <location filename="dlgguestedit.ui" line="580"/>
         <source>fix value</source>
         <translation>pontos összeg</translation>
     </message>
     <message>
-        <location filename="dlgguestedit.ui" line="404"/>
+        <location filename="dlgguestedit.ui" line="593"/>
         <source>percent</source>
         <translation>százalék</translation>
     </message>
     <message>
-        <location filename="dlgguestedit.ui" line="446"/>
+        <location filename="dlgguestedit.ui" line="678"/>
         <source>Edit</source>
         <translation>Szerkesztés</translation>
     </message>
     <message>
-        <location filename="dlgguestedit.ui" line="469"/>
+        <location filename="dlgguestedit.ui" line="632"/>
         <source>Sample :</source>
         <translation>Példa :</translation>
     </message>
     <message>
-        <location filename="dlgguestedit.ui" line="482"/>
+        <location filename="dlgguestedit.ui" line="645"/>
         <source>if total price is 10,000 $ then discounted price is</source>
         <oldsource>if total price is 1,000 $ then discounted price is</oldsource>
         <translation>ha a teljes ár 10,000 Ft. akkor a kedvezményes ár</translation>
     </message>
     <message>
-        <location filename="dlgguestedit.ui" line="489"/>
+        <location filename="dlgguestedit.ui" line="652"/>
         <source>10,000 $</source>
         <translation>10,000 Ft.</translation>
     </message>
     <message>
-        <location filename="dlgguestedit.ui" line="673"/>
+        <location filename="dlgguestedit.ui" line="839"/>
         <source>Join existing card to guest</source>
         <translation>Bérlet vendéghez rendelése</translation>
     </message>
     <message>
-        <location filename="dlgguestedit.ui" line="676"/>
+        <location filename="dlgguestedit.ui" line="842"/>
         <source>Join card</source>
         <translation>Bérlet hozzárendelés</translation>
     </message>
     <message>
-        <location filename="dlgguestedit.ui" line="654"/>
+        <location filename="dlgguestedit.ui" line="820"/>
         <source>Sell unactivated patientcard to guest.</source>
         <translation>Nem aktív bérlet eladása a vendégnek.</translation>
     </message>
     <message>
-        <location filename="dlgguestedit.ui" line="657"/>
+        <location filename="dlgguestedit.ui" line="823"/>
         <source>Sell card</source>
         <translation>Bérlet eladás</translation>
     </message>
     <message>
-        <location filename="dlgguestedit.ui" line="711"/>
+        <location filename="dlgguestedit.ui" line="877"/>
         <source>History</source>
         <translation>Előzmények</translation>
     </message>
@@ -9219,16 +11074,17 @@ allergia :</translation>
     </message>
     <message>
         <location filename="dlghardwaretest.ui" line="22"/>
-        <source> Hardware connection </source>
+        <source> Hardware </source>
+        <oldsource> Hardware connection </oldsource>
         <translation> Hardver kapcsolat </translation>
     </message>
     <message>
-        <location filename="dlghardwaretest.ui" line="54"/>
+        <location filename="dlghardwaretest.ui" line="67"/>
         <source>Test connection</source>
         <translation>Kapcsolat tesztelés</translation>
     </message>
     <message>
-        <location filename="dlghardwaretest.ui" line="43"/>
+        <location filename="dlghardwaretest.ui" line="56"/>
         <source>Unknown status</source>
         <translation>Újracsatlakozás</translation>
     </message>
@@ -9238,22 +11094,26 @@ allergia :</translation>
         <translation>Státusz :</translation>
     </message>
     <message>
-        <location filename="dlghardwaretest.ui" line="67"/>
+        <location filename="dlghardwaretest.ui" line="80"/>
         <source>Reconnect</source>
         <translation>Újracsatlakozás</translation>
     </message>
     <message>
-        <location filename="dlghardwaretest.ui" line="535"/>
+        <location filename="dlghardwaretest.ui" line="98"/>
+        <source> Modules </source>
+        <translation> Modulok </translation>
+    </message>
+    <message>
+        <location filename="dlghardwaretest.ui" line="1549"/>
         <source>Exit</source>
         <translation>Kilépés</translation>
     </message>
     <message>
-        <location filename="dlghardwaretest.ui" line="101"/>
         <source> Relay test </source>
-        <translation> Relé teszt </translation>
+        <translation type="obsolete"> Relé teszt </translation>
     </message>
     <message>
-        <location filename="dlghardwaretest.ui" line="500"/>
+        <location filename="dlghardwaretest.ui" line="1111"/>
         <source>Run relay test</source>
         <translation>Relé teszt futtatása</translation>
     </message>
@@ -9262,73 +11122,173 @@ allergia :</translation>
         <translation type="obsolete">BE</translation>
     </message>
     <message>
-        <location filename="dlghardwaretest.ui" line="115"/>
+        <location filename="dlghardwaretest.ui" line="1132"/>
         <source>Relay 1</source>
         <translation>Relé 1</translation>
     </message>
     <message>
-        <location filename="dlghardwaretest.ui" line="184"/>
+        <location filename="dlghardwaretest.ui" line="1201"/>
         <source>Relay 2</source>
         <translation>Relé 2</translation>
     </message>
     <message>
-        <location filename="dlghardwaretest.ui" line="253"/>
+        <location filename="dlghardwaretest.ui" line="1270"/>
         <source>Relay 3</source>
         <translation>Relé 3</translation>
     </message>
     <message>
-        <location filename="dlghardwaretest.ui" line="322"/>
+        <location filename="dlghardwaretest.ui" line="1339"/>
         <source>Relay 4</source>
         <translation>Relé 4</translation>
     </message>
     <message>
-        <location filename="dlghardwaretest.ui" line="382"/>
+        <location filename="dlghardwaretest.ui" line="1399"/>
         <source>Relay 5</source>
         <translation>Relé 5</translation>
     </message>
     <message>
-        <location filename="dlghardwaretest.ui" line="442"/>
+        <location filename="dlghardwaretest.ui" line="1459"/>
         <source>Relay 6</source>
         <translation>Relé 6</translation>
     </message>
     <message>
-        <location filename="dlghardwaretest.ui" line="151"/>
+        <location filename="dlghardwaretest.ui" line="1168"/>
         <source>Relay 7</source>
         <translation>Relé 7</translation>
     </message>
     <message>
-        <location filename="dlghardwaretest.ui" line="85"/>
         <source> Module test </source>
-        <translation> Modul tesztelés </translation>
+        <translation type="obsolete"> Modul tesztelés </translation>
     </message>
     <message>
-        <location filename="dlghardwaretest.ui" line="91"/>
+        <location filename="dlghardwaretest.ui" line="106"/>
         <source>Set address of modules (reorder modules)</source>
         <oldsource>Set address of modules</oldsource>
         <translation>Modul címzés beállítása (modulok sorbarendezése)</translation>
     </message>
     <message>
-        <location filename="dlghardwaretest.ui" line="220"/>
+        <location filename="dlghardwaretest.ui" line="140"/>
+        <source>Init hardware modules</source>
+        <translation>Modulok inicializálása</translation>
+    </message>
+    <message>
+        <location filename="dlghardwaretest.ui" line="149"/>
+        <source>Test hardware modules</source>
+        <translation>Modulok tesztelése</translation>
+    </message>
+    <message>
+        <location filename="dlghardwaretest.ui" line="179"/>
+        <location filename="dlghardwaretest.ui" line="192"/>
+        <source>Status</source>
+        <translation>Státusz</translation>
+    </message>
+    <message>
+        <location filename="dlghardwaretest.ui" line="199"/>
+        <source>Modul 01</source>
+        <translation>Modul 01</translation>
+    </message>
+    <message>
+        <location filename="dlghardwaretest.ui" line="258"/>
+        <source>Modul 08</source>
+        <translation>Modul 08</translation>
+    </message>
+    <message>
+        <location filename="dlghardwaretest.ui" line="317"/>
+        <source>Modul 02</source>
+        <translation>Modul 02</translation>
+    </message>
+    <message>
+        <location filename="dlghardwaretest.ui" line="376"/>
+        <source>Modul 09</source>
+        <translation>Modul 09</translation>
+    </message>
+    <message>
+        <location filename="dlghardwaretest.ui" line="435"/>
+        <source>Modul 03</source>
+        <translation>Modul 03</translation>
+    </message>
+    <message>
+        <location filename="dlghardwaretest.ui" line="494"/>
+        <source>Modul 10</source>
+        <translation>Modul 10</translation>
+    </message>
+    <message>
+        <location filename="dlghardwaretest.ui" line="553"/>
+        <source>Modul 04</source>
+        <translation>Modul 04</translation>
+    </message>
+    <message>
+        <location filename="dlghardwaretest.ui" line="612"/>
+        <source>Modul 11</source>
+        <translation>Modul 11</translation>
+    </message>
+    <message>
+        <location filename="dlghardwaretest.ui" line="671"/>
+        <source>Modul 05</source>
+        <translation>Modul 05</translation>
+    </message>
+    <message>
+        <location filename="dlghardwaretest.ui" line="730"/>
+        <source>Modul 12</source>
+        <translation>Modul 12</translation>
+    </message>
+    <message>
+        <location filename="dlghardwaretest.ui" line="789"/>
+        <source>Modul 06</source>
+        <translation>Modul 06</translation>
+    </message>
+    <message>
+        <location filename="dlghardwaretest.ui" line="848"/>
+        <source>Modul 13</source>
+        <translation>Modul 13</translation>
+    </message>
+    <message>
+        <location filename="dlghardwaretest.ui" line="907"/>
+        <source>Modul 07</source>
+        <translation>Modul 07</translation>
+    </message>
+    <message>
+        <location filename="dlghardwaretest.ui" line="966"/>
+        <source>Modul 14</source>
+        <translation>Modul 14</translation>
+    </message>
+    <message>
+        <location filename="dlghardwaretest.ui" line="1047"/>
+        <source> Module buttons </source>
+        <translation> Modul gombok </translation>
+    </message>
+    <message>
+        <location filename="dlghardwaretest.ui" line="1053"/>
+        <source>Test module buttons</source>
+        <translation>Modul gombok tesztelése</translation>
+    </message>
+    <message>
+        <location filename="dlghardwaretest.ui" line="1105"/>
+        <source> Relays </source>
+        <translation> Relék </translation>
+    </message>
+    <message>
+        <location filename="dlghardwaretest.ui" line="1237"/>
         <source>Relay 8</source>
         <translation>Relé 8</translation>
     </message>
     <message>
-        <location filename="dlghardwaretest.ui" line="289"/>
+        <location filename="dlghardwaretest.ui" line="1306"/>
         <source>Relay 9</source>
         <translation>Relé 9</translation>
     </message>
     <message>
-        <location filename="dlghardwaretest.ui" line="349"/>
+        <location filename="dlghardwaretest.ui" line="1366"/>
         <source>Relay 10</source>
         <translation>Relé 10</translation>
     </message>
     <message>
-        <location filename="dlghardwaretest.ui" line="409"/>
+        <location filename="dlghardwaretest.ui" line="1426"/>
         <source>Relay 11</source>
         <translation>Relé 11</translation>
     </message>
     <message>
-        <location filename="dlghardwaretest.ui" line="469"/>
+        <location filename="dlghardwaretest.ui" line="1486"/>
         <source>Relay 12</source>
         <translation>Relé 12</translation>
     </message>
@@ -9429,6 +11389,19 @@ allergia :</translation>
     <message>
         <source>Independent from the local studio.</source>
         <translation type="obsolete">Független a stúdiótól</translation>
+    </message>
+</context>
+<context>
+    <name>dlgInformation</name>
+    <message>
+        <location filename="dlgInformation.ui" line="14"/>
+        <source>Dialog</source>
+        <translation></translation>
+    </message>
+    <message>
+        <location filename="dlgInformation.ui" line="93"/>
+        <source>Ok</source>
+        <translation>Rendben</translation>
     </message>
 </context>
 <context>
@@ -9697,32 +11670,64 @@ El akarja menteni ezt a hármast az adatbázisba?</translation>
     </message>
     <message>
         <location filename="dlgmanagedatabase.ui" line="35"/>
+        <source>Update unit time and type of patientcard units</source>
+        <translation>Bérletegységek adatainak frissítése</translation>
+    </message>
+    <message>
+        <location filename="dlgmanagedatabase.ui" line="42"/>
         <source>Deactivate patientcards that are no longer valid</source>
         <translation>Érvénytelenné vált bérletek deaktiválása</translation>
     </message>
     <message>
-        <location filename="dlgmanagedatabase.ui" line="42"/>
+        <location filename="dlgmanagedatabase.ui" line="49"/>
+        <source>Delete deactivated patientcards and related history entries</source>
+        <oldsource>Delete deactivated patientcards and all related history</oldsource>
+        <translation>Deaktivált bérletek és kapcsolódó bejegyzések végleges törlése</translation>
+    </message>
+    <message>
+        <location filename="dlgmanagedatabase.ui" line="58"/>
+        <source>Repair patientcards without patientcard type</source>
+        <translation>Típus nélküli bérletek javítása</translation>
+    </message>
+    <message>
+        <location filename="dlgmanagedatabase.ui" line="70"/>
         <source>Delete inactive patientcard types that is not assigned to any patientcard</source>
         <oldsource>Delete inactive patientcard types that is not assigned to any patient card</oldsource>
         <translation>Nem használt (nincs bérlet hozzárendellve), inaktív bérlettípusok törlése</translation>
     </message>
     <message>
-        <location filename="dlgmanagedatabase.ui" line="62"/>
+        <location filename="dlgmanagedatabase.ui" line="90"/>
         <source>Ledger related actions</source>
         <translation>Könyveléssel kapcsolatos beavatkozások</translation>
     </message>
     <message>
-        <location filename="dlgmanagedatabase.ui" line="69"/>
+        <location filename="dlgmanagedatabase.ui" line="99"/>
         <source>Delete ledger entries and cassa actions before date ...</source>
         <translation>Könyvelési és pénztár események törlése a megadott dátum elött</translation>
     </message>
     <message>
-        <location filename="dlgmanagedatabase.ui" line="114"/>
+        <location filename="dlgmanagedatabase.ui" line="159"/>
         <source>Execute</source>
         <translation>Végrehajtás</translation>
     </message>
     <message>
-        <location filename="dlgmanagedatabase.ui" line="133"/>
+        <source> Backup </source>
+        <translation type="obsolete"> Mentés </translation>
+    </message>
+    <message>
+        <source>Backup database</source>
+        <translation type="obsolete">Adatbázis mentése</translation>
+    </message>
+    <message>
+        <source>to the defined directory:</source>
+        <translation type="obsolete">a megadott könyvtárba:</translation>
+    </message>
+    <message>
+        <source>...</source>
+        <translation type="obsolete">...</translation>
+    </message>
+    <message>
+        <location filename="dlgmanagedatabase.ui" line="178"/>
         <source>Exit</source>
         <translation>Kilépés</translation>
     </message>
@@ -9735,67 +11740,112 @@ El akarja menteni ezt a hármast az adatbázisba?</translation>
         <translation>Dialog</translation>
     </message>
     <message>
-        <location filename="dlgpanelappereance.ui" line="28"/>
+        <location filename="dlgpanelappereance.ui" line="22"/>
+        <source> Panel caption </source>
+        <translation> Panel fejléc </translation>
+    </message>
+    <message>
+        <location filename="dlgpanelappereance.ui" line="37"/>
+        <location filename="dlgpanelappereance.ui" line="100"/>
+        <source>Caption ...</source>
+        <translation>Szöveg szín ...</translation>
+    </message>
+    <message>
+        <location filename="dlgpanelappereance.ui" line="68"/>
+        <location filename="dlgpanelappereance.ui" line="131"/>
+        <source>Background ...</source>
+        <translation>Háttér szín ...</translation>
+    </message>
+    <message>
+        <location filename="dlgpanelappereance.ui" line="84"/>
+        <source>Inactive state</source>
+        <translation>Inaktív állapot</translation>
+    </message>
+    <message>
+        <location filename="dlgpanelappereance.ui" line="147"/>
+        <source>Active state</source>
+        <translation>Aktív állapot</translation>
+    </message>
+    <message>
+        <location filename="dlgpanelappereance.ui" line="192"/>
         <source> Panel status </source>
         <translation> Gép állapot </translation>
     </message>
     <message>
-        <location filename="dlgpanelappereance.ui" line="36"/>
+        <location filename="dlgpanelappereance.ui" line="200"/>
         <source>Panel status name : </source>
         <translation>Gép állapot megnevezés : </translation>
     </message>
     <message>
-        <location filename="dlgpanelappereance.ui" line="70"/>
+        <location filename="dlgpanelappereance.ui" line="228"/>
         <source> Settings </source>
         <translation> Beállítások </translation>
     </message>
     <message>
-        <location filename="dlgpanelappereance.ui" line="78"/>
+        <location filename="dlgpanelappereance.ui" line="236"/>
         <source>Background color : </source>
         <oldsource>Backgournd color : </oldsource>
         <translation>Háttér szín : </translation>
     </message>
     <message>
-        <location filename="dlgpanelappereance.ui" line="103"/>
-        <location filename="dlgpanelappereance.ui" line="195"/>
-        <location filename="dlgpanelappereance.ui" line="229"/>
+        <location filename="dlgpanelappereance.ui" line="261"/>
+        <location filename="dlgpanelappereance.ui" line="353"/>
+        <location filename="dlgpanelappereance.ui" line="387"/>
         <source>Choose ...</source>
         <translation>Válasszon ...</translation>
     </message>
     <message>
-        <location filename="dlgpanelappereance.ui" line="136"/>
+        <location filename="dlgpanelappereance.ui" line="294"/>
         <source>Panel text name : </source>
         <translation>Panel szöveg megnevezés : </translation>
     </message>
     <message>
-        <location filename="dlgpanelappereance.ui" line="163"/>
+        <location filename="dlgpanelappereance.ui" line="321"/>
         <source>Font : </source>
         <translation>Betűtípus : </translation>
     </message>
     <message>
-        <location filename="dlgpanelappereance.ui" line="351"/>
+        <location filename="dlgpanelappereance.ui" line="533"/>
         <source>Title</source>
         <translation>Fejléc</translation>
     </message>
     <message>
-        <location filename="dlgpanelappereance.ui" line="407"/>
+        <location filename="dlgpanelappereance.ui" line="598"/>
         <source>sampletext</source>
         <translation>mintaszöveg</translation>
     </message>
     <message>
-        <location filename="dlgpanelappereance.ui" line="269"/>
+        <location filename="dlgpanelappereance.ui" line="442"/>
         <source> Preview </source>
         <translation> Előnézet </translation>
     </message>
     <message>
-        <location filename="dlgpanelappereance.ui" line="442"/>
+        <location filename="dlgpanelappereance.ui" line="631"/>
         <source>Ok</source>
         <translation>Ok</translation>
     </message>
     <message>
-        <location filename="dlgpanelappereance.ui" line="455"/>
+        <location filename="dlgpanelappereance.ui" line="644"/>
         <source>Cancel</source>
         <translation>Mégsem</translation>
+    </message>
+</context>
+<context>
+    <name>dlgPanelEdit</name>
+    <message>
+        <location filename="dlgpaneledit.ui" line="14"/>
+        <source>Panel Group</source>
+        <translation>Gépcsoport</translation>
+    </message>
+    <message>
+        <location filename="dlgpaneledit.ui" line="22"/>
+        <source>Title :</source>
+        <translation>Cím :</translation>
+    </message>
+    <message>
+        <location filename="dlgpaneledit.ui" line="36"/>
+        <source>Type :</source>
+        <translation>Típus :</translation>
     </message>
 </context>
 <context>
@@ -9934,7 +11984,7 @@ El akarja menteni ezt a hármast az adatbázisba?</translation>
 <context>
     <name>dlgPanelUse</name>
     <message>
-        <location filename="dlgpaneluse.ui" line="26"/>
+        <location filename="dlgpaneluse.ui" line="20"/>
         <source>Panel usage</source>
         <translation>Géphasználat</translation>
     </message>
@@ -9950,17 +12000,17 @@ El akarja menteni ezt a hármast az adatbázisba?</translation>
     </message>
     <message>
         <location filename="dlgpaneluse.ui" line="47"/>
-        <location filename="dlgpaneluse.ui" line="288"/>
+        <location filename="dlgpaneluse.ui" line="300"/>
         <source>...</source>
         <translation>...</translation>
     </message>
     <message>
-        <location filename="dlgpaneluse.ui" line="70"/>
+        <location filename="dlgpaneluse.ui" line="76"/>
         <source> Use with patientcard ... </source>
         <translation> Gép használat indítása bérlettel ... </translation>
     </message>
     <message>
-        <location filename="dlgpaneluse.ui" line="78"/>
+        <location filename="dlgpaneluse.ui" line="84"/>
         <source>Barcode :</source>
         <translation>Vonalkód :</translation>
     </message>
@@ -9969,7 +12019,7 @@ El akarja menteni ezt a hármast az adatbázisba?</translation>
         <translation type="obsolete">i</translation>
     </message>
     <message>
-        <location filename="dlgpaneluse.ui" line="110"/>
+        <location filename="dlgpaneluse.ui" line="113"/>
         <source>Reload</source>
         <translation>Újratöltés</translation>
     </message>
@@ -9984,59 +12034,65 @@ El akarja menteni ezt a hármast az adatbázisba?</translation>
         <translation type="obsolete">Tulajdonos :</translation>
     </message>
     <message>
-        <location filename="dlgpaneluse.ui" line="149"/>
         <source>Card type : </source>
         <oldsource>Type : </oldsource>
-        <translation>Bérlettípus : </translation>
+        <translation type="obsolete">Bérlettípus : </translation>
     </message>
     <message>
-        <location filename="dlgpaneluse.ui" line="168"/>
+        <location filename="dlgpaneluse.ui" line="150"/>
         <source>Owner : </source>
         <translation>Tulajdonos : </translation>
     </message>
     <message>
-        <location filename="dlgpaneluse.ui" line="186"/>
+        <location filename="dlgpaneluse.ui" line="157"/>
+        <source>Comment :
+</source>
+        <translation>Megjegyzés :
+</translation>
+    </message>
+    <message>
+        <location filename="dlgpaneluse.ui" line="177"/>
         <source> Available units </source>
         <translation> Felhasználható egységek </translation>
     </message>
     <message>
-        <location filename="dlgpaneluse.ui" line="208"/>
+        <location filename="dlgpaneluse.ui" line="214"/>
         <source> Use with time intervall ... </source>
         <translation> Gép használat idő megadásával ... </translation>
     </message>
     <message>
-        <location filename="dlgpaneluse.ui" line="214"/>
+        <location filename="dlgpaneluse.ui" line="220"/>
         <source>Time intervall :</source>
         <translation>Idő intervallum :</translation>
     </message>
     <message>
-        <location filename="dlgpaneluse.ui" line="247"/>
+        <location filename="dlgpaneluse.ui" line="259"/>
         <source> Usage summary </source>
         <translation> Használat összesítés </translation>
     </message>
     <message>
-        <location filename="dlgpaneluse.ui" line="256"/>
+        <location filename="dlgpaneluse.ui" line="268"/>
         <source>Total time :</source>
         <translation>Összes idő :</translation>
     </message>
     <message>
-        <location filename="dlgpaneluse.ui" line="267"/>
+        <location filename="dlgpaneluse.ui" line="279"/>
         <source>00:00:00</source>
         <oldsource>00 : 00 : 00</oldsource>
         <translation>00:00:00</translation>
     </message>
     <message>
-        <location filename="dlgpaneluse.ui" line="277"/>
+        <location filename="dlgpaneluse.ui" line="289"/>
         <source>Total price :</source>
         <translation>Fizetendő :</translation>
     </message>
     <message>
-        <location filename="dlgpaneluse.ui" line="318"/>
+        <location filename="dlgpaneluse.ui" line="330"/>
         <source>Ok</source>
         <translation>Ok</translation>
     </message>
     <message>
-        <location filename="dlgpaneluse.ui" line="328"/>
+        <location filename="dlgpaneluse.ui" line="340"/>
         <source>Cancel</source>
         <translation>Mégsem</translation>
     </message>
@@ -10126,36 +12182,111 @@ El akarja menteni ezt a hármast az adatbázisba?</translation>
         <translation>Bérlet társítás</translation>
     </message>
     <message>
-        <location filename="dlgpatientcardassign.ui" line="22"/>
         <source> Main card </source>
-        <translation> Fő kártya </translation>
+        <translation type="obsolete"> Fő kártya </translation>
     </message>
     <message>
-        <location filename="dlgpatientcardassign.ui" line="28"/>
-        <location filename="dlgpatientcardassign.ui" line="67"/>
+        <location filename="dlgpatientcardassign.ui" line="26"/>
+        <source> &apos;Old&apos; (existing) patientcard  </source>
+        <translation> &apos;Régi&apos; (létező) bérlet </translation>
+    </message>
+    <message>
+        <location filename="dlgpatientcardassign.ui" line="32"/>
+        <location filename="dlgpatientcardassign.ui" line="51"/>
         <source>Barcode :</source>
         <translation>Vonalkód :</translation>
     </message>
     <message>
-        <location filename="dlgpatientcardassign.ui" line="51"/>
-        <location filename="dlgpatientcardassign.ui" line="90"/>
+        <location filename="dlgpatientcardassign.ui" line="45"/>
+        <source> New patientcard (to be assigned to old) </source>
+        <translation> Új bérlet (társítandó a régihez) </translation>
+    </message>
+    <message>
+        <location filename="dlgpatientcardassign.ui" line="68"/>
         <source>Verify</source>
         <translation>Ellenőrzés</translation>
     </message>
     <message>
-        <location filename="dlgpatientcardassign.ui" line="61"/>
+        <location filename="dlgpatientcardassign.ui" line="88"/>
+        <source> Old card assign structure </source>
+        <translation> Régi bérlet társítási kapcsolatok </translation>
+    </message>
+    <message>
+        <location filename="dlgpatientcardassign.ui" line="113"/>
+        <source> Action to be processed </source>
+        <translation> Végrehajtandó feladat </translation>
+    </message>
+    <message>
+        <location filename="dlgpatientcardassign.ui" line="122"/>
+        <source>After the assign process the old card will be the main (parent) card, the new card will be the assigned (child) card.</source>
+        <translation>A társítás után a régi kártya lesz a fő (szülő) kártya, míg az új kártya lesz a társított (gyerek) kártya.</translation>
+    </message>
+    <message>
+        <location filename="dlgpatientcardassign.ui" line="125"/>
+        <source>Assign new card to old card</source>
+        <translation>Új kártya társítása a meglévőhöz</translation>
+    </message>
+    <message>
+        <location filename="dlgpatientcardassign.ui" line="135"/>
+        <source>After the assign process the new card will be the main (parent) card and the old card will be the assigned (child) card.</source>
+        <translation>A társítás után az új kártya lesz a fő (szülő) kártya, míg a régi kártya lesz a társított (gyerek) kártya.</translation>
+    </message>
+    <message>
+        <location filename="dlgpatientcardassign.ui" line="138"/>
+        <source>Assign old card to new card</source>
+        <translation>Meglévő kártya társítása az újhoz</translation>
+    </message>
+    <message>
+        <location filename="dlgpatientcardassign.ui" line="155"/>
+        <source>Replace the current main (parent) card with the &apos;old&apos; card. The current main will be assigned (child) card.</source>
+        <translation>A jelenlegi fő (szülő) kártya lecserélése a &apos;Régi&apos; kártyára. A jelenlegi fő kártya ezután társított (gyerek) kártya lesz.</translation>
+    </message>
+    <message>
+        <location filename="dlgpatientcardassign.ui" line="158"/>
+        <source>Transform old card to main card</source>
+        <translation>Meglévő kártya fő kártyává alakítása</translation>
+    </message>
+    <message>
+        <location filename="dlgpatientcardassign.ui" line="168"/>
+        <source>Unlink all assigned cards from the main (parent) card and inactivate them.</source>
+        <translation>Az összes társított kártya leválasztása a fő (szülő) kártyáról és a leválasztott kártyák inaktiválása.</translation>
+    </message>
+    <message>
+        <location filename="dlgpatientcardassign.ui" line="171"/>
+        <source>Remove assigned cards</source>
+        <translation>Társított kártyák leválasztása</translation>
+    </message>
+    <message>
+        <location filename="dlgpatientcardassign.ui" line="191"/>
+        <source>...</source>
+        <translation>...</translation>
+    </message>
+    <message>
+        <location filename="dlgpatientcardassign.ui" line="204"/>
+        <source>RadioButton</source>
+        <translation>RB</translation>
+    </message>
+    <message>
+        <location filename="dlgpatientcardassign.ui" line="214"/>
+        <source>Execute selected action</source>
+        <translation>Kiválasztott feladat végrehajtása</translation>
+    </message>
+    <message>
+        <location filename="dlgpatientcardassign.ui" line="230"/>
+        <source>Exit</source>
+        <translation>Kilépés</translation>
+    </message>
+    <message>
         <source> Card to be assigned to main card </source>
-        <translation> Társkártya </translation>
+        <translation type="obsolete"> Társkártya </translation>
     </message>
     <message>
-        <location filename="dlgpatientcardassign.ui" line="104"/>
         <source>Assign</source>
-        <translation>Társítás</translation>
+        <translation type="obsolete">Társítás</translation>
     </message>
     <message>
-        <location filename="dlgpatientcardassign.ui" line="111"/>
         <source>Cancel</source>
-        <translation>Mégsem</translation>
+        <translation type="obsolete">Mégsem</translation>
     </message>
 </context>
 <context>
@@ -10388,58 +12519,58 @@ El akarja menteni ezt a hármast az adatbázisba?</translation>
         <translation>Tulajdonos :</translation>
     </message>
     <message>
-        <location filename="dlgpatientcardsell.ui" line="109"/>
+        <location filename="dlgpatientcardsell.ui" line="116"/>
         <source>Comment :</source>
         <translation>Megjegyzés :</translation>
     </message>
     <message>
-        <location filename="dlgpatientcardsell.ui" line="135"/>
+        <location filename="dlgpatientcardsell.ui" line="142"/>
         <source> Information </source>
         <translation> Információ </translation>
     </message>
     <message>
-        <location filename="dlgpatientcardsell.ui" line="141"/>
+        <location filename="dlgpatientcardsell.ui" line="148"/>
         <source>Price :</source>
         <translation>Fizetendő :</translation>
     </message>
     <message>
-        <location filename="dlgpatientcardsell.ui" line="178"/>
+        <location filename="dlgpatientcardsell.ui" line="185"/>
         <source>Available units :</source>
         <translation>Felhasználható egységek :</translation>
     </message>
     <message>
-        <location filename="dlgpatientcardsell.ui" line="215"/>
+        <location filename="dlgpatientcardsell.ui" line="222"/>
         <source>Time left (hh:mm:ss):</source>
         <translation>Hátralévő időhossz (ó:p:mp):</translation>
     </message>
     <message>
-        <location filename="dlgpatientcardsell.ui" line="227"/>
+        <location filename="dlgpatientcardsell.ui" line="234"/>
         <source>hh:mm:ss</source>
         <translation>hh:mm:ss</translation>
     </message>
     <message>
-        <location filename="dlgpatientcardsell.ui" line="249"/>
+        <location filename="dlgpatientcardsell.ui" line="256"/>
         <source>Valid till ... :</source>
         <translation>Érvényes ... :</translation>
     </message>
     <message>
-        <location filename="dlgpatientcardsell.ui" line="261"/>
-        <location filename="dlgpatientcardsell.ui" line="293"/>
+        <location filename="dlgpatientcardsell.ui" line="268"/>
+        <location filename="dlgpatientcardsell.ui" line="300"/>
         <source>yyyy/MM/dd</source>
         <translation>yyyy/MM/dd</translation>
     </message>
     <message>
-        <location filename="dlgpatientcardsell.ui" line="283"/>
+        <location filename="dlgpatientcardsell.ui" line="290"/>
         <source> -&gt; </source>
         <translation> -&gt; </translation>
     </message>
     <message>
-        <location filename="dlgpatientcardsell.ui" line="312"/>
+        <location filename="dlgpatientcardsell.ui" line="319"/>
         <source>Sell</source>
         <translation>Eladás</translation>
     </message>
     <message>
-        <location filename="dlgpatientcardsell.ui" line="325"/>
+        <location filename="dlgpatientcardsell.ui" line="332"/>
         <source>Cancel</source>
         <translation>Mégsem</translation>
     </message>
@@ -11075,32 +13206,32 @@ El akarja menteni ezt a hármast az adatbázisba?</translation>
         <translation>Program log szint :</translation>
     </message>
     <message>
-        <location filename="dlgpreferences.ui" line="404"/>
+        <location filename="dlgpreferences.ui" line="454"/>
         <source>Default country : </source>
         <translation>Alapértelmezett ország :</translation>
     </message>
     <message>
-        <location filename="dlgpreferences.ui" line="827"/>
+        <location filename="dlgpreferences.ui" line="1186"/>
         <source>Patientcard</source>
         <translation>Bérlet</translation>
     </message>
     <message>
-        <location filename="dlgpreferences.ui" line="833"/>
+        <location filename="dlgpreferences.ui" line="1192"/>
         <source> Barcode </source>
         <translation> Vonalkód </translation>
     </message>
     <message>
-        <location filename="dlgpreferences.ui" line="839"/>
+        <location filename="dlgpreferences.ui" line="1198"/>
         <source>Barcode length:</source>
         <translation>Vonalkód hossza :</translation>
     </message>
     <message>
-        <location filename="dlgpreferences.ui" line="882"/>
+        <location filename="dlgpreferences.ui" line="1241"/>
         <source>Barcode prefix:</source>
         <translation>Vonalkód automatikus előtag :</translation>
     </message>
     <message>
-        <location filename="dlgpreferences.ui" line="767"/>
+        <location filename="dlgpreferences.ui" line="995"/>
         <source>Device</source>
         <translation>Gép</translation>
     </message>
@@ -11110,188 +13241,532 @@ El akarja menteni ezt a hármast az adatbázisba?</translation>
         <translation>Állomány log szint:</translation>
     </message>
     <message>
-        <location filename="dlgpreferences.ui" line="438"/>
+        <location filename="dlgpreferences.ui" line="404"/>
+        <source>Date format :</source>
+        <translation>Dátum formátum :</translation>
+    </message>
+    <message>
+        <location filename="dlgpreferences.ui" line="414"/>
+        <source>yyyy-MM-dd</source>
+        <translation>yyyy-MM-dd</translation>
+    </message>
+    <message>
+        <location filename="dlgpreferences.ui" line="419"/>
+        <source>MM-dd-yyyy</source>
+        <translation>MM-dd-yyyy</translation>
+    </message>
+    <message>
+        <location filename="dlgpreferences.ui" line="424"/>
+        <source>dd-MM-yyyy</source>
+        <translation>dd-MM-yyyy</translation>
+    </message>
+    <message>
+        <location filename="dlgpreferences.ui" line="432"/>
+        <source>(example: %1)</source>
+        <translation>(példa: %1)</translation>
+    </message>
+    <message>
+        <location filename="dlgpreferences.ui" line="488"/>
         <source>Kiwisun web address :</source>
         <translation>KiwiSun webcím :</translation>
     </message>
     <message>
-        <location filename="dlgpreferences.ui" line="471"/>
+        <location filename="dlgpreferences.ui" line="501"/>
+        <source> Minimal version </source>
+        <translation> Minimál verzió </translation>
+    </message>
+    <message>
+        <location filename="dlgpreferences.ui" line="507"/>
+        <source>MINIMAL VERSION - Only the minimal features are enabled to be used in the application </source>
+        <translation>ALAP VERZIÓ - Csak a minimális szolgáltatások elérhetőek az alkalmazás használatakor </translation>
+    </message>
+    <message>
+        <location filename="dlgpreferences.ui" line="537"/>
         <source> Main window </source>
         <translation> Fő ablak </translation>
     </message>
     <message>
-        <location filename="dlgpreferences.ui" line="479"/>
-        <location filename="dlgpreferences.ui" line="591"/>
+        <location filename="dlgpreferences.ui" line="545"/>
+        <location filename="dlgpreferences.ui" line="746"/>
         <source>Background color: </source>
         <translation>Háttér szín : </translation>
     </message>
     <message>
-        <location filename="dlgpreferences.ui" line="532"/>
+        <location filename="dlgpreferences.ui" line="598"/>
         <source> Secondary window  </source>
         <translation> Másodlagos megjelenítő ablak </translation>
     </message>
     <message>
-        <location filename="dlgpreferences.ui" line="559"/>
+        <location filename="dlgpreferences.ui" line="625"/>
         <source>Visible</source>
         <translation>Látható</translation>
     </message>
     <message>
+        <location filename="dlgpreferences.ui" line="785"/>
+        <source>Frame color: </source>
+        <translation>Keret színe :</translation>
+    </message>
+    <message>
         <location filename="dlgpreferences.ui" line="659"/>
+        <source>Window caption is visible</source>
+        <translation>Az ablak fejléce látható</translation>
+    </message>
+    <message>
+        <location filename="dlgpreferences.ui" line="653"/>
+        <source> Caption settins  </source>
+        <translation> Fejléc beállítások </translation>
+    </message>
+    <message>
+        <location filename="dlgpreferences.ui" line="684"/>
+        <source>Background ...</source>
+        <translation>Háttér szín ...</translation>
+    </message>
+    <message>
+        <location filename="dlgpreferences.ui" line="709"/>
+        <source>Text ...</source>
+        <translation>Szöveg ...</translation>
+    </message>
+    <message>
+        <location filename="dlgpreferences.ui" line="738"/>
+        <source> Window settings </source>
+        <translation> Ablak beállítások </translation>
+    </message>
+    <message>
+        <location filename="dlgpreferences.ui" line="854"/>
         <source> Panels </source>
         <translation> Panelok </translation>
     </message>
     <message>
-        <location filename="dlgpreferences.ui" line="722"/>
+        <location filename="dlgpreferences.ui" line="903"/>
+        <source>    Device usage is visible on main window</source>
+        <translation>    Gép üzemóra látható a fő ablakban</translation>
+    </message>
+    <message>
+        <location filename="dlgpreferences.ui" line="927"/>
         <source>Panel settings ...</source>
         <translation>Panel beállítások ...</translation>
     </message>
     <message>
-        <location filename="dlgpreferences.ui" line="775"/>
+        <location filename="dlgpreferences.ui" line="958"/>
+        <source> If device is stopped by guest ... </source>
+        <translation> Ha a gépet a vendég megállítja ... </translation>
+    </message>
+    <message>
+        <location filename="dlgpreferences.ui" line="964"/>
+        <source>the STOP sign will be visible on the Status line</source>
+        <translation>a STOP felirat a státusz szöveg mellett jelenjen meg</translation>
+    </message>
+    <message>
+        <location filename="dlgpreferences.ui" line="971"/>
+        <source>the STOP sign will be visible under the Status line</source>
+        <translation>a STOP felirat a státusz szöveg alatt jelenjen meg</translation>
+    </message>
+    <message>
+        <location filename="dlgpreferences.ui" line="1001"/>
+        <source> Device ledger </source>
+        <translation> Gép könyvelés </translation>
+    </message>
+    <message>
+        <location filename="dlgpreferences.ui" line="1009"/>
         <source>VAT percent for device usage :</source>
         <translation>Géphasználat ÁFA kulcs (%):</translation>
     </message>
     <message>
-        <location filename="dlgpreferences.ui" line="909"/>
+        <location filename="dlgpreferences.ui" line="1050"/>
+        <source> Settings </source>
+        <translation> Beállítások </translation>
+    </message>
+    <message>
+        <location filename="dlgpreferences.ui" line="1056"/>
+        <source>Password for device admin :</source>
+        <translation>Gép adminisztrátori jelszó :</translation>
+    </message>
+    <message>
+        <location filename="dlgpreferences.ui" line="1090"/>
+        <source>Retype password :</source>
+        <translation>Jelszó megint :</translation>
+    </message>
+    <message>
+        <location filename="dlgpreferences.ui" line="1110"/>
+        <source> Status text </source>
+        <translation> Státusz szövegek </translation>
+    </message>
+    <message>
+        <location filename="dlgpreferences.ui" line="1116"/>
+        <source>Display the defined text when ...</source>
+        <translation>Jelenítse meg a megadott szöveget, amikor ...</translation>
+    </message>
+    <message>
+        <location filename="dlgpreferences.ui" line="1125"/>
+        <source>the device is not sterile :</source>
+        <translation>a gép nem tiszta (nem steril) :</translation>
+    </message>
+    <message>
+        <location filename="dlgpreferences.ui" line="1137"/>
+        <location filename="dlgpreferences.ui" line="1158"/>
+        <source>Visible on secondary window</source>
+        <translation>Megjelenik a másodlagos ablakon</translation>
+    </message>
+    <message>
+        <location filename="dlgpreferences.ui" line="1146"/>
+        <source>tube replacement is needed :</source>
+        <translation>csőcsere vált szükségessé :</translation>
+    </message>
+    <message>
+        <location filename="dlgpreferences.ui" line="1268"/>
         <source>Product barcode length
 is different :</source>
         <translation>A termék vonalkódja
 eltérő hosszúságú :</translation>
     </message>
     <message>
-        <location filename="dlgpreferences.ui" line="927"/>
+        <location filename="dlgpreferences.ui" line="1283"/>
+        <source>Hidden for general users: </source>
+        <translation>Rejtve a kezelők elött: </translation>
+    </message>
+    <message>
+        <location filename="dlgpreferences.ui" line="1300"/>
         <source> In case of loss </source>
         <translation> Elvesztés esetén </translation>
     </message>
     <message>
-        <location filename="dlgpreferences.ui" line="935"/>
+        <location filename="dlgpreferences.ui" line="1308"/>
         <source>Price of replace lost patientcard :</source>
         <translation>Az elvesztett kártya cseréjének ára :</translation>
     </message>
     <message>
-        <location filename="dlgpreferences.ui" line="975"/>
-        <location filename="dlgpreferences.ui" line="1078"/>
+        <location filename="dlgpreferences.ui" line="1348"/>
+        <location filename="dlgpreferences.ui" line="1451"/>
         <source>including</source>
         <translation>beleértve</translation>
     </message>
     <message>
-        <location filename="dlgpreferences.ui" line="998"/>
-        <location filename="dlgpreferences.ui" line="1101"/>
+        <location filename="dlgpreferences.ui" line="1371"/>
+        <location filename="dlgpreferences.ui" line="1474"/>
         <source>VAT</source>
         <translation>ÁFA-t</translation>
     </message>
     <message>
-        <location filename="dlgpreferences.ui" line="1018"/>
-        <location filename="dlgpreferences.ui" line="1121"/>
+        <location filename="dlgpreferences.ui" line="1391"/>
+        <location filename="dlgpreferences.ui" line="1494"/>
         <source>TextLabel</source>
         <translation>mintaszöveg</translation>
     </message>
     <message>
-        <location filename="dlgpreferences.ui" line="1030"/>
+        <location filename="dlgpreferences.ui" line="1403"/>
         <source> Partner patientcard </source>
         <translation> Társkártya </translation>
     </message>
     <message>
-        <location filename="dlgpreferences.ui" line="1038"/>
+        <location filename="dlgpreferences.ui" line="1411"/>
         <source>Price of assigning partner card to activated card :</source>
         <translation>Társkártya eladási ára :</translation>
     </message>
     <message>
-        <location filename="dlgpreferences.ui" line="1147"/>
+        <location filename="dlgpreferences.ui" line="1520"/>
         <source>Cassa</source>
         <translation>Pénztár</translation>
     </message>
     <message>
-        <location filename="dlgpreferences.ui" line="1153"/>
+        <location filename="dlgpreferences.ui" line="1526"/>
         <source>Automatically close cassa when user log out</source>
         <translation>A pénztár automatikusan legyen lezárva a felhasználó kilépésekor</translation>
     </message>
     <message>
-        <location filename="dlgpreferences.ui" line="1156"/>
+        <location filename="dlgpreferences.ui" line="1529"/>
         <source>Auto close cassa</source>
         <translation>Pénztár zárás automatikusan</translation>
     </message>
     <message>
-        <location filename="dlgpreferences.ui" line="1175"/>
+        <location filename="dlgpreferences.ui" line="1554"/>
         <source>Automatically add cash withdrawal</source>
         <translation>Automatikus készpénz kivét</translation>
     </message>
     <message>
-        <location filename="dlgpreferences.ui" line="1184"/>
+        <location filename="dlgpreferences.ui" line="1563"/>
+        <source>Automatically create new cassa when date has been changed</source>
+        <translation>Új nap kezdeténél automatikusan új pénztár kezdődjön</translation>
+    </message>
+    <message>
+        <location filename="dlgpreferences.ui" line="1593"/>
+        <source>With the previous cassa balance</source>
+        <translation>Az előző pénztár egyenlegével</translation>
+    </message>
+    <message>
+        <location filename="dlgpreferences.ui" line="1603"/>
+        <source>with empty cassa</source>
+        <translation>Nullás egyenleggel</translation>
+    </message>
+    <message>
+        <location filename="dlgpreferences.ui" line="1614"/>
         <source> Currency settings </source>
         <translation> Pénz beállítások </translation>
     </message>
     <message>
-        <location filename="dlgpreferences.ui" line="1190"/>
+        <location filename="dlgpreferences.ui" line="1620"/>
         <source>Full name :</source>
         <translation>Teljes megnevezés :</translation>
     </message>
     <message>
-        <location filename="dlgpreferences.ui" line="1217"/>
+        <location filename="dlgpreferences.ui" line="1647"/>
         <source>Short name :</source>
         <translation>Rövid jelölés :</translation>
     </message>
     <message>
-        <location filename="dlgpreferences.ui" line="1240"/>
+        <location filename="dlgpreferences.ui" line="1670"/>
         <source>Decimal symbol :</source>
         <translation>Tizedesjel :</translation>
     </message>
     <message>
-        <location filename="dlgpreferences.ui" line="1263"/>
+        <location filename="dlgpreferences.ui" line="1693"/>
         <source>Digit grouping symbol :</source>
         <translation>Ezres elválasztó :</translation>
     </message>
     <message>
-        <location filename="dlgpreferences.ui" line="1303"/>
+        <location filename="dlgpreferences.ui" line="1733"/>
         <source>Server</source>
         <translation>Szerver</translation>
     </message>
     <message>
-        <location filename="dlgpreferences.ui" line="1311"/>
-        <source>Server Host:</source>
-        <translation>IP cím :</translation>
+        <location filename="dlgpreferences.ui" line="1742"/>
+        <source> Http server settings </source>
+        <oldsource> Gibbig server settings </oldsource>
+        <translation> HTTP szerver beállítások </translation>
     </message>
     <message>
-        <location filename="dlgpreferences.ui" line="1325"/>
+        <location filename="dlgpreferences.ui" line="1748"/>
+        <source>Server address :</source>
+        <oldsource>Server Host:</oldsource>
+        <translation>Szerver cím :</translation>
+    </message>
+    <message>
+        <location filename="dlgpreferences.ui" line="1819"/>
+        <source>Length of Http message is visible in seconds :</source>
+        <translation>Http üzenet láthatóságának hossza másodpercben :</translation>
+    </message>
+    <message>
+        <location filename="dlgpreferences.ui" line="1856"/>
+        <source>Synchronization automatically starts after</source>
+        <translation>Az automatikus szinkronizáció</translation>
+    </message>
+    <message>
+        <location filename="dlgpreferences.ui" line="1879"/>
+        <source>seconds if devices are not working</source>
+        <translation>másodperc elteltével indul, amint az összes gép leállt</translation>
+    </message>
+    <message>
+        <source>Synchronization automatically starts after 15 seconds if devices are not working</source>
+        <translation type="obsolete">A szinkronizáció automatikusan elindul 15 másodperc elteltével, ha a gépek nem működnek</translation>
+    </message>
+    <message>
         <source>Server Port:</source>
-        <translation>Port :</translation>
+        <translation type="obsolete">Port :</translation>
     </message>
     <message>
-        <location filename="dlgpreferences.ui" line="1341"/>
+        <source> Gibbig user settings </source>
+        <translation type="obsolete"> Gibbig felhasználói beállítások </translation>
+    </message>
+    <message>
+        <source>User name :</source>
+        <translation type="obsolete">Felhasználónév :</translation>
+    </message>
+    <message>
+        <source>Password :</source>
+        <translation type="obsolete">Jelszó :</translation>
+    </message>
+    <message>
+        <location filename="dlgpreferences.ui" line="1768"/>
+        <source> Actions </source>
+        <translation> Beavatkozások </translation>
+    </message>
+    <message>
+        <location filename="dlgpreferences.ui" line="1779"/>
+        <source>Enable synchronization</source>
+        <translation>Szinkronizálás engedélyezése</translation>
+    </message>
+    <message>
+        <location filename="dlgpreferences.ui" line="1802"/>
+        <source>Test connection</source>
+        <translation>Kapcsolat tesztelés</translation>
+    </message>
+    <message>
+        <source>Length of Gibbig message is visible in seconds :</source>
+        <translation type="obsolete">Gibbig üzenet láthatóságának hossza másodpercben :</translation>
+    </message>
+    <message>
         <source> Automatically synchronize ...</source>
-        <translation> Az alkalmazás automatikusan szinkronizálja ...</translation>
+        <translation type="obsolete"> Az alkalmazás automatikusan szinkronizálja ...</translation>
     </message>
     <message>
-        <location filename="dlgpreferences.ui" line="1350"/>
         <source>database when exiting from application</source>
-        <translation>az adatbázist kilépéskor.</translation>
+        <translation type="obsolete">az adatbázist kilépéskor.</translation>
     </message>
     <message>
-        <location filename="dlgpreferences.ui" line="1360"/>
         <source>studio independent data when application started.</source>
-        <translation>a stúdió független adatokat induláskor.</translation>
+        <translation type="obsolete">a stúdió független adatokat induláskor.</translation>
     </message>
     <message>
-        <location filename="dlgpreferences.ui" line="1384"/>
+        <location filename="dlgpreferences.ui" line="1918"/>
         <source>Hardware</source>
         <translation>Hardver</translation>
     </message>
     <message>
-        <location filename="dlgpreferences.ui" line="1392"/>
+        <location filename="dlgpreferences.ui" line="1924"/>
+        <source> Communication </source>
+        <translation> Kommunikáció </translation>
+    </message>
+    <message>
+        <location filename="dlgpreferences.ui" line="1930"/>
+        <source>Through serial port</source>
+        <oldsource>Serial port</oldsource>
+        <translation>Soros porton keresztül </translation>
+    </message>
+    <message>
+        <location filename="dlgpreferences.ui" line="1942"/>
         <source>COM Port:</source>
         <translation>COM Port :</translation>
     </message>
     <message>
-        <location filename="dlgpreferences.ui" line="1399"/>
+        <location filename="dlgpreferences.ui" line="1949"/>
         <source>COM</source>
         <translation>COM</translation>
     </message>
     <message>
-        <location filename="dlgpreferences.ui" line="465"/>
+        <location filename="dlgpreferences.ui" line="1980"/>
+        <source> Force application to ... </source>
+        <translation> Az alkalmazás ...</translation>
+    </message>
+    <message>
+        <location filename="dlgpreferences.ui" line="1988"/>
+        <source>send current time value to modul</source>
+        <translation>küldje el rendszeresen az aktuális időt a moduloknak</translation>
+    </message>
+    <message>
+        <location filename="dlgpreferences.ui" line="2027"/>
+        <source>seconds from beginning of preparation time.</source>
+        <translation>másodpercig az előkészítés kezdetétől.</translation>
+    </message>
+    <message>
+        <location filename="dlgpreferences.ui" line="2049"/>
+        <source>check modul buttons state</source>
+        <translation>ellenőrizze rendszeresen a modul gombok állapotát</translation>
+    </message>
+    <message>
+        <location filename="dlgpreferences.ui" line="2073"/>
+        <source>Database</source>
+        <translation>Adatbázis</translation>
+    </message>
+    <message>
+        <location filename="dlgpreferences.ui" line="2079"/>
+        <source> Database server </source>
+        <translation> Adatbázis szerver </translation>
+    </message>
+    <message>
+        <location filename="dlgpreferences.ui" line="2087"/>
+        <source>Location of binaries :</source>
+        <translation>Program könyvtár :</translation>
+    </message>
+    <message>
+        <location filename="dlgpreferences.ui" line="2107"/>
+        <location filename="dlgpreferences.ui" line="2143"/>
+        <source>...</source>
+        <translation>...</translation>
+    </message>
+    <message>
+        <location filename="dlgpreferences.ui" line="2119"/>
+        <source> Database backup </source>
+        <translation> Adatbázis archiválás </translation>
+    </message>
+    <message>
+        <location filename="dlgpreferences.ui" line="2127"/>
+        <source>Backup location :</source>
+        <translation>Archivált adatbázisok könyvtára :</translation>
+    </message>
+    <message>
+        <location filename="dlgpreferences.ui" line="2152"/>
+        <source>Force to backup database on exit (activated only once)</source>
+        <translation>Adatbázis archiválás kényszerítése kilépéskor (csak egyszer aktiválódik)</translation>
+    </message>
+    <message>
+        <location filename="dlgpreferences.ui" line="2159"/>
+        <source>Enable automatic database backup if confirmed</source>
+        <oldsource>Enable automatic database backup</oldsource>
+        <translation>Automatikus adatbázis archiválás jóváhagyás után</translation>
+    </message>
+    <message>
+        <location filename="dlgpreferences.ui" line="2186"/>
+        <source>after every exit</source>
+        <oldsource>after every exit if confirmed</oldsource>
+        <translation>alkalmazás bezárása után mindig</translation>
+    </message>
+    <message>
+        <location filename="dlgpreferences.ui" line="2193"/>
+        <source>after exit if cassa is closed</source>
+        <translation>alkalmazás bezárása után, ha a pénztár le van zárva</translation>
+    </message>
+    <message>
+        <source>after every cassa closure if none of the devices are working</source>
+        <translation type="obsolete">minden pénztár zárás után, ha egyik gép sincs használatban</translation>
+    </message>
+    <message>
+        <location filename="dlgpreferences.ui" line="2200"/>
+        <source>after exit on the last day of the week</source>
+        <oldsource>after exit on the last day of the week if confirmed</oldsource>
+        <translation>alkalmazás bezárása után a hét utolsó napján</translation>
+    </message>
+    <message>
+        <location filename="dlgpreferences.ui" line="2207"/>
+        <source>after exit on the last day of the month</source>
+        <oldsource>after exit on the last day of the month if confirmed</oldsource>
+        <translation>alkalmazás bezárása után a hónap utolsó napján</translation>
+    </message>
+    <message>
+        <location filename="dlgpreferences.ui" line="2214"/>
+        <source>after exit on the selected day(s)</source>
+        <translation>alkalmazás bezárása után a kiválasztott napokon</translation>
+    </message>
+    <message>
+        <location filename="dlgpreferences.ui" line="2223"/>
+        <source>Monday</source>
+        <translation>Hétfő</translation>
+    </message>
+    <message>
+        <location filename="dlgpreferences.ui" line="2233"/>
+        <source>Tuesday</source>
+        <translation>Kedd</translation>
+    </message>
+    <message>
+        <location filename="dlgpreferences.ui" line="2240"/>
+        <source>Wednesday</source>
+        <translation>Szerda</translation>
+    </message>
+    <message>
+        <location filename="dlgpreferences.ui" line="2247"/>
+        <source>Thursday</source>
+        <translation>Csütörtök</translation>
+    </message>
+    <message>
+        <location filename="dlgpreferences.ui" line="2254"/>
+        <source>Friday</source>
+        <translation>Péntek</translation>
+    </message>
+    <message>
+        <location filename="dlgpreferences.ui" line="2278"/>
+        <source>Saturday</source>
+        <translation>Szombat</translation>
+    </message>
+    <message>
+        <location filename="dlgpreferences.ui" line="2285"/>
+        <source>Sunday</source>
+        <translation>Vasárnap</translation>
+    </message>
+    <message>
+        <location filename="dlgpreferences.ui" line="531"/>
         <source>Appearance</source>
         <translation>Megjelenés</translation>
     </message>
     <message>
-        <location filename="dlgpreferences.ui" line="673"/>
+        <location filename="dlgpreferences.ui" line="868"/>
         <source>Number of &amp;panels in a row:</source>
         <translation>Egy sorban megjelenő &amp;panelok száma :</translation>
     </message>
@@ -11300,8 +13775,9 @@ eltérő hosszúságú :</translation>
         <translation type="obsolete">Fő ablak hátterének színe :</translation>
     </message>
     <message>
-        <location filename="dlgpreferences.ui" line="498"/>
-        <location filename="dlgpreferences.ui" line="610"/>
+        <location filename="dlgpreferences.ui" line="564"/>
+        <location filename="dlgpreferences.ui" line="765"/>
+        <location filename="dlgpreferences.ui" line="804"/>
         <source>Choose ...</source>
         <translation>Válasszon ...</translation>
     </message>
@@ -11578,32 +14054,32 @@ beavatkozás</translation>
         <translation>Darab: </translation>
     </message>
     <message>
-        <location filename="dlgproductsell.ui" line="122"/>
+        <location filename="dlgproductsell.ui" line="116"/>
         <source>Price: </source>
         <translation>Ár: </translation>
     </message>
     <message>
-        <location filename="dlgproductsell.ui" line="136"/>
+        <location filename="dlgproductsell.ui" line="130"/>
         <source>Items in storage: </source>
         <translation>Raktárkészlet: </translation>
     </message>
     <message>
-        <location filename="dlgproductsell.ui" line="193"/>
+        <location filename="dlgproductsell.ui" line="187"/>
         <source>Amount to pay :</source>
         <translation>Fizetendő összeg :</translation>
     </message>
     <message>
-        <location filename="dlgproductsell.ui" line="243"/>
+        <location filename="dlgproductsell.ui" line="237"/>
         <source>$</source>
         <translation>Ft.</translation>
     </message>
     <message>
-        <location filename="dlgproductsell.ui" line="272"/>
+        <location filename="dlgproductsell.ui" line="266"/>
         <source>Sell</source>
         <translation>Eladás</translation>
     </message>
     <message>
-        <location filename="dlgproductsell.ui" line="288"/>
+        <location filename="dlgproductsell.ui" line="282"/>
         <source>Cancel</source>
         <translation>Mégsem</translation>
     </message>
@@ -11748,27 +14224,27 @@ egyik esemény sem változtat a napi, aktuális pénztár egyenlegén.
 az események kihatással vannak a pénztár egyenlegére.</translation>
     </message>
     <message>
-        <location filename="dlg/dlgproductstorage.cpp" line="129"/>
+        <location filename="dlg/dlgproductstorage.cpp" line="131"/>
         <source>Product name: %1</source>
         <translation>Termék neve: %1</translation>
     </message>
     <message>
-        <location filename="dlg/dlgproductstorage.cpp" line="206"/>
+        <location filename="dlg/dlgproductstorage.cpp" line="208"/>
         <source>not modify</source>
         <translation>nem változtatja</translation>
     </message>
     <message>
-        <location filename="dlg/dlgproductstorage.cpp" line="209"/>
+        <location filename="dlg/dlgproductstorage.cpp" line="211"/>
         <source>increase</source>
         <translation>növeli</translation>
     </message>
     <message>
-        <location filename="dlg/dlgproductstorage.cpp" line="213"/>
+        <location filename="dlg/dlgproductstorage.cpp" line="215"/>
         <source>decrease</source>
         <translation>csökkenti</translation>
     </message>
     <message>
-        <location filename="dlg/dlgproductstorage.cpp" line="215"/>
+        <location filename="dlg/dlgproductstorage.cpp" line="217"/>
         <source>The action &lt;%1&gt; will %2
 the count of the selected product.
 Based on the selected cassa type, the given price will be
@@ -11778,12 +14254,12 @@ A kiválasztott &apos;Kapcsolódó pénztár&apos; függvényében a megadott ö
 módosítja az aktuális, illetve a stúdió általános pénztárának egyenlegét.</translation>
     </message>
     <message>
-        <location filename="dlg/dlgproductstorage.cpp" line="225"/>
+        <location filename="dlg/dlgproductstorage.cpp" line="227"/>
         <source>Attention</source>
         <translation>Figyelmeztetés</translation>
     </message>
     <message>
-        <location filename="dlg/dlgproductstorage.cpp" line="226"/>
+        <location filename="dlg/dlgproductstorage.cpp" line="228"/>
         <source>There is no product action type in the database.
 Without any action type modification of product count is not possible.
 Please create at least one product action type.</source>
@@ -11792,24 +14268,24 @@ Termék-esemény nélkül nem lehet módosítani a raktárkészletet.
 Kérem hozzon létre legalább egy termék-eseményt.</translation>
     </message>
     <message>
-        <location filename="dlg/dlgproductstorage.cpp" line="230"/>
+        <location filename="dlg/dlgproductstorage.cpp" line="232"/>
         <source>&lt;Product action type not found&gt;</source>
         <translation>&lt;Nincs termék-esemény&gt;</translation>
     </message>
     <message>
-        <location filename="dlg/dlgproductstorage.cpp" line="255"/>
+        <location filename="dlg/dlgproductstorage.cpp" line="257"/>
         <source>(%1+%2%VAT)</source>
         <oldsource>(%1 + %2 % VAT)</oldsource>
         <translation>(%1+%2%ÁFA)</translation>
     </message>
     <message>
-        <location filename="dlg/dlgproductstorage.cpp" line="89"/>
-        <location filename="dlg/dlgproductstorage.cpp" line="97"/>
+        <location filename="dlg/dlgproductstorage.cpp" line="91"/>
+        <location filename="dlg/dlgproductstorage.cpp" line="99"/>
         <source>Warning</source>
         <translation>Figyelmeztetés</translation>
     </message>
     <message>
-        <location filename="dlg/dlgproductstorage.cpp" line="90"/>
+        <location filename="dlg/dlgproductstorage.cpp" line="92"/>
         <source>You have selected a product action that modifies the
 count of the selected product but the value has not defined.
 
@@ -11820,7 +14296,7 @@ a kiválasztott termék darabszámát, de darabszámot nem adott meg.
 Kérem adjon meg egy valós darabszámot, vagy válasszon másik eseményt.</translation>
     </message>
     <message>
-        <location filename="dlg/dlgproductstorage.cpp" line="98"/>
+        <location filename="dlg/dlgproductstorage.cpp" line="100"/>
         <source>You have defined price for the selected action
 but the count of product not defined.
 
@@ -11831,7 +14307,7 @@ de a termék darabszámát nem adta meg.
 Kérem adjon meg egy valós darabszámot, vagy törölje az árat.</translation>
     </message>
     <message>
-        <location filename="dlg/dlgproductstorage.cpp" line="110"/>
+        <location filename="dlg/dlgproductstorage.cpp" line="112"/>
         <source>Negative</source>
         <translation>Negatív</translation>
     </message>
@@ -11918,14 +14394,16 @@ módosítja az aktuális, illetve a stúdió általános pénztárának egyenleg
 <context>
     <name>dlgProgress</name>
     <message>
-        <location filename="dlgprogress.ui" line="17"/>
-        <source>Please wait ...</source>
-        <translation>Kérem várjon ...</translation>
+        <location filename="dlgprogress.ui" line="29"/>
+        <source>Please wait</source>
+        <oldsource>Please wait ...</oldsource>
+        <translation>Kérem várjon</translation>
     </message>
     <message>
-        <location filename="dlgprogress.ui" line="48"/>
-        <source>Please wait while the requested process ends.</source>
-        <translation>Kérem várjon amíg az elindított folyamat befejeződik.</translation>
+        <location filename="dlgprogress.ui" line="90"/>
+        <source>Please wait while the requested process ends ...</source>
+        <oldsource>Please wait while the requested process ends.</oldsource>
+        <translation>Kérem várjon amíg az elindított folyamat befejeződik ...</translation>
     </message>
 </context>
 <context>
@@ -11962,6 +14440,14 @@ módosítja az aktuális, illetve a stúdió általános pénztárának egyenleg
         <location filename="dlgreasontovisitedit.ui" line="34"/>
         <source>Independent from the local studio.</source>
         <translation>Független a stúdiótól</translation>
+    </message>
+</context>
+<context>
+    <name>dlgSecondaryWindow</name>
+    <message>
+        <location filename="dlgsecondarywindow.ui" line="71"/>
+        <source>TextLabel</source>
+        <translation>mintaszöveg</translation>
     </message>
 </context>
 <context>
@@ -12062,6 +14548,83 @@ módosítja az aktuális, illetve a stúdió általános pénztárának egyenleg
         <location filename="dlgserialreg.ui" line="166"/>
         <source>Validate</source>
         <translation>Érvényesítés</translation>
+    </message>
+</context>
+<context>
+    <name>dlgSkinTypeEdit</name>
+    <message>
+        <location filename="dlgskintypeedit.ui" line="14"/>
+        <source>Skin Type</source>
+        <oldsource>Panel Type</oldsource>
+        <translation>Bőrtípus</translation>
+    </message>
+    <message>
+        <location filename="dlgskintypeedit.ui" line="22"/>
+        <source>Name:</source>
+        <translation>Név :</translation>
+    </message>
+</context>
+<context>
+    <name>dlgStockProcess</name>
+    <message>
+        <location filename="dlgStockProcess.ui" line="14"/>
+        <source>Dialog</source>
+        <translation>Dialog</translation>
+    </message>
+    <message>
+        <location filename="dlgStockProcess.ui" line="22"/>
+        <source> Select product ... </source>
+        <translation> Termék kiválasztása ... </translation>
+    </message>
+    <message>
+        <location filename="dlgStockProcess.ui" line="28"/>
+        <source>using product barcode :</source>
+        <oldsource>using product &amp;barcode :</oldsource>
+        <translation>vonalkód megadásával :</translation>
+    </message>
+    <message>
+        <location filename="dlgStockProcess.ui" line="41"/>
+        <source>using product name :</source>
+        <oldsource>using product &amp;name :</oldsource>
+        <translation>név megadásával :</translation>
+    </message>
+    <message>
+        <location filename="dlgStockProcess.ui" line="58"/>
+        <source> Selected product ... </source>
+        <translation> Kiválasztott termék ... </translation>
+    </message>
+    <message>
+        <location filename="dlgStockProcess.ui" line="70"/>
+        <source> Execute ... </source>
+        <translation> Végrehajtás </translation>
+    </message>
+    <message>
+        <location filename="dlgStockProcess.ui" line="76"/>
+        <source>Increase stock</source>
+        <oldsource>&amp;Increase stock</oldsource>
+        <translation>Készlet növelés</translation>
+    </message>
+    <message>
+        <location filename="dlgStockProcess.ui" line="92"/>
+        <source>Decrease stock</source>
+        <oldsource>&amp;Decrease stock</oldsource>
+        <translation>Készlet csökkentés</translation>
+    </message>
+    <message>
+        <location filename="dlgStockProcess.ui" line="128"/>
+        <source>Exit</source>
+        <oldsource>E&amp;xit</oldsource>
+        <translation>Kilépés</translation>
+    </message>
+    <message>
+        <location filename="dlg/dlgstockprocess.cpp" line="97"/>
+        <source>&lt;Product not found&gt;</source>
+        <translation>&lt;Nincs megfelelő termék&gt;</translation>
+    </message>
+    <message>
+        <location filename="dlg/dlgstockprocess.cpp" line="109"/>
+        <source>&lt;More than one product found&gt;</source>
+        <translation>&lt;Több mint egy termék található&gt;</translation>
     </message>
 </context>
 <context>
@@ -12315,12 +14878,12 @@ módosítja az aktuális, illetve a stúdió általános pénztárának egyenleg
         <translation>&amp;Rendszer</translation>
     </message>
     <message>
-        <location filename="wndmain.ui" line="137"/>
+        <location filename="wndmain.ui" line="146"/>
         <source>&amp;Edit</source>
         <translation>&amp;Szerkesztés</translation>
     </message>
     <message>
-        <location filename="wndmain.ui" line="141"/>
+        <location filename="wndmain.ui" line="150"/>
         <source>Administrator</source>
         <translation>Adminisztrátor</translation>
     </message>
@@ -12337,7 +14900,7 @@ módosítja az aktuális, illetve a stúdió általános pénztárának egyenleg
         <translation type="obsolete">Vendég</translation>
     </message>
     <message>
-        <location filename="wndmain.ui" line="196"/>
+        <location filename="wndmain.ui" line="209"/>
         <source>Device</source>
         <translation>Gép</translation>
     </message>
@@ -12346,65 +14909,66 @@ módosítja az aktuális, illetve a stúdió általános pénztárának egyenleg
         <translation type="obsolete">Kezelés</translation>
     </message>
     <message>
-        <location filename="wndmain.ui" line="209"/>
+        <location filename="wndmain.ui" line="222"/>
         <source>PatientCard</source>
         <translation>Bérlet</translation>
     </message>
     <message>
-        <location filename="wndmain.ui" line="260"/>
-        <location filename="wndmain.ui" line="309"/>
-        <location filename="wndmain.ui" line="338"/>
-        <location filename="wndmain.ui" line="367"/>
+        <location filename="wndmain.ui" line="274"/>
+        <location filename="wndmain.ui" line="324"/>
+        <location filename="wndmain.ui" line="353"/>
+        <location filename="wndmain.ui" line="376"/>
+        <location filename="wndmain.ui" line="404"/>
         <source>toolBar</source>
         <translation>Eszköztár</translation>
     </message>
     <message>
-        <location filename="wndmain.ui" line="387"/>
+        <location filename="wndmain.ui" line="424"/>
         <source>E&amp;xit</source>
         <translation>&amp;Kilépés</translation>
     </message>
     <message>
-        <location filename="wndmain.ui" line="392"/>
+        <location filename="wndmain.ui" line="429"/>
         <source>&amp;Preferences ...</source>
         <translation>&amp;Beállítások ...</translation>
     </message>
     <message>
-        <location filename="wndmain.ui" line="397"/>
+        <location filename="wndmain.ui" line="434"/>
         <source>&amp;Logs ...</source>
         <translation>&amp;Nyomkövetés ...</translation>
     </message>
     <message>
-        <location filename="wndmain.ui" line="402"/>
+        <location filename="wndmain.ui" line="439"/>
         <source>Log &amp;Out</source>
         <translation>Ki&amp;jelentkezés</translation>
     </message>
     <message>
-        <location filename="wndmain.ui" line="407"/>
+        <location filename="wndmain.ui" line="444"/>
         <source>&amp;Users ...</source>
         <translation>&amp;Felhasználók ...</translation>
     </message>
     <message>
-        <location filename="wndmain.ui" line="412"/>
+        <location filename="wndmain.ui" line="449"/>
         <source>&amp;Hardware test ...</source>
         <translation>&amp;Hardver teszt ...</translation>
     </message>
     <message>
-        <location filename="wndmain.ui" line="417"/>
+        <location filename="wndmain.ui" line="454"/>
         <source>P&amp;anel types ...</source>
         <translation>&amp;Gép típusok ...</translation>
     </message>
     <message>
-        <location filename="wndmain.ui" line="438"/>
+        <location filename="wndmain.ui" line="475"/>
         <source>Device settings</source>
         <translation>Gép beállítások</translation>
     </message>
     <message>
-        <location filename="wndmain.ui" line="457"/>
+        <location filename="wndmain.ui" line="494"/>
         <source>PatNew</source>
         <translation>V.Új</translation>
     </message>
     <message>
-        <location filename="wndmain.ui" line="465"/>
+        <location filename="wndmain.ui" line="502"/>
         <source>Select actual patient...</source>
         <oldsource>Patient origin ...</oldsource>
         <translation>Aktuális vendég kiválasztása ...</translation>
@@ -12414,22 +14978,22 @@ módosítja az aktuális, illetve a stúdió általános pénztárának egyenleg
         <translation type="obsolete">Látogatási ok ...</translation>
     </message>
     <message>
-        <location filename="wndmain.ui" line="422"/>
+        <location filename="wndmain.ui" line="459"/>
         <source>Start Device</source>
         <translation>Gép indítás</translation>
     </message>
     <message>
-        <location filename="wndmain.ui" line="425"/>
+        <location filename="wndmain.ui" line="462"/>
         <source>Start Current Device</source>
         <translation>Aktuális gép indítása</translation>
     </message>
     <message>
-        <location filename="wndmain.ui" line="430"/>
+        <location filename="wndmain.ui" line="467"/>
         <source>Reset Device</source>
         <translation>Gép reset</translation>
     </message>
     <message>
-        <location filename="wndmain.ui" line="433"/>
+        <location filename="wndmain.ui" line="470"/>
         <source>Reset Current Device</source>
         <translation>Aktuális gép alap helyzetbe állítása</translation>
     </message>
@@ -12438,12 +15002,12 @@ módosítja az aktuális, illetve a stúdió általános pénztárának egyenleg
         <translation type="obsolete">Gép beállítások</translation>
     </message>
     <message>
-        <location filename="wndmain.ui" line="441"/>
+        <location filename="wndmain.ui" line="478"/>
         <source>Current Device Settings</source>
         <translation>Aktuális gép beállításainak szerkesztése</translation>
     </message>
     <message>
-        <location filename="wndmain.ui" line="446"/>
+        <location filename="wndmain.ui" line="483"/>
         <source>Patients ...</source>
         <translation>Vendégek ...</translation>
     </message>
@@ -12452,12 +15016,12 @@ módosítja az aktuális, illetve a stúdió általános pénztárának egyenleg
         <translation type="obsolete">Létrehozás ...</translation>
     </message>
     <message>
-        <location filename="wndmain.ui" line="460"/>
+        <location filename="wndmain.ui" line="497"/>
         <source>Create new patient</source>
         <translation>Új vendég felvétele</translation>
     </message>
     <message>
-        <location filename="wndmain.ui" line="454"/>
+        <location filename="wndmain.ui" line="491"/>
         <source>Create new patient ...</source>
         <translation>Új vendég felvétele ...</translation>
     </message>
@@ -12477,27 +15041,32 @@ módosítja az aktuális, illetve a stúdió általános pénztárának egyenleg
         <translation>&amp;Bejelentkezés</translation>
     </message>
     <message>
-        <location filename="wndmain.ui" line="182"/>
+        <location filename="wndmain.ui" line="131"/>
+        <source>Import / Export </source>
+        <translation>Import / Export</translation>
+    </message>
+    <message>
+        <location filename="wndmain.ui" line="194"/>
         <source>&amp;Tools</source>
         <translation>&amp;Kellékek</translation>
     </message>
     <message>
-        <location filename="wndmain.ui" line="192"/>
+        <location filename="wndmain.ui" line="205"/>
         <source>&amp;Action</source>
         <translation>&amp;Beavatkozás</translation>
     </message>
     <message>
-        <location filename="wndmain.ui" line="218"/>
+        <location filename="wndmain.ui" line="232"/>
         <source>Product</source>
         <translation>Termék</translation>
     </message>
     <message>
-        <location filename="wndmain.ui" line="238"/>
+        <location filename="wndmain.ui" line="252"/>
         <source>&amp;Reports</source>
         <translation>&amp;Listák</translation>
     </message>
     <message>
-        <location filename="wndmain.ui" line="285"/>
+        <location filename="wndmain.ui" line="300"/>
         <source>toolBar_2</source>
         <translation>Eszköztár</translation>
     </message>
@@ -12506,13 +15075,13 @@ módosítja az aktuális, illetve a stúdió általános pénztárának egyenleg
         <translation type="obsolete">Kezelések ...</translation>
     </message>
     <message>
-        <location filename="wndmain.ui" line="468"/>
+        <location filename="wndmain.ui" line="505"/>
         <source>Select actual patient</source>
         <translation>Aktuális vendég kiválasztása</translation>
     </message>
     <message>
-        <location filename="wndmain.ui" line="473"/>
-        <location filename="wndmain.ui" line="476"/>
+        <location filename="wndmain.ui" line="510"/>
+        <location filename="wndmain.ui" line="513"/>
         <source>Deselect actual patient</source>
         <oldsource>Deselect actual</oldsource>
         <translation>Aktuális vendég kiürítése</translation>
@@ -12526,12 +15095,12 @@ módosítja az aktuális, illetve a stúdió általános pénztárának egyenleg
         <translation type="obsolete">Aktuális vendéghez új kezelés felvétele</translation>
     </message>
     <message>
-        <location filename="wndmain.ui" line="481"/>
+        <location filename="wndmain.ui" line="518"/>
         <source>Cards ...</source>
         <translation>Bérletek ...</translation>
     </message>
     <message>
-        <location filename="wndmain.ui" line="484"/>
+        <location filename="wndmain.ui" line="521"/>
         <source>Patient cards</source>
         <translation>Bérletek</translation>
     </message>
@@ -12548,162 +15117,233 @@ módosítja az aktuális, illetve a stúdió általános pénztárának egyenleg
         <translation type="obsolete">Géphasználat ...</translation>
     </message>
     <message>
-        <location filename="wndmain.ui" line="500"/>
+        <location filename="wndmain.ui" line="537"/>
         <source>Use by time or patientcard ...</source>
         <oldsource>Use device with defined time period</oldsource>
         <translation>Gép használat indítása idő megadásával vagy bérlettel ...</translation>
     </message>
     <message>
-        <location filename="wndmain.ui" line="503"/>
+        <location filename="wndmain.ui" line="540"/>
         <source>Use device</source>
         <translation>Géphasználat</translation>
     </message>
     <message>
-        <location filename="wndmain.ui" line="506"/>
+        <location filename="wndmain.ui" line="543"/>
         <source>Use device with defined time period or with patientcard</source>
         <oldsource>Use device with defined time period or with patient card</oldsource>
         <translation>Géphasználat idő megadásával vagy bérlethasználattal</translation>
     </message>
     <message>
-        <location filename="wndmain.ui" line="511"/>
+        <location filename="wndmain.ui" line="548"/>
         <source>Panel statuses ...</source>
         <translation>Gép állapotok ...</translation>
     </message>
     <message>
-        <location filename="wndmain.ui" line="516"/>
+        <location filename="wndmain.ui" line="553"/>
         <source>Card types ...</source>
         <translation>Bérlet típusok ...</translation>
     </message>
     <message>
-        <location filename="wndmain.ui" line="519"/>
+        <location filename="wndmain.ui" line="556"/>
         <source>Patientcard types</source>
         <translation>Bérlet típusok</translation>
     </message>
     <message>
-        <location filename="wndmain.ui" line="524"/>
+        <location filename="wndmain.ui" line="561"/>
         <source>Save to database ...</source>
         <translation>Mentés adatbázisba ...</translation>
     </message>
     <message>
-        <location filename="wndmain.ui" line="529"/>
+        <location filename="wndmain.ui" line="566"/>
         <source>Activate existing ...</source>
         <translation>Aktiválás ...</translation>
     </message>
     <message>
-        <location filename="wndmain.ui" line="534"/>
+        <location filename="wndmain.ui" line="571"/>
         <source>Accounting ...</source>
         <translation>Könyvelés ...</translation>
     </message>
     <message>
-        <location filename="wndmain.ui" line="537"/>
+        <location filename="wndmain.ui" line="574"/>
         <source>Main accounting</source>
         <translation>Főkönyv</translation>
     </message>
     <message>
-        <location filename="wndmain.ui" line="542"/>
+        <location filename="wndmain.ui" line="579"/>
         <source>Cassa ...</source>
         <translation>Pénztár ...</translation>
     </message>
     <message>
-        <location filename="wndmain.ui" line="704"/>
+        <location filename="wndmain.ui" line="741"/>
         <source>Payment methods</source>
         <translation>Fizetési módok</translation>
     </message>
     <message>
-        <location filename="wndmain.ui" line="707"/>
+        <location filename="wndmain.ui" line="744"/>
         <source>Manage payment methods</source>
         <translation>Fizetési módok kezelése</translation>
     </message>
     <message>
-        <location filename="wndmain.ui" line="712"/>
+        <location filename="wndmain.ui" line="749"/>
         <source>Report viewer</source>
         <translation>Statisztika megjelenítő</translation>
     </message>
     <message>
-        <location filename="wndmain.ui" line="715"/>
+        <location filename="wndmain.ui" line="752"/>
         <source>Start independent Report Viewer application</source>
         <translation>Önálló Statisztika megjelenítő alkalmazás indítása</translation>
     </message>
     <message>
-        <location filename="wndmain.ui" line="720"/>
+        <location filename="wndmain.ui" line="757"/>
         <source>Clear device</source>
         <translation>Gép kitisztítva</translation>
     </message>
     <message>
-        <location filename="wndmain.ui" line="723"/>
+        <location filename="wndmain.ui" line="760"/>
         <source>The device has been cleaned and ready to use</source>
         <translation>A gép steril és kész a használatra</translation>
     </message>
     <message>
-        <location filename="wndmain.ui" line="732"/>
+        <location filename="wndmain.ui" line="769"/>
         <source>About ...</source>
         <translation>Névjegy ...</translation>
     </message>
     <message>
-        <location filename="wndmain.ui" line="735"/>
+        <location filename="wndmain.ui" line="772"/>
         <source>Application information</source>
         <translation>Alkalmazás információ</translation>
     </message>
     <message>
-        <location filename="wndmain.ui" line="740"/>
+        <location filename="wndmain.ui" line="777"/>
         <source>Assign patientcards</source>
         <translation>Bérlet társítás</translation>
     </message>
     <message>
-        <location filename="wndmain.ui" line="745"/>
+        <location filename="wndmain.ui" line="782"/>
         <source>Device groups</source>
         <translation>Gép csoportok</translation>
     </message>
     <message>
-        <location filename="wndmain.ui" line="748"/>
+        <location filename="wndmain.ui" line="785"/>
         <source>Groups for devices</source>
         <translation>Gép csoportok</translation>
     </message>
     <message>
-        <location filename="wndmain.ui" line="753"/>
-        <location filename="wndmain.ui" line="756"/>
+        <location filename="wndmain.ui" line="790"/>
+        <location filename="wndmain.ui" line="793"/>
         <source>Manage database</source>
         <translation>Adatbázis kezelés</translation>
     </message>
     <message>
-        <location filename="wndmain.ui" line="224"/>
-        <location filename="wndmain.ui" line="545"/>
+        <location filename="wndmain.ui" line="798"/>
+        <source>Manage device panels</source>
+        <translation>Gépek kezelése</translation>
+    </message>
+    <message>
+        <location filename="wndmain.ui" line="803"/>
+        <location filename="wndmain.ui" line="806"/>
+        <source>Manage skin types</source>
+        <translation>Bőrtípusok kezelése</translation>
+    </message>
+    <message>
+        <location filename="wndmain.ui" line="811"/>
+        <source>Import ...</source>
+        <translation>Import ...</translation>
+    </message>
+    <message>
+        <location filename="wndmain.ui" line="814"/>
+        <source>Import data from text files</source>
+        <translation>Adatok importálása szöveges állományból</translation>
+    </message>
+    <message>
+        <location filename="wndmain.ui" line="819"/>
+        <source>Export ...</source>
+        <translation>Export ...</translation>
+    </message>
+    <message>
+        <location filename="wndmain.ui" line="822"/>
+        <source>Export data to tab separated text file</source>
+        <translation>Adatok exportálása tab-al szeparált szöveges állományba</translation>
+    </message>
+    <message>
+        <location filename="wndmain.ui" line="827"/>
+        <source>Advertisement windows</source>
+        <translation>Hírdetés ablakok</translation>
+    </message>
+    <message>
+        <location filename="wndmain.ui" line="830"/>
+        <source>Manage advertisement windows</source>
+        <translation>Hírdetés ablakok kezelése</translation>
+    </message>
+    <message>
+        <location filename="wndmain.ui" line="835"/>
+        <source>Patientcard information</source>
+        <translation>Bérlet információ</translation>
+    </message>
+    <message>
+        <location filename="wndmain.ui" line="838"/>
+        <source>Show details about selected patientcard</source>
+        <translation>A kiválasztott bérlet adatainak megmutatása</translation>
+    </message>
+    <message>
+        <location filename="wndmain.ui" line="843"/>
+        <source>Replace lost card</source>
+        <translation>Elveszett bérlet cseréje</translation>
+    </message>
+    <message>
+        <location filename="wndmain.ui" line="846"/>
+        <source>Replace lost patientcard with a new card and inactivate the lost card</source>
+        <translation>Elveszett bérlet cseréje új bérletre és az elveszett bérlet inaktiválása</translation>
+    </message>
+    <message>
+        <location filename="wndmain.ui" line="851"/>
+        <source>Close shift</source>
+        <translation>Műszak zárás</translation>
+    </message>
+    <message>
+        <location filename="wndmain.ui" line="854"/>
+        <source>Logout from application with closing cassa and current shift</source>
+        <translation>Alkalmazásból való kijelentkezés a pénztár és a műszak lezárásával.</translation>
+    </message>
+    <message>
+        <location filename="wndmain.ui" line="238"/>
+        <location filename="wndmain.ui" line="582"/>
         <source>Cassa</source>
         <translation>Pénztár</translation>
     </message>
     <message>
-        <location filename="wndmain.ui" line="489"/>
+        <location filename="wndmain.ui" line="526"/>
         <source>Use device later ...</source>
         <translation>Géphasználat később ...</translation>
     </message>
     <message>
-        <location filename="wndmain.ui" line="492"/>
+        <location filename="wndmain.ui" line="529"/>
         <source>Use later</source>
         <translation>Géphasználat később</translation>
     </message>
     <message>
-        <location filename="wndmain.ui" line="495"/>
+        <location filename="wndmain.ui" line="532"/>
         <source>Use device later with defined time period or with patient card</source>
         <translation>Géphasználat idő megadásával vagy bérlethasználattal később</translation>
     </message>
     <message>
-        <location filename="wndmain.ui" line="550"/>
+        <location filename="wndmain.ui" line="587"/>
         <source>Skip status</source>
         <translation>Státusz kihagyása</translation>
     </message>
     <message>
-        <location filename="wndmain.ui" line="553"/>
+        <location filename="wndmain.ui" line="590"/>
         <source>Skip actual status and step to next status</source>
         <translation>Aktuális státusz kihagyása és ugrás a következő státuszra</translation>
     </message>
     <message>
-        <location filename="wndmain.ui" line="558"/>
+        <location filename="wndmain.ui" line="595"/>
         <source>Sell / refill patientcard</source>
         <oldsource>Sell patientcard</oldsource>
         <translation>Bérlet eladás / feltöltés</translation>
     </message>
     <message>
-        <location filename="wndmain.ui" line="561"/>
+        <location filename="wndmain.ui" line="598"/>
         <source>Sell inactive or refill active patientcard</source>
         <translation>Új bérlet eladása / aktív bérlet feltöltése</translation>
     </message>
@@ -12741,17 +15381,17 @@ módosítja az aktuális, illetve a stúdió általános pénztárának egyenleg
         <translation type="obsolete">Későbbi adatkitöltésre félrerakott kezelések</translation>
     </message>
     <message>
-        <location filename="wndmain.ui" line="566"/>
+        <location filename="wndmain.ui" line="603"/>
         <source>Validate Serial key ...</source>
         <translation>Liszensz kulcs érvényesítése ...</translation>
     </message>
     <message>
-        <location filename="wndmain.ui" line="571"/>
+        <location filename="wndmain.ui" line="608"/>
         <source>Edit actual ...</source>
         <translation>Aktuális szerkesztése ...</translation>
     </message>
     <message>
-        <location filename="wndmain.ui" line="574"/>
+        <location filename="wndmain.ui" line="611"/>
         <source>Edit actual patient</source>
         <translation>Aktuális vendég adatainak szerkesztése</translation>
     </message>
@@ -12781,12 +15421,12 @@ módosítja az aktuális, illetve a stúdió általános pénztárának egyenleg
         <translation type="obsolete">Aktuális vendéghez tartozó aktuális kezelés szerkesztése.</translation>
     </message>
     <message>
-        <location filename="wndmain.ui" line="579"/>
+        <location filename="wndmain.ui" line="616"/>
         <source>PayCash</source>
         <translation>Fizetés</translation>
     </message>
     <message>
-        <location filename="wndmain.ui" line="582"/>
+        <location filename="wndmain.ui" line="619"/>
         <source>Pay cash usage of panel</source>
         <translation>Géphasználat kifizetése</translation>
     </message>
@@ -12795,7 +15435,7 @@ módosítja az aktuális, illetve a stúdió általános pénztárának egyenleg
         <translation type="obsolete">Betegség csoport ...</translation>
     </message>
     <message>
-        <location filename="wndmain.ui" line="587"/>
+        <location filename="wndmain.ui" line="624"/>
         <source>Companies ...</source>
         <translation>Cégek ...</translation>
     </message>
@@ -12804,32 +15444,32 @@ módosítja az aktuális, illetve a stúdió általános pénztárának egyenleg
         <translation type="obsolete">Orvosok ...</translation>
     </message>
     <message>
-        <location filename="wndmain.ui" line="592"/>
+        <location filename="wndmain.ui" line="629"/>
         <source>Health Insurance Funds ...</source>
         <translation>Egészségpénztárak ...</translation>
     </message>
     <message>
-        <location filename="wndmain.ui" line="597"/>
+        <location filename="wndmain.ui" line="634"/>
         <source>Region, Zip, City ...</source>
         <translation>Megye, Irányítószám, Település ...</translation>
     </message>
     <message>
-        <location filename="wndmain.ui" line="602"/>
+        <location filename="wndmain.ui" line="639"/>
         <source>Patients</source>
         <translation>Vendégek</translation>
     </message>
     <message>
-        <location filename="wndmain.ui" line="605"/>
+        <location filename="wndmain.ui" line="642"/>
         <source>Report of patients</source>
         <translation>Vendégek listája</translation>
     </message>
     <message>
-        <location filename="wndmain.ui" line="610"/>
+        <location filename="wndmain.ui" line="647"/>
         <source>Cassa history</source>
         <translation>Pénztárforgalom</translation>
     </message>
     <message>
-        <location filename="wndmain.ui" line="613"/>
+        <location filename="wndmain.ui" line="650"/>
         <source>History of cassa actions</source>
         <translation>Pénztár műveletek listája</translation>
     </message>
@@ -12842,53 +15482,53 @@ módosítja az aktuális, illetve a stúdió általános pénztárának egyenleg
         <translation type="obsolete">Kezelések listája</translation>
     </message>
     <message>
-        <location filename="wndmain.ui" line="618"/>
+        <location filename="wndmain.ui" line="655"/>
         <source>Patientcard uses</source>
         <translation>Bérlethasználatok</translation>
     </message>
     <message>
-        <location filename="wndmain.ui" line="621"/>
+        <location filename="wndmain.ui" line="658"/>
         <source>List of patientcard uses</source>
         <translation>Bérlethasználatok listája</translation>
     </message>
     <message>
-        <location filename="wndmain.ui" line="626"/>
+        <location filename="wndmain.ui" line="663"/>
         <source>Edit Licence information</source>
         <translation>Liszensz adatok ...</translation>
     </message>
     <message>
-        <location filename="wndmain.ui" line="629"/>
+        <location filename="wndmain.ui" line="666"/>
         <source>Edit Licence information such as Studio name, address, contact person etc.</source>
         <translation>Liszensz adatok szerkesztése mint pl.: a Stúdió neve, címe, a kapcsolattartó személy neve stb.</translation>
     </message>
     <message>
-        <location filename="wndmain.ui" line="634"/>
+        <location filename="wndmain.ui" line="671"/>
         <source>Patientcards</source>
         <translation>Bérletek</translation>
     </message>
     <message>
-        <location filename="wndmain.ui" line="637"/>
+        <location filename="wndmain.ui" line="674"/>
         <source>List of active patientcards</source>
         <translation>Aktív bérletek listája</translation>
     </message>
     <message>
-        <location filename="wndmain.ui" line="642"/>
+        <location filename="wndmain.ui" line="679"/>
         <source>Discounts ...</source>
         <oldsource>Discounts</oldsource>
         <translation>Kedvezmények ...</translation>
     </message>
     <message>
-        <location filename="wndmain.ui" line="645"/>
+        <location filename="wndmain.ui" line="682"/>
         <source>Different type of discounts</source>
         <translation>Különböző típusú kedvezmények</translation>
     </message>
     <message>
-        <location filename="wndmain.ui" line="650"/>
+        <location filename="wndmain.ui" line="687"/>
         <source>Obsolete Patientcards</source>
         <translation>Lejáró bérletek</translation>
     </message>
     <message>
-        <location filename="wndmain.ui" line="653"/>
+        <location filename="wndmain.ui" line="690"/>
         <source>List of patientcards will be obsolete in the near future.</source>
         <translation>Közeljövőben érvényességüket elvesztő bérletek listája.</translation>
     </message>
@@ -12918,52 +15558,52 @@ módosítja az aktuális, illetve a stúdió általános pénztárának egyenleg
         <translation type="obsolete">Kapcsolat létrehozása a szerverrel</translation>
     </message>
     <message>
-        <location filename="wndmain.ui" line="658"/>
+        <location filename="wndmain.ui" line="695"/>
         <source>Empty demo database ...</source>
         <translation>Demo adatok törlése ...</translation>
     </message>
     <message>
-        <location filename="wndmain.ui" line="661"/>
+        <location filename="wndmain.ui" line="698"/>
         <source>Delete all data attached to demo licence key.</source>
         <translation>A DEMO liszensz kulcshoz kapcsolt összes adat törlése.</translation>
     </message>
     <message>
-        <location filename="wndmain.ui" line="666"/>
+        <location filename="wndmain.ui" line="703"/>
         <source>Guests ...</source>
         <translation>Vendégek ...</translation>
     </message>
     <message>
-        <location filename="wndmain.ui" line="669"/>
+        <location filename="wndmain.ui" line="706"/>
         <source>Guests</source>
         <translation>Vendégek</translation>
     </message>
     <message>
-        <location filename="wndmain.ui" line="674"/>
+        <location filename="wndmain.ui" line="711"/>
         <source>Product Types ...</source>
         <translation>Terméktípusok ...</translation>
     </message>
     <message>
-        <location filename="wndmain.ui" line="679"/>
+        <location filename="wndmain.ui" line="716"/>
         <source>Products ...</source>
         <translation>Termékek ...</translation>
     </message>
     <message>
-        <location filename="wndmain.ui" line="684"/>
+        <location filename="wndmain.ui" line="721"/>
         <source>Product Action Types ...</source>
         <translation>Termék-Események ...</translation>
     </message>
     <message>
-        <location filename="wndmain.ui" line="689"/>
+        <location filename="wndmain.ui" line="726"/>
         <source>Sell Product</source>
         <translation>Termék eladás</translation>
     </message>
     <message>
-        <location filename="wndmain.ui" line="694"/>
+        <location filename="wndmain.ui" line="731"/>
         <source>Shopping cart</source>
         <translation>Bevásárló kosár</translation>
     </message>
     <message>
-        <location filename="wndmain.ui" line="699"/>
+        <location filename="wndmain.ui" line="736"/>
         <source>Cassa action storno</source>
         <translation>Pénztár művelet visszavonása</translation>
     </message>

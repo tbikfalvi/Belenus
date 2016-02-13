@@ -44,6 +44,8 @@ cDlgPatientCardRefill::cDlgPatientCardRefill( QWidget *p_poParent, cDBPatientCar
     pbSell->setIcon( QIcon("./resources/40x40_cassa.png") );
     pbCancel->setIcon( QIcon("./resources/40x40_cancel.png") );
     pbSelectPatient->setIcon( QIcon("./resources/40x40_search.png") );
+    deValidDateFrom->setDisplayFormat( g_poPrefs->getDateFormat().replace("-",".") );
+    deValidDateTo->setDisplayFormat( g_poPrefs->getDateFormat().replace("-",".") );
 
     if( m_poPatientCard )
     {
@@ -59,8 +61,6 @@ cDlgPatientCardRefill::cDlgPatientCardRefill( QWidget *p_poParent, cDBPatientCar
                 continue;
 
             cmbCardType->addItem( poQuery->value( 1 ).toString(), poQuery->value( 0 ) );
-//            if( m_poPatientCard->patientCardTypeId() == poQuery->value( 0 ) )
-//                cmbCardType->setCurrentIndex( cmbCardType->count()-1 );
         }
 
         cmbPatient->addItem( tr("<Not selected>"), 0 );
@@ -81,6 +81,15 @@ cDlgPatientCardRefill::cDlgPatientCardRefill( QWidget *p_poParent, cDBPatientCar
 
     slotRefreshWarningColors();
     slotEnableButtons();
+
+    if( g_poPrefs->isBarcodeHidden() && !g_obUser.isInGroup( cAccessGroup::ADMIN ) )
+    {
+        ledBarcode->setEchoMode( QLineEdit::Password );
+    }
+    else
+    {
+        ledBarcode->setEchoMode( QLineEdit::Normal );
+    }
 
     QPoint  qpDlgSize = g_poPrefs->getDialogSize( "SellPatientCard", QPoint(440,380) );
     resize( qpDlgSize.x(), qpDlgSize.y() );
@@ -156,6 +165,31 @@ void cDlgPatientCardRefill::slotRefreshWarningColors()
 //-----------------------------------------------------------------------------------------------------------
 void cDlgPatientCardRefill::slotEnableButtons()
 {
+    if( m_poPatientCard->parentId() > 0 )
+    {
+        pbSell->setEnabled( false );
+
+        cDBPatientCard  obDBPatientCard;
+
+        obDBPatientCard.load( m_poPatientCard->parentId() );
+
+        QMessageBox::warning( this, tr("Attention"),
+                              tr("This patientcard attached to another card therefore it can not be refilled.\n\n"
+                                 "Please refill the main patientcard with barcode: %1").arg(obDBPatientCard.barcode()) );
+    }
+    else
+    {
+        if( m_poPatientCardType->id() == 1 && !g_obUser.isInGroup( cAccessGroup::SYSTEM ) )
+        {
+            QMessageBox::warning( this, tr("Warning"),
+                                  tr("You are not allowed to create System Service Patientcard.") );
+            pbSell->setEnabled( false );
+        }
+        else
+        {
+            pbSell->setEnabled( true );
+        }
+    }
 }
 //===========================================================================================================
 //
@@ -208,18 +242,8 @@ void cDlgPatientCardRefill::on_cmbCardType_currentIndexChanged(int index)
     else
         ledPrice->setText( cPrice.currencyFullStringShort() );
 
-    if( m_poPatientCardType->id() == 1 && !g_obUser.isInGroup( cAccessGroup::SYSTEM ) )
-    {
-        QMessageBox::warning( this, tr("Warning"),
-                              tr("You are not allowed to create System Service Patientcard.") );
-        pbSell->setEnabled( false );
-    }
-    else
-    {
-        pbSell->setEnabled( true );
-    }
-
     slotRefreshWarningColors();
+    slotEnableButtons();
 }
 //===========================================================================================================
 //
@@ -328,9 +352,6 @@ void cDlgPatientCardRefill::on_pbSell_clicked()
             if( m_poPatientCard->patientCardTypeId() == 0 )
                 m_poPatientCard->setPatientCardTypeId( cmbCardType->itemData( cmbCardType->currentIndex() ).toUInt() );
             m_poPatientCard->setPatientId( cmbPatient->itemData( cmbPatient->currentIndex() ).toUInt() );
-            m_poPatientCard->setUnits( uiUnits );
-            m_poPatientCard->setTimeLeft( uiUnitTime );
-//            m_poPatientCard->setValidDateFrom( deValidDateFrom->date().toString("yyyy-MM-dd") );
             if( deValidDateTo->date() > QDate::fromString(m_poPatientCard->validDateTo(),"yyyy-MM-dd") )
             {
                 m_poPatientCard->setValidDateTo( deValidDateTo->date().toString("yyyy-MM-dd") );
@@ -424,6 +445,7 @@ void cDlgPatientCardRefill::on_pbSell_clicked()
                 obDBPatientcardUnit.createNew();
                 obDBPatientcardUnit.setLicenceId( m_poPatientCard->licenceId() );
                 obDBPatientcardUnit.setPatientCardId( m_poPatientCard->id() );
+                obDBPatientcardUnit.setPatientCardTypeId( m_poPatientCard->patientCardTypeId() );
                 obDBPatientcardUnit.setLedgerId( uiLedgerId );
                 obDBPatientcardUnit.setUnitTime( m_poPatientCardType->unitTime() );
                 obDBPatientcardUnit.setUnitPrice( m_poPatientCardType->price()/ledUnits->text().toInt() );
@@ -436,12 +458,16 @@ void cDlgPatientCardRefill::on_pbSell_clicked()
             }
 
             m_poPatientCard->synchronizeUnits();
+            m_poPatientCard->synchronizeTime();
+            m_poPatientCard->save();
 
             if( bShoppingCart )
             {
                 obDBShoppingCart.setComment( qslUnitIds.join("#") );
                 obDBShoppingCart.save();
             }
+
+            m_poPatientCard->sendDataToWeb();
 
             QDialog::accept();
 

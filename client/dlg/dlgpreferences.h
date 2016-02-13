@@ -3,6 +3,7 @@
 
 #include "../belenus.h"
 #include "ui_dlgpreferences.h"
+#include "dlgprogress.h"
 
 class cDlgPreferences : public QDialog, private Ui::dlgPreferences
 {
@@ -16,9 +17,17 @@ public slots:
     virtual void accept();
 
 private:
-    int            m_inLangIdx;
+    int              m_inLangIdx;
+    QPushButton     *m_poBtnSystem;
+    cDlgProgress    *m_dlgProgress;
+    int              m_nTimer;
 
-    QPushButton   *m_poBtnSystem;
+    void            _updateDatabaseLanguage();
+    void            _increasePatientCardBarcodes();
+    void            _decreasePatientCardBarcodes( bool p_bCutBegin );
+
+protected:
+    void timerEvent( QTimerEvent *p_poEvent );
 
 private slots:
     void on_btnSecondaryBackground_clicked();
@@ -33,6 +42,18 @@ private slots:
     void on_spbBarcodeLen_valueChanged( int p_inValue );
     void on_ledPCLostPrice_textChanged(const QString &arg1);
     void on_ledPCPartnerPrice_textChanged(const QString &arg1);
+    void on_chkAutoOpenNewCassa_clicked();
+    void on_chkEnableDatabaseBackup_clicked();
+    void on_pbChangeBinaryLocation_clicked();
+    void on_pbBackupLocation_clicked();
+    void on_cmbDateFormat_currentIndexChanged(const QString &arg1);
+    void on_pbTestHttpConnection_clicked();
+    void on_chkEnableHttp_clicked(bool checked);
+    void on_btnSecondaryFrame_clicked();
+    void on_pbModifyDevAdminPsw_clicked();
+    void on_pbCancelModifyPsw_clicked();
+    void on_pbCaptionBackgroundActive_clicked();
+    void on_pbTextColorActive_clicked();
 };
 
 #endif

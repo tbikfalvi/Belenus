@@ -40,7 +40,7 @@ typedef struct _used_patientcard
     unsigned int    uiPatientCardId;
     QStringList     qslUnitIds;
     int             inUnitTime;
-} stUsedPatientCard;
+} stUsedPatientCards;
 
 typedef struct _waiting_queue
 {
@@ -83,7 +83,7 @@ public:
     void            setMainProcessTime( const int p_inLength );
     void            setMainProcessTime( const int p_inLength, const int p_inPrice );
     void            setMainProcessTime( const unsigned int p_uiPatientCardId, const QStringList p_qslUnitIds, const int p_inLength );
-    bool            isTimeIntervallValid( const int p_inLength, int *p_inPrice, int *p_inCount );
+    bool            isTimeIntervallValid( const int p_inLength );
     void            cashPayed( const unsigned int p_uiLedgerId );
     void            getPanelCashData( unsigned int *p_uiPatientId, int *p_inPrice, int *p_inDiscount );
     bool            isHasToPay();
@@ -94,7 +94,8 @@ public:
     bool            isItemInShoppingCart();
     void            itemAddedToShoppingCart();
     void            itemRemovedFromShoppingCart();
-    void            addPatientToWaitingQueue( int p_inLengthCash, int p_inPrice, unsigned int p_uiPatientCardId, QString p_qsUnitIds, int p_inLenghtCard, unsigned int p_uiLedgerId, int p_inPayType );
+//    void            addPatientToWaitingQueue( int p_inLengthCash, int p_inPrice, unsigned int p_uiPatientCardId, QString p_qsUnitIds, int p_inLenghtCard, unsigned int p_uiLedgerId, int p_inPayType );
+    void            addPatientToWaitingQueue( bool p_bIsPatientWaiting );
     bool            isPatientWaiting();
     void            setUsageFromWaitingQueue();
     bool            isNeedToBeCleaned()     { return m_bIsNeedToBeCleaned;  }
@@ -120,7 +121,7 @@ private:
     int                          m_inMainProcessLength;
     int                          m_inCashLength;
     int                          m_inCashTimeRemains;
-    stUsedPatientCard            m_vrPatientCard;
+    vector<stUsedPatientCards*>  m_vrPatientCards;
     int                          m_inCardTimeRemains;
     int                          m_inCashToPay;
     int                          m_inCashNetToPay;
@@ -131,10 +132,15 @@ private:
     unsigned int                 m_uiLedgerId;
     unsigned int                 m_uiPaymentMethodId;
     bool                         m_bIsItemInShoppingCart;
+    unsigned int                 m_uiShoppingCartItemId;
     bool                         m_bIsPatientWaiting;
     unsigned int                 m_uiProcessWaitTime;
     bool                         m_bIsNeedToBeCleaned;
     bool                         m_bIsDeviceStopped;
+    bool                         m_bIsTubeReplaceNeeded;
+    QString                      m_qsTransactionId;
+    int                          m_nMinuteOfPanel;
+    int                          m_nForceTimeSendCounter;
 
     QVBoxLayout                 *verticalLayout;
     QLabel                      *lblTitle;
@@ -160,6 +166,7 @@ private:
     QString                         m_qsTimer;
     QString                         m_qsTimerNextStatus;
     QString                         m_qsInfo;
+    QString                         m_qsCashToPay;
 
     vector<cDBPanelStatuses*>       m_obStatuses;
     vector<cDBPanelStatusSettings*> m_obStatusSettings;
@@ -170,12 +177,13 @@ private:
     void            formatStatusString( QString p_qsStatusText );
     void            formatTimerString( QString p_qsTimerText );
     void            formatNextLengthString( QString p_qsNextLengthText );
-    void            formatInfoString( QString p_qsInfoText );
+    void            formatInfoString();
     void            activateNextStatus();
     void            closeAttendance();
 
 //    QString         convertCurrency( int p_nCurrencyValue, QString p_qsCurrency );
     unsigned int    _calculateWaitTime();
+    QString         _transactionId();
 
 signals:
     void            signalPaymentActivated( unsigned int p_uiPanelId );
@@ -185,6 +193,8 @@ signals:
     void            signalSetCounterText( unsigned int p_uiPanelId, const QString &p_qsCounter );
     void            signalSetWaitTime( unsigned int p_uiPanelId, const unsigned int p_uiWaitTime );
     void            signalSetInfoText( unsigned int p_uiPanelId, const QString &p_qsInfo );
+    void            signalSelectedFromWaitingQueue();
+    void            signalMainWindowActivated();
 
 private slots:
     void            slotPanelStartClicked();

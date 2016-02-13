@@ -31,6 +31,8 @@ cDlgProductEdit::cDlgProductEdit( QWidget *p_poParent, cDBProduct *p_poProduct )
     ledVatpercentBuy->setVisible( false );
     ledVatpercentBuy->setEnabled( false );
 
+    lblCurrencyBuy->setText( g_poPrefs->getCurrencyShort() );
+
     m_poProduct = p_poProduct;
 
     QStringList qslProductTypes;

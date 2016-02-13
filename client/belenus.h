@@ -25,6 +25,7 @@
 #include "communication.h"
 #include "cassa.h"
 #include "general.h"
+#include "http.h"
 
 //====================================================================================
 
@@ -38,6 +39,15 @@
 
 //====================================================================================
 
+#define STATUS_ALAP                     0
+#define STATUS_VETKOZES                 1
+#define STATUS_SZAUNAZAS                2
+#define STATUS_BARNULAS                 3
+#define STATUS_UTOHUTES                 4
+#define STATUS_VARAKOZAS                9
+
+//====================================================================================
+
 extern QApplication            *apMainApp;
 extern cDBUser                  g_obUser;
 extern cPreferences            *g_poPrefs;
@@ -45,6 +55,7 @@ extern CS_Communication        *g_poHardware;
 extern cCassa                   g_obCassa;
 extern cGeneral                 g_obGen;
 extern cDBGuest                 g_obGuest;
+extern cBlnsHttp               *g_poBlnsHttp;
 
 //====================================================================================
 

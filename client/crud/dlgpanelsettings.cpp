@@ -6,8 +6,7 @@
 #include "../db/dbpanels.h"
 #include "../dlg/dlgpaneltimecopy.h"
 
-cDlgPanelSettings::cDlgPanelSettings( QWidget *p_poParent, unsigned int p_uiPanelId )
-    : cDlgCrud( p_poParent )
+cDlgPanelSettings::cDlgPanelSettings( QWidget *p_poParent, unsigned int p_uiPanelId ) : cDlgCrud( p_poParent )
 {
     setWindowTitle( tr( "Panel settings" ) );
     setWindowIcon( QIcon("./resources/40x40_device.png") );
@@ -71,6 +70,19 @@ cDlgPanelSettings::cDlgPanelSettings( QWidget *p_poParent, unsigned int p_uiPane
     ledWorkTimeSec->setEnabled( g_obUser.isInGroup( cAccessGroup::SYSTEM ) );
     horizontalLayout2->addWidget( ledWorkTimeSec );
 
+    if( g_obUser.isInGroup( cAccessGroup::ADMIN ) )
+    {
+        ledWorkTimeHour->setEchoMode( QLineEdit::Normal );
+        ledWorkTimeMin->setEchoMode( QLineEdit::Normal );
+        ledWorkTimeSec->setEchoMode( QLineEdit::Normal );
+    }
+    else
+    {
+        ledWorkTimeHour->setEchoMode( QLineEdit::Password );
+        ledWorkTimeMin->setEchoMode( QLineEdit::Password );
+        ledWorkTimeSec->setEchoMode( QLineEdit::Password );
+    }
+
     pbWTReset = new QPushButton( this );
     pbWTReset->setObjectName( QString::fromUtf8( "pbWTReset" ) );
     pbWTReset->setMinimumHeight( 30 );
@@ -81,6 +93,19 @@ cDlgPanelSettings::cDlgPanelSettings( QWidget *p_poParent, unsigned int p_uiPane
     pbWTReset->setIcon( QIcon("./resources/40x40_hourglass.png") );
     pbWTReset->setEnabled( g_obUser.isInGroup( cAccessGroup::SYSTEM ) );
     horizontalLayout2->addWidget( pbWTReset );
+
+    pbEnableDeviceAdmin = new QPushButton( this );
+    pbEnableDeviceAdmin->setObjectName( QString::fromUtf8( "pbEnableDeviceAdmin" ) );
+    pbEnableDeviceAdmin->setMinimumWidth( 30 );
+    pbEnableDeviceAdmin->setMaximumWidth( 30 );
+    pbEnableDeviceAdmin->setMinimumHeight( 30 );
+    pbEnableDeviceAdmin->setMaximumHeight( 30 );
+    pbEnableDeviceAdmin->setText( "" );
+    pbEnableDeviceAdmin->setToolTip( tr("Enable to reset work time for Device Administrator.") );
+    pbEnableDeviceAdmin->setIconSize( QSize(20,20) );
+    pbEnableDeviceAdmin->setIcon( QIcon("./resources/40x40_key.png") );
+    pbEnableDeviceAdmin->setEnabled( true );
+    horizontalLayout2->addWidget( pbEnableDeviceAdmin );
 
     lblMaxWorkTime = new QLabel( this );
     lblMaxWorkTime->setObjectName( QString::fromUtf8( "lblMaxWorkTime" ) );
@@ -94,6 +119,9 @@ cDlgPanelSettings::cDlgPanelSettings( QWidget *p_poParent, unsigned int p_uiPane
     ledMaxWorkTime->setEnabled( g_obUser.isInGroup( cAccessGroup::SYSTEM ) );
     horizontalLayout2->addWidget( ledMaxWorkTime );
 
+    horizontalSpacer2 = new QSpacerItem( 300, 20, QSizePolicy::Expanding, QSizePolicy::Minimum );
+    horizontalLayout2->addItem( horizontalSpacer2 );
+
     lblGroup = new QLabel( this );
     lblGroup->setObjectName( QString::fromUtf8( "lblGroup" ) );
     lblGroup->setText( tr("Group: ") );
@@ -103,9 +131,6 @@ cDlgPanelSettings::cDlgPanelSettings( QWidget *p_poParent, unsigned int p_uiPane
     cmbPanelGroup->setObjectName( QString::fromUtf8( "cmbPanelGroup" ) );
     cmbPanelGroup->setEnabled( g_obUser.isInGroup( cAccessGroup::ADMIN ) );
     horizontalLayout1->addWidget( cmbPanelGroup );
-
-    horizontalSpacer2 = new QSpacerItem( 300, 20, QSizePolicy::Expanding, QSizePolicy::Minimum );
-    horizontalLayout2->addItem( horizontalSpacer2 );
 
     horizontalLayout3 = new QHBoxLayout();
     horizontalLayout3->setObjectName( QString::fromUtf8( "horizontalLayout3" ) );
@@ -124,6 +149,19 @@ cDlgPanelSettings::cDlgPanelSettings( QWidget *p_poParent, unsigned int p_uiPane
     pbCopyToAll->setEnabled( g_obUser.isInGroup( cAccessGroup::ADMIN ) );
     horizontalLayout3->addWidget( pbCopyToAll );
 
+    pbEnableSystemAdmin = new QPushButton( this );
+    pbEnableSystemAdmin->setObjectName( QString::fromUtf8( "pbEnableSystemAdmin" ) );
+    pbEnableSystemAdmin->setMinimumWidth( 30 );
+    pbEnableSystemAdmin->setMaximumWidth( 30 );
+    pbEnableSystemAdmin->setMinimumHeight( 30 );
+    pbEnableSystemAdmin->setMaximumHeight( 30 );
+    pbEnableSystemAdmin->setText( "" );
+    pbEnableSystemAdmin->setToolTip( tr("Enable temporary controls can be used by System Administrator.") );
+    pbEnableSystemAdmin->setIconSize( QSize(20,20) );
+    pbEnableSystemAdmin->setIcon( QIcon("./resources/40x40_key.png") );
+    pbEnableSystemAdmin->setEnabled( true );
+    horizontalLayout3->addWidget( pbEnableSystemAdmin );
+
     verticalLayout->insertLayout( 0, horizontalLayout1 );
     verticalLayout->insertLayout( 1, horizontalLayout2 );
     verticalLayout->insertLayout( 3, horizontalLayout3 );
@@ -134,6 +172,8 @@ cDlgPanelSettings::cDlgPanelSettings( QWidget *p_poParent, unsigned int p_uiPane
     connect( m_poBtnSave, SIGNAL( clicked( bool ) ), this, SLOT( saveClicked( bool ) ) );
     connect( pbWTReset, SIGNAL( clicked( bool ) ), this, SLOT( on_pbWTReset_clicked( bool ) ) );
     connect( pbCopyToAll, SIGNAL( clicked( bool ) ), this, SLOT( on_pbCopyToAll_clicked( bool ) ) );
+    connect( pbEnableSystemAdmin, SIGNAL(clicked()), this, SLOT(on_pbEnableSystemAdmin_clicked()) );
+    connect( pbEnableDeviceAdmin, SIGNAL(clicked()), this, SLOT(on_pbEnableDeviceAdmin_clicked()) );
 
     if( p_uiPanelId > 0 )
     {
@@ -343,21 +383,22 @@ void cDlgPanelSettings::saveClicked( bool )
         obDBPanel.load( m_uiPanelId );
         obDBPanel.setTitle( ledTitle->text() );
 
-        if( g_obUser.isInGroup(cAccessGroup::SYSTEM) )
+        if( g_obUser.isInGroup(cAccessGroup::ADMIN) || cmbPanelGroup->isEnabled() )
         {
             obDBPanel.setPanelGroupId( cmbPanelGroup->itemData( cmbPanelGroup->currentIndex() ).toUInt() );
         }
 
-        if( g_obUser.isInGroup(cAccessGroup::SYSTEM) )
-        {
-            int hour    = ledWorkTimeHour->text().toInt();
-            int minute  = ledWorkTimeMin->text().toInt();
-            int second  = ledWorkTimeSec->text().toInt();
+        int hour    = ledWorkTimeHour->text().toInt();
+        int minute  = ledWorkTimeMin->text().toInt();
+        int second  = ledWorkTimeSec->text().toInt();
 
+        if( cmbPanelType->isEnabled() )
             obDBPanel.setPanelTypeId( cmbPanelType->itemData( cmbPanelType->currentIndex() ).toUInt() );
+        if( ledWorkTimeHour->isEnabled() || pbWTReset->isEnabled() )
             obDBPanel.setWorkTime( hour*3600 + minute*60 + second );
+        if( ledMaxWorkTime->isEnabled() )
             obDBPanel.setMaxWorkTime( ledMaxWorkTime->text().toUInt() );
-        }
+
         obDBPanel.save();
 
         QDialog::accept();
@@ -377,4 +418,27 @@ void cDlgPanelSettings::on_pbCopyToAll_clicked( bool )
     cDlgPanelTypeCopy   obDlgPanelTypeCopy( this, m_uiPanelId );
 
     obDlgPanelTypeCopy.exec();
+}
+
+void cDlgPanelSettings::on_pbEnableSystemAdmin_clicked()
+{
+    if( g_obGen.isSystemAdmin() )
+    {
+        cmbPanelType->setEnabled( true );
+        ledWorkTimeHour->setEnabled( true );
+        ledWorkTimeMin->setEnabled( true );
+        ledWorkTimeSec->setEnabled( true );
+        pbWTReset->setEnabled( true );
+        ledMaxWorkTime->setEnabled( true );
+        cmbPanelGroup->setEnabled( true );
+        pbCopyToAll->setEnabled( true );
+    }
+}
+
+void cDlgPanelSettings::on_pbEnableDeviceAdmin_clicked()
+{
+    if( g_obGen.isExtendedAdmin() )
+    {
+        pbWTReset->setEnabled( true );
+    }
 }

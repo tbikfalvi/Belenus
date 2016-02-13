@@ -1,0 +1,23 @@
+#-------------------------------------------------
+#
+# Project created by QtCreator 2014-06-08T13:59:12
+#
+#-------------------------------------------------
+
+QT          += core gui
+TARGET       = DBBackup
+DESTDIR      = ..
+TEMPLATE     = app
+RC_FILE      = dbbackup.rc
+RESOURCES   += dbbackup.qrc
+TRANSLATIONS = dbbackup_hu.ts \
+               dbbackup_de.ts \
+               qt_hu.ts
+
+SOURCES     += main.cpp\
+               mainwindow.cpp
+
+HEADERS     += mainwindow.h
+
+FORMS       += mainwindow.ui
+

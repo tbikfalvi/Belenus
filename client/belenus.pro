@@ -1,11 +1,24 @@
-TEMPLATE = app
+
+QT          += core gui network sql
+CONFIG      += qt
+RESOURCES   += belenus.qrc
+RC_FILE      = Belenus.rc
+TEMPLATE     = app
+DESTDIR      = ..
+TRANSLATIONS = belenus_hu.ts \
+               belenus_de.ts
+
+win32:DEFINES -= UNICODE
+
 FORMS = ../framework/dlgcrud.ui \
     report/dlgpreview.ui \
     dlghardwaretest.ui \
     dlglogin.ui \
     dlglogs.ui \
     dlgpaneltypeedit.ui \
+    dlgskintypeedit.ui \
     dlgpanelgroupedit.ui \
+    dlgpaneledit.ui \
     dlgpreferences.ui \
     dlgpwdconfirm.ui \
     dlguseredit.ui \
@@ -44,7 +57,14 @@ FORMS = ../framework/dlgcrud.ui \
     dlgpatientcardassign.ui \
     dlgproductsell.ui \
     dlgchangepcvalidity.ui \
-    dlgmanagedatabase.ui
+    dlgmanagedatabase.ui \
+    dlgExportImport.ui \
+    dlgAdvertisement.ui \
+    dlgAdvertisementedit.ui \
+    dlgcomment.ui \
+    dlgStockProcess.ui \
+    dlgInformation.ui
+
 HEADERS = belenus.h \
     ../framework/dbconnection.h \
     ../framework/dlgcrud.h \
@@ -63,7 +83,9 @@ HEADERS = belenus.h \
     ../framework/network/packet.h \
     ../framework/network/CommunicationProtocol.h \
     crud/dlgpaneltypes.h \
+    crud/dlgskintypes.h \
     crud/dlgpanelgroups.h \
+    crud/dlgpanels.h \
     crud/dlgusers.h \
     crud/dlgreasontovisit.h \
     crud/dlgpanelstatuses.h \
@@ -84,12 +106,15 @@ HEADERS = belenus.h \
     crud/dlgdiscount.h \
     crud/dlgstorno.h \
     crud/dlgpaymentmethod.h \
+    crud/dlgadvertisements.h \
+    crud/dlgwaitlist.h \
     db/dbreasontovisit.h \
     db/dbpatientcard.h \
     db/dbpatientcardtype.h \
     db/dbpanelstatuses.h \
     db/dbuser.h \
     db/dbpaneltypes.h \
+    db/dbskintypes.h \
     db/dbpanelgroups.h \
     db/dbpaneluses.h \
     db/dbcassa.h \
@@ -115,6 +140,8 @@ HEADERS = belenus.h \
     db/dbpaymentmethod.h \
     db/dbpatientcardunits.h \
     db/dbapplicationaction.h \
+    db/dbadvertisements.h \
+    db/dbwaitlist.h \
     dlg/dlghardwaretest.h \
     dlg/dlglogin.h \
     dlg/dlglogs.h \
@@ -131,8 +158,14 @@ HEADERS = belenus.h \
     dlg/dlgpatientcardassign.h \
     dlg/dlgchangepcvalidity.h \
     dlg/dlgmanagedatabase.h \
+    dlg/dlgexportimport.h \
+    dlg/dlgcomment.h \
+    dlg/dlgstockprocess.h \
+    dlg/dlginformation.h \
     edit/dlgpaneltypeedit.h \
+    edit/dlgskintypeedit.h \
     edit/dlgpanelgroupedit.h \
+    edit/dlgpaneledit.h \
     edit/dlguseredit.h \
     edit/dlgreasontovisitedit.h \
     edit/dlgpanelstatusesedit.h \
@@ -152,6 +185,7 @@ HEADERS = belenus.h \
     edit/dlgpatientcardrefill.h \
     edit/dlgdiscountedit.h \
     edit/dlgpaymentmethodedit.h \
+    edit/dlgadvertisementedit.h \
     report/dlgpreview.h \
     report/reppatientcards.h \
     report/reppatientcardsobs.h \
@@ -175,7 +209,10 @@ HEADERS = belenus.h \
     dlg/dlgsecondarywindow.h \
     dsppanel.h \
     licenceManager.h \
-    cdlgtest.h
+    cdlgtest.h \
+    http.h \
+    advertisementwindow.h
+
 SOURCES = main.cpp \
     ../framework/dbconnection.cpp \
     ../framework/dlgcrud.cpp \
@@ -191,7 +228,9 @@ SOURCES = main.cpp \
     ../framework/network/packet.cpp \
     ../framework/network/CommunicationProtocol.cpp \
     crud/dlgpaneltypes.cpp \
+    crud/dlgskintypes.cpp \
     crud/dlgpanelgroups.cpp \
+    crud/dlgpanels.cpp \
     crud/dlgusers.cpp \
     crud/dlgreasontovisit.cpp \
     crud/dlgpanelstatuses.cpp \
@@ -212,12 +251,15 @@ SOURCES = main.cpp \
     crud/dlgdiscount.cpp \
     crud/dlgstorno.cpp \
     crud/dlgpaymentmethod.cpp \
+    crud/dlgadvertisements.cpp \
+    crud/dlgwaitlist.cpp \
     db/dbreasontovisit.cpp \
     db/dbpatientcard.cpp \
     db/dbpatientcardtype.cpp \
     db/dbpanelstatuses.cpp \
     db/dbuser.cpp \
     db/dbpaneltypes.cpp \
+    db/dbskintypes.cpp \
     db/dbpanelgroups.cpp \
     db/dbpaneluses.cpp \
     db/dbcassa.cpp \
@@ -243,6 +285,8 @@ SOURCES = main.cpp \
     db/dbpaymentmethod.cpp \
     db/dbpatientcardunits.cpp \
     db/dbapplicationaction.cpp \
+    db/dbadvertisements.cpp \
+    db/dbwaitlist.cpp \
     dlg/dlghardwaretest.cpp \
     dlg/dlglogin.cpp \
     dlg/dlglogs.cpp \
@@ -259,8 +303,14 @@ SOURCES = main.cpp \
     dlg/dlgpatientcardassign.cpp \
     dlg/dlgchangepcvalidity.cpp \
     dlg/dlgmanagedatabase.cpp \
+    dlg/dlgexportimport.cpp \
+    dlg/dlgcomment.cpp \
+    dlg/dlgstockprocess.cpp \
+    dlg/dlginformation.cpp \
     edit/dlgpaneltypeedit.cpp \
+    edit/dlgskintypeedit.cpp \
     edit/dlgpanelgroupedit.cpp \
+    edit/dlgpaneledit.cpp \
     edit/dlguseredit.cpp \
     edit/dlgreasontovisitedit.cpp \
     edit/dlgpanelstatusesedit.cpp \
@@ -281,6 +331,7 @@ SOURCES = main.cpp \
     edit/dlgpatientcardrefill.cpp \
     edit/dlgdiscountedit.cpp \
     edit/dlgpaymentmethodedit.cpp \
+    edit/dlgadvertisementedit.cpp \
     report/reppatientcards.cpp \
     report/reppatientcardsobs.cpp \
     report/dlgpreview.cpp \
@@ -302,27 +353,12 @@ SOURCES = main.cpp \
     dlg/dlgsecondarywindow.cpp \
     dsppanel.cpp \
     licenceManager.cpp \
-    cdlgtest.cpp
+    cdlgtest.cpp \
+    http.cpp \
+    advertisementwindow.cpp
+
 win32 { 
     HEADERS += communication_serial.h
     SOURCES += communication_serial.cpp
 }
-TRANSLATIONS = belenus_us.ts \
-    belenus_hu.ts
-DESTDIR = ..
-QT += sql
-QT += network
-CONFIG += qt
-RC_FILE = Belenus.rc
-
-# CONFIG += console
-win32:DEFINES -= UNICODE
-
-RESOURCES += \
-    belenus.qrc
-
-
-
-
-
 

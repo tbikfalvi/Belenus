@@ -36,6 +36,8 @@ cDlgProductSell::cDlgProductSell( QWidget *p_poParent, QString p_qsBarcode ) : Q
     connect( ledFilterName, SIGNAL(returnPressed()), this, SLOT(on_pbRefresh_clicked()) );
     connect( ledBarcode, SIGNAL(returnPressed()), this, SLOT(on_pbRefresh_clicked()) );
 
+    lblCurrencyToPay->setText( g_poPrefs->getCurrencyShort() );
+
 /*
     m_poBtnClose->setEnabled(false);
     m_poBtnDelete->setEnabled(false);
@@ -367,6 +369,9 @@ void cDlgProductSell::on_pbPayment_clicked()
     int     nDiscount = 0;
     int     nCount = cmbProductCount->itemData( cmbProductCount->currentIndex() ).toInt();
 
+    if( nCount == 0 )
+        return;
+
     cCurrency   cPrice( m_obProduct.netPriceSell() * nCount, cCurrency::CURR_NET, m_obProduct.vatPercentSell() );
 
     int     nTotalPrice = cPrice.currencyValue().toInt();
@@ -446,6 +451,8 @@ void cDlgProductSell::_calculateTotalPrice()
 
     int     nCount = cmbProductCount->itemData( cmbProductCount->currentIndex() ).toInt();
 
+    pbPayment->setEnabled( nCount > 0 );
+
     m_obProduct.load( qvProducts.at(cmbProduct->currentIndex())->uiId );
 
     cCurrency   cPrice( m_obProduct.netPriceSell() * nCount, cCurrency::CURR_NET, m_obProduct.vatPercentSell() );
@@ -475,8 +482,6 @@ void cDlgProductSell::_calculateTotalPrice()
         ledAmountToPay->setText( QString("%1 (%2)").arg(cDiscount.currencyStringSeparator()).arg(cPrice.currencyStringSeparator()) );
     else
         ledAmountToPay->setText( cPrice.currencyStringSeparator() );
-
-    pbPayment->setEnabled( nCount>0 );
 }
 //===========================================================================================================
 void cDlgProductSell::on_pbRefresh_clicked()
@@ -575,6 +580,7 @@ void cDlgProductSell::on_cmbProduct_currentIndexChanged(int index)
         ledPrice->setText( cPrice.currencyFullStringShort() );
         ledCurrentCount->setText( QString::number(qvProducts.at(index)->inProductCount) );
 
+        cmbProductCount->addItem( tr("<Choose ...>"), 0 );
         for( int i=0; i<qvProducts.at(index)->inProductCount; i++ )
         {
             cmbProductCount->addItem( QString::number(i+1), i+1 );
@@ -584,7 +590,7 @@ void cDlgProductSell::on_cmbProduct_currentIndexChanged(int index)
     }
 }
 //===========================================================================================================
-void cDlgProductSell::on_cmbProductCount_currentIndexChanged(int index)
+void cDlgProductSell::on_cmbProductCount_currentIndexChanged(int /*index*/)
 //===========================================================================================================
 {
     _calculateTotalPrice();

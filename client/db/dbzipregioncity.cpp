@@ -138,11 +138,7 @@ void cDBZipRegionCity::save() throw( cSevException )
     if( m_uiId )
     {
         qsQuery = "UPDATE";
-
-        if( m_qsArchive.compare("NEW") != 0 )
-        {
-            m_qsArchive = "MOD";
-        }
+        m_qsArchive = "MOD";
     }
     else
     {

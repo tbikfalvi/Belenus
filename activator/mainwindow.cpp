@@ -68,7 +68,98 @@ MainWindow::MainWindow(QWidget *parent) : QMainWindow(parent), ui(new Ui::MainWi
                                      << "MX^JDA"  // BLNS27_FSUAOJ <- BLNS27_580046
                                      << "A@RAZ@"  // BLNS28_JKYJQK <- BLNS28_904968
                                      << "LXRJGA"  // BLNS29_GSYALJ <- BLNS29_684016
-                                     << "CZAJ_J"; // BLNS30_HQJATA <- BLNS30_766099
+                                     << "CZAJ_J"  // BLNS30_HQJATA <- BLNS30_766099
+                                     << "N_@OF_"  // BLNS31_ETKDMT <- BLNS31_498327
+                                     << "BYSHE]"  // BLNS32_IRXCNV <- BLNS32_873231
+                                     << "HERIXR"  // BLNS33_CNYBSY <- BLNS33_234184
+                                     << "H_@OYR"  // BLNS34_CTKDRY <- BLNS34_298374
+                                     << "IEQC_A"  // BLNS35_BNZHTJ <- BLNS35_135796
+                                     << "HDABYS"  // BLNS36_COJIRX <- BLNS36_246873
+                                     << "M_JC_^"  // BLNS37_FTAHTU <- BLNS37_599790
+                                     << "N[QBYD"  // BLNS38_EPZIRO <- BLNS38_455872
+                                     << "LFAJX^"  // BLNS39_GMJASU <- BLNS39_626080
+                                     << "IYJLDS"  // BLNS40_BRAGOX <- BLNS40_179643
+                                     << "L[AC[R"  // BLNS41_GPJHPY <- BLNS41_656754
+                                     << "LYAIDR"  // BLNS42_GRJBOY <- BLNS42_676144
+                                     << "CY_C[^"  // BLNS43_HRTHPU <- BLNS43_777750
+                                     << "O@RH@_"  // BLNS44_DKYCKT <- BLNS44_304207
+                                     << "OG_I[R"  // BLNS45_DLTBPY <- BLNS45_317154
+                                     << "IEAMD@"  // BLNS46_BNJFOK <- BLNS46_136548
+                                     << "L@]HGA"  // BLNS47_GKVCLJ <- BLNS47_601216
+                                     << "H_SOFR"  // BLNS48_CTXDMY <- BLNS48_293324
+                                     << "OZSMX^"  // BLNS49_DQXFSU <- BLNS49_363580
+                                     << "H__OEA"  // BLNS50_CTTDNJ <- BLNS50_297336
+                                     << "CZQNGQ"  // BLNS51_HQZELZ <- BLNS51_765415
+                                     << "HXDH[@"  // BLNS52_CSOCPK <- BLNS52_282258
+                                     << "AD^ID^"  // BLNS53_JOUBOU <- BLNS53_940140
+                                     << "CFSCEA"  // BLNS54_HMXHNJ <- BLNS54_723736
+                                     << "H[SJ@Q"  // BLNS55_CPXAKZ <- BLNS55_253005
+                                     << "A@^BF_"  // BLNS56_JKUIMT <- BLNS56_900827
+                                     << "NZ_N@]"  // BLNS57_EQTEKV <- BLNS57_467401
+                                     << "OX@M[_"  // BLNS58_DSKFPT <- BLNS58_388557
+                                     << "M@AHE]"  // BLNS59_FKJCNV <- BLNS59_506231
+                                     << "C_RCX^";  // BLNS60_HTYHSU <- BLNS60_794780
+
+    m_qslActiveKeys = QStringList()  << "BLNS01"
+                                     << "BLNS02"
+                                     << "BLNS03"
+                                     << "BLNS04"
+                                     << "BLNS05"
+                                     << "BLNS06"
+                                     << "BLNS07"
+                                     << "BLNS08"
+                                     << "BLNS09"
+                                     << "BLNS10"
+                                     << "BLNS11"
+                                     << "BLNS12"
+                                     << "BLNS13"
+                                     << "BLNS14"
+                                     << "BLNS15"
+//                                     << "BLNS16"
+//                                     << "BLNS17"
+                                     << "BLNS18"
+                                     << "BLNS19"
+                                     << "BLNS20"
+                                     << "BLNS21"
+                                     << "BLNS22"
+                                     << "BLNS23"
+                                     << "BLNS24"
+                                     << "BLNS25"
+                                     << "BLNS26"
+                                     << "BLNS27"
+                                     << "BLNS28"
+                                     << "BLNS29"
+//                                     << "BLNS30"
+                                     << "BLNS31"
+                                     << "BLNS32"
+                                     << "BLNS33"
+                                     << "BLNS34"
+                                     << "BLNS35"
+                                     << "BLNS36"
+                                     << "BLNS37"
+                                     << "BLNS38"
+                                     << "BLNS39"
+                                     << "BLNS40"
+                                     << "BLNS41"
+                                     << "BLNS42"
+                                     << "BLNS43"
+                                     << "BLNS44"
+                                     << "BLNS45"
+                                     << "BLNS46"
+                                     << "BLNS47"
+                                     << "BLNS48"
+//                                     << "BLNS49"
+                                     << "BLNS50"
+//                                     << "BLNS51"
+//                                     << "BLNS52"
+//                                     << "BLNS53"
+//                                     << "BLNS54"
+//                                     << "BLNS55"
+//                                     << "BLNS56"
+//                                     << "BLNS57"
+//                                     << "BLNS58"
+//                                     << "BLNS59"
+                                     << "BLNS60";
 
     // These are the random values
     m_qslLicenceCodes = QStringList()<< "358194"
@@ -100,13 +191,48 @@ MainWindow::MainWindow(QWidget *parent) : QMainWindow(parent), ui(new Ui::MainWi
                                      << "580046"
                                      << "904968"
                                      << "684016"
-                                     << "766099";
+                                     << "766099"
+                                     << "498327"
+                                     << "873231"
+                                     << "234184"
+                                     << "298374"
+                                     << "135796"
+                                     << "246873"
+                                     << "599790"
+                                     << "455872"
+                                     << "626080"
+                                     << "179643"
+                                     << "656754"
+                                     << "676144"
+                                     << "777750"
+                                     << "304207"
+                                     << "317154"
+                                     << "136548"
+                                     << "601216"
+                                     << "293324"
+                                     << "363580"
+                                     << "297336"
+                                     << "765415"
+                                     << "282258"
+                                     << "940140"
+                                     << "723736"
+                                     << "253005"
+                                     << "900827"
+                                     << "467401"
+                                     << "388557"
+                                     << "506231"
+                                     << "794780";
 
-    _fillLicenceTree();
+//    _fillLicenceTree();
 
     QStringList qslHeader = QStringList() << tr("Licence string") << tr("Activation\ndate") << tr("Activation\ncode") << tr("Validation\ncode");
 
     ui->treeLicences->setHeaderLabels( qslHeader );
+
+    ui->lblCheckCodeOk->setVisible( false );
+    ui->lblCheckCodeCancel->setVisible( false );
+
+    ui->lblLicenceKeyString->setText( "BLNS..." );
 }
 
 MainWindow::~MainWindow()
@@ -165,6 +291,7 @@ void MainWindow::on_pbNewLicenceKey_clicked()
     if( qsRegKey.length() != 8 )
     {
         QMessageBox::warning( this, tr("Warning"), tr("Registration code length is invalid") );
+        ui->lblCheckCodeCancel->setVisible( true );
         return;
     }
 
@@ -173,8 +300,15 @@ void MainWindow::on_pbNewLicenceKey_clicked()
 
     int nOrder = n1*10+n2;
 
-    if( nOrder > 0 && nOrder < LICENCE_MAX_NUMBER )
+    if( nOrder > 0 && nOrder < LICENCE_MAX_NUMBER+1 )
     {
+        if( !m_qslActiveKeys.contains( QString("BLNS%1%2").arg(n1).arg(n2) ) )
+        {
+            QMessageBox::warning( this, tr("Warning"),
+                                  tr("This licence string is not valid.") );
+            return;
+        }
+
         char    strLicenceRandomCode[7];
 
         strLicenceRandomCode[6] = 0;
@@ -184,7 +318,8 @@ void MainWindow::on_pbNewLicenceKey_clicked()
         m_qsCode = m_qslLicenceCodes.at(nOrder-1);
 
         ui->ledLicenceKeyName->setText( QString("BLNS%1%2_%3").arg(n1).arg(n2).arg(strLicenceRandomCode) );
-        ui->lblLicenceKeyString->setText( QString("BLNS%1%2_%3 (%4)").arg(n1).arg(n2).arg(strLicenceRandomCode).arg(m_qslLicenceCodes.at(nOrder-1)) );
+//        ui->lblLicenceKeyString->setText( QString("BLNS%1%2_%3 (%4)").arg(n1).arg(n2).arg(strLicenceRandomCode).arg(m_qslLicenceCodes.at(nOrder-1)) );
+        ui->lblLicenceKeyString->setText( QString("BLNS%1%2_%3").arg(n1).arg(n2).arg(strLicenceRandomCode) );
         ui->ledCode->setText( ui->ledRegistrationCode->text().right(6) );
         ui->deActivated->setDate( QDate::currentDate() );
         ui->pbValidateLicence->setFocus();
@@ -192,6 +327,7 @@ void MainWindow::on_pbNewLicenceKey_clicked()
     else
     {
         QMessageBox::warning( this, tr("Warning"), tr("Registration code is invalid - BLNS%1%2").arg(n1).arg(n2) );
+        ui->lblCheckCodeCancel->setVisible( true );
         return;
     }
 
@@ -232,7 +368,8 @@ void MainWindow::on_pbEditLicenceKey_clicked()
     int nOrder = n1*10+n2;
 
     m_qsCode = m_qslLicenceCodes.at(nOrder-1);
-    ui->lblLicenceKeyString->setText( QString("%1 (%2)").arg(ui->ledLicenceKeyName->text()).arg(m_qslLicenceCodes.at(nOrder-1)) );
+//    ui->lblLicenceKeyString->setText( QString("%1 (%2)").arg(ui->ledLicenceKeyName->text()).arg(m_qslLicenceCodes.at(nOrder-1)) );
+    ui->lblLicenceKeyString->setText( QString("%1").arg(ui->ledLicenceKeyName->text()) );
 
     if( item->text(2).length() > 0 )
     {
@@ -285,7 +422,7 @@ void MainWindow::on_pbSaveLicence_clicked()
 
 void MainWindow::on_pbCancelLicence_clicked()
 {
-    ui->treeLicences->setEnabled( true );
+//    ui->treeLicences->setEnabled( true );
 
     ui->pbNewLicenceKey->setEnabled( true );
 
@@ -295,30 +432,47 @@ void MainWindow::on_pbCancelLicence_clicked()
 
     ui->ledLicenceKeyName->setText( "" );
 
-    ui->lblLicenceKeyString->setText( "BLNSxx_AAAAAA" );
+//    ui->lblLicenceKeyString->setText( "BLNSxx_AAAAAA" );
+    ui->lblLicenceKeyString->setText( "BLNS..." );
     ui->ledCode->setText( "" );
     ui->ledValidator->setText( "" );
-    ui->deActivated->setDate( QDate::currentDate() );
+//    ui->deActivated->setDate( QDate::currentDate() );
+
+    ui->lblCheckCodeOk->setVisible( false );
+    ui->lblCheckCodeCancel->setVisible( false );
 }
 
 
 void MainWindow::on_ledLicenceKeyName_textChanged(const QString&)
 {
+    ui->lblCheckCodeOk->setVisible( false );
+    ui->lblCheckCodeCancel->setVisible( false );
+
     bool    bEnable = _validateLicenceStr( ui->ledLicenceKeyName->text() );
 
-    ui->ledCode->setEnabled( bEnable );
+//    ui->ledCode->setEnabled( bEnable );
     ui->ledValidator->setEnabled( bEnable );
-    ui->deActivated->setEnabled( bEnable );
+//    ui->deActivated->setEnabled( bEnable );
     ui->pbValidateLicence->setEnabled( bEnable );
+    if( bEnable )
+    {
+        ui->lblCheckCodeOk->setVisible( true );
+        ui->lblCheckCodeCancel->setVisible( false );
+    }
+    else
+    {
+        ui->lblCheckCodeOk->setVisible( false );
+        ui->lblCheckCodeCancel->setVisible( true );
+    }
 }
 
 bool MainWindow::_validateLicenceStr(QString p_qsLicenceString )
 {
-    int nRet = ERR_NO_ERROR;
+//    int nRet = ERR_NO_ERROR;
 
     if( p_qsLicenceString.length() != 13 )
     {
-        nRet = ERR_KEY_FORMAT_MISMATCH;
+//        nRet = ERR_KEY_FORMAT_MISMATCH;
         return false;
     }
 
@@ -331,7 +485,7 @@ bool MainWindow::_validateLicenceStr(QString p_qsLicenceString )
 //        g_obLogger(cSeverity::INFO) << "Licence 4 digit: " << (p_qsLicenceString.at(4).isDigit()?"true":"false") << EOM;
 //        g_obLogger(cSeverity::INFO) << "Licence 5 digit: " << (p_qsLicenceString.at(5).isDigit()?"true":"false") << EOM;
 //        g_obLogger(cSeverity::INFO) << "Licence 7th char is '" << p_qsLicenceString.at(6) << "'" << EOM;
-        nRet = ERR_KEY_FORMAT_MISMATCH;
+//        nRet = ERR_KEY_FORMAT_MISMATCH;
         return false;
     }
 
@@ -346,13 +500,13 @@ bool MainWindow::_validateLicenceStr(QString p_qsLicenceString )
     if( nLicenceNumber < 1 || nLicenceNumber > LICENCE_MAX_NUMBER )
     {
 //        g_obLogger(cSeverity::INFO) << "Licence order number is: " << nLicenceNumber << EOM;
-        nRet = ERR_KEY_NUMBER_INCORRECT;
+//        nRet = ERR_KEY_NUMBER_INCORRECT;
         return false;
     }
 
     if( m_qslLicenceKeys.at( nLicenceNumber-1 ).compare( QString( strLicenceRandomCode ) ) != 0 )
     {
-        nRet = ERR_KEY_NOT_EXISTS;
+//        nRet = ERR_KEY_NOT_EXISTS;
         return false;
     }
 
@@ -392,7 +546,8 @@ void MainWindow::on_pbValidateLicence_clicked()
         qsStringValidation.append( m_qslCode.at( i*10 + qsCodeValidation.at(i).digitValue() ) );
     }
 
-    ui->ledValidator->setText( QString("%1 (%2)").arg(qsStringValidation).arg(qsCodeValidation) );
+//    ui->ledValidator->setText( QString("%1 (%2)").arg(qsStringValidation).arg(qsCodeValidation) );
+    ui->ledValidator->setText( qsStringValidation );
 }
 
 void MainWindow::_fillLicenceTree()
@@ -432,4 +587,9 @@ void MainWindow::_saveLicenceTree()
         file.write( QString("%1\t%2\t%3\t%4\n").arg(item->text(0)).arg(item->text(1)).arg(item->text(2)).arg(item->text(3)).toStdString().c_str() );
     }
     file.close();
+}
+
+void MainWindow::on_ledRegistrationCode_textEdited(const QString &/*arg1*/)
+{
+    on_pbCancelLicence_clicked();
 }

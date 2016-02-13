@@ -6,7 +6,7 @@
    <rect>
     <x>0</x>
     <y>0</y>
-    <width>694</width>
+    <width>1361</width>
     <height>345</height>
    </rect>
   </property>
@@ -118,18 +118,27 @@
     <rect>
      <x>0</x>
      <y>0</y>
-     <width>694</width>
-     <height>21</height>
+     <width>1361</width>
+     <height>26</height>
     </rect>
    </property>
    <widget class="QMenu" name="menu_System">
     <property name="title">
      <string>&amp;System</string>
     </property>
+    <widget class="QMenu" name="menu_ExportImport">
+     <property name="title">
+      <string>Import / Export </string>
+     </property>
+     <addaction name="action_Import"/>
+     <addaction name="action_Export"/>
+    </widget>
     <addaction name="action_About"/>
     <addaction name="separator"/>
-    <addaction name="action_LogOut"/>
+    <addaction name="menu_ExportImport"/>
     <addaction name="separator"/>
+    <addaction name="action_LogOut"/>
+    <addaction name="action_CloseShift"/>
     <addaction name="action_Exit"/>
    </widget>
    <widget class="QMenu" name="menu_Edit">
@@ -140,6 +149,8 @@
      <property name="title">
       <string>Administrator</string>
      </property>
+     <addaction name="action_Preferences"/>
+     <addaction name="separator"/>
      <addaction name="action_Users"/>
      <addaction name="separator"/>
      <addaction name="action_Company"/>
@@ -155,12 +166,17 @@
      <addaction name="action_DeviceSettings"/>
      <addaction name="separator"/>
      <addaction name="action_CardTypes"/>
+     <addaction name="action_Cards"/>
      <addaction name="separator"/>
      <addaction name="action_ProductTypes"/>
      <addaction name="action_ProductActionType"/>
      <addaction name="action_Products"/>
      <addaction name="separator"/>
+     <addaction name="action_ManageSkinTypes"/>
+     <addaction name="separator"/>
      <addaction name="action_PaymentMethods"/>
+     <addaction name="separator"/>
+     <addaction name="action_Advertisements"/>
      <addaction name="separator"/>
      <addaction name="action_ValidateSerialKey"/>
      <addaction name="action_EditLicenceInformation"/>
@@ -171,11 +187,7 @@
     <addaction name="action_Patients"/>
     <addaction name="action_Guests"/>
     <addaction name="separator"/>
-    <addaction name="action_Cards"/>
-    <addaction name="separator"/>
     <addaction name="menuAdministrator"/>
-    <addaction name="separator"/>
-    <addaction name="action_Preferences"/>
    </widget>
    <widget class="QMenu" name="menu_View">
     <property name="title">
@@ -183,9 +195,10 @@
     </property>
     <addaction name="action_Cassa"/>
     <addaction name="separator"/>
-    <addaction name="separator"/>
     <addaction name="action_Logs"/>
+    <addaction name="separator"/>
     <addaction name="action_Hardwaretest"/>
+    <addaction name="action_ManageDevicePanels"/>
    </widget>
    <widget class="QMenu" name="menu_Action">
     <property name="title">
@@ -210,6 +223,7 @@
      </property>
      <addaction name="action_PatientCardSell"/>
      <addaction name="action_PatientCardAssign"/>
+     <addaction name="action_ReplaceLostCard"/>
      <addaction name="separator"/>
      <addaction name="action_PCSaveToDatabase"/>
     </widget>
@@ -279,6 +293,7 @@
    </attribute>
    <addaction name="action_Exit"/>
    <addaction name="action_LogOut"/>
+   <addaction name="action_CloseShift"/>
   </widget>
   <widget class="QToolBar" name="toolBarPatient">
    <property name="windowTitle">
@@ -333,6 +348,29 @@
    <addaction name="action_DeviceReset"/>
    <addaction name="action_DeviceSettings"/>
   </widget>
+  <widget class="QToolBar" name="toolBarPatientCard">
+   <property name="windowTitle">
+    <string>toolBar</string>
+   </property>
+   <property name="movable">
+    <bool>false</bool>
+   </property>
+   <property name="iconSize">
+    <size>
+     <width>40</width>
+     <height>40</height>
+    </size>
+   </property>
+   <attribute name="toolBarArea">
+    <enum>TopToolBarArea</enum>
+   </attribute>
+   <attribute name="toolBarBreak">
+    <bool>false</bool>
+   </attribute>
+   <addaction name="action_PatientcardInformation"/>
+   <addaction name="action_PatientCardAssign"/>
+   <addaction name="action_ReplaceLostCard"/>
+  </widget>
   <widget class="QToolBar" name="toolBarCassa">
    <property name="windowTitle">
     <string>toolBar</string>
@@ -354,7 +392,6 @@
    </attribute>
    <addaction name="action_PayCash"/>
    <addaction name="action_PatientCardSell"/>
-   <addaction name="action_PatientCardAssign"/>
    <addaction name="action_SellProduct"/>
    <addaction name="separator"/>
    <addaction name="action_CassaActionStorno"/>
@@ -754,6 +791,67 @@
    </property>
    <property name="toolTip">
     <string>Manage database</string>
+   </property>
+  </action>
+  <action name="action_ManageDevicePanels">
+   <property name="text">
+    <string>Manage device panels</string>
+   </property>
+  </action>
+  <action name="action_ManageSkinTypes">
+   <property name="text">
+    <string>Manage skin types</string>
+   </property>
+   <property name="toolTip">
+    <string>Manage skin types</string>
+   </property>
+  </action>
+  <action name="action_Import">
+   <property name="text">
+    <string>Import ...</string>
+   </property>
+   <property name="toolTip">
+    <string>Import data from text files</string>
+   </property>
+  </action>
+  <action name="action_Export">
+   <property name="text">
+    <string>Export ...</string>
+   </property>
+   <property name="toolTip">
+    <string>Export data to tab separated text file</string>
+   </property>
+  </action>
+  <action name="action_Advertisements">
+   <property name="text">
+    <string>Advertisement windows</string>
+   </property>
+   <property name="toolTip">
+    <string>Manage advertisement windows</string>
+   </property>
+  </action>
+  <action name="action_PatientcardInformation">
+   <property name="text">
+    <string>Patientcard information</string>
+   </property>
+   <property name="toolTip">
+    <string>Show details about selected patientcard</string>
+   </property>
+  </action>
+  <action name="action_ReplaceLostCard">
+   <property name="text">
+    <string>Replace lost card</string>
+   </property>
+   <property name="toolTip">
+    <string>Replace lost patientcard with a new card and inactivate the lost card</string>
+   </property>
+  </action>
+  <action name="action_CloseShift">
+   <property name="text">
+    <string>Close shift</string>
+   </property>
+   <property name="toolTip">
+    <string>Logout from application with closing cassa and current shift</string>
    </property>
   </action>
  </widget>

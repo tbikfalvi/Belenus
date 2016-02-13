@@ -142,11 +142,7 @@ void cDBProduct::save() throw( cSevException )
     if( m_uiId )
     {
         qsQuery = "UPDATE";
-
-        if( m_qsArchive.compare("NEW") != 0 )
-        {
-            m_qsArchive = "MOD";
-        }
+        m_qsArchive = "MOD";
     }
     else
     {
@@ -207,14 +203,14 @@ void cDBProduct::remove() throw( cSevException )
 
         QString  qsQuery;
 
-        if( m_qsArchive.compare( "NEW" ) == 0 )
-        {
-            qsQuery = "DELETE FROM products ";
-        }
-        else
-        {
-            qsQuery = "UPDATE products SET active=0, archive=\"MOD\" ";
-        }
+//        if( m_qsArchive.compare( "NEW" ) == 0 )
+//        {
+//            qsQuery = "DELETE FROM products ";
+//        }
+//        else
+//        {
+            qsQuery = "UPDATE products SET active=0, archive=\"DEL\" ";
+//        }
         qsQuery += QString( " WHERE productId = %1" ).arg( m_uiId );
 
         poQuery = g_poDB->executeQTQuery( qsQuery );

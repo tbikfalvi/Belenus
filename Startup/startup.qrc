@@ -1,0 +1,12 @@
+<RCC>
+    <qresource prefix="/">
+        <file>startup.ico</file>
+        <file>Logo.png</file>
+        <file>Directory.png</file>
+        <file>Refresh.png</file>
+        <file>Start.png</file>
+        <file>flag_de.png</file>
+        <file>flag_en.png</file>
+        <file>flag_hu.png</file>
+    </qresource>
+</RCC>

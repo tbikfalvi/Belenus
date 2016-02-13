@@ -19,7 +19,7 @@ class MainWindow : public QMainWindow
 
 public:
 
-    static const int LICENCE_MAX_NUMBER = 30;
+    static const int LICENCE_MAX_NUMBER = 60;
 
     enum licenceType {
         LTYPE_DEMO,
@@ -51,6 +51,7 @@ private:
     QStringList     m_qslLicenceCodes;
     QStringList     m_qslCode;
     QStringList     m_qslCodeString;
+    QStringList     m_qslActiveKeys;
 
     licenceType     m_LicenceType;
     QString         m_qsLicenceString;
@@ -77,6 +78,7 @@ private slots:
     void on_pbCancelLicence_clicked();
     void on_ledLicenceKeyName_textChanged(const QString &arg1);
     void on_pbValidateLicence_clicked();
+    void on_ledRegistrationCode_textEdited(const QString &arg1);
 };
 
 #endif // MAINWINDOW_H

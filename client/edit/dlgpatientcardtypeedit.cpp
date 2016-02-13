@@ -23,6 +23,9 @@ cDlgPatientCardTypeEdit::cDlgPatientCardTypeEdit( QWidget *p_poParent, cDBPatien
     deValidDateFrom->setDate( QDate(2000,1,1) );
     deValidDateTo->setDate( QDate(2000,1,1) );
 
+    deValidDateFrom->setDisplayFormat( g_poPrefs->getDateFormat().replace("-",".") );
+    deValidDateTo->setDisplayFormat( g_poPrefs->getDateFormat().replace("-",".") );
+
     checkIndependent->setVisible( false );
     checkIndependent->setEnabled( false );
 
@@ -98,11 +101,14 @@ cDlgPatientCardTypeEdit::cDlgPatientCardTypeEdit( QWidget *p_poParent, cDBPatien
         if( m_poPatientCardType->id() > 0 )
             checkIndependent->setEnabled( false );
     }
+    m_dlgProgress = new cDlgProgress( this );
 }
 
 cDlgPatientCardTypeEdit::~cDlgPatientCardTypeEdit()
 {
     g_poPrefs->setDialogSize( "EditPatientCardType", QPoint( width(), height() ) );
+
+    delete m_dlgProgress;
 }
 
 void cDlgPatientCardTypeEdit::on_rbInterval_toggled(bool checked)
@@ -198,13 +204,31 @@ void cDlgPatientCardTypeEdit::on_pbSave_clicked()
     {
         try
         {
+            if( m_poPatientCardType->unitTime() > 0 &&
+                m_poPatientCardType->unitTime() != ledUnitTime->text().toInt() )
+            {
+                if( QMessageBox::question( this, tr("Question"),
+                                           tr("The unit time of this patientcard was different.\n"
+                                              "Old unit time: %1\n"
+                                              "New unit time: %2\n\n"
+                                              "Do you want to update all of the units of all patientcard\n"
+                                              "assigned to this patientcard type?").arg( m_poPatientCardType->unitTime() )
+                                                                                   .arg( ledUnitTime->text().toUInt() ),
+                                           QMessageBox::Yes, QMessageBox::No ) == QMessageBox::Yes )
+                {
+                    m_dlgProgress->showProgress();
+                    m_poPatientCardType->updatePatientCardUnits( ledUnitTime->text().toInt() );
+                    m_dlgProgress->hideProgress();
+                }
+            }
+
             cCurrency currPrice( ledPrice->text(), cCurrency::CURR_GROSS, ledVatpercent->text().toInt() );
 
             m_poPatientCardType->setName( ledName->text() );
             m_poPatientCardType->setPrice( currPrice.currencyValue().toInt() );
             m_poPatientCardType->setVatpercent( ledVatpercent->text().toInt() );
             m_poPatientCardType->setUnits( ledUnits->text().toUInt() );
-            m_poPatientCardType->setUnitTime( ledUnitTime->text().toUInt() );
+            m_poPatientCardType->setUnitTime( ledUnitTime->text().toInt() );
             m_poPatientCardType->setValidDateFrom( (rbDays->isChecked()?"2000-01-01":deValidDateFrom->date().toString("yyyy-MM-dd")) );
             m_poPatientCardType->setValidDateTo( (rbDays->isChecked()?"2000-01-01":deValidDateTo->date().toString("yyyy-MM-dd")) );
             m_poPatientCardType->setValidDays( ledValidDays->text().toUInt() );

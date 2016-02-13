@@ -1,6 +1,31 @@
 Belenus Szoftver Rendszer - KiwiSun
 
-client - Kliens alkalmazás
-server - Szerver alkalmazás
-install - Telepítõ alkalmazás
-dbtool - Szolarium/Sensolite DAT file-ok manipulalasa
+Version_1_3_0	Uj dll-ek, 1.2.0 es 1.2.1 javitasok, Updater
+Version_1_4_0	Hirdetoablak alkalmazas + Gibbig adatbazis kiegeszitesek
+Version_1_4_6   Hibajavitas, Startup, HW teszt, Waitlist, Berlet egyseg w/ pctype
+                Liszensz kodok kiterjesztve 60-ig
+Version_1_4_7   Fapados Belenus	Ez a Belenus alap funkcionalitasat tartalmazza
+Version_1_4_8   Masodlagos ablaknak nincs normal kerete, keret szine es a fejlec 
+                lathatosaga beallithato
+                Panelok fejlecenek aktiv es inaktiv szine beallithato
+Version_1_4_9   Egyszerre, egymas utan tobb termek keszletet is lehet modositani
+Version_1_4_10  Berlettipus egysegido modositas -> berlet egysegek egysegidejenek modosulasa
+Version_1_4_11  http://belenus.pagonymedia.hu/?p=125
+Version_1_4_12  Berlet torles, aprobb javitas
+Version_1_4_14  Masodlagos ablak info text
+Version_1_4_15  Modul hibak javitasa: ido rendszeres kikuldes, gomb figyeles
+Version_1_4_16  15-os verzio settings-be, minusz hiba, report to txt, demo ha nincs aktivalva
+Version_1_5_0   Berlet info megjelenites a KiwiSun weboldalan (gibbig helyett),
+                Rendszeradmin tud barmennyi percre inditani gepet
+Version_1_5_0_1 Gepido kuldes adott masodpercig vetkozesi idoben
+Version_1_5_0_2 Exception-ok elkapasa a legfelso szinten
+Version_1_5_1_p Berlet szinkornizalas okozta db overload javitas
+Version_1_5_1_c Tizedesjegy kijelzes hibajavitas
+Version_1_5_1   Az eredeti 1_5_1-es verzio, de programban 1.5.2 lesz
+
+Version_1_5_2   Az 1.5.2 ag
+Version_1_5_2_1 Aprobb javitasok, kp sztorno, csocsere szoveg, berlet adatok report elerhetoseg
+Version_1_5_2_2 Nem olvassa ki a panelok szamat a hardverbol
+Version_1_5_2_3 Berlet vonalkod elrejtese
+Version_1_5_2_4 Berlet vonalkod elrejtese, info ablak
+Version_1_5_3   Elveszett berlet csere, muszak zaras foly. jav.; uzemora kijelzes; fennmarado egysegek, uj doksi

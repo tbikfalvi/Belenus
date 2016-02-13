@@ -2,7 +2,7 @@
 #define DLGSERIALREG_H
 
 #include "../belenus.h"
-#include "../../Build/belenus/ui_dlgpaneltypecopy.h"
+#include "ui_dlgpaneltypecopy.h"
 #include "dlgprogress.h"
 
 class cDlgPanelTypeCopy : public QDialog, protected Ui::dlgPanelTypeCopy

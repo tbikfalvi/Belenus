@@ -17,12 +17,16 @@ public:
     void            loadPatient( const unsigned int p_uiId )                    throw( cSevException );
     void            save()                                                      throw( cSevException );
     void            remove()                                                    throw( cSevException );
+    void            deactivate()                                                throw( cSevException );
     bool            isPatientCardTypeLinked( const unsigned int p_PCTId )       throw();
     bool            isPatientCardCanBeReplaced()                                throw();
     bool            isPatientCardCanBeParent()                                  throw();
-    bool            isPatientCardCanBeUsed(QString *p_qsValid)                  throw();
+    bool            isPatientCardCanBeUsed(unsigned int p_uiPatientCardTypeId, QString *p_qsValid)                  throw();
     bool            isAssignedCardExists()                                      throw();
+    bool            isLedgerConnected()                                         throw();
     void            synchronizeUnits()                                          throw();
+    void            synchronizeTime()                                           throw();
+    void            synchronizeUnitTime( int p_nUnitTime )                      throw();
     void            updateActiveUnits( QDate p_qdNew )                          throw();
     void            createNew()                                                 throw();
     unsigned int    id() const                                                  throw();
@@ -38,7 +42,7 @@ public:
     void            setBarcode( const QString &p_qsBarcode )                    throw();
     QString         comment() const                                             throw();
     void            setComment( const QString &p_qsComment )                    throw();
-    int             units() const                                               throw();
+    int             units()                                               throw();
     void            setUnits( const int p_nUnits )                              throw();
     int             amount() const                                              throw();
     void            setAmount( const int p_nAmount )                            throw();
@@ -57,6 +61,7 @@ public:
     void            setActive( const bool p_bActive )                           throw();
     QString         archive() const                                             throw();
     void            setArchive( const QString &p_qsArchive )                    throw();
+    void            sendDataToWeb( bool p_bSendNow = true )                     throw();
 
 private:
     unsigned int    m_uiId;

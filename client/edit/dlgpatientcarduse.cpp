@@ -5,8 +5,7 @@
 #include "dlgpatientcarduse.h"
 #include "../db/dbpatientcardtype.h"
 
-cDlgPatientCardUse::cDlgPatientCardUse( QWidget *p_poParent, cDBPatientCard *p_poPatientCard, unsigned int p_uiPanelId )
-    : QDialog( p_poParent )
+cDlgPatientCardUse::cDlgPatientCardUse( QWidget *p_poParent, cDBPatientCard *p_poPatientCard, unsigned int p_uiPanelId ) : QDialog( p_poParent )
 {
     setupUi( this );
 
@@ -18,6 +17,9 @@ cDlgPatientCardUse::cDlgPatientCardUse( QWidget *p_poParent, cDBPatientCard *p_p
 
     pbSave->setIcon( QIcon("./resources/40x40_ok.png") );
     pbCancel->setIcon( QIcon("./resources/40x40_cancel.png") );
+
+    deValidDateFrom->setDisplayFormat( g_poPrefs->getDateFormat().replace("-",".") );
+    deValidDateTo->setDisplayFormat( g_poPrefs->getDateFormat().replace("-",".") );
 
     if( m_poPatientCard )
     {
@@ -95,6 +97,15 @@ cDlgPatientCardUse::cDlgPatientCardUse( QWidget *p_poParent, cDBPatientCard *p_p
     if( cmbNoUnits->count() > 0 )
     {
         on_cmbNoUnits_currentIndexChanged( 0 );
+    }
+
+    if( g_poPrefs->isBarcodeHidden() && !g_obUser.isInGroup( cAccessGroup::ADMIN ) )
+    {
+        ledBarcode->setEchoMode( QLineEdit::Password );
+    }
+    else
+    {
+        ledBarcode->setEchoMode( QLineEdit::Normal );
     }
 }
 

@@ -102,7 +102,7 @@ cDlgShoppingCart::cDlgShoppingCart( QWidget *p_poParent ) : cDlgCrud( p_poParent
     m_poBtnNew->setVisible(false);
     m_poBtnEdit->setVisible(false);
     m_poBtnSave->setVisible(false);
-    m_poBtnDelete->setVisible( g_obUser.isInGroup( cAccessGroup::SYSTEM ) );
+    m_poBtnDelete->setVisible( g_obUser.isInGroup( cAccessGroup::USER ) );
 }
 
 cDlgShoppingCart::~cDlgShoppingCart()
@@ -204,11 +204,11 @@ void cDlgShoppingCart::refreshTable()
 
     if( g_obUser.isInGroup( cAccessGroup::ROOT ) )
     {
-        m_qsQuery = "SELECT shoppingCartItemId, shoppingCartItems.licenceId, title, patients.name, productId, patientCardId, itemName, itemNetPrice/100, itemVAT, itemSumPrice/100, itemCount, discountValue/100, voucher/100, (itemSumPrice*itemCount-discountValue)/100 AS totalSumPrice, shoppingCartItems.comment, shoppingCartItems.archive FROM shoppingCartItems JOIN patients ON shoppingCartItems.patientId = patients.patientId JOIN panels ON shoppingCartItems.panelId = panels.panelId";
+        m_qsQuery = "SELECT shoppingCartItemId, shoppingCartItems.licenceId, title, patients.name, productId, patientCardId, itemName, itemNetPrice/100, itemVAT, itemSumPrice/100, itemCount, discountValue/100, voucher/100, (itemSumPrice*itemCount-discountValue)/100 AS totalSumPrice, shoppingCartItems.comment, shoppingCartItems.archive FROM shoppingCartItems JOIN patients ON shoppingCartItems.patientId = patients.patientId JOIN panels ON shoppingCartItems.panelId = panels.panelId WHERE shoppingCartItemId>0";
     }
     else
     {
-        m_qsQuery = "SELECT shoppingCartItemId AS id, title, patients.name, itemName, itemNetPrice/100, itemVAT, itemSumPrice/100, itemCount, discountValue/100, voucher/100, (itemSumPrice*itemCount-discountValue)/100 AS totalSumPrice, shoppingCartItems.comment FROM shoppingCartItems JOIN patients ON shoppingCartItems.patientId = patients.patientId JOIN panels ON shoppingCartItems.panelId = panels.panelId";
+        m_qsQuery = "SELECT shoppingCartItemId AS id, title, patients.name, itemName, itemNetPrice/100, itemVAT, itemSumPrice/100, itemCount, discountValue/100, voucher/100, (itemSumPrice*itemCount-discountValue)/100 AS totalSumPrice, shoppingCartItems.comment FROM shoppingCartItems JOIN patients ON shoppingCartItems.patientId = patients.patientId JOIN panels ON shoppingCartItems.panelId = panels.panelId WHERE shoppingCartItemId>0";
     }
 
     int nPanelId = cmbPanel->itemData( cmbPanel->currentIndex() ).toInt();
@@ -232,7 +232,7 @@ void cDlgShoppingCart::enableButtons()
 {
     cTracer obTracer( "cDlgShoppingCart::enableButtons" );
 
-    m_poBtnDelete->setEnabled( m_inSelectedCount > 0 && g_obUser.isInGroup( cAccessGroup::SYSTEM ) );
+    m_poBtnDelete->setEnabled( m_inSelectedCount > 0 && g_obUser.isInGroup( cAccessGroup::USER ) );
     pbPayment->setEnabled( m_inSelectedCount > 0 );
 }
 
@@ -281,15 +281,23 @@ void cDlgShoppingCart::deleteClicked( bool )
                     obDBPatientCard.load( obDBShoppingCart.patientCardId() );
                     obDBPatientCardType.load( obDBPatientCard.patientCardTypeId() );
 
-                    obDBPatientCard.setUnits( obDBPatientCard.units() - obDBPatientCardType.units() );
-                    if( obDBPatientCard.units() < 0 ) obDBPatientCard.setUnits( 0 );
-
-                    obDBPatientCard.setTimeLeft( obDBPatientCard.timeLeft() - obDBPatientCardType.units() * obDBPatientCardType.unitTime() * 60 );
-                    if( obDBPatientCard.timeLeft() < 0 ) obDBPatientCard.setTimeLeft( 0 );
-
                     obDBPatientCard.save();
 
                     QStringList qslUnitIds = obDBShoppingCart.comment().split("#");
+
+                    QString     qsQuery = QString( "SELECT * FROM patientcardunits WHERE "
+                                                   "((prepared=1 AND active=1) OR active=0) AND "
+                                                   "patientCardUnitId IN (%1) " )
+                                          .arg( qslUnitIds.join(",") );
+                    QSqlQuery *poQuery = g_poDB->executeQTQuery( qsQuery );
+
+                    if( poQuery->size() > 0 )
+                    {
+                        QMessageBox::warning( this, tr("Warning"),
+                                              tr("Some of the units of this patientcard has been used or is in use.\n"
+                                                 "Deleting of this entry from shopping cart is not allowed.") );
+                        return;
+                    }
 
                     for( int i=0; i<qslUnitIds.count(); i++ )
                     {
@@ -299,6 +307,7 @@ void cDlgShoppingCart::deleteClicked( bool )
                         obDBPatientcardUnit.remove();
                     }
                     obDBPatientCard.synchronizeUnits();
+                    obDBPatientCard.synchronizeTime();
                 }
                 catch( cSevException &e )
                 {
@@ -339,7 +348,14 @@ void cDlgShoppingCart::on_pbPayment_clicked()
             qslIds << tbvCrud->selectionModel()->selectedRows().at(i).data().toString();
         }
 
-        QString     qsQuery = QString("SELECT SUM(itemSumPrice-discountValue) AS shoppingCartSum FROM shoppingcartitems WHERE shoppingCartItemId IN (%1) ").arg(qslIds.join(QString(",")));
+        QString     qsQuery = QString("SELECT SUM(itemSumPrice-discountValue) AS shoppingCartSum, "
+                                      "SUM(card) as card, "
+                                      "SUM(cash) as cash, "
+                                      "SUM(voucher) as voucher, "
+                                      "SUM(itemVAT) as Vat, "
+                                      "SUM(discountValue) as Discount "
+                                      "FROM shoppingcartitems "
+                                      "WHERE shoppingCartItemId IN (%1) ").arg(qslIds.join(QString(",")));
         QSqlQuery  *poQuery = g_poDB->executeQTQuery( qsQuery );
 
         cDBShoppingCart obDBShoppingCart;
@@ -349,31 +365,49 @@ void cDlgShoppingCart::on_pbPayment_clicked()
         if( poQuery->first() )
         {
             obDBShoppingCart.setItemSumPrice( poQuery->value( 0 ).toInt() );
+            obDBShoppingCart.setCard( poQuery->value( 1 ).toInt() );
+            obDBShoppingCart.setCash( poQuery->value( 2 ).toInt() );
+            obDBShoppingCart.setVoucher( poQuery->value( 3 ).toInt() );
+            obDBShoppingCart.setItemVAT( poQuery->value( 4 ).toInt() );
+            obDBShoppingCart.setItemDiscount( poQuery->value( 5 ).toInt() );
         }
 
         cDlgCassaAction obDlgCassaAction( this, &obDBShoppingCart );
-        obDlgCassaAction.actionPayment();
-        obDlgCassaAction.setPayWithCash();
+        obDlgCassaAction.payShoppingCart();
+
         if( obDlgCassaAction.exec() == QDialog::Accepted )
         {
-            for( int i=0; i< tbvCrud->selectionModel()->selectedRows().count(); i++ )
+            int             inPayType = 0;
+            bool            bShoppingCart = false;
+            unsigned int    uiCouponId = 0;
+
+            obDlgCassaAction.cassaResult( &inPayType, &bShoppingCart, &uiCouponId );
+
+            for( int i=0; i<tbvCrud->selectionModel()->selectedRows().count(); i++ )
             {
+                QString         qsComment = "";
+
                 obDBShoppingCart.load( tbvCrud->selectionModel()->selectedRows().at(i).data().toUInt() );
 
-                int             inPayType = 0;
-                QString         qsComment = "";
-                bool            bShoppingCart = false;
-                unsigned int    uiCouponId = 0;
-                cDBDiscount     obDBDiscount;
-
-                obDlgCassaAction.cassaResult( &inPayType, &bShoppingCart, &uiCouponId );
-
-                /*if( uiCouponId > 0 )
-                {
-                    obDBDiscount.load( uiCouponId );
-
-                    obDBShoppingCart.setItemDiscount( obDBShoppingCart.itemDiscount()+obDBDiscount.discount(obDBShoppingCart.itemSumPrice()) );
-                }*/
+                // Restructure the payment category based on selection
+                if( inPayType == 1 )
+                { // Payed with card
+                    obDBShoppingCart.setCard( obDBShoppingCart.card() +
+                                              obDBShoppingCart.cash() +
+                                              obDBShoppingCart.voucher() );
+                }
+                else if( inPayType == 2 )
+                {// Payed with cash
+                    obDBShoppingCart.setCash( obDBShoppingCart.card() +
+                                              obDBShoppingCart.cash() +
+                                              obDBShoppingCart.voucher() );
+                }
+                else
+                {// Payed with other
+                    obDBShoppingCart.setVoucher( obDBShoppingCart.card() +
+                                                 obDBShoppingCart.cash() +
+                                                 obDBShoppingCart.voucher() );
+                }
 
                 if( obDBShoppingCart.panelId() > 0 &&
                     obDBShoppingCart.productId() == 0 &&

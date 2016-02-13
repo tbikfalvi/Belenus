@@ -70,7 +70,37 @@ cLicenceManager::cLicenceManager()
                                      << "MX^JDA"  // BLNS27_FSUAOJ <- BLNS27_580046
                                      << "A@RAZ@"  // BLNS28_JKYJQK <- BLNS28_904968
                                      << "LXRJGA"  // BLNS29_GSYALJ <- BLNS29_684016
-                                     << "CZAJ_J"; // BLNS30_HQJATA <- BLNS30_766099
+                                     << "CZAJ_J"  // BLNS30_HQJATA <- BLNS30_766099
+                                     << "N_@OF_"  // BLNS31_ETKDMT <- BLNS31_498327
+                                     << "BYSHE]"  // BLNS32_IRXCNV <- BLNS32_873231
+                                     << "HERIXR"  // BLNS33_CNYBSY <- BLNS33_234184
+                                     << "H_@OYR"  // BLNS34_CTKDRY <- BLNS34_298374
+                                     << "IEQC_A"  // BLNS35_BNZHTJ <- BLNS35_135796
+                                     << "HDABYS"  // BLNS36_COJIRX <- BLNS36_246873
+                                     << "M_JC_^"  // BLNS37_FTAHTU <- BLNS37_599790
+                                     << "N[QBYD"  // BLNS38_EPZIRO <- BLNS38_455872
+                                     << "LFAJX^"  // BLNS39_GMJASU <- BLNS39_626080
+                                     << "IYJLDS"  // BLNS40_BRAGOX <- BLNS40_179643
+                                     << "L[AC[R"  // BLNS41_GPJHPY <- BLNS41_656754
+                                     << "LYAIDR"  // BLNS42_GRJBOY <- BLNS42_676144
+                                     << "CY_C[^"  // BLNS43_HRTHPU <- BLNS43_777750
+                                     << "O@RH@_"  // BLNS44_DKYCKT <- BLNS44_304207
+                                     << "OG_I[R"  // BLNS45_DLTBPY <- BLNS45_317154
+                                     << "IEAMD@"  // BLNS46_BNJFOK <- BLNS46_136548
+                                     << "L@]HGA"  // BLNS47_GKVCLJ <- BLNS47_601216
+                                     << "H_SOFR"  // BLNS48_CTXDMY <- BLNS48_293324
+                                     << "OZSMX^"  // BLNS49_DQXFSU <- BLNS49_363580
+                                     << "H__OEA"  // BLNS50_CTTDNJ <- BLNS50_297336
+                                     << "CZQNGQ"  // BLNS51_HQZELZ <- BLNS51_765415
+                                     << "HXDH[@"  // BLNS52_CSOCPK <- BLNS52_282258
+                                     << "AD^ID^"  // BLNS53_JOUBOU <- BLNS53_940140
+                                     << "CFSCEA"  // BLNS54_HMXHNJ <- BLNS54_723736
+                                     << "H[SJ@Q"  // BLNS55_CPXAKZ <- BLNS55_253005
+                                     << "A@^BF_"  // BLNS56_JKUIMT <- BLNS56_900827
+                                     << "NZ_N@]"  // BLNS57_EQTEKV <- BLNS57_467401
+                                     << "OX@M[_"  // BLNS58_DSKFPT <- BLNS58_388557
+                                     << "M@AHE]"  // BLNS59_FKJCNV <- BLNS59_506231
+                                     << "C_RCX^";  // BLNS60_HTYHSU <- BLNS60_794780
 
     // These are the random values
     m_qslLicenceCodes = QStringList()<< "358194"
@@ -102,7 +132,40 @@ cLicenceManager::cLicenceManager()
                                      << "580046"
                                      << "904968"
                                      << "684016"
-                                     << "766099";
+                                     << "766099"
+                                     << "498327"
+                                     << "873231"
+                                     << "234184"
+                                     << "298374"
+                                     << "135796"
+                                     << "246873"
+                                     << "599790"
+                                     << "455872"
+                                     << "626080"
+                                     << "179643"
+                                     << "656754"
+                                     << "676144"
+                                     << "777750"
+                                     << "304207"
+                                     << "317154"
+                                     << "136548"
+                                     << "601216"
+                                     << "293324"
+                                     << "363580"
+                                     << "297336"
+                                     << "765415"
+                                     << "282258"
+                                     << "940140"
+                                     << "723736"
+                                     << "253005"
+                                     << "900827"
+                                     << "467401"
+                                     << "388557"
+                                     << "506231"
+                                     << "794780";
+
+    m_qsCode = "";
+    m_qsAct  = "";
 }
 
 cLicenceManager::~cLicenceManager()
@@ -158,6 +221,11 @@ QString cLicenceManager::lastValidated()
     return m_qdLastValidated.toString( "yyyy-MM-dd" );
 }
 
+cLicenceManager::licenceType cLicenceManager::ltLicenceType()
+{
+    return m_LicenceType;
+}
+
 int cLicenceManager::daysRemain()
 {
     if ( !m_qdLastValidated.isValid() )
@@ -165,7 +233,7 @@ int cLicenceManager::daysRemain()
 
     int nDays = m_qdLastValidated.daysTo( QDate::currentDate() );
 
-    g_obLogger(cSeverity::INFO) << "nDays: " << nDays << EOM;
+    g_obLogger(cSeverity::INFO) << "nDays: " << nDays*(-1) << EOM;
 
     nDays = EXPIRE_IN_DAYS - nDays;
     if ( nDays < 0 ) // ha ez mar tobb mint EXP_IN_DAYS akkor nincs tobb nap hatra
@@ -327,10 +395,14 @@ QString cLicenceManager::activationKey()
 {
     QString qsAct = "";
 
-    for( int i=0; i<6; i++ )
+    if( m_qsAct.length() == 6 )
     {
-        qsAct.append( m_qslCode.at( i*10 + m_qsAct.at(i).digitValue() ) );
+        for( int i=0; i<6; i++ )
+        {
+            qsAct.append( m_qslCode.at( i*10 + m_qsAct.at(i).digitValue() ) );
+        }
     }
+
     return qsAct;
 }
 
@@ -358,35 +430,6 @@ void cLicenceManager::_checkCode()
     {
         m_qsCode += m_qslCode.at( i*10 + qsCodeReg.at(i).digitValue() );
     }
-/*
-    // THIS CODE CREATES THE ENCODED BELENUS LICENCE KEY STRINGLIST
-    // USE ONLY IF NEW CODES NEEDED
-    QString qsLK = "";
-    for( int j=0; j<30; j++ )
-    {
-        QString qsTemp = "";
-
-        for( int i=0; i<6; i++ )
-        {
-            qsTemp += m_qslCode.at( i*10 + m_qslLicenceKeys.at(j).mid(7+i,1).toInt() );
-        }
-        QString qsKey = QString("BLNS%1%2_%3").arg((j<9?"0":"")).arg(j+1).arg(qsTemp);
-
-        QString qsCodedKey = "";
-        char    strKey[14];
-
-        strncpy( strKey, qsKey.toStdString().c_str(), 13 );
-
-        for( int k=0; k<13; k++ )
-        {
-            strKey[k] ^= 11;
-            qsCodedKey += QString( strKey[k] );
-        }
-
-        qsLK += QString("<< \"%1\" // %2 <- %3 ").arg(qsCodedKey).arg(qsKey).arg(m_qslLicenceKeys.at(j));
-    }
-    settings.setValue( "lk", qsLK );
-*/
 }
 
 void cLicenceManager::_checkValidity()
@@ -436,6 +479,10 @@ void cLicenceManager::_checkValidity()
         else
         {
             g_obLogger(cSeverity::INFO) << "Licence is not activated yet." << EOM;
+            if( daysRemain() > 7 )
+            {
+                validateApplication( QDate::currentDate().addDays(7).toString("yyyy-MM-dd") );
+            }
         }
     }
 }
@@ -456,174 +503,50 @@ void cLicenceManager::_DeCode( char *str, int size )
    }
 }
 
-/*
-
-#include "preferences.h"
-#include "bs_connection.h"
-#include "../framework/qtmysqlconnection.h"
-#include "../framework/qtlogger.h"
-
-
-extern cQTMySQLConnection *g_poDB;
-extern cPreferences *g_poPrefs;
-extern BelenusServerConnection *g_poServer;
-extern cQTLogger g_obLogger;
-
-
-
-LicenceManager::LicenceManager() : _type(DEMO), _licenceKey("")
+QString cLicenceManager::createLicenceKey( QString qsNumber )
 {
-}
-
-bool LicenceManager::isDemo()
-{
-    return _type==DEMO || _type==VALID_EXPIRED || _type==NOT_VALID || _type==VALID_CODE_2_EXPIRED;
-}
-
-void LicenceManager::initialize()
-{
-    int licenceId = 0;
-    QSqlQuery *poQuery = NULL;
-
-    try
+    if( m_qslLicenceCodes.contains( qsNumber ) )
     {
-        poQuery = g_poDB->executeQTQuery( QString( "SELECT licenceId, serial, lastValidated FROM licences WHERE active=1 ORDER BY licenceId DESC LIMIT 1" ) );
-        if( poQuery->first() )
-        {
-            _lastValidated = poQuery->value( 2 ).toDate();
-            _licenceKey = poQuery->value( 1 ).toString();
-            licenceId = poQuery->value( 0 ).toInt();
-            if( licenceId > 1 )
-            {
-                _type = VALID_SERVER_ERROR;     // init as server-error as server-connection comes after init only
-                checkValidity();
-            }
-            g_poPrefs->setLicenceId( licenceId );
-            g_obLogger(cSeverity::DEBUG) << "[LicenceManager::initialize] initialized with " << _licenceKey << " and " << licenceId << ". Last validated = " << _lastValidated.toString() << EOM;
-        }
+        return "Already entered";
     }
-    catch( cSevException &e )
+
+    m_qslLicenceCodes << qsNumber;
+
+    QString qsLK = "";
+    QString qsTemp = "";
+
+    if( qsNumber.length() != 6 )
     {
-        if( poQuery ) delete poQuery;
-        g_obLogger(e.severity()) << e.what() << EOM;
-    }
-}
-
-
-
-void LicenceManager::validateLicence()
-{
-    validateLicence(_licenceKey);
-}
-
-
-
-void LicenceManager::validateLicence(const QString serial)
-{
-    if ( g_poServer->isConnected() ) {
-        g_obLogger(cSeverity::ERROR) << "[LicenceManager::validateLicence] already connected to server. not allowed to validate new server" << EOM;
-        return;
+        return "Length should be 6";
     }
 
-    QFileInfo info;
-    info.setFile("C:\\windows");
-    if (!info.exists()) info.setFile("d:\\windows");
-    if (!info.exists()) info.setFile("c:\\");
-    if (!info.exists()) info.setFile("/etc");
-    if (!info.exists()) info.setFile("/");
-    if (!info.exists()) info.setFile(".");
-
-    QString code2 = QCryptographicHash::hash(QString("SALT:%1").arg(info.created().toString()).toAscii(), QCryptographicHash::Sha1).toHex();
-
-    connect(g_poServer, SIGNAL(licenceStatusChanged(Result::ResultCode, int)),
-            this, SLOT(handleServerResponse(Result::ResultCode, int)),
-            Qt::DirectConnection );
-
-    _licenceKey = serial;
-    g_poServer->setLoginKeys(_licenceKey, code2);
-    g_poServer->connectTo();
-
-    g_obLogger(cSeverity::DEBUG) << "[LicenceManager::validateLicence] connection called with "<< serial << " and " << code2 << EOM;
-}
-
-
-
-int LicenceManager::getDaysRemaining()
-{
-    if ( !_lastValidated.isValid() )
-        return 0;
-
-    int days = _lastValidated.daysTo(QDate::currentDate());
-    // days<0 means currentdate is before lastvalidated - error
-    if ( days < 0 )
-        return 0;
-
-    // itt lehet days 0..n .. EXP-days lehet -vegtelen..EXP
-    days = EXPIRE_IN_DAYS - days;
-    if ( days < 0 ) // ha ez mar tobb mint EXP_IN_DAYS akkor nincs tobb nap hatra
-        days = 0;
-
-    return days;
-}
-
-
-
-void LicenceManager::handleServerResponse(const Result::ResultCode res, const int licenceId)
-{
-    if ( res==Result::OK ) {        // server auth was successful
-        _type = VALID;
-
-        // see if there is already a record in db with the provided clientId
-        QSqlQuery *query = NULL;
-        try {
-            query = g_poDB->executeQTQuery( QString( "SELECT * FROM licences WHERE licenceId=%1 ORDER BY licenceId DESC" ).arg(licenceId) );
-            if( query->size()==1 )  // id exists. update validity date
-            {
-                QSqlQuery *a = g_poDB->executeQTQuery( QString("UPDATE licences SET lastValidated=NOW() WHERE licenceId=%1").arg(licenceId) );
-                if ( !a->isActive() )
-                    g_obLogger(cSeverity::ERROR) << "[LicenceManager::handleServerResponse] unable to update validity date" << EOM;
-                delete a;
-            } else {
-                // if not, insert.
-                QSqlQuery *a = g_poDB->executeQTQuery( QString("INSERT INTO licences(licenceId,lastValidated,active,serial, archive) VALUES(%1, NOW(), 1, \"%2\", \"NEW\");").arg(licenceId).arg(_licenceKey) );
-                if ( !a->isActive() )
-                    g_obLogger(cSeverity::ERROR) << "[LicenceManager::handleServerResponse] unable to insert new licenceId" << EOM;
-                delete a;
-            }
-            _lastValidated = QDate::currentDate();
-            delete query;
-        } catch( cSevException &e ) {
-            if( query ) delete query;
-            g_obLogger(e.severity()) << e.what() << EOM;
-        }
-
-    } else if ( res==Result::INVALID_LICENSE_KEY ) {
-        _type = NOT_VALID;
-    } else if ( res==Result::INVALID_SECOND_ID ) { // server responded nothing or licence was invalid
-        _type = VALID_CODE_2_ERROR;
-    } else if ( res==Result::UNKNOWN ) {
-        // do not change. it was set in initialize or a previous handleSResponse
+    for( int i=0; i<6; i++ )
+    {
+        qsTemp += m_qslCode.at( i*10 + qsNumber.mid(i,1).toInt() );
     }
 
-    checkValidity();
-    if (isDemo())
-        g_poPrefs->setLicenceId(DEMO_LICENCE_KEY_ID);
-    else
-        g_poPrefs->setLicenceId(licenceId);
+    g_obLogger(cSeverity::DEBUG) << "LICENCE qsTemp: " << qsTemp << EOM;
 
-    g_obLogger(cSeverity::DEBUG) << "[LicenceManager::handleServerResponse] type=" << _type << " daysremaining=" << getDaysRemaining() << " licenceId=" << licenceId << EOM;
+    int j = m_qslLicenceCodes.count()-1;
+
+    QString qsKey = QString("BLNS%1%2_%3").arg((j<9?"0":"")).arg(j+1).arg(qsTemp);
+
+    g_obLogger(cSeverity::DEBUG) << "LICENCE qsKey: " << qsKey << EOM;
+
+    QString qsCodedKey = "";
+    char    strKey[14];
+
+    strncpy( strKey, qsKey.toStdString().c_str(), 13 );
+
+    for( int k=0; k<13; k++ )
+    {
+        strKey[k] ^= 11;
+        qsCodedKey += QString( strKey[k] );
+    }
+
+    g_obLogger(cSeverity::DEBUG) << "LICENCE qsCode: " << qsCodedKey << EOM;
+
+    qsLK += QString("<< \"%1\"  // %2 <- BLNS%3_%4 ").arg(qsCodedKey.mid(7,6)).arg(qsKey).arg(j+1).arg(qsNumber);
+
+    return qsLK;
 }
-
-
-
-void LicenceManager::checkValidity()
-{
-    if ( _type==DEMO || _type==VALID || getDaysRemaining()>0 )
-        return;
-
-    if ( _type==VALID_SERVER_ERROR )
-        _type = VALID_EXPIRED;
-    if ( _type==VALID_CODE_2_ERROR )
-        _type = VALID_CODE_2_EXPIRED;
-}
-*/

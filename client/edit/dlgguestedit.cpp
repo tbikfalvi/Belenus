@@ -48,6 +48,8 @@ cDlgGuestEdit::cDlgGuestEdit( QWidget *p_poParent, cDBGuest *p_poGuest, cDBPostp
 
     m_bInit = true;
 
+    m_dlgProgress = new cDlgProgress( this );
+
     setWindowTitle( tr( "Attendance List" ) );
     setWindowIcon( QIcon("./resources/40x40_patient.png") );
 
@@ -59,6 +61,9 @@ cDlgGuestEdit::cDlgGuestEdit( QWidget *p_poParent, cDBGuest *p_poGuest, cDBPostp
     pbDislink->setIcon( QIcon("./resources/40x40_patientcard_disjoin.png") );
     pbSellCard->setIcon( QIcon("./resources/40x40_patientcard_sell.png") );
     pbEditDiscount->setIcon( QIcon("./resources/40x40_edit.png") );
+    lblAssignCardInfo->setPixmap( QPixmap("./resources/40x40_information.png") );
+
+    deBirthDate->setDisplayFormat( g_poPrefs->getDateFormat().replace("-",".") );
 
     chkService->setEnabled( g_obUser.isInGroup( cAccessGroup::ADMIN ) );
     chkEmployee->setEnabled( g_obUser.isInGroup( cAccessGroup::ADMIN ) );
@@ -71,39 +76,70 @@ cDlgGuestEdit::cDlgGuestEdit( QWidget *p_poParent, cDBGuest *p_poGuest, cDBPostp
     if( m_poGuest )
     {
         ledName->setText( m_poGuest->name() );
-        if( m_poGuest->gender() == 1 ) rbGenderMale->setChecked(true);
-        else if( m_poGuest->gender() == 2 ) rbGenderFemale->setChecked(true);
-        ledEmail->setText( m_poGuest->email() );
-        switch( m_poGuest->ageType() )
+        if( m_poGuest->gender() == 1 )              rbGenderMale->setChecked(true);
+        else if( m_poGuest->gender() == 2 )         rbGenderFemale->setChecked(true);
+        if( m_poGuest->dateBirth().length() > 0 )
         {
-            case 1:
-                rbAge1->setChecked( true );
-                break;
-            case 2:
-                rbAge2->setChecked( true );
-                break;
-            case 3:
-                rbAge3->setChecked( true );
-                break;
-            case 4:
-                rbAge4->setChecked( true );
-                break;
-            case 5:
-                rbAge5->setChecked( true );
-                break;
-            case 6:
-                rbAge6->setChecked( true );
-                break;
-            case 7:
-                rbAge7->setChecked( true );
-                break;
-            default:
-                rbAge0->setChecked( true );
+            deBirthDate->setDate( QDate::fromString(m_poGuest->dateBirth(),"yyyy-MM-dd") );
+            int nYear = QDate::fromString(m_poGuest->dateBirth(),"yyyy-MM-dd").daysTo( QDate::currentDate() ) / 365.25;
+
+            if( nYear < 18 )                    rbAge1->setChecked( true );
+            else if( 17 < nYear && nYear < 21 ) rbAge2->setChecked( true );
+            else if( 20 < nYear && nYear < 31 ) rbAge3->setChecked( true );
+            else if( 30 < nYear && nYear < 41 ) rbAge4->setChecked( true );
+            else if( 40 < nYear && nYear < 51 ) rbAge5->setChecked( true );
+            else if( 50 < nYear && nYear < 61 ) rbAge6->setChecked( true );
+            else if( 60 < nYear )               rbAge7->setChecked( true );
         }
+        else
+        {
+            deBirthDate->setDate( QDate(2000,1,1) );
+            switch( m_poGuest->ageType() )
+            {
+                case 1:
+                    rbAge1->setChecked( true );
+                    break;
+                case 2:
+                    rbAge2->setChecked( true );
+                    break;
+                case 3:
+                    rbAge3->setChecked( true );
+                    break;
+                case 4:
+                    rbAge4->setChecked( true );
+                    break;
+                case 5:
+                    rbAge5->setChecked( true );
+                    break;
+                case 6:
+                    rbAge6->setChecked( true );
+                    break;
+                case 7:
+                    rbAge7->setChecked( true );
+                    break;
+                default:
+                    rbAge0->setChecked( true );
+            }
+        }
+        QDate   qdRegistration( QDate::fromString(m_poGuest->dateCreated().left(10),"yyyy-MM-dd") );
+        ledMembership->setText( m_poGuest->membership() );
+        ledEmail->setText( m_poGuest->email() );
+        ledPhone->setText( m_poGuest->mobile() );
+        teAddress->setText( m_poGuest->address() );
+        teComment->setText( m_poGuest->comment() );
         chkReturning->setChecked( m_poGuest->isReturning() );
+        ledDateOfRegistration->setText( qdRegistration.toString(g_poPrefs->getDateFormat()) );
         chkService->setChecked( m_poGuest->service() );
         chkEmployee->setChecked( m_poGuest->employee() );
         chkRegularCustomer->setChecked( m_poGuest->regularCustomer() );
+
+        QSqlQuery *poQuery = g_poDB->executeQTQuery( QString( "SELECT skinTypeId, skinTypeName FROM skintypes WHERE active=1 AND archive<>\"DEL\" ORDER BY skinTypeName " ) );
+        while( poQuery->next() )
+        {
+            cmbSkinType->addItem( poQuery->value( 1 ).toString(), poQuery->value( 0 ) );
+            if( m_poGuest->skinTypeId() == poQuery->value( 0 ) )
+                cmbSkinType->setCurrentIndex( cmbSkinType->count()-1 );
+        }
 
         cDBDiscount obDBDiscount;
 
@@ -181,6 +217,15 @@ cDlgGuestEdit::cDlgGuestEdit( QWidget *p_poParent, cDBGuest *p_poGuest, cDBPostp
     // Temporary until patient history will be implemented
     pbHistory->setVisible( false );
 
+    if( g_poPrefs->isBarcodeHidden() && !g_obUser.isInGroup( cAccessGroup::ADMIN ) )
+    {
+        ledBarcode->setEchoMode( QLineEdit::Password );
+    }
+    else
+    {
+        ledBarcode->setEchoMode( QLineEdit::Normal );
+    }
+
     m_bInit = false;
 }
 //===========================================================================================================
@@ -189,6 +234,8 @@ cDlgGuestEdit::cDlgGuestEdit( QWidget *p_poParent, cDBGuest *p_poGuest, cDBPostp
 cDlgGuestEdit::~cDlgGuestEdit()
 {
     cTracer obTrace( "cDlgGuestEdit::~cDlgGuestEdit" );
+
+    delete m_dlgProgress;
 }
 //===========================================================================================================
 //
@@ -264,7 +311,11 @@ void cDlgGuestEdit::on_pbSave_clicked()
 //-----------------------------------------------------------------------------------------------------------
 void cDlgGuestEdit::on_pbAssignCard_clicked()
 {
+    m_dlgProgress->showProgress();
+
     cDlgPatientCardSelect   obDlgSelect( this );
+
+    m_dlgProgress->hideProgress();
 
     if( obDlgSelect.exec() == QDialog::Accepted )
     {
@@ -388,33 +439,33 @@ void cDlgGuestEdit::on_pbSellCard_clicked()
 //-----------------------------------------------------------------------------------------------------------
 void cDlgGuestEdit::on_pbDislink_clicked()
 {
+    m_dlgProgress->showProgress();
+
     cDlgPatientCardSelect   obDlgSelect( this, m_poGuest->id() );
+
     unsigned int uiPCardId = 0;
+
+    m_dlgProgress->hideProgress();
 
     if( obDlgSelect.exec() == QDialog::Accepted )
     {
         uiPCardId = obDlgSelect.selected();
 
-        if( m_poPatientCard->id() < 1 ) return;
-
         if( QMessageBox::question( this, tr( "Question" ),
                                    tr( "Are you sure you want to disjoin the selected card from patient?" ),
                                    QMessageBox::Yes | QMessageBox::No, QMessageBox::No ) == QMessageBox::Yes )
         {
-            if( m_poPatientCard->id() == uiPCardId && m_poPatientCard->patientId() == m_poGuest->id() )
+            m_poPatientCard->load( uiPCardId );
+            if( m_poPatientCard->patientId() == m_poGuest->id() )
             {
                 m_poPatientCard->setPatientId( 0 );
                 m_poPatientCard->save();
             }
-            else
-            {
-                g_poDB->executeQTQuery( QString( "DELETE FROM connectPatientWithCard WHERE patientCardId = %1 AND patientId = %2" ).arg(uiPCardId).arg(m_poGuest->id()) );
-            }
+            g_poDB->executeQTQuery( QString( "DELETE FROM connectPatientWithCard WHERE patientCardId = %1 AND patientId = %2" ).arg(uiPCardId).arg(m_poGuest->id()) );
             m_poPatientCard->createNew();
         }
     }
     ledBarcode->setText( "" );
-    ledPatientcardType->setText( "" );
     _fillPatientCardData();
     slotEnableButtons();
 }
@@ -464,6 +515,48 @@ void cDlgGuestEdit::slotEnableButtons()
 //-----------------------------------------------------------------------------------------------------------
 void cDlgGuestEdit::_fillPatientCardData()
 {
+    ledBarcode->setText( "" );
+    ledBarcode->setToolTip( "" );
+    lblAssignCardInfo->setToolTip( "" );
+
+    if( m_poGuest->id() == 0 )  return;
+
+    QSqlQuery  *poQuery;
+    QString     qsBarcodes      = "";
+    QString     qsPatientCards  = tr("Assigned patientcards:\nBarcode\tPatientcard type");
+
+    poQuery = g_poDB->executeQTQuery( QString( "SELECT barcode FROM patientcards WHERE patientcards.patientId=%1 " ).arg( m_poGuest->id() ) );
+
+    while( poQuery->next() )
+    {
+        if( !qsBarcodes.contains( poQuery->value(0).toString() ) )
+        {
+            qsBarcodes.append( QString("%1, ").arg( poQuery->value(0).toString() ) );
+            qsPatientCards.append( QString("\n%1\t%2").arg( poQuery->value(0).toString() ).arg( poQuery->value(1).toString() ) );
+        }
+    }
+
+    poQuery = g_poDB->executeQTQuery( QString( "SELECT barcode FROM "
+                                               "patientcards, connectpatientwithcard WHERE "
+                                               "patientcards.patientcardid=connectpatientwithcard.patientcardid AND "
+                                               "connectpatientwithcard.patientId=%1 " ).arg( m_poGuest->id() ) );
+    while( poQuery->next() )
+    {
+        if( !qsBarcodes.contains( poQuery->value(0).toString() ) )
+        {
+            qsBarcodes.append( QString("%1, ").arg( poQuery->value(0).toString() ) );
+            qsPatientCards.append( QString("\n%1").arg( poQuery->value(0).toString() ) );
+//            qsPatientCards.append( QString("\n%1\t%2").arg( poQuery->value(0).toString() ).arg( poQuery->value(1).toString() ) );
+        }
+    }
+
+    if( qsBarcodes.length() > 0 )
+    {
+        ledBarcode->setText( qsBarcodes.left( qsBarcodes.length()-2 ) );
+        ledBarcode->setToolTip( qsPatientCards );
+        lblAssignCardInfo->setToolTip( qsPatientCards );
+    }
+/*
     try
     {
         m_poPatientCard->loadPatient( m_poGuest->id() );
@@ -473,7 +566,7 @@ void cDlgGuestEdit::_fillPatientCardData()
         cDBPatientCardType  obDBPatientCardType;
 
         obDBPatientCardType.load( m_poPatientCard->patientCardTypeId() );
-        ledPatientcardType->setText( obDBPatientCardType.name() );
+//        ledPatientcardType->setText( obDBPatientCardType.name() );
     }
     catch( cSevException &e )
     {
@@ -497,7 +590,7 @@ void cDlgGuestEdit::_fillPatientCardData()
                 cDBPatientCardType  obDBPatientCardType;
 
                 obDBPatientCardType.load( m_poPatientCard->patientCardTypeId() );
-                ledPatientcardType->setText( obDBPatientCardType.name() );
+//                ledPatientcardType->setText( obDBPatientCardType.name() );
             }
             catch( cSevException &e )
             {
@@ -508,6 +601,7 @@ void cDlgGuestEdit::_fillPatientCardData()
             }
         }
     }
+*/
 }
 //===========================================================================================================
 //
@@ -524,7 +618,13 @@ bool cDlgGuestEdit::_saveGuestData()
             m_poGuest->setGender( 1 );
         else if( rbGenderFemale->isChecked() )
             m_poGuest->setGender( 2 );
+        m_poGuest->setDateBirth( deBirthDate->date().toString("yyyy-MM-dd") );
+        m_poGuest->setMembership( ledMembership->text() );
         m_poGuest->setEmail( ledEmail->text() );
+        m_poGuest->setMobile( ledPhone->text() );
+        m_poGuest->setAddress( teAddress->toPlainText() );
+        m_poGuest->setComment( teComment->toPlainText() );
+        m_poGuest->setIsReturning( chkReturning->isChecked() );
         if( rbAge0->isChecked() ) m_poGuest->setAgeType( 0 );
         else if( rbAge1->isChecked() ) m_poGuest->setAgeType( 1 );
         else if( rbAge2->isChecked() ) m_poGuest->setAgeType( 2 );
@@ -533,10 +633,10 @@ bool cDlgGuestEdit::_saveGuestData()
         else if( rbAge5->isChecked() ) m_poGuest->setAgeType( 5 );
         else if( rbAge6->isChecked() ) m_poGuest->setAgeType( 6 );
         else if( rbAge7->isChecked() ) m_poGuest->setAgeType( 7 );
-        m_poGuest->setIsReturning( chkReturning->isChecked() );
         m_poGuest->setService( chkService->isChecked() );
         m_poGuest->setEmployee( chkEmployee->isChecked() );
         m_poGuest->setRegularCustomer( chkRegularCustomer->isChecked() );
+        m_poGuest->setSkinTypeId( cmbSkinType->itemData( cmbSkinType->currentIndex() ).toUInt() );
 
         m_poGuest->save();
 
@@ -577,7 +677,7 @@ void cDlgGuestEdit::slotUpdateDiscountSample()
     m_poGuest->setEmployee( chkEmployee->isChecked() );
     m_poGuest->setService( chkService->isChecked() );
 
-    lblDiscountedPrice->setText( tr("%1 $").arg( _convertCurrency( QString::number(m_poGuest->getDiscountedPrice( 10000 )) ) ) );
+    lblDiscountedPrice->setText( QString("%1 %2").arg( _convertCurrency( QString::number(m_poGuest->getDiscountedPrice( 10000 )) ) ).arg( g_poPrefs->getCurrencyShort() ) );
 }
 
 
@@ -593,3 +693,9 @@ void cDlgGuestEdit::on_pbEditDiscount_clicked()
 
     slotUpdateDiscountSample();
 }
+
+unsigned int cDlgGuestEdit::guestId()
+{
+    return m_poGuest->id();
+}
+

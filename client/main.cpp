@@ -13,7 +13,8 @@
 // Alkalmazas fo allomanya.
 //====================================================================================
 
-#define APPLICATION_VERSION_NUMBER  "1.0"
+#define APPLICATION_VERSION_NUMBER  "1.5.3"
+#define DATABASE_VERSION_NUMBER     "1.7.1"
 
 //====================================================================================
 
@@ -39,6 +40,7 @@
 #include "cassa.h"
 #include "licenceManager.h"
 #include "general.h"
+#include "http.h"
 #ifdef __WIN32__
     #include "communication_serial.h"
 #endif
@@ -62,8 +64,9 @@ cCassa                   g_obCassa;
 cGeneral                 g_obGen;
 cDBGuest                 g_obGuest;
 cLicenceManager          g_obLicenceManager;
+cBlnsHttp               *g_poBlnsHttp;
 
-// 'TO BE SOLVED' felirat, ahol még valamit meg kell oldani
+// 'TO BE SOLVED' felirat, ahol mÃ©g valamit meg kell oldani
 // g_obLogger(cSeverity::DEBUG) << QString("") << EOM;
 // cTracer obTrace( "" );
 
@@ -87,6 +90,7 @@ int main( int argc, char *argv[] )
 
     g_poPrefs  = new cPreferences( QString::fromAscii( "./belenus.ini" ) );
     g_poPrefs->setVersion( APPLICATION_VERSION_NUMBER );
+    g_poPrefs->setVersionDb( DATABASE_VERSION_NUMBER );
     g_poPrefs->setLangFilePrefix( "belenus_" );
     g_poPrefs->setDBAccess( "localhost", "belenus", "belenus", "belenus" );
 
@@ -137,13 +141,49 @@ int main( int argc, char *argv[] )
         qsSpalsh += "\n";
         obSplash.showMessage(qsSpalsh,Qt::AlignLeft,QColor(59,44, 75));
 
+        qsSpalsh += QObject::tr("Another instance of application ... ");
+        obSplash.showMessage(qsSpalsh,Qt::AlignLeft,QColor(59,44, 75));
+
+        QFile   fileCheck( "belenus.chk" );
+
+        fileCheck.open( QIODevice::WriteOnly );
+        fileCheck.write( "CURRENTLY NOT RUNNING" );
+        fileCheck.close();
+#ifdef __WIN32__
+            Sleep(3000);
+#else
+            sleep( 3 );
+#endif
+        if( fileCheck.size() > 0 )
+        {
+            qsSpalsh += QObject::tr(" NOT RUNNING.\n");
+            obSplash.showMessage(qsSpalsh,Qt::AlignLeft,QColor(59,44, 75));
+        }
+        else
+        {
+            qsSpalsh += QObject::tr(" ALREADY RUNNING.\n");
+            qsSpalsh += QObject::tr("\n\nPlease use the currently running application.\n");
+            obSplash.showMessage(qsSpalsh,Qt::AlignLeft,QColor(59,44, 75));
+#ifdef __WIN32__
+            Sleep(5000);
+#else
+            sleep( 3 );
+#endif
+            return 0;
+        }
+
+        QSqlQuery *poQuery = g_poDB->executeQTQuery( QString( "SELECT * FROM licences" ) );
+
+        qsSpalsh += "\n";
+        obSplash.showMessage(qsSpalsh,Qt::AlignLeft,QColor(59,44, 75));
+
         qsSpalsh += QObject::tr("License is ... ");
         obSplash.showMessage(qsSpalsh,Qt::AlignLeft,QColor(59,44, 75));
 
         int         nId = 0;
         QString     qsSerial = QObject::tr("NO_SERIAL_DETECTED");
 
-        QSqlQuery *poQuery = g_poDB->executeQTQuery( QString( "SELECT * FROM licences" ) );
+        poQuery = g_poDB->executeQTQuery( QString( "SELECT * FROM licences" ) );
         if( poQuery->last() )
         {
             nId = poQuery->value( 0 ).toInt();
@@ -171,7 +211,7 @@ int main( int argc, char *argv[] )
         qsSpalsh += QObject::tr("Days remains: %1\n").arg( nDaysRemain );
         obSplash.showMessage(qsSpalsh,Qt::AlignLeft,QColor(59,44,75));
 
-        if( nDaysRemain < cLicenceManager::EXPIRE_MAX_DAYS )
+        if( nDaysRemain < cLicenceManager::EXPIRE_MAX_DAYS || g_obLicenceManager.ltLicenceType() == cLicenceManager::LTYPE_REGISTERED )
         {
             qsSpalsh += QObject::tr("\nVALIDATE YOUR APPLICATION\nWITH YOUR FRANCHISE PROVIDER\n\n");
             obSplash.showMessage(qsSpalsh,Qt::AlignLeft,QColor(59,44,75));
@@ -182,6 +222,7 @@ int main( int argc, char *argv[] )
                                         "The application can be used only in DEMO mode.\n\n");
                 obSplash.showMessage(qsSpalsh,Qt::AlignLeft,QColor(59,44,75));
             }
+
 #ifdef __WIN32__
             Sleep(3000);
 #else
@@ -196,12 +237,37 @@ int main( int argc, char *argv[] )
         qsSpalsh += "-----------------------------------------------------\n";
         obSplash.showMessage(qsSpalsh,Qt::AlignLeft,QColor(59,44, 75));
 
+        qsSpalsh += QObject::tr("Checking database consistency: ");
+        obSplash.showMessage(qsSpalsh,Qt::AlignLeft,QColor(59,44,75));
+
+        poQuery = g_poDB->executeQTQuery( QString( "UPDATE patientcardunits SET "
+                                                   "prepared=0, "
+                                                   "active=0 "
+                                                   "WHERE "
+                                                   "prepared=1 AND "
+                                                   "patientCardId>1 AND "
+                                                   "dateTimeUsed>\"2000-01-01\" " ) );
+
+        poQuery = g_poDB->executeQTQuery( QString( "UPDATE patientcardunits SET "
+                                                   "prepared=0 "
+                                                   "WHERE "
+                                                   "prepared=1 AND "
+                                                   "active=1 ") );
+
+        qsSpalsh += QObject::tr("FINISHED\n");
+        obSplash.showMessage(qsSpalsh,Qt::AlignLeft,QColor(59,44,75));
+
+        qsSpalsh += "-----------------------------------------------------\n";
+        obSplash.showMessage(qsSpalsh,Qt::AlignLeft,QColor(59,44, 75));
+
 #ifdef __WIN32__
 
         //-------------------------------------------------------------------------------
         // If Hardware component active, process hardware initialization
         g_obLogger(cSeverity::DEBUG) << QString("HW check nID: %1 HWInstalled: %2").arg(nId).arg(g_poPrefs->isComponentHardwareInstalled()) << EOM;
-        if( nId >= 2 /*&& g_poPrefs->isComponentHardwareInstalled()*/ && nDaysRemain > 0 )
+        if( nId >= 2 /*&& g_poPrefs->isComponentHardwareInstalled()*/ &&
+            nDaysRemain > 0 &&
+            g_obLicenceManager.ltLicenceType() != cLicenceManager::LTYPE_REGISTERED )
         {
             qsSpalsh += QObject::tr("Checking hardware connection ...");
             obSplash.showMessage(qsSpalsh,Qt::AlignLeft,QColor(59,44, 75));
@@ -285,6 +351,8 @@ int main( int argc, char *argv[] )
 #else
         sleep( 2 );
 #endif
+
+        obMainWindow.setCommunicationEnabled( g_poHardware->isHardwareConnected() );
 
         obSplash.finish( &obMainWindow );
 

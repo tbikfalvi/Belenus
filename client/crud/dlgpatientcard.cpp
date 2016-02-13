@@ -14,14 +14,14 @@ cDlgPatientCard::cDlgPatientCard( QWidget *p_poParent ) : cDlgCrud( p_poParent )
 
     horizontalLayout = new QHBoxLayout();
     horizontalLayout->setObjectName( QString::fromUtf8( "horizontalLayout" ) );
-    lblPatientCardType = new QLabel( this );
-    lblPatientCardType->setObjectName( QString::fromUtf8( "lblPatientCardType" ) );
-    lblPatientCardType->setText( tr("Patientcard type: ") );
-    horizontalLayout->addWidget( lblPatientCardType );
-    cmbPatientCardType = new QComboBox( this );
-    cmbPatientCardType->setObjectName( QString::fromUtf8( "cmbPatientCardType" ) );
-    cmbPatientCardType->resize( 400, 20 );
-    horizontalLayout->addWidget( cmbPatientCardType );
+//    lblPatientCardType = new QLabel( this );
+//    lblPatientCardType->setObjectName( QString::fromUtf8( "lblPatientCardType" ) );
+//    lblPatientCardType->setText( tr("Patientcard type: ") );
+//    horizontalLayout->addWidget( lblPatientCardType );
+//    cmbPatientCardType = new QComboBox( this );
+//    cmbPatientCardType->setObjectName( QString::fromUtf8( "cmbPatientCardType" ) );
+//    cmbPatientCardType->resize( 400, 20 );
+//    horizontalLayout->addWidget( cmbPatientCardType );
 
     lblBarcode = new QLabel( this );
     lblBarcode->setObjectName( QString::fromUtf8( "lblBarcode" ) );
@@ -33,11 +33,21 @@ cDlgPatientCard::cDlgPatientCard( QWidget *p_poParent ) : cDlgCrud( p_poParent )
     ledBarcode->setMaximumWidth( 100 );
     horizontalLayout->addWidget( ledBarcode );
 
+    lblOwner = new QLabel( this );
+    lblOwner->setObjectName( QString::fromUtf8( "lblOwner" ) );
+    lblOwner->setText( tr("Owner: ") );
+    horizontalLayout->addWidget( lblOwner );
+    ledOwner = new QLineEdit( this );
+    ledOwner->setObjectName( QString::fromUtf8( "ledOwner" ) );
+    ledOwner->setMinimumWidth( 100 );
+    ledOwner->setMaximumWidth( 100 );
+    horizontalLayout->addWidget( ledOwner );
+
     horizontalSpacer1 = new QSpacerItem( 10, 20, QSizePolicy::Expanding, QSizePolicy::Minimum );
     horizontalLayout->addItem( horizontalSpacer1 );
     verticalLayout->insertLayout( 0, horizontalLayout );
 
-    QSqlQuery   *poQuery;
+/*    QSqlQuery   *poQuery;
     QString      qsQuery;
 
     cmbPatientCardType->addItem( tr("<All patientcard types>"), -1 );
@@ -54,7 +64,7 @@ cDlgPatientCard::cDlgPatientCard( QWidget *p_poParent ) : cDlgCrud( p_poParent )
     while( poQuery->next() )
     {
         cmbPatientCardType->addItem( poQuery->value( 1 ).toString(), poQuery->value( 0 ) );
-    }
+    }*/
 /*
     pbPatientCardType = new QPushButton( tr( "Patientcard types" ), this );
     pbPatientCardType->setObjectName( QString::fromUtf8( "pbPatientCardType" ) );
@@ -82,8 +92,9 @@ cDlgPatientCard::cDlgPatientCard( QWidget *p_poParent ) : cDlgCrud( p_poParent )
 
     setupTableView();
 
-    connect( cmbPatientCardType, SIGNAL(currentIndexChanged(int)), this, SLOT(refreshTable()) );
+//    connect( cmbPatientCardType, SIGNAL(currentIndexChanged(int)), this, SLOT(refreshTable()) );
     connect( ledBarcode, SIGNAL(textChanged(QString)), this, SLOT(refreshTable()) );
+    connect( ledOwner, SIGNAL(textChanged(QString)), this, SLOT(refreshTable()) );
 
     m_qsCondition = "";
 }
@@ -107,15 +118,11 @@ void cDlgPatientCard::setupTableView()
         m_poModel->setHeaderData( 1, Qt::Horizontal, tr( "LicenceId" ) );
         m_poModel->setHeaderData( 2, Qt::Horizontal, tr( "Barcode" ) );
         m_poModel->setHeaderData( 3, Qt::Horizontal, tr( "Owner" ) );
-        m_poModel->setHeaderData( 4, Qt::Horizontal, tr( "Units" ) );
-        m_poModel->setHeaderData( 5, Qt::Horizontal, tr( "Amount" ) );
-        m_poModel->setHeaderData( 6, Qt::Horizontal, tr( "Patientcard type" ) );
-        m_poModel->setHeaderData( 7, Qt::Horizontal, tr( "All units" ) );
-        m_poModel->setHeaderData( 8, Qt::Horizontal, tr( "Valid from" ) );
-        m_poModel->setHeaderData( 9, Qt::Horizontal, tr( "Valid to" ) );
-        m_poModel->setHeaderData( 10, Qt::Horizontal, tr( "Comment" ) );
-        m_poModel->setHeaderData( 11, Qt::Horizontal, tr( "Active" ) );
-        m_poModel->setHeaderData( 12, Qt::Horizontal, tr( "Archive" ) );
+        m_poModel->setHeaderData( 4, Qt::Horizontal, tr( "Valid from" ) );
+        m_poModel->setHeaderData( 5, Qt::Horizontal, tr( "Valid to" ) );
+        m_poModel->setHeaderData( 6, Qt::Horizontal, tr( "Comment" ) );
+        m_poModel->setHeaderData( 7, Qt::Horizontal, tr( "Active" ) );
+        m_poModel->setHeaderData( 8, Qt::Horizontal, tr( "Archive" ) );
 
         tbvCrud->resizeColumnToContents( 0 );
         tbvCrud->resizeColumnToContents( 1 );
@@ -126,10 +133,6 @@ void cDlgPatientCard::setupTableView()
         tbvCrud->resizeColumnToContents( 6 );
         tbvCrud->resizeColumnToContents( 7 );
         tbvCrud->resizeColumnToContents( 8 );
-        tbvCrud->resizeColumnToContents( 9 );
-        tbvCrud->resizeColumnToContents( 10 );
-        tbvCrud->resizeColumnToContents( 11 );
-        tbvCrud->resizeColumnToContents( 12 );
 
         tbvCrud->sortByColumn( 2, Qt::AscendingOrder );
     }
@@ -137,14 +140,10 @@ void cDlgPatientCard::setupTableView()
     {
         m_poModel->setHeaderData( 1, Qt::Horizontal, tr( "Barcode" ) );
         m_poModel->setHeaderData( 2, Qt::Horizontal, tr( "Owner" ) );
-        m_poModel->setHeaderData( 3, Qt::Horizontal, tr( "Units" ) );
-        m_poModel->setHeaderData( 4, Qt::Horizontal, tr( "Amount" ) );
-        m_poModel->setHeaderData( 5, Qt::Horizontal, tr( "Patientcard type" ) );
-        m_poModel->setHeaderData( 6, Qt::Horizontal, tr( "All units" ) );
-        m_poModel->setHeaderData( 7, Qt::Horizontal, tr( "Valid from" ) );
-        m_poModel->setHeaderData( 8, Qt::Horizontal, tr( "Valid to" ) );
-        m_poModel->setHeaderData( 9, Qt::Horizontal, tr( "Comment" ) );
-        m_poModel->setHeaderData( 10, Qt::Horizontal, tr( "Active" ) );
+        m_poModel->setHeaderData( 3, Qt::Horizontal, tr( "Valid from" ) );
+        m_poModel->setHeaderData( 4, Qt::Horizontal, tr( "Valid to" ) );
+        m_poModel->setHeaderData( 5, Qt::Horizontal, tr( "Comment" ) );
+        m_poModel->setHeaderData( 6, Qt::Horizontal, tr( "Active" ) );
 
         tbvCrud->resizeColumnToContents( 1 );
         tbvCrud->resizeColumnToContents( 2 );
@@ -152,10 +151,6 @@ void cDlgPatientCard::setupTableView()
         tbvCrud->resizeColumnToContents( 4 );
         tbvCrud->resizeColumnToContents( 5 );
         tbvCrud->resizeColumnToContents( 6 );
-        tbvCrud->resizeColumnToContents( 7 );
-        tbvCrud->resizeColumnToContents( 8 );
-        tbvCrud->resizeColumnToContents( 9 );
-        tbvCrud->resizeColumnToContents( 10 );
 
         tbvCrud->sortByColumn( 1, Qt::AscendingOrder );
     }
@@ -167,19 +162,19 @@ void cDlgPatientCard::refreshTable( QString p_qsCondition )
 
     if( g_obUser.isInGroup( cAccessGroup::ROOT ) )
     {
-        m_qsQuery = "SELECT patientCards.patientCardId, patientCards.licenceId, patientCards.barcode, patients.name, patientCards.units, patientCards.amount, patientCardTypes.name, patientCardTypes.units, patientCards.validDateFrom, patientCards.validDateTo, patientCards.comment, patientCards.active, patientCards.archive FROM patientCards, patientCardTypes, patients WHERE patientCards.patientCardTypeId=patientCardTypes.patientCardTypeId AND patientCards.patientId=patients.patientId";
+        m_qsQuery = "SELECT patientCards.patientCardId, patientCards.licenceId, patientCards.barcode, patients.name, patientCards.validDateFrom, patientCards.validDateTo, patientCards.comment, patientCards.active, patientCards.archive FROM patientCards, patientCardTypes, patients WHERE patientCards.patientCardTypeId=patientCardTypes.patientCardTypeId AND patientCards.patientId=patients.patientId";
     }
     else
     {
-        m_qsQuery = "SELECT patientCards.patientCardId AS id, patientCards.barcode, patients.name, patientCards.units, patientCards.amount, patientCardTypes.name, patientCardTypes.units, patientCards.validDateFrom, patientCards.validDateTo, patientCards.comment, patientCards.active FROM patientCards, patientCardTypes, patients WHERE patientCards.patientCardTypeId=patientCardTypes.patientCardTypeId AND patientCards.patientId=patients.patientId AND patientCards.patientCardId>0";
+        m_qsQuery = "SELECT patientCards.patientCardId AS id, patientCards.barcode, patients.name, patientCards.validDateFrom, patientCards.validDateTo, patientCards.comment, patientCards.active FROM patientCards, patientCardTypes, patients WHERE patientCards.patientCardTypeId=patientCardTypes.patientCardTypeId AND patientCards.patientId=patients.patientId AND patientCards.patientCardId>0";
     }
 
-    int uiPatientCardTypeId = cmbPatientCardType->itemData( cmbPatientCardType->currentIndex() ).toInt();
+    /*int uiPatientCardTypeId = cmbPatientCardType->itemData( cmbPatientCardType->currentIndex() ).toInt();
     if( uiPatientCardTypeId > -1 )
     {
         m_qsQuery += " AND ";
         m_qsQuery += QString( "patientCards.patientCardTypeId=%1" ).arg( uiPatientCardTypeId );
-    }
+    }*/
     QString stTemp;
 
     stTemp = ledBarcode->text();
@@ -187,6 +182,13 @@ void cDlgPatientCard::refreshTable( QString p_qsCondition )
     {
         m_qsQuery += " AND ";
         m_qsQuery += QString( "barcode LIKE '\%%1\%'" ).arg( stTemp );
+    }
+
+    stTemp = ledOwner->text();
+    if( stTemp != "" )
+    {
+        m_qsQuery += " AND ";
+        m_qsQuery += QString( "patients.name LIKE '\%%1\%'" ).arg( stTemp );
     }
 
     if( p_qsCondition != "" )
@@ -295,8 +297,7 @@ void cDlgPatientCard::deleteClicked( bool )
                                       tr("You are not allowed to delete studio independent data."));
                 return;
             }
-            poPatientCard->remove();
-            m_uiSelectedId = 0;
+            poPatientCard->deactivate();
             refreshTable();
             if( poPatientCard ) delete poPatientCard;
         }

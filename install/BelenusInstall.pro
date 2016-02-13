@@ -4,33 +4,22 @@
 #
 #-------------------------------------------------
 
+greaterThan(QT_MAJOR_VERSION, 4): QT += widgets
+
+QT          += core gui sql xml
+TARGET       = Setup
 TEMPLATE     = app
 DESTDIR      = ..
-TARGET       = Setup
 RC_FILE      = setup.rc
-
+RESOURCES   += install.qrc
 CONFIG      += qt
-QT          += core gui sql
-TRANSLATIONS = setup_us.ts \
-               setup_hu.ts \
+TRANSLATIONS = setup_hu.ts \
+               setup_de.ts \
                qt_hu.ts
 
 win32:DEFINES -= UNICODE
 
 FORMS       += dlgMain.ui
-
-SOURCES     += ../framework/dbconnection.cpp \
-               ../framework/qtmysqlconnection.cpp \
-               ../framework/qtmysqlquerymodel.cpp \
-               ../framework/qtlogger.cpp \
-               ../framework/logger/FileWriter.cpp \
-               ../framework/tracer.cpp \
-               main.cpp \
-               dlgMain.cpp \
-               ../client/communication_serial.cpp \
-               ../client/ClassSerialComm.cpp \
-               ../client/ClassHardware.cpp \
-               cregistry.cpp
 
 HEADERS     += ../framework/dbconnection.h \
                ../framework/qtmysqlconnection.h \
@@ -46,4 +35,16 @@ HEADERS     += ../framework/dbconnection.h \
                ../client/communication.h \
                cregistry.h
 
-RESOURCES   += install.qrc
+SOURCES     += ../framework/dbconnection.cpp \
+               ../framework/qtmysqlconnection.cpp \
+               ../framework/qtmysqlquerymodel.cpp \
+               ../framework/qtlogger.cpp \
+               ../framework/logger/FileWriter.cpp \
+               ../framework/tracer.cpp \
+               main.cpp \
+               dlgMain.cpp \
+               ../client/communication_serial.cpp \
+               ../client/ClassSerialComm.cpp \
+               ../client/ClassHardware.cpp \
+               cregistry.cpp
+

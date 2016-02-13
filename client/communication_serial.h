@@ -81,8 +81,8 @@ public:
     bool getRelayStatus( const int nRelayCount );
 
     void setCurrentCommand( const int p_nIndex, const int p_nCurrentCommand );
-    void setCounter( const int p_nIndex, const int p_nCounter );
-    void setMainActionTime( const int p_nIndex, const int p_nTime );
+    void setCounter( const int p_nIndex, const int p_nCounter, bool p_bUpdateTimer = false );
+    bool setMainActionTime( const int p_nIndex, const int p_nTime, BYTE *p_byStatus, bool p_bSend = false );
     bool isHardwareMovedNextStatus( const int p_nIndex );
     void setHardwareMovedNextStatus( const int p_nIndex );
     bool isHardwareStopped( const int p_nIndex );
@@ -93,6 +93,12 @@ public:
     void HW_Kezel();
 
     bool isCommunicationStopped();
+
+    void ModuleTurnOn();
+    void ModuleTurnOff();
+
+    void EnableModulIRQ();
+    void DisableModulIRQ();
 
 private:
     vector<typ_panel_data>   pPanel;
@@ -119,6 +125,7 @@ private:
     int                      nHWModuleCount;         // Hardware-ben a kezelendo panel-ek szama,
     WORD                     m_wRelay;
     bool                     m_bCommunicationStopped;
+    int                      m_nModuleButtonQueryCounter;
 
     void GetAvailableCommPorts();
 
@@ -136,8 +143,6 @@ private:
     BOOL HW_WriteEEProm( unsigned char byStartAddress, char *chMessage );
 
     unsigned char GetHWModuleStatus( unsigned char byCim );
-    void EnableModulIRQ();
-    void DisableModulIRQ();
 
     bool SP_ReadMessage( char *Message, int *nLength );
     bool SP_SendMessage( char *Message, int nLength );

@@ -1,15 +1,9 @@
 -- -----------------------------------------------------------------------------------
---
 -- Belenus Szoftver Rendszer (c) Pagony Multimedia Studio Bt - 2013
---
 -- -----------------------------------------------------------------------------------
---
 -- Filename    : db_create.sql
--- AppVersion  : 1.0.0
--- DbVersion   : 1.0
--- FileVersion : 1.0
--- Author      : Ballok Peter, Bikfalvi Tamas
---
+-- AppVersion  : 1.5.3
+-- DbVersion   : 1.7.1
 -- -----------------------------------------------------------------------------------
 -- Adatbazist letrehozo SQL script
 -- -----------------------------------------------------------------------------------
@@ -33,6 +27,20 @@ CREATE TABLE `licences` (
   `active`                  tinyint(1)              DEFAULT 0,
   `archive`                 varchar(10)             NOT NULL,
   PRIMARY KEY (`licenceId`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+
+-- -----------------------------------------------------------------------------------
+-- A kiwisun web oldalnak kuldendo uzeneteket tartalmazza.
+-- -----------------------------------------------------------------------------------
+CREATE TABLE `httppatientcardinfo` (
+  `httpPatientcardInfoId`   int(10) unsigned        NOT NULL AUTO_INCREMENT,
+  `licenceId`               int(10) unsigned        NOT NULL,
+  `barcode`                 varchar(20)             NOT NULL,
+  `patientcardInfoText`     text                    NOT NULL,
+  `active`                  tinyint(1)              DEFAULT 0,
+  `archive`                 varchar(10)             NOT NULL,  
+  PRIMARY KEY (`httpPatientcardInfoId`,`licenceId`),
+  FOREIGN KEY (`licenceId`) REFERENCES `licences` (`licenceId`) ON UPDATE CASCADE ON DELETE RESTRICT
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
 -- -----------------------------------------------------------------------------------
@@ -132,6 +140,19 @@ CREATE TABLE `genders` (
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
 -- -----------------------------------------------------------------------------------
+-- Bortipusok leirasat tartalmazza. Vendegekhez.
+-- -----------------------------------------------------------------------------------
+CREATE TABLE `skinTypes` (
+  `skinTypeId`              int(10) unsigned        NOT NULL AUTO_INCREMENT,
+  `licenceId`               int(10) unsigned        NOT NULL,
+  `skinTypeName`            varchar(50)             NOT NULL,
+  `active`                  tinyint(1)              DEFAULT 0,
+  `archive`                 varchar(10)             NOT NULL,
+  PRIMARY KEY (`skinTypeId`,`licenceId`),
+  FOREIGN KEY (`licenceId`) REFERENCES `licences` (`licenceId`) ON UPDATE CASCADE ON DELETE RESTRICT
+) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+
+-- -----------------------------------------------------------------------------------
 -- A studio vendegeinek adatait tartalmazza.
 -- -----------------------------------------------------------------------------------
 CREATE TABLE `patients` (
@@ -150,6 +171,11 @@ CREATE TABLE `patients` (
   `service`                 tinyint(1)              DEFAULT 0,
   `company`                 tinyint(1)              DEFAULT 0,
   `discountType`            int(11)                 NOT NULL,
+  `membership`				varchar( 30 ) 			NOT NULL,
+  `dateBirth` 				date 					NOT NULL,
+  `address` 				varchar( 200 ) 			NOT NULL,
+  `skinTypeId` 				int(10) unsigned		DEFAULT 0,
+  `mobile` 					varchar( 50 ) 			NOT NULL,
   `comment`                 text                    DEFAULT NULL,
   `loyaltyPoints`           int(11)                 DEFAULT 0,
   `modified`                datetime                NOT NULL,
@@ -157,7 +183,8 @@ CREATE TABLE `patients` (
   `archive`                 varchar(10)             NOT NULL,
   PRIMARY KEY (`patientId`,`licenceId`),
   FOREIGN KEY (`licenceId`) REFERENCES `licences` (`licenceId`) ON UPDATE CASCADE ON DELETE RESTRICT,
-  FOREIGN KEY (`companyId`) REFERENCES `companies` (`companyId`) ON UPDATE CASCADE ON DELETE RESTRICT
+  FOREIGN KEY (`companyId`) REFERENCES `companies` (`companyId`) ON UPDATE CASCADE ON DELETE RESTRICT,
+  FOREIGN KEY (`skinTypeId`) REFERENCES `skinTypes` (`skinTypeId`) ON UPDATE CASCADE ON DELETE RESTRICT
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
 -- -----------------------------------------------------------------------------------
@@ -363,6 +390,7 @@ CREATE TABLE `patientCardUnits` (
   `patientCardUnitId`       int(10) unsigned        NOT NULL AUTO_INCREMENT,
   `licenceId`               int(10) unsigned        NOT NULL,
   `patientCardId`           int(10) unsigned        NOT NULL,
+  `patientCardTypeId`       int(10) unsigned        NOT NULL DEFAULT 0,
   `ledgerId`                int(10) unsigned        NOT NULL,
   `panelId`                 int(10) unsigned        NOT NULL,
   `unitTime`                int(11)                 NOT NULL DEFAULT 0,
@@ -370,6 +398,7 @@ CREATE TABLE `patientCardUnits` (
   `validDateFrom`           date                    DEFAULT NULL,
   `validDateTo`             date                    DEFAULT NULL,
   `dateTimeUsed`            timestamp               NOT NULL DEFAULT CURRENT_TIMESTAMP,
+  `prepared`                tinyint(1)              NOT NULL DEFAULT '0',
   `active`                  tinyint(1)              DEFAULT 0,
   `archive`                 varchar(10)             NOT NULL,
   PRIMARY KEY (`patientCardUnitId`,`licenceId`),
@@ -460,7 +489,7 @@ CREATE TABLE `products` (
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
 -- -----------------------------------------------------------------------------------
--- A studioban forgalmazott termekeket és csoportokat köti össze.
+-- A studioban forgalmazott termekeket Ã©s csoportokat kÃ¶ti Ã¶ssze.
 -- -----------------------------------------------------------------------------------
 CREATE TABLE `connectProductWithType` (
   `productTypeId`           int(10) unsigned        NOT NULL,
@@ -812,5 +841,53 @@ CREATE TABLE `cassaHistory` (
   FOREIGN KEY (`ledgerId`) REFERENCES `ledger` (`ledgerId`) ON UPDATE CASCADE ON DELETE RESTRICT,
   FOREIGN KEY (`userId`) REFERENCES `users` (`userId`) ON UPDATE CASCADE ON DELETE RESTRICT,
   FOREIGN KEY (`patientId`) REFERENCES `patients` (`patientId`) ON UPDATE CASCADE ON DELETE RESTRICT
+) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+
+-- -----------------------------------------------------------------------------------
+-- Masodlagos monitoron megjeleno, reklamokat - slide show - es fix kepeket tartalmazo
+-- nem modal ablakok tartalmat meghatarozo tabla
+-- Minden egyes bejegyzes egy ablakot ir le
+-- -----------------------------------------------------------------------------------
+CREATE TABLE `advertisements` (
+  `advertisementId`         int(10) unsigned        NOT NULL AUTO_INCREMENT,
+  `licenceId`               int(10) unsigned        NOT NULL,
+  `name`                    varchar(100)            NOT NULL,
+  `caption`                 varchar(100)            NOT NULL,
+  `backgroundColor`         varchar(10)             NOT NULL,
+  `path`                    text                    NOT NULL,
+  `fileNames`               text                    NOT NULL,
+  `timer`                   int(10) unsigned        NOT NULL DEFAULT 0,
+  `transparent`             tinyint(1)              DEFAULT 0,
+  `modified`                datetime                NOT NULL,
+  `active`                  tinyint(1)              DEFAULT 0,
+  `archive`                 varchar(10)             NOT NULL,
+  PRIMARY KEY (`advertisementId`,`licenceId`),
+  FOREIGN KEY (`licenceId`) REFERENCES `licences` (`licenceId`) ON UPDATE CASCADE ON DELETE RESTRICT
+) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+
+-- -----------------------------------------------------------------------------------
+-- Varakozo lista
+-- -----------------------------------------------------------------------------------
+CREATE TABLE `waitlist` (
+  `waitlistId`              int(10) unsigned        NOT NULL AUTO_INCREMENT,
+  `licenceId`               int(10) unsigned        NOT NULL,
+  `patientCardId`           int(10) unsigned        NOT NULL,
+  `ledgerId`                int(10) unsigned        NOT NULL,
+  `shoppingCartItemId`      int(10) unsigned        NOT NULL,
+  `panelTypeId`             int(10) unsigned        NOT NULL,
+  `payType`                 int(10) unsigned        NOT NULL,
+  `barcode`                 varchar(20)             NOT NULL,
+  `unitIds`                 text                    NOT NULL,
+  `lengthCash`              decimal(10,0)           NOT NULL,
+  `lengthCard`              decimal(10,0)           NOT NULL,
+  `useTime`                 int(11)                 NOT NULL,
+  `usePrice`                decimal(10,0)           NOT NULL,
+  `comment`                 text                    DEFAULT NULL,
+  PRIMARY KEY (`waitlistId`,`licenceId`),
+  FOREIGN KEY (`patientCardId`) REFERENCES `patientCards` (`patientCardId`) ON UPDATE CASCADE ON DELETE RESTRICT,
+  FOREIGN KEY (`ledgerId`) REFERENCES `ledger` (`ledgerId`) ON UPDATE CASCADE ON DELETE RESTRICT,
+  FOREIGN KEY (`shoppingCartItemId`) REFERENCES `shoppingCartItems` (`shoppingCartItemId`) ON UPDATE CASCADE ON DELETE RESTRICT,
+  FOREIGN KEY (`panelTypeId`) REFERENCES `panelTypes` (`panelTypeId`) ON UPDATE CASCADE ON DELETE RESTRICT,
+  FOREIGN KEY (`licenceId`) REFERENCES `licences` (`licenceId`) ON UPDATE CASCADE ON DELETE RESTRICT
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 

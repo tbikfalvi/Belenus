@@ -9,8 +9,8 @@
    <rect>
     <x>0</x>
     <y>0</y>
-    <width>460</width>
-    <height>410</height>
+    <width>608</width>
+    <height>536</height>
    </rect>
   </property>
   <property name="windowTitle">
@@ -23,7 +23,7 @@
    <item>
     <widget class="QTabWidget" name="tbwPreferences">
      <property name="currentIndex">
-      <number>4</number>
+      <number>1</number>
      </property>
      <widget class="QWidget" name="tab_General">
       <attribute name="title">
@@ -399,13 +399,63 @@
            </layout>
           </item>
           <item row="1" column="0">
+           <widget class="QLabel" name="lblDateFormat">
+            <property name="text">
+             <string>Date format :</string>
+            </property>
+           </widget>
+          </item>
+          <item row="1" column="1">
+           <layout class="QHBoxLayout" name="horizontalLayout_28">
+            <item>
+             <widget class="QComboBox" name="cmbDateFormat">
+              <item>
+               <property name="text">
+                <string>yyyy-MM-dd</string>
+               </property>
+              </item>
+              <item>
+               <property name="text">
+                <string>MM-dd-yyyy</string>
+               </property>
+              </item>
+              <item>
+               <property name="text">
+                <string>dd-MM-yyyy</string>
+               </property>
+              </item>
+             </widget>
+            </item>
+            <item>
+             <widget class="QLabel" name="lblDateFormatExample">
+              <property name="text">
+               <string>(example: %1)</string>
+              </property>
+             </widget>
+            </item>
+            <item>
+             <spacer name="horizontalSpacer_22">
+              <property name="orientation">
+               <enum>Qt::Horizontal</enum>
+              </property>
+              <property name="sizeHint" stdset="0">
+               <size>
+                <width>40</width>
+                <height>20</height>
+               </size>
+              </property>
+             </spacer>
+            </item>
+           </layout>
+          </item>
+          <item row="2" column="0">
            <widget class="QLabel" name="lblDefaultCountry">
             <property name="text">
              <string>Default country : </string>
             </property>
            </widget>
           </item>
-          <item row="1" column="1">
+          <item row="2" column="1">
            <layout class="QHBoxLayout" name="horizontalLayout_15">
             <item>
              <widget class="QLineEdit" name="ledDefaultCountry">
@@ -432,15 +482,31 @@
             </item>
            </layout>
           </item>
-          <item row="2" column="0">
+          <item row="3" column="0">
            <widget class="QLabel" name="lblAboutLink">
             <property name="text">
              <string>Kiwisun web address :</string>
             </property>
            </widget>
           </item>
-          <item row="2" column="1">
+          <item row="3" column="1">
            <widget class="QLineEdit" name="ledAboutLink"/>
+          </item>
+         </layout>
+        </widget>
+       </item>
+       <item>
+        <widget class="QGroupBox" name="gbFapad">
+         <property name="title">
+          <string> Minimal version </string>
+         </property>
+         <layout class="QVBoxLayout" name="verticalLayout_23">
+          <item>
+           <widget class="QCheckBox" name="chkFapad">
+            <property name="text">
+             <string>MINIMAL VERSION - Only the minimal features are enabled to be used in the application </string>
+            </property>
+           </widget>
           </item>
          </layout>
         </widget>
@@ -464,7 +530,7 @@
       <attribute name="title">
        <string>Appearance</string>
       </attribute>
-      <layout class="QVBoxLayout" name="verticalLayout_13">
+      <layout class="QVBoxLayout" name="verticalLayout_26">
        <item>
         <widget class="QGroupBox" name="gbMainWindow">
          <property name="title">
@@ -531,7 +597,7 @@
          <property name="title">
           <string> Secondary window  </string>
          </property>
-         <layout class="QHBoxLayout" name="horizontalLayout_14">
+         <layout class="QHBoxLayout" name="horizontalLayout_31">
           <item>
            <layout class="QVBoxLayout" name="verticalLayout_12">
             <item>
@@ -582,60 +648,189 @@
            </spacer>
           </item>
           <item>
-           <layout class="QVBoxLayout" name="verticalLayout_14">
-            <item>
-             <layout class="QHBoxLayout" name="horizontalLayout_13">
-              <item>
-               <widget class="QLabel" name="lblSecondaryBackground">
-                <property name="text">
-                 <string>Background color: </string>
-                </property>
-               </widget>
-              </item>
-              <item>
-               <widget class="QToolButton" name="btnSecondaryBackground">
-                <property name="sizePolicy">
-                 <sizepolicy hsizetype="Minimum" vsizetype="Fixed">
-                  <horstretch>0</horstretch>
-                  <verstretch>0</verstretch>
-                 </sizepolicy>
-                </property>
-                <property name="maximumSize">
-                 <size>
-                  <width>16777215</width>
-                  <height>24</height>
-                 </size>
-                </property>
-                <property name="text">
-                 <string>Choose ...</string>
-                </property>
-                <property name="iconSize">
-                 <size>
-                  <width>15</width>
-                  <height>15</height>
-                 </size>
-                </property>
-                <property name="toolButtonStyle">
-                 <enum>Qt::ToolButtonTextBesideIcon</enum>
-                </property>
-               </widget>
-              </item>
-             </layout>
-            </item>
-            <item>
-             <spacer name="verticalSpacer_7">
-              <property name="orientation">
-               <enum>Qt::Vertical</enum>
-              </property>
-              <property name="sizeHint" stdset="0">
-               <size>
-                <width>20</width>
-                <height>40</height>
-               </size>
-              </property>
-             </spacer>
-            </item>
-           </layout>
+           <widget class="QGroupBox" name="gbSecondaryCaption">
+            <property name="title">
+             <string> Caption settins  </string>
+            </property>
+            <layout class="QVBoxLayout" name="verticalLayout_25">
+             <item>
+              <widget class="QCheckBox" name="chkSecondaryCaption">
+               <property name="text">
+                <string>Window caption is visible</string>
+               </property>
+              </widget>
+             </item>
+             <item>
+              <widget class="QToolButton" name="pbCaptionBackgroundActive">
+               <property name="sizePolicy">
+                <sizepolicy hsizetype="Minimum" vsizetype="Fixed">
+                 <horstretch>0</horstretch>
+                 <verstretch>0</verstretch>
+                </sizepolicy>
+               </property>
+               <property name="minimumSize">
+                <size>
+                 <width>0</width>
+                 <height>25</height>
+                </size>
+               </property>
+               <property name="maximumSize">
+                <size>
+                 <width>16777215</width>
+                 <height>24</height>
+                </size>
+               </property>
+               <property name="text">
+                <string>Background ...</string>
+               </property>
+               <property name="iconSize">
+                <size>
+                 <width>15</width>
+                 <height>15</height>
+                </size>
+               </property>
+               <property name="toolButtonStyle">
+                <enum>Qt::ToolButtonTextBesideIcon</enum>
+               </property>
+              </widget>
+             </item>
+             <item>
+              <widget class="QPushButton" name="pbTextColorActive">
+               <property name="enabled">
+                <bool>true</bool>
+               </property>
+               <property name="minimumSize">
+                <size>
+                 <width>0</width>
+                 <height>25</height>
+                </size>
+               </property>
+               <property name="text">
+                <string>Text ...</string>
+               </property>
+               <property name="iconSize">
+                <size>
+                 <width>15</width>
+                 <height>15</height>
+                </size>
+               </property>
+              </widget>
+             </item>
+             <item>
+              <spacer name="verticalSpacer_9">
+               <property name="orientation">
+                <enum>Qt::Vertical</enum>
+               </property>
+               <property name="sizeHint" stdset="0">
+                <size>
+                 <width>20</width>
+                 <height>40</height>
+                </size>
+               </property>
+              </spacer>
+             </item>
+            </layout>
+           </widget>
+          </item>
+          <item>
+           <widget class="QGroupBox" name="gbSecWindowSettings">
+            <property name="title">
+             <string> Window settings </string>
+            </property>
+            <layout class="QVBoxLayout" name="verticalLayout_14">
+             <item>
+              <layout class="QHBoxLayout" name="horizontalLayout_13">
+               <item>
+                <widget class="QLabel" name="lblSecondaryBackground">
+                 <property name="text">
+                  <string>Background color: </string>
+                 </property>
+                </widget>
+               </item>
+               <item>
+                <widget class="QToolButton" name="btnSecondaryBackground">
+                 <property name="sizePolicy">
+                  <sizepolicy hsizetype="Minimum" vsizetype="Fixed">
+                   <horstretch>0</horstretch>
+                   <verstretch>0</verstretch>
+                  </sizepolicy>
+                 </property>
+                 <property name="maximumSize">
+                  <size>
+                   <width>16777215</width>
+                   <height>24</height>
+                  </size>
+                 </property>
+                 <property name="text">
+                  <string>Choose ...</string>
+                 </property>
+                 <property name="iconSize">
+                  <size>
+                   <width>15</width>
+                   <height>15</height>
+                  </size>
+                 </property>
+                 <property name="toolButtonStyle">
+                  <enum>Qt::ToolButtonTextBesideIcon</enum>
+                 </property>
+                </widget>
+               </item>
+              </layout>
+             </item>
+             <item>
+              <layout class="QHBoxLayout" name="horizontalLayout_14">
+               <item>
+                <widget class="QLabel" name="lblSecondaryFrame">
+                 <property name="text">
+                  <string>Frame color: </string>
+                 </property>
+                </widget>
+               </item>
+               <item>
+                <widget class="QToolButton" name="btnSecondaryFrame">
+                 <property name="sizePolicy">
+                  <sizepolicy hsizetype="Minimum" vsizetype="Fixed">
+                   <horstretch>0</horstretch>
+                   <verstretch>0</verstretch>
+                  </sizepolicy>
+                 </property>
+                 <property name="maximumSize">
+                  <size>
+                   <width>16777215</width>
+                   <height>24</height>
+                  </size>
+                 </property>
+                 <property name="text">
+                  <string>Choose ...</string>
+                 </property>
+                 <property name="iconSize">
+                  <size>
+                   <width>15</width>
+                   <height>15</height>
+                  </size>
+                 </property>
+                 <property name="toolButtonStyle">
+                  <enum>Qt::ToolButtonTextBesideIcon</enum>
+                 </property>
+                </widget>
+               </item>
+              </layout>
+             </item>
+             <item>
+              <spacer name="verticalSpacer_7">
+               <property name="orientation">
+                <enum>Qt::Vertical</enum>
+               </property>
+               <property name="sizeHint" stdset="0">
+                <size>
+                 <width>20</width>
+                 <height>28</height>
+                </size>
+               </property>
+              </spacer>
+             </item>
+            </layout>
+           </widget>
           </item>
           <item>
            <spacer name="horizontalSpacer_7">
@@ -700,6 +895,16 @@
              </widget>
             </item>
             <item>
+             <widget class="QCheckBox" name="chkUsageVisibleOnMain">
+              <property name="layoutDirection">
+               <enum>Qt::RightToLeft</enum>
+              </property>
+              <property name="text">
+               <string>    Device usage is visible on main window</string>
+              </property>
+             </widget>
+            </item>
+            <item>
              <spacer name="horizontalSpacer_2">
               <property name="orientation">
                <enum>Qt::Horizontal</enum>
@@ -748,6 +953,29 @@
         </widget>
        </item>
        <item>
+        <widget class="QGroupBox" name="gbPanelStop">
+         <property name="title">
+          <string> If device is stopped by guest ... </string>
+         </property>
+         <layout class="QVBoxLayout" name="verticalLayout_13">
+          <item>
+           <widget class="QRadioButton" name="rbStopInLine">
+            <property name="text">
+             <string>the STOP sign will be visible on the Status line</string>
+            </property>
+           </widget>
+          </item>
+          <item>
+           <widget class="QRadioButton" name="rbStopInNewLine">
+            <property name="text">
+             <string>the STOP sign will be visible under the Status line</string>
+            </property>
+           </widget>
+          </item>
+         </layout>
+        </widget>
+       </item>
+       <item>
         <spacer name="verticalSpacer">
          <property name="orientation">
           <enum>Qt::Vertical</enum>
@@ -766,46 +994,177 @@
       <attribute name="title">
        <string>Device</string>
       </attribute>
-      <layout class="QVBoxLayout" name="verticalLayout_7">
+      <layout class="QVBoxLayout" name="verticalLayout_27">
        <item>
-        <layout class="QHBoxLayout" name="horizontalLayout_5">
-         <item>
-          <widget class="QLabel" name="lblVatPercent">
-           <property name="text">
-            <string>VAT percent for device usage :</string>
-           </property>
-          </widget>
-         </item>
-         <item>
-          <widget class="QLineEdit" name="ledVatPercent">
-           <property name="sizePolicy">
-            <sizepolicy hsizetype="Fixed" vsizetype="Fixed">
-             <horstretch>0</horstretch>
-             <verstretch>0</verstretch>
-            </sizepolicy>
-           </property>
-           <property name="maximumSize">
-            <size>
-             <width>41</width>
-             <height>16777215</height>
-            </size>
-           </property>
-          </widget>
-         </item>
-         <item>
-          <spacer name="horizontalSpacer_9">
-           <property name="orientation">
-            <enum>Qt::Horizontal</enum>
-           </property>
-           <property name="sizeHint" stdset="0">
-            <size>
-             <width>40</width>
-             <height>20</height>
-            </size>
-           </property>
-          </spacer>
-         </item>
-        </layout>
+        <widget class="QGroupBox" name="gbLedger">
+         <property name="title">
+          <string> Device ledger </string>
+         </property>
+         <layout class="QVBoxLayout" name="verticalLayout_7">
+          <item>
+           <layout class="QHBoxLayout" name="horizontalLayout_5">
+            <item>
+             <widget class="QLabel" name="lblVatPercent">
+              <property name="text">
+               <string>VAT percent for device usage :</string>
+              </property>
+             </widget>
+            </item>
+            <item>
+             <widget class="QLineEdit" name="ledVatPercent">
+              <property name="sizePolicy">
+               <sizepolicy hsizetype="Fixed" vsizetype="Fixed">
+                <horstretch>0</horstretch>
+                <verstretch>0</verstretch>
+               </sizepolicy>
+              </property>
+              <property name="maximumSize">
+               <size>
+                <width>41</width>
+                <height>16777215</height>
+               </size>
+              </property>
+             </widget>
+            </item>
+            <item>
+             <spacer name="horizontalSpacer_9">
+              <property name="orientation">
+               <enum>Qt::Horizontal</enum>
+              </property>
+              <property name="sizeHint" stdset="0">
+               <size>
+                <width>40</width>
+                <height>20</height>
+               </size>
+              </property>
+             </spacer>
+            </item>
+           </layout>
+          </item>
+         </layout>
+        </widget>
+       </item>
+       <item>
+        <widget class="QGroupBox" name="gbSettings">
+         <property name="title">
+          <string> Settings </string>
+         </property>
+         <layout class="QGridLayout" name="gridLayout">
+          <item row="0" column="0">
+           <widget class="QLabel" name="lblDeviceAdminPassword">
+            <property name="text">
+             <string>Password for device admin :</string>
+            </property>
+           </widget>
+          </item>
+          <item row="0" column="1">
+           <widget class="QLineEdit" name="ledDeviceAdminPassword">
+            <property name="enabled">
+             <bool>false</bool>
+            </property>
+            <property name="echoMode">
+             <enum>QLineEdit::Password</enum>
+            </property>
+           </widget>
+          </item>
+          <item row="1" column="1">
+           <widget class="QLineEdit" name="ledDeviceAdminPasswordCheck">
+            <property name="enabled">
+             <bool>false</bool>
+            </property>
+            <property name="echoMode">
+             <enum>QLineEdit::Password</enum>
+            </property>
+           </widget>
+          </item>
+          <item row="0" column="2">
+           <widget class="QPushButton" name="pbModifyDevAdminPsw">
+            <property name="text">
+             <string/>
+            </property>
+           </widget>
+          </item>
+          <item row="1" column="0">
+           <widget class="QLabel" name="lblRetype">
+            <property name="text">
+             <string>Retype password :</string>
+            </property>
+           </widget>
+          </item>
+          <item row="1" column="2">
+           <widget class="QPushButton" name="pbCancelModifyPsw">
+            <property name="enabled">
+             <bool>false</bool>
+            </property>
+            <property name="text">
+             <string/>
+            </property>
+           </widget>
+          </item>
+         </layout>
+        </widget>
+       </item>
+       <item>
+        <widget class="QGroupBox" name="gbPanelText">
+         <property name="title">
+          <string> Status text </string>
+         </property>
+         <layout class="QVBoxLayout" name="verticalLayout_6">
+          <item>
+           <widget class="QLabel" name="lblShowPanelText">
+            <property name="text">
+             <string>Display the defined text when ...</string>
+            </property>
+           </widget>
+          </item>
+          <item>
+           <layout class="QFormLayout" name="formLayout_3">
+            <item row="0" column="0">
+             <widget class="QLabel" name="lblPanelTextSterile">
+              <property name="text">
+               <string>the device is not sterile :</string>
+              </property>
+             </widget>
+            </item>
+            <item row="0" column="1">
+             <layout class="QHBoxLayout" name="horizontalLayout_34">
+              <item>
+               <widget class="QLineEdit" name="ledPanelTextSterile"/>
+              </item>
+              <item>
+               <widget class="QCheckBox" name="chkVisibleSecSteril">
+                <property name="text">
+                 <string>Visible on secondary window</string>
+                </property>
+               </widget>
+              </item>
+             </layout>
+            </item>
+            <item row="1" column="0">
+             <widget class="QLabel" name="lblPanelTextTubeReplacement">
+              <property name="text">
+               <string>tube replacement is needed :</string>
+              </property>
+             </widget>
+            </item>
+            <item row="1" column="1">
+             <layout class="QHBoxLayout" name="horizontalLayout_35">
+              <item>
+               <widget class="QLineEdit" name="ledPanelTextTubeReplacement"/>
+              </item>
+              <item>
+               <widget class="QCheckBox" name="chkVisibleSecTubeReplace">
+                <property name="text">
+                 <string>Visible on secondary window</string>
+                </property>
+               </widget>
+              </item>
+             </layout>
+            </item>
+           </layout>
+          </item>
+         </layout>
+        </widget>
        </item>
        <item>
         <spacer name="verticalSpacer_4">
@@ -913,6 +1272,20 @@ is different :</string>
           </item>
           <item row="2" column="1">
            <widget class="QCheckBox" name="chkCardProductBarcodeLength">
+            <property name="text">
+             <string/>
+            </property>
+           </widget>
+          </item>
+          <item row="3" column="0">
+           <widget class="QLabel" name="lblBarcodeHidden">
+            <property name="text">
+             <string>Hidden for general users: </string>
+            </property>
+           </widget>
+          </item>
+          <item row="3" column="1">
+           <widget class="QCheckBox" name="chkBarcodeHidden">
             <property name="text">
              <string/>
             </property>
@@ -1146,7 +1519,7 @@ is different :</string>
       <attribute name="title">
        <string>Cassa</string>
       </attribute>
-      <layout class="QVBoxLayout" name="verticalLayout_8">
+      <layout class="QVBoxLayout" name="verticalLayout_22">
        <item>
         <widget class="QCheckBox" name="chkAutoCloseCassa">
          <property name="toolTip">
@@ -1160,14 +1533,20 @@ is different :</string>
        <item>
         <layout class="QHBoxLayout" name="horizontalLayout_6">
          <item>
-          <widget class="QWidget" name="widget" native="true">
-           <property name="maximumSize">
+          <spacer name="horizontalSpacer_20">
+           <property name="orientation">
+            <enum>Qt::Horizontal</enum>
+           </property>
+           <property name="sizeType">
+            <enum>QSizePolicy::Fixed</enum>
+           </property>
+           <property name="sizeHint" stdset="0">
             <size>
              <width>20</width>
-             <height>16777215</height>
+             <height>20</height>
             </size>
            </property>
-          </widget>
+          </spacer>
          </item>
          <item>
           <widget class="QCheckBox" name="chkCassaAutoWithdrawal">
@@ -1175,6 +1554,57 @@ is different :</string>
             <string>Automatically add cash withdrawal</string>
            </property>
           </widget>
+         </item>
+        </layout>
+       </item>
+       <item>
+        <widget class="QCheckBox" name="chkAutoOpenNewCassa">
+         <property name="text">
+          <string>Automatically create new cassa when date has been changed</string>
+         </property>
+        </widget>
+       </item>
+       <item>
+        <layout class="QHBoxLayout" name="horizontalLayout_27">
+         <item>
+          <spacer name="horizontalSpacer_21">
+           <property name="orientation">
+            <enum>Qt::Horizontal</enum>
+           </property>
+           <property name="sizeType">
+            <enum>QSizePolicy::Fixed</enum>
+           </property>
+           <property name="sizeHint" stdset="0">
+            <size>
+             <width>20</width>
+             <height>20</height>
+            </size>
+           </property>
+          </spacer>
+         </item>
+         <item>
+          <layout class="QVBoxLayout" name="verticalLayout_8">
+           <item>
+            <widget class="QRadioButton" name="rbCassaContinueWithBalance">
+             <property name="enabled">
+              <bool>false</bool>
+             </property>
+             <property name="text">
+              <string>With the previous cassa balance</string>
+             </property>
+            </widget>
+           </item>
+           <item>
+            <widget class="QRadioButton" name="rbCassaContinueWithoutBalance">
+             <property name="enabled">
+              <bool>false</bool>
+             </property>
+             <property name="text">
+              <string>with empty cassa</string>
+             </property>
+            </widget>
+           </item>
+          </layout>
          </item>
         </layout>
        </item>
@@ -1304,62 +1734,166 @@ is different :</string>
       </attribute>
       <layout class="QVBoxLayout" name="verticalLayout_10">
        <item>
-        <layout class="QFormLayout" name="formLayout_3">
-         <item row="0" column="0">
-          <widget class="QLabel" name="lblServerHost">
-           <property name="text">
-            <string>Server Host:</string>
-           </property>
-          </widget>
-         </item>
-         <item row="0" column="1">
-          <widget class="QLineEdit" name="ledServerHost">
-           <property name="enabled">
-            <bool>false</bool>
-           </property>
-          </widget>
-         </item>
-         <item row="1" column="0">
-          <widget class="QLabel" name="lblServerPort">
-           <property name="text">
-            <string>Server Port:</string>
-           </property>
-          </widget>
-         </item>
-         <item row="1" column="1">
-          <widget class="QLineEdit" name="ledServerPort">
-           <property name="enabled">
-            <bool>false</bool>
-           </property>
-          </widget>
-         </item>
-        </layout>
-       </item>
-       <item>
-        <widget class="QGroupBox" name="gbDBSynchron">
-         <property name="title">
-          <string> Automatically synchronize ...</string>
+        <widget class="QGroupBox" name="gbServerSettings">
+         <property name="enabled">
+          <bool>true</bool>
          </property>
-         <layout class="QVBoxLayout" name="verticalLayout_4">
+         <property name="title">
+          <string> Http server settings </string>
+         </property>
+         <layout class="QHBoxLayout" name="horizontalLayout_32">
           <item>
-           <widget class="QCheckBox" name="chkDBAutoSynchron">
-            <property name="enabled">
-             <bool>false</bool>
-            </property>
+           <widget class="QLabel" name="lblServerHost">
             <property name="text">
-             <string>database when exiting from application</string>
+             <string>Server address :</string>
             </property>
            </widget>
           </item>
           <item>
-           <widget class="QCheckBox" name="chkDBGlobalAutoSynchron">
+           <widget class="QLineEdit" name="ledServerHost">
             <property name="enabled">
-             <bool>false</bool>
-            </property>
-            <property name="text">
-             <string>studio independent data when application started.</string>
+             <bool>true</bool>
             </property>
            </widget>
+          </item>
+         </layout>
+        </widget>
+       </item>
+       <item>
+        <widget class="QGroupBox" name="gbHttpActionEnable">
+         <property name="enabled">
+          <bool>true</bool>
+         </property>
+         <property name="title">
+          <string> Actions </string>
+         </property>
+         <layout class="QVBoxLayout" name="verticalLayout_17">
+          <item>
+           <layout class="QHBoxLayout" name="horizontalLayout_30">
+            <item>
+             <widget class="QCheckBox" name="chkEnableHttp">
+              <property name="enabled">
+               <bool>true</bool>
+              </property>
+              <property name="text">
+               <string>Enable synchronization</string>
+              </property>
+             </widget>
+            </item>
+            <item>
+             <spacer name="horizontalSpacer_24">
+              <property name="orientation">
+               <enum>Qt::Horizontal</enum>
+              </property>
+              <property name="sizeHint" stdset="0">
+               <size>
+                <width>40</width>
+                <height>20</height>
+               </size>
+              </property>
+             </spacer>
+            </item>
+            <item>
+             <widget class="QPushButton" name="pbTestHttpConnection">
+              <property name="enabled">
+               <bool>false</bool>
+              </property>
+              <property name="text">
+               <string>Test connection</string>
+              </property>
+              <property name="iconSize">
+               <size>
+                <width>20</width>
+                <height>20</height>
+               </size>
+              </property>
+             </widget>
+            </item>
+           </layout>
+          </item>
+          <item>
+           <layout class="QHBoxLayout" name="horizontalLayout_29">
+            <item>
+             <widget class="QLabel" name="lblHttpWaitTime">
+              <property name="text">
+               <string>Length of Http message is visible in seconds :</string>
+              </property>
+             </widget>
+            </item>
+            <item>
+             <widget class="QSpinBox" name="sbHttpWaitTime">
+              <property name="enabled">
+               <bool>false</bool>
+              </property>
+              <property name="minimum">
+               <number>1</number>
+              </property>
+              <property name="maximum">
+               <number>10</number>
+              </property>
+             </widget>
+            </item>
+            <item>
+             <spacer name="horizontalSpacer_23">
+              <property name="orientation">
+               <enum>Qt::Horizontal</enum>
+              </property>
+              <property name="sizeHint" stdset="0">
+               <size>
+                <width>40</width>
+                <height>20</height>
+               </size>
+              </property>
+             </spacer>
+            </item>
+           </layout>
+          </item>
+          <item>
+           <layout class="QHBoxLayout" name="horizontalLayout_36">
+            <item>
+             <widget class="QCheckBox" name="chkHttpEnableAutoSync">
+              <property name="text">
+               <string>Synchronization automatically starts after</string>
+              </property>
+             </widget>
+            </item>
+            <item>
+             <widget class="QLineEdit" name="ledAutoSyncSeconds">
+              <property name="minimumSize">
+               <size>
+                <width>30</width>
+                <height>0</height>
+               </size>
+              </property>
+              <property name="maximumSize">
+               <size>
+                <width>30</width>
+                <height>16777215</height>
+               </size>
+              </property>
+             </widget>
+            </item>
+            <item>
+             <widget class="QLabel" name="lblAutoSync">
+              <property name="text">
+               <string>seconds if devices are not working</string>
+              </property>
+             </widget>
+            </item>
+            <item>
+             <spacer name="horizontalSpacer_27">
+              <property name="orientation">
+               <enum>Qt::Horizontal</enum>
+              </property>
+              <property name="sizeHint" stdset="0">
+               <size>
+                <width>40</width>
+                <height>20</height>
+               </size>
+              </property>
+             </spacer>
+            </item>
+           </layout>
           </item>
          </layout>
         </widget>
@@ -1383,43 +1917,141 @@ is different :</string>
       <attribute name="title">
        <string>Hardware</string>
       </attribute>
-      <layout class="QVBoxLayout" name="verticalLayout_6">
+      <layout class="QVBoxLayout" name="verticalLayout_28">
        <item>
-        <layout class="QHBoxLayout" name="horizontalLayout_3">
-         <item>
-          <widget class="QLabel" name="lblCOM">
-           <property name="text">
-            <string>COM Port:</string>
-           </property>
-          </widget>
-         </item>
-         <item>
-          <widget class="QSpinBox" name="spbCOM">
-           <property name="prefix">
-            <string>COM</string>
-           </property>
-           <property name="minimum">
-            <number>1</number>
-           </property>
-           <property name="maximum">
-            <number>16</number>
-           </property>
-          </widget>
-         </item>
-         <item>
-          <spacer name="horizontalSpacer">
-           <property name="orientation">
-            <enum>Qt::Horizontal</enum>
-           </property>
-           <property name="sizeHint" stdset="0">
-            <size>
-             <width>40</width>
-             <height>20</height>
-            </size>
-           </property>
-          </spacer>
-         </item>
-        </layout>
+        <widget class="QGroupBox" name="gbCommunication">
+         <property name="title">
+          <string> Communication </string>
+         </property>
+         <layout class="QFormLayout" name="formLayout_7">
+          <item row="0" column="0">
+           <widget class="QRadioButton" name="rbCommSerial">
+            <property name="text">
+             <string>Through serial port</string>
+            </property>
+            <property name="checked">
+             <bool>true</bool>
+            </property>
+           </widget>
+          </item>
+          <item row="0" column="1">
+           <layout class="QHBoxLayout" name="horizontalLayout_3">
+            <item>
+             <widget class="QLabel" name="lblCOM">
+              <property name="text">
+               <string>COM Port:</string>
+              </property>
+             </widget>
+            </item>
+            <item>
+             <widget class="QSpinBox" name="spbCOM">
+              <property name="prefix">
+               <string>COM</string>
+              </property>
+              <property name="minimum">
+               <number>1</number>
+              </property>
+              <property name="maximum">
+               <number>16</number>
+              </property>
+             </widget>
+            </item>
+            <item>
+             <spacer name="horizontalSpacer">
+              <property name="orientation">
+               <enum>Qt::Horizontal</enum>
+              </property>
+              <property name="sizeHint" stdset="0">
+               <size>
+                <width>40</width>
+                <height>20</height>
+               </size>
+              </property>
+             </spacer>
+            </item>
+           </layout>
+          </item>
+         </layout>
+        </widget>
+       </item>
+       <item>
+        <widget class="QGroupBox" name="gbForceCommand">
+         <property name="title">
+          <string> Force application to ... </string>
+         </property>
+         <layout class="QVBoxLayout" name="verticalLayout_4">
+          <item>
+           <layout class="QHBoxLayout" name="horizontalLayout_33">
+            <item>
+             <widget class="QCheckBox" name="chkForceSendTime">
+              <property name="text">
+               <string>send current time value to modul</string>
+              </property>
+             </widget>
+            </item>
+            <item>
+             <spacer name="horizontalSpacer_25">
+              <property name="orientation">
+               <enum>Qt::Horizontal</enum>
+              </property>
+              <property name="sizeType">
+               <enum>QSizePolicy::Fixed</enum>
+              </property>
+              <property name="sizeHint" stdset="0">
+               <size>
+                <width>10</width>
+                <height>20</height>
+               </size>
+              </property>
+             </spacer>
+            </item>
+            <item>
+             <widget class="QLineEdit" name="ledForceTimeSendTime">
+              <property name="minimumSize">
+               <size>
+                <width>30</width>
+                <height>0</height>
+               </size>
+              </property>
+              <property name="maximumSize">
+               <size>
+                <width>30</width>
+                <height>16777215</height>
+               </size>
+              </property>
+             </widget>
+            </item>
+            <item>
+             <widget class="QLabel" name="lblForceSendTime">
+              <property name="text">
+               <string>seconds from beginning of preparation time.</string>
+              </property>
+             </widget>
+            </item>
+            <item>
+             <spacer name="horizontalSpacer_26">
+              <property name="orientation">
+               <enum>Qt::Horizontal</enum>
+              </property>
+              <property name="sizeHint" stdset="0">
+               <size>
+                <width>40</width>
+                <height>20</height>
+               </size>
+              </property>
+             </spacer>
+            </item>
+           </layout>
+          </item>
+          <item>
+           <widget class="QCheckBox" name="chkForceButtonRead">
+            <property name="text">
+             <string>check modul buttons state</string>
+            </property>
+           </widget>
+          </item>
+         </layout>
+        </widget>
        </item>
        <item>
         <spacer name="verticalSpacer_3">
@@ -1430,6 +2062,261 @@ is different :</string>
           <size>
            <width>20</width>
            <height>245</height>
+          </size>
+         </property>
+        </spacer>
+       </item>
+      </layout>
+     </widget>
+     <widget class="QWidget" name="tab_Database">
+      <attribute name="title">
+       <string>Database</string>
+      </attribute>
+      <layout class="QVBoxLayout" name="verticalLayout_21">
+       <item>
+        <widget class="QGroupBox" name="gbDatabaseServer">
+         <property name="title">
+          <string> Database server </string>
+         </property>
+         <layout class="QVBoxLayout" name="verticalLayout_18">
+          <item>
+           <layout class="QHBoxLayout" name="horizontalLayout_22">
+            <item>
+             <widget class="QLabel" name="lblBinaryLocation">
+              <property name="text">
+               <string>Location of binaries :</string>
+              </property>
+             </widget>
+            </item>
+            <item>
+             <widget class="QLineEdit" name="ledBinaryLocation">
+              <property name="readOnly">
+               <bool>true</bool>
+              </property>
+             </widget>
+            </item>
+            <item>
+             <widget class="QPushButton" name="pbChangeBinaryLocation">
+              <property name="maximumSize">
+               <size>
+                <width>30</width>
+                <height>16777215</height>
+               </size>
+              </property>
+              <property name="text">
+               <string>...</string>
+              </property>
+             </widget>
+            </item>
+           </layout>
+          </item>
+         </layout>
+        </widget>
+       </item>
+       <item>
+        <widget class="QGroupBox" name="gbDatabaseBackup">
+         <property name="title">
+          <string> Database backup </string>
+         </property>
+         <layout class="QVBoxLayout" name="verticalLayout_20">
+          <item>
+           <layout class="QHBoxLayout" name="horizontalLayout_23">
+            <item>
+             <widget class="QLabel" name="lblBackupDir">
+              <property name="text">
+               <string>Backup location :</string>
+              </property>
+             </widget>
+            </item>
+            <item>
+             <widget class="QLineEdit" name="ledBackupLocation"/>
+            </item>
+            <item>
+             <widget class="QPushButton" name="pbBackupLocation">
+              <property name="maximumSize">
+               <size>
+                <width>30</width>
+                <height>16777215</height>
+               </size>
+              </property>
+              <property name="text">
+               <string>...</string>
+              </property>
+             </widget>
+            </item>
+           </layout>
+          </item>
+          <item>
+           <widget class="QCheckBox" name="chkBackupDatabase">
+            <property name="text">
+             <string>Force to backup database on exit (activated only once)</string>
+            </property>
+           </widget>
+          </item>
+          <item>
+           <widget class="QCheckBox" name="chkEnableDatabaseBackup">
+            <property name="text">
+             <string>Enable automatic database backup if confirmed</string>
+            </property>
+           </widget>
+          </item>
+          <item>
+           <layout class="QHBoxLayout" name="horizontalLayout_26">
+            <item>
+             <spacer name="horizontalSpacer_19">
+              <property name="orientation">
+               <enum>Qt::Horizontal</enum>
+              </property>
+              <property name="sizeType">
+               <enum>QSizePolicy::Fixed</enum>
+              </property>
+              <property name="sizeHint" stdset="0">
+               <size>
+                <width>20</width>
+                <height>20</height>
+               </size>
+              </property>
+             </spacer>
+            </item>
+            <item>
+             <layout class="QVBoxLayout" name="verticalLayout_19">
+              <item>
+               <widget class="QRadioButton" name="rbBackupOnExitIfConfirmed">
+                <property name="text">
+                 <string>after every exit</string>
+                </property>
+               </widget>
+              </item>
+              <item>
+               <widget class="QRadioButton" name="rbBackupOnExitCassaClose">
+                <property name="text">
+                 <string>after exit if cassa is closed</string>
+                </property>
+               </widget>
+              </item>
+              <item>
+               <widget class="QRadioButton" name="rbBackupOnEveryWeek">
+                <property name="text">
+                 <string>after exit on the last day of the week</string>
+                </property>
+               </widget>
+              </item>
+              <item>
+               <widget class="QRadioButton" name="rbBackupOnEveryMonth">
+                <property name="text">
+                 <string>after exit on the last day of the month</string>
+                </property>
+               </widget>
+              </item>
+              <item>
+               <widget class="QRadioButton" name="rbBackupOnExitDays">
+                <property name="text">
+                 <string>after exit on the selected day(s)</string>
+                </property>
+               </widget>
+              </item>
+              <item>
+               <layout class="QHBoxLayout" name="horizontalLayout_24">
+                <item>
+                 <widget class="QCheckBox" name="chkMonday">
+                  <property name="text">
+                   <string>Monday</string>
+                  </property>
+                  <property name="checked">
+                   <bool>false</bool>
+                  </property>
+                 </widget>
+                </item>
+                <item>
+                 <widget class="QCheckBox" name="chkTuesday">
+                  <property name="text">
+                   <string>Tuesday</string>
+                  </property>
+                 </widget>
+                </item>
+                <item>
+                 <widget class="QCheckBox" name="chkWednesday">
+                  <property name="text">
+                   <string>Wednesday</string>
+                  </property>
+                 </widget>
+                </item>
+                <item>
+                 <widget class="QCheckBox" name="chkThursday">
+                  <property name="text">
+                   <string>Thursday</string>
+                  </property>
+                 </widget>
+                </item>
+                <item>
+                 <widget class="QCheckBox" name="chkFriday">
+                  <property name="text">
+                   <string>Friday</string>
+                  </property>
+                 </widget>
+                </item>
+                <item>
+                 <spacer name="horizontalSpacer_17">
+                  <property name="orientation">
+                   <enum>Qt::Horizontal</enum>
+                  </property>
+                  <property name="sizeHint" stdset="0">
+                   <size>
+                    <width>40</width>
+                    <height>20</height>
+                   </size>
+                  </property>
+                 </spacer>
+                </item>
+               </layout>
+              </item>
+              <item>
+               <layout class="QHBoxLayout" name="horizontalLayout_25">
+                <item>
+                 <widget class="QCheckBox" name="chkSaturday">
+                  <property name="text">
+                   <string>Saturday</string>
+                  </property>
+                 </widget>
+                </item>
+                <item>
+                 <widget class="QCheckBox" name="chkSunday">
+                  <property name="text">
+                   <string>Sunday</string>
+                  </property>
+                 </widget>
+                </item>
+                <item>
+                 <spacer name="horizontalSpacer_18">
+                  <property name="orientation">
+                   <enum>Qt::Horizontal</enum>
+                  </property>
+                  <property name="sizeHint" stdset="0">
+                   <size>
+                    <width>40</width>
+                    <height>20</height>
+                   </size>
+                  </property>
+                 </spacer>
+                </item>
+               </layout>
+              </item>
+             </layout>
+            </item>
+           </layout>
+          </item>
+         </layout>
+        </widget>
+       </item>
+       <item>
+        <spacer name="verticalSpacer_8">
+         <property name="orientation">
+          <enum>Qt::Vertical</enum>
+         </property>
+         <property name="sizeHint" stdset="0">
+          <size>
+           <width>20</width>
+           <height>20</height>
           </size>
          </property>
         </spacer>

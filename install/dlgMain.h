@@ -58,7 +58,14 @@ class dlgMain : public QDialog, protected Ui::dlgMain
     Q_OBJECT
 
 public:
-    explicit dlgMain(QWidget *parent = 0, bool bUninstall = false);
+    explicit dlgMain(QWidget *parent = 0,
+                     bool bUninstall = false,
+                     bool bSilent = false,
+                     int nDeviceNum = 3,
+                     int nComPort = 0,
+                     QString qsLangInstall = "hu",
+                     QString qsLangApp = "hu",
+                     QString qsDir = "\"c:/Program Files/belenus\"");
     ~dlgMain();
 
 protected:
@@ -74,7 +81,7 @@ private:
     QString                  m_qsPathDesktop;
     QString                  m_qsPathWampServer;
 
-    bool                     m_bBelenusAlreadyInstalled;
+//    bool                     m_bBelenusAlreadyInstalled;
     bool                     m_bWampServerAlreadyInstalled;
     bool                     m_bDatabaseAlreadyInstalled;
     bool                     m_bRootUserExists;
@@ -93,7 +100,7 @@ private:
     int                      m_nComPort;
     int                      m_nCountDevices;
 
-    bool                     m_bInstallStarted;         // Identifies if install process started
+//    bool                     m_bInstallStarted;         // Identifies if install process started
                                                         // true after component selection
     bool                     m_bProcessWamp;
     bool                     m_bProcessDatabase;
@@ -115,6 +122,7 @@ private:
     bool                     m_bIsWindows32Bit;
 
     bool                     m_bUninstallCalled;
+    bool                     m_bSilentIstallCalled;
     QString                  m_qsProcessErrorMsg;
     QString                  m_qsIniFileName;
 
@@ -124,6 +132,9 @@ private:
 
     QString                  m_qsAppVersion;
     QString                  m_qsDBVersion;
+
+    QString                  m_qsLangInstall;
+    QString                  m_qsLangApp;
 
     void                    _initializeInstall();
     void                    _uninstallBelenus();
@@ -143,6 +154,7 @@ private:
     void                    _initializeFinishPage();
 
     bool                    _processPage( int p_nPage );
+    bool                    _processWelcomePage();
     bool                    _processSelectionPage();
     bool                    _processComponentSelectionPage();
     bool                    _processWampInstallPage();
@@ -179,6 +191,7 @@ private:
     bool                    _emptyTargetDirectory( QString p_qsPath );
     bool                    _createTargetDirectory( QString p_qsPath );
     bool                    _copyClientFile( QString p_qsFileName, bool p_bInstall = true );
+    bool                    _copyFile( QString p_qsSrc, QString p_qsDst );
     bool                    _copyInstallFiles( QString p_qsFileName, bool p_bInstall = true );
     bool                    _createFolderShortcut();
     void                    _logProcess( QString p_qsLog, bool p_bInsertNewLine = true );
@@ -207,6 +220,7 @@ private slots:
     void on_pbCancel_clicked();
     void on_pbPrev_clicked();
     void on_pbNext_clicked();
+    void on_cmbLanguageApp_currentIndexChanged(int);
 };
 //====================================================================================
 #endif // DLGMAIN_H

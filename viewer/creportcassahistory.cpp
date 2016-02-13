@@ -3,7 +3,7 @@
 #include "creportcassahistory.h"
 #include "currency.h"
 
-cReportCassaHistory::cReportCassaHistory(QWidget *parent, QString p_qsReportName, bool p_bFilterEnable ) : cReport(parent,p_qsReportName)
+cReportCassaHistory::cReportCassaHistory(QWidget *parent, QString p_qsReportName, bool p_bIsAdmin, unsigned int p_uiUserId) : cReport(parent,p_qsReportName)
 {
     cTracer obTrace( "cReportCassaHistory::cReportCassaHistory" );
 
@@ -11,11 +11,11 @@ cReportCassaHistory::cReportCassaHistory(QWidget *parent, QString p_qsReportName
     m_qsReportDescription   = tr( "This report shows all of the events and action for the selected owner and date intervall. "
                                   "Please select the first and last day of the date intervall and the cassa owner you interested in." );
 
-    _setDateStartEnabled( p_bFilterEnable );
+    _setDateStartEnabled( p_bIsAdmin );
     _setDateStartLabelText( tr("First date of intervall :") );
     m_qdStartDate = QDate::currentDate();
 
-    _setDateStopEnabled( p_bFilterEnable );
+    _setDateStopEnabled( p_bIsAdmin );
     _setDateStopLabelText( tr("Last date of intervall :") );
     m_qdStopDate = QDate::currentDate();
 
@@ -24,16 +24,26 @@ cReportCassaHistory::cReportCassaHistory(QWidget *parent, QString p_qsReportName
 
     QStringList qslDataTypes;
 
-    qslDataTypes << QString( "0|%1" ).arg( tr("All users") );
-
-    QSqlQuery   *poQueryResult = g_poDB->executeQTQuery( "SELECT userId, realName FROM users WHERE userId>1 AND active=1" );
-
-    while( poQueryResult->next() )
+    if( p_bIsAdmin )
     {
+        qslDataTypes << QString( "0|%1" ).arg( tr("All users") );
+
+        QSqlQuery   *poQueryResult = g_poDB->executeQTQuery( "SELECT userId, realName FROM users WHERE userId>1 AND active=1" );
+
+        while( poQueryResult->next() )
+        {
+            qslDataTypes << QString( "%1|%2" ).arg( poQueryResult->value(0).toString() ).arg( poQueryResult->value(1).toString() );
+        }
+
+        setFilterDataType( QString( "0|%1" ).arg( tr("All users") ) );
+    }
+    else
+    {
+        QSqlQuery   *poQueryResult = g_poDB->executeQTQuery( QString("SELECT userId, realName FROM users WHERE userId=%1 AND active=1").arg(p_uiUserId) );
+
+        poQueryResult->first();
         qslDataTypes << QString( "%1|%2" ).arg( poQueryResult->value(0).toString() ).arg( poQueryResult->value(1).toString() );
     }
-
-    setFilterDataType( QString( "0|%1" ).arg( tr("All users") ) );
     setFilterDataTypeList( qslDataTypes.join("#") );
 
     setFilterIsVisible( false );
@@ -102,7 +112,9 @@ void cReportCassaHistory::refreshReport()
     addTableCell( tr( "Action amount" ), "center bold" );
     addTableCell( tr( "Description" ), "bold" );
 
-//    int nTotalAmount = 0;
+    int nTotalCash   = 0;
+    int nTotalCard   = 0;
+    int nTotalAmount = 0;
 
     while( poQueryResult->next() )
     {
@@ -120,7 +132,9 @@ void cReportCassaHistory::refreshReport()
             cCurrency   obCassaActionCard( poQueryResult->value(3).toInt() );
             cCurrency   obCassaActionValue( poQueryResult->value(4).toInt() );
 
-//            nTotalAmount += poQueryResult->value(2).toInt();
+            nTotalCash   += poQueryResult->value(2).toInt();
+            nTotalCard   += poQueryResult->value(3).toInt();
+            nTotalAmount += poQueryResult->value(4).toInt();
 
             addTableRow();
             addTableCell( poQueryResult->value(0).toString() );
@@ -132,15 +146,18 @@ void cReportCassaHistory::refreshReport()
         }
     }
 
-/*    cCurrency   obTotalAmount( nTotalAmount );
+    cCurrency   obTotalCash( nTotalCash );
+    cCurrency   obTotalCard( nTotalCard );
+    cCurrency   obTotalAmount( nTotalAmount );
 
     addTableRow();
-    addTableCell( tr( "Sum total" ), "bold" );
+    addTableCell( tr( "Sum" ), "bold" );
     addTableCell();
-    addTableCell();
+    addTableCell( obTotalCash.currencyFullStringShort(), "right bold" );
+    addTableCell( obTotalCard.currencyFullStringShort(), "right bold" );
     addTableCell( obTotalAmount.currencyFullStringShort(), "right bold" );
     addTableCell();
-*/
+
     finishReport();
 
     m_dlgProgress.hide();

@@ -91,11 +91,7 @@ void cDBReasonToVisit::save() throw( cSevException )
     if( m_uiId )
     {
         qsQuery = "UPDATE";
-
-        if( m_stArchive.compare("NEW") != 0 )
-        {
-            m_stArchive = "MOD";
-        }
+        m_stArchive = "MOD";
     }
     else
     {

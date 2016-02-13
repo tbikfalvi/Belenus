@@ -7,6 +7,7 @@
 #include "../db/dbpostponed.h"
 #include "../db/dbaddress.h"
 #include "../db/dbpatientcard.h"
+#include "../dlg/dlgprogress.h"
 
 class cDlgGuestEdit : public QDialog, private Ui::dlgGuestEdit
 {
@@ -16,11 +17,14 @@ public:
     cDlgGuestEdit( QWidget *p_poParent = 0, cDBGuest *p_poGuest = NULL, cDBPostponed *p_poPostponed = NULL );
     ~cDlgGuestEdit();
 
+    unsigned int     guestId();
+
 protected:
     cDBGuest        *m_poGuest;
     cDBPostponed    *m_poPostponed;
     cDBAddress      *m_poAddress;
     cDBPatientCard  *m_poPatientCard;
+    cDlgProgress    *m_dlgProgress;
 
 private slots:
     void on_pbEditDiscount_clicked();

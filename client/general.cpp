@@ -15,9 +15,14 @@
 
 #include <QMessageBox>
 #include <QList>
+#include <QProcess>
 
 #include "general.h"
 #include "belenus.h"
+#include "dlg/dlglogin.h"
+#include "dlg/dlginformation.h"
+#include "db/dbguest.h"
+#include "db/dbpatientcardtype.h"
 
 //====================================================================================
 cGeneral::cGeneral()
@@ -64,6 +69,8 @@ int cGeneral::customMsgBox(QWidget *parent, msgBoxType msgtype, QString buttonst
 //====================================================================================
 {
     QMessageBox msgBox;
+
+    //msgBox.setParent( parent );
 
     switch(msgtype)
     {
@@ -117,6 +124,245 @@ int cGeneral::customMsgBox(QWidget *parent, msgBoxType msgtype, QString buttonst
     return nRet;
 }
 //====================================================================================
+void cGeneral::backupDatabase(QWidget *parent)
+{
+    bool    bBackupDatabase = false;
+
+    if( g_poPrefs->isBackupDatabase() )
+    {
+        g_obLogger(cSeverity::INFO) << "Backup database process enabled";
+
+        QStringList     qslDays;
+        QString         qsBackupDays = g_poPrefs->getBackupDatabaseDays();
+        int             nDaysInMonth = QDate::currentDate().daysInMonth();
+
+        qslDays << QObject::tr("Mon")
+                << QObject::tr("Tue")
+                << QObject::tr("Wed")
+                << QObject::tr("Thu")
+                << QObject::tr("Fri")
+                << QObject::tr("Sat")
+                << QObject::tr("Sun");
+
+        if( g_poPrefs->getBackupDatabaseType() == 1 )
+        {
+            g_obLogger(cSeverity::INFO) << " on every exit" << EOM;
+            bBackupDatabase = true;
+        }
+        else if( g_poPrefs->getBackupDatabaseType() == 2 && g_obCassa.isCassaClosed() )
+        {
+            g_obLogger(cSeverity::INFO) << " on exit if cassa is closed" << EOM;
+            bBackupDatabase = true;
+        }
+        else if( g_poPrefs->getBackupDatabaseType() == 3 && QDate::currentDate().dayOfWeek() == 7 )
+        {
+            g_obLogger(cSeverity::INFO) << " on exit on the last day of week" << EOM;
+            bBackupDatabase = true;
+        }
+        else if( g_poPrefs->getBackupDatabaseType() == 4 && QDate::currentDate().day() == nDaysInMonth )
+        {
+            g_obLogger(cSeverity::INFO) << " on exit on the last day of month" << EOM;
+            bBackupDatabase = true;
+        }
+        else if( g_poPrefs->getBackupDatabaseType() == 5 && qsBackupDays.contains(qslDays.at( QDate::currentDate().dayOfWeek()-1 ), Qt::CaseInsensitive) )
+        {
+            g_obLogger(cSeverity::INFO) << " on exit on the selected day: " << qslDays.at( QDate::currentDate().dayOfWeek()-1 ) << EOM;
+            bBackupDatabase = true;
+        }
+    }
+
+    if( g_poPrefs->isForceBackupDatabase() )
+    {
+        g_obLogger(cSeverity::INFO) << "User selected to force database backup process" << EOM;
+        bBackupDatabase = true;
+    }
+
+    if( bBackupDatabase )
+    {
+        if( QMessageBox::question( parent, QObject::tr("Question"),
+                                   QObject::tr("Do you want to backup database now?"),
+                                   QMessageBox::Yes | QMessageBox::No, QMessageBox::No ) == QMessageBox::No )
+        {
+            bBackupDatabase = false;
+        }
+    }
+
+    if( bBackupDatabase )
+    {
+        g_obLogger(cSeverity::INFO) << "Database backup process initiated" << EOM;
+        QProcess::startDetached( "dbbackup.exe" );
+    }
+}
+//====================================================================================
+bool cGeneral::isSystemAdmin()
+//------------------------------------------------------------------------------------
+{
+    bool    bRet = false;
+
+    cDlgLogIn   *poDlgLogIn = new cDlgLogIn();
+
+    if( poDlgLogIn->exec() == QDialog::Accepted )
+    {
+        QSqlQuery *poQuery = g_poDB->executeQTQuery( "SELECT password FROM users WHERE userId=1" );
+        poQuery->first();
+        QString qsPsw = poQuery->value(0).toString();
+
+        if( poDlgLogIn->m_qsPassword.compare( qsPsw ) == 0 )
+        {
+            bRet = true;
+        }
+    }
+
+    return bRet;
+}
+//====================================================================================
+bool cGeneral::isExtendedAdmin()
+//------------------------------------------------------------------------------------
+{
+    bool    bRet = false;
+
+    cDlgLogIn   *poDlgLogIn = new cDlgLogIn();
+
+    if( poDlgLogIn->exec() == QDialog::Accepted )
+    {
+        QSqlQuery *poQuery = g_poDB->executeQTQuery( "SELECT value FROM settings WHERE identifier='ADMIN_EXT_PASSWORD' " );
+        poQuery->first();
+        QString qsPsw = poQuery->value(0).toString();
+
+        if( poDlgLogIn->m_qsPassword.compare( qsPsw ) == 0 )
+        {
+            bRet = true;
+        }
+    }
+
+    return bRet;
+}
+//====================================================================================
+bool cGeneral::isExtendedOrSystemAdmin()
+//------------------------------------------------------------------------------------
+{
+    bool    bRet = false;
+
+    cDlgLogIn   *poDlgLogIn = new cDlgLogIn();
+
+    if( poDlgLogIn->exec() == QDialog::Accepted )
+    {
+        QSqlQuery *poQuery;
+
+        poQuery = g_poDB->executeQTQuery( "SELECT password FROM users WHERE userId=1" );
+        poQuery->first();
+        QString qsPsw1 = poQuery->value(0).toString();
+
+        poQuery = g_poDB->executeQTQuery( "SELECT value FROM settings WHERE identifier='ADMIN_EXT_PASSWORD' " );
+        poQuery->first();
+        QString qsPsw2 = poQuery->value(0).toString();
+
+        if( poDlgLogIn->m_qsPassword.compare( qsPsw1 ) == 0 ||
+            poDlgLogIn->m_qsPassword.compare( qsPsw2 ) == 0 )
+        {
+            bRet = true;
+        }
+    }
+
+    return bRet;
+}
+//====================================================================================
+void cGeneral::showPatientCardInformation(QString p_qsBarcode)
+//------------------------------------------------------------------------------------
+{
+    try
+    {
+        cDlgInformation obDlgInformation;
+        cDBPatientCard  obDBPatientCard;
+        cDBGuest        obDBGuest;
+        QString         qsText = "";
+
+        obDBPatientCard.load( p_qsBarcode );
+        obDBGuest.load( obDBPatientCard.patientId() );
+
+        qsText.append( QString("<table>") );
+        qsText.append( QObject::tr("<tr><td width=\"100\"><b>Owner:</b></td><td>%1</td></tr>").arg( obDBGuest.name() ) );
+        qsText.append( QObject::tr("<tr><td><b>Valid:</b></td><td>%1 -> %2</td></tr>").arg( obDBPatientCard.validDateFrom() )
+                                                                             .arg( obDBPatientCard.validDateTo() ) );
+        qsText.append( QObject::tr("<tr><td><b>Units:</b></td><td>%1</td></tr>").arg( obDBPatientCard.units() ) );
+        qsText.append( QObject::tr("<tr><td><b>Comment:</b></td></tr>") );
+        qsText.append( QString("<tr><td>%1</td></tr>").arg( obDBPatientCard.comment() ) );
+        qsText.append( QString("</table>") );
+
+        QString qsQuery = QString( "SELECT patientCardUnitId, patientCardTypeId, unitTime, validDateFrom, validDateTo, COUNT(unitTime) "
+                                   "FROM patientcardunits "
+                                   "WHERE patientCardId=%1 "
+                                   "AND validDateFrom<=CURDATE() AND validDateTo>=CURDATE() "
+                                   "AND prepared=0 "
+                                   "AND active=1 "
+                                   "GROUP BY unitTime, validDateTo, patientCardTypeId ORDER BY validDateTo, patientCardUnitId" ).arg( obDBPatientCard.id() );
+        QSqlQuery  *poQuery = g_poDB->executeQTQuery( qsQuery );
+
+        qsText.append( QObject::tr("<p><b>Valid units:</b><br>") );
+
+        while( poQuery->next() )
+        {
+            QString qsValid;
+            unsigned int uiPCTId = poQuery->value( 1 ).toUInt();
+
+            if( uiPCTId == 0 )
+            {
+                uiPCTId = obDBPatientCard.patientCardTypeId();
+            }
+            if( uiPCTId > 0 )
+            {
+                cDBPatientCardType obDBPatientCardType;
+
+                obDBPatientCardType.load( uiPCTId );
+                obDBPatientCard.isPatientCardCanBeUsed( uiPCTId, &qsValid );
+                qsText.append( QObject::tr("<br><b>%1 units (%2 minutes) (%3) valid on</b>%4")
+                               .arg( poQuery->value( 5 ).toString() )
+                               .arg( poQuery->value( 2 ).toString() )
+                               .arg( obDBPatientCardType.name() )
+                               .arg( qsValid ) );
+            }
+        }
+
+        if( g_poPrefs->isBarcodeHidden() && !g_obUser.isInGroup( cAccessGroup::ADMIN ) )
+        {
+            QString qsBarcode = obDBPatientCard.barcode();
+            obDlgInformation.setInformationTitle( qsBarcode.fill('*') );
+        }
+        else
+        {
+            obDlgInformation.setInformationTitle( obDBPatientCard.barcode() );
+        }
+        obDlgInformation.setInformationText( qsText );
+        obDlgInformation.exec();
+    }
+    catch( cSevException &e )
+    {
+        g_obLogger(e.severity()) << e.what() << EOM;
+    }
+}
+//====================================================================================
+bool cGeneral::isShoppingCartHasItems()
+//------------------------------------------------------------------------------------
+{
+    bool bRet = false;
+
+    try
+    {
+        QSqlQuery  *poQuery = g_poDB->executeQTQuery( "SELECT * FROM `shoppingcartitems` WHERE shoppingCartItemId>0" );
+
+        if( poQuery->size() > 0 )
+        {
+            bRet = true;
+        }
+    }
+    catch( cSevException &e )
+    {
+        g_obLogger(e.severity()) << e.what() << EOM;
+    }
+
+    return bRet;
+}
+//====================================================================================
 //QString cGeneral::convertCurrency( int p_nCurrencyValue, QString p_qsCurrency )
 //====================================================================================
 /*{
@@ -149,6 +395,7 @@ cCurrency::cCurrency(const QString &p_qsCurrencyString, currType p_ctCurrencyTyp
     m_nValueRight   = 0;
     m_ctCurrType    = p_ctCurrencyType;
     m_nVatValue     = p_nVat;
+    m_bIsNegative   = false;
 
     _init( p_qsCurrencyString, p_ctCurrencyType, p_nVat );
 }
@@ -178,7 +425,7 @@ cCurrency::cCurrency(int p_nCurrencyValue, currType p_ctCurrencyType, int p_nVat
 //====================================================================================
 void cCurrency::_init(const QString &p_qsCurrencyString, currType p_ctCurrencyType, int p_nVat)
 {
-//    g_obLogger(cSeverity::INFO) << "fullstr: [" << p_qsCurrencyString << "]" << EOM;
+    g_obLogger(cSeverity::DEBUG) << "fullstr: [" << p_qsCurrencyString << "]" << EOM;
 
     QString qsPureCurrency = p_qsCurrencyString;
 
@@ -201,7 +448,16 @@ void cCurrency::_init(const QString &p_qsCurrencyString, currType p_ctCurrencyTy
     // Remove spaces
     qsPureCurrency = qsPureCurrency.remove( " " );
 
-//    g_obLogger(cSeverity::INFO) << "purestr: [" << qsPureCurrency << "]" << EOM;
+    g_obLogger(cSeverity::DEBUG) << "purestr: [" << qsPureCurrency << "]" << EOM;
+
+    m_bIsNegative = false;
+    // Remove the minus sign
+    if( qsPureCurrency.left(1).compare("-") == 0 )
+    {
+        m_bIsNegative = true;
+        qsPureCurrency = qsPureCurrency.remove( "-" );
+    }
+
     // Get value before and after decimal separator
     if( qsPureCurrency.contains( g_poPrefs->getCurrencyDecimalSeparator() ) )
     {
@@ -216,9 +472,17 @@ void cCurrency::_init(const QString &p_qsCurrencyString, currType p_ctCurrencyTy
         m_nValueLeft    = qsPureCurrency.toInt();
         m_nValueRight   = 0;
     }
+    g_obLogger(cSeverity::DEBUG) << "nValueLeft: ["
+                                 << m_nValueLeft
+                                 << "] nValueRight: ["
+                                 << m_nValueRight
+                                 << "]"
+                                 << EOM;
 
     // Calculate full currency value (original *100)
     m_nValue = m_nValueLeft * 100 + m_nValueRight;
+
+    g_obLogger(cSeverity::DEBUG) << "m_nValue: [" << m_nValue << "]" << EOM;
 
     if( m_nVatValue > 0 )
     {
@@ -239,7 +503,7 @@ void cCurrency::_init(const QString &p_qsCurrencyString, currType p_ctCurrencyTy
         m_nValueGross = m_nValue;
     }
 
-//    g_obLogger(cSeverity::INFO) << "net/gross " << QString("%1/%2").arg(m_nValueNet).arg(m_nValueGross) << EOM;
+    g_obLogger(cSeverity::DEBUG) << "net/gross " << QString("%1/%2").arg(m_nValueNet).arg(m_nValueGross) << EOM;
 }
 //====================================================================================
 cCurrency::~cCurrency()
@@ -262,8 +526,12 @@ QString cCurrency::currencyValue(currType p_ctCurrencyType)
     m_nValueRight = m_nValue % 100;
 
 //    g_obLogger(cSeverity::DEBUG) << "L/R " << QString("%1/%2").arg(m_nValueLeft).arg(m_nValueRight) << EOM;
+    g_obLogger(cSeverity::DEBUG) << "RET currencyValue ["
+                                 << QString( "%1%2" ).arg(m_bIsNegative?"-":"").arg( m_nValue )
+                                 << "]"
+                                 << EOM;
 
-    return QString( "%1" ).arg( m_nValue );
+    return QString( "%1%2" ).arg(m_bIsNegative?"-":"").arg( m_nValue );
 }
 //====================================================================================
 QString cCurrency::currencyString(currType p_ctCurrencyType)
@@ -273,10 +541,25 @@ QString cCurrency::currencyString(currType p_ctCurrencyType)
     QString qsRet = "";
 
     if( m_nValueRight > 0 )
-        qsRet = QString( "%1%2%3" ).arg(m_nValueLeft).arg(g_poPrefs->getCurrencyDecimalSeparator()).arg(m_nValueRight);
-    else
-        qsRet = QString( "%1" ).arg(m_nValueLeft);
+    {
+        QString qsRight = "";
 
+        if( m_nValueRight < 10 )
+            qsRight.append( "0" );
+
+        qsRight.append( QString::number(m_nValueRight) );
+
+        qsRet = QString( "%1%2%3%4" ).arg(m_bIsNegative?"-":"").arg(m_nValueLeft).arg(g_poPrefs->getCurrencyDecimalSeparator()).arg(qsRight);
+    }
+    else
+    {
+        qsRet = QString( "%1%2" ).arg(m_bIsNegative?"-":"").arg(m_nValueLeft);
+    }
+
+    g_obLogger(cSeverity::DEBUG) << "RET currencyString ["
+                                 << qsRet
+                                 << "]"
+                                 << EOM;
     return qsRet;
 }
 //====================================================================================
@@ -287,21 +570,50 @@ QString cCurrency::currencyStringSeparator(currType p_ctCurrencyType)
     QString qsRet = "";
 
     if( m_nValueRight > 0 )
-        qsRet = QString( "%1%2%3" ).arg(_separatedValue(m_nValueLeft)).arg(g_poPrefs->getCurrencyDecimalSeparator()).arg(m_nValueRight);
-    else
-        qsRet = QString( "%1" ).arg(_separatedValue(m_nValueLeft));
+    {
+        QString qsRight = "";
 
+        if( m_nValueRight < 10 )
+            qsRight.append( "0" );
+
+        qsRight.append( QString::number(m_nValueRight) );
+
+        qsRet = QString( "%1%2%3%4" ).arg(m_bIsNegative?"-":"")
+                                     .arg(_separatedValue(m_nValueLeft))
+                                     .arg(g_poPrefs->getCurrencyDecimalSeparator())
+                                     .arg(qsRight);
+    }
+    else
+    {
+        qsRet = QString( "%1%2" ).arg(m_bIsNegative?"-":"").arg(_separatedValue(m_nValueLeft));
+    }
+
+    g_obLogger(cSeverity::DEBUG) << "RET currencyStringSeparator ["
+                                 << qsRet
+                                 << "]"
+                                 << EOM;
     return qsRet;
 }
 //====================================================================================
 QString cCurrency::currencyFullStringShort( currType p_ctCurrencyType )
 {
-    return QString( "%1 %2" ).arg(currencyStringSeparator(p_ctCurrencyType)).arg(g_poPrefs->getCurrencyShort());
+    QString qsRet = QString( "%1 %2" ).arg(currencyStringSeparator(p_ctCurrencyType)).arg(g_poPrefs->getCurrencyShort());
+
+    g_obLogger(cSeverity::DEBUG) << "RET currencyFullStringShort ["
+                                 << qsRet
+                                 << "]"
+                                 << EOM;
+    return qsRet;
 }
 //====================================================================================
 QString cCurrency::currencyFullStringLong( currType p_ctCurrencyType )
 {
-    return QString( "%1 %2" ).arg(currencyStringSeparator(p_ctCurrencyType)).arg(g_poPrefs->getCurrencyLong());
+    QString qsRet = QString( "%1 %2" ).arg(currencyStringSeparator(p_ctCurrencyType)).arg(g_poPrefs->getCurrencyLong());
+    g_obLogger(cSeverity::DEBUG) << "RET currencyFullStringLong ["
+                                 << qsRet
+                                 << "]"
+                                 << EOM;
+    return qsRet;
 }
 //====================================================================================
 QString cCurrency::_separatedValue(int p_nValue)

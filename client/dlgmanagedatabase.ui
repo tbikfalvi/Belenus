@@ -6,14 +6,14 @@
    <rect>
     <x>0</x>
     <y>0</y>
-    <width>530</width>
-    <height>200</height>
+    <width>541</width>
+    <height>295</height>
    </rect>
   </property>
   <property name="windowTitle">
    <string>Dialog</string>
   </property>
-  <layout class="QHBoxLayout" name="horizontalLayout">
+  <layout class="QHBoxLayout" name="horizontalLayout_4">
    <item>
     <layout class="QVBoxLayout" name="verticalLayout_3">
      <item>
@@ -30,11 +30,39 @@
          </widget>
         </item>
         <item>
+         <widget class="QRadioButton" name="rbUpdatePCUnitType">
+          <property name="text">
+           <string>Update unit time and type of patientcard units</string>
+          </property>
+         </widget>
+        </item>
+        <item>
          <widget class="QRadioButton" name="rbDeactivatePCs">
           <property name="text">
            <string>Deactivate patientcards that are no longer valid</string>
           </property>
          </widget>
+        </item>
+        <item>
+         <widget class="QRadioButton" name="rbDeleteInactivePCs">
+          <property name="text">
+           <string>Delete deactivated patientcards and related history entries</string>
+          </property>
+         </widget>
+        </item>
+        <item>
+         <layout class="QHBoxLayout" name="horizontalLayout_3">
+          <item>
+           <widget class="QRadioButton" name="rbAssignPCTToPC">
+            <property name="text">
+             <string>Repair patientcards without patientcard type</string>
+            </property>
+           </widget>
+          </item>
+          <item>
+           <widget class="QComboBox" name="cmbPatientCardType"/>
+          </item>
+         </layout>
         </item>
         <item>
          <widget class="QRadioButton" name="rbDeleteNotUsedPCTs">
@@ -64,11 +92,35 @@
          </widget>
         </item>
         <item>
-         <widget class="QRadioButton" name="rbDeleteLedgerBeforeDate">
-          <property name="text">
-           <string>Delete ledger entries and cassa actions before date ...</string>
-          </property>
-         </widget>
+         <layout class="QHBoxLayout" name="horizontalLayout">
+          <item>
+           <widget class="QRadioButton" name="rbDeleteLedgerBeforeDate">
+            <property name="text">
+             <string>Delete ledger entries and cassa actions before date ...</string>
+            </property>
+           </widget>
+          </item>
+          <item>
+           <widget class="QDateEdit" name="deFilterDate">
+            <property name="calendarPopup">
+             <bool>true</bool>
+            </property>
+           </widget>
+          </item>
+          <item>
+           <spacer name="horizontalSpacer">
+            <property name="orientation">
+             <enum>Qt::Horizontal</enum>
+            </property>
+            <property name="sizeHint" stdset="0">
+             <size>
+              <width>40</width>
+              <height>20</height>
+             </size>
+            </property>
+           </spacer>
+          </item>
+         </layout>
         </item>
         <item>
          <spacer name="verticalSpacer_3">
@@ -88,13 +140,6 @@
      </item>
      <item>
       <layout class="QHBoxLayout" name="horizontalLayout_2">
-       <item>
-        <widget class="QDateEdit" name="deFilterDate">
-         <property name="calendarPopup">
-          <bool>true</bool>
-         </property>
-        </widget>
-       </item>
        <item>
         <spacer name="horizontalSpacer_2">
          <property name="orientation">
@@ -157,6 +202,16 @@
    </item>
   </layout>
  </widget>
+ <tabstops>
+  <tabstop>rbUpdatePCUnitType</tabstop>
+  <tabstop>rbDeactivatePCs</tabstop>
+  <tabstop>rbDeleteInactivePCs</tabstop>
+  <tabstop>rbDeleteNotUsedPCTs</tabstop>
+  <tabstop>rbDeleteLedgerBeforeDate</tabstop>
+  <tabstop>deFilterDate</tabstop>
+  <tabstop>pbExecute</tabstop>
+  <tabstop>pbExit</tabstop>
+ </tabstops>
  <resources/>
  <connections/>
 </ui>

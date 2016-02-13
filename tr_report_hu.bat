@@ -1,9 +1,7 @@
 cd viewer
-lupdate BelenusReportViewer.pro
-cd ..
-linguist viewer/brv_hu.ts
-linguist viewer/brv_us.ts
-cd viewer
-copy brv_hu.qm "c:\Program Files\Belenus\lang\brv_hu.qm"
-copy brv_us.qm "c:\Program Files\Belenus\lang\brv_us.qm"
+C:\DevEnv\Qt\4.8.6\bin\lupdate BelenusReportViewer.pro
+C:\DevEnv\Qt\4.8.6\bin\linguist brv_hu.ts
+C:\DevEnv\Qt\4.8.6\bin\linguist brv_de.ts
+copy brv_de.qm "c:\Install\Belenus\4_Update_MasterCD\lang\brv_de.qm"
+copy brv_hu.qm "c:\Install\Belenus\4_Update_MasterCD\lang\brv_hu.qm"
 pause

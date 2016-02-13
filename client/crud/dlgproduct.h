@@ -31,6 +31,7 @@ public:
     QPushButton *pbProductActionType;
     QPushButton *pbStockIncrease;
     QPushButton *pbStockDecrease;
+    QPushButton *pbStockProcess;
 
 protected:
     virtual void setupTableView();
@@ -48,6 +49,7 @@ protected slots:
     virtual void _slotProductActionTypes();
     virtual void _slotStockIncrease();
     virtual void _slotStockDecrease();
+    virtual void _slotStockProcess();
 };
 
 #endif // DLGPRODUCT_H

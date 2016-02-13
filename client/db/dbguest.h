@@ -46,6 +46,16 @@ public:
     void            setCompany( const bool p_bCompany )                             throw();
     int             discountType() const                                            throw();
     void            setDiscountType( const int p_inDiscountType )                   throw();
+    QString         membership() const                                              throw();
+    void            setMembership( const QString p_qsMembership )                   throw();
+    QString         dateBirth() const                                               throw();
+    void            setDateBirth( const QString p_qsDateBirth )                     throw();
+    QString         address() const                                                 throw();
+    void            setAddress( const QString p_qsAddress )                         throw();
+    unsigned int    skinTypeId() const                                              throw();
+    void            setSkinTypeId( const unsigned int p_nSkinTypeId )               throw();
+    QString         mobile() const                                                  throw();
+    void            setMobile( const QString p_qsMobile )                           throw();
     QString         comment() const                                                 throw();
     void            setComment( const QString &p_qsComment )                        throw();
     int             loyaltyPoints() const                                           throw();
@@ -72,6 +82,11 @@ private:
     bool            m_bService;
     bool            m_bCompany;
     int             m_inDiscountType;
+    QString         m_qsMembership;
+    QString         m_qsDateBirth;
+    QString         m_qsAddress;
+    unsigned int    m_uiSkinTypeId;
+    QString         m_qsMobile;
     QString         m_qsComment;
     int             m_inLoyaltyPoints;
     QString         m_qsModified;
@@ -93,6 +108,11 @@ private:
                const bool p_bService = false,
                const bool p_bCompany = false,
                const int p_inDiscountType = 2,
+               const QString p_qsMembership = "",
+               const QString p_qsDateBirth = "",
+               const QString p_qsAddress = "",
+               const unsigned int p_uiSkinTypeId = 0,
+               const QString p_qsMobile = "",
                const QString &p_qsComment = "",
                const int p_inLoyaltyPoints = 0,
                const QString &p_qsModified = "",

@@ -6,6 +6,7 @@
 #include "dlgproductactiontype.h"
 #include "../edit/dlgproductedit.h"
 #include "../dlg/dlgproductstorage.h"
+#include "../dlg/dlgstockprocess.h"
 
 cDlgProduct::cDlgProduct( QWidget *p_poParent ) : cDlgCrud( p_poParent )
 {
@@ -85,6 +86,15 @@ cDlgProduct::cDlgProduct( QWidget *p_poParent ) : cDlgCrud( p_poParent )
     pbProductActionType->setAutoDefault( false );
     btbButtonsSide->addButton( pbProductActionType, QDialogButtonBox::ActionRole );
     connect( pbProductActionType, SIGNAL(clicked()), this, SLOT(_slotProductActionTypes()) );
+
+    pbStockProcess = new QPushButton( tr( "Stock process" ), this );
+    pbStockProcess->setObjectName( QString::fromUtf8( "pbStockProcess" ) );
+    pbStockProcess->setIconSize( QSize(20, 20) );
+    pbStockProcess->setIcon( QIcon("./resources/40x40_storage.png") );
+    pbStockProcess->setAutoDefault( false );
+    btbButtonsSide->addButton( pbStockProcess, QDialogButtonBox::ActionRole );
+    connect( pbStockProcess, SIGNAL(clicked()), this, SLOT(_slotStockProcess()) );
+    pbStockProcess->setEnabled( g_obUser.isInGroup( cAccessGroup::ADMIN ) );
 
     pbStockIncrease = new QPushButton( tr( "Increase stock" ), this );
     pbStockIncrease->setObjectName( QString::fromUtf8( "pbStockIncrease" ) );
@@ -343,6 +353,7 @@ void cDlgProduct::_slotStockIncrease()
     {
         refreshTable();
     }
+    delete obDlgProductStorage;
 }
 
 void cDlgProduct::_slotStockDecrease()
@@ -360,4 +371,14 @@ void cDlgProduct::_slotStockDecrease()
     {
         refreshTable();
     }
+    delete obDlgProductStorage;
+}
+
+void cDlgProduct::_slotStockProcess()
+{
+    dlgStockProcess *obDlgStockProcess = new dlgStockProcess( this, tr("Stock process") );
+
+    obDlgStockProcess->exec();
+    refreshTable();
+    delete obDlgStockProcess;
 }

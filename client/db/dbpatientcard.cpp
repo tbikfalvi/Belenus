@@ -16,6 +16,8 @@
 #include "belenus.h"
 #include "dbpatientcard.h"
 #include "dbvalidtimeperiods.h"
+#include "dbpatientcardunits.h"
+#include "dbpatientcardtype.h"
 
 cDBPatientCard::cDBPatientCard()
 {
@@ -59,6 +61,9 @@ void cDBPatientCard::init( const unsigned int p_uiId,
     m_qsModified            = p_qsModified;
     m_bActive               = p_bActive;
     m_qsArchive             = p_qsArchive;
+
+    synchronizeUnits();
+    synchronizeTime();
 }
 
 void cDBPatientCard::init( const QSqlRecord &p_obRecord ) throw()
@@ -109,7 +114,6 @@ void cDBPatientCard::load( const unsigned int p_uiId ) throw( cSevException )
 
     poQuery->first();
     init( poQuery->record() );
-    synchronizeUnits();
 }
 
 void cDBPatientCard::load( const QString &p_qsBarcode ) throw( cSevException )
@@ -123,7 +127,6 @@ void cDBPatientCard::load( const QString &p_qsBarcode ) throw( cSevException )
 
     poQuery->first();
     init( poQuery->record() );
-    synchronizeUnits();
 }
 
 void cDBPatientCard::loadPatient( const unsigned int p_uiId ) throw( cSevException )
@@ -147,11 +150,7 @@ void cDBPatientCard::save() throw( cSevException )
     if( m_uiId )
     {
         qsQuery = "UPDATE";
-
-        if( m_qsArchive != "NEW" )
-        {
-            m_qsArchive = "MOD";
-        }
+        m_qsArchive = "MOD";
     }
     else
     {
@@ -232,6 +231,24 @@ void cDBPatientCard::remove() throw( cSevException )
     }
 }
 
+void cDBPatientCard::deactivate() throw( cSevException )
+{
+    setPatientCardTypeId( 0 );
+    setParentId( 0 );
+    setPatientId( 0 );
+    setUnits( 0 );
+    setAmount( 0 );
+    setTimeLeft( 0 );
+    setValidDateFrom( "0000-00-00" );
+    setValidDateTo( "0000-00-00" );
+    setActive( false );
+    save();
+
+    cDBPatientcardUnit  obDBPatientcardUnit;
+
+    obDBPatientcardUnit.deactivateUnits( m_uiId );
+}
+
 bool cDBPatientCard::isPatientCardTypeLinked( const unsigned int p_PCTId ) throw()
 {
     cTracer obTrace( "cDBPatientCard::isPatientCardTypeLinked", QString( "id: %1" ).arg( p_PCTId ) );
@@ -259,7 +276,7 @@ bool cDBPatientCard::isPatientCardCanBeReplaced() throw()
 
 bool cDBPatientCard::isPatientCardCanBeParent() throw()
 {
-    if( m_bActive == 0 || m_nUnits < 1 || m_uiTimeLeft < 1 || patientCardTypeId() < 2 || m_uiParentId > 0 || pincode().compare("LOST") == 0 )
+    if( m_bActive == 0 || m_nUnits < 1 || m_uiTimeLeft < 1 || patientCardTypeId() < 2 || /*m_uiParentId > 0 ||*/ pincode().compare("LOST") == 0 )
         return false;
 
     QDate   qdTo = QDate::fromString( m_qsValidDateTo, "yyyy-MM-dd" );
@@ -282,11 +299,42 @@ bool cDBPatientCard::isAssignedCardExists() throw()
     return false;
 }
 
+bool cDBPatientCard::isLedgerConnected() throw()
+{
+    QSqlQuery *poQuery = g_poDB->executeQTQuery( QString( "SELECT * FROM ledger WHERE patientCardId = %1" ).arg( m_uiId ) );
+    if( poQuery->size() > 0 )
+        return true;
+
+    return false;
+}
+
 void cDBPatientCard::synchronizeUnits() throw()
 {
     QString qsQuery = "";
 
     qsQuery += QString( "SELECT COUNT(patientCardId) FROM patientcardunits WHERE " );
+    qsQuery += QString( "( patientCardId=%1 " ).arg( m_uiId );
+    if( parentId() > 0 )
+    {
+        qsQuery += QString( "OR patientCardId=%2 " ).arg( parentId() );
+    }
+    qsQuery += QString( " ) AND prepared=0 AND active=1 " );
+
+    QSqlQuery *poQuery = g_poDB->executeQTQuery( qsQuery );
+
+    poQuery->first();
+
+    if( poQuery->size() > 0 )
+        setUnits( poQuery->value(0).toInt() );
+    else
+        setUnits( 0 );
+}
+
+void cDBPatientCard::synchronizeTime() throw()
+{
+    QString qsQuery = "";
+
+    qsQuery += QString( "SELECT SUM(unitTime) FROM patientcardunits WHERE " );
     qsQuery += QString( "( patientCardId=%1 " ).arg( m_uiId );
     if( parentId() > 0 )
     {
@@ -299,9 +347,32 @@ void cDBPatientCard::synchronizeUnits() throw()
     poQuery->first();
 
     if( poQuery->size() > 0 )
-        setUnits( poQuery->value(0).toInt() );
+        setTimeLeft( poQuery->value(0).toInt()*60 );
     else
-        setUnits( 0 );
+        setTimeLeft( 0 );
+}
+
+void cDBPatientCard::synchronizeUnitTime(int p_nUnitTime) throw()
+{
+    QString     qsQuery = "";
+
+    qsQuery += QString( "UPDATE patientcardunits SET patientCardTypeId=%1 " ).arg( patientCardTypeId() );
+    qsQuery += QString( "WHERE patientCardId=%1 " ).arg( m_uiId );
+    qsQuery += QString( "AND patientCardTypeId=0 " );
+//    qsQuery += QString( "AND active=1 " );
+
+    g_poDB->executeQTQuery( qsQuery );
+
+    if( p_nUnitTime > 0 )
+    {
+        qsQuery  = "";
+        qsQuery += QString( "UPDATE patientcardunits SET unitTime=%1 " ).arg( p_nUnitTime );
+        qsQuery += QString( "WHERE patientCardId=%1 " ).arg( m_uiId );
+        qsQuery += QString( "AND patientCardTypeId=%1 " ).arg( patientCardTypeId() );
+        qsQuery += QString( "AND active=1 " );
+
+        g_poDB->executeQTQuery( qsQuery );
+    }
 }
 
 void cDBPatientCard::updateActiveUnits(QDate p_qdNew) throw()
@@ -311,7 +382,7 @@ void cDBPatientCard::updateActiveUnits(QDate p_qdNew) throw()
     g_poDB->executeQTQuery( qsQuery );
 }
 
-bool cDBPatientCard::isPatientCardCanBeUsed( QString *p_qsValid ) throw()
+bool cDBPatientCard::isPatientCardCanBeUsed( unsigned int p_uiPatientCardTypeId, QString *p_qsValid ) throw()
 {
     QStringList         qslDays;
     QDateTime           currDateTime( QDateTime::currentDateTime() );
@@ -323,14 +394,14 @@ bool cDBPatientCard::isPatientCardCanBeUsed( QString *p_qsValid ) throw()
 
     try
     {
-        qslValidTimes = obDBValidTimePeriod.loadPeriods( m_uiPatientCardTypeId );
+        qslValidTimes = obDBValidTimePeriod.loadPeriods( p_uiPatientCardTypeId );
     }
     catch( cSevException &e )
     {
         g_obLogger(e.severity()) << e.what() << EOM;
     }
 
-    *p_qsValid = QObject::tr( "Patientcard can be used:" );
+    *p_qsValid = ""; //QObject::tr( "Patientcard can be used:" );
     for( int i=0; i<qslValidTimes.count(); i++ )
     {
         QString qsValidTimeStr  = qslValidTimes.at(i);
@@ -433,8 +504,20 @@ void cDBPatientCard::setComment( const QString &p_qsComment ) throw()
     m_qsComment = p_qsComment;
 }
 
-int cDBPatientCard::units() const throw()
+int cDBPatientCard::units() throw()
 {
+    QString qsQuery = QString( "SELECT COUNT(unitTime) "
+                               "FROM patientcardunits "
+                               "WHERE patientCardId=%1 AND "
+                               "validDateFrom<=CURDATE() AND "
+                               "validDateTo>=CURDATE() AND prepared=0 AND active=1" )
+                                .arg( m_uiId );
+    QSqlQuery  *poQuery = g_poDB->executeQTQuery( qsQuery );
+    if( poQuery->first() )
+    {
+        m_nUnits = poQuery->value( 0 ).toInt();
+    }
+
     return m_nUnits;
 }
 
@@ -531,4 +614,79 @@ QString cDBPatientCard::archive() const throw()
 void cDBPatientCard::setArchive( const QString &p_qsArchive ) throw()
 {
     m_qsArchive = p_qsArchive;
+}
+
+void cDBPatientCard::sendDataToWeb( bool p_bSendNow ) throw()
+{
+    try
+    {
+        QString qsMessageData = "";
+
+        synchronizeUnits();
+
+//        qsMessageData.append( "<div id='valid'><label>T201</label>" );
+//        qsMessageData.append( validDateTo() );
+//        qsMessageData.append( "</div><div id='unit'><label>T202</label>" );
+//        qsMessageData.append( QString::number(units()) );
+//        qsMessageData.append( "</div><label id='validT'>T203</label>" );
+
+        qsMessageData.append( "<div id='unit'><label>T202</label></div>" );
+
+        QString qsQuery = QString( "SELECT patientCardUnitId, "
+                                          "patientCardTypeId, "
+                                          "unitTime, "
+                                          "validDateFrom, "
+                                          "validDateTo, "
+                                          "COUNT(unitTime) "
+                                   "FROM patientcardunits "
+                                   "WHERE patientCardId=%1 "
+                                   "AND validDateFrom<=CURDATE() AND validDateTo>=CURDATE() "
+                                   "AND prepared=0 "
+                                   "AND active=1 "
+                                   "GROUP BY unitTime, validDateTo, patientCardTypeId ORDER BY validDateTo, patientCardUnitId" )
+                                 .arg( id() );
+        QSqlQuery  *poQuery = g_poDB->executeQTQuery( qsQuery );
+
+        while( poQuery->next() )
+        {
+            QString qsValid = QString( "%1 -> %2" ).arg( poQuery->value( 3 ).toString() )
+                                                   .arg( poQuery->value( 4 ).toString() );
+            unsigned int uiPCTId = poQuery->value( 1 ).toUInt();
+
+            if( uiPCTId == 0 )
+            {
+                uiPCTId = patientCardTypeId();
+            }
+            if( uiPCTId > 0 )
+            {
+                cDBPatientCardType obDBPatientCardType;
+
+                obDBPatientCardType.load( uiPCTId );
+//                isPatientCardCanBeUsed( uiPCTId, &qsValid );
+//                qsValid.replace( QObject::tr("Mon"), "T205" );
+//                qsValid.replace( QObject::tr("Tue"), "T206" );
+//                qsValid.replace( QObject::tr("Wed"), "T207" );
+//                qsValid.replace( QObject::tr("Thu"), "T208" );
+//                qsValid.replace( QObject::tr("Fri"), "T209" );
+//                qsValid.replace( QObject::tr("Sat"), "T210" );
+//                qsValid.replace( QObject::tr("Sun"), "T211" );
+
+                qsMessageData.append( "<div class='validType'><span class='cardName'>" );
+                qsMessageData.append( poQuery->value( 5 ).toString() );
+                qsMessageData.append( " T219 (" );
+                qsMessageData.append( poQuery->value( 2 ).toString() );
+                qsMessageData.append( "T204) (" );
+                qsMessageData.append( obDBPatientCardType.name() );
+                qsMessageData.append( ")</span><span class='cardDays'>" );
+                qsMessageData.append( qsValid );
+                qsMessageData.append( "</span></div>" );
+            }
+        }
+
+        g_poBlnsHttp->sendPatientCardData( barcode(), qsMessageData, p_bSendNow );
+    }
+    catch( cSevException &e )
+    {
+        g_obLogger(e.severity()) << e.what() << EOM;
+    }
 }

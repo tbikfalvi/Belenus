@@ -166,8 +166,6 @@ void cCassa::createNew( unsigned int p_uiUserId, int p_inBalance )
 void cCassa::cassaContinue()
 //====================================================================================
 {
-    cTracer obTrace( "cCassa::cassaContinue" );
-
     cDBCassaHistory obDBCassaHistory;
 
     obDBCassaHistory.setLicenceId( m_pCassa->licenceId() );
@@ -187,8 +185,6 @@ void cCassa::cassaContinue()
 void cCassa::cassaContinue( unsigned int p_uiUserId )
 //====================================================================================
 {
-    cTracer obTrace( QString("cCassa::cassaContinue %1").arg(p_uiUserId) );
-
 /*    int inCurrentBalance = m_pCassa->currentBalance();
 
     m_pCassa->setStopDateTime( QDateTime::currentDateTime().toString( QString("yyyy-MM-dd hh:mm:ss") ) );
@@ -213,8 +209,6 @@ void cCassa::cassaContinue( unsigned int p_uiUserId )
 void cCassa::cassaReOpen()
 //====================================================================================
 {
-    cTracer obTrace( "cCassa::cassaReOpen" );
-
     m_pCassa->setStopDateTime( "" );
     m_pCassa->save();
 
@@ -237,8 +231,6 @@ void cCassa::cassaReOpen()
 void cCassa::cassaReOpen( unsigned int p_uiCassaId )
 //====================================================================================
 {
-    cTracer obTrace( "cCassa::cassaReOpen", QString("%1").arg(p_uiCassaId) );
-
     m_pCassa->load( p_uiCassaId );
     cassaReOpen();
 }
@@ -246,8 +238,6 @@ void cCassa::cassaReOpen( unsigned int p_uiCassaId )
 void cCassa::cassaClose()
 //====================================================================================
 {
-    cTracer obTrace( "cCassa::cassaClose" );
-
     m_pCassa->setStopDateTime( QDateTime::currentDateTime().toString( QString("yyyy-MM-dd hh:mm:ss") ) );
     m_pCassa->save();
 
@@ -306,7 +296,7 @@ unsigned int cCassa::cassaProcessPatientCardSell( const cDBPatientCard &p_DBPati
 
 //    if( (p_obDBShoppingCart.cash()+p_obDBShoppingCart.voucher()) > 0 )
 //    {
-        cassaAddMoneyAction( p_obDBShoppingCart.cash()+p_obDBShoppingCart.voucher(), p_obDBShoppingCart.card(), obDBLedger.id(), p_qsComment );
+        cassaAddMoneyAction( p_obDBShoppingCart.cash()+p_obDBShoppingCart.voucher(), p_obDBShoppingCart.card(), obDBLedger.id(), qsComment );
 //    }
 /*    if( p_obDBShoppingCart.card() > 0 )
     {
@@ -352,11 +342,11 @@ unsigned int cCassa::cassaProcessProductStorageChange( const cDBShoppingCart &p_
 
     if( !p_bGlobalCassa )
     {
-        cassaAddMoneyAction( p_obDBShoppingCart.itemSumPrice()-p_obDBShoppingCart.itemDiscount(), 0, obDBLedger.id(), p_qsComment );
+        cassaAddMoneyAction( p_obDBShoppingCart.itemSumPrice()-p_obDBShoppingCart.itemDiscount(), 0, obDBLedger.id(), qsComment );
     }
     else
     {
-        cassaAddMoneyAction( 0, p_obDBShoppingCart.itemSumPrice()-p_obDBShoppingCart.itemDiscount(), obDBLedger.id(), p_qsComment );
+        cassaAddMoneyAction( p_obDBShoppingCart.itemSumPrice()-p_obDBShoppingCart.itemDiscount(), 0, obDBLedger.id(), qsComment, 0, true );
 //        cassaAddGlobalMoneyAction( p_obDBShoppingCart.itemSumPrice()-p_obDBShoppingCart.itemDiscount(), obDBLedger.id(), p_qsComment );
     }
 
@@ -391,14 +381,7 @@ unsigned int cCassa::cassaProcessDeviceUse( const cDBShoppingCart &p_obDBShoppin
     obDBLedger.setComment( qsComment );
     obDBLedger.save();
 
-//    if( (p_obDBShoppingCart.cash()+p_obDBShoppingCart.voucher()) > 0 )
-//    {
-        cassaAddMoneyAction( p_obDBShoppingCart.cash()+p_obDBShoppingCart.voucher(), p_obDBShoppingCart.card(), obDBLedger.id(), p_qsComment );
-//    }
-/*    if( p_obDBShoppingCart.card() > 0 )
-    {
-        cassaAddGlobalMoneyAction( p_obDBShoppingCart.card(), obDBLedger.id(), p_qsComment );
-    }*/
+    cassaAddMoneyAction( p_obDBShoppingCart.cash()+p_obDBShoppingCart.voucher(), p_obDBShoppingCart.card(), obDBLedger.id(), qsComment );
 
     return obDBLedger.id();
 }
@@ -433,14 +416,7 @@ void cCassa::cassaProcessProductSell( const cDBShoppingCart &p_obDBShoppingCart,
     obDBLedger.setComment( qsComment );
     obDBLedger.save();
 
-//    if( (p_obDBShoppingCart.cash()+p_obDBShoppingCart.voucher()) > 0 )
-//    {
-        cassaAddMoneyAction( p_obDBShoppingCart.cash()+p_obDBShoppingCart.voucher(), p_obDBShoppingCart.card(), obDBLedger.id(), p_qsComment );
-//    }
-/*    if( p_obDBShoppingCart.card() > 0 )
-    {
-        cassaAddGlobalMoneyAction( p_obDBShoppingCart.card(), obDBLedger.id(), p_qsComment );
-    }*/
+    cassaAddMoneyAction( p_obDBShoppingCart.cash()+p_obDBShoppingCart.voucher(), p_obDBShoppingCart.card(), obDBLedger.id(), qsComment );
 
     cDBProduct  obDBProduct;
 
@@ -615,17 +591,26 @@ void cCassa::cassaDecreaseMoney( unsigned int p_uiUserId, int p_nMoney, QString 
     obDBCassaHistory.save();
 }
 //====================================================================================
-void cCassa::cassaAddMoneyAction( int p_nCash, int p_nCard, unsigned int p_uiLedgerId, QString p_qsComment, unsigned int p_uiParentId )
+void cCassa::cassaAddMoneyAction( int p_nCash, int p_nCard, unsigned int p_uiLedgerId, QString p_qsComment, unsigned int p_uiParentId, bool p_bGlobalCassa )
 //====================================================================================
 {
-    m_pCassa->setCurrentBalance( m_pCassa->currentBalance()+p_nCash );
-    m_pCassa->save();
+    unsigned int uiCassaId = m_pCassa->id();
+
+    if( !p_bGlobalCassa )
+    {
+        m_pCassa->setCurrentBalance( m_pCassa->currentBalance()+p_nCash );
+        m_pCassa->save();
+    }
+    else
+    {
+        uiCassaId = 0;
+    }
 
     cDBCassaHistory obDBCassaHistory;
 
     obDBCassaHistory.setLicenceId( g_poPrefs->getLicenceId() );
     obDBCassaHistory.setParentId( p_uiParentId );
-    obDBCassaHistory.setCassaId( m_pCassa->id() );
+    obDBCassaHistory.setCassaId( uiCassaId );
     obDBCassaHistory.setLedgerId( p_uiLedgerId );
     obDBCassaHistory.setUserId( g_obUser.id() );
     obDBCassaHistory.setActionValue( p_nCash+p_nCard );
@@ -671,6 +656,12 @@ bool cCassa::isCassaEnabled()
 //====================================================================================
 {
     return m_bCassaEnabled;
+}
+//====================================================================================
+bool cCassa::isCassaClosed()
+//====================================================================================
+{
+    return ( m_pCassa->id()==0 ? true : false );
 }
 //====================================================================================
 unsigned int cCassa::cassaOwnerId()

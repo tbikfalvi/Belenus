@@ -18,14 +18,15 @@ cDlgPanelTypeCopy::cDlgPanelTypeCopy( QWidget *p_poParent, unsigned int uiPanelI
 
     m_dlgProgress = new cDlgProgress( this );
 
-    QString qsQuery = QString( "SELECT name, useTime, usePrice, 1 FROM panelUses WHERE panelId=%1" ).arg(uiPanelId);
+    QString qsQuery = QString( "SELECT name, useTime, usePrice FROM panelUses WHERE panelId=%1" ).arg(uiPanelId);
     QSqlQuery  *poQuery = g_poDB->executeQTQuery( qsQuery );
 
     while( poQuery->next() )
     {
-        //cCurrency   cPrice( poQuery->value(2).toInt() );
-        QString qsSellPrice = QString::number(poQuery->value(2).toInt()/100);
-        listPanelTimes->addItem( QString("%1\t%2\t%3").arg(poQuery->value(0).toString()).arg(poQuery->value(1).toString()).arg(qsSellPrice) );
+        cCurrency   cPrice( poQuery->value(2).toInt() );
+        listPanelTimes->addItem( QString("%1\t%2\t%3").arg(poQuery->value(0).toString())
+                                                      .arg(poQuery->value(1).toString())
+                                                      .arg(cPrice.currencyString()) );
     }
 
     qsQuery = QString( "SELECT panelId, title FROM panels WHERE panelId<>%1 AND panelId>0" ).arg(uiPanelId);
@@ -84,7 +85,7 @@ void cDlgPanelTypeCopy::on_pbCopyTimes_clicked()
             obDbPanelUse.setPanelId( qslPanel.at(0).toUInt() );
             obDbPanelUse.setName( qslPanelUse.at(0) );
             obDbPanelUse.setUseTime( qslPanelUse.at(1).toInt() );
-            obDbPanelUse.setUsePrice( qslPanelUse.at(2).toInt()*100 );
+            obDbPanelUse.setUsePrice( qslPanelUse.at(2).toDouble()*100 );
 
             if( obDbPanelUse.isPanelUseExists() )
             {

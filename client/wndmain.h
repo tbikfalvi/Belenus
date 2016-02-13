@@ -2,6 +2,7 @@
 #define WNDMAIN_H
 
 #include <QString>
+#include <vector>
 
 #include "ui_wndmain.h"
 #include "mdipanels.h"
@@ -10,6 +11,7 @@
 #include "dlg/dlgcassaaction.h"
 #include "dlg/dlgsecondarywindow.h"
 #include "db/dbapplicationaction.h"
+#include "advertisementwindow.h"
 
 using namespace std;
 
@@ -40,6 +42,7 @@ public:
     void startMainTimer();
     void autoSynchronizeGlobalData();
     void showProgress();
+    void setCommunicationEnabled( bool p_bEnabled = false );
 
     int customMsgBox( QWidget *parent, msgBoxType msgtype, QString buttonstext, QString msg, QString details = "" );
 
@@ -50,7 +53,12 @@ protected:
     void closeEvent( QCloseEvent *p_poEvent );
 
 private:
+
     QLabel                   m_lblStatusLeft;
+    QPushButton              m_pbStatusHttp;
+    QPushButton              m_pbStatusCommunication;
+    QPushButton              m_pbStatusKeyboard;
+    QLabel                   m_lblHttpCount;
     QLabel                   m_lblStatusRight;
     cMdiPanels              *mdiPanels;
     cDlgProgress            *m_dlgProgress;
@@ -69,6 +77,19 @@ private:
     QString                  m_qsPanelStartBarcode;
     int                      m_inCommunicationCounter;
     bool                     m_bActionProcessing;
+    bool                     m_bProgressErrorVisible;
+    int                      m_nProgressCounter;
+    bool                     m_bBlnsHttpConnected;
+    bool                     m_bBlnsHttpErrorVisible;
+    unsigned int             m_uiBlnsErrorAppeared;
+    int                      m_nCommunicationErrorCounter;
+    int                      m_nCommResetStep;
+    bool                     m_bClosingShift;
+    bool                     m_bShoppingCartHasItem;
+    int                      m_nHttpCommCounter;
+    bool                     m_bMainWindowActive;
+
+    vector<cDlgAdvertisementWindow *>   m_obAdWnd;
 
     void showElementsForComponents();
     void enableElementsByLogin( bool p_bEnable );
@@ -77,10 +98,21 @@ private:
     void processInputPatientCard( QString p_stBarcode );
     void processInputProduct( QString p_stBarcode );
     void processInputTimePeriod( int p_inMinute );
+    void showAdWindows();
+    void _resetCommunication();
+    void _updateAllPatientcardToWeb();
+    void _removeAllPatientcardFromWeb();
+    void _removePatientcardFromWeb();
+    void _setStatusText( QString p_qsText, bool p_bError = false );
+    void _processHttpActions();
+    void _checkVersions();
+    void _checkIsActivationNeeded();
 
 public slots:
     void processDeviceUsePayment( unsigned int p_uiPanelId, unsigned int p_uiLedgerId, int p_nPaymentType );
     void processProductSellPayment( const cDBShoppingCart &p_obDBShoppingCart );
+
+    void slotMainWindowActivated();
 
 private slots:
     void on_action_SellProduct_triggered();
@@ -91,7 +123,7 @@ private slots:
     void slotSetCounterText( unsigned int p_uiPanelId, const QString &p_qsCounter );
     void slotSetWaitTime( unsigned int p_uiPanelId, const unsigned int p_uiWaitTime );
     void slotSetInfoText( unsigned int p_uiPanelId, const QString &p_qsInfo );
-    void slotReplacePatientCard( const QString &p_qsBarcode );
+    void slotReplacePatientCard( const QString &p_qsBarcode, const unsigned int p_uiPCId = 0 );
     void slotAssignPartnerCard( const QString &p_qsBarcode );
     void on_action_CassaActionStorno_triggered();
     void on_action_ShoppingCart_triggered();
@@ -103,6 +135,7 @@ private slots:
     void on_action_Logs_triggered();
     void on_action_Hardwaretest_triggered();
     void on_action_LogOut_triggered();
+    void on_action_CloseShift_triggered();
     void on_action_Paneltypes_triggered();
     void on_action_Panelgroups_triggered();
     void on_action_Patientorigin_triggered()        {}
@@ -128,6 +161,7 @@ private slots:
     void on_action_ValidateSerialKey_triggered();
     void on_action_PatientCardSell_triggered();
     void on_action_PatientCardAssign_triggered();
+    void on_action_ReplaceLostCard_triggered();
     void on_action_EditActualPatient_triggered();
     void on_action_DeviceSettings_triggered();
     void on_action_PayCash_triggered();
@@ -154,6 +188,21 @@ private slots:
     void on_action_ReportViewer_triggered();
     void on_action_About_triggered();
     void on_action_ManageDatabase_triggered();
+    void on_action_ManageDevicePanels_triggered();
+    void on_action_ManageSkinTypes_triggered();
+    void on_action_Import_triggered();
+    void on_action_Export_triggered();
+    void on_BlnsHttpErrorOccured();
+    void on_BlnsHttpActionFinished( QString p_qsInfo );
+    void on_BlnsHttpIconClicked();
+    void on_BlnsHttpStepProgress();
+    void on_BlnsHttpHideProgress();
+    void on_action_Advertisements_triggered();
+    void on_CommunicationButtonClicked();
+    void on_action_PatientcardInformation_triggered();
+    void on_KeyboardEnabled();
+    void on_KeyboardDisabled();
+    void on_BlnsHttpProcessStopped();
 };
 
 #endif

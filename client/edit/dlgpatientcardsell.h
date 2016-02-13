@@ -30,6 +30,7 @@ private slots:
     void on_pbSell_clicked();
     void on_pbCancel_clicked();
     void on_pbSelectPatient_clicked();
+    void on_pbCreatePatient_clicked();
 };
 
 #endif

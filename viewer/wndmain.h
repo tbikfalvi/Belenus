@@ -18,6 +18,9 @@
 #include "creportproductstatus.h"
 #include "creportproducthistory.h"
 #include "creportpatientcardusages.h"
+#include "creportmonthclose.h"
+#include "creportguests.h"
+#include "creportdeviceusages.h"
 
 extern cQTMySQLConnection  *g_poDB;
 
@@ -64,6 +67,9 @@ signals: // <_NEW_REPORT_>  report signal-ja
     void                    setCheckedReportPatientcardDebts( bool p_bChecked );
     void                    setCheckedReportProductStatus( bool p_bChecked );
     void                    setCheckedReportProductHistory( bool p_bChecked );
+    void                    setCheckedReportMonthClose( bool p_bChecked );
+    void                    setCheckedReportGuests( bool p_bChecked );
+    void                    setCheckedReportDeviceUsages( bool p_bChecked );
 
 public slots: // <_NEW_REPORT_> report slot-ja
     void                    slotCheckReportDaily( bool p_bChecked );
@@ -78,6 +84,9 @@ public slots: // <_NEW_REPORT_> report slot-ja
     void                    slotCheckReportPatientcardDebts( bool p_bChecked );
     void                    slotCheckReportProductStatus( bool p_bChecked );
     void                    slotCheckReportProductHistory( bool p_bChecked );
+    void                    slotCheckReportMonthClose( bool p_bChecked );
+    void                    slotCheckReportGuests( bool p_bChecked );
+    void                    slotCheckReportDeviceUsages( bool p_bChecked );
 
 private:
 
@@ -96,12 +105,16 @@ private:
     cReportPatientcardDebts *m_repCardDebts;
     cReportProductStatus    *m_repProdStatus;
     cReportProductHistory   *m_repProdHistory;
+    cReportMonthClose       *m_repMonthClose;
+    cReportGuests           *m_repGuests;
+    cReportDeviceUsages     *m_repDeviceUsages;
 
     QVector<cReport*>        m_qvReports;
 
     bool                     m_bReportTabSwitching;
 
     int                      m_enGroup;
+    unsigned int             m_uiUserId;
 
     bool                    _isInGroup( groupUser p_enGroup );
     void                    _initActions();
@@ -117,6 +130,7 @@ private:
     void                    _setFiltersEnabledReport( cReport *obReport );
 
     void                    _updateReportIndexes();
+    void                    _updateReportButtons( bool p_bEnable );
 
 private slots:
     void on_tabReports_tabCloseRequested(int index);
@@ -132,6 +146,9 @@ private slots:
     void on_pbRefresh_clicked();
     void on_chkFilterIsVisible_clicked();
     void on_pbPrint_clicked();
+    void on_rbOrientationPortrait_clicked();
+    void on_rbOrientationLandscape_clicked();
+    void on_pbSave_clicked();
 };
 
 #endif // WNDMAIN_H
