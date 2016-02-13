@@ -61,6 +61,7 @@
 #include "crud/dlgpanels.h"
 #include "crud/dlgskintypes.h"
 #include "crud/dlgadvertisements.h"
+#include "crud/dlgpatientcardselect.h"
 
 //====================================================================================
 
@@ -1478,7 +1479,8 @@ void cWndMain::closeEvent( QCloseEvent *p_poEvent )
     }
     else
     {
-        if( QMessageBox::question( this, tr("Question"),
+        if( m_bClosingShift ||
+            QMessageBox::question( this, tr("Question"),
                                    tr("Are you sure you want to close the application?"),
                                    QMessageBox::Yes | QMessageBox::No, QMessageBox::No ) == QMessageBox::Yes )
         {
@@ -2497,18 +2499,31 @@ void cWndMain::on_action_ReplaceLostCard_triggered()
 
     m_bMainWindowActive = false;
 
-    QMessageBox::warning( this, tr("Request"), tr("Please enter the lost patientcard's barcode.") );
+    QMessageBox::warning( this, tr("Request"), tr("Please select the guest from the list") );
 
-    cDlgInputStart  obDlgInputStart( this );
+    cDlgPatientSelect  obDlgPatientSelect( this );
 
-    obDlgInputStart.m_bCard = true;
-    obDlgInputStart.init();
-
-    m_dlgProgress->hideProgress();
-
-    if( obDlgInputStart.exec() == QDialog::Accepted )
+    if( obDlgPatientSelect.exec() == QDialog::Accepted )
     {
-        slotReplacePatientCard( obDlgInputStart.getEditText() );
+        if( obDlgPatientSelect.selectedPatientId() > 0 )
+        {
+            QMessageBox::warning( this, tr("Request"), tr("Please select the patientcard from the list") );
+
+            m_dlgProgress->showProgress();
+
+            cDlgPatientCardSelect   obDlgSelect( this, obDlgPatientSelect.selectedPatientId() );
+
+            unsigned int uiPCardId = 0;
+
+            m_dlgProgress->hideProgress();
+
+            if( obDlgSelect.exec() == QDialog::Accepted )
+            {
+                uiPCardId = obDlgSelect.selected();
+
+                slotReplacePatientCard( "", uiPCardId );
+            }
+        }
     }
 
     m_bMainWindowActive = true;
@@ -2967,7 +2982,8 @@ void cWndMain::slotSetInfoText( unsigned int p_uiPanelId, const QString &p_qsInf
     m_dlgSecondaryWindow->setPanelInfoText( p_uiPanelId, p_qsInfo );
 }
 //====================================================================================
-void cWndMain::slotReplacePatientCard(const QString &p_qsBarcode)
+void cWndMain::slotReplacePatientCard(const QString &p_qsBarcode,
+                                      const unsigned int p_uiPCId )
 {
     cTracer obTrace( "cWndMain::slotReplacePatientCard" );
 
@@ -2985,7 +3001,14 @@ void cWndMain::slotReplacePatientCard(const QString &p_qsBarcode)
 
     cDBPatientCard  obDBPatientCardOld;
 
-    obDBPatientCardOld.load( p_qsBarcode );
+    if( p_uiPCId > 0 )
+    {
+        obDBPatientCardOld.load( p_uiPCId );
+    }
+    else
+    {
+        obDBPatientCardOld.load( p_qsBarcode );
+    }
 
     QMessageBox::warning( this, tr("Request"), tr("Please enter the new patientcard's barcode.") );
 
@@ -3821,6 +3844,9 @@ void cWndMain::_checkVersions()
 
 void cWndMain::_checkIsActivationNeeded()
 {
+    if( m_bClosingShift )
+        return;
+
     int     nDaysRemain = g_obLicenceManager.daysRemain();
 
     if( nDaysRemain < cLicenceManager::EXPIRE_MAX_DAYS )

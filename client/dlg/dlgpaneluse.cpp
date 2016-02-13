@@ -519,7 +519,21 @@ unsigned int cDlgPanelUse::panelTypeId()
 //----------------------------------------------------------------------------------------------
 int cDlgPanelUse::countPatientCardUnitsLeft()
 {
-    return ( m_obDBPatientCard.units() - m_qslUnitIds.count() );
+    int nRet = 0;
+
+    QString qsQuery = QString( "SELECT COUNT(unitTime) "
+                               "FROM patientcardunits "
+                               "WHERE patientCardId=%1 AND "
+                               "validDateFrom<=CURDATE() AND "
+                               "validDateTo>=CURDATE() AND prepared=0 AND active=1" )
+                                .arg( m_obDBPatientCard.id() );
+    QSqlQuery  *poQuery = g_poDB->executeQTQuery( qsQuery );
+    if( poQuery->first() )
+    {
+        nRet = poQuery->value( 0 ).toInt();
+    }
+    return nRet;
+//    return ( m_obDBPatientCard.units() - m_qslUnitIds.count() );
 }
 //----------------------------------------------------------------------------------------------
 QStringList cDlgPanelUse::panelUnitIds()

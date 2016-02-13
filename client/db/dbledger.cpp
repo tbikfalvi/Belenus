@@ -256,6 +256,7 @@ void cDBLedger::revoke() throw( cSevException )
             obDBPatientcardUnit.removeLedgerUnits( m_uiId );
             obDBPatientCard.load( patientCardId() );
             obDBPatientCard.save();
+            obDBPatientCard.sendDataToWeb();
         }
         catch( cSevException &e )
         {
