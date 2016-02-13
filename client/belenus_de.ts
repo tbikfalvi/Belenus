@@ -46,7 +46,7 @@
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="db/dbledger.cpp" line="290"/>
+        <location filename="db/dbledger.cpp" line="291"/>
         <source>Revoking action: %1</source>
         <translation type="unfinished"></translation>
     </message>
@@ -2157,7 +2157,7 @@ linked to one or more panels.</source>
     </message>
     <message>
         <location filename="dlg/dlgpaneluse.cpp" line="194"/>
-        <location filename="dlg/dlgpaneluse.cpp" line="727"/>
+        <location filename="dlg/dlgpaneluse.cpp" line="741"/>
         <source>Comment :
 </source>
         <translation type="unfinished"></translation>
@@ -2186,7 +2186,7 @@ linked to one or more panels.</source>
     </message>
     <message>
         <location filename="dlg/dlgpaneluse.cpp" line="460"/>
-        <location filename="dlg/dlgpaneluse.cpp" line="595"/>
+        <location filename="dlg/dlgpaneluse.cpp" line="609"/>
         <source>Warning</source>
         <translation type="unfinished"></translation>
     </message>
@@ -2198,50 +2198,50 @@ Please select valid value from the list.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="dlg/dlgpaneluse.cpp" line="549"/>
+        <location filename="dlg/dlgpaneluse.cpp" line="563"/>
         <source>Ok</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="dlg/dlgpaneluse.cpp" line="596"/>
+        <location filename="dlg/dlgpaneluse.cpp" line="610"/>
         <source>Invalid barcode length.
 The length of the barcode should be %1.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="dlg/dlgpaneluse.cpp" line="609"/>
-        <location filename="dlg/dlgpaneluse.cpp" line="617"/>
+        <location filename="dlg/dlgpaneluse.cpp" line="623"/>
+        <location filename="dlg/dlgpaneluse.cpp" line="631"/>
         <source>Attention</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="dlg/dlgpaneluse.cpp" line="610"/>
+        <location filename="dlg/dlgpaneluse.cpp" line="624"/>
         <source>You are not allowed to use system administrator card.
 Please log in as a system administrator if you want to use this card.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="dlg/dlgpaneluse.cpp" line="618"/>
+        <location filename="dlg/dlgpaneluse.cpp" line="632"/>
         <source>This patientcard has been lost and replaced
 and can not be used or sold again.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="dlg/dlgpaneluse.cpp" line="634"/>
+        <location filename="dlg/dlgpaneluse.cpp" line="648"/>
         <source>
 
 Due to there is no time left, the patientcard will be reseted and deactivated.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="dlg/dlgpaneluse.cpp" line="636"/>
-        <location filename="dlg/dlgpaneluse.cpp" line="670"/>
-        <location filename="dlg/dlgpaneluse.cpp" line="689"/>
+        <location filename="dlg/dlgpaneluse.cpp" line="650"/>
+        <location filename="dlg/dlgpaneluse.cpp" line="684"/>
+        <location filename="dlg/dlgpaneluse.cpp" line="703"/>
         <source>Question</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="dlg/dlgpaneluse.cpp" line="637"/>
+        <location filename="dlg/dlgpaneluse.cpp" line="651"/>
         <source>This patientcard can not be used with these settings:
 
 Available units: %1
@@ -2251,13 +2251,13 @@ Do you want to refill the patientcard now?%3</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="dlg/dlgpaneluse.cpp" line="671"/>
+        <location filename="dlg/dlgpaneluse.cpp" line="685"/>
         <source>This barcode has not been activated yet.
 Do you want to activate and sell it now?</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="dlg/dlgpaneluse.cpp" line="690"/>
+        <location filename="dlg/dlgpaneluse.cpp" line="704"/>
         <source>This barcode has not found in the database.
 Do you want to save it and sell it now?</source>
         <translation type="unfinished"></translation>
