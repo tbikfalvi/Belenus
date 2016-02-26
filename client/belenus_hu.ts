@@ -544,6 +544,16 @@ Kérem indítsa el a WampServer alkalmazást, majd indítsa újra a Belenus alka
         <translation>&lt;tr&gt;&lt;td&gt;&lt;b&gt;Megjegyzés:&lt;/b&gt;&lt;/td&gt;&lt;/tr&gt;</translation>
     </message>
     <message>
+        <location filename="general.cpp" line="337"/>
+        <source>&lt;p&gt;&lt;b&gt;Expired units:&lt;/b&gt;&lt;br&gt;</source>
+        <translation>&lt;p&gt;&lt;b&gt;Lejárt érvényességű egységek:&lt;/b&gt;&lt;br&gt;</translation>
+    </message>
+    <message>
+        <location filename="general.cpp" line="352"/>
+        <source>&lt;br&gt;&lt;b&gt;%1 units (%2 minutes) (%3) expired on&lt;/b&gt;%4</source>
+        <translation>&lt;br&gt;&lt;b&gt;%1 egység (%2 perc) (%3) lejárt &lt;/b&gt;%4</translation>
+    </message>
+    <message>
         <location filename="general.cpp" line="287"/>
         <source>&lt;tr&gt;&lt;td&gt;&lt;b&gt;Units:&lt;/b&gt;&lt;/td&gt;&lt;td&gt;%1&lt;/td&gt;&lt;/tr&gt;</source>
         <translation>&lt;tr&gt;&lt;td&gt;&lt;b&gt;Egységek:&lt;/b&gt;&lt;/td&gt;&lt;td&gt;%1&lt;/td&gt;&lt;/tr&gt;</translation>
