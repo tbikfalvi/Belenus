@@ -323,6 +323,41 @@ void cGeneral::showPatientCardInformation(QString p_qsBarcode)
             }
         }
 
+        qsQuery = QString( "SELECT patientCardUnitId, patientCardTypeId, unitTime, validDateFrom, validDateTo, COUNT(unitTime) "
+                           "FROM patientcardunits "
+                           "WHERE patientCardId=%1 "
+                           "AND validDateTo<CURDATE() "
+                           "AND prepared=0 "
+                           "AND active=1 "
+                           "GROUP BY unitTime, validDateTo, patientCardTypeId ORDER BY validDateTo, patientCardUnitId" ).arg( obDBPatientCard.id() );
+        poQuery = g_poDB->executeQTQuery( qsQuery );
+
+        if( poQuery->size() > 0 )
+        {
+            qsText.append( QObject::tr("<p><b>Expired units:</b><br>") );
+
+            while( poQuery->next() )
+            {
+                unsigned int uiPCTId = poQuery->value( 1 ).toUInt();
+
+                if( uiPCTId == 0 )
+                {
+                    uiPCTId = obDBPatientCard.patientCardTypeId();
+                }
+                if( uiPCTId > 0 )
+                {
+                    cDBPatientCardType obDBPatientCardType;
+
+                    obDBPatientCardType.load( uiPCTId );
+                    qsText.append( QObject::tr("<br><b>%1 units (%2 minutes) (%3) expired on</b>%4")
+                                   .arg( poQuery->value( 5 ).toString() )
+                                   .arg( poQuery->value( 2 ).toString() )
+                                   .arg( obDBPatientCardType.name() )
+                                   .arg( poQuery->value( 4 ).toString() ) );
+                }
+            }
+        }
+
         if( g_poPrefs->isBarcodeHidden() && !g_obUser.isInGroup( cAccessGroup::ADMIN ) )
         {
             QString qsBarcode = obDBPatientCard.barcode();
