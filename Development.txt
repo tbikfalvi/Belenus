@@ -1,0 +1,5 @@
+Development branch
+
+1.5.3.2
+
+- Tarskartyaval nem lehetett inditani a gephasznalatot, csak a fokartyaval. UnitId tarskartya eseten 0-at adott vissza.
