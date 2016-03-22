@@ -502,6 +502,9 @@ QString cDBPatientCard::comment() const throw()
 void cDBPatientCard::setComment( const QString &p_qsComment ) throw()
 {
     m_qsComment = p_qsComment;
+
+    m_qsComment.remove("\\");
+    m_qsComment.remove("\\\\");
 }
 
 int cDBPatientCard::units() throw()
