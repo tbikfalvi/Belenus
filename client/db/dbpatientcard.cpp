@@ -253,9 +253,18 @@ bool cDBPatientCard::isPatientCardTypeLinked( const unsigned int p_PCTId ) throw
 {
     cTracer obTrace( "cDBPatientCard::isPatientCardTypeLinked", QString( "id: %1" ).arg( p_PCTId ) );
 
-    QSqlQuery *poQuery = g_poDB->executeQTQuery( QString( "SELECT * FROM patientCards WHERE patientCardTypeId = %1" ).arg( p_PCTId ) );
+    QSqlQuery       *poQuery;
+    unsigned int     uiCount = 0;
 
-    if( poQuery->size() > 0 )
+    poQuery = g_poDB->executeQTQuery( QString( "SELECT * FROM patientCards WHERE patientCardTypeId = %1" ).arg( p_PCTId ) );
+
+    uiCount += poQuery->size();
+
+    poQuery = g_poDB->executeQTQuery( QString( "SELECT * FROM patientCardUnits WHERE patientCardTypeId = %1" ).arg( p_PCTId ) );
+
+    uiCount += poQuery->size();
+
+    if( uiCount > 0 )
         return true;
     else
         return false;
