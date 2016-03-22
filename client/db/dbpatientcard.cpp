@@ -163,7 +163,7 @@ void cDBPatientCard::save() throw( cSevException )
     qsQuery += QString( "parentCardId = \"%1\", " ).arg( m_uiParentId );
     qsQuery += QString( "patientId = \"%1\", " ).arg( m_uiPatientId );
     qsQuery += QString( "barcode = \"%1\", " ).arg( m_qsBarcode );
-    qsQuery += QString( "comment = \"%1\", " ).arg( m_qsComment.replace( QString("\""), QString("\\\"") ) );
+    qsQuery += QString( "comment = \"%1\", " ).arg( m_qsComment );
     qsQuery += QString( "units = \"%1\", " ).arg( m_nUnits );
     qsQuery += QString( "amount = \"%1\", " ).arg( m_nAmount );
     qsQuery += QString( "timeLeft = \"%1\", " ).arg( m_uiTimeLeft );
@@ -253,9 +253,18 @@ bool cDBPatientCard::isPatientCardTypeLinked( const unsigned int p_PCTId ) throw
 {
     cTracer obTrace( "cDBPatientCard::isPatientCardTypeLinked", QString( "id: %1" ).arg( p_PCTId ) );
 
-    QSqlQuery *poQuery = g_poDB->executeQTQuery( QString( "SELECT * FROM patientCards WHERE patientCardTypeId = %1" ).arg( p_PCTId ) );
+    QSqlQuery       *poQuery;
+    unsigned int     uiCount = 0;
 
-    if( poQuery->size() > 0 )
+    poQuery = g_poDB->executeQTQuery( QString( "SELECT * FROM patientCards WHERE patientCardTypeId = %1" ).arg( p_PCTId ) );
+
+    uiCount += poQuery->size();
+
+    poQuery = g_poDB->executeQTQuery( QString( "SELECT * FROM patientCardUnits WHERE patientCardTypeId = %1" ).arg( p_PCTId ) );
+
+    uiCount += poQuery->size();
+
+    if( uiCount > 0 )
         return true;
     else
         return false;
@@ -502,6 +511,10 @@ QString cDBPatientCard::comment() const throw()
 void cDBPatientCard::setComment( const QString &p_qsComment ) throw()
 {
     m_qsComment = p_qsComment;
+
+    m_qsComment.remove("\\\\");
+    m_qsComment.remove("\\");
+    m_qsComment.replace( QString("\""), QString("\\\"") );
 }
 
 int cDBPatientCard::units() throw()

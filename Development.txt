@@ -1,5 +1,13 @@
 Development branch
+==================
 
-1.5.3.2
+Version 1.5.3.2
+===============
 
 - Tarskartyaval nem lehetett inditani a gephasznalatot, csak a fokartyaval. UnitId tarskartya eseten 0-at adott vissza.
+
+Version 1.5.3.3
+===============
+
+- Berlet feltoltesnel, ha a comment-ben aposztrof volt, rosszul mentette el comment-et es ez hibat okozott. Ami fura, hogy berlet eladasnal, modositasnal nem.
+- Berlettipus torlesnel csak a berletnel ellenorizte, hogy van-e ilyen berlettipus meg hasznalva, berletegysegnel nem. Ez hibas, mert most mar a berletnel tarolt tipusnak nincs jelentosege.
