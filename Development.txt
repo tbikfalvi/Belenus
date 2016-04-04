@@ -15,3 +15,4 @@ Version 1.5.3.3
 Version 1.5.3.4
 ===============
 
+- Berletnel a comment-ben az aposztrof-ot nem sikerult rendesen mentenem ezert a " helyett most ` van string kozrezaro karakterkent. Ez remelem megoldja vegre a problemat
