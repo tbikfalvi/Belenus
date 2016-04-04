@@ -118,9 +118,9 @@ void cDBPatientCard::load( const unsigned int p_uiId ) throw( cSevException )
 
 void cDBPatientCard::load( const QString &p_qsBarcode ) throw( cSevException )
 {
-    cTracer obTrace( "cDBPatientCard::load", QString("name: \"%1\"").arg(p_qsBarcode) );
+    cTracer obTrace( "cDBPatientCard::load", QString("name: `%1`").arg(p_qsBarcode) );
 
-    QSqlQuery *poQuery = g_poDB->executeQTQuery( "SELECT * FROM patientCards WHERE barcode = \"" + p_qsBarcode + "\"" );
+    QSqlQuery *poQuery = g_poDB->executeQTQuery( "SELECT * FROM patientCards WHERE barcode = `" + p_qsBarcode + "`" );
 
     if( poQuery->size() != 1 )
         throw cSevException( cSeverity::ERROR, "Patientcard barcode not found" );
@@ -158,21 +158,21 @@ void cDBPatientCard::save() throw( cSevException )
         m_qsArchive = "NEW";
     }
     qsQuery += " patientCards SET ";
-    qsQuery += QString( "licenceId = \"%1\", " ).arg( m_uiLicenceId );
-    qsQuery += QString( "patientCardTypeId = \"%1\", " ).arg( m_uiPatientCardTypeId );
-    qsQuery += QString( "parentCardId = \"%1\", " ).arg( m_uiParentId );
-    qsQuery += QString( "patientId = \"%1\", " ).arg( m_uiPatientId );
-    qsQuery += QString( "barcode = \"%1\", " ).arg( m_qsBarcode );
-    qsQuery += QString( "comment = \"%1\", " ).arg( m_qsComment );
-    qsQuery += QString( "units = \"%1\", " ).arg( m_nUnits );
-    qsQuery += QString( "amount = \"%1\", " ).arg( m_nAmount );
-    qsQuery += QString( "timeLeft = \"%1\", " ).arg( m_uiTimeLeft );
-    qsQuery += QString( "validDateFrom = \"%1\", " ).arg( m_qsValidDateFrom );
-    qsQuery += QString( "validDateTo = \"%1\", " ).arg( m_qsValidDateTo );
-    qsQuery += QString( "pincode = \"%1\", " ).arg( m_qsPincode );
-    qsQuery += QString( "modified = \"%1\", " ).arg( QDateTime::currentDateTime().toString( QString("yyyy-MM-dd hh:mm:ss") ) );
+    qsQuery += QString( "licenceId = `%1`, " ).arg( m_uiLicenceId );
+    qsQuery += QString( "patientCardTypeId = `%1`, " ).arg( m_uiPatientCardTypeId );
+    qsQuery += QString( "parentCardId = `%1`, " ).arg( m_uiParentId );
+    qsQuery += QString( "patientId = `%1`, " ).arg( m_uiPatientId );
+    qsQuery += QString( "barcode = `%1`, " ).arg( m_qsBarcode );
+    qsQuery += QString( "comment = `%1`, " ).arg( m_qsComment );
+    qsQuery += QString( "units = `%1`, " ).arg( m_nUnits );
+    qsQuery += QString( "amount = `%1`, " ).arg( m_nAmount );
+    qsQuery += QString( "timeLeft = `%1`, " ).arg( m_uiTimeLeft );
+    qsQuery += QString( "validDateFrom = `%1`, " ).arg( m_qsValidDateFrom );
+    qsQuery += QString( "validDateTo = `%1`, " ).arg( m_qsValidDateTo );
+    qsQuery += QString( "pincode = `%1`, " ).arg( m_qsPincode );
+    qsQuery += QString( "modified = `%1`, " ).arg( QDateTime::currentDateTime().toString( QString("yyyy-MM-dd hh:mm:ss") ) );
     qsQuery += QString( "active = %1, " ).arg( m_bActive );
-    qsQuery += QString( "archive = \"%1\" " ).arg( m_qsArchive );
+    qsQuery += QString( "archive = `%1` " ).arg( m_qsArchive );
     if( m_uiId )
     {
         qsQuery += QString( " WHERE patientCardId = %1" ).arg( m_uiId );
@@ -185,13 +185,13 @@ void cDBPatientCard::save() throw( cSevException )
     {
         qsQuery = "UPDATE";
         qsQuery += " patientCards SET ";
-        qsQuery += QString( "licenceId = \"%1\", " ).arg( m_uiLicenceId );
-        qsQuery += QString( "patientCardTypeId = \"%1\", " ).arg( m_uiPatientCardTypeId );
-        qsQuery += QString( "units = \"%1\", " ).arg( m_nUnits );
-        qsQuery += QString( "amount = \"%1\", " ).arg( m_nAmount );
-        qsQuery += QString( "timeLeft = \"%1\", " ).arg( m_uiTimeLeft );
-        qsQuery += QString( "validDateFrom = \"%1\", " ).arg( m_qsValidDateFrom );
-        qsQuery += QString( "validDateTo = \"%1\" " ).arg( m_qsValidDateTo );
+        qsQuery += QString( "licenceId = `%1`, " ).arg( m_uiLicenceId );
+        qsQuery += QString( "patientCardTypeId = `%1`, " ).arg( m_uiPatientCardTypeId );
+        qsQuery += QString( "units = `%1`, " ).arg( m_nUnits );
+        qsQuery += QString( "amount = `%1`, " ).arg( m_nAmount );
+        qsQuery += QString( "timeLeft = `%1`, " ).arg( m_uiTimeLeft );
+        qsQuery += QString( "validDateFrom = `%1`, " ).arg( m_qsValidDateFrom );
+        qsQuery += QString( "validDateTo = `%1` " ).arg( m_qsValidDateTo );
         if( m_uiParentId > 0 )
         {
             // update parent
@@ -222,7 +222,7 @@ void cDBPatientCard::remove() throw( cSevException )
         }
         else
         {
-            qsQuery = "UPDATE patientCards SET active=0, archive=\"MOD\" ";
+            qsQuery = "UPDATE patientCards SET active=0, archive=`MOD` ";
         }
         qsQuery += QString( " WHERE patientCardId = %1" ).arg( m_uiId );
 
@@ -500,7 +500,6 @@ QString cDBPatientCard::barcode() const throw()
 void cDBPatientCard::setBarcode( const QString &p_qsBarcode ) throw()
 {
     m_qsBarcode = p_qsBarcode;
-    m_qsBarcode = m_qsBarcode.replace( QString("\""), QString("\\\"") );
 }
 
 QString cDBPatientCard::comment() const throw()
@@ -511,10 +510,6 @@ QString cDBPatientCard::comment() const throw()
 void cDBPatientCard::setComment( const QString &p_qsComment ) throw()
 {
     m_qsComment = p_qsComment;
-
-    m_qsComment.remove("\\\\");
-    m_qsComment.remove("\\");
-    m_qsComment.replace( QString("\""), QString("\\\"") );
 }
 
 int cDBPatientCard::units() throw()
@@ -608,7 +603,6 @@ QString cDBPatientCard::pincode() const throw()
 void cDBPatientCard::setPincode( const QString &p_qsPincode ) throw()
 {
     m_qsPincode = p_qsPincode;
-    m_qsPincode = m_qsPincode.replace( QString("\""), QString("\\\"") );
 }
 
 QString cDBPatientCard::modified() const throw()
