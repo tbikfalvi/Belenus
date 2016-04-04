@@ -1,10 +1,10 @@
-#include <QPushButton>
+Ôªø#include <QPushButton>
 #include <QMessageBox>
 
 #include "dlguseredit.h"
 #include "../dlg/dlgpwdconfirm.h"
 
-// KiwiSun rendszer adminisztr·tor jelszÛ: KW13sun
+// KiwiSun rendszer adminisztr√°tor jelsz√≥: KW13sun
 
 cDlgUserEdit::cDlgUserEdit( QWidget *p_poParent, cDBUser *p_poUser )
     : QDialog( p_poParent )
