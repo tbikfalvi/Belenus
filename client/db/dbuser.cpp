@@ -147,14 +147,14 @@ void cDBUser::remove() throw( cSevException )
     {
         QString  qsQuery;
 
-        if( m_qsArchive.compare( "NEW" ) == 0 )
-        {
-            qsQuery = "DELETE FROM users ";
-        }
-        else
-        {
+//        if( m_qsArchive.compare( "NEW" ) == 0 )
+//        {
+//            qsQuery = "DELETE FROM users ";
+//        }
+//        else
+//        {
             qsQuery = "UPDATE users SET active=0, archive=\"MOD\" ";
-        }
+//        }
         qsQuery += QString( " WHERE userId = %1" ).arg( m_uiId );
 
         QSqlQuery  *poQuery = g_poDB->executeQTQuery( qsQuery );

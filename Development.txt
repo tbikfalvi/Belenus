@@ -11,3 +11,9 @@ Version 1.5.3.3
 
 - Berlet feltoltesnel, ha a comment-ben aposztrof volt, rosszul mentette el comment-et es ez hibat okozott. Ami fura, hogy berlet eladasnal, modositasnal nem.
 - Berlettipus torlesnel csak a berletnel ellenorizte, hogy van-e ilyen berlettipus meg hasznalva, berletegysegnel nem. Ez hibas, mert most mar a berletnel tarolt tipusnak nincs jelentosege.
+
+Version 1.5.3.4
+===============
+
+- Berletnel a comment-ben az aposztrof bezavart. Most a mentesnel javitom ki a " jelet es tuntetem el a felesleges extra karaktereket.
+- Felhasznalo torles nem volt jo. Tenylegesen torolni akart, amit nem lehet, ha a felhasznalo pl. eladott mar valamit. Most bekerul a comment-be, hogy "DELETED USER".

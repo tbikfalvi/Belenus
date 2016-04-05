@@ -147,6 +147,13 @@ void cDBPatientCard::save() throw( cSevException )
     cTracer obTrace( "cDBPatientCard::save" );
     QString  qsQuery;
 
+//    g_obLogger(cSeverity::DEBUG) << "Comment: " << m_qsComment << EOM;
+    m_qsComment = m_qsComment.replace("\"","`");
+    m_qsComment = m_qsComment.replace("\\`","`");
+    m_qsComment = m_qsComment.replace("`","\\\"");
+    m_qsBarcode = m_qsBarcode.replace("\"","");
+    m_qsPincode = m_qsPincode.replace("\"","");
+
     if( m_uiId )
     {
         qsQuery = "UPDATE";
@@ -500,7 +507,6 @@ QString cDBPatientCard::barcode() const throw()
 void cDBPatientCard::setBarcode( const QString &p_qsBarcode ) throw()
 {
     m_qsBarcode = p_qsBarcode;
-    m_qsBarcode = m_qsBarcode.replace( QString("\""), QString("\\\"") );
 }
 
 QString cDBPatientCard::comment() const throw()
@@ -511,10 +517,6 @@ QString cDBPatientCard::comment() const throw()
 void cDBPatientCard::setComment( const QString &p_qsComment ) throw()
 {
     m_qsComment = p_qsComment;
-
-    m_qsComment.remove("\\\\");
-    m_qsComment.remove("\\");
-    m_qsComment.replace( QString("\""), QString("\\\"") );
 }
 
 int cDBPatientCard::units() throw()
@@ -608,7 +610,6 @@ QString cDBPatientCard::pincode() const throw()
 void cDBPatientCard::setPincode( const QString &p_qsPincode ) throw()
 {
     m_qsPincode = p_qsPincode;
-    m_qsPincode = m_qsPincode.replace( QString("\""), QString("\\\"") );
 }
 
 QString cDBPatientCard::modified() const throw()
