@@ -280,13 +280,25 @@ void cGeneral::showPatientCardInformation(QString p_qsBarcode)
         obDBPatientCard.load( p_qsBarcode );
         obDBGuest.load( obDBPatientCard.patientId() );
 
+        QString qsOwner     = obDBGuest.name();
+        QString qsValidFrom = obDBPatientCard.validDateFrom();
+        QString qsValidTo   = obDBPatientCard.validDateTo();
+        int     nUnitCount  = obDBPatientCard.units();
+        QString qsComment   = obDBPatientCard.comment();
+
         qsText.append( QString("<table>") );
-        qsText.append( QObject::tr("<tr><td width=\"100\"><b>Owner:</b></td><td>%1</td></tr>").arg( obDBGuest.name() ) );
-        qsText.append( QObject::tr("<tr><td><b>Valid:</b></td><td>%1 -> %2</td></tr>").arg( obDBPatientCard.validDateFrom() )
-                                                                             .arg( obDBPatientCard.validDateTo() ) );
-        qsText.append( QObject::tr("<tr><td><b>Units:</b></td><td>%1</td></tr>").arg( obDBPatientCard.units() ) );
+        qsText.append( QObject::tr("<tr><td width=\"100\"><b>Owner:</b></td><td>%1</td></tr>").arg( qsOwner ) );
+        if( qsValidFrom.length() > 0 && qsValidTo.length() > 0 )
+        {
+            qsText.append( QObject::tr("<tr><td><b>Valid:</b></td><td>%1 -> %2</td></tr>").arg( qsValidFrom ).arg( qsValidTo ) );
+        }
+        else
+        {
+            qsText.append( QObject::tr("<tr><td><b>Valid:</b></td><td></td></tr>") );
+        }
+        qsText.append( QObject::tr("<tr><td><b>Units:</b></td><td>%1</td></tr>").arg( nUnitCount ) );
         qsText.append( QObject::tr("<tr><td><b>Comment:</b></td></tr>") );
-        qsText.append( QString("<tr><td>%1</td></tr>").arg( obDBPatientCard.comment() ) );
+        qsText.append( QString("<tr><td>%1</td></tr>").arg( qsComment ) );
         qsText.append( QString("</table>") );
 
         QString qsQuery = QString( "SELECT patientCardUnitId, patientCardTypeId, unitTime, validDateFrom, validDateTo, COUNT(unitTime) "
@@ -358,15 +370,22 @@ void cGeneral::showPatientCardInformation(QString p_qsBarcode)
             }
         }
 
+        QString qsTitle;
+
         if( g_poPrefs->isBarcodeHidden() && !g_obUser.isInGroup( cAccessGroup::ADMIN ) )
         {
             QString qsBarcode = obDBPatientCard.barcode();
-            obDlgInformation.setInformationTitle( qsBarcode.fill('*') );
+            qsTitle = qsBarcode.fill('*');
         }
         else
         {
-            obDlgInformation.setInformationTitle( obDBPatientCard.barcode() );
+            qsTitle = obDBPatientCard.barcode();
         }
+        if( obDBPatientCard.active() == 0 )
+        {
+            qsTitle.append( QObject::tr(" - INACTIVE Patientcard") );
+        }
+        obDlgInformation.setInformationTitle( qsTitle );
         obDlgInformation.setInformationText( qsText );
         obDlgInformation.exec();
     }

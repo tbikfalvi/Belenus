@@ -237,7 +237,6 @@ cDlgPanelUse::cDlgPanelUse( QWidget *p_poParent, unsigned int p_uiPanelId ) : QD
     setPanelUseTime();
     setPanelUsePrice();
 
-
     if( g_poPrefs->isBarcodeHidden() && !g_obUser.isInGroup( cAccessGroup::ADMIN ) )
     {
         ledPatientCardBarcode->setEchoMode( QLineEdit::Password );
@@ -373,12 +372,6 @@ void cDlgPanelUse::setPanelUsePatientCard(unsigned int p_uiPatientCardId)
             {
                 qvPanelUseUnits.at(0)->setFocus();
             }
-/*            else
-            {
-                QMessageBox::warning( m_poMsg, tr("Warning"),
-                                      tr("This patientcard currently can not be used.\n"
-                                         "Please check it's validity time period.\n%1").arg(qsValidPeriods) );
-            }*/
         }
     }
     catch( cSevException &e )
@@ -394,12 +387,6 @@ void cDlgPanelUse::setPanelUsePatientCard(unsigned int p_uiPatientCardId)
 
     if( m_obDBPatientCard.id() > 0 )
     {
-//        QSqlQuery *poQuery = g_poDB->executeQTQuery( QString("SELECT patientcardtypes.name AS type, patients.name AS owner "
-//                                                             "FROM patientcards JOIN patientcardtypes ON "
-//                                                             "patientcards.patientCardTypeId=patientcardtypes.patientCardTypeId "
-//                                                             "JOIN patients ON "
-//                                                             "patientcards.patientId=patients.patientId "
-//                                                             "WHERE patientcards.patientCardId=%1").arg(m_obDBPatientCard.id()) );
         QSqlQuery *poQuery = g_poDB->executeQTQuery( QString("SELECT patients.name AS owner, patientcards.comment "
                                                              "FROM patientcards, patients "
                                                              "WHERE patientcards.patientId=patients.patientId "
@@ -408,7 +395,6 @@ void cDlgPanelUse::setPanelUsePatientCard(unsigned int p_uiPatientCardId)
 
         qsValidPeriods.replace("\n","<br>");
         pbInformation->setEnabled( true );
-//        lblCardType->setText( tr("Type : %1").arg( poQuery->value(0).toString() ) );
         lblCardOwner->setText( tr("Owner : %1").arg( poQuery->value(0).toString() ) );
         lblComment->setText( tr("Comment :\n%1").arg( poQuery->value(1).toString() ) );
     }
@@ -417,8 +403,6 @@ void cDlgPanelUse::setPanelUsePatientCard(unsigned int p_uiPatientCardId)
 
     if( nUnitHeight < 0 ) nUnitHeight = 0;
 
-//    setMinimumHeight( 340 + nUnitHeight );
-//    setMaximumHeight( 340 + nUnitHeight );
     if( height() < 340 + nUnitHeight )
         resize( width(), 340 + nUnitHeight );
 }
@@ -681,14 +665,19 @@ void cDlgPanelUse::on_pbReloadPC_clicked()
         }
         else
         {
-            if( QMessageBox::question( m_poMsg, tr("Question"),
-                                       tr("This barcode has not been activated yet.\n"
-                                          "Do you want to activate and sell it now?"),
-                                       QMessageBox::Yes,QMessageBox::No ) == QMessageBox::Yes )
+            int nRet = QMessageBox::question( m_poMsg, tr("Question"),
+                                              tr("This barcode has not been activated yet.\n"
+                                                 "Do you want to activate and sell it now?"),
+                                              QMessageBox::Yes,QMessageBox::No );
+            if( nRet == QMessageBox::Yes )
             {
                 cDlgPatientCardSell obDlgPatientCardSell( this, &m_obDBPatientCard );
                 obDlgPatientCardSell.setPatientCardOwner( g_obGuest.id() );
                 obDlgPatientCardSell.exec();
+            }
+            else
+            {
+                return;
             }
         }
     }
