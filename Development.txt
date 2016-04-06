@@ -17,9 +17,3 @@ Version 1.5.3.4
 
 - Berletnel a comment-ben az aposztrof bezavart. Most a mentesnel javitom ki a " jelet es tuntetem el a felesleges extra karaktereket.
 - Felhasznalo torles nem volt jo. Tenylegesen torolni akart, amit nem lehet, ha a felhasznalo pl. eladott mar valamit. Most bekerul a comment-be, hogy "DELETED USER".
-
-Version 1.5.3.5
-===============
-
-- Deaktivalt berletnel, ha vannak meg valamilyen oknal fogva egysegek, akkor berlethasznalat elinditasakor az "akarod-e feltolteni" kerdesre nem-et valasztva el lehet hasznalni az ervenyes egysegeket hibasan.
-
