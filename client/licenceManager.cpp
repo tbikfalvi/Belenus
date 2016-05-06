@@ -100,7 +100,46 @@ cLicenceManager::cLicenceManager()
                                      << "NZ_N@]"  // BLNS57_EQTEKV <- BLNS57_467401
                                      << "OX@M[_"  // BLNS58_DSKFPT <- BLNS58_388557
                                      << "M@AHE]"  // BLNS59_FKJCNV <- BLNS59_506231
-                                     << "C_RCX^";  // BLNS60_HTYHSU <- BLNS60_794780
+                                     << "C_RCX^"  // BLNS60_HTYHSU <- BLNS60_794780
+                                     << "CEAN_S"  // BLNS61_HNJETX <- BLNS61_736493
+                                     << "BGSBEA"  // BLNS62_ILXINJ <- BLNS62_813836
+                                     << "AE_IZ]"  // BLNS63_JNTBQV <- BLNS63_937161
+                                     << "IXQAYD"  // BLNS64_BSZJRO <- BLNS64_185972
+                                     << "CYDBDS"  // BLNS65_HROIOX <- BLNS65_772843
+                                     << "BZ@HY^"  // BLNS66_IQKCRU <- BLNS66_868270
+                                     << "N[^J[S"  // BLNS67_EPUAPX <- BLNS67_450053
+                                     << "I@AO[A"  // BLNS68_BKJDPJ <- BLNS68_106356
+                                     << "L@AIZR"  // BLNS69_GKJBQY <- BLNS69_606164
+                                     << "MYRLDQ"  // BLNS70_FRYGOZ <- BLNS70_574645
+                                     << "N_RCZ^"  // BLNS71_ETYHQU <- BLNS71_494760
+                                     << "H_SNX_"  // BLNS72_CTXEST <- BLNS72_293487
+                                     << "HDSO@^"  // BLNS73_COXDKU <- BLNS73_243300
+                                     << "C_DHFA"  // BLNS74_HTOCMJ <- BLNS74_792226
+                                     << "A[]AZR"  // BLNS75_JPVJQY <- BLNS75_951964
+                                     << "LXSLED"  // BLNS76_GSXGNO <- BLNS76_683632
+                                     << "BZSLEQ"  // BLNS77_IQXGNZ <- BLNS77_863635
+                                     << "HERNED"  // BLNS78_CNYENO <- BLNS78_234432
+                                     << "ID^CXR"  // BLNS79_BOUHSY <- BLNS79_140784
+                                     << "HD^NY^"  // BLNS80_COUERU <- BLNS80_240470
+                                     << "NGJCGA"  // BLNS81_ELAHLJ <- BLNS81_419716
+                                     << "IGAMD]"  // BLNS82_BLJFOV <- BLNS82_116541
+                                     << "HYDNX@"  // BLNS83_CROESK <- BLNS83_272488
+                                     << "CX@LX@"  // BLNS84_HSKGSK <- BLNS84_788688
+                                     << "LD^BDQ"  // BLNS85_GOUIOZ <- BLNS85_640845
+                                     << "AY]OEA"  // BLNS86_JRVDNJ <- BLNS86_971336
+                                     << "OYACF_"  // BLNS87_DRJHMT <- BLNS87_376727
+                                     << "H[^HZR"  // BLNS88_CPUCQY <- BLNS88_250264
+                                     << "M[QCFA"  // BLNS89_FPZHMJ <- BLNS89_555726
+                                     << "I_]IER"  // BLNS90_BTVBNY <- BLNS90_191134
+                                     << "CGRBZ@"  // BLNS91_HLYIQK <- BLNS91_714868
+                                     << "LYSM@^"  // BLNS92_GRXFKU <- BLNS92_673500
+                                     << "HX^MF]"  // BLNS93_CSUFMV <- BLNS93_280521
+                                     << "NYSMED"  // BLNS94_ERXFNO <- BLNS94_473532
+                                     << "O@SIF^"  // BLNS95_DKXBMU <- BLNS95_303120
+                                     << "AYSLYQ"  // BLNS96_JRXGRZ <- BLNS96_973675
+                                     << "MXROXD"  // BLNS97_FSYDSO <- BLNS97_584382
+                                     << "OZSHY@"  // BLNS98_DQXCRK <- BLNS98_363278
+                                     << "LDJH@^";  // BLNS99_GOACKU <- BLNS99_649200
 
     // These are the random values
     m_qslLicenceCodes = QStringList()<< "358194"
@@ -162,7 +201,46 @@ cLicenceManager::cLicenceManager()
                                      << "467401"
                                      << "388557"
                                      << "506231"
-                                     << "794780";
+                                     << "794780"
+                                     << "736493"
+                                     << "813836"
+                                     << "937161"
+                                     << "185972"
+                                     << "772843"
+                                     << "868270"
+                                     << "450053"
+                                     << "106356"
+                                     << "606164"
+                                     << "574645"
+                                     << "494760"
+                                     << "293487"
+                                     << "243300"
+                                     << "792226"
+                                     << "951964"
+                                     << "683632"
+                                     << "863635"
+                                     << "234432"
+                                     << "140784"
+                                     << "240470"
+                                     << "419716"
+                                     << "116541"
+                                     << "272488"
+                                     << "788688"
+                                     << "640845"
+                                     << "971336"
+                                     << "376727"
+                                     << "250264"
+                                     << "555726"
+                                     << "191134"
+                                     << "714868"
+                                     << "673500"
+                                     << "280521"
+                                     << "473532"
+                                     << "303120"
+                                     << "973675"
+                                     << "584382"
+                                     << "363278"
+                                     << "649200";
 
     m_qsCode = "";
     m_qsAct  = "";
