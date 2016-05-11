@@ -1893,6 +1893,8 @@ void cWndMain::on_action_UseDevice_triggered()
 
     if( obDlgPanelUse.exec() == QDialog::Accepted )
     {
+        g_obLogger(cSeverity::INFO) << "Initiate paneluse preparation" << EOM;
+
         if( obDlgPanelUse.panelUsePatientCardId() > 0 && obDlgPanelUse.panelUseSecondsCard() > 0 )
         {
             cDBPatientCard  obDBPatientCard;
@@ -1922,6 +1924,7 @@ void cWndMain::on_action_UseDevice_triggered()
                 {
                     on_KeyboardEnabled();                    
                     m_bMainWindowActive = true;
+                    g_obLogger(cSeverity::INFO) << "Abort paneluse preparation" << EOM;
                     return;
                 }
             }
@@ -1937,7 +1940,7 @@ void cWndMain::on_action_UseDevice_triggered()
                 }
             }
 
-            g_obLogger(cSeverity::DEBUG) << "Device prepare with card Id:"
+            g_obLogger(cSeverity::INFO) << "Device prepare with card Id:"
                                          << obDlgPanelUse.panelUsePatientCardId()
                                          << " Units:"
                                          << obDlgPanelUse.panelUnitIds().join("|")
@@ -1952,6 +1955,7 @@ void cWndMain::on_action_UseDevice_triggered()
         {
             mdiPanels->setMainProcessTime( obDlgPanelUse.panelUseSecondsCash(), obDlgPanelUse.panelUsePrice() );
         }
+        g_obLogger(cSeverity::INFO) << "Finished paneluse preparation" << EOM;
     }
     on_KeyboardEnabled();
 
@@ -1970,6 +1974,8 @@ void cWndMain::on_action_UseDeviceLater_triggered()
 
     if( obDlgPanelUse.exec() == QDialog::Accepted )
     {
+        g_obLogger(cSeverity::INFO) << "Initiate later paneluse" << EOM;
+
         int             inLengthCash    = 0;
         int             inPrice         = 0;
         unsigned int    uiPatientCardId = 0;
@@ -2004,6 +2010,7 @@ void cWndMain::on_action_UseDeviceLater_triggered()
                                          "Please relogin to enable cassa.") );
 
                 m_bMainWindowActive = true;
+                g_obLogger(cSeverity::INFO) << "Abort later paneluse" << EOM;
                 return;
             }
 
@@ -2098,6 +2105,7 @@ void cWndMain::on_action_UseDeviceLater_triggered()
 //        mdiPanels->addPatientToWaitingQueue( inLengthCash, inPrice, uiPatientCardId, qsUnitIds, inLengthCard, uiLedgerId, inPayType );
 
         m_bShoppingCartHasItem = g_obGen.isShoppingCartHasItems();
+        g_obLogger(cSeverity::INFO) << "Finished later paneluse" << EOM;
     }
 
     m_bMainWindowActive = true;
@@ -2213,6 +2221,8 @@ void cWndMain::on_action_SellProduct_triggered( QString p_qsBarcode )
     m_bMainWindowActive = false;
 
     m_dlgProgress->showProgress();
+
+    g_obLogger(cSeverity::INFO) << "Selling product" << EOM;
 
     cDlgProductSell obDlgProductSell( this, p_qsBarcode );
 
