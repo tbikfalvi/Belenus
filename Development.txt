@@ -21,3 +21,4 @@ Version 1.5.3.4
 Version 1.5.3.5
 ===============
 
+- Ha inaktiv, vagy lejart berletet probalnak hasznalni, a program felajanlja, hogy fel lehet tolteni. Ha itt 'nem'-et valasztott a felhasznalo, akkor is tudta a lejart berletet hasznalni es a rajta levo egysegek nem fogytak el. Javitva. Ha a 'nem'-re kattint, nem lehet inditani.
