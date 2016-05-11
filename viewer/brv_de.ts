@@ -328,7 +328,6 @@
         <translation>Verkaufte Produkte</translation>
     </message>
     <message>
-        <location filename="creportdaily.cpp" line="56"/>
         <location filename="creportdaily.cpp" line="806"/>
         <source>Patientcards sold</source>
         <translation>Verkaufte Club Karten</translation>
@@ -692,7 +691,6 @@
         <translation>Verkaufte Produkte</translation>
     </message>
     <message>
-        <location filename="creportledger.cpp" line="70"/>
         <location filename="creportledger.cpp" line="625"/>
         <source>Patientcards sold</source>
         <translation>Verkaufte Club Karten</translation>
@@ -857,8 +855,9 @@
     </message>
     <message>
         <location filename="creportmonthclose.cpp" line="48"/>
-        <source>Patientcards sold</source>
-        <translation>Verkaufte Club Karten</translation>
+        <source>Patientcards sold / attach</source>
+        <oldsource>Patientcards sold</oldsource>
+        <translation type="unfinished">Verkaufte Club Karten</translation>
     </message>
     <message>
         <location filename="creportmonthclose.cpp" line="91"/>

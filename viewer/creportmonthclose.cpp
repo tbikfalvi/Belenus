@@ -45,7 +45,7 @@ void cReportMonthClose::refreshReport()
 
     // Patientcards sold
     addSeparator();
-    addSubTitle( tr( "Patientcards sold" ) );
+    addSubTitle( tr( "Patientcards sold / attach" ) );
     _reportPartPatientCardSell();
 
     finishReport();
@@ -149,7 +149,7 @@ unsigned int cReportMonthClose::_reportPartPatientCardSell()
         uiCountPCTSum += qsCountPCSell.toInt();
         uiPricePCTSum += uiPricePCSell;
 
-        if( uiPricePCTSum > 0 )
+        if( uiPricePCTSum > 0 || qsCountPCSell.toInt() > 0 )
         {
             addTableRow();
             addTableCell( poQueryResult->value(2).toString() );

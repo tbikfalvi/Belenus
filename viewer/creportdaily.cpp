@@ -53,7 +53,7 @@ void cReportDaily::refreshReport()
 
     // Patientcards sold
     addSeparator();
-    addSubTitle( tr( "Patientcards sold" ) );
+    addSubTitle( tr( "Patientcards sold / attach" ) );
     unsigned int uiPatientCardTotal = _reportPartPatientCardSell();
 
     // Panel related data of the selected date
@@ -299,7 +299,7 @@ unsigned int cReportDaily::_reportPartPatientCardSell()
             unsigned int uiPricePCSell = 0;
             QString      qsCountPCSell = _countsumPatientCardTypeSell( m_qslCassaIds.at(i), poQueryResult->value(0).toUInt(), &uiPricePCSell );
 
-            if( uiPricePCSell > 0 )
+            if( uiPricePCSell > 0 || qsCountPCSell.toInt() > 0 )
             {
                 cCurrency   obPricePCSell( uiPricePCSell );
 
@@ -317,7 +317,7 @@ unsigned int cReportDaily::_reportPartPatientCardSell()
             uiPricePCTSum += uiPricePCSell;
         }
 
-        if( uiPricePCTSum > 0 )
+        if( uiPricePCTSum > 0 || uiCountPCTSum > 0 )
         {
             addTableRow();
             addTableCell( poQueryResult->value(2).toString() );
