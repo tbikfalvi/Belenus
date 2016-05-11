@@ -67,7 +67,7 @@ void cReportLedger::refreshReport()
 
         // Patientcards sold
         addSeparator();
-        addSubTitle( tr( "Patientcards sold" ) );
+        addSubTitle( tr( "Patientcards sold / attach" ) );
         unsigned int uiPatientCardTotal = _reportPartPatientCardSell();
 
         // Panel related data of the selected date
@@ -293,7 +293,7 @@ unsigned int cReportLedger::_reportPartPatientCardSell()
             uiPricePCTSum += uiPricePCSell;
 //        }
 
-        if( uiPricePCTSum > 0 )
+        if( uiPricePCTSum > 0 || uiCountPCTSum > 0 )
         {
             addTableRow();
             addTableCell( poQueryResult->value(2).toString() );
