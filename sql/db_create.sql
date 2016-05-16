@@ -2,8 +2,8 @@
 -- Belenus Szoftver Rendszer (c) Pagony Multimedia Studio Bt - 2013
 -- -----------------------------------------------------------------------------------
 -- Filename    : db_create.sql
--- AppVersion  : 1.5.3.5
--- DbVersion   : 1.7.1
+-- AppVersion  : 1.6.0
+-- DbVersion   : 1.8.0
 -- -----------------------------------------------------------------------------------
 -- Adatbazist letrehozo SQL script
 -- -----------------------------------------------------------------------------------
@@ -235,6 +235,7 @@ CREATE TABLE `patientCards` (
   `parentCardId`            int(10) unsigned        DEFAULT 0,
   `patientId`               int(10) unsigned        NOT NULL,
   `barcode`                 varchar(20)             NOT NULL,
+  `rfId`                    varchar(30)             NOT NULL,
   `comment`                 varchar(50)             DEFAULT NULL,
   `units`                   int(11)                 NOT NULL,
   `amount`                  decimal(10,0)           NOT NULL,
