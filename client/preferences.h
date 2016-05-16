@@ -223,6 +223,10 @@ public:
     bool            isBarcodeHidden();
     void            setUsageVisibleOnMain( bool p_bUsageVisibleOnMain, bool p_boSaveNow = false );
     bool            isUsageVisibleOnMain();
+    void            setRFIDEnabled( bool p_bRFIDEnabled, bool p_boSaveNow = false );
+    bool            isRFIDEnabled();
+    void            setRFIDComPort( const int p_nRFIDComPort, bool p_boSaveNow = false );
+    int             getRFIDComPort() const;
 
 //void            setXXX( const QString &p_qsXXX, bool p_boSaveNow = false );
 //QString         getXXX() const;
@@ -318,6 +322,8 @@ private:
     int             m_nStartHttpSyncAutoSeconds;
     bool            m_bBarcodeHidden;
     bool            m_bUsageVisibleOnMain;
+    bool            m_bRFIDEnabled;
+    int             m_inRFIDCommunicationPort;
 
     void init();
 };

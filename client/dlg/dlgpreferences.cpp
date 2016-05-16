@@ -124,6 +124,9 @@ cDlgPreferences::cDlgPreferences( QWidget *p_poParent )
     chkForceSendTime->setChecked( g_poPrefs->isForceModuleSendTime() );
     ledForceTimeSendTime->setText( QString::number( g_poPrefs->getForceTimeSendCounter() ) );
     chkForceButtonRead->setChecked( g_poPrefs->isForceModuleCheckButton() );
+    chkRFIDEnabled->setChecked( g_poPrefs->isRFIDEnabled() );
+    spbCOMRFID->setValue( g_poPrefs->getRFIDComPort() );
+    gbCommunicationRFID->setEnabled( chkRFIDEnabled->isChecked() );
 
     obColorIcon.fill( QColor( g_poPrefs->getMainBackground() ) );
     btnMainBackground->setIcon( QIcon( obColorIcon ) );
@@ -422,6 +425,8 @@ void cDlgPreferences::accept()
     g_poPrefs->setForceModuleSendTime( chkForceSendTime->isChecked() );
     g_poPrefs->setForceTimeSendCounter( ledForceTimeSendTime->text().toInt() );
     g_poPrefs->setForceModuleCheckButton( chkForceButtonRead->isChecked() );
+    g_poPrefs->setRFIDEnabled( chkRFIDEnabled->isChecked() );
+    g_poPrefs->setRFIDComPort( spbCOMRFID->value() );
 
     g_poPrefs->setDeviceUseVAT( ledVatPercent->text().toInt() );
     g_poPrefs->setPanelTextSteril( ledPanelTextSterile->text() );
@@ -834,4 +839,9 @@ void cDlgPreferences::on_pbTextColorActive_clicked()
     QColor  colorFill = QColor( g_poPrefs->getSecondaryCaptionColor() );
     obColorIcon.fill( colorFill );
     pbTextColorActive->setIcon( QIcon( obColorIcon ) );
+}
+
+void cDlgPreferences::on_chkRFIDEnabled_clicked()
+{
+    gbCommunicationRFID->setEnabled( chkRFIDEnabled->isChecked() );
 }

@@ -162,6 +162,8 @@ void cPreferences::loadConfFileSettings()
         m_bForceModuleSendTime          = obPrefFile.value( QString::fromAscii( "Hardware/ForceModuleSendTime") ).toBool();
         m_bForceModuleCheckButton       = obPrefFile.value( QString::fromAscii( "Hardware/ForceModuleCheckButton") ).toBool();
         m_nForceTimeSendCounter         = obPrefFile.value( QString::fromAscii( "Hardware/ForceTimeSendCounter") ).toInt();
+        m_bRFIDEnabled                  = obPrefFile.value( QString::fromAscii( "Hardware/RFIDEnabled") ).toBool();
+        m_inRFIDCommunicationPort       = obPrefFile.value( QString::fromAscii( "Hardware/RFIDComPort" ) ).toInt();
 
         m_qsCurrencyShort               = obPrefFile.value( QString::fromAscii( "Currency/Short" ), "Ft." ).toString();
         m_qsCurrencyLong                = obPrefFile.value( QString::fromAscii( "Currency/Long" ), "Forint" ).toString();
@@ -339,6 +341,8 @@ void cPreferences::save() const throw (cSevException)
     obPrefFile.setValue( QString::fromAscii( "Hardware/ForceModuleSendTime"), m_bForceModuleSendTime );
     obPrefFile.setValue( QString::fromAscii( "Hardware/ForceModuleCheckButton"), m_bForceModuleCheckButton );
     obPrefFile.setValue( QString::fromAscii( "Hardware/ForceTimeSendCounter"), m_nForceTimeSendCounter );
+    obPrefFile.setValue( QString::fromAscii( "Hardware/RFIDEnabled"), m_bRFIDEnabled );
+    obPrefFile.setValue( QString::fromAscii( "Hardware/RFIDComPort" ), m_inRFIDCommunicationPort );
 
     obPrefFile.setValue( QString::fromAscii( "UserInterface/MainBackground" ), m_qsMainBackground );
 
@@ -1692,3 +1696,34 @@ bool cPreferences::isUsageVisibleOnMain()
     return m_bUsageVisibleOnMain;
 }
 
+void cPreferences::setRFIDEnabled( bool p_bRFIDEnabled, bool p_boSaveNow )
+{
+    m_bRFIDEnabled = p_bRFIDEnabled;
+
+    if( p_boSaveNow )
+    {
+        QSettings  obPrefFile( m_qsFileName, QSettings::IniFormat );
+        obPrefFile.setValue( QString::fromAscii( "Hardware/RFIDEnabled"), m_bRFIDEnabled );
+    }
+}
+
+bool cPreferences::isRFIDEnabled()
+{
+    return m_bRFIDEnabled;
+}
+
+void cPreferences::setRFIDComPort( const int p_nRFIDComPort, bool p_boSaveNow )
+{
+    m_inRFIDCommunicationPort = p_nRFIDComPort;
+
+    if( p_boSaveNow )
+    {
+        QSettings  obPrefFile( m_qsFileName, QSettings::IniFormat );
+        obPrefFile.setValue( QString::fromAscii( "Hardware/RFIDComPort" ), m_inRFIDCommunicationPort );
+    }
+}
+
+int cPreferences::getRFIDComPort() const
+{
+    return m_inRFIDCommunicationPort;
+}
