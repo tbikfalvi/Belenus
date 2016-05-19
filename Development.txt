@@ -23,3 +23,8 @@ Version 1.5.3.5
 
 - Ha inaktiv, vagy lejart berletet probalnak hasznalni, a program felajanlja, hogy fel lehet tolteni. Ha itt 'nem'-et valasztott a felhasznalo, akkor is tudta a lejart berletet hasznalni es a rajta levo egysegek nem fogytak el. Javitva. Ha a 'nem'-re kattint, nem lehet inditani.
 - A ReportViewer Napi konyv, Fokonyv es Havi osszesito kimutatasokban nem szerepeltek azok a berleteladasok, ahol az eladas osszege nulla volt. Javitva.
+
+Version 1.5.4.0
+===============
+
+- Ha a berletet feltoltottek, de a feltolteskor mas berlettipust adtak meg, mint a berlet elso eladasakor, akkor az uj berletegysegek bar jo egysegidot es arat mutattak, de a tipusuk megegyezett a berlet elso eladasakor hasznalt tipussal. Ez most javitva lett, mostantol a jo berlettipus kerul az egysegekhez.

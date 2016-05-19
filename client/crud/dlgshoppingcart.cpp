@@ -276,10 +276,10 @@ void cDlgShoppingCart::deleteClicked( bool )
                 try
                 {
                     cDBPatientCard      obDBPatientCard;
-                    cDBPatientCardType  obDBPatientCardType;
+//                    cDBPatientCardType  obDBPatientCardType;
 
                     obDBPatientCard.load( obDBShoppingCart.patientCardId() );
-                    obDBPatientCardType.load( obDBPatientCard.patientCardTypeId() );
+//                    obDBPatientCardType.load( obDBPatientCard.patientCardTypeId() );
 
                     obDBPatientCard.save();
 

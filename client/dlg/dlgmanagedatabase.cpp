@@ -478,8 +478,8 @@ void cDlgManageDatabase::_actionRepairPatientcardsWithoutType()
                 cDBPatientCard  obDBPatientCard;
 
                 obDBPatientCard.load( uiId );
-                obDBPatientCard.setPatientCardTypeId( uiPatientCardTypeId );
-                obDBPatientCard.save();
+//                obDBPatientCard.setPatientCardTypeId( uiPatientCardTypeId );
+//                obDBPatientCard.save();
 
                 qsQuery = QString( "UPDATE patientcardunits SET "
                                    "patientCardTypeId=%1, "

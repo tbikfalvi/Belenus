@@ -600,7 +600,7 @@ void cDlgPanelUse::on_pbReloadPC_clicked()
     {
         m_obDBPatientCard.load( ledPatientCardBarcode->text() );
 
-        if( m_obDBPatientCard.patientCardTypeId() == 1 && !g_obUser.isInGroup(cAccessGroup::SYSTEM) )
+        if( m_obDBPatientCard.isServiceCard() && !g_obUser.isInGroup(cAccessGroup::SYSTEM) )
         {
             if( !g_obGen.isSystemAdmin() )
             {
