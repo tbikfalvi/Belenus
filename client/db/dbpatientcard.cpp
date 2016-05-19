@@ -256,6 +256,21 @@ void cDBPatientCard::deactivate() throw( cSevException )
     obDBPatientcardUnit.deactivateUnits( m_uiId );
 }
 
+bool cDBPatientCard::isServiceCard() throw()
+{
+    QSqlQuery       *poQuery;
+    unsigned int     uiCount = 0;
+
+    poQuery = g_poDB->executeQTQuery( QString( "SELECT * FROM patientCardUnits WHERE patientCardId = %1 AND patientCardTypeId = 1" ).arg( id() ) );
+
+    uiCount += poQuery->size();
+
+    if( uiCount > 0 )
+        return true;
+    else
+        return false;
+}
+
 bool cDBPatientCard::isPatientCardTypeLinked( const unsigned int p_PCTId ) throw()
 {
     cTracer obTrace( "cDBPatientCard::isPatientCardTypeLinked", QString( "id: %1" ).arg( p_PCTId ) );

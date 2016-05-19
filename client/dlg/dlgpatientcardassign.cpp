@@ -357,7 +357,7 @@ void cDlgPatientCardAssign::_fillOldCardAssignStructure()
                 m_qsReasonM = tr( "This patientcard has been lost and replaced\nand can not be used or sold again." );
                 m_bMainCardOk = false;
             }
-            else if( obDBPatientCard.patientCardTypeId() == 1 )
+            else if( obDBPatientCard.isServiceCard() )
             {
                 m_qsReasonM = tr( "Service cards can not be main card." );
                 m_bMainCardOk = false;
@@ -492,7 +492,7 @@ void cDlgPatientCardAssign::_loadAssignedCard()
         {
             m_qsReasonA = "";
 
-            if( obDBPatientCard.patientCardTypeId() == 1 )
+            if( obDBPatientCard.isServiceCard() )
             {
                 m_qsReasonA = tr( "Service cards can not be main card." );
                 m_bAssignCardOk = false;
