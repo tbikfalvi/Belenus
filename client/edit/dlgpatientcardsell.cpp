@@ -349,7 +349,7 @@ void cDlgPatientCardSell::on_pbSell_clicked()
             unsigned int    uiLedgerId = 0;
 
             // Szerviz kartyat nem kell eladni
-            if( m_poPatientCard->patientCardTypeId() > 1 )
+            if( m_poPatientCardType->id() > 1 )
             {
                 if( !g_obCassa.isCassaEnabled() )
                 {
