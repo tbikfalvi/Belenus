@@ -28,3 +28,10 @@ Version 1.5.4.0
 ===============
 
 - Ha a berletet feltoltottek, de a feltolteskor mas berlettipust adtak meg, mint a berlet elso eladasakor, akkor az uj berletegysegek bar jo egysegidot es arat mutattak, de a tipusuk megegyezett a berlet elso eladasakor hasznalt tipussal. Ez most javitva lett, mostantol a jo berlettipus kerul az egysegekhez.
+
+Version 1.5.4.1
+===============
+
+- Uj berlet eladasa utan, ha a berlethez tarsitani akartunk egy masik berletet, a tarsitas ellenorzese nem megfeleloen
+mukodott (kartya berlettipusat nezte), igy nem lehetett tarsitani. Mostantol az ellenorzesnel azt nezi, hogy ne legyen
+szerviz kartya, azaz ne legyen a berletnek szerviz egysege.

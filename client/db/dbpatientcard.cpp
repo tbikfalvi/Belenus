@@ -294,7 +294,7 @@ bool cDBPatientCard::isPatientCardTypeLinked( const unsigned int p_PCTId ) throw
 
 bool cDBPatientCard::isPatientCardCanBeReplaced() throw()
 {
-    if( m_bActive == 0 || m_nUnits < 1 || m_uiTimeLeft < 1 || patientCardTypeId() < 2 )
+    if( m_bActive == 0 || m_nUnits < 1 || m_uiTimeLeft < 1 || id() < 2 || isServiceCard() )
         return false;
 
     QDate   qdTo = QDate::fromString( m_qsValidDateTo, "yyyy-MM-dd" );
@@ -307,7 +307,7 @@ bool cDBPatientCard::isPatientCardCanBeReplaced() throw()
 
 bool cDBPatientCard::isPatientCardCanBeParent() throw()
 {
-    if( m_bActive == 0 || m_nUnits < 1 || m_uiTimeLeft < 1 || patientCardTypeId() < 2 || /*m_uiParentId > 0 ||*/ pincode().compare("LOST") == 0 )
+    if( m_bActive == 0 || m_nUnits < 1 || m_uiTimeLeft < 1 || id() < 2 || isServiceCard() || /*m_uiParentId > 0 ||*/ pincode().compare("LOST") == 0 )
         return false;
 
     QDate   qdTo = QDate::fromString( m_qsValidDateTo, "yyyy-MM-dd" );
