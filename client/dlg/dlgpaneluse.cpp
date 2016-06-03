@@ -336,10 +336,6 @@ void cDlgPanelUse::setPanelUsePatientCard(unsigned int p_uiPatientCardId)
                 QString qsValid;
                 unsigned int uiPCTId = poQuery->value( 1 ).toUInt();
 
-                if( uiPCTId == 0 )
-                {
-                    uiPCTId = m_obDBPatientCard.patientCardTypeId();
-                }
                 if( uiPCTId > 0 )
                 {
                     bool    isValid = m_obDBPatientCard.isPatientCardCanBeUsed( uiPCTId, &qsValid );

@@ -317,10 +317,6 @@ void cGeneral::showPatientCardInformation(QString p_qsBarcode)
             QString qsValid;
             unsigned int uiPCTId = poQuery->value( 1 ).toUInt();
 
-            if( uiPCTId == 0 )
-            {
-                uiPCTId = obDBPatientCard.patientCardTypeId();
-            }
             if( uiPCTId > 0 )
             {
                 cDBPatientCardType obDBPatientCardType;
@@ -352,10 +348,6 @@ void cGeneral::showPatientCardInformation(QString p_qsBarcode)
             {
                 unsigned int uiPCTId = poQuery->value( 1 ).toUInt();
 
-                if( uiPCTId == 0 )
-                {
-                    uiPCTId = obDBPatientCard.patientCardTypeId();
-                }
                 if( uiPCTId > 0 )
                 {
                     cDBPatientCardType obDBPatientCardType;
