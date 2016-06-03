@@ -35,3 +35,8 @@ Version 1.5.4.1
 - Uj berlet eladasa utan, ha a berlethez tarsitani akartunk egy masik berletet, a tarsitas ellenorzese nem megfeleloen
 mukodott (kartya berlettipusat nezte), igy nem lehetett tarsitani. Mostantol az ellenorzesnel azt nezi, hogy ne legyen
 szerviz kartya, azaz ne legyen a berletnek szerviz egysege.
+
+Version 1.5.4.2
+===============
+
+- Uj berletnel a berlet hasznalatakor programhiba miatt nem vonta le az egysegeket. Mostantol helyesen le fogja vonni.
