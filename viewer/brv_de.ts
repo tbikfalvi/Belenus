@@ -338,6 +338,11 @@
         <translation>gelegentliche Einnahme durch Gerätebenutzung</translation>
     </message>
     <message>
+        <location filename="creportdaily.cpp" line="56"/>
+        <source>Patientcards sold / attach</source>
+        <translation type="unfinished">Verkaufte Club Karten</translation>
+    </message>
+    <message>
         <location filename="creportdaily.cpp" line="66"/>
         <source>Income by payment methods</source>
         <translation>Einnahmen laut Zahlungen</translation>
@@ -699,6 +704,11 @@
         <location filename="creportledger.cpp" line="75"/>
         <source>Occasionally usage of devices</source>
         <translation>gelegentliche Einnahme durch Gerätebenutzung</translation>
+    </message>
+    <message>
+        <location filename="creportledger.cpp" line="70"/>
+        <source>Patientcards sold / attach</source>
+        <translation type="unfinished">Verkaufte Club Karten</translation>
     </message>
     <message>
         <location filename="creportledger.cpp" line="80"/>

@@ -359,6 +359,11 @@
         <translation>Eladott termékek</translation>
     </message>
     <message>
+        <location filename="creportdaily.cpp" line="56"/>
+        <source>Patientcards sold / attach</source>
+        <translation>Eladott / társított bérletek</translation>
+    </message>
+    <message>
         <location filename="creportdaily.cpp" line="200"/>
         <source>Product name</source>
         <translation>Termék megnevezés</translation>
@@ -808,6 +813,11 @@
         <location filename="creportledger.cpp" line="75"/>
         <source>Occasionally usage of devices</source>
         <translation>Alkalmi géphasználatok bevétele</translation>
+    </message>
+    <message>
+        <location filename="creportledger.cpp" line="70"/>
+        <source>Patientcards sold / attach</source>
+        <translation>Eladott / társított bérletek</translation>
     </message>
     <message>
         <location filename="creportledger.cpp" line="85"/>

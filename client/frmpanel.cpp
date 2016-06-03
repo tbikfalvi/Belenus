@@ -255,7 +255,7 @@ void cFrmPanel::start()
 
     QStringList qslPCUsed = QStringList();
 
-    for( int j=0;j<m_vrPatientCards.size(); j++ )
+    for( unsigned int j=0;j<m_vrPatientCards.size(); j++ )
     {
         stUsedPatientCards *stTemp = m_vrPatientCards.at(j);
 
@@ -324,7 +324,7 @@ void cFrmPanel::clear()
         g_poHardware->setCurrentCommand( m_uiId-1, 0 );
     }
 
-    for( int i=0; i<m_vrPatientCards.size(); i++ )
+    for( unsigned int i=0; i<m_vrPatientCards.size(); i++ )
     {
         stUsedPatientCards *stTemp = m_vrPatientCards.at(i);
 
@@ -1097,7 +1097,7 @@ void cFrmPanel::closeAttendance()
 
     if( m_vrPatientCards.size() > 0 )
     {
-        for( int i=0; i<m_vrPatientCards.size(); i++ )
+        for( unsigned int i=0; i<m_vrPatientCards.size(); i++ )
         {
             stUsedPatientCards  *stTemp = m_vrPatientCards.at(i);
             cDBPatientCard       obDBPatientCard;
@@ -1105,7 +1105,7 @@ void cFrmPanel::closeAttendance()
             obDBPatientCard.load( stTemp->uiPatientCardId );
 
             // Szerviz csoportba tartozo kartyanal nem kell levonni az egyseget es idot
-            if( obDBPatientCard.patientCardTypeId() > 1 )
+            if( !obDBPatientCard.isServiceCard() )
             {
                 for( int j=0; j<stTemp->qslUnitIds.count(); j++ )
                 {
