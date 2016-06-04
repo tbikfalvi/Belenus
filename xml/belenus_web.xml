@@ -437,7 +437,7 @@
     <version current="1.5.4.0" next="1.5.4.1">
     </version>    
     
-    <version current="1.5.4.1" next="1.5.4.2">
+    <version current="1.5.4.1" next="1.5.4.0.correct">
         <download>
             <file path="http://download.bikfalvi.hu/belenus/official/Update_1_5_4_2.zip" />
         </download>
@@ -453,6 +453,12 @@
         </update>
         <execute>
             <application home="%CURRENT_DIR%" name="DBBackup.exe" params='-execute "%DOWNLOAD_DIR%/sql/db_update_1_5_4_2.sql"' />
+        </execute>
+    </version>    
+
+    <version current="1.5.4.0.correct" next="1.5.4.2">
+        <execute>
+            <application home="%CURRENT_DIR%" name="DBBackup.exe" params='-execute "%DOWNLOAD_DIR%/sql/correct_1_5_4_0.sql"' />
         </execute>
     </version>    
     
