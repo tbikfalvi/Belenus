@@ -41,3 +41,7 @@ Version 1.5.4.2
 
 - Uj berletnel a berlet hasznalatakor programhiba miatt nem vonta le az egysegeket. Mostantol helyesen le fogja vonni.
 - Correct sql hozzaadva a frissiteshez
+
+Version 1.5.5.0
+===============
+
