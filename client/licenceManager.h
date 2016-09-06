@@ -60,6 +60,7 @@ private:
     QString         m_qsCode;
     QString         m_qsAct;
     QDate           m_qdLastValidated;
+    QDate           m_qdLicenceLastValidated;
     int             m_nLicenceOrderNumber;
 
     void            _checkCode();
