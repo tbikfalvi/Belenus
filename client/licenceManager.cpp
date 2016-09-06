@@ -281,6 +281,16 @@ void cLicenceManager::initialize()
             g_poPrefs->setLicenceId( nLicenceId );
             g_obLogger(cSeverity::INFO) << "Initialized with " << m_qsLicenceString << " and " << nLicenceId << ". Last validated = " << m_qdLastValidated.addMonths(6).toString("yyyy/MM/dd") << EOM;
         }
+
+        // Get last validated from settings and update with licence date if it has default value
+        m_qdLicenceLastValidated = QDate::fromString( g_poPrefs->getLicenceLastValidated().left(10), "yyyy-MM-dd" );
+
+        if( m_qdLicenceLastValidated.year() == 2000 &&
+            m_qdLicenceLastValidated.month() == 1 &&
+            m_qdLicenceLastValidated.day() == 1 )
+        {
+            g_poPrefs->setLicenceLastValidated( QString( "%1 12:00:00" ).arg( m_qdLastValidated.toString("yyyy-MM-dd") ), true );
+        }
     }
     catch( cSevException &e )
     {
@@ -306,18 +316,27 @@ cLicenceManager::licenceType cLicenceManager::ltLicenceType()
 
 int cLicenceManager::daysRemain()
 {
-    if ( !m_qdLastValidated.isValid() )
+    if ( !m_qdLastValidated.isValid() || !m_qdLicenceLastValidated.isValid() )
         return 0;
 
-    int nDays = m_qdLastValidated.daysTo( QDate::currentDate() );
+    QDate   qdCurrent       = QDate::currentDate();
+    int     nDaysToExpire   = 0;
 
-    g_obLogger(cSeverity::INFO) << "nDays: " << nDays*(-1) << EOM;
+    if( m_qdLicenceLastValidated < m_qdLastValidated )
+    {
+        nDaysToExpire = qdCurrent.daysTo( m_qdLicenceLastValidated );
+    }
+    else
+    {
+        nDaysToExpire = qdCurrent.daysTo( m_qdLastValidated );
+    }
 
-    nDays = EXPIRE_IN_DAYS - nDays;
-    if ( nDays < 0 ) // ha ez mar tobb mint EXP_IN_DAYS akkor nincs tobb nap hatra
-        nDays = 0;
+    g_obLogger(cSeverity::INFO) << "nDaysToExpire: " << nDaysToExpire << EOM;
 
-    return nDays;
+    if ( nDaysToExpire < 0 ) // ha ez mar tobb mint EXP_IN_DAYS akkor nincs tobb nap hatra
+        nDaysToExpire = 0;
+
+    return nDaysToExpire;
 }
 
 void cLicenceManager::validateApplication( QString p_qsDate )
