@@ -4782,13 +4782,25 @@ total income</source>
 <context>
     <name>cDlgSerialReg</name>
     <message>
-        <location filename="dlg/dlgserialreg.cpp" line="66"/>
-        <location filename="dlg/dlgserialreg.cpp" line="114"/>
+        <location filename="dlg/dlgserialreg.cpp" line="63"/>
+        <source>Question</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="dlg/dlgserialreg.cpp" line="64"/>
+        <source>Are you sure you want to replace the licence key?
+
+Please note this modification affect all data connected to this licence key. If you use a currently active licence key, the related data will be corrupted!</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="dlg/dlgserialreg.cpp" line="83"/>
+        <location filename="dlg/dlgserialreg.cpp" line="131"/>
         <source>Information</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="dlg/dlgserialreg.cpp" line="67"/>
+        <location filename="dlg/dlgserialreg.cpp" line="84"/>
         <source>Your licence key has been verified successfully.
 Please send the &apos;Activation code&apos; to the
 provider of the Belenus application and
@@ -4797,34 +4809,34 @@ Finally click on the &apos;Validate&apos; button.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="dlg/dlgserialreg.cpp" line="82"/>
-        <location filename="dlg/dlgserialreg.cpp" line="90"/>
-        <location filename="dlg/dlgserialreg.cpp" line="98"/>
-        <location filename="dlg/dlgserialreg.cpp" line="125"/>
-        <location filename="dlg/dlgserialreg.cpp" line="136"/>
+        <location filename="dlg/dlgserialreg.cpp" line="99"/>
+        <location filename="dlg/dlgserialreg.cpp" line="107"/>
+        <location filename="dlg/dlgserialreg.cpp" line="115"/>
+        <location filename="dlg/dlgserialreg.cpp" line="142"/>
+        <location filename="dlg/dlgserialreg.cpp" line="153"/>
         <source>Warning</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="dlg/dlgserialreg.cpp" line="83"/>
+        <location filename="dlg/dlgserialreg.cpp" line="100"/>
         <source>The format of the licence key you entered is not valid.
 Please check your licence key and retype it if necessary.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="dlg/dlgserialreg.cpp" line="91"/>
+        <location filename="dlg/dlgserialreg.cpp" line="108"/>
         <source>The order number of the licence key you entered is not correct.
 Please check your licence key and retype it if necessary.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="dlg/dlgserialreg.cpp" line="99"/>
+        <location filename="dlg/dlgserialreg.cpp" line="116"/>
         <source>The licence key you entered is not valid.
 Please check your licence key and retype it if necessary..</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="dlg/dlgserialreg.cpp" line="115"/>
+        <location filename="dlg/dlgserialreg.cpp" line="132"/>
         <source>Your licence key has been activated successfully.
 
 Please note that you have to validate your application
@@ -4835,13 +4847,13 @@ You have %1 days until the next validation.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="dlg/dlgserialreg.cpp" line="126"/>
+        <location filename="dlg/dlgserialreg.cpp" line="143"/>
         <source>The validation code you entered does not match with the requested.
 Please check your code and retype it if necessary.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="dlg/dlgserialreg.cpp" line="137"/>
+        <location filename="dlg/dlgserialreg.cpp" line="154"/>
         <source>You are not authorized to validate the application.</source>
         <translation type="unfinished"></translation>
     </message>
@@ -10042,66 +10054,71 @@ Please create at least one product action type.</source>
     </message>
     <message>
         <location filename="dlgserialreg.ui" line="67"/>
+        <source>Change</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="dlgserialreg.ui" line="80"/>
         <source>Activate</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="dlgserialreg.ui" line="83"/>
+        <location filename="dlgserialreg.ui" line="96"/>
         <source> Activation </source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="dlgserialreg.ui" line="89"/>
+        <location filename="dlgserialreg.ui" line="102"/>
         <source>Activation code :</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="dlgserialreg.ui" line="121"/>
+        <location filename="dlgserialreg.ui" line="134"/>
         <source>Validation code :</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="dlgserialreg.ui" line="166"/>
+        <location filename="dlgserialreg.ui" line="179"/>
         <source>Validate</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="dlgserialreg.ui" line="182"/>
+        <location filename="dlgserialreg.ui" line="195"/>
         <source> Application validity </source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="dlgserialreg.ui" line="190"/>
+        <location filename="dlgserialreg.ui" line="203"/>
         <source>Valid until :</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="dlgserialreg.ui" line="231"/>
+        <location filename="dlgserialreg.ui" line="244"/>
         <source>The application can be used for ...</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="dlgserialreg.ui" line="248"/>
+        <location filename="dlgserialreg.ui" line="261"/>
         <source>XXX</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="dlgserialreg.ui" line="255"/>
+        <location filename="dlgserialreg.ui" line="268"/>
         <source>days</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="dlgserialreg.ui" line="283"/>
+        <location filename="dlgserialreg.ui" line="296"/>
         <source>Validate application</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="dlgserialreg.ui" line="303"/>
+        <location filename="dlgserialreg.ui" line="316"/>
         <source>Ok</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="dlgserialreg.ui" line="316"/>
+        <location filename="dlgserialreg.ui" line="329"/>
         <source>Exit</source>
         <translation type="unfinished"></translation>
     </message>

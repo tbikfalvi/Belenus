@@ -7311,13 +7311,27 @@ total income</source>
         <translation type="obsolete">Írja be a liszensz kulcsot</translation>
     </message>
     <message>
-        <location filename="dlg/dlgserialreg.cpp" line="66"/>
-        <location filename="dlg/dlgserialreg.cpp" line="114"/>
+        <location filename="dlg/dlgserialreg.cpp" line="63"/>
+        <source>Question</source>
+        <translation>Kérdés</translation>
+    </message>
+    <message>
+        <location filename="dlg/dlgserialreg.cpp" line="64"/>
+        <source>Are you sure you want to replace the licence key?
+
+Please note this modification affect all data connected to this licence key. If you use a currently active licence key, the related data will be corrupted!</source>
+        <translation>Biztos benne, hogy ki akarja cserélni a liszensz kulcsot?
+
+Kérem vegye figyelembe, hogy a csere hatással van az összes liszensz kulcshoz kapcsolt adatra. Amennyiben meglévő liszensz kulcsot használ fel a kapcsolódó adatok sérülhetnek!</translation>
+    </message>
+    <message>
+        <location filename="dlg/dlgserialreg.cpp" line="83"/>
+        <location filename="dlg/dlgserialreg.cpp" line="131"/>
         <source>Information</source>
         <translation>Információ</translation>
     </message>
     <message>
-        <location filename="dlg/dlgserialreg.cpp" line="67"/>
+        <location filename="dlg/dlgserialreg.cpp" line="84"/>
         <source>Your licence key has been verified successfully.
 Please send the &apos;Activation code&apos; to the
 provider of the Belenus application and
@@ -7334,7 +7348,7 @@ visszakapott kódot írja be az &apos;Érvényesítő kód&apos; mezőbe.
 Végül kattintson az &apos;Érvényesítés&apos; gombra.</translation>
     </message>
     <message>
-        <location filename="dlg/dlgserialreg.cpp" line="115"/>
+        <location filename="dlg/dlgserialreg.cpp" line="132"/>
         <source>Your licence key has been activated successfully.
 
 Please note that you have to validate your application
@@ -7351,14 +7365,14 @@ Az érvényesítés nélkül az alkalmazás csak DEMÓ módban tud működni.
 Önnek %1 napja van még a következő érvényesítésig.</translation>
     </message>
     <message>
-        <location filename="dlg/dlgserialreg.cpp" line="126"/>
+        <location filename="dlg/dlgserialreg.cpp" line="143"/>
         <source>The validation code you entered does not match with the requested.
 Please check your code and retype it if necessary.</source>
         <translation>A megadott ellenőrző kód nem egyezik meg az elvárt kóddal.
 Kérem ellenőrizze a kódot és írja be mégegyszer.</translation>
     </message>
     <message>
-        <location filename="dlg/dlgserialreg.cpp" line="137"/>
+        <location filename="dlg/dlgserialreg.cpp" line="154"/>
         <source>You are not authorized to validate the application.</source>
         <translation>Nincs jogosultsága az alkalmazás érvényesítéséhez.</translation>
     </message>
@@ -7379,25 +7393,25 @@ majd írja be az aktiváló kulcsot a beviteli mezőbe.
 Ellenőrző kód: %1</translation>
     </message>
     <message>
-        <location filename="dlg/dlgserialreg.cpp" line="83"/>
+        <location filename="dlg/dlgserialreg.cpp" line="100"/>
         <source>The format of the licence key you entered is not valid.
 Please check your licence key and retype it if necessary.</source>
         <translation>A megadott liszensz kulcs formátuma nem megfelelő.
 Kérem ellenőrizze a liszensz kulcsot és írja be mégegyszer ha szükséges.</translation>
     </message>
     <message>
-        <location filename="dlg/dlgserialreg.cpp" line="91"/>
+        <location filename="dlg/dlgserialreg.cpp" line="108"/>
         <source>The order number of the licence key you entered is not correct.
 Please check your licence key and retype it if necessary.</source>
         <translation>A liszensz kulcsban szereplő szám nem megfelelő.
 Kérem ellenőrizze a liszensz kulcsot és írja be mégegyszer ha szükséges.</translation>
     </message>
     <message>
-        <location filename="dlg/dlgserialreg.cpp" line="82"/>
-        <location filename="dlg/dlgserialreg.cpp" line="90"/>
-        <location filename="dlg/dlgserialreg.cpp" line="98"/>
-        <location filename="dlg/dlgserialreg.cpp" line="125"/>
-        <location filename="dlg/dlgserialreg.cpp" line="136"/>
+        <location filename="dlg/dlgserialreg.cpp" line="99"/>
+        <location filename="dlg/dlgserialreg.cpp" line="107"/>
+        <location filename="dlg/dlgserialreg.cpp" line="115"/>
+        <location filename="dlg/dlgserialreg.cpp" line="142"/>
+        <location filename="dlg/dlgserialreg.cpp" line="153"/>
         <source>Warning</source>
         <translation>Figyelmeztetés</translation>
     </message>
@@ -7414,7 +7428,7 @@ Please check your licence key and retype it if necessary..</source>
 Kérem ellenőrizze a liszensz kulcsot és írja be mégegyszer ha szükséges.</translation>
     </message>
     <message>
-        <location filename="dlg/dlgserialreg.cpp" line="99"/>
+        <location filename="dlg/dlgserialreg.cpp" line="116"/>
         <source>The licence key you entered is not valid.
 Please check your licence key and retype it if necessary..</source>
         <translation>A megadott liszensz kulcs érvénytelen.
@@ -14529,31 +14543,36 @@ módosítja az aktuális, illetve a stúdió általános pénztárának egyenleg
     </message>
     <message>
         <location filename="dlgserialreg.ui" line="67"/>
+        <source>Change</source>
+        <translation>Csere</translation>
+    </message>
+    <message>
+        <location filename="dlgserialreg.ui" line="80"/>
         <source>Activate</source>
         <translation>Aktiválás</translation>
     </message>
     <message>
-        <location filename="dlgserialreg.ui" line="83"/>
+        <location filename="dlgserialreg.ui" line="96"/>
         <source> Activation </source>
         <translation> Aktiválás </translation>
     </message>
     <message>
-        <location filename="dlgserialreg.ui" line="89"/>
+        <location filename="dlgserialreg.ui" line="102"/>
         <source>Activation code :</source>
         <translation>Aktiváló kód :</translation>
     </message>
     <message>
-        <location filename="dlgserialreg.ui" line="121"/>
+        <location filename="dlgserialreg.ui" line="134"/>
         <source>Validation code :</source>
         <translation>Érvényesítő kód :</translation>
     </message>
     <message>
-        <location filename="dlgserialreg.ui" line="182"/>
+        <location filename="dlgserialreg.ui" line="195"/>
         <source> Application validity </source>
         <translation> Alkalmazás érvényesség </translation>
     </message>
     <message>
-        <location filename="dlgserialreg.ui" line="190"/>
+        <location filename="dlgserialreg.ui" line="203"/>
         <source>Valid until :</source>
         <oldsource>Last validated on :</oldsource>
         <translation>Érvényesség lejárta :</translation>
@@ -14563,32 +14582,32 @@ módosítja az aktuális, illetve a stúdió általános pénztárának egyenleg
         <translation type="obsolete">0000-00-00</translation>
     </message>
     <message>
-        <location filename="dlgserialreg.ui" line="231"/>
+        <location filename="dlgserialreg.ui" line="244"/>
         <source>The application can be used for ...</source>
         <translation>Az alkalmazás még ...</translation>
     </message>
     <message>
-        <location filename="dlgserialreg.ui" line="248"/>
+        <location filename="dlgserialreg.ui" line="261"/>
         <source>XXX</source>
         <translation>XXX</translation>
     </message>
     <message>
-        <location filename="dlgserialreg.ui" line="255"/>
+        <location filename="dlgserialreg.ui" line="268"/>
         <source>days</source>
         <translation>napig érvényes</translation>
     </message>
     <message>
-        <location filename="dlgserialreg.ui" line="283"/>
+        <location filename="dlgserialreg.ui" line="296"/>
         <source>Validate application</source>
         <translation>Alkalmazás érvényesítése</translation>
     </message>
     <message>
-        <location filename="dlgserialreg.ui" line="303"/>
+        <location filename="dlgserialreg.ui" line="316"/>
         <source>Ok</source>
         <translation>Rendben</translation>
     </message>
     <message>
-        <location filename="dlgserialreg.ui" line="316"/>
+        <location filename="dlgserialreg.ui" line="329"/>
         <source>Exit</source>
         <translation>Kilépés</translation>
     </message>
@@ -14601,7 +14620,7 @@ módosítja az aktuális, illetve a stúdió általános pénztárának egyenleg
         <translation type="obsolete">Liszensz kulcs</translation>
     </message>
     <message>
-        <location filename="dlgserialreg.ui" line="166"/>
+        <location filename="dlgserialreg.ui" line="179"/>
         <source>Validate</source>
         <translation>Érvényesítés</translation>
     </message>
