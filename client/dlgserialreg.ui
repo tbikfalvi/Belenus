@@ -6,7 +6,7 @@
    <rect>
     <x>0</x>
     <y>0</y>
-    <width>429</width>
+    <width>523</width>
     <height>292</height>
    </rect>
   </property>
@@ -60,6 +60,19 @@
            </size>
           </property>
          </spacer>
+        </item>
+        <item>
+         <widget class="QPushButton" name="pbChangeKey">
+          <property name="text">
+           <string>Change</string>
+          </property>
+          <property name="iconSize">
+           <size>
+            <width>20</width>
+            <height>20</height>
+           </size>
+          </property>
+         </widget>
         </item>
         <item>
          <widget class="QPushButton" name="pbActivateKey">
@@ -196,15 +209,15 @@
             <property name="enabled">
              <bool>false</bool>
             </property>
+            <property name="calendarPopup">
+             <bool>true</bool>
+            </property>
             <property name="date">
              <date>
               <year>2013</year>
               <month>12</month>
               <day>1</day>
              </date>
-            </property>
-            <property name="calendarPopup">
-             <bool>true</bool>
             </property>
            </widget>
           </item>
