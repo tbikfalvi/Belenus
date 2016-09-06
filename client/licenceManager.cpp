@@ -327,7 +327,7 @@ void cLicenceManager::validateApplication( QString p_qsDate )
     g_poDB->executeQTQuery( QString("UPDATE licences SET lastValidated=\"%1\" WHERE licenceId=%2").arg( p_qsDate ).arg( g_poPrefs->getLicenceId() ) );
 }
 
-int cLicenceManager::activateLicence( const QString &p_qsLicenceString )
+int cLicenceManager::activateLicence(const QString &p_qsLicenceString , bool p_bChangeLicence )
 {
     int nRet = ERR_NO_ERROR;
 
@@ -376,8 +376,17 @@ int cLicenceManager::activateLicence( const QString &p_qsLicenceString )
 
         try
         {
-            poQuery = g_poDB->executeQTQuery( QString( "INSERT INTO licences ( `licenceId`, `serial`, `lastValidated` ) VALUES ( %1, '%2', '%3' )" ).arg(nLicenceNumber+1).arg(p_qsLicenceString).arg(QDate::currentDate().toString("yyyy-MM-dd")) );
-            if( poQuery ) g_poPrefs->setLicenceId( poQuery->lastInsertId().toUInt() );
+            if( p_bChangeLicence )
+            {
+                poQuery = g_poDB->executeQTQuery( QString( "UPDATE licences SET `serial`=\"%1\" WHERE licenceId=%2" )
+                                                  .arg( p_qsLicenceString )
+                                                  .arg( g_poPrefs->getLicenceId() ) );
+            }
+            else
+            {
+                poQuery = g_poDB->executeQTQuery( QString( "INSERT INTO licences ( `licenceId`, `serial`, `lastValidated` ) VALUES ( %1, '%2', '%3' )" ).arg(nLicenceNumber+1).arg(p_qsLicenceString).arg(QDate::currentDate().toString("yyyy-MM-dd")) );
+                if( poQuery ) g_poPrefs->setLicenceId( poQuery->lastInsertId().toUInt() );
+            }
             m_qsLicenceString = p_qsLicenceString;
         }
         catch( cSevException &e )
