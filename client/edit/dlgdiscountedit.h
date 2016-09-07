@@ -25,6 +25,7 @@ protected:
 private slots:
     void slotRefreshWarningColors();
     void slotFillHCDComboList();
+    void slotEnableTimezone();
     void slotCheckValue();
     void on_ledName_textChanged(const QString &arg1);
 };

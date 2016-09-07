@@ -670,6 +670,8 @@ CREATE TABLE `discounts` (
   `regularCustomer`         tinyint(1)              DEFAULT 0,
   `employee`                tinyint(1)              DEFAULT 0,
   `service`                 tinyint(1)              DEFAULT 0,
+  `timezoneStart`           time                    NOT NULL,
+  `timezoneStop`            time                    NOT NULL,
   `name`                    varchar(100)            NOT NULL,
   `discountValue`           decimal(10,0)           NOT NULL,
   `discountPercent`         int(11)                 NOT NULL,

@@ -253,8 +253,8 @@ INSERT INTO `productactiontype` (`productActionTypeId`, `licenceId`, `name`, `in
 
 -- -----------------------------------------------------------------------------------
 
-INSERT INTO `discounts` (`discountId`, `licenceId`, `patientId`, `companyId`, `paymentMethodId`, `productId`, `regularCustomer`, `employee`, `service`, `name`, `discountValue`, `discountPercent`, `modified`, `active`, `archive`) VALUES
- (NULL, '0', NULL, NULL, NULL, NULL, '0', '0', '0', '', '', '', '', '0', 'ARC');
+INSERT INTO `discounts` (`discountId`, `licenceId`, `patientId`, `companyId`, `paymentMethodId`, `productId`, `regularCustomer`, `employee`, `service`, `timezoneStart`, `timezoneStop`, `name`, `discountValue`, `discountPercent`, `modified`, `active`, `archive`) VALUES
+ (NULL, '0', NULL, NULL, NULL, NULL, '0', '0', '0', '00:00:00', '00:00:00', '', '', '', '', '0', 'ARC');
 UPDATE `discounts` SET `discountId`='0' WHERE `discountId`=1;
 ALTER TABLE `discounts` auto_increment=1;
 
