@@ -179,6 +179,20 @@ void cDBDiscount::loadProduct( const unsigned int p_uiId ) throw( cSevException 
     init( poQuery->record() );
 }
 
+void cDBDiscount::loadTimeZone() throw( cSevException )
+{
+    cTracer obTrace( "cDBDiscount::loadTimeZone", QString( "time: %1" ).arg( QTime::currentTime().toString("hh:mm") ) );
+
+    QSqlQuery *poQuery = g_poDB->executeQTQuery( QString( "SELECT * FROM discounts WHERE timezoneStart <= \"%1\" AND timezoneStop >= \"%1\" " )
+                                                 .arg( QTime::currentTime().toString("hh:mm:ss") ) );
+
+    if( poQuery->size() != 1 )
+        throw cSevException( cSeverity::ERROR, "Discount id not found" );
+
+    poQuery->first();
+    init( poQuery->record() );
+}
+
 bool cDBDiscount::isRegularCustomerExists() throw( cSevException )
 {
     QSqlQuery *poQuery = g_poDB->executeQTQuery( QString( "SELECT * FROM discounts WHERE regularCustomer > 0 AND discountId<>%1" ).arg(m_uiId) );

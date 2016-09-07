@@ -17,6 +17,7 @@ public:
     void            loadCompany( const unsigned int p_uiId )                            throw( cSevException );
     void            loadPaymentMethod( const unsigned int p_uiId )                      throw( cSevException );
     void            loadProduct( const unsigned int p_uiId )                            throw( cSevException );
+    void            loadTimeZone()                                                      throw( cSevException );
     bool            isRegularCustomerExists()                                           throw( cSevException );
     bool            isEmployeeExists()                                                  throw( cSevException );
     bool            isServiceExists()                                                   throw( cSevException );

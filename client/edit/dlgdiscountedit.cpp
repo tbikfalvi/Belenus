@@ -79,7 +79,15 @@ cDlgDiscountEdit::cDlgDiscountEdit( QWidget *p_poParent, cDBDiscount *p_poDiscou
         {
             rbCoupon->setChecked( true );
         }
-        slotFillHCDComboList();
+
+        if( rbTimeZone->isChecked() )
+        {
+            slotEnableTimezone();
+        }
+        else
+        {
+            slotFillHCDComboList();
+        }
 
         if( m_poDiscount->discountValue() > 0 )
         {

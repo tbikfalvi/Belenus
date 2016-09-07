@@ -31,9 +31,6 @@ cDlgCassaAction::cDlgCassaAction( QWidget *p_poParent, cDBShoppingCart *p_poShop
     lblVoucherCurrency->setText( g_poPrefs->getCurrencyShort() );
     lblCurrencyToPay->setText( g_poPrefs->getCurrencyShort() );
 
-    gbComment->setVisible( false );
-    teComment->setEnabled( false );
-
     m_bShoppingCart = false;
 
     int nMoney = 0;
@@ -66,20 +63,32 @@ cDlgCassaAction::cDlgCassaAction( QWidget *p_poParent, cDBShoppingCart *p_poShop
     if( cmbCoupon )
     {
         cmbCoupon->addItem( tr("<Not selected>"), 0 );
-        poQuery = g_poDB->executeQTQuery( QString( "SELECT discountId, name FROM discounts WHERE patientId=0 AND companyId=0 AND paymentMethodId=0 AND productId=0 AND regularCustomer=0 AND employee=0 AND service=0 AND active=1 AND archive<>\"DEL\" " ) );
+        poQuery = g_poDB->executeQTQuery( QString( "SELECT discountId, name "
+                                                   "FROM discounts WHERE "
+                                                   "patientId=0 AND "
+                                                   "companyId=0 AND "
+                                                   "paymentMethodId=0 AND "
+                                                   "productId=0 AND "
+                                                   "regularCustomer=0 AND "
+                                                   "employee=0 AND "
+                                                   "service=0 AND "
+                                                   "timezoneStart = \"00:00:00\" AND "
+                                                   "timezoneStop = \"00:00:00\" AND "
+                                                   "active=1 AND "
+                                                   "archive<>\"DEL\" " ) );
 
         while( poQuery->next() )
         {
             cmbCoupon->addItem( poQuery->value( 1 ).toString(), poQuery->value( 0 ) );
         }
     }
-
+/*
     m_nHeightSmall  = 334;
     m_nHeightBig    = 450;
 
     setMinimumHeight( m_nHeightSmall );
     setMaximumHeight( m_nHeightSmall );
-
+*/
     pbPayCash->setFocus();
 }
 
@@ -116,11 +125,12 @@ void cDlgCassaAction::actionPayment()
     pbShoppingCart->setEnabled( false );
     frmCoupon->setVisible( false );
     frmCoupon->setEnabled( false );
-
+/*
     m_nHeightSmall  = 308;
     m_nHeightBig    = 424;
     setMinimumHeight( m_nHeightSmall );
     setMaximumHeight( m_nHeightSmall );
+*/
 }
 
 QString cDlgCassaAction::cassaResult( int *p_nPayType, bool *p_bShoppingCart, unsigned int *p_uiCouponId )
@@ -137,6 +147,7 @@ QString cDlgCassaAction::cassaResult( int *p_nPayType, bool *p_bShoppingCart, un
 
 void cDlgCassaAction::on_pbComment_clicked()
 {
+    /*
     if( pbComment->text().compare( tr("Comment >>") ) == 0 )
     {
         gbComment->setVisible( true );
@@ -154,6 +165,7 @@ void cDlgCassaAction::on_pbComment_clicked()
         setMinimumHeight( m_nHeightSmall );
         setMaximumHeight( m_nHeightSmall );
     }
+    */
 }
 
 void cDlgCassaAction::on_pbPayCash_clicked()
@@ -363,6 +375,7 @@ void cDlgCassaAction::updateShoppingCartItem()
     m_poShoppingCart->setCard( cCard.currencyValue().toInt() );
     m_poShoppingCart->setVoucher( cVoucher.currencyValue().toInt() );
 
+    /*
     if( uiCouponId > 0 )
     {
         cDBDiscount     obDBDiscount;
@@ -382,6 +395,7 @@ void cDlgCassaAction::updateShoppingCartItem()
     qsComment.append( teComment->toPlainText() );
 
     m_poShoppingCart->setComment( qsComment );
+    */
 }
 
 void cDlgCassaAction::on_pbOk_clicked()
