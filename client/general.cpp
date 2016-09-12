@@ -65,7 +65,7 @@ void cGeneral::setApplicationLanguage( const QString &p_qsLang )
     m_poMainApplication->installTranslator( m_poQtTr );
 }
 //====================================================================================
-int cGeneral::customMsgBox(QWidget *parent, msgBoxType msgtype, QString buttonstext, QString msg, QString details)
+int cGeneral::customMsgBox(QWidget */*parent*/, msgBoxType msgtype, QString buttonstext, QString msg, QString details)
 //====================================================================================
 {
     QMessageBox msgBox;
@@ -469,7 +469,7 @@ cCurrency::cCurrency(int p_nCurrencyValue, currType p_ctCurrencyType, int p_nVat
 //    g_obLogger(cSeverity::INFO) << "m_nValueGross " << m_nValueGross << EOM;
 }
 //====================================================================================
-void cCurrency::_init(const QString &p_qsCurrencyString, currType p_ctCurrencyType, int p_nVat)
+void cCurrency::_init(const QString &p_qsCurrencyString, currType p_ctCurrencyType, int /*p_nVat*/)
 {
     g_obLogger(cSeverity::DEBUG) << "fullstr: [" << p_qsCurrencyString << "]" << EOM;
 

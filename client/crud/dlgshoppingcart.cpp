@@ -141,13 +141,12 @@ void cDlgShoppingCart::setupTableView()
         m_poModel->setHeaderData( 6, Qt::Horizontal, tr( "Name" ) );
         m_poModel->setHeaderData( 7, Qt::Horizontal, tr( "NetPrice" ) );
         m_poModel->setHeaderData( 8, Qt::Horizontal, tr( "VATPercent" ) );
-        m_poModel->setHeaderData( 9, Qt::Horizontal, tr( "SumPrice" ) );
-        m_poModel->setHeaderData( 10, Qt::Horizontal, tr( "Count" ) );
-        m_poModel->setHeaderData( 11, Qt::Horizontal, tr( "Discount" ) );
-        m_poModel->setHeaderData( 12, Qt::Horizontal, tr( "Voucher" ) );
-        m_poModel->setHeaderData( 13, Qt::Horizontal, tr( "TotalSumPrice" ) );
-        m_poModel->setHeaderData( 14, Qt::Horizontal, tr( "Comment" ) );
-        m_poModel->setHeaderData( 15, Qt::Horizontal, tr( "Archive" ) );
+        m_poModel->setHeaderData( 9, Qt::Horizontal, tr( "Count" ) );
+        m_poModel->setHeaderData( 10, Qt::Horizontal, tr( "Discount" ) );
+        m_poModel->setHeaderData( 11, Qt::Horizontal, tr( "Voucher" ) );
+        m_poModel->setHeaderData( 12, Qt::Horizontal, tr( "SumPrice" ) );
+        m_poModel->setHeaderData( 13, Qt::Horizontal, tr( "Comment" ) );
+        m_poModel->setHeaderData( 14, Qt::Horizontal, tr( "Archive" ) );
 
         tbvCrud->resizeColumnToContents( 0 );
         tbvCrud->resizeColumnToContents( 1 );
@@ -164,7 +163,6 @@ void cDlgShoppingCart::setupTableView()
         tbvCrud->resizeColumnToContents( 12 );
         tbvCrud->resizeColumnToContents( 13 );
         tbvCrud->resizeColumnToContents( 14 );
-        tbvCrud->resizeColumnToContents( 15 );
 
         tbvCrud->sortByColumn( 2, Qt::AscendingOrder );
     }
@@ -175,12 +173,11 @@ void cDlgShoppingCart::setupTableView()
         m_poModel->setHeaderData( 3, Qt::Horizontal, tr( "Name" ) );
         m_poModel->setHeaderData( 4, Qt::Horizontal, tr( "NetPrice" ) );
         m_poModel->setHeaderData( 5, Qt::Horizontal, tr( "VATPercent" ) );
-        m_poModel->setHeaderData( 6, Qt::Horizontal, tr( "SumPrice" ) );
-        m_poModel->setHeaderData( 7, Qt::Horizontal, tr( "Count" ) );
-        m_poModel->setHeaderData( 8, Qt::Horizontal, tr( "Discount" ) );
-        m_poModel->setHeaderData( 9, Qt::Horizontal, tr( "Voucher" ) );
-        m_poModel->setHeaderData( 10, Qt::Horizontal, tr( "TotalSumPrice" ) );
-        m_poModel->setHeaderData( 11, Qt::Horizontal, tr( "Comment" ) );
+        m_poModel->setHeaderData( 6, Qt::Horizontal, tr( "Count" ) );
+        m_poModel->setHeaderData( 7, Qt::Horizontal, tr( "Discount" ) );
+        m_poModel->setHeaderData( 8, Qt::Horizontal, tr( "Voucher" ) );
+        m_poModel->setHeaderData( 9, Qt::Horizontal, tr( "SumPrice" ) );
+        m_poModel->setHeaderData( 10, Qt::Horizontal, tr( "Comment" ) );
 
         tbvCrud->resizeColumnToContents( 1 );
         tbvCrud->resizeColumnToContents( 2 );
@@ -192,7 +189,6 @@ void cDlgShoppingCart::setupTableView()
         tbvCrud->resizeColumnToContents( 8 );
         tbvCrud->resizeColumnToContents( 9 );
         tbvCrud->resizeColumnToContents( 10 );
-        tbvCrud->resizeColumnToContents( 11 );
 
         tbvCrud->sortByColumn( 1, Qt::AscendingOrder );
     }
@@ -204,11 +200,43 @@ void cDlgShoppingCart::refreshTable()
 
     if( g_obUser.isInGroup( cAccessGroup::ROOT ) )
     {
-        m_qsQuery = "SELECT shoppingCartItemId, shoppingCartItems.licenceId, title, patients.name, productId, patientCardId, itemName, itemNetPrice/100, itemVAT, itemSumPrice/100, itemCount, discountValue/100, voucher/100, (itemSumPrice*itemCount-discountValue)/100 AS totalSumPrice, shoppingCartItems.comment, shoppingCartItems.archive FROM shoppingCartItems JOIN patients ON shoppingCartItems.patientId = patients.patientId JOIN panels ON shoppingCartItems.panelId = panels.panelId WHERE shoppingCartItemId>0";
+        m_qsQuery = "SELECT shoppingCartItemId, "
+                           "shoppingCartItems.licenceId, "
+                           "title, "
+                           "patients.name, "
+                           "productId, "
+                           "patientCardId, "
+                           "itemName, "
+                           "itemNetPrice/100/itemCount, "
+                           "itemVAT, "
+                           "itemCount, "
+                           "discountValue/100, "
+                           "voucher/100, "
+                           "itemSumPrice/100, "
+                           "shoppingCartItems.comment, "
+                           "shoppingCartItems.archive "
+                    "FROM shoppingCartItems "
+                    "JOIN patients ON shoppingCartItems.patientId = patients.patientId "
+                    "JOIN panels ON shoppingCartItems.panelId = panels.panelId "
+                    "WHERE shoppingCartItemId>0";
     }
     else
     {
-        m_qsQuery = "SELECT shoppingCartItemId AS id, title, patients.name, itemName, itemNetPrice/100, itemVAT, itemSumPrice/100, itemCount, discountValue/100, voucher/100, (itemSumPrice*itemCount-discountValue)/100 AS totalSumPrice, shoppingCartItems.comment FROM shoppingCartItems JOIN patients ON shoppingCartItems.patientId = patients.patientId JOIN panels ON shoppingCartItems.panelId = panels.panelId WHERE shoppingCartItemId>0";
+        m_qsQuery = "SELECT shoppingCartItemId AS id, "
+                            "title, "
+                            "patients.name, "
+                            "itemName, "
+                            "itemNetPrice/100/itemCount, "
+                            "itemVAT, "
+                            "itemCount, "
+                            "discountValue/100, "
+                            "voucher/100, "
+                            "itemSumPrice/100, "
+                            "shoppingCartItems.comment "
+                            "FROM shoppingCartItems "
+                    "JOIN patients ON shoppingCartItems.patientId = patients.patientId "
+                    "JOIN panels ON shoppingCartItems.panelId = panels.panelId "
+                    "WHERE shoppingCartItemId>0";
     }
 
     int nPanelId = cmbPanel->itemData( cmbPanel->currentIndex() ).toInt();
@@ -348,12 +376,12 @@ void cDlgShoppingCart::on_pbPayment_clicked()
             qslIds << tbvCrud->selectionModel()->selectedRows().at(i).data().toString();
         }
 
-        QString     qsQuery = QString("SELECT SUM(itemSumPrice-discountValue) AS shoppingCartSum, "
-                                      "SUM(card) as card, "
-                                      "SUM(cash) as cash, "
-                                      "SUM(voucher) as voucher, "
-                                      "SUM(itemVAT) as Vat, "
-                                      "SUM(discountValue) as Discount "
+        QString     qsQuery = QString("SELECT SUM(itemSumPrice) AS itemSumPrice, "
+                                      "SUM(card) AS card, "
+                                      "SUM(cash) AS cash, "
+                                      "SUM(voucher) AS voucher, "
+                                      "SUM(itemVAT) AS vat, "
+                                      "SUM(discountValue) AS discount "
                                       "FROM shoppingcartitems "
                                       "WHERE shoppingCartItemId IN (%1) ").arg(qslIds.join(QString(",")));
         QSqlQuery  *poQuery = g_poDB->executeQTQuery( qsQuery );
@@ -391,19 +419,25 @@ void cDlgShoppingCart::on_pbPayment_clicked()
 
                 // Restructure the payment category based on selection
                 if( inPayType == 1 )
+                {// Payed with cash
+                    obDBShoppingCart.setCard( 0 );
+                    obDBShoppingCart.setCash( obDBShoppingCart.card() +
+                                              obDBShoppingCart.cash() +
+                                              obDBShoppingCart.voucher() );
+                    obDBShoppingCart.setVoucher( 0 );
+                }
+                else if( inPayType == 2 )
                 { // Payed with card
                     obDBShoppingCart.setCard( obDBShoppingCart.card() +
                                               obDBShoppingCart.cash() +
                                               obDBShoppingCart.voucher() );
-                }
-                else if( inPayType == 2 )
-                {// Payed with cash
-                    obDBShoppingCart.setCash( obDBShoppingCart.card() +
-                                              obDBShoppingCart.cash() +
-                                              obDBShoppingCart.voucher() );
+                    obDBShoppingCart.setCash( 0 );
+                    obDBShoppingCart.setVoucher( 0 );
                 }
                 else
                 {// Payed with other
+                    obDBShoppingCart.setCard( 0 );
+                    obDBShoppingCart.setCash( 0 );
                     obDBShoppingCart.setVoucher( obDBShoppingCart.card() +
                                                  obDBShoppingCart.cash() +
                                                  obDBShoppingCart.voucher() );

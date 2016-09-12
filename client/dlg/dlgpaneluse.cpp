@@ -6,6 +6,7 @@
 #include "db/dbpatientcardunits.h"
 #include "edit/dlgpatientcardsell.h"
 #include "edit/dlgpatientcardrefill.h"
+#include "db/dbdiscount.h"
 
 //==============================================================================================
 //
@@ -464,9 +465,36 @@ void cDlgPanelUse::setPanelUseTime()
 //----------------------------------------------------------------------------------------------
 void cDlgPanelUse::setPanelUsePrice()
 {
-    cCurrency   cPrice( m_uiPanelUsePrice );
+    int nTimezoneDiscount   = 0;
+
+    try
+    {
+        cDBDiscount obDiscount;
+
+        obDiscount.loadTimeZone();
+        nTimezoneDiscount = obDiscount.discount( m_uiPanelUsePrice );
+    }
+    catch( cSevException &e )
+    {
+//        g_obLogger(e.severity()) << e.what() << EOM;
+    }
+
+    cCurrency   cPrice( m_uiPanelUsePrice-nTimezoneDiscount );
 
     lblTotalPriceValue->setText( cPrice.currencyFullStringShort() );
+
+    lblDiscountCaption->setVisible( false );
+    lblDiscountValue->setVisible( false );
+
+    if( nTimezoneDiscount > 0 )
+    {
+        lblDiscountCaption->setVisible( true );
+        lblDiscountValue->setVisible( true );
+
+        cCurrency   cDisc( nTimezoneDiscount );
+
+        lblDiscountValue->setText( QString("  ") + cDisc.currencyFullStringShort() );
+    }
 }
 //----------------------------------------------------------------------------------------------
 unsigned int cDlgPanelUse::panelUseSecondsCard()

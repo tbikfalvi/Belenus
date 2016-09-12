@@ -552,8 +552,8 @@ void cDlgPatientCardAssign::_processAssignNewToOld()
     obDBPatientCardMain.load( ledMainBarcode->text() );
     obDBPatientCardAssign.load( ledAssignBarcode->text() );
 
-    unsigned int uiTimeLeft = obDBPatientCardMain.timeLeft() + obDBPatientCardAssign.timeLeft();
-    unsigned int uiUnits    = obDBPatientCardMain.units() + obDBPatientCardAssign.units();
+//    unsigned int uiTimeLeft = obDBPatientCardMain.timeLeft() + obDBPatientCardAssign.timeLeft();
+//    unsigned int uiUnits    = obDBPatientCardMain.units() + obDBPatientCardAssign.units();
 
     if( obDBPatientCardAssign.active() )
     {

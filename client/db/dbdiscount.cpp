@@ -34,6 +34,8 @@ void cDBDiscount::init( const unsigned int p_uiId,
                         const bool p_bRegularCustomer,
                         const bool p_bEmployee,
                         const bool p_bService,
+                        const QString &p_qsTimezoneStart,
+                        const QString &p_qsTimezoneStop,
                         const QString &p_qsName,
                         const int p_inDiscountValue,
                         const int p_inDiscountPercent,
@@ -50,6 +52,8 @@ void cDBDiscount::init( const unsigned int p_uiId,
     m_bRegularCustomer      = p_bRegularCustomer;
     m_bEmployee             = p_bEmployee;
     m_bService              = p_bService;
+    m_qsTimezoneStart       = p_qsTimezoneStart;
+    m_qsTimezoneStop        = p_qsTimezoneStop;
     m_qsName                = p_qsName;
     m_inDiscountValue       = p_inDiscountValue;
     m_inDiscountPercent     = p_inDiscountPercent;
@@ -64,11 +68,13 @@ void cDBDiscount::init( const QSqlRecord &p_obRecord ) throw()
     int inLicenceIdIdx          = p_obRecord.indexOf( "licenceId" );
     int inGuestIdIdx            = p_obRecord.indexOf( "patientId" );
     int inCompanyIdIdx          = p_obRecord.indexOf( "companyId" );
-    int inPaymentMethodIdIdx      = p_obRecord.indexOf( "paymentMethodId" );
+    int inPaymentMethodIdIdx    = p_obRecord.indexOf( "paymentMethodId" );
     int inProductIdIdx          = p_obRecord.indexOf( "productId" );
     int inRegularCustomerIdx    = p_obRecord.indexOf( "regularCustomer" );
     int inEmpoyeeIdx            = p_obRecord.indexOf( "employee" );
     int inServiceIdx            = p_obRecord.indexOf( "service" );
+    int inTimezoneStartIdx      = p_obRecord.indexOf( "timezoneStart" );
+    int inTimezoneStopIdx       = p_obRecord.indexOf( "timezoneStop" );
     int inNameIdx               = p_obRecord.indexOf( "name" );
     int inDiscountValueIdx      = p_obRecord.indexOf( "discountValue" );
     int inDiscountPercentIdx    = p_obRecord.indexOf( "discountPercent" );
@@ -85,6 +91,8 @@ void cDBDiscount::init( const QSqlRecord &p_obRecord ) throw()
           p_obRecord.value( inRegularCustomerIdx ).toBool(),
           p_obRecord.value( inEmpoyeeIdx ).toBool(),
           p_obRecord.value( inServiceIdx ).toBool(),
+          p_obRecord.value( inTimezoneStartIdx ).toString(),
+          p_obRecord.value( inTimezoneStopIdx ).toString(),
           p_obRecord.value( inNameIdx ).toString(),
           p_obRecord.value( inDiscountValueIdx ).toInt(),
           p_obRecord.value( inDiscountPercentIdx ).toInt(),
@@ -163,6 +171,20 @@ void cDBDiscount::loadProduct( const unsigned int p_uiId ) throw( cSevException 
     cTracer obTrace( "cDBDiscount::loadProduct", QString( "id: %1" ).arg( p_uiId ) );
 
     QSqlQuery *poQuery = g_poDB->executeQTQuery( QString( "SELECT * FROM discounts WHERE productId = %1" ).arg( p_uiId ) );
+
+    if( poQuery->size() != 1 )
+        throw cSevException( cSeverity::ERROR, "Discount id not found" );
+
+    poQuery->first();
+    init( poQuery->record() );
+}
+
+void cDBDiscount::loadTimeZone() throw( cSevException )
+{
+    cTracer obTrace( "cDBDiscount::loadTimeZone", QString( "time: %1" ).arg( QTime::currentTime().toString("hh:mm") ) );
+
+    QSqlQuery *poQuery = g_poDB->executeQTQuery( QString( "SELECT * FROM discounts WHERE timezoneStart <= \"%1\" AND timezoneStop >= \"%1\" " )
+                                                 .arg( QTime::currentTime().toString("hh:mm:ss") ) );
 
     if( poQuery->size() != 1 )
         throw cSevException( cSeverity::ERROR, "Discount id not found" );
@@ -275,6 +297,8 @@ void cDBDiscount::save() throw( cSevException )
     qsQuery += QString( "regularCustomer = \"%1\", " ).arg( m_bRegularCustomer );
     qsQuery += QString( "employee = \"%1\", " ).arg( m_bEmployee );
     qsQuery += QString( "service = \"%1\", " ).arg( m_bService );
+    qsQuery += QString( "timezoneStart = \"%1\", " ).arg( m_qsTimezoneStart );
+    qsQuery += QString( "timezoneStop = \"%1\", " ).arg( m_qsTimezoneStop );
     qsQuery += QString( "name = \"%1\", " ).arg( m_qsName );
     qsQuery += QString( "discountValue = \"%1\", " ).arg( m_inDiscountValue );
     qsQuery += QString( "discountPercent = \"%1\", " ).arg( m_inDiscountPercent );
@@ -408,6 +432,26 @@ bool cDBDiscount::service() const throw()
 void cDBDiscount::setService( const bool p_bService ) throw()
 {
     m_bService = p_bService;
+}
+
+QString cDBDiscount::timezoneStart() const throw()
+{
+    return m_qsTimezoneStart;
+}
+
+void cDBDiscount::setTimezoneStart( const QString &p_qsTimezoneStart ) throw()
+{
+    m_qsTimezoneStart = p_qsTimezoneStart;
+}
+
+QString cDBDiscount::timezoneStop() const throw()
+{
+    return m_qsTimezoneStop;
+}
+
+void cDBDiscount::setTimezoneStop( const QString &p_qsTimezoneStop ) throw()
+{
+    m_qsTimezoneStop = p_qsTimezoneStop;
 }
 
 QString cDBDiscount::name() const throw()

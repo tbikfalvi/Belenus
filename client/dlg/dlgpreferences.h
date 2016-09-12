@@ -54,6 +54,7 @@ private slots:
     void on_pbCancelModifyPsw_clicked();
     void on_pbCaptionBackgroundActive_clicked();
     void on_pbTextColorActive_clicked();
+    void on_pbModifyExpDate_clicked();
 };
 
 #endif

@@ -223,6 +223,12 @@ public:
     bool            isBarcodeHidden();
     void            setUsageVisibleOnMain( bool p_bUsageVisibleOnMain, bool p_boSaveNow = false );
     bool            isUsageVisibleOnMain();
+    void            setLicenceLastValidated( const QString &p_qsLicenceLastValidated, bool p_boSaveNow = false );
+    QString         getLicenceLastValidated() const;
+    void            setDACanModifyWorktime( bool p_bDACanModifyWorktime, bool p_boSaveNow = false );
+    bool            isDACanModifyWorktime();
+    void            setDACanModifyExpDate( bool p_bDACanModifyExpDate, bool p_boSaveNow = false );
+    bool            isDACanModifyExpDate();
 
 //void            setXXX( const QString &p_qsXXX, bool p_boSaveNow = false );
 //QString         getXXX() const;
@@ -318,6 +324,9 @@ private:
     int             m_nStartHttpSyncAutoSeconds;
     bool            m_bBarcodeHidden;
     bool            m_bUsageVisibleOnMain;
+    QString         m_qsLicenceLastValidated;
+    bool            m_bDACanModifyWorktime;
+    bool            m_bDACanModifyExpDate;
 
     void init();
 };

@@ -16,14 +16,14 @@ cDlgDiscountEdit::cDlgDiscountEdit( QWidget *p_poParent, cDBDiscount *p_poDiscou
     setWindowIcon( QIcon("./resources/40x40_discount.png") );
 
     cmbHCDList->setEnabled( false );
+    gbTimeZone->setEnabled( false );
+    gbTimeZone->setVisible( false );
     gbDiscountCategory->setStyleSheet( "QGroupBox {font: bold; color: red;}" );
     gbValue->setStyleSheet( "QGroupBox {font: bold; color: red;}" );
     lblName->setStyleSheet( "QLabel {font: bold; color: red;}" );
 
     pbSave->setIcon( QIcon("./resources/40x40_ok.png") );
     pbCancel->setIcon( QIcon("./resources/40x40_cancel.png") );
-
-    checkIndependent->setVisible( false );
 
     m_poDiscount = p_poDiscount;
     if( m_poDiscount->id() > 0 )
@@ -37,6 +37,7 @@ cDlgDiscountEdit::cDlgDiscountEdit( QWidget *p_poParent, cDBDiscount *p_poDiscou
         rbPaymentMethod->setEnabled( false );
         rbProduct->setEnabled( false );
         rbCoupon->setEnabled( false );
+        rbTimeZone->setEnabled( false );
         cmbHCDList->setEnabled( false );
 
         if( m_poDiscount->regularCustomer() > 0 )
@@ -67,11 +68,26 @@ cDlgDiscountEdit::cDlgDiscountEdit( QWidget *p_poParent, cDBDiscount *p_poDiscou
         {
             rbProduct->setChecked( true );
         }
+        else if( m_poDiscount->timezoneStart().compare("00:00:00") != 0 ||
+                 m_poDiscount->timezoneStop().compare("00:00:00") != 0 )
+        {
+            rbTimeZone->setChecked( true );
+            teTimeZoneStart->setTime( QTime::fromString( m_poDiscount->timezoneStart(), "hh:mm:ss" ) );
+            teTimeZoneStop->setTime( QTime::fromString( m_poDiscount->timezoneStop(), "hh:mm:ss" ) );
+        }
         else
         {
             rbCoupon->setChecked( true );
         }
-        slotFillHCDComboList();
+
+        if( rbTimeZone->isChecked() )
+        {
+            slotEnableTimezone();
+        }
+        else
+        {
+            slotFillHCDComboList();
+        }
 
         if( m_poDiscount->discountValue() > 0 )
         {
@@ -86,12 +102,9 @@ cDlgDiscountEdit::cDlgDiscountEdit( QWidget *p_poParent, cDBDiscount *p_poDiscou
         }
         ledDiscount->setFocus();
     }
-    if( m_poDiscount->licenceId() == 0 && m_poDiscount->id() > 0 )
-        checkIndependent->setChecked( true );
 
     if( !g_obUser.isInGroup( cAccessGroup::ROOT ) && !g_obUser.isInGroup( cAccessGroup::SYSTEM ) )
     {
-        checkIndependent->setEnabled( false );
         if( m_poDiscount->licenceId() == 0 && m_poDiscount->id() > 0 )
         {
             ledName->setEnabled( false );
@@ -103,6 +116,7 @@ cDlgDiscountEdit::cDlgDiscountEdit( QWidget *p_poParent, cDBDiscount *p_poDiscou
             rbPaymentMethod->setEnabled( false );
             rbProduct->setEnabled( false );
             rbCoupon->setEnabled( false );
+            rbTimeZone->setEnabled( false );
             cmbHCDList->setEnabled( false );
             rbDiscountValue->setEnabled( false );
             rbDiscountPercent->setEnabled( false );
@@ -110,8 +124,6 @@ cDlgDiscountEdit::cDlgDiscountEdit( QWidget *p_poParent, cDBDiscount *p_poDiscou
             pbSave->setEnabled( false );
         }
     }
-    if( m_poDiscount->id() > 0 )
-        checkIndependent->setEnabled( false );
 
     connect( rbRegularCustomer, SIGNAL(clicked()), this, SLOT(slotFillHCDComboList()) );
     connect( rbEmployee, SIGNAL(clicked()), this, SLOT(slotFillHCDComboList()) );
@@ -121,6 +133,7 @@ cDlgDiscountEdit::cDlgDiscountEdit( QWidget *p_poParent, cDBDiscount *p_poDiscou
     connect( rbPaymentMethod, SIGNAL(clicked()), this, SLOT(slotFillHCDComboList()) );
     connect( rbProduct, SIGNAL(clicked()), this, SLOT(slotFillHCDComboList()) );
     connect( rbCoupon, SIGNAL(clicked()), this, SLOT(slotFillHCDComboList()) );
+    connect( rbTimeZone, SIGNAL(clicked()), this, SLOT(slotEnableTimezone()) );
     connect( ledDiscount, SIGNAL(textEdited(QString)), this, SLOT(slotCheckValue()) );
 
     QPoint  qpDlgSize = g_poPrefs->getDialogSize( "EditDiscount", QPoint(517,269) );
@@ -259,6 +272,25 @@ void cDlgDiscountEdit::accept ()
         cmbHCDList->setFocus();
     }
 
+    if( rbTimeZone->isChecked() )
+    {
+        QTime   tTimezoneStart = teTimeZoneStart->time();
+        QTime   tTimeZoneStop  = teTimeZoneStop->time();
+
+        if( tTimezoneStart == tTimeZoneStop )
+        {
+            boCanBeSaved = false;
+            if( qsErrorMessage.length() ) qsErrorMessage.append( "\n\n" );
+            qsErrorMessage.append( tr( "The start and stop value of the timezone can not be the same." ) );
+        }
+        else if( tTimezoneStart > tTimeZoneStop )
+        {
+            boCanBeSaved = false;
+            if( qsErrorMessage.length() ) qsErrorMessage.append( "\n\n" );
+            qsErrorMessage.append( tr( "The start time can not be later than stop time." ) );
+        }
+    }
+
     bool    boConversion = true;
 
     if( rbDiscountValue->isChecked() )
@@ -321,6 +353,12 @@ void cDlgDiscountEdit::accept ()
                     m_poDiscount->setProductId( cmbHCDList->itemData(cmbHCDList->currentIndex()).toUInt() );
                 }
             }
+            else if( rbTimeZone->isChecked() )
+            {
+                m_poDiscount->setTimezoneStart( teTimeZoneStart->time().toString("hh:mm:ss") );
+                m_poDiscount->setTimezoneStop( teTimeZoneStop->time().toString("hh:mm:ss") );
+            }
+
             if( rbDiscountValue->isChecked() )
             {
                 cCurrency   cValue( ledDiscount->text() );
@@ -353,6 +391,9 @@ void cDlgDiscountEdit::accept ()
 //-----------------------------------------------------------------------------------------------------------
 void cDlgDiscountEdit::slotFillHCDComboList()
 {
+    gbDiscountCombo->setVisible( true );
+    gbTimeZone->setVisible( false );
+    gbTimeZone->setEnabled( false );
     lblName->setStyleSheet( "QLabel {font: normal;}" );
     gbDiscountCategory->setStyleSheet( "QGroupBox {font: normal;}" );
 
@@ -445,8 +486,33 @@ void cDlgDiscountEdit::slotFillHCDComboList()
         cmbHCDList->setEnabled( false );
     }
 }
+//===========================================================================================================
+//
+//-----------------------------------------------------------------------------------------------------------
+void cDlgDiscountEdit::slotEnableTimezone()
+{
+    gbDiscountCombo->setVisible( false );
+    cmbHCDList->setEnabled( false );
+    gbTimeZone->setVisible( true );
+    gbTimeZone->setEnabled( true );
+    teTimeZoneStart->setEnabled( true );
+    teTimeZoneStop->setEnabled( true );
+    ledName->setEnabled( false );
 
-
+    if( rbTimeZone->isChecked() )
+    {
+        if( !m_bLoading )
+        {
+            ledName->setText( tr("Time zone discount - %1 - %2")
+                              .arg( teTimeZoneStart->time().toString("hh:mm") )
+                              .arg( teTimeZoneStop->time().toString("hh:mm") ) );
+            lblName->setStyleSheet( "QLabel {font: bold; color: red;}" );
+        }
+    }
+}
+//===========================================================================================================
+//
+//-----------------------------------------------------------------------------------------------------------
 void cDlgDiscountEdit::slotCheckValue()
 {
     gbValue->setStyleSheet( "QGroupBox {font: bold; color: red;}" );
@@ -459,11 +525,27 @@ void cDlgDiscountEdit::slotCheckValue()
     if( ledDiscount->text().length() > 0 && boConversion )
         gbValue->setStyleSheet( "QGroupBox {font: normal;}" );
 }
-
-void cDlgDiscountEdit::on_ledName_textChanged(const QString &arg1)
+//===========================================================================================================
+//
+//-----------------------------------------------------------------------------------------------------------
+void cDlgDiscountEdit::on_ledName_textChanged(const QString &/*arg1*/)
 {
     if( ledName->text().length() > 0 )
         lblName->setStyleSheet( "QLabel {font: normal;}" );
     else
         lblName->setStyleSheet( "QLabel {font: bold; color: red;}" );
+}
+
+void cDlgDiscountEdit::on_teTimeZoneStart_timeChanged(const QTime &/*time*/)
+{
+    ledName->setText( tr("Time zone discount - %1 - %2")
+                      .arg( teTimeZoneStart->time().toString("hh:mm") )
+                      .arg( teTimeZoneStop->time().toString("hh:mm") ) );
+}
+
+void cDlgDiscountEdit::on_teTimeZoneStop_timeChanged(const QTime &/*time*/)
+{
+    ledName->setText( tr("Time zone discount - %1 - %2")
+                      .arg( teTimeZoneStart->time().toString("hh:mm") )
+                      .arg( teTimeZoneStop->time().toString("hh:mm") ) );
 }
