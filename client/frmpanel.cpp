@@ -365,9 +365,8 @@ void cFrmPanel::clear()
 
             obDBShoppingCart.load( poQuery->value( 0 ).toUInt() );
             obDBShoppingCart.remove();
-            itemRemovedFromShoppingCart();
         }
-        m_uiShoppingCartItemId = 0;
+        itemRemovedFromShoppingCart();
     }
 
     if( m_inCashToPay == 0 )
@@ -1244,15 +1243,24 @@ bool cFrmPanel::isItemInShoppingCart()
     return m_bIsItemInShoppingCart;
 }
 //====================================================================================
-void cFrmPanel::itemAddedToShoppingCart()
+void cFrmPanel::itemAddedToShoppingCart(const unsigned int p_uiShoppingCardItemId)
 {
     m_bIsItemInShoppingCart = true;
+    if( p_uiShoppingCardItemId > 0 )
+    {
+        g_obLogger(cSeverity::INFO) << "Device usage payment moved to shopping cart ["
+                                    << p_uiShoppingCardItemId
+                                    << "]"
+                                    << EOM;
+        m_uiShoppingCartItemId = p_uiShoppingCardItemId;
+    }
     icoShoppingCart->setVisible( true );
 }
 //====================================================================================
 void cFrmPanel::itemRemovedFromShoppingCart()
 {
     m_bIsItemInShoppingCart = false;
+    m_uiShoppingCartItemId = 0;
     icoShoppingCart->setVisible( false );
 }
 //====================================================================================

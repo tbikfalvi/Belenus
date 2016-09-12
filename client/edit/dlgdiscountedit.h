@@ -28,6 +28,8 @@ private slots:
     void slotEnableTimezone();
     void slotCheckValue();
     void on_ledName_textChanged(const QString &arg1);
+    void on_teTimeZoneStart_timeChanged(const QTime &time);
+    void on_teTimeZoneStop_timeChanged(const QTime &time);
 };
 
 #endif

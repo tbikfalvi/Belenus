@@ -503,7 +503,9 @@ void cDlgDiscountEdit::slotEnableTimezone()
     {
         if( !m_bLoading )
         {
-            ledName->setText( tr("Time zone discount") );
+            ledName->setText( tr("Time zone discount - %1 - %2")
+                              .arg( teTimeZoneStart->time().toString("hh:mm") )
+                              .arg( teTimeZoneStop->time().toString("hh:mm") ) );
             lblName->setStyleSheet( "QLabel {font: bold; color: red;}" );
         }
     }
@@ -532,4 +534,18 @@ void cDlgDiscountEdit::on_ledName_textChanged(const QString &/*arg1*/)
         lblName->setStyleSheet( "QLabel {font: normal;}" );
     else
         lblName->setStyleSheet( "QLabel {font: bold; color: red;}" );
+}
+
+void cDlgDiscountEdit::on_teTimeZoneStart_timeChanged(const QTime &/*time*/)
+{
+    ledName->setText( tr("Time zone discount - %1 - %2")
+                      .arg( teTimeZoneStart->time().toString("hh:mm") )
+                      .arg( teTimeZoneStop->time().toString("hh:mm") ) );
+}
+
+void cDlgDiscountEdit::on_teTimeZoneStop_timeChanged(const QTime &/*time*/)
+{
+    ledName->setText( tr("Time zone discount - %1 - %2")
+                      .arg( teTimeZoneStart->time().toString("hh:mm") )
+                      .arg( teTimeZoneStop->time().toString("hh:mm") ) );
 }

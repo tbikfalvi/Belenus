@@ -2,6 +2,7 @@
 #include <QMessageBox>
 
 #include "dlgcassaaction.h"
+#include "dlgcomment.h"
 #include "db/dbdiscount.h"
 
 cDlgCassaAction::cDlgCassaAction( QWidget *p_poParent, cDBShoppingCart *p_poShoppingCart ) : QDialog( p_poParent )
@@ -25,11 +26,13 @@ cDlgCassaAction::cDlgCassaAction( QWidget *p_poParent, cDBShoppingCart *p_poShop
     pbOk->setIcon( QIcon("./resources/40x40_ok.png") );
     pbShoppingCart->setIcon( QIcon("./resources/40x40_shoppingcart.png") );
     pbCancel->setIcon( QIcon("./resources/40x40_cancel.png") );
+    pbComment->setIcon( QIcon("./resources/40x40_edit.png") );
 
     lblCashCurrency->setText( g_poPrefs->getCurrencyShort() );
     lblCardCurrency->setText( g_poPrefs->getCurrencyShort() );
     lblVoucherCurrency->setText( g_poPrefs->getCurrencyShort() );
     lblCurrencyToPay->setText( g_poPrefs->getCurrencyShort() );
+    lblCurrencyDiscount->setText( g_poPrefs->getCurrencyShort() );
 
     m_bShoppingCart = false;
 
@@ -46,11 +49,14 @@ cDlgCassaAction::cDlgCassaAction( QWidget *p_poParent, cDBShoppingCart *p_poShop
     if( nMoney > 0 )
     {
         cCurrency   cPrice( nMoney );
+        cCurrency   cDisc( m_poShoppingCart->itemDiscount() );
 
         g_obLogger(cSeverity::DEBUG) << "[" << cPrice.currencyValue() << "]" << EOM;
 
         ledAmountToPay->setText( cPrice.currencyStringSeparator() );
         ledAmountToPay->setEnabled( false );
+        ledDiscount->setText( cDisc.currencyStringSeparator() );
+        ledDiscount->setEnabled( false );
     }
 
     cmbPaymentType->addItem( tr("<Not selected>"), 0 );
@@ -147,25 +153,13 @@ QString cDlgCassaAction::cassaResult( int *p_nPayType, bool *p_bShoppingCart, un
 
 void cDlgCassaAction::on_pbComment_clicked()
 {
-    /*
-    if( pbComment->text().compare( tr("Comment >>") ) == 0 )
+    dlgComment  obDlgComment( this );
+
+    obDlgComment.setDefault( m_poShoppingCart->comment() );
+    if( obDlgComment.exec() == QDialog::Accepted )
     {
-        gbComment->setVisible( true );
-        teComment->setEnabled( true );
-        pbComment->setText( tr("Comment <<") );
-        setMinimumHeight( m_nHeightBig );
-        setMaximumHeight( m_nHeightBig );
-        teComment->setFocus();
+        m_poShoppingCart->setComment( obDlgComment.resultComment() );
     }
-    else
-    {
-        gbComment->setVisible( false );
-        teComment->setEnabled( false );
-        pbComment->setText( tr("Comment >>") );
-        setMinimumHeight( m_nHeightSmall );
-        setMaximumHeight( m_nHeightSmall );
-    }
-    */
 }
 
 void cDlgCassaAction::on_pbPayCash_clicked()
@@ -375,7 +369,8 @@ void cDlgCassaAction::updateShoppingCartItem()
     m_poShoppingCart->setCard( cCard.currencyValue().toInt() );
     m_poShoppingCart->setVoucher( cVoucher.currencyValue().toInt() );
 
-    /*
+    QString qsComment = m_poShoppingCart->comment();
+
     if( uiCouponId > 0 )
     {
         cDBDiscount     obDBDiscount;
@@ -383,19 +378,12 @@ void cDlgCassaAction::updateShoppingCartItem()
         obDBDiscount.load( uiCouponId );
         m_poShoppingCart->setItemDiscount( m_poShoppingCart->itemDiscount()+obDBDiscount.discount(m_poShoppingCart->itemSumPrice()) );
 
-        if( teComment->toPlainText().length() > 0 )
-            teComment->append( "\n" );
-        teComment->append( tr("Coupon used: %1").arg( cmbCoupon->currentText() ) );
+        if( qsComment.length() > 0 )
+            qsComment.append( "\n" );
+        qsComment.append( tr("Coupon used: %1").arg( cmbCoupon->currentText() ) );
     }
 
-    QString qsComment = m_poShoppingCart->comment();
-
-    if( qsComment.length() > 0 && teComment->toPlainText().length() > 0 )
-        qsComment.append( "\n" );
-    qsComment.append( teComment->toPlainText() );
-
     m_poShoppingCart->setComment( qsComment );
-    */
 }
 
 void cDlgCassaAction::on_pbOk_clicked()
