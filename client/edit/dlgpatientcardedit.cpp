@@ -178,7 +178,7 @@ void cDlgPatientCardEdit::slotRefreshWarningColors()
     }
 }
 //-----------------------------------------------------------------------------------------------------------
-void cDlgPatientCardEdit::on_ledBarcode_textChanged(const QString &arg1)
+void cDlgPatientCardEdit::on_ledBarcode_textChanged(const QString &/*arg1*/)
 //-----------------------------------------------------------------------------------------------------------
 {
     pbCheckBarcode->setIcon( QIcon("./resources/40x40_question.png") );

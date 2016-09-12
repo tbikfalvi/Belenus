@@ -102,7 +102,7 @@ void cDlgPanelUseEdit::on_pbCancel_clicked()
 }
 
 
-void cDlgPanelUseEdit::on_ledUsePrice_textEdited(const QString &arg1)
+void cDlgPanelUseEdit::on_ledUsePrice_textEdited(const QString &/*arg1*/)
 {
     cCurrency currPrice( ledUsePrice->text(), cCurrency::CURR_GROSS, g_poPrefs->getDeviceUseVAT() );
 
