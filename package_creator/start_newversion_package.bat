@@ -26,7 +26,7 @@ GOTO :proc_error
 
 :open_xml_sql_files
 echo ------------------------------------------------------------
-echo  Update xml, sql files
+echo  Update xml, sql, inf files
 echo ------------------------------------------------------------
 echo.
 echo Create db_update_%strVersion%.sql file
@@ -44,6 +44,7 @@ start "C:\Program Files\Notepad++\notepad++.exe" c:\Development\Belenus\sql\db_f
 start "C:\Program Files\Notepad++\notepad++.exe" c:\Development\Belenus\sql\db_fill_en.sql 
 start "C:\Program Files\Notepad++\notepad++.exe" c:\Development\Belenus\sql\db_fill_hu.sql 
 start "C:\Program Files\Notepad++\notepad++.exe" c:\Development\Belenus\sql\db_update_%strVersion%.sql 
+start "C:\Program Files\Notepad++\notepad++.exe" c:\Development\Belenus\system.inf 
 echo.
 
 echo Shall we continue? Type (y/n)
@@ -68,6 +69,7 @@ copy c:\Development\Belenus\sql\db_fill_de.sql %dirCurrent%\db_fill_de.sql
 copy c:\Development\Belenus\sql\db_fill_en.sql %dirCurrent%\db_fill_en.sql
 copy c:\Development\Belenus\sql\db_fill_hu.sql %dirCurrent%\db_fill_hu.sql
 copy c:\Development\Belenus\sql\db_update_%strVersion%.sql %dirCurrent%\*.*
+copy c:\Development\Belenus\system.inf %dirCurrent%\system.inf
 echo.
 
 echo Shall we continue? Type (y/n)
@@ -132,6 +134,9 @@ copy %dirCurrent%\*.xml c:\Install\Belenus\4_Update_MasterCD\settings\*.*
 echo. 
 echo Copy sql files
 copy %dirCurrent%\*.sql c:\Install\Belenus\4_Update_MasterCD\sql\*.*
+echo.
+echo Copy inf files
+copy %dirCurrent%\system.inf c:\Install\Belenus\4_Update_MasterCD\*.*
 echo.
 
 echo Shall we continue? Type (y/n)

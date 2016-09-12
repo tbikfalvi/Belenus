@@ -10,3 +10,7 @@ viewer/*.pro.*
 advertisement/*.pro.*
 startup/*.pro.*
 activator/*.pro.*
+package_creator/*.zip
+package_creator/*.xml
+package_creator/*.sql
+package_creator/*.inf
