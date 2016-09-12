@@ -56,7 +56,7 @@ public:
     void            setPaymentMethod( const unsigned int p_uiPaymentMethodId );
     void            setPaymentMethod( const unsigned int p_uiPanelId, const unsigned int p_uiPaymentMethodId );
     bool            isItemInShoppingCart();
-    void            itemAddedToShoppingCart();
+    void            itemAddedToShoppingCart( const unsigned int p_uiShoppingCardItemId = 0 );
     void            itemRemovedFromShoppingCart();
     void            itemRemovedFromShoppingCart( const unsigned int p_uiPanelId );
 //    void            addPatientToWaitingQueue( int p_inLengthCash, int p_inPrice, unsigned int p_uiPatientCardId, QString p_qsUnitIds, int p_inLenghtCard, unsigned int p_uiLedgerId, int p_inPayType );

@@ -2,8 +2,8 @@
 -- Belenus Szoftver Rendszer (c) Pagony Multimedia Studio Bt - 2013
 -- -----------------------------------------------------------------------------------
 -- Filename    : db_create.sql
--- AppVersion  : 1.5.4.2
--- DbVersion   : 1.7.1
+-- AppVersion  : 1.5.5.0
+-- DbVersion   : 1.7.2
 -- -----------------------------------------------------------------------------------
 -- Adatbazist letrehozo SQL script
 -- -----------------------------------------------------------------------------------
@@ -670,6 +670,8 @@ CREATE TABLE `discounts` (
   `regularCustomer`         tinyint(1)              DEFAULT 0,
   `employee`                tinyint(1)              DEFAULT 0,
   `service`                 tinyint(1)              DEFAULT 0,
+  `timezoneStart`           time                    NOT NULL,
+  `timezoneStop`            time                    NOT NULL,
   `name`                    varchar(100)            NOT NULL,
   `discountValue`           decimal(10,0)           NOT NULL,
   `discountPercent`         int(11)                 NOT NULL,

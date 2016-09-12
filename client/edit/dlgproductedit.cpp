@@ -322,12 +322,12 @@ void cDlgProductEdit::slot_PriceCalculate()
     lblPriceFull->setText( tr("(%1 + %2 \% VAT)").arg(currPriceSell.currencyStringSeparator( cCurrency::CURR_NET)).arg(ledVatpercentSell->text()) );
 }
 
-void cDlgProductEdit::on_ledPriceSell_textChanged(const QString &arg1)
+void cDlgProductEdit::on_ledPriceSell_textChanged(const QString &/*arg1*/)
 {
     slot_PriceCalculate();
 }
 
-void cDlgProductEdit::on_ledVatpercentSell_textChanged(const QString &arg1)
+void cDlgProductEdit::on_ledVatpercentSell_textChanged(const QString &/*arg1*/)
 {
     slot_PriceCalculate();
 }

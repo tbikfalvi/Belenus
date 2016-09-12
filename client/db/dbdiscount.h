@@ -17,6 +17,7 @@ public:
     void            loadCompany( const unsigned int p_uiId )                            throw( cSevException );
     void            loadPaymentMethod( const unsigned int p_uiId )                      throw( cSevException );
     void            loadProduct( const unsigned int p_uiId )                            throw( cSevException );
+    void            loadTimeZone()                                                      throw( cSevException );
     bool            isRegularCustomerExists()                                           throw( cSevException );
     bool            isEmployeeExists()                                                  throw( cSevException );
     bool            isServiceExists()                                                   throw( cSevException );
@@ -45,6 +46,10 @@ public:
     void            setEmployee( const bool p_bEmployee )                               throw();
     bool            service() const                                                     throw();
     void            setService( const bool p_bService )                                 throw();
+    QString         timezoneStart() const                                               throw();
+    void            setTimezoneStart( const QString &p_qsTimezoneStart )                throw();
+    QString         timezoneStop() const                                                throw();
+    void            setTimezoneStop( const QString &p_qsTimezoneStop )                  throw();
     QString         name() const                                                        throw();
     void            setName( const QString &p_qsName )                                  throw();
     int             discountValue() const                                               throw();
@@ -70,6 +75,8 @@ private:
     bool            m_bRegularCustomer;
     bool            m_bEmployee;
     bool            m_bService;
+    QString         m_qsTimezoneStart;
+    QString         m_qsTimezoneStop;
     QString         m_qsName;
     int             m_inDiscountValue;
     int             m_inDiscountPercent;
@@ -86,6 +93,8 @@ private:
                const bool p_bRegularCustomer = false,
                const bool p_bEmployee = false,
                const bool p_bService = false,
+               const QString &p_qsTimezoneStart = "",
+               const QString &p_qsTimezoneStop = "",
                const QString &p_qsName = "",
                const int p_inDiscountValue = 0,
                const int p_inDiscountPercent = 0,

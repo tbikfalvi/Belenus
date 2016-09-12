@@ -240,12 +240,12 @@ void dlgProductStorage::_fillProductActionList()
     m_bInit = false;
 }
 
-void dlgProductStorage::on_ledPrice_textEdited(const QString &arg1)
+void dlgProductStorage::on_ledPrice_textEdited(const QString &/*arg1*/)
 {
     slot_refreshPrice();
 }
 
-void dlgProductStorage::on_ledVatPercent_textEdited(const QString &arg1)
+void dlgProductStorage::on_ledVatPercent_textEdited(const QString &/*arg1*/)
 {
     slot_refreshPrice();
 }
