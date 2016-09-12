@@ -10211,7 +10211,7 @@ allergia :</translation>
     <message>
         <location filename="dlgcassaaction.ui" line="677"/>
         <source>Discount :</source>
-        <translation>Kedvezméyn :</translation>
+        <translation>Kedvezmény :</translation>
     </message>
     <message>
         <source>Money given :</source>
