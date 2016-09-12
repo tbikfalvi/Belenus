@@ -376,11 +376,11 @@ bool cMdiPanels::isItemInShoppingCart()
     return m_obPanels.at( m_uiActivePanel )->isItemInShoppingCart();
 }
 //====================================================================================
-void cMdiPanels::itemAddedToShoppingCart()
+void cMdiPanels::itemAddedToShoppingCart(const unsigned int p_uiShoppingCardItemId)
 {
     for( unsigned int i=0; i<m_obPanels.size(); i++ )
     {
-        m_obPanels.at( i )->itemAddedToShoppingCart();
+        m_obPanels.at( i )->itemAddedToShoppingCart(p_uiShoppingCardItemId);
     }
 }
 //====================================================================================

@@ -18,9 +18,14 @@ dlgComment::~dlgComment()
 {
 }
 
+void dlgComment::setDefault(QString p_qsComment)
+{
+    teComment->setText( p_qsComment );
+}
+
 QString dlgComment::resultComment()
 {
-    return ledComment->text();
+    return teComment->toPlainText();
 }
 
 void dlgComment::on_pbOk_clicked()

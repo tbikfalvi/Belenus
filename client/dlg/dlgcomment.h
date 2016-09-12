@@ -13,6 +13,7 @@ public:
     virtual ~dlgComment();
 
     QString     resultComment();
+    void        setDefault( QString p_qsComment = "" );
 
 private slots:
     void on_pbOk_clicked();
