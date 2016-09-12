@@ -47,3 +47,4 @@ Version 1.5.5.0
 
 - Gep adminisztratori jelszoval, amennyiben a Rendszer adminisztrator engedelyezi, meg lehet adni egy lejarati datumot, aminek eleresekor a program demo modba valt at, amennyiben a Gep adminisztrator, vagy a Rendszer adminisztrator nem valtoztatja meg.
 - Rendszer adminisztrator mostantol meg tudja valtoztatni, le tudja cserelni a liszensz kulcsot ugy, hogy az adatok nem vesznek el.
+- Adminisztrator mostantol be tud allitani gep hasznalati kedvezmenyt idointervallumokhoz, amit a program automatikusan ervenyesit.
