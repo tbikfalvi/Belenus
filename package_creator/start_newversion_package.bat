@@ -69,6 +69,7 @@ copy c:\Development\Belenus\sql\db_fill_de.sql %dirCurrent%\db_fill_de.sql
 copy c:\Development\Belenus\sql\db_fill_en.sql %dirCurrent%\db_fill_en.sql
 copy c:\Development\Belenus\sql\db_fill_hu.sql %dirCurrent%\db_fill_hu.sql
 copy c:\Development\Belenus\sql\db_update_%strVersion%.sql %dirCurrent%\*.*
+copy c:\Development\Belenus\sql\db_update_%strVersion%.sql c:\Development\Belenus\sql\db_update_.sql
 copy c:\Development\Belenus\system.inf %dirCurrent%\system.inf
 echo.
 
@@ -84,6 +85,7 @@ echo  Create update package
 echo ------------------------------------------------------------
 echo.
 echo Creating Update package
+copy %dirCurrent%\db_update_%strVersion%.sql c:\install\Belenus\2_Create_Package\sql\*.*
 cd c:\install\Belenus\2_Create_Package
 %dirCurrent%\pkzip -add -rec -dir %dirCurrent%\Update_%strVersion%.zip
 cd %dirCurrent%

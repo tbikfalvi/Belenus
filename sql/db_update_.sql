@@ -12,6 +12,9 @@ USE `belenus`;
 
 ALTER TABLE `discounts` ADD `timezoneStart` TIME NOT NULL AFTER `service`, ADD `timezoneStop` TIME NOT NULL AFTER `timezoneStart`;
 
+INSERT INTO settings (settingId, identifier, value)
+ VALUES (NULL, "LICENCE_LAST_VALIDATED", CONCAT((SELECT lastValidated FROM licences WHERE licenceId>1 ORDER BY licenceId DESC LIMIT 1), " 00:00:00") );
+
 -- -----------------------------------------------------------------------------------
 
 UPDATE settings SET value=NOW() WHERE identifier="GLOBAL_DATA_UPDATED";
