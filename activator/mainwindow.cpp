@@ -198,12 +198,12 @@ MainWindow::MainWindow(QWidget *parent) : QMainWindow(parent), ui(new Ui::MainWi
                                      << "BLNS57"    // Gödöllő
                                      << "BLNS58"    // Paks
                                      << "BLNS59"    // Irorszag             Dublin
-//                                     << "BLNS60"    //
-//                                     << "BLNS61"    //
-//                                     << "BLNS62"    //
-//                                     << "BLNS63"    //
-//                                     << "BLNS64"    //
-//                                     << "BLNS65"    //
+                                     << "BLNS60"    // Csepel
+                                     << "BLNS61"    // Dunakeszi
+                                     << "BLNS62"    // Budapest             Blaha
+                                     << "BLNS63"    // Budapest             Kalvin ter
+                                     << "BLNS64"    // Budapest             Polus
+                                     << "BLNS65"    // Budapest             Zuglo
 //                                     << "BLNS66"    //
 //                                     << "BLNS67"    //
 //                                     << "BLNS68"    //
