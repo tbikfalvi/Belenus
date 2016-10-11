@@ -656,3 +656,17 @@ QString cLicenceManager::createLicenceKey( QString qsNumber )
 
     return qsLK;
 }
+
+void cLicenceManager::refreshValidationDates()
+{
+    QSqlQuery   *poQuery = NULL;
+
+    poQuery = g_poDB->executeQTQuery( QString( "SELECT licenceId, serial, lastValidated FROM licences ORDER BY licenceId DESC LIMIT 1" ) );
+    if( poQuery->first() )
+    {
+        m_qdLastValidated   = poQuery->value( 2 ).toDate();
+    }
+
+    m_qdLicenceLastValidated = QDate::fromString( g_poPrefs->getLicenceLastValidated().left(10), "yyyy-MM-dd" );
+}
+
