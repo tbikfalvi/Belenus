@@ -2028,7 +2028,6 @@ void cWndMain::on_action_UseDeviceLater_triggered()
         //        g_obLogger(e.severity()) << e.what() << EOM;
             }
 
-
             cDBShoppingCart obDBShoppingCart;
 
             obDBShoppingCart.setLicenceId( g_poPrefs->getLicenceId() );
