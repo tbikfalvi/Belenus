@@ -234,6 +234,29 @@
             </property>
            </spacer>
           </item>
+          <item>
+           <widget class="QLabel" name="lblStudioValid">
+            <property name="text">
+             <string>Studio expiration date: </string>
+            </property>
+           </widget>
+          </item>
+          <item>
+           <widget class="QLabel" name="lblStudioValidDate">
+            <property name="enabled">
+             <bool>false</bool>
+            </property>
+            <property name="font">
+             <font>
+              <weight>75</weight>
+              <bold>true</bold>
+             </font>
+            </property>
+            <property name="text">
+             <string>2000.01.01</string>
+            </property>
+           </widget>
+          </item>
          </layout>
         </item>
         <item>
