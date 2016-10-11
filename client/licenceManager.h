@@ -47,6 +47,7 @@ public:
     QString         lastValidated();
     licenceType     ltLicenceType();
     QString         createLicenceKey( QString qsNumber );
+    void            refreshValidationDates();
 
 private:
 

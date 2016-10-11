@@ -25,8 +25,12 @@ cDlgSerialReg::cDlgSerialReg( QWidget *p_poParent ) : QDialog( p_poParent )
 
     g_obLogger(cSeverity::INFO) << "Licence id: " << g_poPrefs->getLicenceId() << EOM;
 
+    g_obLicenceManager.refreshValidationDates();
+
     ledSerialKey->setText( g_obLicenceManager.licenceKey() );
     lblValidDays->setText( "   " );
+
+    lblStudioValidDate->setText( g_poPrefs->getLicenceLastValidated().left(10) );
 
     ledSerialKey->setEnabled( g_obUser.isInGroup( cAccessGroup::SYSTEM ) );
     pbActivateKey->setEnabled( g_obUser.isInGroup( cAccessGroup::SYSTEM ) );
