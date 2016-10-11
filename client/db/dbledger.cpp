@@ -155,7 +155,21 @@ void cDBLedger::save() throw( cSevException )
     cTracer obTrace( "cDBLedger::save" );
     QString  qsQuery;
 
-    m_nTotalPrice -= m_inDiscount;
+    if( m_inDiscount > 0 && m_nNetPrice == m_nTotalPrice )
+    {
+        m_nTotalPrice -= m_inDiscount;
+    }
+
+//    g_obLogger(cSeverity::DEBUG) << "DISCOUNT: m_nNetPrice ["
+//                                 << m_nNetPrice
+//                                 << "]"
+//                                 << " m_inDiscount ["
+//                                 << m_inDiscount
+//                                 << "]"
+//                                 << " m_nTotalPrice ["
+//                                 << m_nTotalPrice
+//                                 << "]"
+//                                 << EOM;
 
     if( m_uiId )
     {
