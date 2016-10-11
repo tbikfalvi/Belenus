@@ -418,5 +418,21 @@
             <application home="%CURRENT_DIR%" name="DBBackup.exe" params='-execute "%DOWNLOAD_DIR%/sql/db_update_1_5_5_0.sql"' />
         </execute>
     </version>    
+    
+    <version current="1.5.5.0" next="1.5.5.1">
+        <uncompress>
+            <file path="%DOWNLOAD_DIR%" name="Update_1_5_5_1.zip" />
+        </uncompress>
+        <backup>
+            <file path="%INSTALL_DIR%" directory="" name="belenus.exe" move="yes" />
+        </backup>
+        <update>
+            <file src="%DOWNLOAD_DIR%/belenus.exe" dst="%INSTALL_DIR%/belenus.exe" />
+            <file src="%DOWNLOAD_DIR%/lang/belenus_hu.qm" dst="%INSTALL_DIR%/lang/belenus_hu.qm" />
+        </update>
+        <execute>
+            <application home="%CURRENT_DIR%" name="DBBackup.exe" params='-execute "%DOWNLOAD_DIR%/sql/db_update_1_5_5_1.sql"' />
+        </execute>
+    </version>    
 
 </Process>
