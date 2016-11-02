@@ -2,8 +2,8 @@
 -- Belenus Szoftver Rendszer (c) Pagony Multimedia Studio Bt - 2013
 -- -----------------------------------------------------------------------------------
 -- Filename    : db_fill_en.sql
--- AppVersion  : 1.6.0
--- DbVersion   : 1.8.0
+-- AppVersion  : 1.5.5.1
+-- DbVersion   : 1.7.2
 -- Author      : Bikfalvi Tamas
 -- -----------------------------------------------------------------------------------
 -- Adatbazist default adatokkal feltolto SQL script
@@ -253,8 +253,8 @@ INSERT INTO `productactiontype` (`productActionTypeId`, `licenceId`, `name`, `in
 
 -- -----------------------------------------------------------------------------------
 
-INSERT INTO `discounts` (`discountId`, `licenceId`, `patientId`, `companyId`, `paymentMethodId`, `productId`, `regularCustomer`, `employee`, `service`, `name`, `discountValue`, `discountPercent`, `modified`, `active`, `archive`) VALUES
- (NULL, '0', NULL, NULL, NULL, NULL, '0', '0', '0', '', '', '', '', '0', 'ARC');
+INSERT INTO `discounts` (`discountId`, `licenceId`, `patientId`, `companyId`, `paymentMethodId`, `productId`, `regularCustomer`, `employee`, `service`, `timezoneStart`, `timezoneStop`, `name`, `discountValue`, `discountPercent`, `modified`, `active`, `archive`) VALUES
+ (NULL, '0', NULL, NULL, NULL, NULL, '0', '0', '0', '00:00:00', '00:00:00', '', '', '', '', '0', 'ARC');
 UPDATE `discounts` SET `discountId`='0' WHERE `discountId`=1;
 ALTER TABLE `discounts` auto_increment=1;
 
@@ -318,8 +318,9 @@ ALTER TABLE `shoppingcartitems` auto_increment=1;
 
 INSERT INTO `settings` (`settingId`, `identifier`, `value`) VALUES
  (NULL, 'GLOBAL_DATA_UPDATED', '2015-01-01 08:00:00'),
+ (NULL, 'LICENCE_LAST_VALIDATED', '2000-01-01 12:00:00'),
  (NULL, 'ABOUT_INFO_LINK', 'http://www.kiwisun.eu/elerhetosegeink.html'),
- (NULL, 'APPLICATION_VERSION', '1_6_0'),
- (NULL, 'DATABASE_VERSION', '1_8_0');
+ (NULL, 'APPLICATION_VERSION', '1_5_5_1'),
+ (NULL, 'DATABASE_VERSION', '1_7_2');
 
 -- -----------------------------------------------------------------------------------

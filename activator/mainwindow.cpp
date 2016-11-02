@@ -139,22 +139,22 @@ MainWindow::MainWindow(QWidget *parent) : QMainWindow(parent), ui(new Ui::MainWi
                                      << "OZSHY@"  // BLNS98_DQXCRK <- BLNS98_363278
                                      << "LDJH@^";  // BLNS99_GOACKU <- BLNS99_649200
 
-    m_qslActiveKeys = QStringList()  << "BLNS01"    // Budapest     Szt. Istvan korut
-                                     << "BLNS02"    // London       Beckhanem
-                                     << "BLNS03"    // London       Sheenlane
-                                     << "BLNS04"    // London       ButterSea park
+    m_qslActiveKeys = QStringList()  << "BLNS01"    // Budapest             Szt. Istvan korut
+                                     << "BLNS02"    // London               Beckhanem
+                                     << "BLNS03"    // London               Sheenlane
+                                     << "BLNS04"    // London               ButterSea park
                                      << "BLNS05"    // Mosonmagyarovar
-                                     << "BLNS06"    // London       Putney
-                                     << "BLNS07"    // Budapest     Margit krt
-                                     << "BLNS08"    // London       ??
+                                     << "BLNS06"    // London               Putney
+                                     << "BLNS07"    // Budapest             Margit krt
+                                     << "BLNS08"    // London               Streatham
                                      << "BLNS09"    // Békéscsaba
-                                     << "BLNS10"    // Budapest     Bartók Béla út
-                                     << "BLNS11"    // Budapest     Kolosy tér
+                                     << "BLNS10"    // Budapest             Bartók Béla út
+                                     << "BLNS11"    // Budapest             Kolosy tér
                                      << "BLNS12"    // Siófok
-                                     << "BLNS13"    // Budapest     Ferenc krt.
-                                     << "BLNS14"    // Budapest     Béke út
+                                     << "BLNS13"    // Budapest             Ferenc krt.
+                                     << "BLNS14"    // Budapest             Béke út
                                      << "BLNS15"    // München
-//                                     << "BLNS16"  // Debrecen helyett valami frissítés
+//                                     << "BLNS16"  // Debrecen helyett     valami frissítés
 //                                     << "BLNS17"    // Kisvárda
                                      << "BLNS18"    // Rózsadomb
                                      << "BLNS19"    // Pécs
@@ -162,8 +162,8 @@ MainWindow::MainWindow(QWidget *parent) : QMainWindow(parent), ui(new Ui::MainWi
                                      << "BLNS21"    // Baja
                                      << "BLNS22"    // Székesfehérvár
                                      << "BLNS23"    // Dunaszerdahely
-                                     << "BLNS24"    // Budapest     Kossuth L. u.
-                                     << "BLNS25"    // Budapest     Keleti pu.
+                                     << "BLNS24"    // Budapest             Kossuth L. u.
+                                     << "BLNS25"    // Budapest             Keleti pu.
                                      << "BLNS26"    // Eger
                                      << "BLNS27"    // Miskolc
                                      << "BLNS28"    // Nyiregyhaza
@@ -171,16 +171,16 @@ MainWindow::MainWindow(QWidget *parent) : QMainWindow(parent), ui(new Ui::MainWi
 //                                     << "BLNS30"    // Győr
                                      << "BLNS31"    // Szeged
                                      << "BLNS32"    // Veszprém
-                                     << "BLNS33"    // Irorszag
-                                     << "BLNS34"    // London       Mall
-                                     << "BLNS35"    // Budapest     Október 23. u.
+                                     << "BLNS33"    // Irorszag             Cork
+                                     << "BLNS34"    // London               Mall
+                                     << "BLNS35"    // Budapest             Október 23. u.
                                      << "BLNS36"    // Budakeszi
-                                     << "BLNS37"    // London       Broomley
+                                     << "BLNS37"    // London               Broomley
                                      << "BLNS38"    // Dunaujvaros
                                      << "BLNS39"    // Zalaegerszeg
                                      << "BLNS40"    // Tatabanya
-                                     << "BLNS41"    // Budapest     Oktogon
-                                     << "BLNS42"    // Budapest     Lőrinc
+                                     << "BLNS41"    // Budapest             Oktogon
+                                     << "BLNS42"    // Budapest             Lőrinc
                                      << "BLNS43"    // Szombathely
                                      << "BLNS44"    // Gyöngyös
                                      << "BLNS45"    // Érd
@@ -188,22 +188,22 @@ MainWindow::MainWindow(QWidget *parent) : QMainWindow(parent), ui(new Ui::MainWi
                                      << "BLNS47"    // Tata
                                      << "BLNS48"    // Besztercebánya
                                      << "BLNS49"    // Komárom
-                                     << "BLNS50"    // Budapest     Erzsébet krt.
+                                     << "BLNS50"    // Budapest             Erzsébet krt.
                                      << "BLNS51"    // Hódmezővásárhely
                                      << "BLNS52"    // Kalocsa
                                      << "BLNS53"    // Kiskörös
                                      << "BLNS54"    // Dabas
-                                     << "BLNS55"    // Paks
+                                     << "BLNS55"    // Tarnaméra
                                      << "BLNS56"    // Orosháza
-                                     << "BLNS57"    // Szekszárd
-//                                     << "BLNS58"    //
-//                                     << "BLNS59"    //
-//                                     << "BLNS60"    //
-//                                     << "BLNS61"    //
-//                                     << "BLNS62"    //
-//                                     << "BLNS63"    //
-//                                     << "BLNS64"    //
-//                                     << "BLNS65"    //
+                                     << "BLNS57"    // Gödöllő
+                                     << "BLNS58"    // Paks
+                                     << "BLNS59"    // Irorszag             Dublin
+                                     << "BLNS60"    // Csepel
+                                     << "BLNS61"    // Dunakeszi
+                                     << "BLNS62"    // Budapest             Blaha
+                                     << "BLNS63"    // Budapest             Kalvin ter
+                                     << "BLNS64"    // Budapest             Polus
+                                     << "BLNS65"    // Budapest             Zuglo
 //                                     << "BLNS66"    //
 //                                     << "BLNS67"    //
 //                                     << "BLNS68"    //

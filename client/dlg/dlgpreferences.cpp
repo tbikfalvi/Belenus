@@ -152,6 +152,12 @@ cDlgPreferences::cDlgPreferences( QWidget *p_poParent )
     ledPanelTextTubeReplacement->setEnabled( g_obUser.isInGroup( cAccessGroup::SYSTEM ) );
     chkVisibleSecSteril->setChecked( g_poPrefs->isTextSterilVisible() );
     chkVisibleSecTubeReplace->setChecked( g_poPrefs->isTextTubeReplaceVisible() );
+    chkDAResetClock->setChecked( g_poPrefs->isDACanModifyWorktime() );
+    chkDAResetClock->setEnabled( g_obUser.isInGroup( cAccessGroup::SYSTEM ) );
+    chkDASetExpireDate->setChecked( g_poPrefs->isDACanModifyExpDate() );
+    chkDASetExpireDate->setEnabled( g_obUser.isInGroup( cAccessGroup::SYSTEM ) );
+    dteLicenceExpiration->setDateTime( QDateTime::fromString( g_poPrefs->getLicenceLastValidated(), "yyyy-MM-dd hh:mm:ss" ) );
+    pbModifyExpDate->setIcon( QIcon("./resources/40x40_key.png") );
 
     chkAutoCloseCassa->setChecked( g_poPrefs->getCassaAutoClose() );
     chkCassaAutoWithdrawal->setChecked( g_poPrefs->getCassaAutoWithdrawal() );
@@ -429,6 +435,9 @@ void cDlgPreferences::accept()
     g_poPrefs->setRFIDComPort( spbCOMRFID->value() );
 
     g_poPrefs->setDeviceUseVAT( ledVatPercent->text().toInt() );
+    g_poPrefs->setDACanModifyWorktime( chkDAResetClock->isChecked(), true );
+    g_poPrefs->setDACanModifyExpDate( chkDASetExpireDate->isChecked(), true );
+    g_poPrefs->setLicenceLastValidated( dteLicenceExpiration->dateTime().toString( "yyyy-MM-dd hh:mm:ss" ), true );
     g_poPrefs->setPanelTextSteril( ledPanelTextSterile->text() );
     g_poPrefs->setPanelTextTubeReplace( ledPanelTextTubeReplacement->text() );
 
@@ -844,4 +853,31 @@ void cDlgPreferences::on_pbTextColorActive_clicked()
 void cDlgPreferences::on_chkRFIDEnabled_clicked()
 {
     gbCommunicationRFID->setEnabled( chkRFIDEnabled->isChecked() );
+}
+
+void cDlgPreferences::on_pbModifyExpDate_clicked()
+{
+    if( !chkDASetExpireDate->isChecked() )
+    {
+        QMessageBox::warning( this, tr("Warning"),
+                              tr("You are not allowed to modify application expiration day.") );
+        return;
+    }
+
+    // Enable edit fields for modifications
+    bool    bEnableModification = false;
+
+    if( g_obGen.isExtendedOrSystemAdmin() )
+    {
+        bEnableModification = true;
+    }
+
+    dteLicenceExpiration->setEnabled( bEnableModification );
+
+    if( !bEnableModification )
+    {
+        QMessageBox::warning( this, tr("Warning"),
+                              tr("The password you entered is not valid\n"
+                                 "to modify application expiration day.") );
+    }
 }

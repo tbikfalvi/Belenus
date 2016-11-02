@@ -6,6 +6,7 @@
 #include "db/dbpatientcardunits.h"
 #include "edit/dlgpatientcardsell.h"
 #include "edit/dlgpatientcardrefill.h"
+#include "db/dbdiscount.h"
 
 //==============================================================================================
 //
@@ -336,10 +337,6 @@ void cDlgPanelUse::setPanelUsePatientCard(unsigned int p_uiPatientCardId)
                 QString qsValid;
                 unsigned int uiPCTId = poQuery->value( 1 ).toUInt();
 
-                if( uiPCTId == 0 )
-                {
-                    uiPCTId = m_obDBPatientCard.patientCardTypeId();
-                }
                 if( uiPCTId > 0 )
                 {
                     bool    isValid = m_obDBPatientCard.isPatientCardCanBeUsed( uiPCTId, &qsValid );
@@ -468,9 +465,36 @@ void cDlgPanelUse::setPanelUseTime()
 //----------------------------------------------------------------------------------------------
 void cDlgPanelUse::setPanelUsePrice()
 {
-    cCurrency   cPrice( m_uiPanelUsePrice );
+    int nTimezoneDiscount   = 0;
+
+    try
+    {
+        cDBDiscount obDiscount;
+
+        obDiscount.loadTimeZone();
+        nTimezoneDiscount = obDiscount.discount( m_uiPanelUsePrice );
+    }
+    catch( cSevException &e )
+    {
+//        g_obLogger(e.severity()) << e.what() << EOM;
+    }
+
+    cCurrency   cPrice( m_uiPanelUsePrice-nTimezoneDiscount );
 
     lblTotalPriceValue->setText( cPrice.currencyFullStringShort() );
+
+    lblDiscountCaption->setVisible( false );
+    lblDiscountValue->setVisible( false );
+
+    if( nTimezoneDiscount > 0 )
+    {
+        lblDiscountCaption->setVisible( true );
+        lblDiscountValue->setVisible( true );
+
+        cCurrency   cDisc( nTimezoneDiscount );
+
+        lblDiscountValue->setText( QString("  ") + cDisc.currencyFullStringShort() );
+    }
 }
 //----------------------------------------------------------------------------------------------
 unsigned int cDlgPanelUse::panelUseSecondsCard()
@@ -600,7 +624,7 @@ void cDlgPanelUse::on_pbReloadPC_clicked()
     {
         m_obDBPatientCard.load( ledPatientCardBarcode->text() );
 
-        if( m_obDBPatientCard.patientCardTypeId() == 1 && !g_obUser.isInGroup(cAccessGroup::SYSTEM) )
+        if( m_obDBPatientCard.isServiceCard() && !g_obUser.isInGroup(cAccessGroup::SYSTEM) )
         {
             if( !g_obGen.isSystemAdmin() )
             {

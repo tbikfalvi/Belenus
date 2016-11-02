@@ -227,6 +227,12 @@ public:
     bool            isRFIDEnabled();
     void            setRFIDComPort( const int p_nRFIDComPort, bool p_boSaveNow = false );
     int             getRFIDComPort() const;
+    void            setLicenceLastValidated( const QString &p_qsLicenceLastValidated, bool p_boSaveNow = false );
+    QString         getLicenceLastValidated() const;
+    void            setDACanModifyWorktime( bool p_bDACanModifyWorktime, bool p_boSaveNow = false );
+    bool            isDACanModifyWorktime();
+    void            setDACanModifyExpDate( bool p_bDACanModifyExpDate, bool p_boSaveNow = false );
+    bool            isDACanModifyExpDate();
 
 //void            setXXX( const QString &p_qsXXX, bool p_boSaveNow = false );
 //QString         getXXX() const;
@@ -324,6 +330,9 @@ private:
     bool            m_bUsageVisibleOnMain;
     bool            m_bRFIDEnabled;
     int             m_inRFIDCommunicationPort;
+    QString         m_qsLicenceLastValidated;
+    bool            m_bDACanModifyWorktime;
+    bool            m_bDACanModifyExpDate;
 
     void init();
 };

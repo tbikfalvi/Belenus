@@ -18,6 +18,7 @@ public:
     void            save()                                                      throw( cSevException );
     void            remove()                                                    throw( cSevException );
     void            deactivate()                                                throw( cSevException );
+    bool            isServiceCard()                                             throw();
     bool            isPatientCardTypeLinked( const unsigned int p_PCTId )       throw();
     bool            isPatientCardCanBeReplaced()                                throw();
     bool            isPatientCardCanBeParent()                                  throw();

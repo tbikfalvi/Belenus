@@ -339,7 +339,6 @@ void cDlgPatientCardSell::on_pbSell_clicked()
         {
             m_poPatientCard->setLicenceId( g_poPrefs->getLicenceId() );
             m_poPatientCard->setBarcode( ledBarcode->text() );
-            m_poPatientCard->setPatientCardTypeId( cmbCardType->itemData( cmbCardType->currentIndex() ).toUInt() );
             m_poPatientCard->setPatientId( cmbPatient->itemData( cmbPatient->currentIndex() ).toUInt() );
             m_poPatientCard->setValidDateFrom( deValidDateFrom->date().toString("yyyy-MM-dd") );
             m_poPatientCard->setValidDateTo( deValidDateTo->date().toString("yyyy-MM-dd") );
@@ -350,7 +349,7 @@ void cDlgPatientCardSell::on_pbSell_clicked()
             unsigned int    uiLedgerId = 0;
 
             // Szerviz kartyat nem kell eladni
-            if( m_poPatientCard->patientCardTypeId() > 1 )
+            if( m_poPatientCardType->id() > 1 )
             {
                 if( !g_obCassa.isCassaEnabled() )
                 {
@@ -383,7 +382,7 @@ void cDlgPatientCardSell::on_pbSell_clicked()
                 obDBShoppingCart.setGuestId( m_poPatientCard->patientId() );
                 obDBShoppingCart.setProductId( 0 );
                 obDBShoppingCart.setPatientCardId( m_poPatientCard->id() );
-                obDBShoppingCart.setPatientCardTypeId( m_poPatientCard->patientCardTypeId() );
+                obDBShoppingCart.setPatientCardTypeId( m_poPatientCardType->id() );
                 obDBShoppingCart.setPanelId( 0 );
                 obDBShoppingCart.setLedgerTypeId( cDBLedger::LT_PC_SELL );
                 obDBShoppingCart.setItemName( QString("%1 - %2").arg(m_poPatientCardType->name()).arg(m_poPatientCard->barcode()) );
@@ -433,7 +432,7 @@ void cDlgPatientCardSell::on_pbSell_clicked()
                 obDBPatientcardUnit.createNew();
                 obDBPatientcardUnit.setLicenceId( m_poPatientCard->licenceId() );
                 obDBPatientcardUnit.setPatientCardId( m_poPatientCard->id() );
-                obDBPatientcardUnit.setPatientCardTypeId( m_poPatientCard->patientCardTypeId() );
+                obDBPatientcardUnit.setPatientCardTypeId( m_poPatientCardType->id() );
                 obDBPatientcardUnit.setLedgerId( uiLedgerId );
                 obDBPatientcardUnit.setUnitTime( m_poPatientCardType->unitTime() );
                 obDBPatientcardUnit.setUnitPrice( m_poPatientCardType->price()/ledUnits->text().toInt() );
@@ -444,6 +443,15 @@ void cDlgPatientCardSell::on_pbSell_clicked()
                 obDBPatientcardUnit.save();
                 qslUnitIds << QString::number( obDBPatientcardUnit.id() );
             }
+
+            g_obLogger(cSeverity::INFO) << "Patientcard ["
+                                        << m_poPatientCard->barcode()
+                                        << "] sold with Type ["
+                                        << m_poPatientCardType->name()
+                                        << "] Units ["
+                                        << ledUnits->text().toInt()
+                                        << "]"
+                                        << EOM;
 
             m_poPatientCard->synchronizeUnits();
             m_poPatientCard->synchronizeTime();

@@ -39,7 +39,7 @@ public:
     bool            isDemo();
     int             daysRemain();
     int             validateLicence( const QString &p_qsLicenceString );
-    int             activateLicence( const QString &p_qsValidationString );
+    int             activateLicence( const QString &p_qsValidationString, bool p_bChangeLicence = false );
     void            validateApplication( QString p_qsDate );
     QString         licenceKey() const;
     QString         validationKey() const;
@@ -47,6 +47,7 @@ public:
     QString         lastValidated();
     licenceType     ltLicenceType();
     QString         createLicenceKey( QString qsNumber );
+    void            refreshValidationDates();
 
 private:
 
@@ -60,6 +61,7 @@ private:
     QString         m_qsCode;
     QString         m_qsAct;
     QDate           m_qdLastValidated;
+    QDate           m_qdLicenceLastValidated;
     int             m_nLicenceOrderNumber;
 
     void            _checkCode();

@@ -24,5 +24,32 @@ Version 1.5.3.5
 - Ha inaktiv, vagy lejart berletet probalnak hasznalni, a program felajanlja, hogy fel lehet tolteni. Ha itt 'nem'-et valasztott a felhasznalo, akkor is tudta a lejart berletet hasznalni es a rajta levo egysegek nem fogytak el. Javitva. Ha a 'nem'-re kattint, nem lehet inditani.
 - A ReportViewer Napi konyv, Fokonyv es Havi osszesito kimutatasokban nem szerepeltek azok a berleteladasok, ahol az eladas osszege nulla volt. Javitva.
 
-Version 1.6.0
-=============
+Version 1.5.4.0
+===============
+
+- Ha a berletet feltoltottek, de a feltolteskor mas berlettipust adtak meg, mint a berlet elso eladasakor, akkor az uj berletegysegek bar jo egysegidot es arat mutattak, de a tipusuk megegyezett a berlet elso eladasakor hasznalt tipussal. Ez most javitva lett, mostantol a jo berlettipus kerul az egysegekhez.
+
+Version 1.5.4.1
+===============
+
+- Uj berlet eladasa utan, ha a berlethez tarsitani akartunk egy masik berletet, a tarsitas ellenorzese nem megfeleloen
+mukodott (kartya berlettipusat nezte), igy nem lehetett tarsitani. Mostantol az ellenorzesnel azt nezi, hogy ne legyen
+szerviz kartya, azaz ne legyen a berletnek szerviz egysege.
+
+Version 1.5.4.2
+===============
+
+- Uj berletnel a berlet hasznalatakor programhiba miatt nem vonta le az egysegeket. Mostantol helyesen le fogja vonni.
+- Correct sql hozzaadva a frissiteshez
+
+Version 1.5.5.0
+===============
+
+- Gep adminisztratori jelszoval, amennyiben a Rendszer adminisztrator engedelyezi, meg lehet adni egy lejarati datumot, aminek eleresekor a program demo modba valt at, amennyiben a Gep adminisztrator, vagy a Rendszer adminisztrator nem valtoztatja meg.
+- Rendszer adminisztrator mostantol meg tudja valtoztatni, le tudja cserelni a liszensz kulcsot ugy, hogy az adatok nem vesznek el.
+- Adminisztrator mostantol be tud allitani gep hasznalati kedvezmenyt idointervallumokhoz, amit a program automatikusan ervenyesit.
+
+Version 1.5.5.1
+===============
+- Idokedvezmeny eseten a program rosszul szamolt a vegosszeggel. Javitva
+- Ha modositjak a liszensz ervenyessegi idejet, nem volt egyertelmu, miert nem valtozik a napok szama. Mostantol latszik a szalon ervenyesseg is.

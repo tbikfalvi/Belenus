@@ -1,19 +1,15 @@
 -- -----------------------------------------------------------------------------------
 -- Belenus Szoftver Rendszer (c) Pagony Multimedia Studio Bt - 2014
 -- -----------------------------------------------------------------------------------
--- Filename    : db_update_1_5_5_1.sql
--- AppVersion  : 1.5.5.0
--- DbVersion   : 1.7.2
+-- Filename    : correct_1_5_4_0.sql
+-- AppVersion  : 1.5.4.2
+-- DbVersion   : 1.7.1
 -- -----------------------------------------------------------------------------------
 
 USE `belenus`;
 
 -- -----------------------------------------------------------------------------------
 
-ALTER TABLE `patientcards` ADD `rfId` varchar(30) NOT NULL AFTER `barcode`;
+UPDATE patientcardunits SET prepared=0, active=0, datetimeused="2016-06-04 00:00:00" WHERE patientCardId>1 AND validdatefrom>"2016-05-22" AND active=1 AND archive="MOD";
 
 -- -----------------------------------------------------------------------------------
-
-UPDATE settings SET value=NOW() WHERE identifier="GLOBAL_DATA_UPDATED";
-UPDATE settings SET value='1_5_5_1' WHERE identifier='APPLICATION_VERSION';
-UPDATE settings SET value='1_7_2' WHERE identifier='DATABASE_VERSION';

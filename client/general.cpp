@@ -65,7 +65,7 @@ void cGeneral::setApplicationLanguage( const QString &p_qsLang )
     m_poMainApplication->installTranslator( m_poQtTr );
 }
 //====================================================================================
-int cGeneral::customMsgBox(QWidget *parent, msgBoxType msgtype, QString buttonstext, QString msg, QString details)
+int cGeneral::customMsgBox(QWidget */*parent*/, msgBoxType msgtype, QString buttonstext, QString msg, QString details)
 //====================================================================================
 {
     QMessageBox msgBox;
@@ -317,10 +317,6 @@ void cGeneral::showPatientCardInformation(QString p_qsBarcode)
             QString qsValid;
             unsigned int uiPCTId = poQuery->value( 1 ).toUInt();
 
-            if( uiPCTId == 0 )
-            {
-                uiPCTId = obDBPatientCard.patientCardTypeId();
-            }
             if( uiPCTId > 0 )
             {
                 cDBPatientCardType obDBPatientCardType;
@@ -352,10 +348,6 @@ void cGeneral::showPatientCardInformation(QString p_qsBarcode)
             {
                 unsigned int uiPCTId = poQuery->value( 1 ).toUInt();
 
-                if( uiPCTId == 0 )
-                {
-                    uiPCTId = obDBPatientCard.patientCardTypeId();
-                }
                 if( uiPCTId > 0 )
                 {
                     cDBPatientCardType obDBPatientCardType;
@@ -477,9 +469,9 @@ cCurrency::cCurrency(int p_nCurrencyValue, currType p_ctCurrencyType, int p_nVat
 //    g_obLogger(cSeverity::INFO) << "m_nValueGross " << m_nValueGross << EOM;
 }
 //====================================================================================
-void cCurrency::_init(const QString &p_qsCurrencyString, currType p_ctCurrencyType, int p_nVat)
+void cCurrency::_init(const QString &p_qsCurrencyString, currType p_ctCurrencyType, int /*p_nVat*/)
 {
-    g_obLogger(cSeverity::DEBUG) << "fullstr: [" << p_qsCurrencyString << "]" << EOM;
+//    g_obLogger(cSeverity::DEBUG) << "fullstr: [" << p_qsCurrencyString << "]" << EOM;
 
     QString qsPureCurrency = p_qsCurrencyString;
 
@@ -502,7 +494,7 @@ void cCurrency::_init(const QString &p_qsCurrencyString, currType p_ctCurrencyTy
     // Remove spaces
     qsPureCurrency = qsPureCurrency.remove( " " );
 
-    g_obLogger(cSeverity::DEBUG) << "purestr: [" << qsPureCurrency << "]" << EOM;
+//    g_obLogger(cSeverity::DEBUG) << "purestr: [" << qsPureCurrency << "]" << EOM;
 
     m_bIsNegative = false;
     // Remove the minus sign
@@ -526,17 +518,17 @@ void cCurrency::_init(const QString &p_qsCurrencyString, currType p_ctCurrencyTy
         m_nValueLeft    = qsPureCurrency.toInt();
         m_nValueRight   = 0;
     }
-    g_obLogger(cSeverity::DEBUG) << "nValueLeft: ["
-                                 << m_nValueLeft
-                                 << "] nValueRight: ["
-                                 << m_nValueRight
-                                 << "]"
-                                 << EOM;
+//    g_obLogger(cSeverity::DEBUG) << "nValueLeft: ["
+//                                 << m_nValueLeft
+//                                 << "] nValueRight: ["
+//                                 << m_nValueRight
+//                                 << "]"
+//                                 << EOM;
 
     // Calculate full currency value (original *100)
     m_nValue = m_nValueLeft * 100 + m_nValueRight;
 
-    g_obLogger(cSeverity::DEBUG) << "m_nValue: [" << m_nValue << "]" << EOM;
+//    g_obLogger(cSeverity::DEBUG) << "m_nValue: [" << m_nValue << "]" << EOM;
 
     if( m_nVatValue > 0 )
     {
@@ -557,7 +549,7 @@ void cCurrency::_init(const QString &p_qsCurrencyString, currType p_ctCurrencyTy
         m_nValueGross = m_nValue;
     }
 
-    g_obLogger(cSeverity::DEBUG) << "net/gross " << QString("%1/%2").arg(m_nValueNet).arg(m_nValueGross) << EOM;
+//    g_obLogger(cSeverity::DEBUG) << "net/gross " << QString("%1/%2").arg(m_nValueNet).arg(m_nValueGross) << EOM;
 }
 //====================================================================================
 cCurrency::~cCurrency()
@@ -580,10 +572,10 @@ QString cCurrency::currencyValue(currType p_ctCurrencyType)
     m_nValueRight = m_nValue % 100;
 
 //    g_obLogger(cSeverity::DEBUG) << "L/R " << QString("%1/%2").arg(m_nValueLeft).arg(m_nValueRight) << EOM;
-    g_obLogger(cSeverity::DEBUG) << "RET currencyValue ["
-                                 << QString( "%1%2" ).arg(m_bIsNegative?"-":"").arg( m_nValue )
-                                 << "]"
-                                 << EOM;
+//    g_obLogger(cSeverity::DEBUG) << "RET currencyValue ["
+//                                 << QString( "%1%2" ).arg(m_bIsNegative?"-":"").arg( m_nValue )
+//                                 << "]"
+//                                 << EOM;
 
     return QString( "%1%2" ).arg(m_bIsNegative?"-":"").arg( m_nValue );
 }
@@ -610,10 +602,10 @@ QString cCurrency::currencyString(currType p_ctCurrencyType)
         qsRet = QString( "%1%2" ).arg(m_bIsNegative?"-":"").arg(m_nValueLeft);
     }
 
-    g_obLogger(cSeverity::DEBUG) << "RET currencyString ["
-                                 << qsRet
-                                 << "]"
-                                 << EOM;
+//    g_obLogger(cSeverity::DEBUG) << "RET currencyString ["
+//                                 << qsRet
+//                                 << "]"
+//                                 << EOM;
     return qsRet;
 }
 //====================================================================================
@@ -642,10 +634,10 @@ QString cCurrency::currencyStringSeparator(currType p_ctCurrencyType)
         qsRet = QString( "%1%2" ).arg(m_bIsNegative?"-":"").arg(_separatedValue(m_nValueLeft));
     }
 
-    g_obLogger(cSeverity::DEBUG) << "RET currencyStringSeparator ["
-                                 << qsRet
-                                 << "]"
-                                 << EOM;
+//    g_obLogger(cSeverity::DEBUG) << "RET currencyStringSeparator ["
+//                                 << qsRet
+//                                 << "]"
+//                                 << EOM;
     return qsRet;
 }
 //====================================================================================
@@ -653,20 +645,20 @@ QString cCurrency::currencyFullStringShort( currType p_ctCurrencyType )
 {
     QString qsRet = QString( "%1 %2" ).arg(currencyStringSeparator(p_ctCurrencyType)).arg(g_poPrefs->getCurrencyShort());
 
-    g_obLogger(cSeverity::DEBUG) << "RET currencyFullStringShort ["
-                                 << qsRet
-                                 << "]"
-                                 << EOM;
+//    g_obLogger(cSeverity::DEBUG) << "RET currencyFullStringShort ["
+//                                 << qsRet
+//                                 << "]"
+//                                 << EOM;
     return qsRet;
 }
 //====================================================================================
 QString cCurrency::currencyFullStringLong( currType p_ctCurrencyType )
 {
     QString qsRet = QString( "%1 %2" ).arg(currencyStringSeparator(p_ctCurrencyType)).arg(g_poPrefs->getCurrencyLong());
-    g_obLogger(cSeverity::DEBUG) << "RET currencyFullStringLong ["
-                                 << qsRet
-                                 << "]"
-                                 << EOM;
+//    g_obLogger(cSeverity::DEBUG) << "RET currencyFullStringLong ["
+//                                 << qsRet
+//                                 << "]"
+//                                 << EOM;
     return qsRet;
 }
 //====================================================================================

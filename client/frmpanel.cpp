@@ -31,6 +31,7 @@
 #include "crud/dlgwaitlist.h"
 #include "db/dbwaitlist.h"
 #include "db/dbpaneluses.h"
+#include "db/dbdiscount.h"
 
 #include <iostream>
 
@@ -255,7 +256,7 @@ void cFrmPanel::start()
 
     QStringList qslPCUsed = QStringList();
 
-    for( int j=0;j<m_vrPatientCards.size(); j++ )
+    for( unsigned int j=0;j<m_vrPatientCards.size(); j++ )
     {
         stUsedPatientCards *stTemp = m_vrPatientCards.at(j);
 
@@ -324,7 +325,7 @@ void cFrmPanel::clear()
         g_poHardware->setCurrentCommand( m_uiId-1, 0 );
     }
 
-    for( int i=0; i<m_vrPatientCards.size(); i++ )
+    for( unsigned int i=0; i<m_vrPatientCards.size(); i++ )
     {
         stUsedPatientCards *stTemp = m_vrPatientCards.at(i);
 
@@ -364,9 +365,8 @@ void cFrmPanel::clear()
 
             obDBShoppingCart.load( poQuery->value( 0 ).toUInt() );
             obDBShoppingCart.remove();
-            itemRemovedFromShoppingCart();
         }
-        m_uiShoppingCartItemId = 0;
+        itemRemovedFromShoppingCart();
     }
 
     if( m_inCashToPay == 0 )
@@ -484,6 +484,21 @@ void cFrmPanel::setMainProcessTime( const int p_inLength, const int p_inPrice )
         return;
     }
 
+    int inPriceTotal        = p_inPrice;
+    int nTimezoneDiscount   = 0;
+
+    try
+    {
+        cDBDiscount obDiscount;
+
+        obDiscount.loadTimeZone();
+        nTimezoneDiscount = obDiscount.discount( inPriceTotal );
+    }
+    catch( cSevException &e )
+    {
+//        g_obLogger(e.severity()) << e.what() << EOM;
+    }
+
     g_obLogger(cSeverity::INFO) << "Device set cash time Id ["
                                 << m_uiId
                                 << "] TrId ["
@@ -492,16 +507,18 @@ void cFrmPanel::setMainProcessTime( const int p_inLength, const int p_inPrice )
                                 << p_inLength/60
                                 << "] cash ["
                                 << p_inPrice
+                                << "] discount_guest ["
+                                << g_obGuest.getDiscountedPrice( inPriceTotal )
+                                << "] discount_timezone ["
+                                << nTimezoneDiscount
                                 << "]"
                                 << EOM;
-
-    int inPriceTotal = p_inPrice;
 
     m_inCashLength += p_inLength;
     m_inCashTimeRemains = m_inCashLength;
     m_inCashNetToPay += p_inPrice;
     m_inCashToPay += inPriceTotal;
-    m_inCashDiscountToPay += inPriceTotal - g_obGuest.getDiscountedPrice( inPriceTotal );
+    m_inCashDiscountToPay += inPriceTotal - g_obGuest.getDiscountedPrice( inPriceTotal ) + nTimezoneDiscount;
     m_uiPatientToPay = m_uiCurrentPatient = g_obGuest.id();
 
     m_pDBLedgerDevice->setCash( m_inCashToPay );
@@ -803,7 +820,7 @@ void cFrmPanel::displayStatus()
 
     if( m_inCashToPay > 0 )
     {
-        cCurrency   cPrice( m_inCashToPay );
+        cCurrency   cPrice( m_inCashToPay-m_inCashDiscountToPay );
 
         m_qsCashToPay = QString( tr("Cash to pay: ") + cPrice.currencyFullStringShort() );
     }
@@ -1097,7 +1114,7 @@ void cFrmPanel::closeAttendance()
 
     if( m_vrPatientCards.size() > 0 )
     {
-        for( int i=0; i<m_vrPatientCards.size(); i++ )
+        for( unsigned int i=0; i<m_vrPatientCards.size(); i++ )
         {
             stUsedPatientCards  *stTemp = m_vrPatientCards.at(i);
             cDBPatientCard       obDBPatientCard;
@@ -1105,7 +1122,7 @@ void cFrmPanel::closeAttendance()
             obDBPatientCard.load( stTemp->uiPatientCardId );
 
             // Szerviz csoportba tartozo kartyanal nem kell levonni az egyseget es idot
-            if( obDBPatientCard.patientCardTypeId() > 1 )
+            if( !obDBPatientCard.isServiceCard() )
             {
                 for( int j=0; j<stTemp->qslUnitIds.count(); j++ )
                 {
@@ -1226,15 +1243,24 @@ bool cFrmPanel::isItemInShoppingCart()
     return m_bIsItemInShoppingCart;
 }
 //====================================================================================
-void cFrmPanel::itemAddedToShoppingCart()
+void cFrmPanel::itemAddedToShoppingCart(const unsigned int p_uiShoppingCardItemId)
 {
     m_bIsItemInShoppingCart = true;
+    if( p_uiShoppingCardItemId > 0 )
+    {
+        g_obLogger(cSeverity::INFO) << "Device usage payment moved to shopping cart ["
+                                    << p_uiShoppingCardItemId
+                                    << "]"
+                                    << EOM;
+        m_uiShoppingCartItemId = p_uiShoppingCardItemId;
+    }
     icoShoppingCart->setVisible( true );
 }
 //====================================================================================
 void cFrmPanel::itemRemovedFromShoppingCart()
 {
     m_bIsItemInShoppingCart = false;
+    m_uiShoppingCartItemId = 0;
     icoShoppingCart->setVisible( false );
 }
 //====================================================================================

@@ -92,7 +92,7 @@ public:
     bool            isCanBeStartedByCard();
     void            setPaymentMethod( const unsigned int p_uiPaymentMethodId );
     bool            isItemInShoppingCart();
-    void            itemAddedToShoppingCart();
+    void            itemAddedToShoppingCart(const unsigned int p_uiShoppingCardItemId);
     void            itemRemovedFromShoppingCart();
 //    void            addPatientToWaitingQueue( int p_inLengthCash, int p_inPrice, unsigned int p_uiPatientCardId, QString p_qsUnitIds, int p_inLenghtCard, unsigned int p_uiLedgerId, int p_inPayType );
     void            addPatientToWaitingQueue( bool p_bIsPatientWaiting );

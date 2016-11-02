@@ -281,6 +281,16 @@ void cLicenceManager::initialize()
             g_poPrefs->setLicenceId( nLicenceId );
             g_obLogger(cSeverity::INFO) << "Initialized with " << m_qsLicenceString << " and " << nLicenceId << ". Last validated = " << m_qdLastValidated.addMonths(6).toString("yyyy/MM/dd") << EOM;
         }
+
+        // Get last validated from settings and update with licence date if it has default value
+        m_qdLicenceLastValidated = QDate::fromString( g_poPrefs->getLicenceLastValidated().left(10), "yyyy-MM-dd" );
+
+        if( m_qdLicenceLastValidated.year() == 2000 &&
+            m_qdLicenceLastValidated.month() == 1 &&
+            m_qdLicenceLastValidated.day() == 1 )
+        {
+            g_poPrefs->setLicenceLastValidated( QString( "%1 12:00:00" ).arg( m_qdLastValidated.toString("yyyy-MM-dd") ), true );
+        }
     }
     catch( cSevException &e )
     {
@@ -306,18 +316,27 @@ cLicenceManager::licenceType cLicenceManager::ltLicenceType()
 
 int cLicenceManager::daysRemain()
 {
-    if ( !m_qdLastValidated.isValid() )
+    if ( !m_qdLastValidated.isValid() || !m_qdLicenceLastValidated.isValid() )
         return 0;
 
-    int nDays = m_qdLastValidated.daysTo( QDate::currentDate() );
+    QDate   qdCurrent       = QDate::currentDate();
+    int     nDaysToExpire   = 0;
 
-    g_obLogger(cSeverity::INFO) << "nDays: " << nDays*(-1) << EOM;
+    if( m_qdLicenceLastValidated < m_qdLastValidated )
+    {
+        nDaysToExpire = qdCurrent.daysTo( m_qdLicenceLastValidated );
+    }
+    else
+    {
+        nDaysToExpire = qdCurrent.daysTo( m_qdLastValidated );
+    }
 
-    nDays = EXPIRE_IN_DAYS - nDays;
-    if ( nDays < 0 ) // ha ez mar tobb mint EXP_IN_DAYS akkor nincs tobb nap hatra
-        nDays = 0;
+    g_obLogger(cSeverity::INFO) << "nDaysToExpire: " << nDaysToExpire << EOM;
 
-    return nDays;
+    if ( nDaysToExpire < 0 ) // ha ez mar tobb mint EXP_IN_DAYS akkor nincs tobb nap hatra
+        nDaysToExpire = 0;
+
+    return nDaysToExpire;
 }
 
 void cLicenceManager::validateApplication( QString p_qsDate )
@@ -327,7 +346,7 @@ void cLicenceManager::validateApplication( QString p_qsDate )
     g_poDB->executeQTQuery( QString("UPDATE licences SET lastValidated=\"%1\" WHERE licenceId=%2").arg( p_qsDate ).arg( g_poPrefs->getLicenceId() ) );
 }
 
-int cLicenceManager::activateLicence( const QString &p_qsLicenceString )
+int cLicenceManager::activateLicence(const QString &p_qsLicenceString , bool p_bChangeLicence )
 {
     int nRet = ERR_NO_ERROR;
 
@@ -376,8 +395,17 @@ int cLicenceManager::activateLicence( const QString &p_qsLicenceString )
 
         try
         {
-            poQuery = g_poDB->executeQTQuery( QString( "INSERT INTO licences ( `licenceId`, `serial`, `lastValidated` ) VALUES ( %1, '%2', '%3' )" ).arg(nLicenceNumber+1).arg(p_qsLicenceString).arg(QDate::currentDate().toString("yyyy-MM-dd")) );
-            if( poQuery ) g_poPrefs->setLicenceId( poQuery->lastInsertId().toUInt() );
+            if( p_bChangeLicence )
+            {
+                poQuery = g_poDB->executeQTQuery( QString( "UPDATE licences SET `serial`=\"%1\" WHERE licenceId=%2" )
+                                                  .arg( p_qsLicenceString )
+                                                  .arg( g_poPrefs->getLicenceId() ) );
+            }
+            else
+            {
+                poQuery = g_poDB->executeQTQuery( QString( "INSERT INTO licences ( `licenceId`, `serial`, `lastValidated` ) VALUES ( %1, '%2', '%3' )" ).arg(nLicenceNumber+1).arg(p_qsLicenceString).arg(QDate::currentDate().toString("yyyy-MM-dd")) );
+                if( poQuery ) g_poPrefs->setLicenceId( poQuery->lastInsertId().toUInt() );
+            }
             m_qsLicenceString = p_qsLicenceString;
         }
         catch( cSevException &e )
@@ -628,3 +656,17 @@ QString cLicenceManager::createLicenceKey( QString qsNumber )
 
     return qsLK;
 }
+
+void cLicenceManager::refreshValidationDates()
+{
+    QSqlQuery   *poQuery = NULL;
+
+    poQuery = g_poDB->executeQTQuery( QString( "SELECT licenceId, serial, lastValidated FROM licences ORDER BY licenceId DESC LIMIT 1" ) );
+    if( poQuery->first() )
+    {
+        m_qdLastValidated   = poQuery->value( 2 ).toDate();
+    }
+
+    m_qdLicenceLastValidated = QDate::fromString( g_poPrefs->getLicenceLastValidated().left(10), "yyyy-MM-dd" );
+}
+

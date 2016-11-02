@@ -93,6 +93,8 @@ void cPreferences::init()
     m_nStartHttpSyncAutoSeconds     = 15;
 
     m_bBarcodeHidden                = false;
+
+    m_qsLicenceLastValidated        = "";
 }
 
 void cPreferences::loadConfFileSettings()
@@ -268,6 +270,40 @@ void cPreferences::loadDBSettings() throw (cSevException)
             {
                 g_poDB->executeQTQuery( QString( "UPDATE settings SET value='66' WHERE identifier=\"COMPONENT_ID\" " ) );
             }
+        }
+
+        poQuery = g_poDB->executeQTQuery( QString( "SELECT value FROM settings WHERE identifier=\"LICENCE_LAST_VALIDATED\" " ) );
+        if( poQuery->first() )
+        {
+            m_qsLicenceLastValidated = poQuery->value( 0 ).toString();
+        }
+
+        if( m_qsLicenceLastValidated.length() == 0 )
+        {
+            g_poDB->executeQTQuery( QString( "INSERT INTO settings ( settingId, identifier, value ) VALUES ( NULL , 'LICENCE_LAST_VALIDATED', '2000-01-01 12:00:00' ) " ) );
+            m_qsLicenceLastValidated = "2000-01-01 12:00:00";
+        }
+
+        poQuery = g_poDB->executeQTQuery( QString( "SELECT value FROM settings WHERE identifier=\"DA_WORKTIME\" " ) );
+        if( poQuery->size() == 0 )
+        {
+            g_poDB->executeQTQuery( QString( "INSERT INTO settings ( settingId, identifier, value ) VALUES ( NULL , 'DA_WORKTIME', '1' ) " ) );
+            m_bDACanModifyWorktime = true;
+        }
+        else if( poQuery->first() )
+        {
+            m_bDACanModifyWorktime = poQuery->value( 0 ).toBool();
+        }
+
+        poQuery = g_poDB->executeQTQuery( QString( "SELECT value FROM settings WHERE identifier=\"DA_EXPDATE\" " ) );
+        if( poQuery->size() == 0 )
+        {
+            g_poDB->executeQTQuery( QString( "INSERT INTO settings ( settingId, identifier, value ) VALUES ( NULL , 'DA_EXPDATE', '0' ) " ) );
+            m_bDACanModifyExpDate = false;
+        }
+        else if( poQuery->first() )
+        {
+            m_bDACanModifyExpDate = poQuery->value( 0 ).toBool();
         }
 
         delete poQuery;
@@ -1727,3 +1763,64 @@ int cPreferences::getRFIDComPort() const
 {
     return m_inRFIDCommunicationPort;
 }
+
+void cPreferences::setLicenceLastValidated( const QString &p_qsLicenceLastValidated, bool p_boSaveNow )
+{
+    m_qsLicenceLastValidated = p_qsLicenceLastValidated;
+
+    if( p_boSaveNow )
+    {
+        QSqlQuery *poQuery = NULL;
+
+        g_poDB->executeQTQuery( QString( "UPDATE settings SET value='%1' "
+                                         "WHERE identifier=\"LICENCE_LAST_VALIDATED\" " )
+                                .arg( m_qsLicenceLastValidated ) );
+        delete poQuery;
+    }
+}
+
+QString cPreferences::getLicenceLastValidated() const
+{
+    return m_qsLicenceLastValidated;
+}
+
+void cPreferences::setDACanModifyWorktime( bool p_bDACanModifyWorktime, bool p_boSaveNow )
+{
+    m_bDACanModifyWorktime = p_bDACanModifyWorktime;
+
+    if( p_boSaveNow )
+    {
+        QSqlQuery *poQuery = NULL;
+
+        g_poDB->executeQTQuery( QString( "UPDATE settings SET value='%1' "
+                                         "WHERE identifier=\"DA_WORKTIME\" " )
+                                .arg( m_bDACanModifyWorktime ) );
+        delete poQuery;
+    }
+}
+
+bool cPreferences::isDACanModifyWorktime()
+{
+    return m_bDACanModifyWorktime;
+}
+
+void cPreferences::setDACanModifyExpDate( bool p_bDACanModifyExpDate, bool p_boSaveNow )
+{
+    m_bDACanModifyExpDate = p_bDACanModifyExpDate;
+
+    if( p_boSaveNow )
+    {
+        QSqlQuery *poQuery = NULL;
+
+        g_poDB->executeQTQuery( QString( "UPDATE settings SET value='%1' "
+                                         "WHERE identifier=\"DA_EXPDATE\" " )
+                                .arg( m_bDACanModifyExpDate ) );
+        delete poQuery;
+    }
+}
+
+bool cPreferences::isDACanModifyExpDate()
+{
+    return m_bDACanModifyExpDate;
+}
+

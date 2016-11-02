@@ -319,7 +319,7 @@ bool cDlgPatientCard::_isPatientCardNotForService()
         poPatientCard = new cDBPatientCard;
         poPatientCard->load( m_uiSelectedId );
 
-        if( poPatientCard->patientCardTypeId() == 1 )
+        if( poPatientCard->isServiceCard() )
         {
             bRet = false;
         }

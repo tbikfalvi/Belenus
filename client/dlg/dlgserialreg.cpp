@@ -12,8 +12,11 @@ cDlgSerialReg::cDlgSerialReg( QWidget *p_poParent ) : QDialog( p_poParent )
 {
     setupUi( this );
 
+    m_bChangeLicenceKey = false;
+
     setWindowIcon( QIcon("./resources/40x40_key.png") );
 
+    pbChangeKey->setIcon( QIcon("./resources/40x40_key.png") );
     pbActivateKey->setIcon( QIcon("./resources/40x40_key.png") );
     pbValidateCode->setIcon( QIcon("./resources/40x40_validate.png") );
     pbValidateApplication->setIcon( QIcon("./resources/40x40_hourglass.png") );
@@ -22,8 +25,12 @@ cDlgSerialReg::cDlgSerialReg( QWidget *p_poParent ) : QDialog( p_poParent )
 
     g_obLogger(cSeverity::INFO) << "Licence id: " << g_poPrefs->getLicenceId() << EOM;
 
+    g_obLicenceManager.refreshValidationDates();
+
     ledSerialKey->setText( g_obLicenceManager.licenceKey() );
     lblValidDays->setText( "   " );
+
+    lblStudioValidDate->setText( g_poPrefs->getLicenceLastValidated().left(10) );
 
     ledSerialKey->setEnabled( g_obUser.isInGroup( cAccessGroup::SYSTEM ) );
     pbActivateKey->setEnabled( g_obUser.isInGroup( cAccessGroup::SYSTEM ) );
@@ -55,9 +62,23 @@ cDlgSerialReg::~cDlgSerialReg()
 {
 }
 
+void cDlgSerialReg::on_pbChangeKey_clicked()
+{
+    if( QMessageBox::question( this, tr("Question"),
+                               tr("Are you sure you want to replace the licence key?\n\n"
+                                  "Please note this modification affect all data connected "
+                                  "to this licence key. If you use a currently active licence "
+                                  "key, the related data will be corrupted!"),
+                               QMessageBox::Yes|QMessageBox::No, QMessageBox::No ) == QMessageBox::Yes )
+    {
+        m_bChangeLicenceKey = true;
+        on_pbActivateKey_clicked();
+    }
+}
+
 void cDlgSerialReg::on_pbActivateKey_clicked()
 {
-    int nRet = g_obLicenceManager.activateLicence( ledSerialKey->text() );
+    int nRet = g_obLicenceManager.activateLicence( ledSerialKey->text(), m_bChangeLicenceKey );
 
     switch( nRet )
     {
@@ -231,3 +252,4 @@ void cDlgSerialReg::on_pbValidate_clicked()
     }
 }
 */
+

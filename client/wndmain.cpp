@@ -1074,6 +1074,7 @@ void cWndMain::keyPressEvent( QKeyEvent *p_poEvent )
             g_obLogger(cSeverity::INFO) << "User pressed ESC" << EOM;
             _setStatusText( m_qsStatusText );
             mdiPanels->clear();
+            m_bShoppingCartHasItem = g_obGen.isShoppingCartHasItems();
         }
         else if( p_poEvent->key() == Qt::Key_Space )
         {
@@ -2012,7 +2013,20 @@ void cWndMain::on_action_UseDeviceLater_triggered()
 
             cCurrency cPrice( inPriceNet, cCurrency::CURR_GROSS, g_poPrefs->getDeviceUseVAT() );
 
-            inPriceTotal = cPrice.currencyValue().toInt();
+            inPriceTotal            = cPrice.currencyValue().toInt();
+            int nTimezoneDiscount   = 0;
+
+            try
+            {
+                cDBDiscount obDiscount;
+
+                obDiscount.loadTimeZone();
+                nTimezoneDiscount = obDiscount.discount( inPriceTotal );
+            }
+            catch( cSevException &e )
+            {
+        //        g_obLogger(e.severity()) << e.what() << EOM;
+            }
 
             cDBShoppingCart obDBShoppingCart;
 
@@ -2027,8 +2041,8 @@ void cWndMain::on_action_UseDeviceLater_triggered()
             obDBShoppingCart.setItemCount( 1 );
             obDBShoppingCart.setItemNetPrice( cPrice.currencyValue().toInt() );
             obDBShoppingCart.setItemVAT( g_poPrefs->getDeviceUseVAT() );
-            obDBShoppingCart.setItemDiscount( 0 );
-            obDBShoppingCart.setItemSumPrice( inPriceTotal );
+            obDBShoppingCart.setItemDiscount( nTimezoneDiscount );
+            obDBShoppingCart.setItemSumPrice( inPriceTotal-nTimezoneDiscount );
 
             cDlgCassaAction     obDlgCassaAction( this, &obDBShoppingCart );
 
@@ -2234,7 +2248,7 @@ void cWndMain::on_action_ShoppingCart_triggered()
     on_KeyboardEnabled();
 }
 //====================================================================================
-void cWndMain::slotOpenShoppingCart( unsigned int p_uiPanelId )
+void cWndMain::slotOpenShoppingCart( unsigned int /*p_uiPanelId*/ )
 {
     cTracer obTrace( "cWndMain::slotOpenShoppingCart" );
 
@@ -2749,7 +2763,7 @@ void cWndMain::on_action_PayCash_triggered()
     }
     else if( inCassaAction == QDialog::Accepted && bShoppingCart )
     {
-        //mdiPanels->itemAddedToShoppingCart();
+        mdiPanels->itemAddedToShoppingCart(obDBShoppingCart.id());
         mdiPanels->cashPayed( 0 );
     }
     m_bShoppingCartHasItem = g_obGen.isShoppingCartHasItems();

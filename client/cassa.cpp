@@ -364,6 +364,17 @@ unsigned int cCassa::cassaProcessDeviceUse( const cDBShoppingCart &p_obDBShoppin
 
     cDBLedger   obDBLedger;
 
+//    g_obLogger(cSeverity::DEBUG) << "DISCOUNT: itemNetPrice ["
+//                                 << p_obDBShoppingCart.itemNetPrice()
+//                                 << "]"
+//                                 << " itemDiscount ["
+//                                 << p_obDBShoppingCart.itemDiscount()
+//                                 << "]"
+//                                 << " itemSumPrice ["
+//                                 << p_obDBShoppingCart.itemSumPrice()
+//                                 << "]"
+//                                 << EOM;
+
     obDBLedger.createNew();
     obDBLedger.setLicenceId( g_poPrefs->getLicenceId() );
     obDBLedger.setLedgerTypeId( cDBLedger::LT_DEVICE_USAGE );
