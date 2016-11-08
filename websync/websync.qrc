@@ -1,0 +1,10 @@
+<RCC>
+    <qresource prefix="/">
+        <file>websync.png</file>
+        <file>cancel.png</file>
+        <file>ok.png</file>
+        <file>status_green.png</file>
+        <file>status_red.png</file>
+        <file>status_yellow.png</file>
+    </qresource>
+</RCC>
