@@ -29,6 +29,7 @@ dlgMain::dlgMain(QWidget *parent) : QDialog(parent), ui(new Ui::dlgMain)
     _setMenu();
 
     trayIcon->setIcon( QIcon( ":/websync.png" ) );
+    trayIcon->setToolTip( tr("Belenus WebSync") );
     trayIcon->show();
 
     m_qsLang                    = obPref.value( "Lang", "en" ).toString();
@@ -96,51 +97,21 @@ void dlgMain::mouseMoveEvent ( QMouseEvent *p_poEvent )
 
 void dlgMain::_setActions()
 {
-    actionSettings = new QAction(tr("&Settings"), this);
+    actionSettings = new QAction(tr("&Open main window"), this);
     actionSettings->setIcon( QIcon( ":/settings.png" ) );
     connect( actionSettings, SIGNAL(triggered()), this, SLOT(slotSettings()) );
 
-    actionShow = new QAction(tr("Show counter"), this);
-    actionShow->setIcon( QIcon( ":/show.png" ) );
-    connect( actionShow, SIGNAL(triggered()), this, SLOT(on_actionShow_triggered()) );
-
-    actionHide = new QAction(tr("Hide counter"), this);
-    actionHide->setIcon( QIcon( ":/minimize.png" ) );
-    connect( actionHide, SIGNAL(triggered()), this, SLOT(on_pbHideCounter_clicked()) );
-
-    actionStart = new QAction(tr("&Start"), this);
-    actionStart->setIcon( QIcon( ":/start.png" ) );
-    connect( actionStart, SIGNAL(triggered()), this, SLOT(on_pbStart_clicked()) );
-
-    actionStop = new QAction(tr("S&top"), this);
-    actionStop->setIcon( QIcon( ":/stop.png" ) );
-    connect( actionStop, SIGNAL(triggered()), this, SLOT(on_pbStop_clicked()) );
-
-    actionReset = new QAction(tr("&Reset"), this);
-    actionReset->setIcon( QIcon( ":/reset.png" ) );
-    connect( actionReset, SIGNAL(triggered()), this, SLOT(on_pbReset_clicked()) );
-
-    actionExit = new QAction(tr("&Exit application"), this);
-    actionExit->setIcon( QIcon( ":/exit.png" ) );
-    connect( actionExit, SIGNAL(triggered()), qApp, SLOT(quit()) );
+//    actionExit = new QAction(tr("&Exit application"), this);
+//    actionExit->setIcon( QIcon( ":/exit.png" ) );
+//    connect( actionExit, SIGNAL(triggered()), qApp, SLOT(quit()) );
 }
 
 void dlgMain::_setMenu()
 {
     trayIconMenu->addAction( actionSettings );
-    trayIconMenu->addSeparator();
+//    trayIconMenu->addSeparator();
 
-    trayIconMenu->addAction( actionShow );
-    trayIconMenu->addAction( actionHide );
-    trayIconMenu->addSeparator();
-
-    trayIconMenu->addAction( actionStart );
-    trayIconMenu->addAction( actionStop );
-    trayIconMenu->addAction( actionReset );
-
-    trayIconMenu->addSeparator();
-
-    trayIconMenu->addAction( actionExit );
+//    trayIconMenu->addAction( actionExit );
 
     trayIcon->setContextMenu(trayIconMenu);
 }
