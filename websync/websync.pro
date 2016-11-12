@@ -1,7 +1,7 @@
 
 greaterThan(QT_MAJOR_VERSION, 4): QT += widgets
 
-QT          += core gui multimedia
+QT          += core gui multimedia network sql
 CONFIG      += qt
 RESOURCES   += websync.qrc
 RC_FILE      = websync.rc
@@ -10,9 +10,21 @@ DESTDIR      = ..
 TRANSLATIONS = websync_hu.ts
 TARGET       = websync
 
-HEADERS     += dlgmain.h
+HEADERS     += ../framework/dbconnection.h \
+               ../framework/qtmysqlconnection.h \
+               ../framework/qtmysqlquerymodel.h \
+               ../framework/qtlogger.h \
+               ../framework/logger/FileWriter.h \
+               ../framework/tracer.h \
+               dlgmain.h
 
-SOURCES     += main.cpp\
+SOURCES     += ../framework/dbconnection.cpp \
+               ../framework/qtmysqlconnection.cpp \
+               ../framework/qtmysqlquerymodel.cpp \
+               ../framework/qtlogger.cpp \
+               ../framework/logger/FileWriter.cpp \
+               ../framework/tracer.cpp \
+               main.cpp \
                dlgmain.cpp
 
 FORMS       += dlgmain.ui

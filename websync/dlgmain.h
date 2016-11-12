@@ -12,15 +12,38 @@
 #include <QHBoxLayout>
 #include <QPushButton>
 
-extern QTranslator     *poTransApp;
-extern QTranslator     *poTransQT;
-extern QApplication    *apMainApp;
+#include "../framework/qtframework.h"
+
+extern QTranslator          *poTransApp;
+extern QTranslator          *poTransQT;
+extern QApplication         *apMainApp;
+extern cQTMySQLConnection   *g_poDB;
 
 namespace Ui { class dlgMain; }
 
 class dlgMain : public QDialog
 {
     Q_OBJECT
+
+    enum authType
+    {
+        AUTH_NEEDED = 0,
+        AUTH_OK,
+        AUTH_USER_NOTFOUND,
+        AUTH_PASSWORD_INCORRECT,
+        AUTH_CONNECTION_FAILED,
+        AUTH_ERROR
+    };
+
+    enum groupUser
+    {
+        GROUP_MIN = 0,
+        GROUP_USER,
+        GROUP_ADMIN,
+        GROUP_SYSTEM,
+        GROUP_ROOT,
+        GROUP_MAX
+    };
 
 public:
     explicit dlgMain(QWidget *parent = 0);

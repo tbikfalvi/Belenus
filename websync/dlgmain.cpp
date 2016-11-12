@@ -1,14 +1,17 @@
 //    QMessageBox::information( this, "", "" );
 
-#include <windows.h>
+//#include <windows.h>
 #include <QMessageBox>
 #include <QSettings>
 #include <QDir>
 #include <QProcessEnvironment>
 #include <QMouseEvent>
+#include <iostream>
 
 #include "dlgmain.h"
 #include "ui_dlgmain.h"
+
+using namespace std;
 
 dlgMain::dlgMain(QWidget *parent) : QDialog(parent), ui(new Ui::dlgMain)
 {
@@ -32,7 +35,30 @@ dlgMain::dlgMain(QWidget *parent) : QDialog(parent), ui(new Ui::dlgMain)
     trayIcon->setToolTip( tr("Belenus WebSync") );
     trayIcon->show();
 
+    try
+    {
+        g_poDB = new cQTMySQLConnection;
+        g_poDB->setHostName( "localhost" );
+        g_poDB->setDatabaseName( "belenus" );
+        g_poDB->setUserName( "belenus" );
+        g_poDB->setPassword( "belenus" );
+        g_poDB->open();
+
+        ui->lblStatusIconSQL->setPixmap( QPixmap( ":/status_green.png" ) );
+        ui->lblStatusIconSQL->setToolTip( tr("SQL Connection established") );
+    }
+    catch( cSevException &e )
+    {
+        cerr << ">> " << e.what() << endl << flush;;
+        g_obLogger(e.severity()) << e.what() << EOM;
+
+        ui->lblStatusIconSQL->setPixmap( QPixmap( ":/status_red.png" ) );
+        ui->lblStatusIconSQL->setToolTip( tr("Error in connection: %1").arg( e.what() ) );
+    }
+
+
     m_qsLang                    = obPref.value( "Lang", "en" ).toString();
+
     m_bShowMainWindowOnStart    = obPref.value( "ShowMainWindowOnStart", 0 ).toBool();
 
     int nCurrentIndex   = ui->cmbLang->findText( QString("%1 (").arg(m_qsLang), Qt::MatchContains );
@@ -58,6 +84,10 @@ dlgMain::~dlgMain()
     obPref.setValue( "WindowPosition/Mainwindow_top", y() );
     obPref.setValue( "WindowPosition/Mainwindow_width", width() );
     obPref.setValue( "WindowPosition/Mainwindow_height", height() );
+
+    delete g_poDB;
+
+    g_obLogger(cSeverity::INFO) << "Belenus WebSync ended." << EOM;
 
     delete ui;
 }

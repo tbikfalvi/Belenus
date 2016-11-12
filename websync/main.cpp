@@ -8,11 +8,27 @@ QTranslator     *poTransApp;
 QTranslator     *poTransQT;
 QApplication    *apMainApp;
 
+#include "../framework/qtlogger.h"
+#include "../framework/qtframework.h"
+#include "../framework/logger/FileWriter.h"
+
+cQTLogger            g_obLogger;
+FileWriter           g_obLogFileWriter("websync_%1.log");
+
+cQTMySQLConnection  *g_poDB;
+
+using namespace std;
+
 int main(int argc, char *argv[])
 {
     Q_INIT_RESOURCE(websync);
 
     apMainApp = new QApplication(argc, argv);
+
+    g_obLogger.attachWriter("file", &g_obLogFileWriter);
+    g_obLogger.setMinimumSeverity("file", cSeverity::DEBUG);
+
+    g_obLogger(cSeverity::INFO) << "Belenus WebSync started." << EOM;
 
     QSettings   obPref( QString( "%1/websync.inf" ).arg( QDir::currentPath() ), QSettings::IniFormat );
     QString     qsLang = obPref.value( "Lang", "en" ).toString();

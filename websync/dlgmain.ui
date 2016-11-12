@@ -249,7 +249,7 @@
           <string/>
          </property>
          <property name="pixmap">
-          <pixmap resource="websync.qrc">:/status_red.png</pixmap>
+          <pixmap resource="websync.qrc">:/status_yellow.png</pixmap>
          </property>
          <property name="scaledContents">
           <bool>true</bool>
@@ -281,7 +281,7 @@
           <string/>
          </property>
          <property name="pixmap">
-          <pixmap resource="websync.qrc">:/status_red.png</pixmap>
+          <pixmap resource="websync.qrc">:/status_yellow.png</pixmap>
          </property>
          <property name="scaledContents">
           <bool>true</bool>
@@ -296,6 +296,19 @@
         </widget>
        </item>
       </layout>
+     </widget>
+     <widget class="QPushButton" name="pbExit">
+      <property name="geometry">
+       <rect>
+        <x>540</x>
+        <y>190</y>
+        <width>93</width>
+        <height>28</height>
+       </rect>
+      </property>
+      <property name="text">
+       <string>Exit</string>
+      </property>
      </widget>
     </widget>
    </item>
