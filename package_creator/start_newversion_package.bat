@@ -19,10 +19,21 @@ echo.
 :enter_version_ok
 echo Is the version number is ok? Type (y/n/ex)
 SET /P cmdVersionOk="> "
-IF "%cmdVersionOk%" == "y" ( GOTO :open_xml_sql_files )
+IF "%cmdVersionOk%" == "y" ( GOTO :create_environment_dirs )
 IF "%cmdVersionOk%" == "n" ( GOTO :enter_new_version )
 IF "%cmdVersionOk%" == "ex" ( GOTO :end_process )
 GOTO :proc_error
+
+:create_environment_dirs
+echo.
+echo Creating package creator environment
+echo Create KiwiSun
+mkdir c:\KiwiSun
+cd c:\KiwiSun
+echo Create KiwiSun\PackageCreate
+mkdir PackageCreate
+echo Return to %dirCurrent%
+cd %dirCurrent%
 
 :open_xml_sql_files
 echo ------------------------------------------------------------
