@@ -11,10 +11,11 @@ QApplication    *apMainApp;
 #include "../framework/qtlogger.h"
 #include "../framework/qtframework.h"
 #include "../framework/logger/FileWriter.h"
+#include "http.h"
 
 cQTLogger            g_obLogger;
 FileWriter           g_obLogFileWriter("websync_%1.log");
-
+cBlnsHttp           *g_poBlnsHttp;
 cQTMySQLConnection  *g_poDB;
 
 using namespace std;
@@ -36,8 +37,8 @@ int main(int argc, char *argv[])
     poTransApp = new QTranslator();
     poTransQT = new QTranslator();
 
-    poTransApp->load( QString("%1\\websync_%2.qm").arg( QDir::currentPath() ).arg(qsLang) );
-    poTransQT->load( QString("%1\\qt_%2.qm").arg( QDir::currentPath() ).arg(qsLang) );
+    poTransApp->load( QString("%1\\lang\\websync_%2.qm").arg( QDir::currentPath() ).arg(qsLang) );
+    poTransQT->load( QString("%1\\lang\\qt_%2.qm").arg( QDir::currentPath() ).arg(qsLang) );
 
     apMainApp->installTranslator( poTransApp );
     apMainApp->installTranslator( poTransQT );

@@ -16,6 +16,7 @@ HEADERS     += ../framework/dbconnection.h \
                ../framework/qtlogger.h \
                ../framework/logger/FileWriter.h \
                ../framework/tracer.h \
+               http.h \
                dlgmain.h
 
 SOURCES     += ../framework/dbconnection.cpp \
@@ -25,6 +26,7 @@ SOURCES     += ../framework/dbconnection.cpp \
                ../framework/logger/FileWriter.cpp \
                ../framework/tracer.cpp \
                main.cpp \
+               http.cpp \
                dlgmain.cpp
 
 FORMS       += dlgmain.ui

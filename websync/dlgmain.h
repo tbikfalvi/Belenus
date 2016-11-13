@@ -13,11 +13,13 @@
 #include <QPushButton>
 
 #include "../framework/qtframework.h"
+#include "http.h"
 
 extern QTranslator          *poTransApp;
 extern QTranslator          *poTransQT;
 extern QApplication         *apMainApp;
 extern cQTMySQLConnection   *g_poDB;
+extern cBlnsHttp            *g_poBlnsHttp;
 
 namespace Ui { class dlgMain; }
 
@@ -73,10 +75,21 @@ private slots:
     void on_cmbLang_currentIndexChanged(const QString &arg1);
     void on_pbRetranslate_clicked();
 
+    void on_BlnsHttpErrorOccured();
+    void on_BlnsHttpActionFinished( QString p_qsInfo );
+    void on_BlnsHttpStepProgress();
+
+    void on_pbResetSQL_clicked();
+
+    void on_pbResetHTTP_clicked();
+
+    void on_chkShowWindowOnStart_clicked();
+
 private:
     Ui::dlgMain         *ui;
     QSystemTrayIcon     *trayIcon;
     QMenu               *trayIconMenu;
+    QMenu               *menuConnection;
     QAction             *actionSettings;
     QAction             *actionShow;
     QAction             *actionHide;
@@ -87,20 +100,18 @@ private:
     QAction             *actionReboot;
     QAction             *actionShutdown;
     QAction             *actionExit;
+    QAction             *actionResetSQL;
+    QAction             *actionResetHTTP;
     int                  m_nTimer;
     bool                 m_bMousePressed;
     int                  m_nMouseX;
     int                  m_nMouseY;
     QString              m_qsLang;
     bool                 m_bShowMainWindowOnStart;
-    bool                 m_bShowTimerPanelOnStart;
     bool                 m_bStartTimerOnStart;
-    bool                 m_bSaveTimerSettingsOnExit;
-    bool                 m_bContinueExtended;
-    int                  m_nActionOnFinish;
-    QString              m_qsPopupMessage;
-    bool                 m_bUseSavedTimers;
     bool                 m_bReloadLanguage;
+    bool                 m_bSyncPCToServer;
+    bool                 m_bSyncPCFromServer;
 
     void                _setActions();
     void                _setMenu();
