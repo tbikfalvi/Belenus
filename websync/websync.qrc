@@ -13,5 +13,6 @@
         <file>hourglass.png</file>
         <file>key.png</file>
         <file>lock.png</file>
+        <file>exit.png</file>
     </qresource>
 </RCC>

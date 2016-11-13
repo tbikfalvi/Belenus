@@ -25,6 +25,8 @@ dlgMain::dlgMain(QWidget *parent) : QDialog(parent), ui(new Ui::dlgMain)
     // Initialize variables
     g_obLogger(cSeverity::DEBUG) << "Initialize main window variables" << EOM;
 
+    m_qsRPSW                    = "7c01fcbe9cab6ae14c98c76cf943a7b2be6a7922";
+
     m_nTimer                    = 0;
     m_bMousePressed             = false;
     m_bReloadLanguage           = false;
@@ -35,6 +37,9 @@ dlgMain::dlgMain(QWidget *parent) : QDialog(parent), ui(new Ui::dlgMain)
 
     m_nIndexPCStatusSync        = 0;
     m_nIndexPCOnlineSync        = 0;
+    m_nIndexUpdateSyncDataCount = 0;
+
+    m_enGroup                   = GROUP_MIN;
 
     trayIcon                    = new QSystemTrayIcon(this);
     trayIconMenu                = new QMenu(this);
@@ -188,6 +193,7 @@ void dlgMain::timerEvent(QTimerEvent *)
 {
     m_nIndexPCStatusSync++;
     m_nIndexPCOnlineSync++;
+    m_nIndexUpdateSyncDataCount++;
 
     ui->lblIndexPCData->setText( QString::number(m_nIndexPCStatusSync) );
     ui->lblIndexPCOnline->setText( QString::number(m_nIndexPCOnlineSync) );
@@ -211,10 +217,14 @@ void dlgMain::timerEvent(QTimerEvent *)
         return;
     }
 
+    if( m_nIndexUpdateSyncDataCount > 60 )
+    {
+        m_nIndexUpdateSyncDataCount = 0;
+        ui->ledNumberOfCardsWaiting->setText( QString::number( g_poBlnsHttp->getNumberOfWaitingRecords() ) );
+    }
+
     if( m_nIndexPCStatusSync >= m_nTimerPCStatusSync )
     {
-        ui->ledNumberOfCardsWaiting->setText( QString::number( g_poBlnsHttp->getNumberOfWaitingRecords() ) );
-
         m_nIndexPCStatusSync = 0;
 
         if( ui->ledNumberOfCardsWaiting->text().toInt() > 0 )
@@ -285,9 +295,9 @@ void dlgMain::_setMenu()
     trayIconMenu->addSeparator();
 
     trayIconMenu->addMenu( menuConnection );
-    trayIconMenu->addSeparator();
+//    trayIconMenu->addSeparator();
 
-    trayIconMenu->addAction( actionExit );
+//    trayIconMenu->addAction( actionExit );
 
     trayIcon->setContextMenu(trayIconMenu);
 }
@@ -304,7 +314,10 @@ void dlgMain::on_pbHide_clicked()
 //=================================================================================================
 void dlgMain::on_pbExit_clicked()
 {
-    qApp->quit();
+    if( _isInGroup( GROUP_SYSTEM ) )
+    {
+        qApp->quit();
+    }
 }
 //=================================================================================================
 void dlgMain::on_cmbLang_currentIndexChanged(const QString &arg1)
@@ -509,5 +522,134 @@ void dlgMain::on_pbClearPCData_clicked()
 //=================================================================================================
 void dlgMain::on_pbAuthenticate_clicked()
 {
+    authType    atRet = AUTH_NEEDED;
 
+    m_enGroup = GROUP_MIN;
+
+    if( ui->ledPassword->isEnabled() )
+    {
+        atRet = _authenticateUser();
+    }
+
+    _setAuthInfoType( atRet );
+
+    if( atRet == AUTH_OK )
+    {
+        _setGUIEnabled();
+        ui->ledPassword->setText( "" );
+    }
+    else
+    {
+        _setGUIEnabled( false );
+    }
+}
+//=================================================================================================
+dlgMain::authType dlgMain::_authenticateUser()
+{
+//    cTracer obTrace( "cWndMain::_authenticateUser" );
+
+    string  stName = ui->cmbName->currentText().toStdString();
+    stName = stName.substr( 0, stName.find( '(' ) - 1 );
+    authType    atRet = AUTH_ERROR;
+    QByteArray  obPwdHash = QCryptographicHash::hash( ui->ledPassword->text().toAscii(), QCryptographicHash::Sha1 );
+
+    m_enGroup = GROUP_MIN;
+
+    if( QString::fromStdString(stName).compare( "root" ) == 0 )
+    {
+        if( m_qsRPSW.compare( QString( obPwdHash.toHex() ) ) == 0 )
+        {
+            atRet = AUTH_OK;
+            m_enGroup = GROUP_ROOT;
+        }
+        else
+        {
+            atRet = AUTH_PASSWORD_INCORRECT;
+        }
+    }
+    else
+    {
+        try
+        {
+            QSqlQuery *poQuery = g_poDB->executeQTQuery( "SELECT * FROM users WHERE name = \"" + QString::fromStdString(stName) + "\"" );
+
+            if( poQuery->size() != 1 )
+            {
+                atRet = AUTH_USER_NOTFOUND;
+            }
+            else
+            {
+                poQuery->first();
+                if( poQuery->value(4).toString().compare( QString( obPwdHash.toHex() ) ) == 0 )
+                {
+                    atRet = AUTH_OK;
+                    m_enGroup = poQuery->value(5).toInt();
+//                    m_uiUserId = poQuery->value(0).toUInt();
+                }
+                else
+                {
+                    atRet = AUTH_PASSWORD_INCORRECT;
+                }
+            }
+        }
+        catch( cSevException &e )
+        {
+            atRet = AUTH_CONNECTION_FAILED;
+        }
+    }
+
+    return atRet;
+}
+//=================================================================================================
+void dlgMain::_setAuthInfoType(authType p_tAuthType)
+{
+//    cTracer obTrace( "cWndMain::_setAuthInfoType" );
+
+    ui->cmbName->setEnabled( true );
+    ui->ledPassword->setEnabled( true );
+
+    ui->pbAuthenticate->setIcon( QIcon(":/key.png") );
+    ui->pbAuthenticate->setIconSize( QSize(20,20) );
+
+    if( p_tAuthType == AUTH_NEEDED )
+    {
+        ui->pbAuthenticate->setToolTip( tr("Need authentication ...") );
+    }
+    else if( p_tAuthType == AUTH_OK )
+    {
+        ui->pbAuthenticate->setToolTip( tr("User successfully authenticated.") );
+
+        ui->cmbName->setEnabled( false );
+        ui->ledPassword->setEnabled( false );
+        ui->pbAuthenticate->setIcon( QIcon(":/lock.png") );
+        ui->pbAuthenticate->setIconSize( QSize(30,30) );
+    }
+    else
+    {
+        if( p_tAuthType == AUTH_USER_NOTFOUND )
+            ui->pbAuthenticate->setToolTip( tr("The username entered not found in the Belenus database") );
+        else if( p_tAuthType == AUTH_PASSWORD_INCORRECT )
+            ui->pbAuthenticate->setToolTip( tr("The password entered is incorrect") );
+        else if( p_tAuthType == AUTH_CONNECTION_FAILED )
+            ui->pbAuthenticate->setToolTip( tr("Connection to Belenus database failed") );
+        else
+            ui->pbAuthenticate->setToolTip( tr("Authentication failed. Please retry later ...") );
+    }
+}
+//=================================================================================================
+void dlgMain::_setGUIEnabled(bool p_bEnabled)
+{
+    ui->chkShowWindowOnStart->setEnabled( p_bEnabled );
+    ui->ledTimerPCStatusSync->setEnabled( p_bEnabled );
+    ui->ledTimerPCOnlineSync->setEnabled( p_bEnabled );
+    ui->ledWebServerAddress->setEnabled( p_bEnabled && _isInGroup( GROUP_SYSTEM ) );
+    ui->pbSyncAllPatientCard->setEnabled( p_bEnabled && _isInGroup( GROUP_SYSTEM ) );
+    ui->pbClearPCData->setEnabled( p_bEnabled && _isInGroup( GROUP_SYSTEM ) );
+    ui->pbExit->setEnabled( p_bEnabled && _isInGroup( GROUP_SYSTEM ) );
+}
+//------------------------------------------------------------------------------------
+bool dlgMain::_isInGroup(groupUser p_enGroup)
+//------------------------------------------------------------------------------------
+{
+    return ( p_enGroup <= m_enGroup );
 }

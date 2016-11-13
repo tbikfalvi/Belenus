@@ -195,110 +195,121 @@ Ha nincs bepipálva, az alul megadott esemény következik be</translation>
         <translation>Belenus - WebSync</translation>
     </message>
     <message>
-        <location filename="dlgmain.ui" line="175"/>
+        <location filename="dlgmain.ui" line="260"/>
         <source> Status </source>
         <oldsource> Connection status </oldsource>
         <translation> Állapot </translation>
     </message>
     <message>
-        <location filename="dlgmain.ui" line="208"/>
+        <location filename="dlgmain.ui" line="293"/>
         <source>Belenus database connection</source>
         <translation>Belenus adatbázis kapcsolat</translation>
     </message>
     <message>
-        <location filename="dlgmain.ui" line="274"/>
+        <location filename="dlgmain.ui" line="359"/>
         <source>KiwiSun Server connection</source>
         <translation>KiwiSun Szerver kapcsolat</translation>
     </message>
     <message>
-        <location filename="dlgmain.ui" line="328"/>
+        <location filename="dlgmain.ui" line="413"/>
         <source>Process status: </source>
         <translation>Futó folyamat: </translation>
     </message>
     <message>
-        <location filename="dlgmain.ui" line="447"/>
+        <location filename="dlgmain.ui" line="535"/>
         <source>Synchronize patientcard data every </source>
         <translation>Bérlet adatszinkronizálás minden </translation>
     </message>
     <message>
-        <location filename="dlgmain.ui" line="464"/>
-        <location filename="dlgmain.ui" line="512"/>
+        <location filename="dlgmain.ui" line="555"/>
+        <location filename="dlgmain.ui" line="606"/>
         <source>seconds</source>
-        <translation>percben</translation>
+        <translation>másodpercben</translation>
     </message>
     <message>
-        <location filename="dlgmain.ui" line="484"/>
-        <location filename="dlgmain.ui" line="532"/>
+        <location filename="dlgmain.ui" line="575"/>
+        <location filename="dlgmain.ui" line="626"/>
         <source>0</source>
         <translation>0</translation>
     </message>
     <message>
-        <location filename="dlgmain.ui" line="495"/>
+        <location filename="dlgmain.ui" line="586"/>
         <source>Check online sold patientcards every</source>
         <translation>Online eladott bérletek lekérdezése minden</translation>
     </message>
     <message>
-        <location filename="dlgmain.ui" line="571"/>
+        <location filename="dlgmain.ui" line="669"/>
         <source> Patientcard status synchronization </source>
         <translation> Bérlet állapot szinkronizálás </translation>
     </message>
     <message>
-        <location filename="dlgmain.ui" line="579"/>
+        <location filename="dlgmain.ui" line="677"/>
         <source>Number of patientcards waiting for synchronization:</source>
         <translation>Szinkronizálásra váró bérletek száma:</translation>
     </message>
     <message>
-        <location filename="dlgmain.ui" line="647"/>
+        <location filename="dlgmain.ui" line="745"/>
         <source> User actions </source>
         <translation> Felhasználói folyamatok </translation>
     </message>
     <message>
-        <location filename="dlgmain.ui" line="653"/>
+        <location filename="dlgmain.ui" line="754"/>
+        <source> Send all patientcard
+data to web server</source>
+        <translation> Az összes bérlet adatainak
+elküldése a web szervernek</translation>
+    </message>
+    <message>
+        <location filename="dlgmain.ui" line="778"/>
+        <source>Clear patientcard data
+to be synchronized</source>
+        <translation> A szinkronizálásra váró
+bérlet adatok törlése</translation>
+    </message>
+    <message>
         <source>  Send all patientcard data to web server  </source>
-        <translation>  Az összes bérlet adatainak elküldése a web szervernek  </translation>
+        <translation type="obsolete">  Az összes bérlet adatainak elküldése a web szervernek  </translation>
     </message>
     <message>
-        <location filename="dlgmain.ui" line="673"/>
         <source>  Clear patientcard data to be synchronized  </source>
-        <translation>  A szinkronizálásra váró bérlet adatok törlése  </translation>
+        <translation type="obsolete">  A szinkronizálásra váró bérlet adatok törlése  </translation>
     </message>
     <message>
-        <location filename="dlgmain.ui" line="711"/>
         <source>Exit</source>
-        <translation>Kilépés</translation>
+        <translation type="obsolete">Kilépés</translation>
     </message>
     <message>
-        <location filename="dlgmain.ui" line="360"/>
+        <location filename="dlgmain.ui" line="445"/>
         <source> Application settings </source>
         <translation> Alkalmazás beállítások </translation>
     </message>
     <message>
-        <location filename="dlgmain.ui" line="368"/>
+        <location filename="dlgmain.ui" line="453"/>
         <source>Application language: </source>
         <translation>Alkalmazás nyelve: </translation>
     </message>
     <message>
-        <location filename="dlgmain.ui" line="375"/>
+        <location filename="dlgmain.ui" line="460"/>
         <source>Language of the application GUI</source>
         <translation>Az alkalmazás felületének nyelve</translation>
     </message>
     <message>
-        <location filename="dlgmain.ui" line="379"/>
+        <location filename="dlgmain.ui" line="464"/>
         <source>en (English)</source>
         <translation>en (English)</translation>
     </message>
     <message>
-        <location filename="dlgmain.ui" line="384"/>
+        <location filename="dlgmain.ui" line="469"/>
         <source>hu (Magyar)</source>
         <translation>hu (Magyar)</translation>
     </message>
     <message>
-        <location filename="dlgmain.ui" line="548"/>
+        <location filename="dlgmain.ui" line="642"/>
         <source> Web connection settings </source>
         <translation> Web kapcsolat beállítások </translation>
     </message>
     <message>
-        <location filename="dlgmain.ui" line="556"/>
+        <location filename="dlgmain.ui" line="650"/>
         <source>Web server address:</source>
         <translation>Web szerver cím:</translation>
     </message>
@@ -313,7 +324,7 @@ If unchecked this window doesn&apos;t appear.</source>
 Ha nincs bepipálva, ez az ablak rejtve marad.</translation>
     </message>
     <message>
-        <location filename="dlgmain.ui" line="423"/>
+        <location filename="dlgmain.ui" line="511"/>
         <source>Show main window when application starts</source>
         <translation>Alkalmazás indulásakor a fő ablak megjelenik</translation>
     </message>
@@ -398,7 +409,7 @@ Ha nincs bepipálva, az alkalmazás nem menti el automatikusan a módosításoka
         <translation type="obsolete">&amp;Vissza kezdőértékre</translation>
     </message>
     <message>
-        <location filename="dlgmain.cpp" line="263"/>
+        <location filename="dlgmain.cpp" line="282"/>
         <source>&amp;Exit application</source>
         <translation>&amp;Alkalmazás bezárása</translation>
     </message>
@@ -411,47 +422,77 @@ Ha nincs bepipálva, az alkalmazás nem menti el automatikusan a módosításoka
         <translation type="obsolete">Lejárt az idő!</translation>
     </message>
     <message>
-        <location filename="dlgmain.cpp" line="63"/>
+        <location filename="dlgmain.cpp" line="71"/>
         <source>Belenus WebSync</source>
         <translation>Belenus WebSync</translation>
     </message>
     <message>
-        <location filename="dlgmain.cpp" line="90"/>
-        <location filename="dlgmain.cpp" line="91"/>
+        <location filename="dlgmain.cpp" line="100"/>
+        <location filename="dlgmain.cpp" line="101"/>
         <source>SQL Connection established</source>
         <translation>SQL Kapcsolat létrejött</translation>
     </message>
     <message>
-        <location filename="dlgmain.cpp" line="105"/>
-        <location filename="dlgmain.cpp" line="106"/>
+        <location filename="dlgmain.cpp" line="119"/>
+        <location filename="dlgmain.cpp" line="120"/>
         <source>Error in connection: %1</source>
         <translation>Hiba a kapcsolódásnál: %1</translation>
     </message>
     <message>
-        <location filename="dlgmain.cpp" line="253"/>
+        <location filename="dlgmain.cpp" line="272"/>
         <source>&amp;Open main window</source>
         <translation>&amp;Fő ablak megnyitása</translation>
     </message>
     <message>
-        <location filename="dlgmain.cpp" line="257"/>
+        <location filename="dlgmain.cpp" line="276"/>
         <source>Reset &amp;SQL connection</source>
         <translation>&amp;SQL kapcsolat újraépítés</translation>
     </message>
     <message>
-        <location filename="dlgmain.cpp" line="260"/>
+        <location filename="dlgmain.cpp" line="279"/>
         <source>Reset &amp;HTTP connection</source>
         <translation>&amp;HTTP kapcsolat újraépítés</translation>
     </message>
     <message>
-        <location filename="dlgmain.cpp" line="271"/>
+        <location filename="dlgmain.cpp" line="290"/>
         <source>Connection</source>
         <translation>Kapcsolat</translation>
     </message>
     <message>
-        <location filename="dlgmain.cpp" line="350"/>
-        <location filename="dlgmain.cpp" line="351"/>
+        <location filename="dlgmain.cpp" line="372"/>
+        <location filename="dlgmain.cpp" line="373"/>
         <source>HTTP Connection established</source>
         <translation>HTTP kapcsolat létrejött.</translation>
+    </message>
+    <message>
+        <location filename="dlgmain.cpp" line="616"/>
+        <source>Need authentication ...</source>
+        <translation>Azonosítás szükséges ...</translation>
+    </message>
+    <message>
+        <location filename="dlgmain.cpp" line="620"/>
+        <source>User successfully authenticated.</source>
+        <translation>Azonosítás sikeres.</translation>
+    </message>
+    <message>
+        <location filename="dlgmain.cpp" line="630"/>
+        <source>The username entered not found in the Belenus database</source>
+        <translation>A megadott felhasználó név nincs benne a Belenus adatbázisában</translation>
+    </message>
+    <message>
+        <location filename="dlgmain.cpp" line="632"/>
+        <source>The password entered is incorrect</source>
+        <translation>A megadott jelszó nem megfelelő</translation>
+    </message>
+    <message>
+        <location filename="dlgmain.cpp" line="634"/>
+        <source>Connection to Belenus database failed</source>
+        <translation>Az adatbázishoz való kapcsolódás sikertelen</translation>
+    </message>
+    <message>
+        <location filename="dlgmain.cpp" line="636"/>
+        <source>Authentication failed. Please retry later ...</source>
+        <translation>Sikertelen azonosítás. Kérem próbálja meg mégegyszer ...</translation>
     </message>
 </context>
 <context>

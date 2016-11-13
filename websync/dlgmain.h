@@ -119,11 +119,18 @@ private:
     int                  m_nTimerPCOnlineSync;
     int                  m_nIndexPCStatusSync;
     int                  m_nIndexPCOnlineSync;
+    int                  m_enGroup;
+    QString              m_qsRPSW;
+    int                  m_nIndexUpdateSyncDataCount;
 
     void                _setActions();
     void                _setMenu();
     void                _sendPCData( unsigned int p_uiId, QString p_qsBarcode );
     QString             _getPatientCardTypeName( unsigned int p_uiId );
+    void                _setAuthInfoType( authType p_tAuthType );
+    authType            _authenticateUser();
+    void                _setGUIEnabled( bool p_bEnabled = true );
+    bool                _isInGroup( groupUser p_enGroup );
 };
 
 #endif // DLGMAIN_H

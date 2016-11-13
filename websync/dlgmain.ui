@@ -145,7 +145,11 @@
             </widget>
            </item>
            <item>
-            <widget class="QLineEdit" name="ledPassword"/>
+            <widget class="QLineEdit" name="ledPassword">
+             <property name="echoMode">
+              <enum>QLineEdit::Password</enum>
+             </property>
+            </widget>
            </item>
           </layout>
          </item>
@@ -169,6 +173,44 @@
            <property name="icon">
             <iconset resource="websync.qrc">
              <normaloff>:/key.png</normaloff>:/key.png</iconset>
+           </property>
+           <property name="iconSize">
+            <size>
+             <width>20</width>
+             <height>20</height>
+            </size>
+           </property>
+          </widget>
+         </item>
+         <item>
+          <widget class="QPushButton" name="pbExit">
+           <property name="enabled">
+            <bool>false</bool>
+           </property>
+           <property name="minimumSize">
+            <size>
+             <width>40</width>
+             <height>40</height>
+            </size>
+           </property>
+           <property name="maximumSize">
+            <size>
+             <width>40</width>
+             <height>40</height>
+            </size>
+           </property>
+           <property name="text">
+            <string/>
+           </property>
+           <property name="icon">
+            <iconset resource="websync.qrc">
+             <normaloff>:/exit.png</normaloff>:/exit.png</iconset>
+           </property>
+           <property name="iconSize">
+            <size>
+             <width>34</width>
+             <height>34</height>
+            </size>
            </property>
           </widget>
          </item>
@@ -706,10 +748,11 @@
          <item row="0" column="0">
           <widget class="QPushButton" name="pbSyncAllPatientCard">
            <property name="enabled">
-            <bool>true</bool>
+            <bool>false</bool>
            </property>
            <property name="text">
-            <string>  Send all patientcard data to web server  </string>
+            <string> Send all patientcard
+data to web server</string>
            </property>
           </widget>
          </item>
@@ -729,10 +772,11 @@
          <item row="0" column="1">
           <widget class="QPushButton" name="pbClearPCData">
            <property name="enabled">
-            <bool>true</bool>
+            <bool>false</bool>
            </property>
            <property name="text">
-            <string>  Clear patientcard data to be synchronized  </string>
+            <string>Clear patientcard data
+to be synchronized</string>
            </property>
           </widget>
          </item>
@@ -752,38 +796,28 @@
         </property>
        </spacer>
       </item>
-      <item>
-       <layout class="QHBoxLayout" name="horizontalLayout_8">
-        <item>
-         <spacer name="horizontalSpacer_3">
-          <property name="orientation">
-           <enum>Qt::Horizontal</enum>
-          </property>
-          <property name="sizeHint" stdset="0">
-           <size>
-            <width>40</width>
-            <height>20</height>
-           </size>
-          </property>
-         </spacer>
-        </item>
-        <item>
-         <widget class="QPushButton" name="pbExit">
-          <property name="enabled">
-           <bool>true</bool>
-          </property>
-          <property name="text">
-           <string>Exit</string>
-          </property>
-         </widget>
-        </item>
-       </layout>
-      </item>
      </layout>
     </widget>
    </item>
   </layout>
  </widget>
+ <tabstops>
+  <tabstop>cmbName</tabstop>
+  <tabstop>ledPassword</tabstop>
+  <tabstop>pbAuthenticate</tabstop>
+  <tabstop>pbHide</tabstop>
+  <tabstop>pbResetSQL</tabstop>
+  <tabstop>pbResetHTTP</tabstop>
+  <tabstop>ledWebServerAddress</tabstop>
+  <tabstop>cmbLang</tabstop>
+  <tabstop>pbRetranslate</tabstop>
+  <tabstop>chkShowWindowOnStart</tabstop>
+  <tabstop>ledTimerPCStatusSync</tabstop>
+  <tabstop>ledTimerPCOnlineSync</tabstop>
+  <tabstop>ledNumberOfCardsWaiting</tabstop>
+  <tabstop>pbSyncAllPatientCard</tabstop>
+  <tabstop>pbClearPCData</tabstop>
+ </tabstops>
  <resources>
   <include location="websync.qrc"/>
  </resources>
