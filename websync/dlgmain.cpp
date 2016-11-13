@@ -7,7 +7,10 @@
 #include <QProcessEnvironment>
 #include <QMouseEvent>
 #include <iostream>
+#include <QCryptographicHash>
+#include <QSqlQuery>
 
+#include "../framework/qtmysqlquerymodel.h"
 #include "dlgmain.h"
 #include "ui_dlgmain.h"
 
@@ -30,6 +33,9 @@ dlgMain::dlgMain(QWidget *parent) : QDialog(parent), ui(new Ui::dlgMain)
     m_bSyncPCToServer           = false;
     m_bSyncPCFromServer         = false;
 
+    m_nIndexPCStatusSync        = 0;
+    m_nIndexPCOnlineSync        = 0;
+
     trayIcon                    = new QSystemTrayIcon(this);
     trayIconMenu                = new QMenu(this);
     menuConnection              = new QMenu(this);
@@ -46,7 +52,9 @@ dlgMain::dlgMain(QWidget *parent) : QDialog(parent), ui(new Ui::dlgMain)
     QSettings   obPref( QString( "%1/websync.inf" ).arg( QDir::currentPath() ), QSettings::IniFormat );
     QSettings   obBelenus( QString( "%1/belenus.ini" ).arg( QDir::currentPath() ), QSettings::IniFormat );
 
-    m_bShowMainWindowOnStart = obPref.value( "ShowMainWindowOnStart", false ).toBool();
+    m_bShowMainWindowOnStart    = obPref.value( "ShowMainWindowOnStart", false ).toBool();
+    m_nTimerPCStatusSync        = obPref.value( "TimerPCStatusSync", 2 ).toInt();
+    m_nTimerPCOnlineSync        = obPref.value( "TimerPCOnlineSync", 60 ).toInt();
 
     //---------------------------------------------------------------------------------------------
     // Set main window settings
@@ -57,6 +65,11 @@ dlgMain::dlgMain(QWidget *parent) : QDialog(parent), ui(new Ui::dlgMain)
     trayIcon->setIcon( QIcon( ":/websync.png" ) );
     trayIcon->setToolTip( tr("Belenus WebSync") );
     trayIcon->show();
+
+    ui->lblProcessStatus->setVisible( false );
+    ui->prgbProcess->setVisible( false );
+    ui->lblIndexPCData->setVisible( false );
+    ui->lblIndexPCOnline->setVisible( false );
 
     _setActions();
     _setMenu();
@@ -87,6 +100,10 @@ dlgMain::dlgMain(QWidget *parent) : QDialog(parent), ui(new Ui::dlgMain)
         {
             g_poBlnsHttp->setStudioLicenceString( poQuery->value( 0 ).toString() );
         }
+
+        cQTMySQLQueryModel *m_poModel = new cQTMySQLQueryModel( this );
+        m_poModel->setQuery( "SELECT CONCAT(name,\" (\",realName,\")\") AS n FROM users WHERE active = 1 ORDER BY name" );
+        ui->cmbName->setModel( m_poModel );
     }
     catch( cSevException &e )
     {
@@ -127,6 +144,8 @@ dlgMain::dlgMain(QWidget *parent) : QDialog(parent), ui(new Ui::dlgMain)
     ui->cmbLang->setCurrentIndex( nCurrentIndex );
 
     ui->chkShowWindowOnStart->setChecked( m_bShowMainWindowOnStart );
+    ui->ledTimerPCStatusSync->setText( QString::number( m_nTimerPCStatusSync ) );
+    ui->ledTimerPCOnlineSync->setText( QString::number( m_nTimerPCOnlineSync ) );
 
     //---------------------------------------------------------------------------------------------
     // Patientcard status synchronization
@@ -155,6 +174,8 @@ dlgMain::~dlgMain()
     obPref.setValue( "WindowPosition/Mainwindow_top", y() );
     obPref.setValue( "WindowPosition/Mainwindow_width", width() );
     obPref.setValue( "WindowPosition/Mainwindow_height", height() );
+    obPref.setValue( "TimerPCStatusSync", m_nTimerPCStatusSync );
+    obPref.setValue( "TimerPCOnlineSync", m_nTimerPCOnlineSync );
 
     delete g_poDB;
 
@@ -165,6 +186,12 @@ dlgMain::~dlgMain()
 //=================================================================================================
 void dlgMain::timerEvent(QTimerEvent *)
 {
+    m_nIndexPCStatusSync++;
+    m_nIndexPCOnlineSync++;
+
+    ui->lblIndexPCData->setText( QString::number(m_nIndexPCStatusSync) );
+    ui->lblIndexPCOnline->setText( QString::number(m_nIndexPCOnlineSync) );
+
     //---------------------------------------------------------------------------------------------
     // Executed only at the beginning
     if( m_bStartTimerOnStart )
@@ -175,10 +202,8 @@ void dlgMain::timerEvent(QTimerEvent *)
             show();
         }
         m_bStartTimerOnStart = false;
-        m_nTimer = startTimer( 3000 );
+        m_nTimer = startTimer( 1000 );
     }
-
-    ui->ledNumberOfCardsWaiting->setText( QString::number( g_poBlnsHttp->getNumberOfWaitingRecords() ) );
 
     if( m_bSyncPCToServer || m_bSyncPCFromServer )
     {
@@ -186,11 +211,23 @@ void dlgMain::timerEvent(QTimerEvent *)
         return;
     }
 
-    if( ui->ledNumberOfCardsWaiting->text().toInt() > 0 )
+    if( m_nIndexPCStatusSync >= m_nTimerPCStatusSync )
     {
-        m_bSyncPCToServer = true;
-        ui->lblStatusSync->setPixmap( QPixmap( ":/hourglass.png" ) );
-        g_poBlnsHttp->processWaitingCardData();
+        ui->ledNumberOfCardsWaiting->setText( QString::number( g_poBlnsHttp->getNumberOfWaitingRecords() ) );
+
+        m_nIndexPCStatusSync = 0;
+
+        if( ui->ledNumberOfCardsWaiting->text().toInt() > 0 )
+        {
+            m_bSyncPCToServer = true;
+            ui->lblStatusSync->setPixmap( QPixmap( ":/hourglass.png" ) );
+            g_poBlnsHttp->processWaitingCardData();
+        }
+    }
+
+    if( m_nIndexPCOnlineSync >= m_nTimerPCOnlineSync )
+    {
+        m_nIndexPCOnlineSync = 0;
     }
 }
 //=================================================================================================
@@ -350,4 +387,127 @@ void dlgMain::on_pbResetHTTP_clicked()
 void dlgMain::on_chkShowWindowOnStart_clicked()
 {
     m_bShowMainWindowOnStart = ui->chkShowWindowOnStart->isChecked();
+}
+//=================================================================================================
+void dlgMain::on_pbSyncAllPatientCard_clicked()
+{
+    QSqlQuery *poQuery = g_poDB->executeQTQuery( "SELECT patientCardId, barcode "
+                                                 "FROM patientcards WHERE "
+                                                 "active = 1");
+
+    ui->lblProcessStatus->setVisible( true );
+    ui->prgbProcess->setVisible( true );
+    ui->prgbProcess->setMaximum( poQuery->size() );
+    ui->prgbProcess->setValue( 0 );
+
+    while( poQuery->next() )
+    {
+        try
+        {
+            _sendPCData( poQuery->value(0).toUInt(), poQuery->value(1).toString() );
+            ui->prgbProcess->setValue( ui->prgbProcess->value()+1 );
+        }
+        catch( cSevException &e )
+        {
+            g_obLogger(e.severity()) << e.what() << EOM;
+        }
+    }
+    ui->lblProcessStatus->setVisible( false );
+    ui->prgbProcess->setVisible( false );
+}
+//=================================================================================================
+void dlgMain::_sendPCData(unsigned int p_uiId , QString p_qsBarcode)
+{
+    try
+    {
+        QString qsMessageData = "";
+
+        qsMessageData.append( "<div id='unit'><label>T202</label></div>" );
+
+        QString qsQuery = QString( "SELECT patientCardUnitId, "
+                                   "patientCardTypeId, "
+                                   "unitTime, "
+                                   "validDateFrom, "
+                                   "validDateTo, "
+                                   "COUNT(unitTime) "
+                                   "FROM patientcardunits "
+                                   "WHERE patientCardId=%1 "
+                                   "AND validDateFrom<=CURDATE() AND validDateTo>=CURDATE() "
+                                   "AND prepared=0 "
+                                   "AND active=1 "
+                                   "GROUP BY unitTime, validDateTo, patientCardTypeId ORDER BY validDateTo, patientCardUnitId" )
+                                 .arg( p_uiId );
+        QSqlQuery  *poQuery = g_poDB->executeQTQuery( qsQuery );
+
+        if( poQuery->size() > 0 )
+        {
+            while( poQuery->next() )
+            {
+                QString qsValid = QString( "%1 -> %2" ).arg( poQuery->value( 3 ).toString() )
+                                                       .arg( poQuery->value( 4 ).toString() );
+                unsigned int uiPCTId = poQuery->value( 1 ).toUInt();
+
+                qsMessageData.append( "<div class='validType'><span class='cardName'>" );
+                qsMessageData.append( poQuery->value( 5 ).toString() );
+                qsMessageData.append( " T219 (" );
+                qsMessageData.append( poQuery->value( 2 ).toString() );
+                qsMessageData.append( "T204) (" );
+                qsMessageData.append( _getPatientCardTypeName( uiPCTId ) );
+                qsMessageData.append( ")</span><span class='cardDays'>" );
+                qsMessageData.append( qsValid );
+                qsMessageData.append( "</span></div>" );
+            }
+        }
+        else
+        {
+            qsMessageData.append( "<div class='validType'><span class='cardName'>" );
+            qsMessageData.append( "0 T219 (" );
+            qsMessageData.append( "0 T204" );
+            qsMessageData.append( ")</span><span class='cardDays'>" );
+            qsMessageData.append( "</span></div>" );
+        }
+
+        g_poBlnsHttp->sendPatientCardData( p_qsBarcode, qsMessageData, false );
+    }
+    catch( cSevException &e )
+    {
+        g_obLogger(e.severity()) << e.what() << EOM;
+    }
+}
+//=================================================================================================
+QString dlgMain::_getPatientCardTypeName( unsigned int p_uiId )
+{
+    QString qsRet = "";
+
+    if( p_uiId > 0 )
+    {
+        QSqlQuery *poQuery = g_poDB->executeQTQuery( QString( "SELECT name "
+                                                              "FROM patientcardtypes WHERE "
+                                                              "patientcardtypeid=%1 AND "
+                                                              "active = 1" ).arg( p_uiId ) );
+        poQuery->first();
+        qsRet = poQuery->value( 0 ).toString();
+    }
+
+    return qsRet;
+}
+//=================================================================================================
+void dlgMain::on_ledTimerPCStatusSync_textEdited(const QString &/*arg1*/)
+{
+    m_nTimerPCStatusSync = ui->ledTimerPCStatusSync->text().toInt();
+}
+//=================================================================================================
+void dlgMain::on_ledTimerPCOnlineSync_textEdited(const QString &/*arg1*/)
+{
+    m_nTimerPCOnlineSync = ui->ledTimerPCOnlineSync->text().toInt();
+}
+//=================================================================================================
+void dlgMain::on_pbClearPCData_clicked()
+{
+    g_poDB->executeQTQuery( "DELETE FROM httppatientcardinfo" );
+}
+//=================================================================================================
+void dlgMain::on_pbAuthenticate_clicked()
+{
+
 }

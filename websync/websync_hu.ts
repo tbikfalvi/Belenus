@@ -196,8 +196,9 @@ Ha nincs bepipálva, az alul megadott esemény következik be</translation>
     </message>
     <message>
         <location filename="dlgmain.ui" line="175"/>
-        <source> Connection status </source>
-        <translation> Kapcsolat állapot </translation>
+        <source> Status </source>
+        <oldsource> Connection status </oldsource>
+        <translation> Állapot </translation>
     </message>
     <message>
         <location filename="dlgmain.ui" line="208"/>
@@ -210,52 +211,94 @@ Ha nincs bepipálva, az alul megadott esemény következik be</translation>
         <translation>KiwiSun Szerver kapcsolat</translation>
     </message>
     <message>
-        <location filename="dlgmain.ui" line="431"/>
+        <location filename="dlgmain.ui" line="328"/>
+        <source>Process status: </source>
+        <translation>Futó folyamat: </translation>
+    </message>
+    <message>
+        <location filename="dlgmain.ui" line="447"/>
+        <source>Synchronize patientcard data every </source>
+        <translation>Bérlet adatszinkronizálás minden </translation>
+    </message>
+    <message>
+        <location filename="dlgmain.ui" line="464"/>
+        <location filename="dlgmain.ui" line="512"/>
+        <source>seconds</source>
+        <translation>percben</translation>
+    </message>
+    <message>
+        <location filename="dlgmain.ui" line="484"/>
+        <location filename="dlgmain.ui" line="532"/>
+        <source>0</source>
+        <translation>0</translation>
+    </message>
+    <message>
+        <location filename="dlgmain.ui" line="495"/>
+        <source>Check online sold patientcards every</source>
+        <translation>Online eladott bérletek lekérdezése minden</translation>
+    </message>
+    <message>
+        <location filename="dlgmain.ui" line="571"/>
         <source> Patientcard status synchronization </source>
         <translation> Bérlet állapot szinkronizálás </translation>
     </message>
     <message>
-        <location filename="dlgmain.ui" line="439"/>
+        <location filename="dlgmain.ui" line="579"/>
         <source>Number of patientcards waiting for synchronization:</source>
         <translation>Szinkronizálásra váró bérletek száma:</translation>
     </message>
     <message>
-        <location filename="dlgmain.ui" line="519"/>
+        <location filename="dlgmain.ui" line="647"/>
+        <source> User actions </source>
+        <translation> Felhasználói folyamatok </translation>
+    </message>
+    <message>
+        <location filename="dlgmain.ui" line="653"/>
+        <source>  Send all patientcard data to web server  </source>
+        <translation>  Az összes bérlet adatainak elküldése a web szervernek  </translation>
+    </message>
+    <message>
+        <location filename="dlgmain.ui" line="673"/>
+        <source>  Clear patientcard data to be synchronized  </source>
+        <translation>  A szinkronizálásra váró bérlet adatok törlése  </translation>
+    </message>
+    <message>
+        <location filename="dlgmain.ui" line="711"/>
         <source>Exit</source>
         <translation>Kilépés</translation>
     </message>
     <message>
-        <location filename="dlgmain.ui" line="316"/>
+        <location filename="dlgmain.ui" line="360"/>
         <source> Application settings </source>
         <translation> Alkalmazás beállítások </translation>
     </message>
     <message>
-        <location filename="dlgmain.ui" line="324"/>
+        <location filename="dlgmain.ui" line="368"/>
         <source>Application language: </source>
         <translation>Alkalmazás nyelve: </translation>
     </message>
     <message>
-        <location filename="dlgmain.ui" line="331"/>
+        <location filename="dlgmain.ui" line="375"/>
         <source>Language of the application GUI</source>
         <translation>Az alkalmazás felületének nyelve</translation>
     </message>
     <message>
-        <location filename="dlgmain.ui" line="335"/>
+        <location filename="dlgmain.ui" line="379"/>
         <source>en (English)</source>
         <translation>en (English)</translation>
     </message>
     <message>
-        <location filename="dlgmain.ui" line="340"/>
+        <location filename="dlgmain.ui" line="384"/>
         <source>hu (Magyar)</source>
         <translation>hu (Magyar)</translation>
     </message>
     <message>
-        <location filename="dlgmain.ui" line="408"/>
+        <location filename="dlgmain.ui" line="548"/>
         <source> Web connection settings </source>
         <translation> Web kapcsolat beállítások </translation>
     </message>
     <message>
-        <location filename="dlgmain.ui" line="416"/>
+        <location filename="dlgmain.ui" line="556"/>
         <source>Web server address:</source>
         <translation>Web szerver cím:</translation>
     </message>
@@ -270,7 +313,7 @@ If unchecked this window doesn&apos;t appear.</source>
 Ha nincs bepipálva, ez az ablak rejtve marad.</translation>
     </message>
     <message>
-        <location filename="dlgmain.ui" line="379"/>
+        <location filename="dlgmain.ui" line="423"/>
         <source>Show main window when application starts</source>
         <translation>Alkalmazás indulásakor a fő ablak megjelenik</translation>
     </message>
@@ -355,7 +398,7 @@ Ha nincs bepipálva, az alkalmazás nem menti el automatikusan a módosításoka
         <translation type="obsolete">&amp;Vissza kezdőértékre</translation>
     </message>
     <message>
-        <location filename="dlgmain.cpp" line="235"/>
+        <location filename="dlgmain.cpp" line="263"/>
         <source>&amp;Exit application</source>
         <translation>&amp;Alkalmazás bezárása</translation>
     </message>
@@ -368,45 +411,45 @@ Ha nincs bepipálva, az alkalmazás nem menti el automatikusan a módosításoka
         <translation type="obsolete">Lejárt az idő!</translation>
     </message>
     <message>
-        <location filename="dlgmain.cpp" line="58"/>
+        <location filename="dlgmain.cpp" line="63"/>
         <source>Belenus WebSync</source>
         <translation>Belenus WebSync</translation>
     </message>
     <message>
-        <location filename="dlgmain.cpp" line="82"/>
-        <location filename="dlgmain.cpp" line="83"/>
+        <location filename="dlgmain.cpp" line="90"/>
+        <location filename="dlgmain.cpp" line="91"/>
         <source>SQL Connection established</source>
         <translation>SQL Kapcsolat létrejött</translation>
     </message>
     <message>
-        <location filename="dlgmain.cpp" line="97"/>
-        <location filename="dlgmain.cpp" line="98"/>
+        <location filename="dlgmain.cpp" line="105"/>
+        <location filename="dlgmain.cpp" line="106"/>
         <source>Error in connection: %1</source>
         <translation>Hiba a kapcsolódásnál: %1</translation>
     </message>
     <message>
-        <location filename="dlgmain.cpp" line="225"/>
+        <location filename="dlgmain.cpp" line="253"/>
         <source>&amp;Open main window</source>
         <translation>&amp;Fő ablak megnyitása</translation>
     </message>
     <message>
-        <location filename="dlgmain.cpp" line="229"/>
+        <location filename="dlgmain.cpp" line="257"/>
         <source>Reset &amp;SQL connection</source>
         <translation>&amp;SQL kapcsolat újraépítés</translation>
     </message>
     <message>
-        <location filename="dlgmain.cpp" line="232"/>
+        <location filename="dlgmain.cpp" line="260"/>
         <source>Reset &amp;HTTP connection</source>
         <translation>&amp;HTTP kapcsolat újraépítés</translation>
     </message>
     <message>
-        <location filename="dlgmain.cpp" line="243"/>
+        <location filename="dlgmain.cpp" line="271"/>
         <source>Connection</source>
         <translation>Kapcsolat</translation>
     </message>
     <message>
-        <location filename="dlgmain.cpp" line="322"/>
-        <location filename="dlgmain.cpp" line="323"/>
+        <location filename="dlgmain.cpp" line="350"/>
+        <location filename="dlgmain.cpp" line="351"/>
         <source>HTTP Connection established</source>
         <translation>HTTP kapcsolat létrejött.</translation>
     </message>

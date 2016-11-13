@@ -11,5 +11,7 @@
         <file>reset_http.png</file>
         <file>reset_sql.png</file>
         <file>hourglass.png</file>
+        <file>key.png</file>
+        <file>lock.png</file>
     </qresource>
 </RCC>

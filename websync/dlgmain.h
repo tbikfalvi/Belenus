@@ -74,16 +74,19 @@ private slots:
     void on_pbExit_clicked();
     void on_cmbLang_currentIndexChanged(const QString &arg1);
     void on_pbRetranslate_clicked();
-
     void on_BlnsHttpErrorOccured();
     void on_BlnsHttpActionFinished( QString p_qsInfo );
     void on_BlnsHttpStepProgress();
-
     void on_pbResetSQL_clicked();
-
     void on_pbResetHTTP_clicked();
-
     void on_chkShowWindowOnStart_clicked();
+    void on_pbSyncAllPatientCard_clicked();
+    void on_ledTimerPCStatusSync_textEdited(const QString &arg1);
+    void on_ledTimerPCOnlineSync_textEdited(const QString &arg1);
+
+    void on_pbClearPCData_clicked();
+
+    void on_pbAuthenticate_clicked();
 
 private:
     Ui::dlgMain         *ui;
@@ -112,9 +115,15 @@ private:
     bool                 m_bReloadLanguage;
     bool                 m_bSyncPCToServer;
     bool                 m_bSyncPCFromServer;
+    int                  m_nTimerPCStatusSync;
+    int                  m_nTimerPCOnlineSync;
+    int                  m_nIndexPCStatusSync;
+    int                  m_nIndexPCOnlineSync;
 
     void                _setActions();
     void                _setMenu();
+    void                _sendPCData( unsigned int p_uiId, QString p_qsBarcode );
+    QString             _getPatientCardTypeName( unsigned int p_uiId );
 };
 
 #endif // DLGMAIN_H
