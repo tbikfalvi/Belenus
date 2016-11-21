@@ -354,6 +354,12 @@ cWndMain::cWndMain( QWidget *parent ) : QMainWindow( parent )
         m_lblHttpCount.setStyleSheet( "QLabel {font-size:8px;}" );
 
         connect( &m_pbStatusHttp, SIGNAL(clicked()), this, SLOT(on_BlnsHttpIconClicked()) );
+
+        m_pbStatusCommunicationSuspended.setIcon( QIcon( "./resources/40x40_minus.png" ) );
+        m_pbStatusCommunicationSuspended.setFlat( true );
+        m_pbStatusCommunicationSuspended.setText( "" );
+        m_pbStatusCommunicationSuspended.setIconSize( QSize(20,20) );
+        m_pbStatusCommunicationSuspended.setFixedSize( 22, 22 );
     }
 
     statusbar->addPermanentWidget( &m_lblStatusLeft, 3 );
@@ -362,6 +368,7 @@ cWndMain::cWndMain( QWidget *parent ) : QMainWindow( parent )
     if( !g_poPrefs->isFapados() )
     {
         statusbar->addPermanentWidget( &m_pbStatusHttp, 0 );
+        statusbar->addPermanentWidget( &m_pbStatusCommunicationSuspended, 0 );
         statusbar->addPermanentWidget( &m_lblHttpCount );
     }
     statusbar->addPermanentWidget( &m_lblStatusRight, 1 );
@@ -927,6 +934,7 @@ void cWndMain::keyPressEvent( QKeyEvent *p_poEvent )
 {
     m_nHttpCommCounter = 0;
     g_poPrefs->setBlnsHttpSuspended( true );
+    m_pbStatusCommunicationSuspended.setIcon( QIcon( "./resources/40x40_minus.png" ) );
     setCursor( Qt::ArrowCursor);
     m_bMainWindowActive = true;
 
@@ -1291,6 +1299,8 @@ action_Logs->setVisible( false );
     {
         m_pbStatusKeyboard.setIcon( QIcon( "./resources/40x40_keyboard.png" ) );
     }
+    m_pbStatusHttp.setEnabled( bIsUserLoggedIn );
+    m_pbStatusCommunicationSuspended.setEnabled( bIsUserLoggedIn );
 
     showElementsForComponents();
 }
@@ -1328,6 +1338,7 @@ void cWndMain::timerEvent(QTimerEvent *)
     {
         m_nHttpCommCounter = 0;
         g_poPrefs->setBlnsHttpSuspended( true );
+        m_pbStatusCommunicationSuspended.setIcon( QIcon( "./resources/40x40_minus.png" ) );
         setCursor( Qt::ArrowCursor);
     }
     else
@@ -1338,11 +1349,14 @@ void cWndMain::timerEvent(QTimerEvent *)
     // 15 masodpercenkent 250 tizedmasodperces timer -> 4 * 15 + 2 = 60
     // 15 -> ini file-bol jon
     if( g_poPrefs->isStartHttpSyncAuto() &&
-        m_nHttpCommCounter == nHttpSyncAutoSecs &&
-        nCountHttpRecord > 0 )
+        m_nHttpCommCounter == nHttpSyncAutoSecs )
     {
         g_poPrefs->setBlnsHttpSuspended( false );
-        _processHttpActions();
+        m_pbStatusCommunicationSuspended.setIcon( QIcon( "./resources/40x40_ok.png" ) );
+        if( nCountHttpRecord > 0 )
+        {
+            _processHttpActions();
+        }
     }
 
 
@@ -3439,6 +3453,12 @@ void cWndMain::on_BlnsHttpHideProgress()
 
 void cWndMain::on_BlnsHttpIconClicked()
 {
+    if( !g_obUser.isLoggedIn() )
+    {
+        // If user logged out, menu won't be visible
+        return;
+    }
+
     QMenu   qmMenu;
 
     if( g_poPrefs->isBlnsHttpEnabled() )
@@ -3532,6 +3552,7 @@ void cWndMain::on_BlnsHttpIconClicked()
         {
             m_nHttpCommCounter = 0;
             g_poPrefs->setBlnsHttpSuspended( true );
+            m_pbStatusCommunicationSuspended.setIcon( QIcon( "./resources/40x40_minus.png" ) );
             setCursor( Qt::ArrowCursor);
         }
         else if( qaRet->text().compare( tr("Clear waiting queue") ) == 0 )

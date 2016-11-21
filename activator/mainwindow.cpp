@@ -154,7 +154,7 @@ MainWindow::MainWindow(QWidget *parent) : QMainWindow(parent), ui(new Ui::MainWi
                                      << "BLNS13"    // Budapest             Ferenc krt.
                                      << "BLNS14"    // Budapest             Béke út
                                      << "BLNS15"    // München
-//                                     << "BLNS16"  // Debrecen helyett     valami frissítés
+                                     << "BLNS16"  // Debrecen helyett     valami frissítés
 //                                     << "BLNS17"    // Kisvárda
                                      << "BLNS18"    // Rózsadomb
                                      << "BLNS19"    // Pécs
@@ -168,7 +168,7 @@ MainWindow::MainWindow(QWidget *parent) : QMainWindow(parent), ui(new Ui::MainWi
                                      << "BLNS27"    // Miskolc
                                      << "BLNS28"    // Nyiregyhaza
                                      << "BLNS29"    // Kecskemét
-//                                     << "BLNS30"    // Győr
+                                     << "BLNS30"    // Győr
                                      << "BLNS31"    // Szeged
                                      << "BLNS32"    // Veszprém
                                      << "BLNS33"    // Irorszag             Cork
