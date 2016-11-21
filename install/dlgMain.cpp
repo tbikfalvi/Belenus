@@ -2958,6 +2958,8 @@ bool dlgMain::_createFolderShortcut()
 //    g_obReg.setKeyValueS( "HKEY_LOCAL_MACHINE\\SOFTWARE\\Microsoft\\Windows\\CurrentVersion\\Uninstall\\Belenus", QString("UninstallString"), QString("%1\\Temp\\BelenusInstall\\setup.exe -uninstall").arg(m_qsPathWindows) );
     g_obReg.setKeyValueS( "HKEY_LOCAL_MACHINE\\SOFTWARE\\Microsoft\\Windows\\CurrentVersion\\Uninstall\\Belenus", QString("URLInfoAbout"), QString("http://belenus.pagonymedia.hu") );
 
+    g_obReg.setKeyValueS( "HKEY_LOCAL_MACHINE\\SOFTWARE\\Microsoft\\Windows\\CurrentVersion\\Run", QString("BelenusWebSync"), QString("%1\\websync.exe").arg(m_qsClientInstallDir) );
+
     prbDBInstallClient->setValue( prbDBInstallClient->value()+1 );
     prbDBInstallClient->update();
 

@@ -1,4 +1,6 @@
+
 #include <QApplication>
+#include <QProcessEnvironment>
 #include <QtGui>
 #include <QTranslator>
 
@@ -26,10 +28,18 @@ int main(int argc, char *argv[])
 
     apMainApp = new QApplication(argc, argv);
 
+    QProcessEnvironment qpeInfo = QProcessEnvironment::systemEnvironment();
+
+    QString qsBelenusTarget = QString( qpeInfo.value( "BelenusTarget", "C:/Program Files/Belenus" ) );
+    QDir::setCurrent( qsBelenusTarget );
+
     g_obLogger.attachWriter("file", &g_obLogFileWriter);
     g_obLogger.setMinimumSeverity("file", cSeverity::DEBUG);
 
     g_obLogger(cSeverity::INFO) << "Belenus WebSync started." << EOM;
+    g_obLogger(cSeverity::INFO) << "Current directory is: "
+                                << QDir::currentPath()
+                                << EOM;
 
     QSettings   obPref( QString( "%1/websync.inf" ).arg( QDir::currentPath() ), QSettings::IniFormat );
     QString     qsLang = obPref.value( "Lang", "en" ).toString();
