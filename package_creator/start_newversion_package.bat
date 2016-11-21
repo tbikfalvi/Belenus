@@ -55,10 +55,10 @@ echo ------------------------------------------------------------
 echo.
 echo Please check the following directories and make sure
 echo their content are updated with needed files.
-echo - c:/KiwiSun/PackageCreate => new files: apps, lang, resources etc.
-echo - c:/KiwiSun/LocalPackage  => previous package files
-echo - c:/KiwiSun/MasterCD      => all install files
-ehco.
+echo - c:/KiwiSun/PackageCreate - new files: apps, lang, resources etc.
+echo - c:/KiwiSun/LocalPackage  - previous package files
+echo - c:/KiwiSun/MasterCD      - all install files
+echo.
 cd %dirCurrent%
 
 echo Shall we continue with update setting files? Type (y/n)
