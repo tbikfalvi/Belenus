@@ -57,3 +57,7 @@ Version 1.5.5.1
 PackageCreate update
 ====================
 - Atirtam, hogy mas gepen is tudjak package-et osszerakni
+
+Version 1.5.5.2
+===============
+- Http popup menu megjelenese javitva, connection suspend status ikon a http ikon mellett
