@@ -60,4 +60,4 @@ PackageCreate update
 
 Version 1.5.5.2
 ===============
-- Http popup menu megjelenese javitva, connection suspend status ikon a http ikon mellett
+- Http extended menu megjelenese javitva, connection suspend status ikon a http ikon mellett
