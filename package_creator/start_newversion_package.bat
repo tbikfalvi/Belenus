@@ -29,6 +29,12 @@ echo.
 echo Creating package creator environment
 echo Create KiwiSun
 mkdir c:\KiwiSun
+echo Create KiwiSun\MasterCD
+cd c:\KiwiSun
+mkdir MasterCD
+echo Create KiwiSun\Upload
+cd c:\KiwiSun
+mkdir Upload
 echo Create KiwiSun\PackageCreate
 cd c:\KiwiSun
 mkdir PackageCreate
@@ -41,6 +47,25 @@ mkdir LocalPackage
 echo Return to %dirCurrent%
 cd %dirCurrent%
 echo.
+
+:update_package_directory
+echo ------------------------------------------------------------
+echo  Update directories
+echo ------------------------------------------------------------
+echo.
+echo Please check the following directories and make sure
+echo their content are updated with needed files.
+echo - c:/KiwiSun/PackageCreate => new files: apps, lang, resources etc.
+echo - c:/KiwiSun/LocalPackage  => previous package files
+echo - c:/KiwiSun/MasterCD      => all install files
+ehco.
+cd %dirCurrent%
+
+echo Shall we continue with update setting files? Type (y/n)
+SET /P cmdVersionOk="> "
+IF "%cmdVersionOk%" == "y" ( GOTO :open_xml_sql_files )
+IF "%cmdVersionOk%" == "n" ( GOTO :end_process )
+GOTO :proc_error
 
 :open_xml_sql_files
 echo ------------------------------------------------------------
@@ -64,8 +89,9 @@ start "notepad++.exe" ..\sql\db_fill_hu.sql
 start "notepad++.exe" ..\sql\db_update_%strVersion%.sql 
 start "notepad++.exe" ..\system.inf 
 echo.
+cd %dirCurrent%
 
-echo Shall we continue? Type (y/n)
+echo Shall we continue with retrieving setting files? Type (y/n)
 SET /P cmdVersionOk="> "
 IF "%cmdVersionOk%" == "y" ( GOTO :copy_xml_sql_files )
 IF "%cmdVersionOk%" == "n" ( GOTO :end_process )
@@ -90,8 +116,9 @@ copy ..\sql\db_update_%strVersion%.sql %dirCurrent%\*.*
 copy ..\sql\db_update_%strVersion%.sql ..\sql\db_update_.sql
 copy ..\system.inf %dirCurrent%\system.inf
 echo.
+cd %dirCurrent%
 
-echo Shall we continue? Type (y/n)
+echo Shall we continue package Update_%strVersion%.zip creation? Type (y/n)
 SET /P cmdVersionOk="> "
 IF "%cmdVersionOk%" == "y" ( GOTO :create_update_package )
 IF "%cmdVersionOk%" == "n" ( GOTO :end_process )
@@ -106,10 +133,10 @@ echo Creating Update package
 copy %dirCurrent%\db_update_%strVersion%.sql c:\KiwiSun\PackageCreate\sql\*.*
 cd c:\KiwiSun\PackageCreate
 %dirCurrent%\pkzip -add -rec -dir %dirCurrent%\Update_%strVersion%.zip
-cd %dirCurrent%
 echo.
+cd %dirCurrent%
 
-echo Shall we continue? Type (y/n)
+echo Shall we continue with LocalPackage BelenusUpdate_%strVersion%.zip creation? Type (y/n)
 SET /P cmdVersionOk="> "
 IF "%cmdVersionOk%" == "y" ( GOTO :create_local_update_package )
 IF "%cmdVersionOk%" == "n" ( GOTO :end_process )
@@ -129,10 +156,10 @@ echo.
 echo Creating LocalUpdate package
 cd c:\KiwiSun\LocalPackage
 %dirCurrent%\pkzip -add %dirCurrent%\BelenusUpdate_%strVersion%.zip
-cd %dirCurrent%
 echo.
+cd %dirCurrent%
 
-echo Shall we continue? Type (y/n)
+echo Shall we continue with MasterCD update? Type (y/n)
 SET /P cmdVersionOk="> "
 IF "%cmdVersionOk%" == "y" ( GOTO :update_master_cd )
 IF "%cmdVersionOk%" == "n" ( GOTO :end_process )
@@ -143,23 +170,36 @@ echo ------------------------------------------------------------
 echo  Update MasterCD
 echo ------------------------------------------------------------
 echo.
+echo Copy document files
+copy c:\KiwiSun\PackageCreate\docs\*.pdf c:\KiwiSun\MasterCD\docs\*.*
+echo.
 echo Copy language files
-copy c:\Install\Belenus\2_Create_Package\lang\*.qm c:\Install\Belenus\4_Update_MasterCD\lang\*.*
+copy c:\KiwiSun\PackageCreate\lang\*.qm c:\KiwiSun\MasterCD\lang\*.*
 echo.
 echo Copy package files
-copy %dirCurrent%\Update_*.zip c:\Install\Belenus\4_Update_MasterCD\package\*.*
+copy %dirCurrent%\Update_*.zip c:\KiwiSun\MasterCD\package\*.*
+echo.
+echo Copy resource files
+copy c:\KiwiSun\PackageCreate\resources\*.* c:\KiwiSun\MasterCD\resources\*.*
 echo.
 echo Copy settings files
-copy %dirCurrent%\*.xml c:\Install\Belenus\4_Update_MasterCD\settings\*.*
+copy %dirCurrent%\*.xml c:\KiwiSun\MasterCD\settings\*.*
 echo. 
 echo Copy sql files
-copy %dirCurrent%\*.sql c:\Install\Belenus\4_Update_MasterCD\sql\*.*
+copy %dirCurrent%\*.sql c:\KiwiSun\MasterCD\sql\*.*
 echo.
-echo Copy inf files
-copy %dirCurrent%\system.inf c:\Install\Belenus\4_Update_MasterCD\*.*
+echo Copy application files
+copy c:\KiwiSun\PackageCreate\*.exe c:\KiwiSun\MasterCD\*.*
 echo.
+echo Copy DLL files
+copy c:\KiwiSun\PackageCreate\*.dll c:\KiwiSun\MasterCD\*.*
+echo.
+echo Copy inf file
+copy %dirCurrent%\system.inf c:\KiwiSun\MasterCD\*.*
+echo.
+cd %dirCurrent%
 
-echo Shall we continue? Type (y/n)
+echo Shall we continue with MasterCD package MasterCD_%strVersion%.zip creation? Type (y/n)
 SET /P cmdVersionOk="> "
 IF "%cmdVersionOk%" == "y" ( GOTO :create_master_cd_package )
 IF "%cmdVersionOk%" == "n" ( GOTO :end_process )
@@ -171,12 +211,12 @@ echo  Create MasterCD package
 echo ------------------------------------------------------------
 echo.
 echo Creating MasterCD package
-cd c:\Install\Belenus\4_Update_MasterCD\
+cd c:\KiwiSun\MasterCD\
 %dirCurrent%\pkzip -add -rec -dir %dirCurrent%\MasterCD_%strVersion%.zip
-cd %dirCurrent%
 echo.
+cd %dirCurrent%
 
-echo Shall we continue? Type (y/n)
+echo Shall we continue with package copy to upload dir? Type (y/n)
 SET /P cmdVersionOk="> "
 IF "%cmdVersionOk%" == "y" ( GOTO :update_official_install )
 IF "%cmdVersionOk%" == "n" ( GOTO :end_process )
@@ -189,12 +229,13 @@ echo ------------------------------------------------------------
 echo.
 echo Copy package files
 echo.
-copy %dirCurrent%\*.zip c:\Install\Belenus\5_Update_Official\*.*
+copy %dirCurrent%\*.zip c:\KiwiSun\Upload\*.*
 echo.
 echo Copy xml file
 echo.
-copy %dirCurrent%\belenus_web.xml c:\Install\Belenus\5_Update_Official\*.*
+copy %dirCurrent%\belenus_web.xml c:\KiwiSun\Upload\*.*
 echo.
+cd %dirCurrent%
 
 :end_process
 echo.
