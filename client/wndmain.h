@@ -58,6 +58,7 @@ private:
     QPushButton              m_pbStatusHttp;
     QPushButton              m_pbStatusCommunication;
     QPushButton              m_pbStatusKeyboard;
+    QPushButton              m_pbStatusCommunicationSuspended;
     QLabel                   m_lblHttpCount;
     QLabel                   m_lblStatusRight;
     cMdiPanels              *mdiPanels;
