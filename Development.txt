@@ -53,3 +53,11 @@ Version 1.5.5.1
 ===============
 - Idokedvezmeny eseten a program rosszul szamolt a vegosszeggel. Javitva
 - Ha modositjak a liszensz ervenyessegi idejet, nem volt egyertelmu, miert nem valtozik a napok szama. Mostantol latszik a szalon ervenyesseg is.
+
+PackageCreate update
+====================
+- Atirtam, hogy mas gepen is tudjak package-et osszerakni
+
+Version 1.5.5.2
+===============
+- Http popup menu megjelenese javitva, connection suspend status ikon a http ikon mellett
