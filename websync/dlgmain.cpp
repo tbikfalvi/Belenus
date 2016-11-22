@@ -331,6 +331,192 @@ void dlgMain::mouseMoveEvent ( QMouseEvent *p_poEvent )
     p_poEvent->accept();
 }
 //=================================================================================================
+void dlgMain::on_pbResetSQL_clicked()
+{
+
+}
+//=================================================================================================
+void dlgMain::on_pbResetHTTP_clicked()
+{
+    g_poBlnsHttp->checkHttpServerAvailability();
+    ui->lblStatusIconWebServer->setPixmap( QPixmap( ":/status_yellow.png" ) );
+}
+//=================================================================================================
+void dlgMain::on_pbAuthenticate_clicked()
+{
+    authType    atRet = AUTH_NEEDED;
+
+    m_enGroup = GROUP_MIN;
+
+    if( ui->ledPassword->isEnabled() )
+    {
+        atRet = _authenticateUser();
+    }
+
+    _setAuthInfoType( atRet );
+
+    if( atRet == AUTH_OK )
+    {
+        _setGUIEnabled();
+    }
+    else
+    {
+        _setGUIEnabled( false );
+        ui->ledPassword->setText( "" );
+    }
+}
+//=================================================================================================
+void dlgMain::on_pbExit_clicked()
+{
+    if( _isInGroup( GROUP_SYSTEM ) )
+    {
+        qApp->quit();
+    }
+}
+//=================================================================================================
+void dlgMain::on_pbHide_clicked()
+{
+    hide();
+}
+//=================================================================================================
+void dlgMain::on_cmbLang_currentIndexChanged(const QString &arg1)
+{
+    if( !m_bReloadLanguage )
+    {
+        m_qsLang = arg1.left(2);
+    }
+}
+//=================================================================================================
+void dlgMain::on_pbRetranslate_clicked()
+{
+    m_bReloadLanguage = true;
+
+    apMainApp->removeTranslator( poTransApp );
+    apMainApp->removeTranslator( poTransQT );
+
+    poTransApp->load( QString("%1\\lang\\websync_%2.qm").arg( QDir::currentPath() ).arg(m_qsLang) );
+    poTransQT->load( QString("%1\\lang\\qt_%2.qm").arg( QDir::currentPath() ).arg(m_qsLang) );
+
+    apMainApp->installTranslator( poTransApp );
+    apMainApp->installTranslator( poTransQT );
+
+    ui->retranslateUi( this );
+
+    int nCurrentIndex   = ui->cmbLang->findText( QString("%1 (").arg(m_qsLang), Qt::MatchContains );
+
+    ui->cmbLang->setCurrentIndex( nCurrentIndex );
+
+    m_bReloadLanguage = false;
+}
+//=================================================================================================
+void dlgMain::on_chkShowWindowOnStart_clicked()
+{
+    m_bShowMainWindowOnStart = ui->chkShowWindowOnStart->isChecked();
+}
+//=================================================================================================
+void dlgMain::on_ledTimerPCStatusSync_textEdited(const QString &/*arg1*/)
+{
+    m_nTimerPCStatusSync = ui->ledTimerPCStatusSync->text().toInt();
+}
+//=================================================================================================
+void dlgMain::on_ledTimerPCOnlineSync_textEdited(const QString &/*arg1*/)
+{
+    m_nTimerPCOnlineSync = ui->ledTimerPCOnlineSync->text().toInt();
+}
+//=================================================================================================
+void dlgMain::on_pbSyncAllPatientCard_clicked()
+{
+    QSqlQuery *poQuery = g_poDB->executeQTQuery( "SELECT patientCardId, barcode "
+                                                 "FROM patientcards WHERE "
+                                                 "active = 1");
+
+    ui->lblProcessStatus->setVisible( true );
+    ui->prgbProcess->setVisible( true );
+    ui->prgbProcess->setMaximum( poQuery->size() );
+    ui->prgbProcess->setValue( 0 );
+
+    while( poQuery->next() )
+    {
+        try
+        {
+            _sendPCData( poQuery->value(0).toUInt(), poQuery->value(1).toString() );
+            ui->prgbProcess->setValue( ui->prgbProcess->value()+1 );
+        }
+        catch( cSevException &e )
+        {
+            g_obLogger(e.severity()) << e.what() << EOM;
+        }
+    }
+    ui->lblProcessStatus->setVisible( false );
+    ui->prgbProcess->setVisible( false );
+}
+//=================================================================================================
+void dlgMain::on_pbClearPCData_clicked()
+{
+    g_poDB->executeQTQuery( "DELETE FROM httppatientcardinfo" );
+}
+//=================================================================================================
+void dlgMain::on_pbSyncOnlinePC_clicked()
+{
+
+}
+//=================================================================================================
+//
+//  H T T P
+//
+//=================================================================================================
+// Executed when any error occures during http process
+void dlgMain::on_BlnsHttpErrorOccured()
+{
+    m_bSyncPCToServer = false;
+
+    ui->lblStatusIconWebServer->setPixmap( QPixmap( ":/status_red.png" ) );
+    ui->lblStatusIconWebServer->setToolTip( g_poBlnsHttp->errorMessage() );
+    ui->lblWebServerStatusText->setToolTip( g_poBlnsHttp->errorMessage() );
+    ui->lblStatusSync->setPixmap( QPixmap( ":/ok.png" ) );
+}
+//=================================================================================================
+// Executed when a http process finished
+void dlgMain::on_BlnsHttpActionFinished(QString p_qsInfo)
+{
+    m_bSyncPCToServer = false;
+
+    if( p_qsInfo.left(10).compare( "HTTPMSG_01" ) == 0 )
+    {
+        ui->lblStatusIconWebServer->setPixmap( QPixmap( ":/status_green.png" ) );
+        ui->lblStatusIconWebServer->setToolTip( tr("HTTP Connection established") );
+        ui->lblWebServerStatusText->setToolTip( tr("HTTP Connection established") );
+    }
+    g_obLogger(cSeverity::INFO) << p_qsInfo << EOM;
+    ui->lblStatusSync->setPixmap( QPixmap( ":/ok.png" ) );
+}
+//=================================================================================================
+// Executed when patientcard data updated on server
+void dlgMain::on_BlnsHttpStepProgress()
+{
+    m_bSyncPCToServer = false;
+
+    ui->lblStatusIconWebServer->setPixmap( QPixmap( ":/status_green.png" ) );
+    ui->ledNumberOfCardsWaiting->setText( QString::number( g_poBlnsHttp->getNumberOfWaitingRecords() ) );
+    ui->lblStatusSync->setPixmap( QPixmap( ":/ok.png" ) );
+}
+//=================================================================================================
+//
+// P R I V A T E - functions
+//
+//=================================================================================================
+void dlgMain::_setGUIEnabled(bool p_bEnabled)
+{
+    ui->chkShowWindowOnStart->setEnabled( p_bEnabled );
+    ui->ledTimerPCStatusSync->setEnabled( p_bEnabled );
+    ui->ledTimerPCOnlineSync->setEnabled( p_bEnabled );
+    ui->ledWebServerAddress->setEnabled( p_bEnabled && _isInGroup( GROUP_SYSTEM ) );
+    ui->pbSyncAllPatientCard->setEnabled( p_bEnabled && _isInGroup( GROUP_SYSTEM ) );
+    //ui->pbClearPCData->setEnabled( p_bEnabled && _isInGroup( GROUP_USER ) );  // can be cleared anytime
+    ui->pbSyncOnlinePC->setEnabled( p_bEnabled && _isInGroup( GROUP_USER ) );
+    ui->pbExit->setEnabled( p_bEnabled && _isInGroup( GROUP_SYSTEM ) );
+}
+//=================================================================================================
 void dlgMain::_setActions()
 {
     actionSettings = new QAction(tr("&Open main window"), this);
@@ -369,128 +555,6 @@ void dlgMain::_setMenu()
 void dlgMain::slotSettings()
 {
     show();
-}
-//=================================================================================================
-void dlgMain::on_pbHide_clicked()
-{
-    hide();
-}
-//=================================================================================================
-void dlgMain::on_pbExit_clicked()
-{
-    if( _isInGroup( GROUP_SYSTEM ) )
-    {
-        qApp->quit();
-    }
-}
-//=================================================================================================
-void dlgMain::on_cmbLang_currentIndexChanged(const QString &arg1)
-{
-    if( !m_bReloadLanguage )
-    {
-        m_qsLang = arg1.left(2);
-    }
-}
-//=================================================================================================
-void dlgMain::on_pbRetranslate_clicked()
-{
-    m_bReloadLanguage = true;
-
-    apMainApp->removeTranslator( poTransApp );
-    apMainApp->removeTranslator( poTransQT );
-
-    poTransApp->load( QString("%1\\lang\\websync_%2.qm").arg( QDir::currentPath() ).arg(m_qsLang) );
-    poTransQT->load( QString("%1\\lang\\qt_%2.qm").arg( QDir::currentPath() ).arg(m_qsLang) );
-
-    apMainApp->installTranslator( poTransApp );
-    apMainApp->installTranslator( poTransQT );
-
-    ui->retranslateUi( this );
-
-    int nCurrentIndex   = ui->cmbLang->findText( QString("%1 (").arg(m_qsLang), Qt::MatchContains );
-
-    ui->cmbLang->setCurrentIndex( nCurrentIndex );
-
-    m_bReloadLanguage = false;
-}
-//=================================================================================================
-// Executed when any error occures during http process
-void dlgMain::on_BlnsHttpErrorOccured()
-{
-    m_bSyncPCToServer = false;
-
-    ui->lblStatusIconWebServer->setPixmap( QPixmap( ":/status_red.png" ) );
-    ui->lblStatusIconWebServer->setToolTip( g_poBlnsHttp->errorMessage() );
-    ui->lblWebServerStatusText->setToolTip( g_poBlnsHttp->errorMessage() );
-    ui->lblStatusSync->setPixmap( QPixmap( ":/ok.png" ) );
-}
-//=================================================================================================
-// Executed when a http process finished
-void dlgMain::on_BlnsHttpActionFinished(QString p_qsInfo)
-{
-    m_bSyncPCToServer = false;
-
-    if( p_qsInfo.left(10).compare( "HTTPMSG_01" ) == 0 )
-    {
-        ui->lblStatusIconWebServer->setPixmap( QPixmap( ":/status_green.png" ) );
-        ui->lblStatusIconWebServer->setToolTip( tr("HTTP Connection established") );
-        ui->lblWebServerStatusText->setToolTip( tr("HTTP Connection established") );
-    }
-    g_obLogger(cSeverity::INFO) << p_qsInfo << EOM;
-    ui->lblStatusSync->setPixmap( QPixmap( ":/ok.png" ) );
-}
-//=================================================================================================
-// Executed when patientcard data updated on server
-void dlgMain::on_BlnsHttpStepProgress()
-{
-    m_bSyncPCToServer = false;
-
-    ui->lblStatusIconWebServer->setPixmap( QPixmap( ":/status_green.png" ) );
-    ui->ledNumberOfCardsWaiting->setText( QString::number( g_poBlnsHttp->getNumberOfWaitingRecords() ) );
-    ui->lblStatusSync->setPixmap( QPixmap( ":/ok.png" ) );
-}
-//=================================================================================================
-void dlgMain::on_pbResetSQL_clicked()
-{
-
-}
-//=================================================================================================
-void dlgMain::on_pbResetHTTP_clicked()
-{
-    g_poBlnsHttp->checkHttpServerAvailability();
-    ui->lblStatusIconWebServer->setPixmap( QPixmap( ":/status_yellow.png" ) );
-}
-//=================================================================================================
-void dlgMain::on_chkShowWindowOnStart_clicked()
-{
-    m_bShowMainWindowOnStart = ui->chkShowWindowOnStart->isChecked();
-}
-//=================================================================================================
-void dlgMain::on_pbSyncAllPatientCard_clicked()
-{
-    QSqlQuery *poQuery = g_poDB->executeQTQuery( "SELECT patientCardId, barcode "
-                                                 "FROM patientcards WHERE "
-                                                 "active = 1");
-
-    ui->lblProcessStatus->setVisible( true );
-    ui->prgbProcess->setVisible( true );
-    ui->prgbProcess->setMaximum( poQuery->size() );
-    ui->prgbProcess->setValue( 0 );
-
-    while( poQuery->next() )
-    {
-        try
-        {
-            _sendPCData( poQuery->value(0).toUInt(), poQuery->value(1).toString() );
-            ui->prgbProcess->setValue( ui->prgbProcess->value()+1 );
-        }
-        catch( cSevException &e )
-        {
-            g_obLogger(e.severity()) << e.what() << EOM;
-        }
-    }
-    ui->lblProcessStatus->setVisible( false );
-    ui->prgbProcess->setVisible( false );
 }
 //=================================================================================================
 void dlgMain::_sendPCData(unsigned int p_uiId , QString p_qsBarcode)
@@ -567,45 +631,6 @@ QString dlgMain::_getPatientCardTypeName( unsigned int p_uiId )
     }
 
     return qsRet;
-}
-//=================================================================================================
-void dlgMain::on_ledTimerPCStatusSync_textEdited(const QString &/*arg1*/)
-{
-    m_nTimerPCStatusSync = ui->ledTimerPCStatusSync->text().toInt();
-}
-//=================================================================================================
-void dlgMain::on_ledTimerPCOnlineSync_textEdited(const QString &/*arg1*/)
-{
-    m_nTimerPCOnlineSync = ui->ledTimerPCOnlineSync->text().toInt();
-}
-//=================================================================================================
-void dlgMain::on_pbClearPCData_clicked()
-{
-    g_poDB->executeQTQuery( "DELETE FROM httppatientcardinfo" );
-}
-//=================================================================================================
-void dlgMain::on_pbAuthenticate_clicked()
-{
-    authType    atRet = AUTH_NEEDED;
-
-    m_enGroup = GROUP_MIN;
-
-    if( ui->ledPassword->isEnabled() )
-    {
-        atRet = _authenticateUser();
-    }
-
-    _setAuthInfoType( atRet );
-
-    if( atRet == AUTH_OK )
-    {
-        _setGUIEnabled();
-    }
-    else
-    {
-        _setGUIEnabled( false );
-        ui->ledPassword->setText( "" );
-    }
 }
 //=================================================================================================
 dlgMain::authType dlgMain::_authenticateUser()
@@ -722,26 +747,7 @@ void dlgMain::_setAuthInfoType(authType p_tAuthType)
     }
 }
 //=================================================================================================
-void dlgMain::_setGUIEnabled(bool p_bEnabled)
-{
-    ui->chkShowWindowOnStart->setEnabled( p_bEnabled );
-    ui->ledTimerPCStatusSync->setEnabled( p_bEnabled );
-    ui->ledTimerPCOnlineSync->setEnabled( p_bEnabled );
-    ui->ledWebServerAddress->setEnabled( p_bEnabled && _isInGroup( GROUP_SYSTEM ) );
-    ui->pbSyncAllPatientCard->setEnabled( p_bEnabled && _isInGroup( GROUP_SYSTEM ) );
-    //ui->pbClearPCData->setEnabled( p_bEnabled && _isInGroup( GROUP_USER ) );  // can be cleared anytime
-    ui->pbSyncOnlinePC->setEnabled( p_bEnabled && _isInGroup( GROUP_USER ) );
-    ui->pbExit->setEnabled( p_bEnabled && _isInGroup( GROUP_SYSTEM ) );
-}
-//------------------------------------------------------------------------------------
 bool dlgMain::_isInGroup(groupUser p_enGroup)
-//------------------------------------------------------------------------------------
 {
     return ( p_enGroup <= m_enGroup );
-}
-//------------------------------------------------------------------------------------
-void dlgMain::on_pbSyncOnlinePC_clicked()
-//------------------------------------------------------------------------------------
-{
-
 }
