@@ -14,5 +14,7 @@
         <file>key.png</file>
         <file>lock.png</file>
         <file>exit.png</file>
+        <file>patientcards.png</file>
+        <file>trash.png</file>
     </qresource>
 </RCC>

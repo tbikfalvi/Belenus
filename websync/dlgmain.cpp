@@ -211,18 +211,24 @@ void dlgMain::timerEvent(QTimerEvent *)
         m_nTimer = startTimer( 1000 );
     }
 
+    //---------------------------------------------------------------------------------------------
+    // Check if any action is in progress
     if( m_bSyncPCToServer || m_bSyncPCFromServer )
     {
         // Synchronization process in progress, wait for next time slot
         return;
     }
 
+    //---------------------------------------------------------------------------------------------
+    // Update number of waiting patientcards to be sent in every minute
     if( m_nIndexUpdateSyncDataCount > 60 )
     {
         m_nIndexUpdateSyncDataCount = 0;
         ui->ledNumberOfCardsWaiting->setText( QString::number( g_poBlnsHttp->getNumberOfWaitingRecords() ) );
     }
 
+    //---------------------------------------------------------------------------------------------
+    // Check if timer of PC data send is reached the value set
     if( m_nIndexPCStatusSync >= m_nTimerPCStatusSync )
     {
         m_nIndexPCStatusSync = 0;
@@ -235,6 +241,8 @@ void dlgMain::timerEvent(QTimerEvent *)
         }
     }
 
+    //---------------------------------------------------------------------------------------------
+    // Check if timer of check online PC sold is reached the value set
     if( m_nIndexPCOnlineSync >= m_nTimerPCOnlineSync )
     {
         m_nIndexPCOnlineSync = 0;

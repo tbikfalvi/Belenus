@@ -754,6 +754,16 @@
             <string> Send all patientcard
 data to web server</string>
            </property>
+           <property name="icon">
+            <iconset resource="websync.qrc">
+             <normaloff>:/patientcards.png</normaloff>:/patientcards.png</iconset>
+           </property>
+           <property name="iconSize">
+            <size>
+             <width>40</width>
+             <height>40</height>
+            </size>
+           </property>
           </widget>
          </item>
          <item row="0" column="2">
@@ -772,11 +782,21 @@ data to web server</string>
          <item row="0" column="1">
           <widget class="QPushButton" name="pbClearPCData">
            <property name="enabled">
-            <bool>false</bool>
+            <bool>true</bool>
            </property>
            <property name="text">
             <string>Clear patientcard data
 to be synchronized</string>
+           </property>
+           <property name="icon">
+            <iconset resource="websync.qrc">
+             <normaloff>:/trash.png</normaloff>:/trash.png</iconset>
+           </property>
+           <property name="iconSize">
+            <size>
+             <width>40</width>
+             <height>40</height>
+            </size>
            </property>
           </widget>
          </item>
