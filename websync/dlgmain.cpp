@@ -38,6 +38,7 @@ dlgMain::dlgMain(QWidget *parent) : QDialog(parent), ui(new Ui::dlgMain)
     m_nIndexPCStatusSync        = 0;
     m_nIndexPCOnlineSync        = 0;
     m_nIndexUpdateSyncDataCount = 0;
+    m_nIndexUser                = 0;
 
     m_enGroup                   = GROUP_MIN;
 
@@ -194,6 +195,7 @@ void dlgMain::timerEvent(QTimerEvent *)
     m_nIndexPCStatusSync++;
     m_nIndexPCOnlineSync++;
     m_nIndexUpdateSyncDataCount++;
+    m_nIndexUser++;
 
     ui->lblIndexPCData->setText( QString::number(m_nIndexPCStatusSync) );
     ui->lblIndexPCOnline->setText( QString::number(m_nIndexPCOnlineSync) );
@@ -209,6 +211,60 @@ void dlgMain::timerEvent(QTimerEvent *)
         }
         m_bStartTimerOnStart = false;
         m_nTimer = startTimer( 1000 );
+    }
+
+    //---------------------------------------------------------------------------------------------
+    // Check if user logged in or out by belenus in every 5 seconds
+    if( m_nIndexUser > 5 )
+    {
+        if( ui->ledPassword->text().length() < 1 )
+        {
+            QFile   fileUser( "websync.usr" );
+
+            // If user already logged in, check if logged out
+            if( _isInGroup( GROUP_USER ) )
+            {
+                if( fileUser.size() < 1 )
+                {
+                    on_pbAuthenticate_clicked();
+                }
+            }
+            else
+            {
+                if( fileUser.size() > 0 )
+                {
+                    char    strName[50];
+
+                    for(int j=0;j<50;j++) strName[j]=0;
+
+                    fileUser.open( QIODevice::ReadOnly );
+                    fileUser.read( strName, 50 );
+                    fileUser.close();
+
+                    for( int i=0; i<ui->cmbName->count(); i++ )
+                    {
+                        QString qsName = ui->cmbName->itemText(i).left( ui->cmbName->itemText(i).indexOf("(")-1 );
+
+                        g_obLogger(cSeverity::INFO) << "COMPARE ["
+                                                    << qsName
+                                                    << "] ["
+                                                    << QString(strName)
+                                                    << "]"
+                                                    << EOM;
+                        if( qsName.compare( QString(strName) ) == 0 )
+                        {
+                            ui->cmbName->setCurrentIndex( i );
+                            if( _loginUser( QString(strName) ) == AUTH_OK )
+                            {
+                                _setGUIEnabled();
+                            }
+                            break;
+                        }
+                    }
+                }
+            }
+        }
+        m_nIndexUser = 0;
     }
 
     //---------------------------------------------------------------------------------------------
@@ -544,11 +600,11 @@ void dlgMain::on_pbAuthenticate_clicked()
     if( atRet == AUTH_OK )
     {
         _setGUIEnabled();
-        ui->ledPassword->setText( "" );
     }
     else
     {
         _setGUIEnabled( false );
+        ui->ledPassword->setText( "" );
     }
 }
 //=================================================================================================
@@ -605,6 +661,27 @@ dlgMain::authType dlgMain::_authenticateUser()
             atRet = AUTH_CONNECTION_FAILED;
         }
     }
+
+    return atRet;
+}
+//=================================================================================================
+dlgMain::authType dlgMain::_loginUser(QString p_qsName)
+{
+    authType    atRet = AUTH_ERROR;
+
+    QSqlQuery *poQuery = g_poDB->executeQTQuery( "SELECT * FROM users WHERE name = \"" + p_qsName + "\"" );
+
+    if( poQuery->size() != 1 )
+    {
+        atRet = AUTH_USER_NOTFOUND;
+    }
+    else
+    {
+        poQuery->first();
+        m_enGroup = poQuery->value(5).toInt();
+        atRet = AUTH_OK;
+    }
+    _setAuthInfoType( atRet );
 
     return atRet;
 }

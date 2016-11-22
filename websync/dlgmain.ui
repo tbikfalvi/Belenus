@@ -142,10 +142,16 @@
                <height>0</height>
               </size>
              </property>
+             <property name="toolTip">
+              <string>User of Belenus Application System</string>
+             </property>
             </widget>
            </item>
            <item>
             <widget class="QLineEdit" name="ledPassword">
+             <property name="toolTip">
+              <string>User password</string>
+             </property>
              <property name="echoMode">
               <enum>QLineEdit::Password</enum>
              </property>
@@ -199,6 +205,9 @@
              <height>40</height>
             </size>
            </property>
+           <property name="toolTip">
+            <string>Exit application (only System Administrators)</string>
+           </property>
            <property name="text">
             <string/>
            </property>
@@ -230,6 +239,9 @@
              <width>40</width>
              <height>40</height>
             </size>
+           </property>
+           <property name="toolTip">
+            <string>Close (hide) main window</string>
            </property>
            <property name="autoFillBackground">
             <bool>false</bool>
@@ -309,6 +321,9 @@
              </item>
              <item>
               <widget class="QPushButton" name="pbResetSQL">
+               <property name="toolTip">
+                <string>Reset SQL connection with SQL Database Server</string>
+               </property>
                <property name="text">
                 <string/>
                </property>
@@ -375,6 +390,9 @@
              </item>
              <item>
               <widget class="QPushButton" name="pbResetHTTP">
+               <property name="toolTip">
+                <string>Reset HTTP Connection with KiwiSun Web Server</string>
+               </property>
                <property name="text">
                 <string/>
                </property>
@@ -473,6 +491,9 @@
              </item>
              <item>
               <widget class="QPushButton" name="pbRetranslate">
+               <property name="toolTip">
+                <string>Load selected language translations</string>
+               </property>
                <property name="text">
                 <string/>
                </property>
@@ -655,6 +676,9 @@
               <widget class="QLineEdit" name="ledWebServerAddress">
                <property name="enabled">
                 <bool>false</bool>
+               </property>
+               <property name="toolTip">
+                <string>Address of KiwiSun Web Server</string>
                </property>
               </widget>
              </item>

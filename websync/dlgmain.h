@@ -119,6 +119,7 @@ private:
     bool                 m_bSyncPCFromServer;
     int                  m_nTimerPCStatusSync;
     int                  m_nTimerPCOnlineSync;
+    int                  m_nIndexUser;
     int                  m_nIndexPCStatusSync;
     int                  m_nIndexPCOnlineSync;
     int                  m_enGroup;
@@ -133,6 +134,7 @@ private:
     authType            _authenticateUser();
     void                _setGUIEnabled( bool p_bEnabled = true );
     bool                _isInGroup( groupUser p_enGroup );
+    authType            _loginUser( QString p_qsName );
 };
 
 #endif // DLGMAIN_H

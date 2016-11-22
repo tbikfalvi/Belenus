@@ -518,6 +518,13 @@ void cWndMain::loginUser()
 {
     cTracer obTrace( "cWndMain::loginUser" );
 
+    // Felhasznalo login nevenek mentese websync-hez
+    QFile   fileUser( "websync.usr" );
+
+    fileUser.open( QIODevice::WriteOnly );
+    fileUser.write( g_obUser.name().toStdString().c_str() );
+    fileUser.close();
+
     // Felhasznalo ellenorzese
     if( g_obUser.isInGroup( cAccessGroup::ROOT ) || g_obUser.isInGroup( cAccessGroup::SYSTEM) )
     { // root, vagy rendszeradmin felhasznalo lepett be, NINCS penztar akcio
@@ -928,6 +935,14 @@ void cWndMain::logoutUser()
         }
     }
     m_bMainWindowActive = false;
+
+    // Felhasznalo login nevenek mentese websync-hez
+    QFile   fileUser( "websync.usr" );
+
+    fileUser.open( QIODevice::WriteOnly );
+    fileUser.write( "" );
+    fileUser.close();
+
 }
 //====================================================================================
 void cWndMain::keyPressEvent( QKeyEvent *p_poEvent )
