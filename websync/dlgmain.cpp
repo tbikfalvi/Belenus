@@ -652,7 +652,8 @@ void dlgMain::_setGUIEnabled(bool p_bEnabled)
     ui->ledTimerPCOnlineSync->setEnabled( p_bEnabled );
     ui->ledWebServerAddress->setEnabled( p_bEnabled && _isInGroup( GROUP_SYSTEM ) );
     ui->pbSyncAllPatientCard->setEnabled( p_bEnabled && _isInGroup( GROUP_SYSTEM ) );
-    ui->pbClearPCData->setEnabled( p_bEnabled && _isInGroup( GROUP_SYSTEM ) );
+    //ui->pbClearPCData->setEnabled( p_bEnabled && _isInGroup( GROUP_USER ) );  // can be cleared anytime
+    ui->pbSyncOnlinePC->setEnabled( p_bEnabled && _isInGroup( GROUP_USER ) );
     ui->pbExit->setEnabled( p_bEnabled && _isInGroup( GROUP_SYSTEM ) );
 }
 //------------------------------------------------------------------------------------
@@ -660,4 +661,10 @@ bool dlgMain::_isInGroup(groupUser p_enGroup)
 //------------------------------------------------------------------------------------
 {
     return ( p_enGroup <= m_enGroup );
+}
+//------------------------------------------------------------------------------------
+void dlgMain::on_pbSyncOnlinePC_clicked()
+//------------------------------------------------------------------------------------
+{
+
 }

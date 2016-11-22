@@ -88,6 +88,8 @@ private slots:
 
     void on_pbAuthenticate_clicked();
 
+    void on_pbSyncOnlinePC_clicked();
+
 private:
     Ui::dlgMain         *ui;
     QSystemTrayIcon     *trayIcon;

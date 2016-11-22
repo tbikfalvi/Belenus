@@ -766,7 +766,7 @@ data to web server</string>
            </property>
           </widget>
          </item>
-         <item row="0" column="2">
+         <item row="0" column="3">
           <spacer name="horizontalSpacer_7">
            <property name="orientation">
             <enum>Qt::Horizontal</enum>
@@ -791,6 +791,27 @@ to be synchronized</string>
            <property name="icon">
             <iconset resource="websync.qrc">
              <normaloff>:/trash.png</normaloff>:/trash.png</iconset>
+           </property>
+           <property name="iconSize">
+            <size>
+             <width>40</width>
+             <height>40</height>
+            </size>
+           </property>
+          </widget>
+         </item>
+         <item row="0" column="2">
+          <widget class="QPushButton" name="pbSyncOnlinePC">
+           <property name="enabled">
+            <bool>false</bool>
+           </property>
+           <property name="text">
+            <string>Retrieve patientcards
+sold online</string>
+           </property>
+           <property name="icon">
+            <iconset resource="websync.qrc">
+             <normaloff>:/onlinepcsync.png</normaloff>:/onlinepcsync.png</iconset>
            </property>
            <property name="iconSize">
             <size>
@@ -825,6 +846,7 @@ to be synchronized</string>
   <tabstop>cmbName</tabstop>
   <tabstop>ledPassword</tabstop>
   <tabstop>pbAuthenticate</tabstop>
+  <tabstop>pbExit</tabstop>
   <tabstop>pbHide</tabstop>
   <tabstop>pbResetSQL</tabstop>
   <tabstop>pbResetHTTP</tabstop>
@@ -837,6 +859,7 @@ to be synchronized</string>
   <tabstop>ledNumberOfCardsWaiting</tabstop>
   <tabstop>pbSyncAllPatientCard</tabstop>
   <tabstop>pbClearPCData</tabstop>
+  <tabstop>pbSyncOnlinePC</tabstop>
  </tabstops>
  <resources>
   <include location="websync.qrc"/>

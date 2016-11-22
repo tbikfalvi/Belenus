@@ -16,5 +16,6 @@
         <file>exit.png</file>
         <file>patientcards.png</file>
         <file>trash.png</file>
+        <file>onlinepcsync.png</file>
     </qresource>
 </RCC>
