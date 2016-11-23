@@ -78,16 +78,16 @@ copy ..\sql\db_update_.sql ..\sql\db_update_%strVersion%.sql
 echo.
 echo Open files with Notepad++
 echo.
-start "notepad++.exe" ..\xml\belenus_loc.xml 
-start "notepad++.exe" ..\xml\belenus_web.xml 
-start "notepad++.exe" ..\xml\install.xml 
-start "notepad++.exe" ..\xml\updater.xml 
-start "notepad++.exe" ..\sql\db_create.sql 
-start "notepad++.exe" ..\sql\db_fill_de.sql 
-start "notepad++.exe" ..\sql\db_fill_en.sql 
-start "notepad++.exe" ..\sql\db_fill_hu.sql 
-start "notepad++.exe" ..\sql\db_update_%strVersion%.sql 
-start "notepad++.exe" ..\system.inf 
+start notepad++ ..\xml\belenus_loc.xml 
+start notepad++ ..\xml\belenus_web.xml 
+start notepad++ ..\xml\install.xml 
+start notepad++ ..\xml\updater.xml 
+start notepad++ ..\sql\db_create.sql 
+start notepad++ ..\sql\db_fill_de.sql 
+start notepad++ ..\sql\db_fill_en.sql 
+start notepad++ ..\sql\db_fill_hu.sql 
+start notepad++ ..\sql\db_update_%strVersion%.sql 
+start notepad++ ..\system.inf 
 echo.
 cd %dirCurrent%
 

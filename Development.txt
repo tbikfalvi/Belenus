@@ -61,3 +61,9 @@ PackageCreate update
 Version 1.5.5.2
 ===============
 - Http extended menu megjelenese javitva, connection suspend status ikon a http ikon mellett
+
+Version 1.5.5.3
+===============
+- Megint csak barnulasi ido alatt lehet a STOP gombot hasznalni
+- Torzsvendeg kedvezmeny, egesz pontosan a user kedvezmeny nem mukodott jol; javitva
+
