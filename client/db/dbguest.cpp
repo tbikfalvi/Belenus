@@ -206,12 +206,11 @@ int cDBGuest::getDiscountedPrice( const int p_inPriceTotal ) throw( cSevExceptio
     qsQuery = QString( "SELECT * FROM discounts WHERE (%1) AND active=1" ).arg(qsCondition);
     poQuery = g_poDB->executeQTQuery( qsQuery );
 
-    int inDiscountedPrice = p_inPriceTotal;
+    int inDiscountedPrice   = p_inPriceTotal;
+    int inBestValue         = 0;
 
     while( poQuery->next() )
     {
-        int inBestValue = 0;
-
         if( poQuery->value( 12 ).toInt() > 0 )
         {
             inBestValue = p_inPriceTotal - poQuery->value( 12 ).toInt()/100;
