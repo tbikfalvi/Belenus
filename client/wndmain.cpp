@@ -1255,7 +1255,7 @@ void cWndMain::updateToolbar()
             action_DeviceClear->setEnabled( bIsUserLoggedIn && mdiPanels->isNeedToBeCleaned() );
             action_DeviceStart->setEnabled( bIsUserLoggedIn && ((!mdiPanels->isPanelWorking(mdiPanels->activePanel()) && mdiPanels->mainProcessTime() > 0) || mdiPanels->isDeviceStopped() ) );
             action_DeviceSkipStatus->setEnabled( bIsUserLoggedIn && mdiPanels->isStatusCanBeSkipped(mdiPanels->activePanel()) );
-            action_DeviceReset->setEnabled( bIsUserLoggedIn /*&& mdiPanels->isMainProcess()*/ );
+            action_DeviceReset->setEnabled( bIsUserLoggedIn && mdiPanels->isMainProcess() );
             action_ManageDatabase->setEnabled( bIsUserLoggedIn && g_obUser.isInGroup(cAccessGroup::ADMIN) && !mdiPanels->isPanelWorking() );
             action_ManageDevicePanels->setEnabled( bIsUserLoggedIn && g_obUser.isInGroup(cAccessGroup::SYSTEM) );
         menuPatientCard->setEnabled( bIsUserLoggedIn );
