@@ -41,4 +41,5 @@ Version_1_5_4_2 Berletegyseg levonas hibajavitas, correct_sql
 Version_1_5_5_0 Gepadmin idokorlat, liszenszkulcs csere, idozona kedvezmeny, kosar torles gephasznalat ESC
 Version_1_5_5_1 Idokedvezmeny brutto osszeg, liszensz erv. magyarazo ido
 Version_1_5_5_2 Http menu rendberakas
+Version_1_5_5_3 Utohutest nem lehet stoppolni, Torzsvasarloi kedvezmeny
 
