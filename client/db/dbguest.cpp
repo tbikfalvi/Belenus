@@ -187,8 +187,8 @@ int cDBGuest::getDiscountedPrice( const int p_inPriceTotal ) throw( cSevExceptio
 //====================================================================================
 {
     QSqlQuery   *poQuery;
-    QString      qsQuery = "";
-    QString      qsCondition = "";
+    QString      qsQuery        = "";
+    QString      qsCondition    = "";
 
     if( m_bRegularCustomer )
         qsCondition += QString( "regularCustomer>0 OR " );
@@ -206,25 +206,36 @@ int cDBGuest::getDiscountedPrice( const int p_inPriceTotal ) throw( cSevExceptio
     qsQuery = QString( "SELECT * FROM discounts WHERE (%1) AND active=1" ).arg(qsCondition);
     poQuery = g_poDB->executeQTQuery( qsQuery );
 
-    int inDiscountedPrice = p_inPriceTotal;
+    int inDiscountedPrice   = p_inPriceTotal;
+    int inBestValue         = 0;
 
     while( poQuery->next() )
     {
-        int inBestValue = 0;
-
-        if( poQuery->value( 10 ).toInt() > 0 )
+        if( poQuery->value( 12 ).toInt() > 0 )
         {
-            inBestValue = p_inPriceTotal - poQuery->value( 10 ).toInt();
+            inBestValue = p_inPriceTotal - poQuery->value( 12 ).toInt()/100;
         }
-        else if( poQuery->value( 11 ).toInt() > 0 )
+        else if( poQuery->value( 13 ).toInt() > 0 )
         {
-            inBestValue = p_inPriceTotal - ((p_inPriceTotal/100)*poQuery->value( 11 ).toInt());
+            inBestValue = p_inPriceTotal - ((p_inPriceTotal/100)*poQuery->value( 13 ).toInt());
         }
 
         if( inBestValue < inDiscountedPrice )
         {
             inDiscountedPrice = inBestValue;
         }
+        g_obLogger(cSeverity::DEBUG) << "PriceTotal: ["
+                                     << p_inPriceTotal
+                                     << "] Discount1 ["
+                                     << poQuery->value( 12 ).toInt()/100
+                                     << "] Discount2 ["
+                                     << poQuery->value( 13 ).toInt()
+                                     << "] BestValue ["
+                                     << inBestValue
+                                     << "] DiscountedPrice ["
+                                     << inDiscountedPrice
+                                     << "]"
+                                     << EOM;
     }
     if( poQuery ) delete poQuery;
 
