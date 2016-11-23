@@ -220,7 +220,7 @@ void cDlgPatientCardRefill::on_cmbCardType_currentIndexChanged(int index)
 
     cCurrency   cPrice( QString::number(m_poPatientCardType->price()/100), cCurrency::CURR_GROSS, m_poPatientCardType->vatpercent() );
 
-    int priceTotal = cPrice.currencyValue().toInt();
+    int priceTotal = cPrice.currencyValue().toInt()/100;
     int discount = 0;
 
     if( cmbPatient->currentIndex() > 0 )
