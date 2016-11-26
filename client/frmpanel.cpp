@@ -197,17 +197,12 @@ bool cFrmPanel::isWorking() const
 //====================================================================================
 bool cFrmPanel::isStatusCanBeSkipped()
 {
-//    bool bRet = true;
-//
-//    if( m_obStatuses.at(m_uiStatus)->activateCommand() == 3 ||
-//        m_obStatuses.at(m_uiStatus)->activateCommand() == 0 ||
-//        /*(m_obStatuses.at(m_uiStatus)->activateCommand() == 4 && */!g_obUser.isInGroup( cAccessGroup::ADMIN )/*)*/ )
-//    {
-//        bRet = false;
-//    }
-//
-//    return bRet;
     return ( m_obStatuses.at(m_uiStatus)->allowedToSkip() && g_obUser.isInGroup((cAccessGroup::teAccessGroup)(m_obStatuses.at(m_uiStatus)->skipLevel())) );
+}
+//====================================================================================
+bool cFrmPanel::isStatusCanBeStopped()
+{
+    return ( m_obStatuses.at(m_uiStatus)->allowedToStop() && g_obUser.isInGroup((cAccessGroup::teAccessGroup)(m_obStatuses.at(m_uiStatus)->stopLevel())) );
 }
 //====================================================================================
 bool cFrmPanel::isStatusCanBeReseted()
@@ -679,7 +674,7 @@ void cFrmPanel::timerEvent ( QTimerEvent * )
             }
         }
         icoPanelNext->setVisible( isStatusCanBeSkipped() );
-        icoPanelStop->setVisible( isMainProcess() );
+        icoPanelStop->setVisible( isStatusCanBeStopped()/*isMainProcess()*/ );
         icoPanelCassa->setVisible( isHasToPay() );
         icoShoppingCart->setVisible( m_bIsItemInShoppingCart );
         icoScheduledGuest->setVisible( m_bIsPatientWaiting );
@@ -863,7 +858,7 @@ void cFrmPanel::displayStatus()
         }
     }
     icoPanelNext->setVisible( isStatusCanBeSkipped() );
-    icoPanelStop->setVisible( isMainProcess() );
+    icoPanelStop->setVisible( isStatusCanBeStopped()/*isMainProcess()*/ );
     icoPanelCassa->setVisible( isHasToPay() );
     icoShoppingCart->setVisible( m_bIsItemInShoppingCart );
     icoScheduledGuest->setVisible( m_bIsPatientWaiting );

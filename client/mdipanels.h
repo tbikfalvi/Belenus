@@ -34,6 +34,7 @@ public:
     bool            isPanelWorking();
     bool            isPanelWorking( const unsigned int p_uiPanel );
     bool            isStatusCanBeSkipped( const unsigned int p_uiPanel );
+    bool            isStatusCanBeStopped( const unsigned int p_uiPanel );
     bool            isStatusCanBeReseted();
     void            reload();
     void            refreshDisplay();

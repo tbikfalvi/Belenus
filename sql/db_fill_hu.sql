@@ -138,17 +138,17 @@ INSERT INTO `panelTypes` ( `panelTypeId`, `licenceId`, `name`, `active`, `archiv
 
 -- -----------------------------------------------------------------------------------
 
-INSERT INTO `panelStatuses` ( `licenceId`, `panelTypeId`, `seqNumber`, `name`, `length`, `activateCmd`, `skipLevel`, `allowedToSkip`, `active`, `archive` ) VALUES
- ( 0, 1, 1, "Alap állapot", 0, 0, 4, 0, 1, "ARC" ),
- ( 0, 1, 2, "Előkészület/Vetkőzés", 60, 1, 1, 1, 1, "ARC" ),
- ( 0, 1, 3, "Kezelés", 0, 3, 4, 0, 1, "ARC" ),
- ( 0, 1, 4, "Utóhűtés", 300, 4, 4, 0, 1, "ARC" ),
- ( 0, 2, 1, "Alap állapot", 0, 0, 4, 0, 1, "ARC" ),
- ( 0, 2, 2, "Előkészület/Vetkőzés", 60, 1, 1, 1, 1, "ARC" ),
- ( 0, 2, 3, "Szaunázás", 120, 2, 4, 0, 1, "ARC" ),
- ( 0, 2, 4, "Várakozás", 3, 9, 4, 0, 1, "ARC" ),
- ( 0, 2, 5, "Kezelés", 0, 3, 4, 0, 1, "ARC" ),
- ( 0, 2, 6, "Utóhűtés", 300, 4, 4, 0, 1, "ARC" );
+INSERT INTO `panelStatuses` ( `licenceId`, `panelTypeId`, `seqNumber`, `name`, `length`, `activateCmd`, `skipLevel`, `allowedToSkip`, `stopLevel`, `allowedToStop`, `active`, `archive` ) VALUES
+ ( 0, 1, 1, "Alap állapot", 0, 0, 4, 0, 0, 0, 1, "ARC" ),
+ ( 0, 1, 2, "Előkészület/Vetkőzés", 60, 1, 1, 1, 1, 1, 1, "ARC" ),
+ ( 0, 1, 3, "Kezelés", 0, 3, 4, 0, 1, 1, 1, "ARC" ),
+ ( 0, 1, 4, "Utóhűtés", 300, 4, 4, 0, 0, 0, 1, "ARC" ),
+ ( 0, 2, 1, "Alap állapot", 0, 0, 4, 0, 0, 0, 1, "ARC" ),
+ ( 0, 2, 2, "Előkészület/Vetkőzés", 60, 1, 1, 1, 1, 1, 1, "ARC" ),
+ ( 0, 2, 3, "Szaunázás", 120, 2, 4, 0, 1, 1, 1, "ARC" ),
+ ( 0, 2, 4, "Várakozás", 3, 9, 4, 0, 0, 0, 1, "ARC" ),
+ ( 0, 2, 5, "Kezelés", 0, 3, 4, 0, 1, 1, 1, "ARC" ),
+ ( 0, 2, 6, "Utóhűtés", 300, 4, 4, 0, 0, 0, 1, "ARC" );
 
 -- -----------------------------------------------------------------------------------
 
