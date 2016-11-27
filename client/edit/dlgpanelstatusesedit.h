@@ -22,6 +22,7 @@ private slots:
     void on_pbCancel_clicked();
     void on_pbOk_clicked();
     void on_chkAllowToSkip_clicked(bool checked);
+    void on_chkAllowToStop_clicked(bool checked);
 };
 
 #endif
