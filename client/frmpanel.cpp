@@ -209,8 +209,8 @@ bool cFrmPanel::isStatusCanBeReseted()
 {
     bool bRet = false;
 
-    if( m_obStatuses.at(m_uiStatus)->activateCommand() == 1 ||
-        m_obStatuses.at(m_uiStatus)->activateCommand() == 0 )
+    if( m_obStatuses.at(m_uiStatus)->activateCommand() == STATUS_VETKOZES ||
+        m_obStatuses.at(m_uiStatus)->activateCommand() == STATUS_ALAP )
     {
         bRet = true;
     }
