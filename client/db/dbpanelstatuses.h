@@ -35,6 +35,10 @@ public:
     void            setSkipLevel( const int p_nSkipLevel )                          throw();
     bool            allowedToSkip() const                                           throw();
     void            setAllowedToSkip( const bool p_bAllowedToSkip )                 throw();
+    int             stopLevel() const                                               throw();
+    void            setStopLevel( const int p_nStopLevel )                          throw();
+    bool            allowedToStop() const                                           throw();
+    void            setAllowedToStop( const bool p_bAllowedToStop )                 throw();
     QString         modified() const                                                throw();
     bool            active() const                                                  throw();
     void            setActive( const bool p_bActive )                               throw();
@@ -51,6 +55,8 @@ private:
     unsigned int    m_uiActivateCommand;
     int             m_nSkipLevel;
     bool            m_bAllowedToSkip;
+    int             m_nStopLevel;
+    bool            m_bAllowedToStop;
     QString         m_qsModified;
     bool            m_bActive;
     QString         m_qsArchive;
@@ -64,6 +70,8 @@ private:
                const unsigned int p_uiActivateCommand = 0,
                const int m_nSkipLevel = 4,
                const bool m_bAllowedToSkip = false,
+               const int m_nStopLevel = 4,
+               const bool m_bAllowedToStop = false,
                const QString &p_qsModified = "",
                const bool p_bActive = true,
                const QString &p_qsArchive = "NEW" )                     throw();

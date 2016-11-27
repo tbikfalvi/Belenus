@@ -65,6 +65,7 @@ public:
 
     bool            isWorking() const;
     bool            isStatusCanBeSkipped();
+    bool            isStatusCanBeStopped();
     bool            isStatusCanBeReseted();
     void            start();
     void            reset();
