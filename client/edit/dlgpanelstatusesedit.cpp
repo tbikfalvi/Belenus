@@ -13,8 +13,6 @@ cDlgPanelStatusesEdit::cDlgPanelStatusesEdit( QWidget *p_poParent, cDBPanelStatu
 
     pbOk->setIcon(     QIcon("./resources/40x40_ok.png") );
     pbCancel->setIcon( QIcon("./resources/40x40_cancel.png") );
-    checkIndependent->setEnabled( false );
-    checkIndependent->setVisible( false );
 
     m_poPanelStatuses = p_poPanelStatuses;
     if( m_poPanelStatuses )
@@ -40,28 +38,19 @@ cDlgPanelStatusesEdit::cDlgPanelStatusesEdit( QWidget *p_poParent, cDBPanelStatu
         }
 
         chkAllowToSkip->setChecked( m_poPanelStatuses->allowedToSkip() );
+        chkAllowToStop->setChecked( m_poPanelStatuses->allowedToStop() );
 
-        for( int i = cAccessGroup::MIN + 1; i < cAccessGroup::MAX; i++ )
+        int i;
+
+        for( i = cAccessGroup::MIN + 1; i < cAccessGroup::MAX; i++ )
             if( g_obUser.isInGroup( (cAccessGroup::teAccessGroup)i ) ) cmbSkipLevel->addItem( cAccessGroup::toStr( (cAccessGroup::teAccessGroup)i ) );
         cmbSkipLevel->setCurrentIndex( m_poPanelStatuses->skipLevel() - 1 );
         cmbSkipLevel->setEnabled( m_poPanelStatuses->allowedToSkip() );
 
-        /*if( m_poPanelStatuses->licenceId() == 0 && m_poPanelStatuses->id() > 0 )
-            checkIndependent->setChecked( true );
-
-        if( !g_obUser.isInGroup( cAccessGroup::ROOT ) && !g_obUser.isInGroup( cAccessGroup::SYSTEM ) )
-        {
-            checkIndependent->setEnabled( false );
-            if( m_poPanelStatuses->licenceId() == 0 && m_poPanelStatuses->id() > 0 )
-            {
-                gbIdentification->setEnabled( false );
-                gbProcess->setEnabled( false );
-                pbOk->setEnabled( false );
-            }
-        }
-        if( m_poPanelStatuses->id() > 0 )
-            checkIndependent->setEnabled( false );
-*/
+        for( i = cAccessGroup::MIN + 1; i < cAccessGroup::MAX; i++ )
+            if( g_obUser.isInGroup( (cAccessGroup::teAccessGroup)i ) ) cmbStopLevel->addItem( cAccessGroup::toStr( (cAccessGroup::teAccessGroup)i ) );
+        cmbStopLevel->setCurrentIndex( m_poPanelStatuses->stopLevel() - 1 );
+        cmbStopLevel->setEnabled( m_poPanelStatuses->allowedToStop() );
     }
     ledName->setEnabled( g_obUser.isInGroup( cAccessGroup::ADMIN ) );
     cmbPanelType->setEnabled( g_obUser.isInGroup( cAccessGroup::SYSTEM ) );
@@ -94,6 +83,28 @@ void cDlgPanelStatusesEdit::on_pbOk_clicked()
     {
         chkAllowToSkip->setChecked( false );
         cmbSkipLevel->setCurrentIndex( -1 );
+        chkAllowToStop->setChecked( false );
+        cmbStopLevel->setCurrentIndex( -1 );
+    }
+
+    if( !chkAllowToSkip->isChecked() )
+    {
+        cmbSkipLevel->setCurrentIndex( -1 );
+    }
+    else if( cmbSkipLevel->currentIndex() == -1 )
+    {
+        boCanBeSaved = false;
+        QMessageBox::warning( this, tr( "Warning" ), tr( "Please select user level from the dropdown list!" ) );
+    }
+
+    if( !chkAllowToStop->isChecked() )
+    {
+        cmbStopLevel->setCurrentIndex( -1 );
+    }
+    else if( cmbStopLevel->currentIndex() == -1 )
+    {
+        boCanBeSaved = false;
+        QMessageBox::warning( this, tr( "Warning" ), tr( "Please select user level from the dropdown list!" ) );
     }
 
     QSqlQuery *poQuery = NULL;
@@ -116,15 +127,8 @@ void cDlgPanelStatusesEdit::on_pbOk_clicked()
             m_poPanelStatuses->setActivateCommand( cmbActivateCmd->itemData( cmbActivateCmd->currentIndex() ).toInt() );
             m_poPanelStatuses->setAllowedToSkip( chkAllowToSkip->isChecked() );
             m_poPanelStatuses->setSkipLevel( (cmbSkipLevel->currentIndex() + 1) );
-
-            /*if( checkIndependent->isChecked() )
-            {
-                m_poPanelStatuses->setLicenceId( 0 );
-            }
-            else
-            {
-                m_poPanelStatuses->setLicenceId( g_poPrefs->getLicenceId() );
-            }*/
+            m_poPanelStatuses->setAllowedToStop( chkAllowToStop->isChecked() );
+            m_poPanelStatuses->setStopLevel( (cmbStopLevel->currentIndex() + 1) );
             m_poPanelStatuses->save();
 
             QDialog::accept();
@@ -146,4 +150,9 @@ void cDlgPanelStatusesEdit::on_pbCancel_clicked()
 void cDlgPanelStatusesEdit::on_chkAllowToSkip_clicked(bool checked)
 {
     cmbSkipLevel->setEnabled( checked );
+}
+
+void cDlgPanelStatusesEdit::on_chkAllowToStop_clicked(bool checked)
+{
+    cmbStopLevel->setEnabled( checked );
 }
