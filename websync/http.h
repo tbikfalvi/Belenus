@@ -143,7 +143,8 @@ private:
     bool            _processCommResponse();
     unsigned int    _saveGuest( QString p_qsName, QString p_qsUniqueId, QString p_qsEmail );
     unsigned int    _savePatientCard( QString p_qsBarcode, QString p_qsValidDateTo, QString p_qsUnitCount, unsigned int p_uiPatientId );
-    void            _savePatientCardUnits( QString p_qsUnitCount, unsigned int p_uiPatientCardId );
+    unsigned int    _saveOnlineSell( unsigned int p_uiPatientCardId, unsigned int p_uiPatientId, QString p_qsLedgerTime );
+    void            _savePatientCardUnits( QString p_qsUnitCount, unsigned int p_uiPatientCardId, unsigned int p_uiLedgerId );
 
 signals:
 

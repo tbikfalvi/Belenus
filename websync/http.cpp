@@ -893,8 +893,9 @@ bool cBlnsHttp::_processCommXML()
 
     for( int i=0; i<obCards.count(); i++)
     {
-        unsigned int    uiPatientId  = 0;
+        unsigned int    uiPatientId = 0;
         unsigned int    uiCardId    = 0;
+        unsigned int    uiLedgerId  = 0;
 
         QString qsBarcode = obCards.at(i).toElement().elementsByTagName("BarCode").at(0).toElement().text();
         QString qsUnitCount = obCards.at(i).toElement().elementsByTagName("OccasionNumber").at(0).toElement().text();
@@ -912,7 +913,8 @@ bool cBlnsHttp::_processCommXML()
 
             if( uiCardId > 0 )
             {
-                _savePatientCardUnits( qsUnitCount, uiCardId );
+                uiLedgerId = _saveOnlineSell( uiCardId, uiPatientId, qsCardSellDate );
+                _savePatientCardUnits( qsUnitCount, uiCardId, uiLedgerId );
             }
         }
     }
