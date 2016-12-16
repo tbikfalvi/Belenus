@@ -24,6 +24,7 @@
 #include <QAuthenticator>
 #include <QDateTime>
 #include <QStringList>
+#include <QDomDocument>
 
 #include <vector>
 
@@ -48,6 +49,8 @@ public:
         HA_PCSENDDATA,
         HA_PCUPDATERECORD,
         HA_PROCESSQUEUE,
+        HA_REQUESTDATA,
+        HA_SENDREQUESTSFINISHED,
         HA_PROCESSFINISHED
     };
 
@@ -55,13 +58,15 @@ public:
     {
         switch( p_enGA )
         {
-            case HA_DEFAULT:            return "HTTPMSG_00";    break;
-            case HA_AUTHENTICATE:       return "HTTPMSG_01";    break;
-            case HA_PCSENDDATA:         return "HTTPMSG_02";    break;
-            case HA_PCUPDATERECORD:     return "HTTPMSG_03";    break;
-            case HA_PROCESSQUEUE:       return "HTTPMSG_04";    break;
-            case HA_PROCESSFINISHED:    return "HTTPMSG_99";    break;
-            default:                    return "HTTPMSGERR";
+            case HA_DEFAULT:                    return "HTTPMSG_00";                                                break;
+            case HA_AUTHENTICATE:               return "HTTPMSG_01 Authentication with server";                     break;
+            case HA_PCSENDDATA:                 return "HTTPMSG_02 Send patientcard data to server";                break;
+            case HA_PCUPDATERECORD:             return "HTTPMSG_03 Update patientcard record on server";            break;
+            case HA_PROCESSQUEUE:               return "HTTPMSG_04 Process waiting queue";                          break;
+            case HA_REQUESTDATA:                return "HTTPMSG_05 Get patientcard data sold online";               break;
+            case HA_SENDREQUESTSFINISHED:       return "HTTPMSG_06 Processing patientcards sold online finished";   break;
+            case HA_PROCESSFINISHED:            return "HTTPMSG_99";                                                break;
+            default:                            return "HTTPMSGERR";
         }
     }
 };
@@ -77,13 +82,17 @@ public:
     ~cBlnsHttp();
 
     void             setTimeout( const int p_inTimeout );
-    void             sendPatientCardData( QString p_qsBarcode, QString p_qsPatientCardData, bool p_bSendNow = true );
-    void             processWaitingCardData();
-    void             checkHttpServerAvailability();
-    QString          errorMessage();
-    int              getNumberOfWaitingRecords();
     void             setServerAddress( QString p_qsServerAddress );
     void             setStudioLicenceString( QString p_qsLicenceString );
+    void             setCommunicationSuspended( bool p_bHttpSuspended = true );
+
+    void             checkHttpServerAvailability();
+    void             sendPatientCardData( QString p_qsBarcode, QString p_qsPatientCardData, bool p_bSendNow = true );
+    void             processWaitingCardData();
+    void             getPatientCardsSoldOnline();
+
+    int              getNumberOfWaitingRecords();
+    QString          errorMessage();
 
 protected:
 
@@ -103,14 +112,17 @@ private:
     int              m_inHttpProcessStep;
     QString          m_qsBarcode;
     QString          m_qsCardData;
-    QString          m_qsCardDataSendResponse;
     unsigned int     m_uiRecordId;
+    unsigned int     m_uiCommId;
+    unsigned int     m_uiCommIdNew;
 
     QString          m_qsServerAddress;
     bool             m_bIsHttpEnabled;
     bool             m_bIsHttpSuspended;
     unsigned int     m_uiLicenceId;
     QString          m_qsLicenceString;
+
+    QDomDocument    *obResponseXML;
 
     cBlnsHttpAction::teBlnsHttpAction           m_teBlnsHttpProcess;
     vector<cBlnsHttpAction::teBlnsHttpAction>   m_vrHttpActions;
@@ -122,10 +134,16 @@ private:
     void            _httpGetToken();
     void            _httpSendCardData();
     void            _readTokenFromFile();
-    void            _readCardSendResponseFromFile();
     void            _sendProcessFinished();
     void            _readResponseFromFile();
     void            _updateProcessedRecord();
+    void            _httpGetOnlineRecords();
+    void            _httpConfirmRequestedData();
+    bool            _processCommXML();
+    bool            _processCommResponse();
+    unsigned int    _saveGuest( QString p_qsName, QString p_qsUniqueId, QString p_qsEmail );
+    unsigned int    _savePatientCard( QString p_qsBarcode, QString p_qsValidDateTo, QString p_qsUnitCount, unsigned int p_uiPatientId );
+    void            _savePatientCardUnits( QString p_qsUnitCount, unsigned int p_uiPatientCardId );
 
 signals:
 

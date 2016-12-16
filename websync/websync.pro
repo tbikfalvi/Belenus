@@ -1,7 +1,7 @@
 
 greaterThan(QT_MAJOR_VERSION, 4): QT += widgets
 
-QT          += core gui multimedia network sql
+QT          += core gui multimedia network sql xml
 CONFIG      += qt
 RESOURCES   += websync.qrc
 RC_FILE      = websync.rc

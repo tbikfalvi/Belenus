@@ -389,6 +389,26 @@
               </spacer>
              </item>
              <item>
+              <widget class="QPushButton" name="pbStartStopHTTP">
+               <property name="toolTip">
+                <string>Reset HTTP Connection with KiwiSun Web Server</string>
+               </property>
+               <property name="text">
+                <string/>
+               </property>
+               <property name="icon">
+                <iconset resource="websync.qrc">
+                 <normaloff>:/hourglass.png</normaloff>:/hourglass.png</iconset>
+               </property>
+               <property name="iconSize">
+                <size>
+                 <width>15</width>
+                 <height>15</height>
+                </size>
+               </property>
+              </widget>
+             </item>
+             <item>
               <widget class="QPushButton" name="pbResetHTTP">
                <property name="toolTip">
                 <string>Reset HTTP Connection with KiwiSun Web Server</string>

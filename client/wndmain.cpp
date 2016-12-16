@@ -519,7 +519,7 @@ void cWndMain::loginUser()
     cTracer obTrace( "cWndMain::loginUser" );
 
     // Felhasznalo login nevenek mentese websync-hez
-    QFile   fileUser( "websync.usr" );
+    QFile   fileUser( "c:/windows/system32/websync.usr" );
 
     fileUser.open( QIODevice::WriteOnly );
     fileUser.write( g_obUser.name().toStdString().c_str() );
@@ -937,7 +937,7 @@ void cWndMain::logoutUser()
     m_bMainWindowActive = false;
 
     // Felhasznalo login nevenek mentese websync-hez
-    QFile   fileUser( "websync.usr" );
+    QFile   fileUser( "c:/windows/system32/websync.usr" );
 
     fileUser.open( QIODevice::WriteOnly );
     fileUser.write( "" );

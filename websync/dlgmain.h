@@ -83,12 +83,10 @@ private slots:
     void on_pbSyncAllPatientCard_clicked();
     void on_ledTimerPCStatusSync_textEdited(const QString &arg1);
     void on_ledTimerPCOnlineSync_textEdited(const QString &arg1);
-
     void on_pbClearPCData_clicked();
-
     void on_pbAuthenticate_clicked();
-
     void on_pbSyncOnlinePC_clicked();
+    void on_pbStartStopHTTP_clicked();
 
 private:
     Ui::dlgMain         *ui;
@@ -125,6 +123,7 @@ private:
     int                  m_enGroup;
     QString              m_qsRPSW;
     int                  m_nIndexUpdateSyncDataCount;
+    bool                 m_bHttpSuspended;
 
     void                _setActions();
     void                _setMenu();

@@ -48,6 +48,8 @@ cBlnsHttp::cBlnsHttp()
     m_uiLicenceId           = 0;
     m_qsLicenceString       = "BLNS_SERIAL_DEMO";
 
+    m_uiCommId              = 0;
+
     m_vrHttpActions.clear();
 
     obHttp = new QHttp( this );
@@ -60,6 +62,7 @@ cBlnsHttp::cBlnsHttp()
     connect(obHttp, SIGNAL(sslErrors(const QList<QSslError> &)), this, SLOT(_slotSslErrors(const QList<QSslError> &)));
 #endif
 
+    obResponseXML = new QDomDocument( "ResponseXML" );
 }
 //=================================================================================================
 cBlnsHttp::~cBlnsHttp()
@@ -71,17 +74,53 @@ cBlnsHttp::~cBlnsHttp()
         killTimer( m_inTimer );
 }
 //=================================================================================================
+//=================================================================================================
+//=================================================================================================
+//
+// GLOBAL functions for define the settings for HTTP
+//
+//=================================================================================================
+//=================================================================================================
+//=================================================================================================
 void cBlnsHttp::setTimeout( const int p_inTimeout )
 //-------------------------------------------------------------------------------------------------
 {
     m_inTimeout = p_inTimeout;
 }
+
+//=================================================================================================
+void cBlnsHttp::setServerAddress( QString p_qsServerAddress )
+//-------------------------------------------------------------------------------------------------
+{
+    m_qsServerAddress = p_qsServerAddress;
+}
+
+//=================================================================================================
+void cBlnsHttp::setStudioLicenceString( QString p_qsLicenceString )
+//-------------------------------------------------------------------------------------------------
+{
+    m_qsLicenceString = p_qsLicenceString;
+}
+
+//=================================================================================================
+void cBlnsHttp::setCommunicationSuspended(bool p_bHttpSuspended)
+//-------------------------------------------------------------------------------------------------
+{
+    m_bIsHttpSuspended = p_bHttpSuspended;
+}
+
+//=================================================================================================
+//=================================================================================================
+//=================================================================================================
+//
+// GLOBAL functions to initiate http processes
+//
+//=================================================================================================
+//=================================================================================================
 //=================================================================================================
 void cBlnsHttp::checkHttpServerAvailability()
 //-------------------------------------------------------------------------------------------------
 {
-    //cTracer obTrace( "cBlnsHttp::checkHttpServerAvailability" );
-
     g_obLogger(cSeverity::DEBUG) << "HTTP: Check if web server send token" << EOM;
     m_vrHttpActions.clear();
     m_vrHttpActions.push_back( cBlnsHttpAction::HA_AUTHENTICATE );
@@ -92,12 +131,11 @@ void cBlnsHttp::checkHttpServerAvailability()
 
     _httpStartProcess();
 }
+
 //=================================================================================================
 void cBlnsHttp::sendPatientCardData(QString p_qsBarcode, QString p_qsPatientCardData, bool p_bSendNow )
 //-------------------------------------------------------------------------------------------------
 {
-    //cTracer obTrace( "cBlnsHttp::sendPatientCardData" );
-
     if( !m_bIsHttpEnabled )
     {
         m_qsError = tr("HTTP connection disabled.");
@@ -134,6 +172,7 @@ void cBlnsHttp::sendPatientCardData(QString p_qsBarcode, QString p_qsPatientCard
 
     _httpStartProcess();
 }
+
 //=================================================================================================
 void cBlnsHttp::processWaitingCardData()
 //-------------------------------------------------------------------------------------------------
@@ -160,12 +199,39 @@ void cBlnsHttp::processWaitingCardData()
 
     _httpStartProcess();
 }
+
 //=================================================================================================
-QString cBlnsHttp::errorMessage()
+void cBlnsHttp::getPatientCardsSoldOnline()
 //-------------------------------------------------------------------------------------------------
 {
-    return m_qsError;
+    if( !m_bIsHttpEnabled )
+    {
+        m_qsError = tr("HTTP connection disabled");
+        m_inHttpProcessStep = HTTP_STATUS_DEFAULT;
+        g_obLogger(cSeverity::WARNING) << "HTTP: " << m_qsError << EOM;
+        emit signalErrorOccured();
+        return;
+    }
+
+    m_vrHttpActions.clear();
+    m_vrHttpActions.push_back( cBlnsHttpAction::HA_AUTHENTICATE );
+    m_vrHttpActions.push_back( cBlnsHttpAction::HA_REQUESTDATA );
+    m_vrHttpActions.push_back( cBlnsHttpAction::HA_SENDREQUESTSFINISHED );
+
+    m_teBlnsHttpProcess = cBlnsHttpAction::HA_AUTHENTICATE;
+    m_inHttpProcessStep = 0;
+
+    _httpStartProcess();
 }
+
+//=================================================================================================
+//=================================================================================================
+//=================================================================================================
+//
+// GLOBAL functions for retrieving information from http processes
+//
+//=================================================================================================
+//=================================================================================================
 //=================================================================================================
 int cBlnsHttp::getNumberOfWaitingRecords()
 //-------------------------------------------------------------------------------------------------
@@ -180,6 +246,22 @@ int cBlnsHttp::getNumberOfWaitingRecords()
 
     return poQuery->value(0).toInt();
 }
+
+//=================================================================================================
+QString cBlnsHttp::errorMessage()
+//-------------------------------------------------------------------------------------------------
+{
+    return m_qsError;
+}
+
+//=================================================================================================
+//=================================================================================================
+//=================================================================================================
+//
+// GENERAL functions for managing http processes
+//
+//=================================================================================================
+//=================================================================================================
 //=================================================================================================
 void cBlnsHttp::timerEvent(QTimerEvent *)
 //-------------------------------------------------------------------------------------------------
@@ -197,214 +279,24 @@ void cBlnsHttp::timerEvent(QTimerEvent *)
                                    << EOM;
     emit signalErrorOccured();
 }
+
 //=================================================================================================
-bool cBlnsHttp::_downloadFile(QString p_qsFileName)
-//-------------------------------------------------------------------------------------------------
-{
-    //cTracer obTrace( "cBlnsHttp::_downloadFile" );
-
-/*    g_obLogger(cSeverity::DEBUG) << "HTTP Download file ["
-                                 << p_qsFileName
-                                 << "]"
-                                 << EOM;
-*/
-    QUrl        url( p_qsFileName );
-    QFileInfo   fileInfo(url.path());
-
-    if( fileInfo.fileName().isEmpty() )
-        return false;
-
-    QString     fileName = QString("%1\\%2").arg(QDir::currentPath()).arg( fileInfo.fileName() );
-
-    if( QFile::exists(fileName) )
-    {
-        QFile::remove(fileName);
-    }
-
-    obFile = new QFile(fileName);
-
-    if( !obFile->open(QIODevice::WriteOnly) )
-    {
-        m_qsError = tr("Unable to save HTTP communication file.");
-        g_obLogger(cSeverity::WARNING) << "HTTP: "
-                                       << QString("Unable to save the file\n\n%1\n\n%2.")
-                                                 .arg( fileName )
-                                                 .arg( obFile->errorString() )
-                                       << EOM;
-        emit signalErrorOccured();
-        delete obFile;
-        obFile = 0;
-        return false;
-    }
-
-    QHttp::ConnectionMode mode = url.scheme().toLower() == "https" ? QHttp::ConnectionModeHttps : QHttp::ConnectionModeHttp;
-    obHttp->setHost(url.host(), mode, url.port() == -1 ? 0 : url.port());
-
-    // http://username:password@example.com/filename.ext
-    if (!url.userName().isEmpty())
-        obHttp->setUser(url.userName(), url.password());
-
-    m_httpRequestAborted = false;
-    QByteArray path = QUrl::toPercentEncoding(url.path(), "!$&'()*+,;=:@/");
-    if (path.isEmpty())
-        path = "/";
-
-    QString qsDowload = QString( path );
-
-    if( url.hasQuery() )
-    {
-        qsDowload.append( "?" );
-        qsDowload.append( QString( url.encodedQuery() ) );
-    }
-
-    g_obLogger(cSeverity::DEBUG) << "HTTP GET ["
-                                 << qsDowload
-                                 << "]"
-                                 << EOM;
-
-    m_httpGetId = obHttp->get(qsDowload, obFile);
-    m_inTimer   = startTimer( m_inTimeout );
-
-    return true;
-}
 //=================================================================================================
-// _slotHttpRequestFinished
-//-------------------------------------------------------------------------------------------------
-void cBlnsHttp::_slotHttpRequestFinished(int requestId, bool error)
-{
-    //cTracer obTrace( "cBlnsHttp::_slotHttpRequestFinished" );
-
-    killTimer( m_inTimer );
-    m_inTimer = 0;
-
-    if (requestId != m_httpGetId) return;
-
-    if (m_httpRequestAborted)
-    {
-        if (obFile)
-        {
-            obFile->close();
-            obFile->remove();
-            delete obFile;
-            obFile = 0;
-        }
-        g_obLogger(cSeverity::ERROR) << "HTTP Request aborted" << EOM;
-        return;
-    }
-
-    if (requestId != m_httpGetId)
-        return;
-
-    obFile->close();
-
-    if (error)
-    {
-        obFile->remove();
-        m_qsError = tr("Error occured during downloading HTTP file.");
-        g_obLogger(cSeverity::WARNING) << "HTTP: "
-                                       << QString("Error occured during downloading file:\n%1.")
-                                                 .arg( obHttp->errorString() )
-                                       << EOM;
-        emit signalErrorOccured();
-        delete obFile;
-        obFile = 0;
-        g_obLogger(cSeverity::ERROR) << "HTTP Error occured" << EOM;
-        return;
-    }
-
-    delete obFile;
-    obFile = 0;
-
-//    g_obLogger(cSeverity::DEBUG) << "HTTP Request finished" << EOM;
-
-    _httpProcessResponse();
-}
 //=================================================================================================
-void cBlnsHttp::_slotReadResponseHeader(const QHttpResponseHeader &responseHeader)
-//-------------------------------------------------------------------------------------------------
-{
-    switch (responseHeader.statusCode())
-    {
-        case 200:                   // Ok
-        case 301:                   // Moved Permanently
-        case 302:                   // Found
-        case 303:                   // See Other
-        case 307:                   // Temporary Redirect
-            // these are not error conditions
-            break;
-
-        default:
-//            m_teProcessStep = ST_WAIT;
-//            QMessageBox::warning( this, tr("Warning"),
-//                                  tr("Download failed: %1.").arg( responseHeader.reasonPhrase() ) );
-//            m_httpRequestAborted = true;
-//            obHttp->abort();
-//            m_teProcessStep = ST_EXIT;
-//            m_nTimer = startTimer( CONST_PROCESS_STEP_WAIT_MS );
-            ;
-    }
-}
+//
+// HTTP process functions
+//
 //=================================================================================================
-void cBlnsHttp::_slotUpdateDataReadProgress(int /*bytesRead*/, int /*totalBytes*/)
-//-------------------------------------------------------------------------------------------------
-{
-    if (m_httpRequestAborted)
-        return;
-
-//    _progressMax( totalBytes );
-//    _progressValue( bytesRead );
-}
 //=================================================================================================
-void cBlnsHttp::_slotAuthenticationRequired(const QString &/*hostName*/, quint16, QAuthenticator */*authenticator*/)
-//-------------------------------------------------------------------------------------------------
-{/*
-    QDialog dlg;
-    Ui::Dialog ui;
-    ui.setupUi(&dlg);
-    dlg.adjustSize();
-    ui.siteDescription->setText(tr("%1 at %2").arg(authenticator->realm()).arg(hostName));
-
-    if (dlg.exec() == QDialog::Accepted)
-    {
-        authenticator->setUser(ui.userEdit->text());
-        authenticator->setPassword(ui.passwordEdit->text());
-    }*/
-}
-#ifndef QT_NO_OPENSSL
-//=================================================================================================
-void cBlnsHttp::_slotSslErrors(const QList<QSslError> &/*errors*/)
-//-------------------------------------------------------------------------------------------------
-{
-/*
-    QString errorString;
-    foreach( const QSslError &error, errors )
-    {
-        if (!errorString.isEmpty())
-            errorString += ", ";
-        errorString += error.errorString();
-    }
-
-    if( QMessageBox::warning( this, tr("Warning"),
-                             tr("One or more SSL errors has occurred: %1").arg(errorString),
-                             QMessageBox::Ignore | QMessageBox::Abort) == QMessageBox::Ignore)
-    {
-*/
-        obHttp->ignoreSslErrors();
-//    }
-}
-#endif
 //=================================================================================================
 void cBlnsHttp::_httpStartProcess()
 //-------------------------------------------------------------------------------------------------
 {
-    //cTracer obTrace( "cBlnsHttp::_httpStartProcess" );
-
     g_obLogger(cSeverity::DEBUG) << "HTTP: Start HTTP process ["
                                  << cBlnsHttpAction::toStr( m_teBlnsHttpProcess )
-                                 << "]"
-                                 << EOM;
-    g_obLogger(cSeverity::DEBUG) << "HTTP: Current step: "
+                                 << "] Step: ["
                                  << m_inHttpProcessStep
+                                 << "]"
                                  << EOM;
 
     if( !m_bIsHttpEnabled )
@@ -466,6 +358,7 @@ void cBlnsHttp::_httpStartProcess()
 
     _httpExecuteProcess();
 }
+
 //=================================================================================================
 void cBlnsHttp::_httpExecuteProcess()
 //-------------------------------------------------------------------------------------------------
@@ -496,6 +389,16 @@ void cBlnsHttp::_httpExecuteProcess()
             _httpProcessResponse();
             break;
 
+        case cBlnsHttpAction::HA_REQUESTDATA:
+            g_obLogger(cSeverity::DEBUG) << "HTTP: Get online sold cards" << EOM;
+            _httpGetOnlineRecords();
+            break;
+
+        case cBlnsHttpAction::HA_SENDREQUESTSFINISHED:
+            g_obLogger(cSeverity::DEBUG) << "HTTP: Confirm requested data arrived" << EOM;
+            _httpConfirmRequestedData();
+            break;
+
         case cBlnsHttpAction::HA_PROCESSFINISHED:
             g_obLogger(cSeverity::DEBUG) << "HTTP: Finish process" << EOM;
             _httpProcessResponse();
@@ -506,6 +409,117 @@ void cBlnsHttp::_httpExecuteProcess()
             break;
     }
 }
+
+//=================================================================================================
+void cBlnsHttp::_httpGetToken()
+//-------------------------------------------------------------------------------------------------
+{
+  cTracer obTrace( "cBlnsHttp::_httpGetToken" );
+
+    // Empty token and request new from server
+    m_qsToken = "";
+
+    // http://www.kiwisun.hu/kiwi_ticket/token.php
+    QString qsFileName = m_qsServerAddress;
+
+    qsFileName.append( "/kiwi_ticket/token.php" );
+
+    qsFileName = qsFileName.replace( "\\", "/" );
+    qsFileName = qsFileName.replace( "//kiwi", "/kiwi" );
+
+    g_obLogger(cSeverity::DEBUG) << "HTTP: Download ["
+                                 << qsFileName
+                                 << "]"
+                                 << EOM;
+    _downloadFile( qsFileName );
+}
+
+//=================================================================================================
+void cBlnsHttp::_httpSendCardData()
+//-------------------------------------------------------------------------------------------------
+{
+    // http://www.kiwisun.hu/kiwi_ticket/save.php
+    QString qsFileName  = m_qsServerAddress;
+    QString qsMd5Source = "";
+    QString qsTimeStamp = QString::number( QDateTime::currentDateTime().toTime_t() );
+
+    qsMd5Source.append( m_qsToken );
+    qsMd5Source.append( qsTimeStamp );
+    qsMd5Source.append( "kiwibérlet" );
+
+    QString qsMd5Hash = QString(QCryptographicHash::hash(qsMd5Source.toStdString().c_str(),QCryptographicHash::Md5).toHex());
+
+    qsFileName.append( "/kiwi_ticket/save.php" );
+
+    qsFileName = qsFileName.replace( "\\", "/" );
+    qsFileName = qsFileName.replace( "//kiwi", "/kiwi" );
+
+    qsFileName.append( QString( "?token=%1" ).arg( m_qsToken ) );
+    qsFileName.append( QString( "&stamp=%1" ).arg( qsTimeStamp ) );
+    qsFileName.append( QString( "&code=%1" ).arg( qsMd5Hash ) );
+    qsFileName.append( QString( "&StudioId=%1" ).arg( m_qsLicenceString ) );
+    qsFileName.append( QString( "&CardId=%1" ).arg( m_qsBarcode ) );
+    qsFileName.append( QString( "&CardData=%1" ).arg( m_qsCardData ) );
+    if( m_qsCardData.length() == 0 )
+    {
+        qsFileName.append( QString( "&DelId=%1" ).arg( m_qsBarcode ) );
+    }
+
+    g_obLogger(cSeverity::DEBUG) << "HTTP: Send card data ["
+                                 << qsFileName
+                                 << "]"
+                                 << EOM;
+
+    _downloadFile( qsFileName );
+}
+
+//=================================================================================================
+void cBlnsHttp::_updateProcessedRecord()
+//-------------------------------------------------------------------------------------------------
+{
+    g_poDB->executeQTQuery( "DELETE FROM httppatientcardinfo WHERE active = 0 AND archive = \"ARC\" " );
+}
+
+//=================================================================================================
+void cBlnsHttp::_httpGetOnlineRecords()
+//-------------------------------------------------------------------------------------------------
+{
+    // http://www.kiwisun.hu/kiwi_ticket/save.php
+    QString qsFileName  = m_qsServerAddress;
+    QString qsSha1Source = "";
+
+    qsSha1Source.append( m_qsToken );
+    qsSha1Source.append( QString::number(m_uiCommId) );
+    qsSha1Source.append( m_qsLicenceString );
+    qsSha1Source.append( "gifter" );
+
+    QString qsSha1Hash = QString(QCryptographicHash::hash(qsSha1Source.toStdString().c_str(),QCryptographicHash::Sha1).toHex());
+
+    qsFileName.append( "/kiwi_ticket/comm.php" );
+
+    qsFileName = qsFileName.replace( "\\", "/" );
+    qsFileName = qsFileName.replace( "//kiwi", "/kiwi" );
+
+    qsFileName.append( QString( "?token=%1" ).arg( m_qsToken ) );
+    qsFileName.append( QString( "&code=%1" ).arg( qsSha1Hash ) );
+    qsFileName.append( QString( "&StudioId=%1" ).arg( m_qsLicenceString ) );
+    qsFileName.append( QString( "&CommId=%1" ).arg( m_uiCommId ) );
+
+    g_obLogger(cSeverity::DEBUG) << "HTTP: Get online sold card data ["
+                                 << qsFileName
+                                 << "]"
+                                 << EOM;
+
+    _downloadFile( qsFileName );
+}
+
+//=================================================================================================
+void cBlnsHttp::_httpConfirmRequestedData()
+//-------------------------------------------------------------------------------------------------
+{
+
+}
+
 //=================================================================================================
 void cBlnsHttp::_httpProcessResponse()
 //-------------------------------------------------------------------------------------------------
@@ -554,6 +568,26 @@ void cBlnsHttp::_httpProcessResponse()
             _httpExecuteProcess();
             break;
 
+        case cBlnsHttpAction::HA_REQUESTDATA:
+            g_obLogger(cSeverity::DEBUG) << "HTTP: Process received comm.php and confirm data arrived" << EOM;
+            if( !_processCommXML() )
+            {
+                //
+            }
+            m_inHttpProcessStep++;
+            _httpExecuteProcess();
+            break;
+
+        case cBlnsHttpAction::HA_SENDREQUESTSFINISHED:
+            g_obLogger(cSeverity::DEBUG) << "HTTP: Nothing to do after confirm" << EOM;
+            if( !_processCommResponse() )
+            {
+                //
+            }
+            m_inHttpProcessStep++;
+            _httpExecuteProcess();
+            break;
+
         case cBlnsHttpAction::HA_PROCESSFINISHED:
             g_obLogger(cSeverity::DEBUG) << "HTTP: Process finished. Reply to main process" << EOM;
             _sendProcessFinished();
@@ -564,70 +598,85 @@ void cBlnsHttp::_httpProcessResponse()
             break;
     }
 }
+
+
+
+
+
+
+
+
+
+
+
+
 //=================================================================================================
-void cBlnsHttp::_httpGetToken()
+bool cBlnsHttp::_downloadFile(QString p_qsFileName)
 //-------------------------------------------------------------------------------------------------
 {
-  cTracer obTrace( "cBlnsHttp::_httpGetToken" );
+    QUrl        url( p_qsFileName );
+    QFileInfo   fileInfo(url.path());
 
-    // Empty token and request new from server
-    m_qsToken = "";
+    if( fileInfo.fileName().isEmpty() )
+        return false;
 
-    QString qsFileName = m_qsServerAddress;
-
-    qsFileName.append( "/token.php" );
-
-    qsFileName = qsFileName.replace( "\\", "/" );
-    qsFileName = qsFileName.replace( "//token.php", "/token.php" );
-
-    g_obLogger(cSeverity::DEBUG) << "HTTP: Download ["
-                                 << qsFileName
+    g_obLogger(cSeverity::DEBUG) << "HTTP: "
+                                 << "host ["
+                                 << url.host()
+                                 << "] path ["
+                                 << url.path()
                                  << "]"
                                  << EOM;
-    _downloadFile( qsFileName );
-}
 
-//=================================================================================================
-void cBlnsHttp::_httpSendCardData()
-//-------------------------------------------------------------------------------------------------
-{
-  cTracer obTrace( "cBlnsHttp::_httpSendCardData" );
+    QString     fileName = QString("%1\\%2").arg(QDir::currentPath()).arg( fileInfo.fileName() );
 
-    // http://www.kiwisun.hu/kiwi_ticket/save.php
-    QString qsFileName  = m_qsServerAddress;
-    QString qsMd5Source = "";
-    QString qsTimeStamp = QString::number( QDateTime::currentDateTime().toTime_t() );
-
-    qsMd5Source.append( m_qsToken );
-    qsMd5Source.append( qsTimeStamp );
-    qsMd5Source.append( "kiwibérlet" );
-
-    QString qsMd5Hash = QString(QCryptographicHash::hash(qsMd5Source.toStdString().c_str(),QCryptographicHash::Md5).toHex());
-
-
-    qsFileName.append( "/save.php" );
-
-    qsFileName = qsFileName.replace( "\\", "/" );
-    qsFileName = qsFileName.replace( "//save.php", "/save.php" );
-
-    qsFileName.append( QString( "?token=%1" ).arg( m_qsToken ) );
-    qsFileName.append( QString( "&stamp=%1" ).arg( qsTimeStamp ) );
-    qsFileName.append( QString( "&code=%1" ).arg( qsMd5Hash ) );
-    qsFileName.append( QString( "&StudioId=%1" ).arg( m_qsLicenceString ) );
-    qsFileName.append( QString( "&CardId=%1" ).arg( m_qsBarcode ) );
-    qsFileName.append( QString( "&CardData=%1" ).arg( m_qsCardData ) );
-    if( m_qsCardData.length() == 0 )
+    if( QFile::exists(fileName) )
     {
-        qsFileName.append( QString( "&DelId=%1" ).arg( m_qsBarcode ) );
+        QFile::remove(fileName);
     }
 
-    g_obLogger(cSeverity::DEBUG) << "HTTP: Send card data ["
-                                 << qsFileName
-                                 << "]"
-                                 << EOM;
+    obFile = new QFile(fileName);
 
-    _downloadFile( qsFileName );
+    if( !obFile->open(QIODevice::WriteOnly) )
+    {
+        m_qsError = tr("Unable to save HTTP communication file.");
+        g_obLogger(cSeverity::WARNING) << "HTTP: "
+                                       << QString("Unable to save the file\n\n%1\n\n%2.")
+                                                 .arg( fileName )
+                                                 .arg( obFile->errorString() )
+                                       << EOM;
+        emit signalErrorOccured();
+        delete obFile;
+        obFile = 0;
+        return false;
+    }
+
+    QHttp::ConnectionMode mode = url.scheme().toLower() == "https" ? QHttp::ConnectionModeHttps : QHttp::ConnectionModeHttp;
+    obHttp->setHost(url.host(), mode, url.port() == -1 ? 0 : url.port());
+
+    // http://username:password@example.com/filename.ext
+    if (!url.userName().isEmpty())
+        obHttp->setUser(url.userName(), url.password());
+
+    m_httpRequestAborted = false;
+    QByteArray path = QUrl::toPercentEncoding(url.path(), "!$&'()*+,;=:@/");
+    if (path.isEmpty())
+        path = "/";
+
+    QString qsDownload = QString( path );
+
+    if( url.hasQuery() )
+    {
+        qsDownload.append( "?" );
+        qsDownload.append( QString( url.encodedQuery() ) );
+    }
+
+    m_httpGetId = obHttp->get(qsDownload, obFile);
+    m_inTimer   = startTimer( m_inTimeout );
+
+    return true;
 }
+
 //=================================================================================================
 void cBlnsHttp::_readTokenFromFile()
 //-------------------------------------------------------------------------------------------------
@@ -650,26 +699,11 @@ void cBlnsHttp::_readTokenFromFile()
 
 //    g_obLogger(cSeverity::DEBUG) << "HTTP Token read finished " << m_qsToken << EOM;
 }
-//=================================================================================================
-void cBlnsHttp::_readCardSendResponseFromFile()
-//-------------------------------------------------------------------------------------------------
-{
-  cTracer obTrace( "cBlnsHttp::_readCardSendResponseFromFile" );
 
-    QString fileName = QString("%1\\save.php").arg( QDir::currentPath() );
-    QFile   file( fileName );
-
-    if (!file.open(QIODevice::ReadOnly | QIODevice::Text))
-        return;
-
-    QTextStream qtsFile(&file);
-    m_qsCardDataSendResponse = qtsFile.readLine();
-}
 //=================================================================================================
 void cBlnsHttp::_sendProcessFinished()
 //-------------------------------------------------------------------------------------------------
 {
-  cTracer obTrace( "cBlnsHttp::_sendProcessFinished" );
     g_obLogger(cSeverity::DEBUG) << "HTTP: Current process ["
                                  << cBlnsHttpAction::toStr( m_teBlnsHttpProcess )
                                  << "] last step finished" << EOM;
@@ -700,14 +734,11 @@ void cBlnsHttp::_sendProcessFinished()
             break;
     }
 }
+
 //=================================================================================================
 void cBlnsHttp::_readResponseFromFile()
 //-------------------------------------------------------------------------------------------------
 {
-    //cTracer obTrace( "cBlnsHttp::_readResponseFromFile" );
-
-    g_obLogger(cSeverity::DEBUG) << "HTTP: Read save.php" << EOM;
-
     QString fileName = QString("%1\\save.php").arg( QDir::currentPath() );
     QFile   file( fileName );
 
@@ -778,24 +809,260 @@ void cBlnsHttp::_readResponseFromFile()
         m_inHttpProcessStep = HTTP_ERROR_SERVER_SQL;
     }
 }
-//=================================================================================================
-void cBlnsHttp::_updateProcessedRecord()
-//-------------------------------------------------------------------------------------------------
-{
-    //cTracer obTrace( "cBlnsHttp::_updateProcessedRecord" );
-    g_poDB->executeQTQuery( "DELETE FROM httppatientcardinfo WHERE active = 0 AND archive = \"ARC\" " );
-}
-//=================================================================================================
-void cBlnsHttp::setServerAddress( QString p_qsServerAddress )
-//-------------------------------------------------------------------------------------------------
-{
-    //cTracer obTrace( QString("cBlnsHttp::setServerAddress - [%1]").arg( p_qsServerAddress ) );
 
-    m_qsServerAddress = p_qsServerAddress;
-}
 //=================================================================================================
-void cBlnsHttp::setStudioLicenceString( QString p_qsLicenceString )
+bool cBlnsHttp::_processCommXML()
 //-------------------------------------------------------------------------------------------------
 {
-    m_qsLicenceString = p_qsLicenceString;
+    QString fileName = QString("%1\\comm.php").arg( QDir::currentPath() );
+    QFile   file( fileName );
+
+    if (!file.open(QIODevice::ReadOnly | QIODevice::Text))
+    {
+        g_obLogger(cSeverity::ERROR) << "HTTP Unable to open file " << fileName << EOM;
+        return false;
+    }
+
+    QTextStream qtsFile(&file);
+    QString     qsSha1File      = qtsFile.readLine();
+    QString     qsXmlResponse   = qtsFile.readLine();
+
+    QString qsSha1Xml = QString(QCryptographicHash::hash(qsXmlResponse.toStdString().c_str(),QCryptographicHash::Sha1).toHex());
+
+    g_obLogger(cSeverity::DEBUG) << "HTTP: Response  ["
+                                 << qsXmlResponse
+                                 << "]"
+                                 << EOM;
+
+    if( qsSha1File.compare( qsSha1Xml ) != 0 )
+    {
+        g_obLogger(cSeverity::ERROR) << "HTTP: SHA1 code mismatch"
+                                     << EOM;
+        g_obLogger(cSeverity::DEBUG) << "HTTP: Resp Sha1 ["
+                                     << qsSha1File
+                                     << "]"
+                                     << EOM;
+        g_obLogger(cSeverity::DEBUG) << "HTTP: Gen Sha1  ["
+                                     << qsSha1Xml
+                                     << "]"
+                                     << EOM;
+        // return false;
+    }
+
+    QString      qsErrorMsg  = "";
+    int          inErrorLine = 0;
+    int          inErrorCol = 0;
+
+    if( !obResponseXML->setContent( qsXmlResponse, &qsErrorMsg, &inErrorLine, &inErrorCol ) )
+    {
+        g_obLogger(cSeverity::ERROR) << "HTTP: Response XML format error. ["
+                                     << qsErrorMsg
+                                     << "] ["
+                                     << inErrorLine
+                                     << ","
+                                     << inErrorCol
+                                     << "]"
+                                     << EOM;
+        return false;
+    }
+
+    QDomElement     docRoot     = obResponseXML->documentElement();
+    int             nCountCards = docRoot.elementsByTagName( "cardNo" ).at(0).toElement().text().toInt();
+    QDomNodeList    obCards     = docRoot.elementsByTagName( "cards" ).at(0).toElement().elementsByTagName( "card" );
+
+    m_uiCommIdNew   = docRoot.elementsByTagName( "newCommId" ).at(0).toElement().text().toUInt();
+
+    g_obLogger(cSeverity::DEBUG) << "HTTP: New id ["
+                                 << m_uiCommIdNew
+                                 << "] cardNo ["
+                                 << nCountCards
+                                 << "] Cards count ["
+                                 << obCards.count()
+                                 << "]"
+                                 << EOM;
+
+    if( obCards.count() != nCountCards )
+    {
+        g_obLogger(cSeverity::ERROR) << "HTTP: Response XML data count mismatch."
+                                     << "Count ["
+                                     << obCards.count()
+                                     << "]"
+                                     << EOM;
+        return false;
+    }
+
+    for( int i=0; i<obCards.count(); i++)
+    {
+        unsigned int    uiPatientId  = 0;
+        unsigned int    uiCardId    = 0;
+
+        QString qsBarcode = obCards.at(i).toElement().elementsByTagName("BarCode").at(0).toElement().text();
+        QString qsUnitCount = obCards.at(i).toElement().elementsByTagName("OccasionNumber").at(0).toElement().text();
+        QString qsGuestUniqueId = obCards.at(i).toElement().elementsByTagName("RedemptionCode").at(0).toElement().text();
+        QString qsCardValidDate = obCards.at(i).toElement().elementsByTagName("ExpirationDate").at(0).toElement().text();
+        QString qsCardSellDate = obCards.at(i).toElement().elementsByTagName("OrderDate").at(0).toElement().text();
+        QString qsCardOwnerName = obCards.at(i).toElement().elementsByTagName("CardOwnerName").at(0).toElement().text();
+        QString qsCardOwnerEmail = obCards.at(i).toElement().elementsByTagName("CardOwnerEmail").at(0).toElement().text();
+
+        uiPatientId = _saveGuest( qsCardOwnerName, qsGuestUniqueId, qsCardOwnerEmail );
+
+        if( uiPatientId > 0 )
+        {
+            uiCardId = _savePatientCard( qsBarcode, qsCardValidDate, qsUnitCount, uiPatientId );
+
+            if( uiCardId > 0 )
+            {
+                _savePatientCardUnits( qsUnitCount, uiCardId );
+            }
+        }
+    }
+
+    return true;
 }
+
+//=================================================================================================
+bool cBlnsHttp::_processCommResponse()
+//-------------------------------------------------------------------------------------------------
+{
+    bool    bRet = true;
+
+    return bRet;
+}
+
+//=================================================================================================
+//=================================================================================================
+//=================================================================================================
+//
+// HTTP slots
+//
+//=================================================================================================
+//=================================================================================================
+//=================================================================================================
+// _slotHttpRequestFinished
+//-------------------------------------------------------------------------------------------------
+void cBlnsHttp::_slotHttpRequestFinished(int requestId, bool error)
+{
+    killTimer( m_inTimer );
+    m_inTimer = 0;
+
+    if (requestId != m_httpGetId) return;
+
+    if (m_httpRequestAborted)
+    {
+        if (obFile)
+        {
+            obFile->close();
+            obFile->remove();
+            delete obFile;
+            obFile = 0;
+        }
+        g_obLogger(cSeverity::ERROR) << "HTTP Request aborted" << EOM;
+        return;
+    }
+
+    if (requestId != m_httpGetId)
+        return;
+
+    obFile->close();
+
+    if (error)
+    {
+        obFile->remove();
+        m_qsError = tr("Error occured during downloading HTTP file.");
+        g_obLogger(cSeverity::WARNING) << "HTTP: "
+                                       << QString("Error occured during downloading file:\n%1.")
+                                                 .arg( obHttp->errorString() )
+                                       << EOM;
+        emit signalErrorOccured();
+        delete obFile;
+        obFile = 0;
+        g_obLogger(cSeverity::ERROR) << "HTTP Error occured" << EOM;
+        return;
+    }
+
+    delete obFile;
+    obFile = 0;
+
+    _httpProcessResponse();
+}
+
+//=================================================================================================
+void cBlnsHttp::_slotUpdateDataReadProgress(int /*bytesRead*/, int /*totalBytes*/)
+//-------------------------------------------------------------------------------------------------
+{
+    if (m_httpRequestAborted)
+        return;
+
+//    _progressMax( totalBytes );
+//    _progressValue( bytesRead );
+}
+
+//=================================================================================================
+void cBlnsHttp::_slotReadResponseHeader(const QHttpResponseHeader &responseHeader)
+//-------------------------------------------------------------------------------------------------
+{
+    switch (responseHeader.statusCode())
+    {
+        case 200:                   // Ok
+        case 301:                   // Moved Permanently
+        case 302:                   // Found
+        case 303:                   // See Other
+        case 307:                   // Temporary Redirect
+            // these are not error conditions
+            break;
+
+        default:
+//            m_teProcessStep = ST_WAIT;
+//            QMessageBox::warning( this, tr("Warning"),
+//                                  tr("Download failed: %1.").arg( responseHeader.reasonPhrase() ) );
+//            m_httpRequestAborted = true;
+//            obHttp->abort();
+//            m_teProcessStep = ST_EXIT;
+//            m_nTimer = startTimer( CONST_PROCESS_STEP_WAIT_MS );
+            ;
+    }
+}
+
+//=================================================================================================
+void cBlnsHttp::_slotAuthenticationRequired(const QString &/*hostName*/, quint16, QAuthenticator */*authenticator*/)
+//-------------------------------------------------------------------------------------------------
+{/*
+    QDialog dlg;
+    Ui::Dialog ui;
+    ui.setupUi(&dlg);
+    dlg.adjustSize();
+    ui.siteDescription->setText(tr("%1 at %2").arg(authenticator->realm()).arg(hostName));
+
+    if (dlg.exec() == QDialog::Accepted)
+    {
+        authenticator->setUser(ui.userEdit->text());
+        authenticator->setPassword(ui.passwordEdit->text());
+    }*/
+}
+
+#ifndef QT_NO_OPENSSL
+
+//=================================================================================================
+void cBlnsHttp::_slotSslErrors(const QList<QSslError> &/*errors*/)
+//-------------------------------------------------------------------------------------------------
+{
+/*
+    QString errorString;
+    foreach( const QSslError &error, errors )
+    {
+        if (!errorString.isEmpty())
+            errorString += ", ";
+        errorString += error.errorString();
+    }
+
+    if( QMessageBox::warning( this, tr("Warning"),
+                             tr("One or more SSL errors has occurred: %1").arg(errorString),
+                             QMessageBox::Ignore | QMessageBox::Abort) == QMessageBox::Ignore)
+    {
+*/
+        obHttp->ignoreSslErrors();
+//    }
+}
+#endif
+
+

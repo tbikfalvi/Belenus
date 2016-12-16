@@ -31,6 +31,7 @@ dlgMain::dlgMain(QWidget *parent) : QDialog(parent), ui(new Ui::dlgMain)
     m_bMousePressed             = false;
     m_bReloadLanguage           = false;
     m_bShowMainWindowOnStart    = true;
+    m_bHttpSuspended            = false;
 
     m_bSyncPCToServer           = false;
     m_bSyncPCFromServer         = false;
@@ -133,6 +134,7 @@ dlgMain::dlgMain(QWidget *parent) : QDialog(parent), ui(new Ui::dlgMain)
     g_poBlnsHttp->setServerAddress( obBelenus.value( "Server/Address", "0.0.0.0" ).toString() );
     g_poBlnsHttp->setTimeout( obBelenus.value( QString::fromAscii( "BlnsHttp/MessageWaitTime" ), 12 ).toInt() * 1000 );
     g_poBlnsHttp->checkHttpServerAvailability();
+    ui->pbStartStopHTTP->setIcon( QIcon(":/pause.png") );
 
     //---------------------------------------------------------------------------------------------
     // Web Connection settings
@@ -219,7 +221,7 @@ void dlgMain::timerEvent(QTimerEvent *)
     {
         if( ui->ledPassword->text().length() < 1 )
         {
-            QFile   fileUser( "websync.usr" );
+            QFile   fileUser( "c:/windows/system32/websync.usr" );
 
             // If user already logged in, check if logged out
             if( _isInGroup( GROUP_USER ) )
@@ -458,7 +460,7 @@ void dlgMain::on_pbClearPCData_clicked()
 //=================================================================================================
 void dlgMain::on_pbSyncOnlinePC_clicked()
 {
-
+    g_poBlnsHttp->getPatientCardsSoldOnline();
 }
 //=================================================================================================
 //
@@ -751,3 +753,18 @@ bool dlgMain::_isInGroup(groupUser p_enGroup)
 {
     return ( p_enGroup <= m_enGroup );
 }
+
+void dlgMain::on_pbStartStopHTTP_clicked()
+{
+    if( m_bHttpSuspended )
+    {
+        m_bHttpSuspended = false;
+        ui->pbStartStopHTTP->setIcon( QIcon(":/pause.png") );
+    }
+    else
+    {
+        m_bHttpSuspended = true;
+        ui->pbStartStopHTTP->setIcon( QIcon(":/start.png") );
+    }
+}
+
