@@ -87,6 +87,10 @@ private slots:
     void on_pbAuthenticate_clicked();
     void on_pbSyncOnlinePC_clicked();
     void on_pbStartStopHTTP_clicked();
+    void on_cmbOnlinePatientCardType_currentIndexChanged(int index);
+    void on_cmbOnlinePaymentMethod_currentIndexChanged(int index);
+
+    void on_sliFileLogLevel_valueChanged(int value);
 
 private:
     Ui::dlgMain         *ui;
@@ -124,6 +128,11 @@ private:
     QString              m_qsRPSW;
     int                  m_nIndexUpdateSyncDataCount;
     bool                 m_bHttpSuspended;
+    unsigned int         m_uiPatientCardTypeId;
+    bool                 m_bStartFinished;
+    unsigned int         m_uiPaymentMethodId;
+    QString              m_qsHttpStatus;
+    int                  m_nLogLevel;
 
     void                _setActions();
     void                _setMenu();
@@ -134,6 +143,7 @@ private:
     void                _setGUIEnabled( bool p_bEnabled = true );
     bool                _isInGroup( groupUser p_enGroup );
     authType            _loginUser( QString p_qsName );
+    void                _setPCTypeForHttp();
 };
 
 #endif // DLGMAIN_H

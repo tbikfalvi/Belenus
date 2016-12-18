@@ -37,9 +37,9 @@ int main(int argc, char *argv[])
     g_obLogger.setMinimumSeverity("file", cSeverity::DEBUG);
 
     g_obLogger(cSeverity::INFO) << "Belenus WebSync started." << EOM;
-    g_obLogger(cSeverity::INFO) << "Current directory is: "
-                                << QDir::currentPath()
-                                << EOM;
+    g_obLogger(cSeverity::DEBUG) << "Current directory is: "
+                                 << QDir::currentPath()
+                                 << EOM;
 
     QSettings   obPref( QString( "%1/websync.inf" ).arg( QDir::currentPath() ), QSettings::IniFormat );
     QString     qsLang = obPref.value( "Lang", "en" ).toString();
@@ -52,6 +52,8 @@ int main(int argc, char *argv[])
 
     apMainApp->installTranslator( poTransApp );
     apMainApp->installTranslator( poTransQT );
+
+    g_obLogger.setMinimumSeverity("file", (cSeverity::teSeverity)obPref.value( "LogLevel", cSeverity::DEBUG ).toUInt() );
 
     if (!QSystemTrayIcon::isSystemTrayAvailable())
     {

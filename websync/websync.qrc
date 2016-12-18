@@ -19,5 +19,6 @@
         <file>onlinepcsync.png</file>
         <file>pause.png</file>
         <file>start.png</file>
+        <file>websync_red.png</file>
     </qresource>
 </RCC>

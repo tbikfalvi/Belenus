@@ -25,13 +25,17 @@ dlgMain::dlgMain(QWidget *parent) : QDialog(parent), ui(new Ui::dlgMain)
     // Initialize variables
     g_obLogger(cSeverity::DEBUG) << "Initialize main window variables" << EOM;
 
+    m_bStartFinished            = false;
+
     m_qsRPSW                    = "7c01fcbe9cab6ae14c98c76cf943a7b2be6a7922";
 
+    m_bStartTimerOnStart        = false;
     m_nTimer                    = 0;
     m_bMousePressed             = false;
     m_bReloadLanguage           = false;
     m_bShowMainWindowOnStart    = true;
     m_bHttpSuspended            = false;
+    m_nLogLevel                 = 0;
 
     m_bSyncPCToServer           = false;
     m_bSyncPCFromServer         = false;
@@ -62,6 +66,11 @@ dlgMain::dlgMain(QWidget *parent) : QDialog(parent), ui(new Ui::dlgMain)
     m_bShowMainWindowOnStart    = obPref.value( "ShowMainWindowOnStart", false ).toBool();
     m_nTimerPCStatusSync        = obPref.value( "TimerPCStatusSync", 2 ).toInt();
     m_nTimerPCOnlineSync        = obPref.value( "TimerPCOnlineSync", 60 ).toInt();
+    m_uiPatientCardTypeId       = obPref.value( "OnlinePatientCardType", 0 ).toUInt();
+    m_uiPaymentMethodId         = obPref.value( "OnlinePaymentMethod", 0 ).toUInt();
+    m_nLogLevel                 = obPref.value( "LogLevel", cSeverity::DEBUG ).toInt();
+
+    g_obLogger.setMinimumSeverity("file", (cSeverity::teSeverity)m_nLogLevel);
 
     //---------------------------------------------------------------------------------------------
     // Set main window settings
@@ -102,15 +111,37 @@ dlgMain::dlgMain(QWidget *parent) : QDialog(parent), ui(new Ui::dlgMain)
         ui->lblStatusIconSQL->setToolTip( tr("SQL Connection established") );
         ui->lblDBServerStatusText->setToolTip( tr("SQL Connection established") );
 
-        QSqlQuery *poQuery = g_poDB->executeQTQuery( QString( "SELECT serial FROM licences ORDER BY licenceId DESC LIMIT 1" ) );
+        QSqlQuery *poQuery = g_poDB->executeQTQuery( QString( "SELECT licenceId, serial FROM licences ORDER BY licenceId DESC LIMIT 1" ) );
         if( poQuery->first() )
         {
-            g_poBlnsHttp->setStudioLicenceString( poQuery->value( 0 ).toString() );
+            g_poBlnsHttp->setStudioLicence( poQuery->value( 0 ).toUInt(), poQuery->value( 1 ).toString() );
         }
 
         cQTMySQLQueryModel *m_poModel = new cQTMySQLQueryModel( this );
         m_poModel->setQuery( "SELECT CONCAT(name,\" (\",realName,\")\") AS n FROM users WHERE active = 1 ORDER BY name" );
         ui->cmbName->setModel( m_poModel );
+
+        ui->cmbOnlinePatientCardType->addItem( tr("<Not selected>"), 0 );
+        poQuery = g_poDB->executeQTQuery( QString( "SELECT patientCardTypeId, name FROM patientCardTypes WHERE active=1 AND archive<>\"DEL\" ORDER BY name " ) );
+        while( poQuery->next() )
+        {
+            if( poQuery->value(0) == 1 ) continue;
+
+            ui->cmbOnlinePatientCardType->addItem( poQuery->value( 1 ).toString(), poQuery->value( 0 ).toUInt() );
+            if( m_uiPatientCardTypeId == poQuery->value( 0 ).toUInt() )
+                ui->cmbOnlinePatientCardType->setCurrentIndex( ui->cmbOnlinePatientCardType->count()-1 );
+        }
+        _setPCTypeForHttp();
+
+        ui->cmbOnlinePaymentMethod->addItem( tr("<Not selected>"), 0 );
+        poQuery = g_poDB->executeQTQuery( QString( "SELECT paymentMethodId, name FROM paymentMethods WHERE active=1 AND archive<>\"DEL\" ORDER BY name " ) );
+        while( poQuery->next() )
+        {
+            ui->cmbOnlinePaymentMethod->addItem( poQuery->value( 1 ).toString(), poQuery->value( 0 ).toUInt() );
+            if( m_uiPaymentMethodId == poQuery->value( 0 ).toUInt() )
+                ui->cmbOnlinePaymentMethod->setCurrentIndex( ui->cmbOnlinePaymentMethod->count()-1 );
+        }
+        g_poBlnsHttp->setOnlinePaymentMethod( m_uiPaymentMethodId );
     }
     catch( cSevException &e )
     {
@@ -154,6 +185,7 @@ dlgMain::dlgMain(QWidget *parent) : QDialog(parent), ui(new Ui::dlgMain)
     ui->chkShowWindowOnStart->setChecked( m_bShowMainWindowOnStart );
     ui->ledTimerPCStatusSync->setText( QString::number( m_nTimerPCStatusSync ) );
     ui->ledTimerPCOnlineSync->setText( QString::number( m_nTimerPCOnlineSync ) );
+    ui->sliFileLogLevel->setValue( m_nLogLevel );
 
     //---------------------------------------------------------------------------------------------
     // Patientcard status synchronization
@@ -169,10 +201,15 @@ dlgMain::dlgMain(QWidget *parent) : QDialog(parent), ui(new Ui::dlgMain)
     m_bStartTimerOnStart = true;
 
     m_nTimer = startTimer( 500 );
+
+    m_bStartFinished = true;
 }
 //=================================================================================================
 dlgMain::~dlgMain()
 {
+    m_uiPatientCardTypeId = ui->cmbOnlinePatientCardType->itemData( ui->cmbOnlinePatientCardType->currentIndex() ).toUInt();
+    m_uiPaymentMethodId   = ui->cmbOnlinePaymentMethod->itemData( ui->cmbOnlinePaymentMethod->currentIndex() ).toUInt();
+
     QSettings   obPref( QString( "%1/websync.inf" ).arg( QDir::currentPath() ), QSettings::IniFormat );
 
     obPref.setValue( "Lang",                    m_qsLang );
@@ -184,6 +221,9 @@ dlgMain::~dlgMain()
     obPref.setValue( "WindowPosition/Mainwindow_height", height() );
     obPref.setValue( "TimerPCStatusSync", m_nTimerPCStatusSync );
     obPref.setValue( "TimerPCOnlineSync", m_nTimerPCOnlineSync );
+    obPref.setValue( "OnlinePatientCardType", m_uiPatientCardTypeId );
+    obPref.setValue( "OnlinePaymentMethod", m_uiPaymentMethodId );
+    obPref.setValue( "LogLevel", m_nLogLevel );
 
     delete g_poDB;
 
@@ -247,17 +287,16 @@ void dlgMain::timerEvent(QTimerEvent *)
                     {
                         QString qsName = ui->cmbName->itemText(i).left( ui->cmbName->itemText(i).indexOf("(")-1 );
 
-                        g_obLogger(cSeverity::INFO) << "COMPARE ["
-                                                    << qsName
-                                                    << "] ["
-                                                    << QString(strName)
-                                                    << "]"
-                                                    << EOM;
                         if( qsName.compare( QString(strName) ) == 0 )
                         {
                             ui->cmbName->setCurrentIndex( i );
                             if( _loginUser( QString(strName) ) == AUTH_OK )
                             {
+                                QString qsUser = ui->cmbName->itemText(i).replace('(','|').replace(')',"");
+
+                                trayIcon->showMessage( "Belenus Websync",
+                                                       tr("User '%1' logged in").arg( qsUser.section("|",1) ),
+                                                       QSystemTrayIcon::Information, 3000 );
                                 _setGUIEnabled();
                             }
                             break;
@@ -267,6 +306,16 @@ void dlgMain::timerEvent(QTimerEvent *)
             }
         }
         m_nIndexUser = 0;
+
+        QString qsTooltip = "";
+
+        qsTooltip.append( m_qsHttpStatus );
+        if( _isInGroup( GROUP_SYSTEM ) )
+        {
+            qsTooltip.append( "<br><br>" );
+            qsTooltip.append( g_poBlnsHttp->settingsInfo() );
+        }
+        ui->lblStatusIconWebServer->setToolTip( qsTooltip );
     }
 
     //---------------------------------------------------------------------------------------------
@@ -304,6 +353,9 @@ void dlgMain::timerEvent(QTimerEvent *)
     if( m_nIndexPCOnlineSync >= m_nTimerPCOnlineSync )
     {
         m_nIndexPCOnlineSync = 0;
+        m_bSyncPCFromServer = true;
+        ui->lblStatusSync->setPixmap( QPixmap( ":/hourglass.png" ) );
+        g_poBlnsHttp->getPatientCardsSoldOnline();
     }
 }
 //=================================================================================================
@@ -470,25 +522,52 @@ void dlgMain::on_pbSyncOnlinePC_clicked()
 // Executed when any error occures during http process
 void dlgMain::on_BlnsHttpErrorOccured()
 {
-    m_bSyncPCToServer = false;
+    QString qsTooltip   = "";
+    m_bSyncPCToServer   = false;
+    m_bSyncPCFromServer = false;
+    m_qsHttpStatus      = g_poBlnsHttp->errorMessage();
+
+    qsTooltip.append( m_qsHttpStatus );
+    if( _isInGroup( GROUP_SYSTEM ) )
+    {
+        qsTooltip.append( "<br><br>" );
+        qsTooltip.append( g_poBlnsHttp->settingsInfo() );
+    }
 
     ui->lblStatusIconWebServer->setPixmap( QPixmap( ":/status_red.png" ) );
-    ui->lblStatusIconWebServer->setToolTip( g_poBlnsHttp->errorMessage() );
+    ui->lblStatusIconWebServer->setToolTip( qsTooltip );
     ui->lblWebServerStatusText->setToolTip( g_poBlnsHttp->errorMessage() );
     ui->lblStatusSync->setPixmap( QPixmap( ":/ok.png" ) );
+    trayIcon->setIcon( QIcon( ":/websync_red.png" ) );
+
+    trayIcon->showMessage( "Belenus Websync",
+                           QString("%1").arg( g_poBlnsHttp->errorMessage() ),
+                           QSystemTrayIcon::Critical, 3000 );
 }
 //=================================================================================================
 // Executed when a http process finished
 void dlgMain::on_BlnsHttpActionFinished(QString p_qsInfo)
 {
-    m_bSyncPCToServer = false;
+    QString qsTooltip   = "";
+    m_bSyncPCToServer   = false;
+    m_bSyncPCFromServer = false;
+    m_qsHttpStatus      = tr("HTTP Connection established");
 
-    if( p_qsInfo.left(10).compare( "HTTPMSG_01" ) == 0 )
+    qsTooltip.append( m_qsHttpStatus );
+    if( _isInGroup( GROUP_SYSTEM ) )
     {
-        ui->lblStatusIconWebServer->setPixmap( QPixmap( ":/status_green.png" ) );
-        ui->lblStatusIconWebServer->setToolTip( tr("HTTP Connection established") );
-        ui->lblWebServerStatusText->setToolTip( tr("HTTP Connection established") );
+        qsTooltip.append( "<br><br>" );
+        qsTooltip.append( g_poBlnsHttp->settingsInfo() );
     }
+
+//    if( p_qsInfo.left(10).compare( "HTTPMSG_01" ) == 0 )
+//    {
+        ui->lblStatusIconWebServer->setPixmap( QPixmap( ":/status_green.png" ) );
+        ui->lblStatusIconWebServer->setToolTip( qsTooltip );
+        ui->lblWebServerStatusText->setToolTip( tr("HTTP Connection established") );
+        trayIcon->setIcon( QIcon( ":/websync.png" ) );
+
+//    }
     g_obLogger(cSeverity::INFO) << p_qsInfo << EOM;
     ui->lblStatusSync->setPixmap( QPixmap( ":/ok.png" ) );
 }
@@ -513,9 +592,12 @@ void dlgMain::_setGUIEnabled(bool p_bEnabled)
     ui->ledTimerPCStatusSync->setEnabled( p_bEnabled );
     ui->ledTimerPCOnlineSync->setEnabled( p_bEnabled );
     ui->ledWebServerAddress->setEnabled( p_bEnabled && _isInGroup( GROUP_SYSTEM ) );
+    ui->sliFileLogLevel->setEnabled( p_bEnabled && _isInGroup( GROUP_USER ) );
     ui->pbSyncAllPatientCard->setEnabled( p_bEnabled && _isInGroup( GROUP_SYSTEM ) );
     //ui->pbClearPCData->setEnabled( p_bEnabled && _isInGroup( GROUP_USER ) );  // can be cleared anytime
     ui->pbSyncOnlinePC->setEnabled( p_bEnabled && _isInGroup( GROUP_USER ) );
+    ui->cmbOnlinePatientCardType->setEnabled( p_bEnabled && _isInGroup( GROUP_USER ) );
+    ui->cmbOnlinePaymentMethod->setEnabled( p_bEnabled && _isInGroup( GROUP_USER ) );
     ui->pbExit->setEnabled( p_bEnabled && _isInGroup( GROUP_SYSTEM ) );
 }
 //=================================================================================================
@@ -754,6 +836,7 @@ bool dlgMain::_isInGroup(groupUser p_enGroup)
     return ( p_enGroup <= m_enGroup );
 }
 
+//=================================================================================================
 void dlgMain::on_pbStartStopHTTP_clicked()
 {
     if( m_bHttpSuspended )
@@ -768,3 +851,47 @@ void dlgMain::on_pbStartStopHTTP_clicked()
     }
 }
 
+//=================================================================================================
+void dlgMain::on_cmbOnlinePatientCardType_currentIndexChanged(int index)
+{
+    if( m_bStartFinished )
+    {
+        m_uiPatientCardTypeId = ui->cmbOnlinePatientCardType->itemData( index ).toUInt();
+
+        _setPCTypeForHttp();
+    }
+}
+
+//=================================================================================================
+void dlgMain::_setPCTypeForHttp()
+{
+    QSqlQuery *poQuery = g_poDB->executeQTQuery( QString( "SELECT price, units, unitTime "
+                                                          "FROM patientCardTypes WHERE "
+                                                          "active=1 AND archive<>\"DEL\" AND patientCardTypeId=%1 " )
+                                                 .arg( m_uiPatientCardTypeId ) );
+
+    poQuery->first();
+
+    g_poBlnsHttp->setOnlinePCType( m_uiPatientCardTypeId,
+                                   poQuery->value( 0 ).toInt(),
+                                   poQuery->value( 1 ).toInt(),
+                                   poQuery->value( 2 ).toInt() );
+}
+
+//=================================================================================================
+void dlgMain::on_cmbOnlinePaymentMethod_currentIndexChanged(int index)
+{
+    if( m_bStartFinished )
+    {
+        m_uiPaymentMethodId = ui->cmbOnlinePaymentMethod->itemData( index ).toUInt();
+        g_poBlnsHttp->setOnlinePaymentMethod( m_uiPaymentMethodId );
+    }
+}
+
+//=================================================================================================
+void dlgMain::on_sliFileLogLevel_valueChanged(int value)
+{
+    m_nLogLevel = value;
+    ui->lblFileLogLevelValue->setText( cSeverity::toStr( (cSeverity::teSeverity)m_nLogLevel ) );
+    g_obLogger.setMinimumSeverity("file", (cSeverity::teSeverity)m_nLogLevel);
+}

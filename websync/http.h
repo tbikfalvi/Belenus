@@ -30,13 +30,19 @@
 
 using namespace std;
 
-#define HTTP_STATUS_DEFAULT         -1
-#define HTTP_ERROR_INVALID_TOKEN    -2
-#define HTTP_ERROR_WRONG_TOKEN      -3
-#define HTTP_ERROR_MD5_MISMATCH     -4
-#define HTTP_ERROR_INVALID_STUDIO   -5
-#define HTTP_ERROR_SERVER_SQL       -6
-#define HTTP_ERROR_UNKNOWN          -99
+#define HTTP_STATUS_DEFAULT              -1
+#define HTTP_ERROR_INVALID_TOKEN         -2
+#define HTTP_ERROR_WRONG_TOKEN           -3
+#define HTTP_ERROR_MD5_MISMATCH          -4
+#define HTTP_ERROR_INVALID_STUDIO        -5
+#define HTTP_ERROR_SERVER_SQL            -6
+#define HTTP_ERROR_SHA1_MISMATCH         -7
+#define HTTP_ERROR_SHA1_NOT_RECEIVED     -8
+#define HTTP_ERROR_MISSING_STUDIOID      -9
+#define HTTP_ERROR_MISSING_COMMID       -10
+#define HTTP_ERROR_OBSOLETE_TOKEN       -11
+#define HTTP_ERROR_RESULT_NOT_SENT      -12
+#define HTTP_ERROR_UNKNOWN              -99
 
 //====================================================================================
 class cBlnsHttpAction
@@ -83,7 +89,9 @@ public:
 
     void             setTimeout( const int p_inTimeout );
     void             setServerAddress( QString p_qsServerAddress );
-    void             setStudioLicenceString( QString p_qsLicenceString );
+    void             setStudioLicence( unsigned int p_uiLicenceId, QString p_qsLicenceString );
+    void             setOnlinePCType( unsigned int p_uiId, int p_nPrice, int p_nUnits, int p_nUnitTime );
+    void             setOnlinePaymentMethod( unsigned int p_uiPaymentMethod );
     void             setCommunicationSuspended( bool p_bHttpSuspended = true );
 
     void             checkHttpServerAvailability();
@@ -93,6 +101,7 @@ public:
 
     int              getNumberOfWaitingRecords();
     QString          errorMessage();
+    QString          settingsInfo();
 
 protected:
 
@@ -121,6 +130,14 @@ private:
     bool             m_bIsHttpSuspended;
     unsigned int     m_uiLicenceId;
     QString          m_qsLicenceString;
+    unsigned int     m_uiPatientCardTypeId;
+    int              m_nPatientCardTypePrice;
+    int              m_nPatientCardTypeUnits;
+    int              m_nPatientCardTypeUnitTime;
+    int              m_uiLedgerTypeId;
+    QString          m_qsLedgerComment;
+    unsigned int     m_uiPaymentMethod;
+    bool             m_bGetOnlinePCProcessed;
 
     QDomDocument    *obResponseXML;
 
@@ -140,11 +157,12 @@ private:
     void            _httpGetOnlineRecords();
     void            _httpConfirmRequestedData();
     bool            _processCommXML();
-    bool            _processCommResponse();
+    bool            _processCommResponse( QString p_qsResponse );
+    bool            _processResponse();
     unsigned int    _saveGuest( QString p_qsName, QString p_qsUniqueId, QString p_qsEmail );
     unsigned int    _savePatientCard( QString p_qsBarcode, QString p_qsValidDateTo, QString p_qsUnitCount, unsigned int p_uiPatientId );
-    unsigned int    _saveOnlineSell( unsigned int p_uiPatientCardId, unsigned int p_uiPatientId, QString p_qsLedgerTime );
-    void            _savePatientCardUnits( QString p_qsUnitCount, unsigned int p_uiPatientCardId, unsigned int p_uiLedgerId );
+    unsigned int    _saveOnlineSell( unsigned int p_uiPatientCardId, QString p_qsBarcode, unsigned int p_uiPatientId, QString p_qsLedgerTime );
+    void            _savePatientCardUnits( QString p_qsUnitCount, unsigned int p_uiPatientCardId, QString p_qsValidDateTo, unsigned int p_uiLedgerId );
 
 signals:
 

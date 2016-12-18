@@ -30,25 +30,30 @@ cBlnsHttp::cBlnsHttp()
 {
     //cTracer obTrace( "cBlnsHttp::cBlnsHttp" );
 
-    obHttp                  = NULL;
-    obFile                  = NULL;
-    m_httpRequestAborted    = false;
-    m_httpGetId             = 0;
+    obHttp                      = NULL;
+    obFile                      = NULL;
+    m_httpRequestAborted        = false;
+    m_httpGetId                 = 0;
 
-    m_qsError               = "";
-    m_inTimeout             = 0;
-    m_inTimer               = 0;
-    m_qsToken               = "";
-    m_inHttpProcessStep     = HTTP_STATUS_DEFAULT;
-    m_teBlnsHttpProcess     = cBlnsHttpAction::HA_DEFAULT;
+    m_qsError                   = "";
+    m_inTimeout                 = 0;
+    m_inTimer                   = 0;
+    m_qsToken                   = "";
+    m_inHttpProcessStep         = HTTP_STATUS_DEFAULT;
+    m_teBlnsHttpProcess         = cBlnsHttpAction::HA_DEFAULT;
 
-    m_qsServerAddress       = "0.0.0.0";
-    m_bIsHttpEnabled        = true;
-    m_bIsHttpSuspended      = false;
-    m_uiLicenceId           = 0;
-    m_qsLicenceString       = "BLNS_SERIAL_DEMO";
+    m_qsServerAddress           = "0.0.0.0";
+    m_bIsHttpEnabled            = true;
+    m_bIsHttpSuspended          = false;
+    m_uiLicenceId               = 0;
+    m_qsLicenceString           = "BLNS_SERIAL_DEMO";
+    m_uiPatientCardTypeId       = 0;
+    m_nPatientCardTypePrice     = 0;
+    m_nPatientCardTypeUnits     = 0;
+    m_nPatientCardTypeUnitTime  = 0;
+    m_bGetOnlinePCProcessed     = false;
 
-    m_uiCommId              = 0;
+    m_uiCommId                  = 0;
 
     m_vrHttpActions.clear();
 
@@ -96,10 +101,27 @@ void cBlnsHttp::setServerAddress( QString p_qsServerAddress )
 }
 
 //=================================================================================================
-void cBlnsHttp::setStudioLicenceString( QString p_qsLicenceString )
+void cBlnsHttp::setStudioLicence( unsigned int p_uiLicenceId, QString p_qsLicenceString )
 //-------------------------------------------------------------------------------------------------
 {
-    m_qsLicenceString = p_qsLicenceString;
+    m_uiLicenceId       = p_uiLicenceId;
+    m_qsLicenceString   = p_qsLicenceString;
+}
+
+//=================================================================================================
+void cBlnsHttp::setOnlinePCType(unsigned int p_uiId, int p_nPrice, int p_nUnits, int p_nUnitTime)
+//-------------------------------------------------------------------------------------------------
+{
+    m_uiPatientCardTypeId       = p_uiId;
+    m_nPatientCardTypePrice     = p_nPrice;
+    m_nPatientCardTypeUnits     = p_nUnits;
+    m_nPatientCardTypeUnitTime  = p_nUnitTime;
+}
+
+//=================================================================================================
+void cBlnsHttp::setOnlinePaymentMethod(unsigned int p_uiPaymentMethod)
+{
+    m_uiPaymentMethod = p_uiPaymentMethod;
 }
 
 //=================================================================================================
@@ -217,9 +239,11 @@ void cBlnsHttp::getPatientCardsSoldOnline()
     m_vrHttpActions.push_back( cBlnsHttpAction::HA_AUTHENTICATE );
     m_vrHttpActions.push_back( cBlnsHttpAction::HA_REQUESTDATA );
     m_vrHttpActions.push_back( cBlnsHttpAction::HA_SENDREQUESTSFINISHED );
+    m_vrHttpActions.push_back( cBlnsHttpAction::HA_PROCESSFINISHED );
 
-    m_teBlnsHttpProcess = cBlnsHttpAction::HA_AUTHENTICATE;
-    m_inHttpProcessStep = 0;
+    m_teBlnsHttpProcess     = cBlnsHttpAction::HA_REQUESTDATA;
+    m_inHttpProcessStep     = 0;
+    m_bGetOnlinePCProcessed = false;
 
     _httpStartProcess();
 }
@@ -252,6 +276,25 @@ QString cBlnsHttp::errorMessage()
 //-------------------------------------------------------------------------------------------------
 {
     return m_qsError;
+}
+
+//=================================================================================================
+QString cBlnsHttp::settingsInfo()
+//-------------------------------------------------------------------------------------------------
+{
+    QString qsRet = "";
+
+    qsRet.append( tr("<b>PatientCardType:</b><br>") );
+    qsRet.append( tr("Id: %1  Price: %2  Units: %3  Unittime: %4<br>")
+                    .arg( m_uiPatientCardTypeId )
+                    .arg( m_nPatientCardTypePrice )
+                    .arg( m_nPatientCardTypeUnits )
+                    .arg( m_nPatientCardTypeUnitTime ) );
+    qsRet.append( tr("<br>") );
+    qsRet.append( tr("<b>Payment method:</b><br>") );
+    qsRet.append( tr("Id: %1").arg( m_uiPaymentMethod ) );
+
+    return qsRet;
 }
 
 //=================================================================================================
@@ -484,7 +527,7 @@ void cBlnsHttp::_updateProcessedRecord()
 void cBlnsHttp::_httpGetOnlineRecords()
 //-------------------------------------------------------------------------------------------------
 {
-    // http://www.kiwisun.hu/kiwi_ticket/save.php
+    // http://www.kiwisun.hu/kiwi_ticket/comm.php
     QString qsFileName  = m_qsServerAddress;
     QString qsSha1Source = "";
 
@@ -517,7 +560,34 @@ void cBlnsHttp::_httpGetOnlineRecords()
 void cBlnsHttp::_httpConfirmRequestedData()
 //-------------------------------------------------------------------------------------------------
 {
+    // http://www.kiwisun.hu/kiwi_ticket/comm.php
+    QString qsFileName  = m_qsServerAddress;
+    QString qsSha1Source = "";
 
+    qsSha1Source.append( m_qsToken );
+    qsSha1Source.append( QString::number(m_uiCommId) );
+    qsSha1Source.append( m_qsLicenceString );
+    qsSha1Source.append( "gifter" );
+
+    QString qsSha1Hash = QString(QCryptographicHash::hash(qsSha1Source.toStdString().c_str(),QCryptographicHash::Sha1).toHex());
+
+    qsFileName.append( "/kiwi_ticket/comm.php" );
+
+    qsFileName = qsFileName.replace( "\\", "/" );
+    qsFileName = qsFileName.replace( "//kiwi", "/kiwi" );
+
+    qsFileName.append( QString( "?token=%1" ).arg( m_qsToken ) );
+    qsFileName.append( QString( "&code=%1" ).arg( qsSha1Hash ) );
+    qsFileName.append( QString( "&StudioId=%1" ).arg( m_qsLicenceString ) );
+    qsFileName.append( QString( "&CommId=%1" ).arg( m_uiCommId ) );
+    qsFileName.append( QString( "&Result=TRUE" ) );
+
+    g_obLogger(cSeverity::DEBUG) << "HTTP: Confirm online sold card data processed ["
+                                 << qsFileName
+                                 << "]"
+                                 << EOM;
+
+    _downloadFile( qsFileName );
 }
 
 //=================================================================================================
@@ -569,10 +639,11 @@ void cBlnsHttp::_httpProcessResponse()
             break;
 
         case cBlnsHttpAction::HA_REQUESTDATA:
-            g_obLogger(cSeverity::DEBUG) << "HTTP: Process received comm.php and confirm data arrived" << EOM;
+            g_obLogger(cSeverity::DEBUG) << "HTTP: Process received comm.php with data" << EOM;
             if( !_processCommXML() )
             {
-                //
+                g_obLogger(cSeverity::ERROR) << "Error occured during processing comm.php ErrorCode: " << m_inHttpProcessStep << EOM;
+                return;
             }
             m_inHttpProcessStep++;
             _httpExecuteProcess();
@@ -580,9 +651,10 @@ void cBlnsHttp::_httpProcessResponse()
 
         case cBlnsHttpAction::HA_SENDREQUESTSFINISHED:
             g_obLogger(cSeverity::DEBUG) << "HTTP: Nothing to do after confirm" << EOM;
-            if( !_processCommResponse() )
+            if( !_processResponse() )
             {
-                //
+                g_obLogger(cSeverity::ERROR) << "Error occured during processing comm.php ErrorCode: " << m_inHttpProcessStep << EOM;
+                return;
             }
             m_inHttpProcessStep++;
             _httpExecuteProcess();
@@ -696,8 +768,6 @@ void cBlnsHttp::_readTokenFromFile()
     QString     qsLine = qtsFile.readLine();
 
     m_qsToken = qsLine.left( 16 );
-
-//    g_obLogger(cSeverity::DEBUG) << "HTTP Token read finished " << m_qsToken << EOM;
 }
 
 //=================================================================================================
@@ -728,6 +798,11 @@ void cBlnsHttp::_sendProcessFinished()
                                                 .arg( m_qsBarcode ) );
             emit signalStepProgress();
 //            processWaitingCardData();
+            break;
+
+        case cBlnsHttpAction::HA_REQUESTDATA:
+            emit signalActionProcessed( QString("%1 Getting patientcards sold online succeeded")
+                                                .arg( cBlnsHttpAction::toStr( m_teBlnsHttpProcess ) ));
             break;
 
         default:
@@ -825,35 +900,121 @@ bool cBlnsHttp::_processCommXML()
 
     QTextStream qtsFile(&file);
     QString     qsSha1File      = qtsFile.readLine();
+    QString     qsMd5File       = qtsFile.readLine();
+    QString     qsToken         = qtsFile.readLine();
     QString     qsXmlResponse   = qtsFile.readLine();
 
-    QString qsSha1Xml = QString(QCryptographicHash::hash(qsXmlResponse.toStdString().c_str(),QCryptographicHash::Sha1).toHex());
+    // Check Sha1 / Md5 keys
+    QString qsShaBase   = "";
 
-    g_obLogger(cSeverity::DEBUG) << "HTTP: Response  ["
-                                 << qsXmlResponse
-                                 << "]"
-                                 << EOM;
+    qsShaBase.append( qsXmlResponse );
+    qsShaBase.append( m_qsToken );
+    qsShaBase.append( "gifter" );
 
-    if( qsSha1File.compare( qsSha1Xml ) != 0 )
+    QString     qsSha1Gen = QString(QCryptographicHash::hash(qsShaBase.toUtf8(),QCryptographicHash::Sha1).toHex());
+
+    g_obLogger(cSeverity::DEBUG) << "Xml:     [" << qsXmlResponse << "]" << EOM;
+    g_obLogger(cSeverity::DEBUG) << "Base:    [" << QString(qsShaBase.toUtf8()) << "]" << EOM;
+
+    g_obLogger(cSeverity::DEBUG) << "Sha1 sent: [" << qsSha1File  << "]" << EOM;
+    g_obLogger(cSeverity::DEBUG) << "Sha1 gen.: [" << qsSha1Gen  << "]" << EOM;
+
+    if( qsSha1File.compare( qsSha1Gen ) != 0 )
     {
-        g_obLogger(cSeverity::ERROR) << "HTTP: SHA1 code mismatch"
+        m_qsError = tr("SHA1 code mismatch in comm response");
+        g_obLogger(cSeverity::WARNING) << "HTTP: SHA1 code mismatch"
                                      << EOM;
-        g_obLogger(cSeverity::DEBUG) << "HTTP: Resp Sha1 ["
-                                     << qsSha1File
-                                     << "]"
-                                     << EOM;
-        g_obLogger(cSeverity::DEBUG) << "HTTP: Gen Sha1  ["
-                                     << qsSha1Xml
-                                     << "]"
-                                     << EOM;
-        // return false;
+//        emit signalErrorOccured();
+//        m_inHttpProcessStep = HTTP_ERROR_SHA1_MISMATCH;
+//        return false;
     }
 
+    if( qsXmlResponse.contains( "<response>" ) )
+    {
+        return _processCommResponse( qsXmlResponse );
+    }
+    else if( qsSha1File.contains( "Missing token" ) )
+    {
+        m_qsError = tr("Server did not received token");
+        g_obLogger(cSeverity::WARNING) << "HTTP: Server did not received token" << EOM;
+        emit signalErrorOccured();
+        m_inHttpProcessStep = HTTP_ERROR_INVALID_TOKEN;
+    }
+    else if( qsSha1File.contains( "Missing code" ) )
+    {
+        m_qsError = tr("Server did not received Sha1 hash");
+        g_obLogger(cSeverity::WARNING) << "HTTP: Server did not received Sha1 hash" << EOM;
+        emit signalErrorOccured();
+        m_inHttpProcessStep = HTTP_ERROR_SHA1_NOT_RECEIVED;
+    }
+    else if( qsSha1File.contains( "Missing StudioId" ) )
+    {
+        m_qsError = tr("Server did not received Studio Id");
+        g_obLogger(cSeverity::WARNING) << "HTTP: Server did not received Studio Id" << EOM;
+        emit signalErrorOccured();
+        m_inHttpProcessStep = HTTP_ERROR_MISSING_STUDIOID;
+    }
+    else if( qsSha1File.contains( "Missing CommId" ) )
+    {
+        m_qsError = tr("Server did not received last successfull request Id");
+        g_obLogger(cSeverity::WARNING) << "HTTP: Server did not received last successfull request Id" << EOM;
+        emit signalErrorOccured();
+        m_inHttpProcessStep = HTTP_ERROR_MISSING_COMMID;
+    }
+    else if( qsSha1File.contains( "Wrong token" ) )
+    {
+        m_qsError = tr("Token sent to server is invalid");
+        g_obLogger(cSeverity::WARNING) << "HTTP: Token sent to server is invalid" << EOM;
+        emit signalErrorOccured();
+        m_inHttpProcessStep = HTTP_ERROR_INVALID_TOKEN;
+    }
+    else if( qsSha1File.contains( "SQL error" ) )
+    {
+        m_qsError = tr("SQL error occured on server side");
+        g_obLogger(cSeverity::WARNING) << "HTTP: SQL error occured on server side" << EOM;
+        emit signalErrorOccured();
+        m_inHttpProcessStep = HTTP_ERROR_SERVER_SQL;
+    }
+    else if( qsSha1File.contains( "Token repeat" ) )
+    {
+        m_qsError = tr("Token sent to server is already sent");
+        g_obLogger(cSeverity::WARNING) << "HTTP: Token sent to server is already sent" << EOM;
+        emit signalErrorOccured();
+        m_inHttpProcessStep = HTTP_ERROR_OBSOLETE_TOKEN;
+    }
+    else if( qsSha1File.contains( "Old token" ) )
+    {
+        m_qsError = tr("Token sent to server is obsolete");
+        g_obLogger(cSeverity::WARNING) << "HTTP: Token sent to server is obsolete" << EOM;
+        emit signalErrorOccured();
+        m_inHttpProcessStep = HTTP_ERROR_OBSOLETE_TOKEN;
+    }
+    else if( qsSha1File.contains( "Check error" ) )
+    {
+        m_qsError = tr("Sha1 code sent to server is invalid");
+        g_obLogger(cSeverity::WARNING) << "HTTP: Sha1 code sent to server is invalid" << EOM;
+        emit signalErrorOccured();
+        m_inHttpProcessStep = HTTP_ERROR_SHA1_MISMATCH;
+    }
+    else if( qsSha1File.contains( "No events" ) )
+    {
+        m_qsError = tr("");
+        g_obLogger(cSeverity::INFO) << "HTTP: No new patientcard has been sold" << EOM;
+        return true;
+    }
+
+    return false;
+}
+
+//=================================================================================================
+bool cBlnsHttp::_processCommResponse(QString p_qsResponse )
+//-------------------------------------------------------------------------------------------------
+{
     QString      qsErrorMsg  = "";
     int          inErrorLine = 0;
     int          inErrorCol = 0;
 
-    if( !obResponseXML->setContent( qsXmlResponse, &qsErrorMsg, &inErrorLine, &inErrorCol ) )
+    if( !obResponseXML->setContent( p_qsResponse, &qsErrorMsg, &inErrorLine, &inErrorCol ) )
     {
         g_obLogger(cSeverity::ERROR) << "HTTP: Response XML format error. ["
                                      << qsErrorMsg
@@ -913,12 +1074,11 @@ bool cBlnsHttp::_processCommXML()
 
             if( uiCardId > 0 )
             {
-                uiLedgerId = _saveOnlineSell( uiCardId, uiPatientId, qsCardSellDate );
-                _savePatientCardUnits( qsUnitCount, uiCardId, uiLedgerId );
+                uiLedgerId = _saveOnlineSell( uiCardId, qsBarcode, uiPatientId, qsCardSellDate );
+                _savePatientCardUnits( qsUnitCount, uiCardId, qsCardValidDate, uiLedgerId );
             }
         }
     }
-
     return true;
 }
 
@@ -926,38 +1086,250 @@ bool cBlnsHttp::_processCommXML()
 unsigned int cBlnsHttp::_saveGuest(QString p_qsName, QString p_qsUniqueId, QString p_qsEmail)
 //-------------------------------------------------------------------------------------------------
 {
-    return 0;
+    QString         qsQuery = "";
+    unsigned int    uiId    = 0;
+
+    qsQuery = QString( "SELECT patientId FROM patients WHERE uniqueId=\"%1\" " ).arg( p_qsUniqueId );
+
+    QSqlQuery   *poQuery = g_poDB->executeQTQuery( qsQuery );
+
+    if( poQuery->size() > 0 )
+    {
+        poQuery->first();
+        uiId = poQuery->value( 0 ).toUInt();
+    }
+    else
+    {
+        qsQuery = "INSERT INTO patients SET ";
+        qsQuery += QString( "licenceId = \"%1\", " ).arg( m_uiLicenceId );
+        qsQuery += QString( "companyId = \"0\", " );
+        qsQuery += QString( "created = \"%1\", " ).arg( QDateTime::currentDateTime().toString( QString("yyyy-MM-ss hh:mm:ss") ) );
+        qsQuery += QString( "name = \"%1\", " ).arg( p_qsName );
+        qsQuery += QString( "gender = \"0\", " );
+        qsQuery += QString( "ageType = \"0\", " );
+        qsQuery += QString( "isReturning = 0, " );
+        qsQuery += QString( "uniqueId = \"%1\", " ).arg( p_qsUniqueId );
+        qsQuery += QString( "email = \"%1\", " ).arg( p_qsEmail );
+        qsQuery += QString( "regularCustomer = 0, " );
+        qsQuery += QString( "employee = 0, " );
+        qsQuery += QString( "service = 0, " );
+        qsQuery += QString( "company = 0, " );
+        qsQuery += QString( "discountType = 0, " );
+        qsQuery += QString( "membership = \"\", " );
+        qsQuery += QString( "dateBirth = \"\", " );
+        qsQuery += QString( "address = \"\", " );
+        qsQuery += QString( "skinTypeId = 0, " );
+        qsQuery += QString( "mobile = \"\", " );
+        qsQuery += QString( "comment = \"\", " );
+        qsQuery += QString( "loyaltyPoints = 0, " );
+        qsQuery += QString( "modified = \"%1\", " ).arg( QDateTime::currentDateTime().toString( QString("yyyy-MM-dd hh:mm:ss") ) );
+        qsQuery += QString( "active = 1, " );
+        qsQuery += QString( "archive = \"NEW\" " );
+
+        poQuery = g_poDB->executeQTQuery( qsQuery );
+        uiId = poQuery->lastInsertId().toUInt();
+    }
+
+    return uiId;
 }
 
 //=================================================================================================
 unsigned int cBlnsHttp::_savePatientCard(QString p_qsBarcode, QString p_qsValidDateTo, QString p_qsUnitCount, unsigned int p_uiPatientId)
 //-------------------------------------------------------------------------------------------------
 {
-    return 0;
+    QString         qsQuery = "";
+    unsigned int    uiId    = 0;
+
+    qsQuery = QString( "SELECT patientCardId FROM patientCards WHERE barcode=\"%1\" " ).arg( p_qsBarcode );
+
+    QSqlQuery   *poQuery = g_poDB->executeQTQuery( qsQuery );
+
+    if( poQuery->size() > 0 )
+    {
+        poQuery->first();
+        uiId = poQuery->value( 0 ).toUInt();
+
+        qsQuery = "UPDATE patientCards SET ";
+        qsQuery += QString( "patientCardTypeId = \"%1\", " ).arg( m_uiPatientCardTypeId );
+        qsQuery += QString( "patientId = \"%1\", " ).arg( p_uiPatientId );
+        qsQuery += QString( "validDateTo = \"%1\", " ).arg( p_qsValidDateTo );
+        qsQuery += QString( "modified = \"%1\", " ).arg( QDateTime::currentDateTime().toString( QString("yyyy-MM-dd hh:mm:ss") ) );
+        qsQuery += QString( "active = 1, " );
+        qsQuery += QString( "archive = \"MOD\" " );
+
+        poQuery = g_poDB->executeQTQuery( qsQuery );
+        m_uiLedgerTypeId = 8;
+        m_qsLedgerComment = tr("Patientcard refilled online");
+    }
+    else
+    {
+        qsQuery = "INSERT INTO patientCards SET ";
+        qsQuery += QString( "licenceId = \"%1\", " ).arg( m_uiLicenceId );
+        qsQuery += QString( "patientCardTypeId = \"%1\", " ).arg( m_uiPatientCardTypeId );
+        qsQuery += QString( "parentCardId = \"0\", " );
+        qsQuery += QString( "patientId = \"%1\", " ).arg( p_uiPatientId );
+        qsQuery += QString( "barcode = \"%1\", " ).arg( p_qsBarcode );
+        qsQuery += QString( "comment = \"\", " );
+        qsQuery += QString( "units = \"%1\", " ).arg( p_qsUnitCount.toInt() );
+        qsQuery += QString( "amount = \"0\", " );
+        qsQuery += QString( "timeLeft = \"0\", " );
+        qsQuery += QString( "validDateFrom = \"%1\", " ).arg( QDateTime::currentDateTime().toString( QString("yyyy-MM-dd hh:mm:ss") ) );
+        qsQuery += QString( "validDateTo = \"%1\", " ).arg( p_qsValidDateTo );
+        qsQuery += QString( "pincode = \"\", " );
+        qsQuery += QString( "modified = \"%1\", " ).arg( QDateTime::currentDateTime().toString( QString("yyyy-MM-dd hh:mm:ss") ) );
+        qsQuery += QString( "active = 1, " );
+        qsQuery += QString( "archive = \"NEW\" " );
+
+        poQuery = g_poDB->executeQTQuery( qsQuery );
+        m_uiLedgerTypeId = 7;
+        m_qsLedgerComment = tr("Patientcard sold online");
+
+        uiId = poQuery->lastInsertId().toUInt();
+    }
+
+    return uiId;
 }
 
 //=================================================================================================
-unsigned int cBlnsHttp::_saveOnlineSell(unsigned int p_uiPatientCardId, unsigned int p_uiPatientId, QString p_qsLedgerTime)
+unsigned int cBlnsHttp::_saveOnlineSell(unsigned int p_uiPatientCardId, QString p_qsBarcode, unsigned int p_uiPatientId, QString p_qsLedgerTime)
 //-------------------------------------------------------------------------------------------------
 {
-    return 0;
+    QString         qsQuery = "";
+    QSqlQuery      *poQuery = NULL;
+
+    qsQuery = "INSERT INTO ledger SET ";
+    qsQuery += QString( "licenceId = \"%1\", " ).arg( m_uiLicenceId );
+    qsQuery += QString( "parentId = \"0\", " );
+    qsQuery += QString( "ledgerTypeId = \"%1\", " ).arg( m_uiLedgerTypeId );
+    qsQuery += QString( "ledgerDeviceId = \"0\", " );
+    qsQuery += QString( "paymentMethodId = \"%1\", " ).arg( m_uiPaymentMethod );
+    qsQuery += QString( "userId = \"1\", " );
+    qsQuery += QString( "productId = \"0\", " );
+    qsQuery += QString( "patientCardTypeId = \"%1\", " ).arg( m_uiPatientCardTypeId );
+    qsQuery += QString( "patientCardId = \"%1\", " ).arg( p_uiPatientCardId );
+    qsQuery += QString( "panelId = \"0\", " );
+    qsQuery += QString( "patientId = \"%1\", " ).arg( p_uiPatientId );
+    qsQuery += QString( "name = \"%1\", " ).arg( p_qsBarcode );
+    qsQuery += QString( "itemCount = \"1\", " );
+    qsQuery += QString( "netPrice = \"0\", " );
+    qsQuery += QString( "card = \"0\", " );
+    qsQuery += QString( "cash = \"0\", " );
+    qsQuery += QString( "voucher = \"0\", " );
+    qsQuery += QString( "discount = \"0\", " );
+    qsQuery += QString( "vatpercent = \"0\", " );
+    qsQuery += QString( "totalPrice = \"0\", " );
+    qsQuery += QString( "comment = \"%1\", " ).arg( m_qsLedgerComment );
+    qsQuery += QString( "modified = \"%1\", " ).arg( p_qsLedgerTime );
+    qsQuery += QString( "active = 1, " );
+    qsQuery += QString( "archive = \"NEW\" " );
+
+    poQuery = g_poDB->executeQTQuery( qsQuery );
+
+    return poQuery->lastInsertId().toUInt();
 }
 
 //=================================================================================================
-void cBlnsHttp::_savePatientCardUnits(QString p_qsUnitCount, unsigned int p_uiPatientCardId, unsigned int p_uiLedgerId)
+void cBlnsHttp::_savePatientCardUnits(QString p_qsUnitCount, unsigned int p_uiPatientCardId, QString p_qsValidDateTo, unsigned int p_uiLedgerId)
 //-------------------------------------------------------------------------------------------------
 {
+    for( int i=0; i<p_qsUnitCount.toInt(); i++ )
+    {
+        QString         qsQuery = "";
 
+        qsQuery = "INSERT INTO patientCardUnits SET ";
+        qsQuery += QString( "licenceId = \"%1\", " ).arg( m_uiLicenceId );
+        qsQuery += QString( "patientCardId = \"%1\", " ).arg( p_uiPatientCardId );
+        qsQuery += QString( "patientCardTypeId = \"%1\", " ).arg( m_uiPatientCardTypeId );
+        qsQuery += QString( "ledgerId = \"%1\", " ).arg( p_uiLedgerId );
+        qsQuery += QString( "panelId = \"0\", " );
+        qsQuery += QString( "unitTime = \"%1\", " ).arg( m_nPatientCardTypeUnitTime );
+        qsQuery += QString( "unitPrice = \"%1\", " ).arg( m_nPatientCardTypePrice / m_nPatientCardTypeUnits );
+        qsQuery += QString( "validDateFrom = \"%1\", " ).arg( QDateTime::currentDateTime().toString( QString("yyyy-MM-dd hh:mm:ss") ) );
+        qsQuery += QString( "validDateTo = \"%1\", " ).arg( p_qsValidDateTo );
+        qsQuery += QString( "dateTimeUsed = \"0000-00-00 00:00:00\", " );
+        qsQuery += QString( "prepared = 0, " );
+        qsQuery += QString( "active = 1, " );
+        qsQuery += QString( "archive = \"NEW\" " );
+
+        g_poDB->executeQTQuery( qsQuery );
+    }
 }
 
-
 //=================================================================================================
-bool cBlnsHttp::_processCommResponse()
+bool cBlnsHttp::_processResponse()
 //-------------------------------------------------------------------------------------------------
 {
-    bool    bRet = true;
+    QString fileName = QString("%1\\comm.php").arg( QDir::currentPath() );
+    QFile   file( fileName );
 
-    return bRet;
+    if (!file.open(QIODevice::ReadOnly | QIODevice::Text))
+    {
+        g_obLogger(cSeverity::ERROR) << "HTTP Unable to open file " << fileName << EOM;
+        return false;
+    }
+
+    QTextStream qtsFile(&file);
+
+    QString     qsResponse   = qtsFile.readLine();
+
+    g_obLogger(cSeverity::DEBUG) << "HTTP: Response [" << qsResponse << "]" << EOM;
+
+    if( qsResponse.contains( "ok -" ) || qsResponse.contains( "ok –" ) )
+    {
+        g_obLogger(cSeverity::INFO) << "HTTP: Response received without error" << EOM;
+        return true;
+    }
+    else if( qsResponse.contains( "Missing token" ) )
+    {
+        m_qsError = tr("Server did not received token");
+        g_obLogger(cSeverity::WARNING) << "HTTP: Server did not received token" << EOM;
+        emit signalErrorOccured();
+        m_inHttpProcessStep = HTTP_ERROR_INVALID_TOKEN;
+    }
+    else if( qsResponse.contains( "Missing code" ) )
+    {
+        m_qsError = tr("Server did not received Sha1 hash");
+        g_obLogger(cSeverity::WARNING) << "HTTP: Server did not received Sha1 hash" << EOM;
+        emit signalErrorOccured();
+        m_inHttpProcessStep = HTTP_ERROR_SHA1_NOT_RECEIVED;
+    }
+    else if( qsResponse.contains( "Missing StudioId" ) )
+    {
+        m_qsError = tr("Server did not received Studio Id");
+        g_obLogger(cSeverity::WARNING) << "HTTP: Server did not received Studio Id" << EOM;
+        emit signalErrorOccured();
+        m_inHttpProcessStep = HTTP_ERROR_MISSING_STUDIOID;
+    }
+    else if( qsResponse.contains( "Missing CommId" ) )
+    {
+        m_qsError = tr("Server did not received last successfull request Id");
+        g_obLogger(cSeverity::WARNING) << "HTTP: Server did not received last successfull request Id" << EOM;
+        emit signalErrorOccured();
+        m_inHttpProcessStep = HTTP_ERROR_MISSING_COMMID;
+    }
+    else if( qsResponse.contains( "Wrong token" ) )
+    {
+        m_qsError = tr("Token sent to server is invalid");
+        g_obLogger(cSeverity::WARNING) << "HTTP: Token sent to server is invalid" << EOM;
+        emit signalErrorOccured();
+        m_inHttpProcessStep = HTTP_ERROR_INVALID_TOKEN;
+    }
+    else if( qsResponse.contains( "Check error" ) )
+    {
+        m_qsError = tr("Sha1 code sent to server is invalid");
+        g_obLogger(cSeverity::WARNING) << "HTTP: Sha1 code sent to server is invalid" << EOM;
+        emit signalErrorOccured();
+        m_inHttpProcessStep = HTTP_ERROR_SHA1_MISMATCH;
+    }
+    else if( qsResponse.contains( "False" ) )
+    {
+        m_qsError = tr("Result not sent to server");
+        g_obLogger(cSeverity::WARNING) << "HTTP: Result not sent to server" << EOM;
+        emit signalErrorOccured();
+        m_inHttpProcessStep = HTTP_ERROR_RESULT_NOT_SENT;
+    }
+
+    return false;
 }
 
 //=================================================================================================
@@ -988,11 +1360,11 @@ void cBlnsHttp::_slotHttpRequestFinished(int requestId, bool error)
             obFile = 0;
         }
         g_obLogger(cSeverity::ERROR) << "HTTP Request aborted" << EOM;
+        m_qsError.append( tr( "Http request aborted" ) );
         return;
     }
 
-    if (requestId != m_httpGetId)
-        return;
+    if (requestId != m_httpGetId) return;
 
     obFile->close();
 
@@ -1001,13 +1373,14 @@ void cBlnsHttp::_slotHttpRequestFinished(int requestId, bool error)
         obFile->remove();
         m_qsError = tr("Error occured during downloading HTTP file.");
         g_obLogger(cSeverity::WARNING) << "HTTP: "
-                                       << QString("Error occured during downloading file:\n%1.")
+                                       << QString("Error occured during downloading file: %1.")
                                                  .arg( obHttp->errorString() )
                                        << EOM;
         emit signalErrorOccured();
         delete obFile;
         obFile = 0;
         g_obLogger(cSeverity::ERROR) << "HTTP Error occured" << EOM;
+        m_qsError.append( tr( "Http error occured: %1" ).arg( obHttp->errorString() ) );
         return;
     }
 
