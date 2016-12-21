@@ -588,8 +588,7 @@ void cBlnsHttp::_httpConfirmRequestedData()
     qsFileName.append( QString( "&code=%1" ).arg( qsSha1Hash ) );
     qsFileName.append( QString( "&StudioId=%1" ).arg( m_qsLicenceString ) );
     qsFileName.append( QString( "&CommId=%1" ).arg( m_uiCommId ) );
-//    qsFileName.append( QString( "&Result=ok(%1)" ).arg( m_qslProcessedRecordIds.join(",") ) );
-    qsFileName.append( QString( "&Result=ok()" ) );
+    qsFileName.append( QString( "&Result=ok(%1)" ).arg( m_qslProcessedRecordIds.join(",") ) );
 
     g_obLogger(cSeverity::DEBUG) << "HTTP: Confirm online sold card data processed ["
                                  << qsFileName
