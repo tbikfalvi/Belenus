@@ -29,13 +29,25 @@ dlgMain::dlgMain(QWidget *parent) : QDialog(parent), ui(new Ui::dlgMain)
 
     m_qsRPSW                    = "7c01fcbe9cab6ae14c98c76cf943a7b2be6a7922";
 
+    m_FlagNoHttpServer          = false;
+    m_FlagHttpFailed            = false;
+    m_FlagHttpDisabled          = false;
+    m_FlagHttpEnabled           = false;
+    m_FlagHttpSuspended         = false;
+    m_FlagHttpContinued         = false;
+    m_FlagNoPaymentMethod       = false;
+    m_FlagNoPCType              = false;
+
     m_bStartTimerOnStart        = false;
     m_nTimer                    = 0;
     m_bMousePressed             = false;
     m_bReloadLanguage           = false;
     m_bShowMainWindowOnStart    = true;
-    m_bHttpSuspended            = false;
     m_nLogLevel                 = 0;
+
+    m_bHttpEnabledBySetting     = true;
+    m_bHttpEnabledByUser        = true;
+    m_bHttpSuspendedByUser      = false;
 
     m_bSyncPCToServer           = false;
     m_bSyncPCFromServer         = false;
@@ -44,6 +56,7 @@ dlgMain::dlgMain(QWidget *parent) : QDialog(parent), ui(new Ui::dlgMain)
     m_nIndexPCOnlineSync        = 0;
     m_nIndexUpdateSyncDataCount = 0;
     m_nIndexUser                = 0;
+    m_nIndexCheckEnablers       = 0;
 
     m_enGroup                   = GROUP_MIN;
 
@@ -69,6 +82,7 @@ dlgMain::dlgMain(QWidget *parent) : QDialog(parent), ui(new Ui::dlgMain)
     m_uiPatientCardTypeId       = obPref.value( "OnlinePatientCardType", 0 ).toUInt();
     m_uiPaymentMethodId         = obPref.value( "OnlinePaymentMethod", 0 ).toUInt();
     m_nLogLevel                 = obPref.value( "LogLevel", cSeverity::DEBUG ).toInt();
+    m_bHttpEnabledByUser        = obBelenus.value( "BlnsHttp/Enabled", false ).toBool();
 
     g_obLogger.setMinimumSeverity("file", (cSeverity::teSeverity)m_nLogLevel);
 
@@ -78,7 +92,7 @@ dlgMain::dlgMain(QWidget *parent) : QDialog(parent), ui(new Ui::dlgMain)
 
 //    setWindowFlags( Qt::Dialog | Qt::FramelessWindowHint );
 
-    trayIcon->setIcon( QIcon( ":/websync.png" ) );
+    trayIcon->setIcon( QIcon( ":/websync_yellow.png" ) );
     trayIcon->setToolTip( tr("Belenus WebSync") );
     trayIcon->show();
 
@@ -162,16 +176,27 @@ dlgMain::dlgMain(QWidget *parent) : QDialog(parent), ui(new Ui::dlgMain)
     connect( g_poBlnsHttp, SIGNAL(signalStepProgress()),            this, SLOT(on_BlnsHttpStepProgress()) );
 
     ui->lblStatusIconWebServer->setPixmap( QPixmap( ":/status_yellow.png" ) );
+    ui->chkHttpCommunicationEnabled->setChecked( m_bHttpEnabledByUser );
     g_poBlnsHttp->setServerAddress( obBelenus.value( "Server/Address", "0.0.0.0" ).toString() );
     g_poBlnsHttp->setTimeout( obBelenus.value( QString::fromAscii( "BlnsHttp/MessageWaitTime" ), 12 ).toInt() * 1000 );
-    g_poBlnsHttp->checkHttpServerAvailability();
     ui->pbStartStopHTTP->setIcon( QIcon(":/pause.png") );
+    m_bHttpEnabledBySetting = m_bHttpEnabledByUser;
+
+    if( m_bHttpEnabledBySetting && m_bHttpEnabledByUser )
+    {
+        g_poBlnsHttp->setCommunicationEnabled( true );
+        g_poBlnsHttp->checkHttpServerAvailability();
+    }
+    else
+    {
+        g_poBlnsHttp->setCommunicationEnabled( false );
+    }
 
     //---------------------------------------------------------------------------------------------
     // Web Connection settings
     g_obLogger(cSeverity::DEBUG) << "Web Connection settings" << EOM;
 
-    ui->ledWebServerAddress->setText( obBelenus.value( "Server/Address", "0.0.0.0" ).toString() );
+    ui->ledWebServerAddress->setText( obBelenus.value( "Server/Address", "" ).toString() );
 
     //---------------------------------------------------------------------------------------------
     // Application settings
@@ -198,10 +223,13 @@ dlgMain::dlgMain(QWidget *parent) : QDialog(parent), ui(new Ui::dlgMain)
     // Start sync process
     g_obLogger(cSeverity::DEBUG) << "Start main timer process" << EOM;
 
+    ui->lblIndexPCData->setVisible( _isInGroup( GROUP_SYSTEM ) );
+    ui->lblIndexPCOnline->setVisible( _isInGroup( GROUP_SYSTEM ) );
+    ui->pbTest->setVisible( _isInGroup( GROUP_SYSTEM ) );
+    ui->pbTest->setEnabled( _isInGroup( GROUP_SYSTEM ) );
+
     m_bStartTimerOnStart = true;
-
     m_nTimer = startTimer( 500 );
-
     m_bStartFinished = true;
 }
 //=================================================================================================
@@ -238,6 +266,7 @@ void dlgMain::timerEvent(QTimerEvent *)
     m_nIndexPCOnlineSync++;
     m_nIndexUpdateSyncDataCount++;
     m_nIndexUser++;
+    m_nIndexCheckEnablers++;
 
     ui->lblIndexPCData->setText( QString::number(m_nIndexPCStatusSync) );
     ui->lblIndexPCOnline->setText( QString::number(m_nIndexPCOnlineSync) );
@@ -294,9 +323,8 @@ void dlgMain::timerEvent(QTimerEvent *)
                             {
                                 QString qsUser = ui->cmbName->itemText(i).replace('(','|').replace(')',"");
 
-                                trayIcon->showMessage( "Belenus Websync",
-                                                       tr("User '%1' logged in").arg( qsUser.section("|",1) ),
-                                                       QSystemTrayIcon::Information, 3000 );
+                                _displayUserNotification( INFO_Custom,
+                                                          tr("User '%1' logged in").arg( qsUser.section("|",1) ) );
                                 _setGUIEnabled();
                             }
                             break;
@@ -335,8 +363,44 @@ void dlgMain::timerEvent(QTimerEvent *)
     }
 
     //---------------------------------------------------------------------------------------------
+    // Check if application settings are ok for http processes
+    if( m_nIndexCheckEnablers > 2 )
+    {
+        m_bHttpEnabledBySetting = true;
+        m_nIndexCheckEnablers   = 0;
+
+        // Read enabler from belenus.ini
+        _checkIfHttpDisabledByUser();
+
+        // Check web server address
+        if( ui->ledWebServerAddress->text().length() == 0 )
+        {
+            _disableHttpBySetting();
+            _displayUserNotification( INFO_NoHttpServer );
+            ui->lblServerAddress->setStyleSheet( "QLabel {font: bold; color: red;}" );
+            return;
+        }
+        // Check if PatientCardType is selected
+        if( m_uiPatientCardTypeId == 0 )
+        {
+            _disableHttpBySetting();
+            _displayUserNotification( INFO_NoPCType );
+            ui->lblOnlinePatientCardType->setStyleSheet( "QLabel {font: bold; color: red;}" );
+            return;
+        }
+        // Check if PaymentMethod is selected
+        if( m_uiPaymentMethodId == 0 )
+        {
+            _disableHttpBySetting();
+            _displayUserNotification( INFO_NoPaymentMethod );
+            ui->lblOnlinePaymentMethod->setStyleSheet( "QLabel {font: bold; color: red;}" );
+            return;
+        }
+    }
+
+    //---------------------------------------------------------------------------------------------
     // Check if timer of PC data send is reached the value set
-    if( m_nIndexPCStatusSync >= m_nTimerPCStatusSync )
+    if( m_nIndexPCStatusSync >= m_nTimerPCStatusSync && !m_bSyncPCFromServer && !m_bSyncPCToServer )
     {
         m_nIndexPCStatusSync = 0;
 
@@ -344,17 +408,19 @@ void dlgMain::timerEvent(QTimerEvent *)
         {
             m_bSyncPCToServer = true;
             ui->lblStatusSync->setPixmap( QPixmap( ":/hourglass.png" ) );
+            trayIcon->setIcon( QIcon( ":/hourglass.png" ) );
             g_poBlnsHttp->processWaitingCardData();
         }
     }
 
     //---------------------------------------------------------------------------------------------
     // Check if timer of check online PC sold is reached the value set
-    if( m_nIndexPCOnlineSync >= m_nTimerPCOnlineSync )
+    if( m_nIndexPCOnlineSync >= m_nTimerPCOnlineSync && !m_bSyncPCFromServer && !m_bSyncPCToServer )
     {
         m_nIndexPCOnlineSync = 0;
         m_bSyncPCFromServer = true;
         ui->lblStatusSync->setPixmap( QPixmap( ":/hourglass.png" ) );
+        trayIcon->setIcon( QIcon( ":/hourglass.png" ) );
         g_poBlnsHttp->getPatientCardsSoldOnline();
     }
 }
@@ -392,8 +458,13 @@ void dlgMain::on_pbResetSQL_clicked()
 //=================================================================================================
 void dlgMain::on_pbResetHTTP_clicked()
 {
-    g_poBlnsHttp->checkHttpServerAvailability();
-    ui->lblStatusIconWebServer->setPixmap( QPixmap( ":/status_yellow.png" ) );
+    if( m_bHttpEnabledByUser )
+    {
+        g_poBlnsHttp->setCommunicationEnabled();
+        g_poBlnsHttp->checkHttpServerAvailability();
+        ui->lblStatusIconWebServer->setPixmap( QPixmap( ":/status_yellow.png" ) );
+        _setGUIEnabled();
+    }
 }
 //=================================================================================================
 void dlgMain::on_pbAuthenticate_clicked()
@@ -422,7 +493,12 @@ void dlgMain::on_pbAuthenticate_clicked()
 //=================================================================================================
 void dlgMain::on_pbExit_clicked()
 {
-    if( _isInGroup( GROUP_SYSTEM ) )
+    if( _isInGroup( GROUP_USER ) &&
+        QMessageBox::question( this, "Belenus Websync",
+                               tr("Are you sure you want to close this application?\n\n"
+                                  "With closing the application the data of the patientcards "
+                                  "will not be synchronized with the KiwiSun server."),
+                               QMessageBox::Yes | QMessageBox::No, QMessageBox::No ) == QMessageBox::Yes )
     {
         qApp->quit();
     }
@@ -539,10 +615,7 @@ void dlgMain::on_BlnsHttpErrorOccured()
     ui->lblWebServerStatusText->setToolTip( g_poBlnsHttp->errorMessage() );
     ui->lblStatusSync->setPixmap( QPixmap( ":/ok.png" ) );
     trayIcon->setIcon( QIcon( ":/websync_red.png" ) );
-
-    trayIcon->showMessage( "Belenus Websync",
-                           QString("%1").arg( g_poBlnsHttp->errorMessage() ),
-                           QSystemTrayIcon::Critical, 3000 );
+    _displayUserNotification( INFO_HttpFailed, g_poBlnsHttp->errorMessage() );
 }
 //=================================================================================================
 // Executed when a http process finished
@@ -560,14 +633,11 @@ void dlgMain::on_BlnsHttpActionFinished(QString p_qsInfo)
         qsTooltip.append( g_poBlnsHttp->settingsInfo() );
     }
 
-//    if( p_qsInfo.left(10).compare( "HTTPMSG_01" ) == 0 )
-//    {
-        ui->lblStatusIconWebServer->setPixmap( QPixmap( ":/status_green.png" ) );
-        ui->lblStatusIconWebServer->setToolTip( qsTooltip );
-        ui->lblWebServerStatusText->setToolTip( tr("HTTP Connection established") );
-        trayIcon->setIcon( QIcon( ":/websync.png" ) );
-
-//    }
+    ui->lblStatusIconWebServer->setPixmap( QPixmap( ":/status_green.png" ) );
+    ui->lblStatusIconWebServer->setToolTip( qsTooltip );
+    ui->lblWebServerStatusText->setToolTip( tr("HTTP Connection established") );
+    trayIcon->setIcon( QIcon( ":/websync.png" ) );
+    m_FlagHttpFailed = false;
     g_obLogger(cSeverity::INFO) << p_qsInfo << EOM;
     ui->lblStatusSync->setPixmap( QPixmap( ":/ok.png" ) );
 }
@@ -580,6 +650,7 @@ void dlgMain::on_BlnsHttpStepProgress()
     ui->lblStatusIconWebServer->setPixmap( QPixmap( ":/status_green.png" ) );
     ui->ledNumberOfCardsWaiting->setText( QString::number( g_poBlnsHttp->getNumberOfWaitingRecords() ) );
     ui->lblStatusSync->setPixmap( QPixmap( ":/ok.png" ) );
+    trayIcon->setIcon( QIcon( ":/websync.png" ) );
 }
 //=================================================================================================
 //
@@ -593,12 +664,17 @@ void dlgMain::_setGUIEnabled(bool p_bEnabled)
     ui->ledTimerPCOnlineSync->setEnabled( p_bEnabled );
     ui->ledWebServerAddress->setEnabled( p_bEnabled && _isInGroup( GROUP_SYSTEM ) );
     ui->sliFileLogLevel->setEnabled( p_bEnabled && _isInGroup( GROUP_USER ) );
-    ui->pbSyncAllPatientCard->setEnabled( p_bEnabled && _isInGroup( GROUP_SYSTEM ) );
+    ui->pbSyncAllPatientCard->setEnabled( p_bEnabled && _isInGroup( GROUP_SYSTEM ) && m_bHttpEnabledBySetting && m_bHttpEnabledByUser );
     //ui->pbClearPCData->setEnabled( p_bEnabled && _isInGroup( GROUP_USER ) );  // can be cleared anytime
-    ui->pbSyncOnlinePC->setEnabled( p_bEnabled && _isInGroup( GROUP_USER ) );
+    ui->pbSyncOnlinePC->setEnabled( p_bEnabled && _isInGroup( GROUP_USER ) && m_bHttpEnabledBySetting && m_bHttpEnabledByUser );
     ui->cmbOnlinePatientCardType->setEnabled( p_bEnabled && _isInGroup( GROUP_USER ) );
     ui->cmbOnlinePaymentMethod->setEnabled( p_bEnabled && _isInGroup( GROUP_USER ) );
-    ui->pbExit->setEnabled( p_bEnabled && _isInGroup( GROUP_SYSTEM ) );
+    ui->pbExit->setEnabled( p_bEnabled && _isInGroup( GROUP_USER ) );
+
+    ui->lblIndexPCData->setVisible( _isInGroup( GROUP_SYSTEM ) );
+    ui->lblIndexPCOnline->setVisible( _isInGroup( GROUP_SYSTEM ) );
+    ui->pbTest->setVisible( _isInGroup( GROUP_SYSTEM ) );
+    ui->pbTest->setEnabled( _isInGroup( GROUP_SYSTEM ) );
 }
 //=================================================================================================
 void dlgMain::_setActions()
@@ -839,15 +915,24 @@ bool dlgMain::_isInGroup(groupUser p_enGroup)
 //=================================================================================================
 void dlgMain::on_pbStartStopHTTP_clicked()
 {
-    if( m_bHttpSuspended )
+    if( m_bHttpSuspendedByUser )
     {
-        m_bHttpSuspended = false;
+        m_bHttpSuspendedByUser = false;
         ui->pbStartStopHTTP->setIcon( QIcon(":/pause.png") );
+        ui->lblStatusIconWebServer->setPixmap( QPixmap( ":/status_yellow.png" ) );
+        trayIcon->setIcon( QIcon( ":/websync_yellow.png" ) );
+        g_poBlnsHttp->setCommunicationSuspended( false );
+        _displayUserNotification( INFO_HttpContinued );
+        g_poBlnsHttp->checkHttpServerAvailability();
+        m_FlagHttpSuspended = false;
     }
     else
     {
-        m_bHttpSuspended = true;
+        m_bHttpSuspendedByUser = true;
         ui->pbStartStopHTTP->setIcon( QIcon(":/start.png") );
+        g_poBlnsHttp->setCommunicationSuspended();
+        _displayUserNotification( INFO_HttpSuspended );
+        m_FlagHttpContinued = false;
     }
 }
 
@@ -857,8 +942,16 @@ void dlgMain::on_cmbOnlinePatientCardType_currentIndexChanged(int index)
     if( m_bStartFinished )
     {
         m_uiPatientCardTypeId = ui->cmbOnlinePatientCardType->itemData( index ).toUInt();
-
         _setPCTypeForHttp();
+        if( m_uiPatientCardTypeId > 0 )
+        {
+            m_FlagNoPCType = false;
+            ui->lblOnlinePatientCardType->setStyleSheet( "QLabel {font: normal;}" );
+        }
+        else
+        {
+            ui->lblOnlinePatientCardType->setStyleSheet( "QLabel {font: bold; color: red;}" );
+        }
     }
 }
 
@@ -885,6 +978,15 @@ void dlgMain::on_cmbOnlinePaymentMethod_currentIndexChanged(int index)
     {
         m_uiPaymentMethodId = ui->cmbOnlinePaymentMethod->itemData( index ).toUInt();
         g_poBlnsHttp->setOnlinePaymentMethod( m_uiPaymentMethodId );
+        if( m_uiPaymentMethodId > 0 )
+        {
+            m_FlagNoPaymentMethod = false;
+            ui->lblOnlinePaymentMethod->setStyleSheet( "QLabel {font: normal;}" );
+        }
+        else
+        {
+            ui->lblOnlinePaymentMethod->setStyleSheet( "QLabel {font: bold; color: red;}" );
+        }
     }
 }
 
@@ -894,4 +996,192 @@ void dlgMain::on_sliFileLogLevel_valueChanged(int value)
     m_nLogLevel = value;
     ui->lblFileLogLevelValue->setText( cSeverity::toStr( (cSeverity::teSeverity)m_nLogLevel ) );
     g_obLogger.setMinimumSeverity("file", (cSeverity::teSeverity)m_nLogLevel);
+}
+
+//=================================================================================================
+void dlgMain::_displayUserNotification(userInfo p_tUserInfo, QString p_qsInfoText, QSystemTrayIcon::MessageIcon icon)
+{
+    switch( p_tUserInfo )
+    {
+        case INFO_NoHttpServer:
+            if( !m_FlagNoHttpServer )
+            {
+                m_FlagNoHttpServer = true;
+                trayIcon->showMessage( "Belenus Websync",
+                                       tr("Http server address is not defined!\n"
+                                          "Http connection is going to be disabled."),
+                                       QSystemTrayIcon::Critical, 2000 );
+            }
+            break;
+
+        case INFO_HttpFailed:
+            if( !m_FlagHttpFailed )
+            {
+                m_FlagHttpFailed = true;
+                trayIcon->showMessage( "Belenus Websync",
+                                       tr("Http error occured!\n%1").arg(p_qsInfoText),
+                                       QSystemTrayIcon::Critical, 2000 );
+            }
+            break;
+
+        case INFO_HttpDisabled:
+            if( !m_FlagHttpDisabled )
+            {
+                m_FlagHttpDisabled = true;
+                trayIcon->showMessage( "Belenus Websync",
+                                       tr("Http communication disabled."),
+                                       QSystemTrayIcon::Warning, 2000 );
+            }
+            break;
+
+        case INFO_HttpEnabled:
+            if( !m_FlagHttpEnabled )
+            {
+                m_FlagHttpEnabled = true;
+                trayIcon->showMessage( "Belenus Websync",
+                                       tr("Http communication enabled."),
+                                       QSystemTrayIcon::Information, 2000 );
+            }
+            break;
+
+        case INFO_HttpSuspended:
+            if( !m_FlagHttpSuspended )
+            {
+                m_FlagHttpSuspended = true;
+                trayIcon->showMessage( "Belenus Websync",
+                                       tr("Http communication suspended."),
+                                       QSystemTrayIcon::Warning, 2000 );
+            }
+            break;
+
+        case INFO_HttpContinued:
+            if( !m_FlagHttpContinued )
+            {
+                m_FlagHttpContinued = true;
+                trayIcon->showMessage( "Belenus Websync",
+                                       tr("Http communication continued."),
+                                       QSystemTrayIcon::Information, 2000 );
+            }
+            break;
+
+        case INFO_NoPaymentMethod:
+            if( !m_FlagNoPaymentMethod )
+            {
+                m_FlagNoPaymentMethod = true;
+                trayIcon->showMessage( "Belenus Websync",
+                                       tr("No payment method set for online transactions.\n"
+                                          "Http connection is going to be disabled."),
+                                       QSystemTrayIcon::Critical, 2000 );
+            }
+            break;
+
+        case INFO_NoPCType:
+            if( !m_FlagNoPCType )
+            {
+                m_FlagNoPCType = true;
+                trayIcon->showMessage( "Belenus Websync",
+                                       tr("No patientcard type set for onlince transactions.\n"
+                                          "Http connection is going to be disabled."),
+                                       QSystemTrayIcon::Critical, 2000 );
+            }
+            break;
+
+        default:
+            if( p_qsInfoText.length() > 0 )
+            {
+                trayIcon->showMessage( "Belenus Websync", p_qsInfoText, icon, 2000 );
+            }
+    }
+}
+
+//=================================================================================================
+void dlgMain::_checkIfHttpDisabledByUser()
+{
+    QSettings   obBelenus( QString( "%1/belenus.ini" ).arg( QDir::currentPath() ), QSettings::IniFormat );
+    bool bHttpEnabled = obBelenus.value( "BlnsHttp/Enabled", false ).toBool();
+
+    if( m_bHttpEnabledByUser != bHttpEnabled )
+    {
+        m_bHttpEnabledByUser = bHttpEnabled;
+        ui->chkHttpCommunicationEnabled->setChecked( m_bHttpEnabledByUser );
+
+        if( m_bHttpEnabledByUser )
+        {
+            // Http just enabled
+            g_poBlnsHttp->setCommunicationEnabled( true );
+            _displayUserNotification( INFO_HttpEnabled );
+            m_FlagHttpDisabled = false;
+            _setGUIEnabled();
+        }
+        else
+        {
+            // Http just disabled
+            ui->lblStatusIconWebServer->setPixmap( QPixmap( ":/status_yellow.png" ) );
+            trayIcon->setIcon( QIcon( ":/websync_yellow.png" ) );
+            g_poBlnsHttp->setCommunicationEnabled( false );
+            _displayUserNotification( INFO_HttpDisabled );
+            m_FlagHttpEnabled = false;
+        }
+    }
+    _setGUIEnabled();
+}
+
+//=================================================================================================
+void dlgMain::_disableHttpBySetting()
+{
+    ui->lblStatusIconWebServer->setPixmap( QPixmap( ":/status_yellow.png" ) );
+    trayIcon->setIcon( QIcon( ":/websync_yellow.png" ) );
+    g_poBlnsHttp->setCommunicationEnabled( false );
+    m_bHttpEnabledBySetting = false;
+}
+
+//=================================================================================================
+void dlgMain::on_ledWebServerAddress_textEdited(const QString &/*arg1*/)
+{
+    ui->lblServerAddress->setStyleSheet( "QLabel {font: normal;}" );
+
+    QSettings   obBelenus( QString( "%1/belenus.ini" ).arg( QDir::currentPath() ), QSettings::IniFormat );
+
+    obBelenus.setValue( "Server/Address", ui->ledWebServerAddress->text() );
+
+    if( ui->ledWebServerAddress->text().length() == 0 )
+    {
+        ui->lblServerAddress->setStyleSheet( "QLabel {font: bold; color: red;}" );
+    }
+    else
+    {
+        m_FlagNoHttpServer = false;
+    }
+}
+
+//=================================================================================================
+void dlgMain::on_chkHttpCommunicationEnabled_clicked()
+{
+    QSettings   obBelenus( QString( "%1/belenus.ini" ).arg( QDir::currentPath() ), QSettings::IniFormat );
+
+    obBelenus.setValue( "BlnsHttp/Enabled", ui->chkHttpCommunicationEnabled->isChecked() );
+}
+
+void dlgMain::on_pbTest_clicked()
+{
+/*    QFile   file( "ansi.php" );
+
+    file.open(QIODevice::ReadOnly | QIODevice::Text);
+
+    QString     sha1    = file.readLine();
+    QByteArray  qbaTest = file.readLine();
+    QString     gen = QString(QCryptographicHash::hash(qbaTest,QCryptographicHash::Sha1).toHex());
+
+    _displayUserNotification( INFO_Custom, qbaTest+"\n"+sha1+"\n"+gen );
+    g_obLogger(cSeverity::DEBUG) << "TEST: [" << _bytearrayToString(qbaTest) << "]" << EOM;
+    g_obLogger(cSeverity::DEBUG) << "sha1: [" << sha1.left(40) << "]" << EOM;
+    g_obLogger(cSeverity::DEBUG) << "gen:  [" << gen << "]" << EOM;
+
+    g_poDB->executeQTQuery( QString("INSERT INTO settings SET identifier=\"Ekezet teszt\", value=\"%1\" ").arg( _bytearrayToString(qbaTest) ) );*/
+    _displayUserNotification( INFO_Custom, tr("árvíztűrő tükörfúrógép\nÁRVÍZTŰRŐ TÜKÖRFÚRÓGÉP") );
+}
+
+QString dlgMain::_bytearrayToString(QString p_qsString)
+{
+    return p_qsString;
 }

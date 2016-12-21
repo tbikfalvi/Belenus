@@ -20,5 +20,6 @@
         <file>pause.png</file>
         <file>start.png</file>
         <file>websync_red.png</file>
+        <file>websync_yellow.png</file>
     </qresource>
 </RCC>

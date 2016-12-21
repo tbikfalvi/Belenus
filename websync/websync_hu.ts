@@ -21,143 +21,172 @@
 <context>
     <name>cBlnsHttp</name>
     <message>
-        <location filename="http.cpp" line="162"/>
+        <location filename="http.cpp" line="171"/>
         <source>HTTP connection disabled.</source>
         <translation>HTTP kapcsolat letiltva.</translation>
     </message>
     <message>
-        <location filename="http.cpp" line="205"/>
-        <location filename="http.cpp" line="230"/>
+        <location filename="http.cpp" line="214"/>
+        <location filename="http.cpp" line="239"/>
         <source>HTTP connection disabled</source>
         <translation>HTTP kapcsolat letiltva.</translation>
     </message>
     <message>
-        <location filename="http.cpp" line="314"/>
+        <location filename="http.cpp" line="325"/>
         <source>HTTP timeout occured.</source>
         <translation>HTTP időtúllépés.</translation>
     </message>
     <message>
-        <location filename="http.cpp" line="683"/>
+        <location filename="http.cpp" line="722"/>
         <source>Unable to save HTTP communication file.</source>
         <translation>Nem sikerült elmenteni a HTTP kommunikációs állományt.</translation>
     </message>
     <message>
-        <location filename="http.cpp" line="890"/>
+        <location filename="http.cpp" line="938"/>
+        <location filename="http.cpp" line="1326"/>
         <source>Server did not received token</source>
         <translation>A webszerver nem kapta meg az elküldött token-t</translation>
     </message>
     <message>
-        <location filename="http.cpp" line="897"/>
+        <location filename="http.cpp" line="945"/>
+        <location filename="http.cpp" line="1333"/>
         <source>Server did not received Sha1 hash</source>
         <translation>A webszerver nem kapta meg az elküldött Sha1 kulcsot</translation>
     </message>
     <message>
-        <location filename="http.cpp" line="904"/>
+        <location filename="http.cpp" line="952"/>
+        <location filename="http.cpp" line="1340"/>
         <source>Server did not received Studio Id</source>
         <translation>A webszerver nem kapta meg az elküldött stúdió azonosítót</translation>
     </message>
     <message>
-        <location filename="http.cpp" line="911"/>
+        <location filename="http.cpp" line="959"/>
+        <location filename="http.cpp" line="1347"/>
         <source>Server did not received last successfull request Id</source>
         <translation>A webszerver nem kapta meg az elküldött kommunikációs azonosítót</translation>
     </message>
     <message>
-        <location filename="http.cpp" line="918"/>
+        <location filename="http.cpp" line="966"/>
+        <location filename="http.cpp" line="1354"/>
         <source>Token sent to server is invalid</source>
         <translation>A webszervernek elküldött token hibás</translation>
     </message>
     <message>
-        <location filename="http.cpp" line="925"/>
+        <location filename="http.cpp" line="973"/>
         <source>SQL error occured on server side</source>
         <translation>Adatbázis hiba következett be a szerver oldalon</translation>
     </message>
     <message>
-        <location filename="http.cpp" line="932"/>
+        <location filename="http.cpp" line="980"/>
         <source>Token sent to server is already sent</source>
         <translation>A webszervernek elküldött token már egyszer el lett küldve</translation>
     </message>
     <message>
-        <location filename="http.cpp" line="939"/>
+        <location filename="http.cpp" line="987"/>
         <source>Token sent to server is obsolete</source>
         <translation>A webszervernek elküldött token érvényessége lejárt</translation>
     </message>
     <message>
-        <location filename="http.cpp" line="946"/>
+        <location filename="http.cpp" line="994"/>
+        <location filename="http.cpp" line="1361"/>
         <source>Sha1 code sent to server is invalid</source>
         <translation>A webszervernek elküldött Sha1 kulcs hibás</translation>
     </message>
     <message>
-        <location filename="http.cpp" line="974"/>
+        <location filename="http.cpp" line="1432"/>
+        <source>Http error occured: %1</source>
+        <translation>Http hiba következett be: %1</translation>
+    </message>
+    <message>
+        <location filename="http.cpp" line="927"/>
         <source>SHA1 code mismatch in comm response</source>
         <translation>Az Sha1 kód nem megfelelő a comm válaszban</translation>
     </message>
     <message>
-        <location filename="http.cpp" line="1139"/>
+        <location filename="http.cpp" line="1143"/>
+        <location filename="http.cpp" line="1209"/>
+        <location filename="http.cpp" line="1258"/>
+        <location filename="http.cpp" line="1296"/>
+        <source>Error occured during executing database command</source>
+        <translation>Hiba következett be adabázis parancs végrehajtása közben</translation>
+    </message>
+    <message>
+        <location filename="http.cpp" line="1177"/>
         <source>Patientcard refilled online</source>
         <translation>Online bérlet feltöltés</translation>
     </message>
     <message>
-        <location filename="http.cpp" line="1162"/>
+        <location filename="http.cpp" line="1200"/>
         <source>Patientcard sold online</source>
         <translation>Online bérlet eladás</translation>
     </message>
     <message>
-        <location filename="http.cpp" line="1283"/>
+        <location filename="http.cpp" line="1368"/>
+        <source>Result not sent to server</source>
+        <translation>Visszaigazolás nem érkezett meg a szerverhez</translation>
+    </message>
+    <message>
+        <location filename="http.cpp" line="1412"/>
+        <source>Http request aborted</source>
+        <translation>Http lekérdezés megszakítva</translation>
+    </message>
+    <message>
+        <location filename="http.cpp" line="1423"/>
         <source>Error occured during downloading HTTP file.</source>
         <translation>Hiba következett be a HTTP állomány letöltésekor.</translation>
     </message>
     <message>
-        <location filename="http.cpp" line="581"/>
+        <location filename="http.cpp" line="619"/>
         <source>Invalid token received: </source>
         <translation>Hibás token érkezett: </translation>
     </message>
     <message>
-        <location filename="http.cpp" line="284"/>
+        <location filename="http.cpp" line="295"/>
         <source>&lt;b&gt;PatientCardType:&lt;/b&gt;&lt;br&gt;</source>
         <translation>&lt;b&gt;Bérlettípus:&lt;/b&gt;&lt;br&gt;</translation>
     </message>
     <message>
-        <location filename="http.cpp" line="285"/>
+        <location filename="http.cpp" line="296"/>
         <source>Id: %1  Price: %2  Units: %3  Unittime: %4&lt;br&gt;</source>
         <translation>Id: %1  Price: %2  Units: %3  Unittime: %4&lt;br&gt;</translation>
     </message>
     <message>
-        <location filename="http.cpp" line="290"/>
+        <location filename="http.cpp" line="301"/>
         <source>&lt;br&gt;</source>
         <translation>&lt;br&gt;</translation>
     </message>
     <message>
-        <location filename="http.cpp" line="291"/>
+        <location filename="http.cpp" line="302"/>
         <source>&lt;b&gt;Payment method:&lt;/b&gt;&lt;br&gt;</source>
         <translation>&lt;b&gt;Fizetési mód:&lt;/b&gt;&lt;br&gt;</translation>
     </message>
     <message>
-        <location filename="http.cpp" line="292"/>
+        <location filename="http.cpp" line="303"/>
         <source>Id: %1</source>
         <translation>Id: %1</translation>
     </message>
     <message>
-        <location filename="http.cpp" line="822"/>
+        <location filename="http.cpp" line="861"/>
         <source>Unknown error occured on server side.</source>
         <translation>Ismeretlen hiba következett be a szerver oldalon.</translation>
     </message>
     <message>
-        <location filename="http.cpp" line="829"/>
+        <location filename="http.cpp" line="868"/>
         <source>HTTP Session expired</source>
         <translation>HTTP Session lejárt</translation>
     </message>
     <message>
-        <location filename="http.cpp" line="836"/>
+        <location filename="http.cpp" line="875"/>
         <source>HTTP security check failed</source>
         <translation>HTTP biztonsági ellenőrzés sikertelen</translation>
     </message>
     <message>
-        <location filename="http.cpp" line="843"/>
+        <location filename="http.cpp" line="882"/>
         <source>Unknown studio Id</source>
         <translation>Ismeretlen szalon azonosító</translation>
     </message>
     <message>
-        <location filename="http.cpp" line="850"/>
+        <location filename="http.cpp" line="889"/>
         <source>Database error occured on server side</source>
         <translation>Adatbázis hiba következett be a szerver oldalon.</translation>
     </message>
@@ -291,130 +320,135 @@ Ha nincs bepipálva, az alul megadott esemény következik be</translation>
         <translation>Felhasználói jelszó</translation>
     </message>
     <message>
-        <location filename="dlgmain.ui" line="209"/>
+        <location filename="dlgmain.ui" line="212"/>
         <source>Exit application (only System Administrators)</source>
         <translation>Alkalmazás bezárása (csak Rendszer Adminisztrátoroknak)</translation>
     </message>
     <message>
-        <location filename="dlgmain.ui" line="244"/>
+        <location filename="dlgmain.ui" line="250"/>
         <source>Close (hide) main window</source>
         <translation>Fő ablak bezárása (elrejtése)</translation>
     </message>
     <message>
-        <location filename="dlgmain.ui" line="272"/>
+        <location filename="dlgmain.ui" line="278"/>
         <source> Status </source>
         <oldsource> Connection status </oldsource>
         <translation> Állapot </translation>
     </message>
     <message>
-        <location filename="dlgmain.ui" line="305"/>
+        <location filename="dlgmain.ui" line="311"/>
         <source>Belenus database connection</source>
         <translation>Belenus adatbázis kapcsolat</translation>
     </message>
     <message>
-        <location filename="dlgmain.ui" line="325"/>
+        <location filename="dlgmain.ui" line="331"/>
         <source>Reset SQL connection with SQL Database Server</source>
         <translation>Az adatbázis szerverrel történő kapcsolat újraépítése</translation>
     </message>
     <message>
-        <location filename="dlgmain.ui" line="374"/>
+        <location filename="dlgmain.ui" line="383"/>
         <source>KiwiSun Server connection</source>
         <translation>KiwiSun Szerver kapcsolat</translation>
     </message>
     <message>
-        <location filename="dlgmain.ui" line="394"/>
-        <location filename="dlgmain.ui" line="414"/>
+        <location filename="dlgmain.ui" line="403"/>
+        <location filename="dlgmain.ui" line="426"/>
         <source>Reset HTTP Connection with KiwiSun Web Server</source>
         <translation>A KiwiSun Web Szerverével való kapcsolat újraépítése</translation>
     </message>
     <message>
-        <location filename="dlgmain.ui" line="451"/>
+        <location filename="dlgmain.ui" line="466"/>
         <source>Process status: </source>
         <translation>Futó folyamat: </translation>
     </message>
     <message>
-        <location filename="dlgmain.ui" line="515"/>
+        <location filename="dlgmain.ui" line="530"/>
         <source>Load selected language translations</source>
         <translation>Kiválasztott nyelvi felület betöltése</translation>
     </message>
     <message>
-        <location filename="dlgmain.ui" line="576"/>
+        <location filename="dlgmain.ui" line="594"/>
         <source>Synchronize patientcard data every </source>
         <translation>Bérlet adatszinkronizálás minden </translation>
     </message>
     <message>
-        <location filename="dlgmain.ui" line="596"/>
-        <location filename="dlgmain.ui" line="647"/>
+        <location filename="dlgmain.ui" line="614"/>
+        <location filename="dlgmain.ui" line="665"/>
         <source>seconds</source>
         <translation>másodpercben</translation>
     </message>
     <message>
-        <location filename="dlgmain.ui" line="616"/>
-        <location filename="dlgmain.ui" line="667"/>
+        <location filename="dlgmain.ui" line="634"/>
+        <location filename="dlgmain.ui" line="685"/>
         <source>0</source>
         <translation>0</translation>
     </message>
     <message>
-        <location filename="dlgmain.ui" line="627"/>
+        <location filename="dlgmain.ui" line="645"/>
         <source>Check online sold patientcards every</source>
         <translation>Online eladott bérletek lekérdezése minden</translation>
     </message>
     <message>
-        <location filename="dlgmain.ui" line="690"/>
+        <location filename="dlgmain.ui" line="708"/>
         <source>Log Level:</source>
         <translation>Log szint:</translation>
     </message>
     <message>
-        <location filename="dlgmain.ui" line="712"/>
+        <location filename="dlgmain.ui" line="730"/>
         <source>NONE</source>
         <translation>NONE</translation>
     </message>
     <message>
-        <location filename="dlgmain.ui" line="771"/>
+        <location filename="dlgmain.ui" line="780"/>
+        <source>Http communication enabled</source>
+        <translation>Http kommunikáció engedélyezve</translation>
+    </message>
+    <message>
+        <location filename="dlgmain.ui" line="799"/>
         <source>Address of KiwiSun Web Server</source>
         <translation>KiwiSun Web Szerverének címe</translation>
     </message>
     <message>
-        <location filename="dlgmain.ui" line="796"/>
+        <location filename="dlgmain.ui" line="824"/>
         <source> Patientcard status synchronization </source>
         <translation> Bérlet állapot szinkronizálás </translation>
     </message>
     <message>
-        <location filename="dlgmain.ui" line="804"/>
+        <location filename="dlgmain.ui" line="832"/>
         <source>Number of patientcards waiting for synchronization:</source>
         <translation>Szinkronizálásra váró bérletek száma:</translation>
     </message>
     <message>
-        <location filename="dlgmain.ui" line="853"/>
+        <location filename="dlgmain.ui" line="881"/>
         <source>Type of online sold patientcards:</source>
         <translation>Online eladott bérlet típusa:</translation>
     </message>
     <message>
-        <location filename="dlgmain.ui" line="871"/>
+        <location filename="dlgmain.ui" line="899"/>
         <source>Payment method of online sold patientcards:</source>
         <translation>Online bérleteladás fizetési módja:</translation>
     </message>
     <message>
-        <location filename="dlgmain.ui" line="908"/>
+        <location filename="dlgmain.ui" line="936"/>
         <source> User actions </source>
         <translation> Felhasználói folyamatok </translation>
     </message>
     <message>
-        <location filename="dlgmain.ui" line="917"/>
+        <location filename="dlgmain.ui" line="982"/>
         <source> Send all patientcard
 data to web server</source>
         <translation> Az összes bérlet adatainak
 elküldése a web szervernek</translation>
     </message>
     <message>
-        <location filename="dlgmain.ui" line="951"/>
+        <location filename="dlgmain.ui" line="945"/>
         <source>Clear patientcard data
 to be synchronized</source>
         <translation> A szinkronizálásra váró
 bérlet adatok törlése</translation>
     </message>
     <message>
-        <location filename="dlgmain.ui" line="972"/>
+        <location filename="dlgmain.ui" line="1006"/>
         <source>Retrieve patientcards
 sold online</source>
         <translation>Online eladott
@@ -433,37 +467,37 @@ bérletek lekérdezése</translation>
         <translation type="obsolete">Kilépés</translation>
     </message>
     <message>
-        <location filename="dlgmain.ui" line="483"/>
+        <location filename="dlgmain.ui" line="498"/>
         <source> Application settings </source>
         <translation> Alkalmazás beállítások </translation>
     </message>
     <message>
-        <location filename="dlgmain.ui" line="491"/>
+        <location filename="dlgmain.ui" line="506"/>
         <source>Application language: </source>
         <translation>Alkalmazás nyelve: </translation>
     </message>
     <message>
-        <location filename="dlgmain.ui" line="498"/>
+        <location filename="dlgmain.ui" line="513"/>
         <source>Language of the application GUI</source>
         <translation>Az alkalmazás felületének nyelve</translation>
     </message>
     <message>
-        <location filename="dlgmain.ui" line="502"/>
+        <location filename="dlgmain.ui" line="517"/>
         <source>en (English)</source>
         <translation>en (English)</translation>
     </message>
     <message>
-        <location filename="dlgmain.ui" line="507"/>
+        <location filename="dlgmain.ui" line="522"/>
         <source>hu (Magyar)</source>
         <translation>hu (Magyar)</translation>
     </message>
     <message>
-        <location filename="dlgmain.ui" line="753"/>
+        <location filename="dlgmain.ui" line="774"/>
         <source> Web connection settings </source>
         <translation> Web kapcsolat beállítások </translation>
     </message>
     <message>
-        <location filename="dlgmain.ui" line="761"/>
+        <location filename="dlgmain.ui" line="789"/>
         <source>Web server address:</source>
         <translation>Web szerver cím:</translation>
     </message>
@@ -478,7 +512,7 @@ If unchecked this window doesn&apos;t appear.</source>
 Ha nincs bepipálva, ez az ablak rejtve marad.</translation>
     </message>
     <message>
-        <location filename="dlgmain.ui" line="552"/>
+        <location filename="dlgmain.ui" line="570"/>
         <source>Show main window when application starts</source>
         <translation>Alkalmazás indulásakor a fő ablak megjelenik</translation>
     </message>
@@ -563,7 +597,7 @@ Ha nincs bepipálva, az alkalmazás nem menti el automatikusan a módosításoka
         <translation type="obsolete">&amp;Vissza kezdőértékre</translation>
     </message>
     <message>
-        <location filename="dlgmain.cpp" line="604"/>
+        <location filename="dlgmain.cpp" line="692"/>
         <source>&amp;Exit application</source>
         <translation>&amp;Alkalmazás bezárása</translation>
     </message>
@@ -576,81 +610,162 @@ Ha nincs bepipálva, az alkalmazás nem menti el automatikusan a módosításoka
         <translation type="obsolete">Lejárt az idő!</translation>
     </message>
     <message>
-        <location filename="dlgmain.cpp" line="82"/>
+        <location filename="dlgmain.cpp" line="96"/>
         <source>Belenus WebSync</source>
         <translation>Belenus WebSync</translation>
     </message>
     <message>
-        <location filename="dlgmain.cpp" line="111"/>
-        <location filename="dlgmain.cpp" line="112"/>
+        <location filename="dlgmain.cpp" line="125"/>
+        <location filename="dlgmain.cpp" line="126"/>
         <source>SQL Connection established</source>
         <translation>SQL Kapcsolat létrejött</translation>
     </message>
     <message>
-        <location filename="dlgmain.cpp" line="124"/>
-        <location filename="dlgmain.cpp" line="136"/>
+        <location filename="dlgmain.cpp" line="138"/>
+        <location filename="dlgmain.cpp" line="150"/>
         <source>&lt;Not selected&gt;</source>
         <translation>&lt;Nincs kiválasztva&gt;</translation>
     </message>
     <message>
-        <location filename="dlgmain.cpp" line="152"/>
-        <location filename="dlgmain.cpp" line="153"/>
+        <location filename="dlgmain.cpp" line="166"/>
+        <location filename="dlgmain.cpp" line="167"/>
         <source>Error in connection: %1</source>
         <translation>Hiba a kapcsolódásnál: %1</translation>
     </message>
     <message>
-        <location filename="dlgmain.cpp" line="594"/>
+        <location filename="dlgmain.cpp" line="327"/>
+        <source>User &apos;%1&apos; logged in</source>
+        <translation>A &apos;%1&apos; felhasználó bejelentkezett</translation>
+    </message>
+    <message>
+        <location filename="dlgmain.cpp" line="498"/>
+        <source>Are you sure you want to close this application?
+
+With closing the application the data of the patientcards will not be synchronized with the KiwiSun server.</source>
+        <translation>Biztos benne, hogy be akarja zárni az alkalmazást?
+
+Az alkalmazás bezárásával a bérlet adatok nem lesznek szinkronizálva a KiwiSun szerverével.</translation>
+    </message>
+    <message>
+        <location filename="dlgmain.cpp" line="682"/>
         <source>&amp;Open main window</source>
         <translation>&amp;Fő ablak megnyitása</translation>
     </message>
     <message>
-        <location filename="dlgmain.cpp" line="598"/>
+        <location filename="dlgmain.cpp" line="686"/>
         <source>Reset &amp;SQL connection</source>
         <translation>&amp;SQL kapcsolat újraépítés</translation>
     </message>
     <message>
-        <location filename="dlgmain.cpp" line="601"/>
+        <location filename="dlgmain.cpp" line="689"/>
         <source>Reset &amp;HTTP connection</source>
         <translation>&amp;HTTP kapcsolat újraépítés</translation>
     </message>
     <message>
-        <location filename="dlgmain.cpp" line="612"/>
+        <location filename="dlgmain.cpp" line="700"/>
         <source>Connection</source>
         <translation>Kapcsolat</translation>
     </message>
     <message>
-        <location filename="dlgmain.cpp" line="545"/>
-        <location filename="dlgmain.cpp" line="558"/>
-        <source>HTTP Connection established</source>
-        <translation>HTTP kapcsolat létrejött.</translation>
+        <location filename="dlgmain.cpp" line="1022"/>
+        <source>Http error occured!
+%1</source>
+        <translation>Http hiba következett be!
+%1</translation>
     </message>
     <message>
-        <location filename="dlgmain.cpp" line="798"/>
+        <location filename="dlgmain.cpp" line="1181"/>
+        <source>Ã¡rvÃ­ztÅ±rÅ tÃ¼kÃ¶rfÃºrÃ³gÃ©p
+ÃRVÃZTÅ°RÅ TÃKÃRFÃRÃGÃP</source>
+        <translation>árvíztűrő tükörfúrógép
+ÁRVÍZTŰRŐ TÜKÖRFÚRÓGÉP</translation>
+    </message>
+    <message>
+        <source>Http communication suspended</source>
+        <translation type="obsolete">Http kommunikáció felfüggesztve</translation>
+    </message>
+    <message>
+        <source>Http communication continued</source>
+        <translation type="obsolete">Http kommunikáció folytatódik</translation>
+    </message>
+    <message>
+        <location filename="dlgmain.cpp" line="1011"/>
+        <source>Http server address is not defined!
+Http connection is going to be disabled.</source>
+        <translation>Http szerver cím nincs megadva!
+A Http kommunikáció le lesz tiltva.</translation>
+    </message>
+    <message>
+        <source>Http error occured!</source>
+        <translation type="obsolete">Http hiba következett be!</translation>
+    </message>
+    <message>
+        <location filename="dlgmain.cpp" line="1032"/>
+        <source>Http communication disabled.</source>
+        <translation>Http kommunikáció letiltva.</translation>
+    </message>
+    <message>
+        <location filename="dlgmain.cpp" line="1042"/>
+        <source>Http communication enabled.</source>
+        <translation>Http kommunikáció engedélyezve.</translation>
+    </message>
+    <message>
+        <location filename="dlgmain.cpp" line="1052"/>
+        <source>Http communication suspended.</source>
+        <translation>Http kommunikáció szüneteltetve.</translation>
+    </message>
+    <message>
+        <location filename="dlgmain.cpp" line="1062"/>
+        <source>Http communication continued.</source>
+        <translation>Http kommunikáció folytatódik.</translation>
+    </message>
+    <message>
+        <location filename="dlgmain.cpp" line="1072"/>
+        <source>No payment method set for online transactions.
+Http connection is going to be disabled.</source>
+        <translation>Nincs fizetési mód megadva az online bérlet eladáshoz.
+A Http kommunikáció le lesz tiltva.</translation>
+    </message>
+    <message>
+        <location filename="dlgmain.cpp" line="1083"/>
+        <source>No patientcard type set for onlince transactions.
+Http connection is going to be disabled.</source>
+        <translation>Nincs bérlettípus megadva az online bérlet eladáshoz.
+A Http kommunikáció le lesz tiltva.</translation>
+    </message>
+    <message>
+        <location filename="dlgmain.cpp" line="627"/>
+        <location filename="dlgmain.cpp" line="638"/>
+        <source>HTTP Connection established</source>
+        <translation>HTTP kapcsolat létrejött</translation>
+    </message>
+    <message>
+        <location filename="dlgmain.cpp" line="886"/>
         <source>Need authentication ...</source>
         <translation>Azonosítás szükséges ...</translation>
     </message>
     <message>
-        <location filename="dlgmain.cpp" line="802"/>
+        <location filename="dlgmain.cpp" line="890"/>
         <source>User successfully authenticated.</source>
         <translation>Azonosítás sikeres.</translation>
     </message>
     <message>
-        <location filename="dlgmain.cpp" line="812"/>
+        <location filename="dlgmain.cpp" line="900"/>
         <source>The username entered not found in the Belenus database</source>
         <translation>A megadott felhasználó név nincs benne a Belenus adatbázisában</translation>
     </message>
     <message>
-        <location filename="dlgmain.cpp" line="814"/>
+        <location filename="dlgmain.cpp" line="902"/>
         <source>The password entered is incorrect</source>
         <translation>A megadott jelszó nem megfelelő</translation>
     </message>
     <message>
-        <location filename="dlgmain.cpp" line="816"/>
+        <location filename="dlgmain.cpp" line="904"/>
         <source>Connection to Belenus database failed</source>
         <translation>Az adatbázishoz való kapcsolódás sikertelen</translation>
     </message>
     <message>
-        <location filename="dlgmain.cpp" line="818"/>
+        <location filename="dlgmain.cpp" line="906"/>
         <source>Authentication failed. Please retry later ...</source>
         <translation>Sikertelen azonosítás. Kérem próbálja meg mégegyszer ...</translation>
     </message>

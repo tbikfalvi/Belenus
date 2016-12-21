@@ -47,6 +47,19 @@ class dlgMain : public QDialog
         GROUP_MAX
     };
 
+    enum userInfo
+    {
+        INFO_NoHttpServer = 1,
+        INFO_HttpFailed,
+        INFO_HttpDisabled,
+        INFO_HttpEnabled,
+        INFO_HttpSuspended,
+        INFO_HttpContinued,
+        INFO_NoPaymentMethod,
+        INFO_NoPCType,
+        INFO_Custom
+    };
+
 public:
     explicit dlgMain(QWidget *parent = 0);
     ~dlgMain();
@@ -89,8 +102,12 @@ private slots:
     void on_pbStartStopHTTP_clicked();
     void on_cmbOnlinePatientCardType_currentIndexChanged(int index);
     void on_cmbOnlinePaymentMethod_currentIndexChanged(int index);
-
     void on_sliFileLogLevel_valueChanged(int value);
+    void on_ledWebServerAddress_textEdited(const QString &arg1);
+
+    void on_chkHttpCommunicationEnabled_clicked();
+
+    void on_pbTest_clicked();
 
 private:
     Ui::dlgMain         *ui;
@@ -127,12 +144,24 @@ private:
     int                  m_enGroup;
     QString              m_qsRPSW;
     int                  m_nIndexUpdateSyncDataCount;
-    bool                 m_bHttpSuspended;
     unsigned int         m_uiPatientCardTypeId;
     bool                 m_bStartFinished;
     unsigned int         m_uiPaymentMethodId;
     QString              m_qsHttpStatus;
     int                  m_nLogLevel;
+    int                  m_nIndexCheckEnablers;
+    bool                 m_bHttpEnabledBySetting;
+    bool                 m_bHttpEnabledByUser;
+    bool                 m_bHttpSuspendedByUser;
+
+    bool                 m_FlagNoHttpServer;
+    bool                 m_FlagHttpFailed;
+    bool                 m_FlagHttpDisabled;
+    bool                 m_FlagHttpEnabled;
+    bool                 m_FlagHttpSuspended;
+    bool                 m_FlagHttpContinued;
+    bool                 m_FlagNoPaymentMethod;
+    bool                 m_FlagNoPCType;
 
     void                _setActions();
     void                _setMenu();
@@ -144,6 +173,10 @@ private:
     bool                _isInGroup( groupUser p_enGroup );
     authType            _loginUser( QString p_qsName );
     void                _setPCTypeForHttp();
+    void                _displayUserNotification( userInfo p_tUserInfo, QString p_qsInfoText = "", QSystemTrayIcon::MessageIcon icon = QSystemTrayIcon::Information );
+    void                _checkIfHttpDisabledByUser();
+    void                _disableHttpBySetting();
+    QString             _bytearrayToString( QString p_qsString );
 };
 
 #endif // DLGMAIN_H
