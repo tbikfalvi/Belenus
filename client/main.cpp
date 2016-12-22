@@ -154,7 +154,9 @@ int main( int argc, char *argv[] )
 #else
             sleep( 3 );
 #endif
-        if( fileCheck.size() > 0 )
+
+        if( !g_obGen.isAppicationRunning("belenus.exe") )
+//        if( fileCheck.size() > 0 )
         {
             qsSpalsh += QObject::tr(" NOT RUNNING.\n");
             obSplash.showMessage(qsSpalsh,Qt::AlignLeft,QColor(59,44, 75));

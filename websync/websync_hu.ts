@@ -192,6 +192,21 @@
     </message>
 </context>
 <context>
+    <name>dlgLineEdit</name>
+    <message>
+        <location filename="dlgLineEdit.ui" line="14"/>
+        <location filename="dlglineedit.ui" line="14"/>
+        <source>Enter ...</source>
+        <translation>Add meg ...</translation>
+    </message>
+    <message>
+        <location filename="dlgLineEdit.ui" line="26"/>
+        <location filename="dlglineedit.ui" line="26"/>
+        <source>Title</source>
+        <translation>Cím</translation>
+    </message>
+</context>
+<context>
     <name>dlgMain</name>
     <message>
         <source>Dialog</source>
@@ -440,10 +455,26 @@ Ha nincs bepipálva, az alul megadott esemény következik be</translation>
     </message>
     <message>
         <location filename="dlgmain.ui" line="985"/>
-        <source> Send all patientcard
+        <source>Send all patientcard
 data to web server</source>
-        <translation> Az összes bérlet adatainak
+        <oldsource> Send all patientcard
+data to web server</oldsource>
+        <translation>Az összes bérlet adatainak
 elküldése a web szervernek</translation>
+    </message>
+    <message>
+        <location filename="dlgmain.ui" line="1053"/>
+        <source>Delete patientcard
+data from web server</source>
+        <translation>Bérlet adatainak törlése
+a web szerverről</translation>
+    </message>
+    <message>
+        <location filename="dlgmain.ui" line="1077"/>
+        <source>Delete all inactive patientcard
+data from web server</source>
+        <translation>Összes inaktív bérlet adatainak
+törlése a web szerverről</translation>
     </message>
     <message>
         <location filename="dlgmain.ui" line="948"/>
@@ -602,7 +633,7 @@ Ha nincs bepipálva, az alkalmazás nem menti el automatikusan a módosításoka
         <translation type="obsolete">&amp;Vissza kezdőértékre</translation>
     </message>
     <message>
-        <location filename="dlgmain.cpp" line="722"/>
+        <location filename="dlgmain.cpp" line="803"/>
         <source>&amp;Exit application</source>
         <translation>&amp;Alkalmazás bezárása</translation>
     </message>
@@ -615,35 +646,35 @@ Ha nincs bepipálva, az alkalmazás nem menti el automatikusan a módosításoka
         <translation type="obsolete">Lejárt az idő!</translation>
     </message>
     <message>
-        <location filename="dlgmain.cpp" line="96"/>
+        <location filename="dlgmain.cpp" line="97"/>
         <source>Belenus WebSync</source>
         <translation>Belenus WebSync</translation>
     </message>
     <message>
-        <location filename="dlgmain.cpp" line="122"/>
-        <location filename="dlgmain.cpp" line="124"/>
+        <location filename="dlgmain.cpp" line="123"/>
+        <location filename="dlgmain.cpp" line="125"/>
         <source>SQL Connection established</source>
         <translation>SQL Kapcsolat létrejött</translation>
     </message>
     <message>
-        <location filename="dlgmain.cpp" line="136"/>
-        <location filename="dlgmain.cpp" line="148"/>
+        <location filename="dlgmain.cpp" line="137"/>
+        <location filename="dlgmain.cpp" line="149"/>
         <source>&lt;Not selected&gt;</source>
         <translation>&lt;Nincs kiválasztva&gt;</translation>
     </message>
     <message>
-        <location filename="dlgmain.cpp" line="164"/>
-        <location filename="dlgmain.cpp" line="166"/>
+        <location filename="dlgmain.cpp" line="165"/>
+        <location filename="dlgmain.cpp" line="167"/>
         <source>Error in connection: %1</source>
         <translation>Hiba a kapcsolódásnál: %1</translation>
     </message>
     <message>
-        <location filename="dlgmain.cpp" line="328"/>
+        <location filename="dlgmain.cpp" line="329"/>
         <source>User &apos;%1&apos; logged in</source>
         <translation>A &apos;%1&apos; felhasználó bejelentkezett</translation>
     </message>
     <message>
-        <location filename="dlgmain.cpp" line="500"/>
+        <location filename="dlgmain.cpp" line="501"/>
         <source>Are you sure you want to close this application?
 
 With closing the application the data of the patientcards will not be synchronized with the KiwiSun server.</source>
@@ -668,14 +699,14 @@ Az alkalmazás bezárásával a bérlet adatok nem lesznek szinkronizálva a Kiw
         <translation type="obsolete">Kapcsolat</translation>
     </message>
     <message>
-        <location filename="dlgmain.cpp" line="1060"/>
+        <location filename="dlgmain.cpp" line="1143"/>
         <source>Http error occured!
 %1</source>
         <translation>Http hiba következett be!
 %1</translation>
     </message>
     <message>
-        <location filename="dlgmain.cpp" line="1221"/>
+        <location filename="dlgmain.cpp" line="1304"/>
         <source>Ã¡rvÃ­ztÅ±rÅ tÃ¼kÃ¶rfÃºrÃ³gÃ©p
 ÃRVÃZTÅ°RÅ TÃKÃRFÃRÃGÃP</source>
         <translation>árvíztűrő tükörfúrógép
@@ -690,7 +721,7 @@ Az alkalmazás bezárásával a bérlet adatok nem lesznek szinkronizálva a Kiw
         <translation type="obsolete">Http kommunikáció folytatódik</translation>
     </message>
     <message>
-        <location filename="dlgmain.cpp" line="1049"/>
+        <location filename="dlgmain.cpp" line="1132"/>
         <source>Http server address is not defined!
 Http connection is going to be disabled.</source>
         <translation>Http szerver cím nincs megadva!
@@ -701,47 +732,47 @@ A Http kommunikáció le lesz tiltva.</translation>
         <translation type="obsolete">Http hiba következett be!</translation>
     </message>
     <message>
-        <location filename="dlgmain.cpp" line="1070"/>
+        <location filename="dlgmain.cpp" line="1153"/>
         <source>Http communication disabled.</source>
         <translation>Http kommunikáció letiltva.</translation>
     </message>
     <message>
-        <location filename="dlgmain.cpp" line="1080"/>
+        <location filename="dlgmain.cpp" line="1163"/>
         <source>Http communication enabled.</source>
         <translation>Http kommunikáció engedélyezve.</translation>
     </message>
     <message>
-        <location filename="dlgmain.cpp" line="1090"/>
+        <location filename="dlgmain.cpp" line="1173"/>
         <source>Http communication suspended.</source>
         <translation>Http kommunikáció szüneteltetve.</translation>
     </message>
     <message>
-        <location filename="dlgmain.cpp" line="1100"/>
+        <location filename="dlgmain.cpp" line="1183"/>
         <source>Http communication continued.</source>
         <translation>Http kommunikáció folytatódik.</translation>
     </message>
     <message>
-        <location filename="dlgmain.cpp" line="1110"/>
+        <location filename="dlgmain.cpp" line="1193"/>
         <source>No payment method set for online transactions.
 Http connection is going to be disabled.</source>
         <translation>Nincs fizetési mód megadva az online bérlet eladáshoz.
 A Http kommunikáció le lesz tiltva.</translation>
     </message>
     <message>
-        <location filename="dlgmain.cpp" line="1121"/>
+        <location filename="dlgmain.cpp" line="1204"/>
         <source>No patientcard type set for onlince transactions.
 Http connection is going to be disabled.</source>
         <translation>Nincs bérlettípus megadva az online bérlet eladáshoz.
 A Http kommunikáció le lesz tiltva.</translation>
     </message>
     <message>
-        <location filename="dlgmain.cpp" line="637"/>
-        <location filename="dlgmain.cpp" line="649"/>
+        <location filename="dlgmain.cpp" line="704"/>
+        <location filename="dlgmain.cpp" line="716"/>
         <source>HTTP Connection established</source>
         <translation>HTTP kapcsolat létrejött</translation>
     </message>
     <message>
-        <location filename="dlgmain.cpp" line="562"/>
+        <location filename="dlgmain.cpp" line="563"/>
         <source>Are you sure you want send all patientcard data to KiwiSun Web server?
 
 Sending all patientcard data could take long time.
@@ -752,62 +783,83 @@ A bérletek adatainak elküldése sok időt vehet igénybe.
 Vegye figyelembe, hogy van-e ideje kivárni a folyamat végét.</translation>
     </message>
     <message>
-        <location filename="dlgmain.cpp" line="700"/>
+        <location filename="dlgmain.cpp" line="611"/>
+        <source>Enter barcode of the patientcard:</source>
+        <translation>Adja meg a bérlet vonalkódját:</translation>
+    </message>
+    <message>
+        <location filename="dlgmain.cpp" line="623"/>
+        <source>The defined barcode not found in the database.</source>
+        <translation>A megadott vonalkód nem található az adatbázisban.</translation>
+    </message>
+    <message>
+        <location filename="dlgmain.cpp" line="773"/>
         <source>Database connection</source>
         <translation>Adatbázis kapcsolat</translation>
     </message>
     <message>
-        <location filename="dlgmain.cpp" line="703"/>
+        <location filename="dlgmain.cpp" line="776"/>
         <source>Http connection</source>
         <translation>Http kapcsolat</translation>
     </message>
     <message>
-        <location filename="dlgmain.cpp" line="710"/>
+        <location filename="dlgmain.cpp" line="783"/>
         <source>Send all patientcard</source>
         <translation>Összes bérlet adat elküldése</translation>
     </message>
     <message>
-        <location filename="dlgmain.cpp" line="714"/>
+        <location filename="dlgmain.cpp" line="787"/>
         <source>Clear waiting queue</source>
         <translation>Várakozó lista kiürítése</translation>
     </message>
     <message>
-        <location filename="dlgmain.cpp" line="718"/>
+        <location filename="dlgmain.cpp" line="791"/>
         <source>Get online sold patientcards</source>
         <translation>Online eladott bérletek lekérdezése</translation>
     </message>
     <message>
-        <location filename="dlgmain.cpp" line="734"/>
+        <location filename="dlgmain.cpp" line="795"/>
+        <source>Clear patientcard</source>
+        <translation>Bérlet törlése</translation>
+    </message>
+    <message>
+        <location filename="dlgmain.cpp" line="799"/>
+        <source>Clear all inactive patientcards</source>
+        <oldsource>Clear all patientcard</oldsource>
+        <translation>Összes inaktív bérlet törlése</translation>
+    </message>
+    <message>
+        <location filename="dlgmain.cpp" line="815"/>
         <source>User actions</source>
         <translation> Felhasználói folyamatok </translation>
     </message>
     <message>
-        <location filename="dlgmain.cpp" line="923"/>
+        <location filename="dlgmain.cpp" line="1006"/>
         <source>Need authentication ...</source>
         <translation>Azonosítás szükséges ...</translation>
     </message>
     <message>
-        <location filename="dlgmain.cpp" line="927"/>
+        <location filename="dlgmain.cpp" line="1010"/>
         <source>User successfully authenticated.</source>
         <translation>Azonosítás sikeres.</translation>
     </message>
     <message>
-        <location filename="dlgmain.cpp" line="937"/>
+        <location filename="dlgmain.cpp" line="1020"/>
         <source>The username entered not found in the Belenus database</source>
         <translation>A megadott felhasználó név nincs benne a Belenus adatbázisában</translation>
     </message>
     <message>
-        <location filename="dlgmain.cpp" line="939"/>
+        <location filename="dlgmain.cpp" line="1022"/>
         <source>The password entered is incorrect</source>
         <translation>A megadott jelszó nem megfelelő</translation>
     </message>
     <message>
-        <location filename="dlgmain.cpp" line="941"/>
+        <location filename="dlgmain.cpp" line="1024"/>
         <source>Connection to Belenus database failed</source>
         <translation>Az adatbázishoz való kapcsolódás sikertelen</translation>
     </message>
     <message>
-        <location filename="dlgmain.cpp" line="943"/>
+        <location filename="dlgmain.cpp" line="1026"/>
         <source>Authentication failed. Please retry later ...</source>
         <translation>Sikertelen azonosítás. Kérem próbálja meg mégegyszer ...</translation>
     </message>

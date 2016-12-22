@@ -13,6 +13,7 @@
 #include "../framework/qtmysqlquerymodel.h"
 #include "dlgmain.h"
 #include "ui_dlgmain.h"
+#include "dlglineedit.h"
 
 using namespace std;
 
@@ -605,7 +606,32 @@ void dlgMain::on_pbSyncOnlinePC_clicked()
 //=================================================================================================
 void dlgMain::on_pbClearPatientCard_clicked()
 {
+    dlgLineEdit obDlgLineEdit( this );
 
+    obDlgLineEdit.setTitle( tr("Enter barcode of the patientcard:") );
+    if( obDlgLineEdit.exec() == QDialog::Accepted )
+    {
+        try
+        {
+            QSqlQuery *poQuery = g_poDB->executeQTQuery( QString("SELECT barcode "
+                                                                 "FROM patientcards WHERE "
+                                                                 "barcode = \"%1\" " )
+                                                         .arg( obDlgLineEdit.value().trimmed() ) );
+            if( poQuery->size() < 1 )
+            {
+                QMessageBox::warning( this, "Belenus Websync",
+                                      tr("The defined barcode not found in the database.") );
+                return;
+            }
+            g_poBlnsHttp->sendPatientCardData( obDlgLineEdit.value().trimmed(), "", false );
+            m_nIndexUpdateSyncDataCount = 0;
+            ui->ledNumberOfCardsWaiting->setText( QString::number( g_poBlnsHttp->getNumberOfWaitingRecords() ) );
+        }
+        catch( cSevException &e )
+        {
+            g_obLogger(e.severity()) << e.what() << EOM;
+        }
+    }
 }
 
 //=================================================================================================
@@ -636,6 +662,8 @@ void dlgMain::on_pbClearAllPatientCard_clicked()
     }
     ui->lblProcessStatus->setVisible( false );
     ui->prgbProcess->setVisible( false );
+    m_nIndexUpdateSyncDataCount = 0;
+    ui->ledNumberOfCardsWaiting->setText( QString::number( g_poBlnsHttp->getNumberOfWaitingRecords() ) );
 }
 
 //=================================================================================================
@@ -768,7 +796,7 @@ void dlgMain::_setActions()
     actionClearPatientCard->setIcon( QIcon( ":/patientcard_delete.png" ) );
     connect( actionClearPatientCard, SIGNAL(triggered()), this, SLOT(on_pbClearPatientCard_clicked()) );
 
-    actionClearAllPatientCard = new QAction(tr("Clear all patientcard"), this);
+    actionClearAllPatientCard = new QAction(tr("Clear all inactive patientcards"), this);
     actionClearAllPatientCard->setIcon( QIcon( ":/patientcards_delete.png" ) );
     connect( actionClearAllPatientCard, SIGNAL(triggered()), this, SLOT(on_pbClearAllPatientCard_clicked()) );
 

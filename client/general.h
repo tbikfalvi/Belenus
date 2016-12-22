@@ -51,6 +51,7 @@ public:
     bool             isExtendedOrSystemAdmin();
     void             showPatientCardInformation( QString p_qsBarcode );
     bool             isShoppingCartHasItems();
+    bool             isAppicationRunning( QString p_qsAppName );
 
 private:
     QApplication    *m_poMainApplication;

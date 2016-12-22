@@ -17,7 +17,8 @@ HEADERS     += ../framework/dbconnection.h \
                ../framework/logger/FileWriter.h \
                ../framework/tracer.h \
                http.h \
-               dlgmain.h
+               dlgmain.h \
+    dlglineedit.h
 
 SOURCES     += ../framework/dbconnection.cpp \
                ../framework/qtmysqlconnection.cpp \
@@ -27,6 +28,9 @@ SOURCES     += ../framework/dbconnection.cpp \
                ../framework/tracer.cpp \
                main.cpp \
                http.cpp \
-               dlgmain.cpp
+               dlgmain.cpp \
+    dlglineedit.cpp
 
-FORMS       += dlgmain.ui
+FORMS       += dlgmain.ui \
+    dlgLineEdit.ui \
+    dlglineedit.ui

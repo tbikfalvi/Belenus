@@ -719,8 +719,6 @@ void cDBPatientCard::sendDataToWeb() throw()
             }
         }
 
-        QString  qsQuery;
-
         qsQuery = "INSERT INTO httppatientcardinfo SET ";
         qsQuery += QString( "licenceId = \"%1\", " ).arg( g_poPrefs->getLicenceId() );
         qsQuery += QString( "barcode = \"%1\", " ).arg( barcode() );

@@ -736,7 +736,7 @@ void cDlgPreferences::on_pbTestHttpConnection_clicked()
     m_nTimer = startTimer( 5000 );
 }
 */
-void cDlgPreferences::on_chkEnableHttp_clicked(bool checked)
+void cDlgPreferences::on_chkEnableHttp_clicked(bool /*checked*/)
 {
 //    pbTestHttpConnection->setEnabled( checked );
 //    sbHttpWaitTime->setEnabled( checked );
