@@ -109,6 +109,8 @@ private slots:
 
     void on_pbTest_clicked();
 
+    void on_ledPassword_returnPressed();
+
 private:
     Ui::dlgMain         *ui;
     QSystemTrayIcon     *trayIcon;

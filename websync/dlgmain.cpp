@@ -1185,3 +1185,8 @@ QString dlgMain::_bytearrayToString(QString p_qsString)
 {
     return p_qsString;
 }
+
+void dlgMain::on_ledPassword_returnPressed()
+{
+    on_pbAuthenticate_clicked();
+}
