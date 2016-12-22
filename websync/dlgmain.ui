@@ -7,7 +7,7 @@
     <x>0</x>
     <y>0</y>
     <width>890</width>
-    <height>602</height>
+    <height>723</height>
    </rect>
   </property>
   <property name="windowTitle">
@@ -60,7 +60,10 @@
          </size>
         </property>
         <property name="title">
-         <string/>
+         <string> v.  </string>
+        </property>
+        <property name="alignment">
+         <set>Qt::AlignRight|Qt::AlignTrailing|Qt::AlignVCenter</set>
         </property>
         <layout class="QHBoxLayout" name="horizontalLayout">
          <property name="spacing">
@@ -979,7 +982,7 @@ to be synchronized</string>
             <bool>false</bool>
            </property>
            <property name="text">
-            <string> Send all patientcard
+            <string>Send all patientcard
 data to web server</string>
            </property>
            <property name="icon">
@@ -1029,6 +1032,54 @@ sold online</string>
            <property name="icon">
             <iconset resource="websync.qrc">
              <normaloff>:/settings.png</normaloff>:/settings.png</iconset>
+           </property>
+           <property name="iconSize">
+            <size>
+             <width>40</width>
+             <height>40</height>
+            </size>
+           </property>
+           <property name="autoDefault">
+            <bool>false</bool>
+           </property>
+          </widget>
+         </item>
+         <item row="1" column="0">
+          <widget class="QPushButton" name="pbClearPatientCard">
+           <property name="enabled">
+            <bool>false</bool>
+           </property>
+           <property name="text">
+            <string>Delete patientcard
+data from web server</string>
+           </property>
+           <property name="icon">
+            <iconset resource="websync.qrc">
+             <normaloff>:/patientcard_delete.png</normaloff>:/patientcard_delete.png</iconset>
+           </property>
+           <property name="iconSize">
+            <size>
+             <width>40</width>
+             <height>40</height>
+            </size>
+           </property>
+           <property name="autoDefault">
+            <bool>false</bool>
+           </property>
+          </widget>
+         </item>
+         <item row="1" column="1">
+          <widget class="QPushButton" name="pbClearAllPatientCard">
+           <property name="enabled">
+            <bool>false</bool>
+           </property>
+           <property name="text">
+            <string>Delete all inactive patientcard
+data from web server</string>
+           </property>
+           <property name="icon">
+            <iconset resource="websync.qrc">
+             <normaloff>:/patientcards_delete.png</normaloff>:/patientcards_delete.png</iconset>
            </property>
            <property name="iconSize">
             <size>

@@ -60,10 +60,6 @@ dlgMain::dlgMain(QWidget *parent) : QDialog(parent), ui(new Ui::dlgMain)
 
     m_enGroup                   = GROUP_MIN;
 
-    trayIcon                    = new QSystemTrayIcon(this);
-    trayIconMenu                = new QMenu(this);
-    menuConnection              = new QMenu(this);
-
     g_poDB                      = new cQTMySQLConnection;
     g_poBlnsHttp                = new cBlnsHttp();
 
@@ -91,6 +87,10 @@ dlgMain::dlgMain(QWidget *parent) : QDialog(parent), ui(new Ui::dlgMain)
     g_obLogger(cSeverity::DEBUG) << "Set main window settings" << EOM;
 
 //    setWindowFlags( Qt::Dialog | Qt::FramelessWindowHint );
+    ui->gbTitle->setTitle( QString(" v.%1 ").arg(app_version) );
+
+    _setActions();
+    _setMenu();
 
     trayIcon->setIcon( QIcon( ":/websync_yellow.png" ) );
     trayIcon->setToolTip( tr("Belenus WebSync") );
@@ -100,9 +100,6 @@ dlgMain::dlgMain(QWidget *parent) : QDialog(parent), ui(new Ui::dlgMain)
     ui->prgbProcess->setVisible( false );
     ui->lblIndexPCData->setVisible( false );
     ui->lblIndexPCOnline->setVisible( false );
-
-    _setActions();
-    _setMenu();
 
     resize( obPref.value( "WindowPosition/Mainwindow_width", 900 ).toInt(),
             obPref.value( "WindowPosition/Mainwindow_height", 600 ).toInt() );
@@ -123,6 +120,7 @@ dlgMain::dlgMain(QWidget *parent) : QDialog(parent), ui(new Ui::dlgMain)
 
         ui->lblStatusIconSQL->setPixmap( QPixmap( ":/status_green.png" ) );
         ui->lblStatusIconSQL->setToolTip( tr("SQL Connection established") );
+        actionStatusSQL->setIcon( QIcon( ":/status_green.png" ) );
         ui->lblDBServerStatusText->setToolTip( tr("SQL Connection established") );
 
         QSqlQuery *poQuery = g_poDB->executeQTQuery( QString( "SELECT licenceId, serial FROM licences ORDER BY licenceId DESC LIMIT 1" ) );
@@ -164,6 +162,7 @@ dlgMain::dlgMain(QWidget *parent) : QDialog(parent), ui(new Ui::dlgMain)
 
         ui->lblStatusIconSQL->setPixmap( QPixmap( ":/status_red.png" ) );
         ui->lblStatusIconSQL->setToolTip( tr("Error in connection: %1").arg( e.what() ) );
+        actionStatusSQL->setIcon( QIcon( ":/status_green.png" ) );
         ui->lblDBServerStatusText->setToolTip( tr("Error in connection: %1").arg( e.what() ) );
     }
 
@@ -218,6 +217,8 @@ dlgMain::dlgMain(QWidget *parent) : QDialog(parent), ui(new Ui::dlgMain)
 
     ui->ledNumberOfCardsWaiting->setText( QString::number( g_poBlnsHttp->getNumberOfWaitingRecords() ) );
     ui->lblStatusSync->setPixmap( QPixmap( ":/ok.png" ) );
+
+    _setGUIEnabled( false );
 
     //---------------------------------------------------------------------------------------------
     // Start sync process
@@ -463,6 +464,7 @@ void dlgMain::on_pbResetHTTP_clicked()
         g_poBlnsHttp->setCommunicationEnabled();
         g_poBlnsHttp->checkHttpServerAvailability();
         ui->lblStatusIconWebServer->setPixmap( QPixmap( ":/status_yellow.png" ) );
+        actionStatusHttp->setIcon( QIcon( ":/status_yellow.png" ) );
         _setGUIEnabled();
     }
 }
@@ -556,9 +558,64 @@ void dlgMain::on_ledTimerPCOnlineSync_textEdited(const QString &/*arg1*/)
 //=================================================================================================
 void dlgMain::on_pbSyncAllPatientCard_clicked()
 {
-    QSqlQuery *poQuery = g_poDB->executeQTQuery( "SELECT patientCardId, barcode "
+    if( QMessageBox::question( this, "Belenus Websync",
+                           tr("Are you sure you want send all patientcard data to KiwiSun Web server?\n\n"
+                              "Sending all patientcard data could take long time.\n"
+                              "Please consider if you have enough time to wait process to finish."),
+                           QMessageBox::Yes | QMessageBox::No, QMessageBox::No ) == QMessageBox::Yes )
+    {
+        QSqlQuery *poQuery = g_poDB->executeQTQuery( "SELECT patientCardId, barcode "
+                                                     "FROM patientcards WHERE "
+                                                     "active = 1");
+
+        ui->lblProcessStatus->setVisible( true );
+        ui->prgbProcess->setVisible( true );
+        ui->prgbProcess->setMaximum( poQuery->size() );
+        ui->prgbProcess->setValue( 0 );
+
+        while( poQuery->next() )
+        {
+            try
+            {
+                _sendPCData( poQuery->value(0).toUInt(), poQuery->value(1).toString() );
+                ui->prgbProcess->setValue( ui->prgbProcess->value()+1 );
+            }
+            catch( cSevException &e )
+            {
+                g_obLogger(e.severity()) << e.what() << EOM;
+            }
+        }
+        ui->lblProcessStatus->setVisible( false );
+        ui->prgbProcess->setVisible( false );
+    }
+}
+
+//=================================================================================================
+void dlgMain::on_pbClearPCData_clicked()
+{
+    g_poDB->executeQTQuery( "DELETE FROM httppatientcardinfo" );
+}
+
+//=================================================================================================
+void dlgMain::on_pbSyncOnlinePC_clicked()
+{
+    g_poBlnsHttp->getPatientCardsSoldOnline();
+}
+
+//=================================================================================================
+void dlgMain::on_pbClearPatientCard_clicked()
+{
+
+}
+
+//=================================================================================================
+void dlgMain::on_pbClearAllPatientCard_clicked()
+{
+    QSqlQuery *poQuery = g_poDB->executeQTQuery( "SELECT barcode "
                                                  "FROM patientcards WHERE "
-                                                 "active = 1");
+                                                 "active = 0 AND "
+                                                 "patientCardId>1 AND "
+                                                 "barcode<>\"\" ");
 
     ui->lblProcessStatus->setVisible( true );
     ui->prgbProcess->setVisible( true );
@@ -569,7 +626,7 @@ void dlgMain::on_pbSyncAllPatientCard_clicked()
     {
         try
         {
-            _sendPCData( poQuery->value(0).toUInt(), poQuery->value(1).toString() );
+            g_poBlnsHttp->sendPatientCardData( poQuery->value(0).toString(), "", false );
             ui->prgbProcess->setValue( ui->prgbProcess->value()+1 );
         }
         catch( cSevException &e )
@@ -580,16 +637,7 @@ void dlgMain::on_pbSyncAllPatientCard_clicked()
     ui->lblProcessStatus->setVisible( false );
     ui->prgbProcess->setVisible( false );
 }
-//=================================================================================================
-void dlgMain::on_pbClearPCData_clicked()
-{
-    g_poDB->executeQTQuery( "DELETE FROM httppatientcardinfo" );
-}
-//=================================================================================================
-void dlgMain::on_pbSyncOnlinePC_clicked()
-{
-    g_poBlnsHttp->getPatientCardsSoldOnline();
-}
+
 //=================================================================================================
 //
 //  H T T P
@@ -612,6 +660,7 @@ void dlgMain::on_BlnsHttpErrorOccured()
 
     ui->lblStatusIconWebServer->setPixmap( QPixmap( ":/status_red.png" ) );
     ui->lblStatusIconWebServer->setToolTip( qsTooltip );
+    actionStatusHttp->setIcon( QIcon( ":/status_red.png" ) );
     ui->lblWebServerStatusText->setToolTip( g_poBlnsHttp->errorMessage() );
     ui->lblStatusSync->setPixmap( QPixmap( ":/ok.png" ) );
     trayIcon->setIcon( QIcon( ":/websync_red.png" ) );
@@ -635,6 +684,7 @@ void dlgMain::on_BlnsHttpActionFinished(QString p_qsInfo)
 
     ui->lblStatusIconWebServer->setPixmap( QPixmap( ":/status_green.png" ) );
     ui->lblStatusIconWebServer->setToolTip( qsTooltip );
+    actionStatusHttp->setIcon( QIcon( ":/status_green.png" ) );
     ui->lblWebServerStatusText->setToolTip( tr("HTTP Connection established") );
     trayIcon->setIcon( QIcon( ":/websync.png" ) );
     m_FlagHttpFailed = false;
@@ -648,6 +698,7 @@ void dlgMain::on_BlnsHttpStepProgress()
     m_bSyncPCToServer = false;
 
     ui->lblStatusIconWebServer->setPixmap( QPixmap( ":/status_green.png" ) );
+    actionStatusHttp->setIcon( QIcon( ":/status_green.png" ) );
     ui->ledNumberOfCardsWaiting->setText( QString::number( g_poBlnsHttp->getNumberOfWaitingRecords() ) );
     ui->lblStatusSync->setPixmap( QPixmap( ":/ok.png" ) );
     trayIcon->setIcon( QIcon( ":/websync.png" ) );
@@ -664,12 +715,24 @@ void dlgMain::_setGUIEnabled(bool p_bEnabled)
     ui->ledTimerPCOnlineSync->setEnabled( p_bEnabled );
     ui->ledWebServerAddress->setEnabled( p_bEnabled && _isInGroup( GROUP_SYSTEM ) );
     ui->sliFileLogLevel->setEnabled( p_bEnabled && _isInGroup( GROUP_USER ) );
+
     ui->pbSyncAllPatientCard->setEnabled( p_bEnabled && _isInGroup( GROUP_SYSTEM ) && m_bHttpEnabledBySetting && m_bHttpEnabledByUser );
-    //ui->pbClearPCData->setEnabled( p_bEnabled && _isInGroup( GROUP_USER ) );  // can be cleared anytime
+    actionUserSendAllPatientCard->setEnabled( p_bEnabled && _isInGroup( GROUP_SYSTEM ) && m_bHttpEnabledBySetting && m_bHttpEnabledByUser );
+
     ui->pbSyncOnlinePC->setEnabled( p_bEnabled && _isInGroup( GROUP_USER ) && m_bHttpEnabledBySetting && m_bHttpEnabledByUser );
+    actionUserGetOnlinePatientCards->setEnabled( p_bEnabled && _isInGroup( GROUP_USER ) && m_bHttpEnabledBySetting && m_bHttpEnabledByUser );
+
+    ui->pbClearPatientCard->setEnabled( p_bEnabled && _isInGroup( GROUP_SYSTEM ) && m_bHttpEnabledBySetting && m_bHttpEnabledByUser );
+    actionClearPatientCard->setEnabled( p_bEnabled && _isInGroup( GROUP_SYSTEM ) && m_bHttpEnabledBySetting && m_bHttpEnabledByUser );
+
+    ui->pbClearAllPatientCard->setEnabled( p_bEnabled && _isInGroup( GROUP_SYSTEM ) && m_bHttpEnabledBySetting && m_bHttpEnabledByUser );
+    actionClearAllPatientCard->setEnabled( p_bEnabled && _isInGroup( GROUP_SYSTEM ) && m_bHttpEnabledBySetting && m_bHttpEnabledByUser );
+
     ui->cmbOnlinePatientCardType->setEnabled( p_bEnabled && _isInGroup( GROUP_USER ) );
     ui->cmbOnlinePaymentMethod->setEnabled( p_bEnabled && _isInGroup( GROUP_USER ) );
+
     ui->pbExit->setEnabled( p_bEnabled && _isInGroup( GROUP_USER ) );
+    actionExit->setEnabled( p_bEnabled && _isInGroup( GROUP_USER ) );
 
     ui->lblIndexPCData->setVisible( _isInGroup( GROUP_SYSTEM ) );
     ui->lblIndexPCOnline->setVisible( _isInGroup( GROUP_SYSTEM ) );
@@ -679,40 +742,69 @@ void dlgMain::_setGUIEnabled(bool p_bEnabled)
 //=================================================================================================
 void dlgMain::_setActions()
 {
-    actionSettings = new QAction(tr("&Open main window"), this);
-    actionSettings->setIcon( QIcon( ":/websync.png" ) );
-    connect( actionSettings, SIGNAL(triggered()), this, SLOT(slotSettings()) );
+    actionStatusSQL = new QAction(tr("Database connection"), this);
+    actionStatusSQL->setIcon( QIcon( ":/status_yellow.png" ) );
 
-    actionResetSQL = new QAction( tr("Reset &SQL connection"), this );
-    actionResetSQL->setIcon( QIcon( ":/reset_sql.png" ) );
+    actionStatusHttp = new QAction(tr("Http connection"), this);
+    actionStatusHttp->setIcon( QIcon( ":/status_yellow.png" ) );
 
-    actionResetHTTP = new QAction( tr("Reset &HTTP connection"), this );
-    actionResetHTTP->setIcon( QIcon( ":/reset_http.png" ) );
+    actionShowMainWindow = new QAction("Belenus WebSync", this);
+    actionShowMainWindow->setIcon( QIcon( ":/websync.png" ) );
+    connect( actionShowMainWindow, SIGNAL(triggered()), this, SLOT(slotShowMainWindow()) );
+
+    actionUserSendAllPatientCard = new QAction(tr("Send all patientcard"), this);
+    actionUserSendAllPatientCard->setIcon( QIcon( ":/patientcards.png" ) );
+    connect( actionUserSendAllPatientCard, SIGNAL(triggered()), this, SLOT(on_pbSyncAllPatientCard_clicked()) );
+
+    actionUserWaitingClearPatientCards = new QAction(tr("Clear waiting queue"), this);
+    actionUserWaitingClearPatientCards->setIcon( QIcon( ":/trash.png" ) );
+    connect( actionUserWaitingClearPatientCards, SIGNAL(triggered()), this, SLOT(on_pbClearPCData_clicked()) );
+
+    actionUserGetOnlinePatientCards = new QAction(tr("Get online sold patientcards"), this);
+    actionUserGetOnlinePatientCards->setIcon( QIcon( ":/onlinepcsync.png" ) );
+    connect( actionUserGetOnlinePatientCards, SIGNAL(triggered()), this, SLOT(on_pbSyncOnlinePC_clicked()) );
+
+    actionClearPatientCard = new QAction(tr("Clear patientcard"), this);
+    actionClearPatientCard->setIcon( QIcon( ":/patientcard_delete.png" ) );
+    connect( actionClearPatientCard, SIGNAL(triggered()), this, SLOT(on_pbClearPatientCard_clicked()) );
+
+    actionClearAllPatientCard = new QAction(tr("Clear all patientcard"), this);
+    actionClearAllPatientCard->setIcon( QIcon( ":/patientcards_delete.png" ) );
+    connect( actionClearAllPatientCard, SIGNAL(triggered()), this, SLOT(on_pbClearAllPatientCard_clicked()) );
 
     actionExit = new QAction(tr("&Exit application"), this);
     actionExit->setIcon( QIcon( ":/exit.png" ) );
-    connect( actionExit, SIGNAL(triggered()), qApp, SLOT(quit()) );
+    connect( actionExit, SIGNAL(triggered()), this, SLOT(on_pbExit_clicked()) );
 }
 //=================================================================================================
 void dlgMain::_setMenu()
 {
-    menuConnection->setIcon( QIcon( ":/settings.png" ) );
-    menuConnection->setTitle( tr("Connection") );
-    menuConnection->addAction( actionResetSQL );
-    menuConnection->addAction( actionResetHTTP );
+    trayIcon                    = new QSystemTrayIcon(this);
+    trayIconMenu                = new QMenu(this);
+    menuConnection              = new QMenu(this);
+    menuUserActions             = new QMenu(this);
 
-    trayIconMenu->addAction( actionSettings );
+    menuUserActions->setTitle( tr("User actions") );
+    menuUserActions->setIcon( QIcon( ":/user.png" ) );
+    menuUserActions->addAction( actionUserSendAllPatientCard );
+    menuUserActions->addAction( actionUserWaitingClearPatientCards );
+    menuUserActions->addAction( actionUserGetOnlinePatientCards );
+    menuUserActions->addAction( actionClearPatientCard );
+    menuUserActions->addAction( actionClearAllPatientCard );
+
+    trayIconMenu->addAction( actionShowMainWindow );
     trayIconMenu->addSeparator();
-
-    trayIconMenu->addMenu( menuConnection );
-//    trayIconMenu->addSeparator();
-
-//    trayIconMenu->addAction( actionExit );
+    trayIconMenu->addAction( actionStatusSQL );
+    trayIconMenu->addAction( actionStatusHttp );
+    trayIconMenu->addSeparator();
+    trayIconMenu->addMenu( menuUserActions );
+    trayIconMenu->addSeparator();
+    trayIconMenu->addAction( actionExit );
 
     trayIcon->setContextMenu(trayIconMenu);
 }
 //=================================================================================================
-void dlgMain::slotSettings()
+void dlgMain::slotShowMainWindow()
 {
     show();
 }
@@ -920,6 +1012,7 @@ void dlgMain::on_pbStartStopHTTP_clicked()
         m_bHttpSuspendedByUser = false;
         ui->pbStartStopHTTP->setIcon( QIcon(":/pause.png") );
         ui->lblStatusIconWebServer->setPixmap( QPixmap( ":/status_yellow.png" ) );
+        actionStatusHttp->setIcon( QIcon( ":/status_yellow.png" ) );
         trayIcon->setIcon( QIcon( ":/websync_yellow.png" ) );
         g_poBlnsHttp->setCommunicationSuspended( false );
         _displayUserNotification( INFO_HttpContinued );
@@ -1117,6 +1210,7 @@ void dlgMain::_checkIfHttpDisabledByUser()
         {
             // Http just disabled
             ui->lblStatusIconWebServer->setPixmap( QPixmap( ":/status_yellow.png" ) );
+            actionStatusHttp->setIcon( QIcon( ":/status_yellow.png" ) );
             trayIcon->setIcon( QIcon( ":/websync_yellow.png" ) );
             g_poBlnsHttp->setCommunicationEnabled( false );
             _displayUserNotification( INFO_HttpDisabled );
@@ -1130,6 +1224,7 @@ void dlgMain::_checkIfHttpDisabledByUser()
 void dlgMain::_disableHttpBySetting()
 {
     ui->lblStatusIconWebServer->setPixmap( QPixmap( ":/status_yellow.png" ) );
+    actionStatusHttp->setIcon( QIcon( ":/status_yellow.png" ) );
     trayIcon->setIcon( QIcon( ":/websync_yellow.png" ) );
     g_poBlnsHttp->setCommunicationEnabled( false );
     m_bHttpEnabledBySetting = false;
@@ -1190,3 +1285,4 @@ void dlgMain::on_ledPassword_returnPressed()
 {
     on_pbAuthenticate_clicked();
 }
+

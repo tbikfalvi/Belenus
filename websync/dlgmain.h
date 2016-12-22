@@ -21,6 +21,8 @@ extern QApplication         *apMainApp;
 extern cQTMySQLConnection   *g_poDB;
 extern cBlnsHttp            *g_poBlnsHttp;
 
+#define app_version "1.0.0"
+
 namespace Ui { class dlgMain; }
 
 class dlgMain : public QDialog
@@ -72,7 +74,7 @@ protected:
     void mouseMoveEvent ( QMouseEvent *p_poEvent );
 
 public slots:
-    void slotSettings();
+    void slotShowMainWindow();
 
 signals:
     void signalStartCounter(int p_nTimerLength, int p_nExtendedLength);
@@ -111,12 +113,27 @@ private slots:
 
     void on_ledPassword_returnPressed();
 
+    void on_pbClearPatientCard_clicked();
+
+    void on_pbClearAllPatientCard_clicked();
+
 private:
     Ui::dlgMain         *ui;
     QSystemTrayIcon     *trayIcon;
     QMenu               *trayIconMenu;
     QMenu               *menuConnection;
-    QAction             *actionSettings;
+    QMenu               *menuUserActions;
+
+    QAction             *actionStatusSQL;
+    QAction             *actionStatusHttp;
+    QAction             *actionShowMainWindow;
+    QAction             *actionUserSendAllPatientCard;
+    QAction             *actionUserWaitingClearPatientCards;
+    QAction             *actionUserGetOnlinePatientCards;
+    QAction             *actionClearPatientCard;
+    QAction             *actionClearAllPatientCard;
+    QAction             *actionExit;
+/*
     QAction             *actionShow;
     QAction             *actionHide;
     QAction             *actionStart;
@@ -125,9 +142,9 @@ private:
     QAction             *actionLogoff;
     QAction             *actionReboot;
     QAction             *actionShutdown;
-    QAction             *actionExit;
     QAction             *actionResetSQL;
     QAction             *actionResetHTTP;
+*/
     int                  m_nTimer;
     bool                 m_bMousePressed;
     int                  m_nMouseX;

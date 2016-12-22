@@ -125,11 +125,11 @@ cWndMain::cWndMain( QWidget *parent ) : QMainWindow( parent )
     m_bBlnsHttpConnected            = false;
     m_nCommunicationErrorCounter    = 0;
     m_nCommResetStep                = 0;
-    m_bBlnsHttpErrorVisible         = false;
+//    m_bBlnsHttpErrorVisible         = false;
     m_uiBlnsErrorAppeared           = 0;
     m_bClosingShift                 = false;
     m_bShoppingCartHasItem          = g_obGen.isShoppingCartHasItems();
-    m_nHttpCommCounter              = 0;
+//    m_nHttpCommCounter              = 0;
     m_bMainWindowActive             = false;
 
     pbLogin->setIcon( QIcon("./resources/40x40_ok.png") );
@@ -343,7 +343,7 @@ cWndMain::cWndMain( QWidget *parent ) : QMainWindow( parent )
 
     m_pbStatusKeyboard.setEnabled( false );
 
-    if( !g_poPrefs->isFapados() )
+    /*if( !g_poPrefs->isFapados() )
     {
         m_pbStatusHttp.setIcon( QIcon( "./resources/40x40_http_disabled.png" ) );
         m_pbStatusHttp.setFlat( true );
@@ -360,19 +360,19 @@ cWndMain::cWndMain( QWidget *parent ) : QMainWindow( parent )
         m_pbStatusCommunicationSuspended.setText( "" );
         m_pbStatusCommunicationSuspended.setIconSize( QSize(20,20) );
         m_pbStatusCommunicationSuspended.setFixedSize( 22, 22 );
-    }
+    }*/
 
     statusbar->addPermanentWidget( &m_lblStatusLeft, 3 );
-    statusbar->addPermanentWidget( &m_pbStatusCommunication, 0 );
+//    statusbar->addPermanentWidget( &m_pbStatusCommunication, 0 );
     statusbar->addPermanentWidget( &m_pbStatusKeyboard, 0 );
-    if( !g_poPrefs->isFapados() )
+    /*if( !g_poPrefs->isFapados() )
     {
         statusbar->addPermanentWidget( &m_pbStatusHttp, 0 );
         statusbar->addPermanentWidget( &m_pbStatusCommunicationSuspended, 0 );
         statusbar->addPermanentWidget( &m_lblHttpCount );
-    }
+    }*/
     statusbar->addPermanentWidget( &m_lblStatusRight, 1 );
-
+/*
     g_poBlnsHttp = new cBlnsHttp();
 
     if( !g_poPrefs->isFapados() )
@@ -390,7 +390,7 @@ cWndMain::cWndMain( QWidget *parent ) : QMainWindow( parent )
         m_pbStatusHttp.setToolTip( tr("Number of records to process: %1")
                                    .arg( m_lblHttpCount.text() ) );
     }
-
+*/
     this->setFocus();
 }
 //====================================================================================
@@ -480,10 +480,10 @@ void cWndMain::on_pbLogin_clicked()
 
         updateTitle();
         loginUser();
-        if( g_poPrefs->isBlnsHttpEnabled() )
+        /*if( g_poPrefs->isBlnsHttpEnabled() )
         {
             g_poBlnsHttp->checkHttpServerAvailability();
-        }
+        }*/
     }
     catch( cSevException &e )
     {
@@ -947,9 +947,9 @@ void cWndMain::logoutUser()
 //====================================================================================
 void cWndMain::keyPressEvent( QKeyEvent *p_poEvent )
 {
-    m_nHttpCommCounter = 0;
-    g_poPrefs->setBlnsHttpSuspended( true );
-    m_pbStatusCommunicationSuspended.setIcon( QIcon( "./resources/40x40_minus.png" ) );
+//    m_nHttpCommCounter = 0;
+//    g_poPrefs->setBlnsHttpSuspended( true );
+//    m_pbStatusCommunicationSuspended.setIcon( QIcon( "./resources/40x40_minus.png" ) );
     setCursor( Qt::ArrowCursor);
     m_bMainWindowActive = true;
 
@@ -1315,8 +1315,8 @@ action_Logs->setVisible( false );
     {
         m_pbStatusKeyboard.setIcon( QIcon( "./resources/40x40_keyboard.png" ) );
     }
-    m_pbStatusHttp.setEnabled( bIsUserLoggedIn );
-    m_pbStatusCommunicationSuspended.setEnabled( bIsUserLoggedIn );
+//    m_pbStatusHttp.setEnabled( bIsUserLoggedIn );
+//    m_pbStatusCommunicationSuspended.setEnabled( bIsUserLoggedIn );
 
     showElementsForComponents();
 }
@@ -1346,6 +1346,7 @@ void cWndMain::timerEvent(QTimerEvent *)
     }
 
     // Suspend patientcard synchronization if panels are in use
+/*
     bool bIsPanelWorking    = mdiPanels->isPanelWorking();
     int  nCountHttpRecord   = m_lblHttpCount.text().toInt();
     int  nHttpSyncAutoSecs  = g_poPrefs->getStartHttpSyncAutoSeconds()*4+2;
@@ -1374,7 +1375,7 @@ void cWndMain::timerEvent(QTimerEvent *)
             _processHttpActions();
         }
     }
-
+*/
 
     QFile   fileCheck( "belenus.chk" );
 
@@ -1592,7 +1593,7 @@ void cWndMain::on_action_Preferences_triggered()
     }
 
     m_bMainWindowActive = true;
-
+/*
     if( g_poPrefs->isBlnsHttpEnabled() )
     {
         m_pbStatusHttp.setIcon( QIcon( "./resources/40x40_http_enabled.png" ) );
@@ -1601,6 +1602,7 @@ void cWndMain::on_action_Preferences_triggered()
     {
         m_pbStatusHttp.setIcon( QIcon( "./resources/40x40_http_disabled.png" ) );
     }
+*/
 }
 //====================================================================================
 void cWndMain::on_action_Users_triggered()
@@ -3432,7 +3434,7 @@ void cWndMain::on_action_Export_triggered()
 
 //    obDlgExportImport.exec();
 }
-
+/*
 void cWndMain::on_BlnsHttpErrorOccured()
 {
     m_bBlnsHttpErrorVisible = true;
@@ -3581,7 +3583,7 @@ void cWndMain::on_BlnsHttpIconClicked()
         }
     }
 }
-
+*/
 void cWndMain::showAdWindows()
 {
     QSqlQuery *poQuery = g_poDB->executeQTQuery( QString( "SELECT advertisementId FROM advertisements WHERE active=1" ) );
@@ -3737,7 +3739,7 @@ void cWndMain::on_KeyboardDisabled()
     m_bActionProcessing = true;
     m_pbStatusKeyboard.setIcon( QIcon( "./resources/40x40_keyboard_locked.png" ) );
 }
-
+/*
 void cWndMain::_updateAllPatientcardToWeb()
 {
     m_dlgProgress->showProgress();
@@ -3820,17 +3822,17 @@ void cWndMain::_removePatientcardFromWeb()
         }
     }
 }
-
+*/
 void cWndMain::_setStatusText(QString p_qsText, bool p_bError)
 {
-    if( m_bBlnsHttpErrorVisible )
+/*    if( m_bBlnsHttpErrorVisible )
     {
         if( (QDateTime::currentDateTime().toTime_t()-m_uiBlnsErrorAppeared) < (unsigned int)(g_poPrefs->getBlnsHttpMessageWaitTime()*1000) )
         {
             return;
         }
         m_bBlnsHttpErrorVisible = false;
-    }
+    }*/
 
     if( p_bError )
     {
@@ -3843,7 +3845,7 @@ void cWndMain::_setStatusText(QString p_qsText, bool p_bError)
 
     m_lblStatusLeft .setText( p_qsText );
 }
-
+/*
 void cWndMain::_processHttpActions()
 {
     if( g_poPrefs->isBlnsHttpEnabled() )
@@ -3853,7 +3855,7 @@ void cWndMain::_processHttpActions()
         g_poBlnsHttp->processWaitingCardData();
     }
 }
-
+*/
 void cWndMain::_checkVersions()
 {
     QSqlQuery   *poQuery            = NULL;
@@ -3918,7 +3920,7 @@ void cWndMain::_checkIsActivationNeeded()
                                   "and validate your application's licence" ) );
     }
 }
-
+/*
 void cWndMain::on_BlnsHttpProcessStopped()
 {
     m_lblHttpCount.setStyleSheet( "QLabel {font:normal; font-size:8px;}" );
@@ -3926,7 +3928,7 @@ void cWndMain::on_BlnsHttpProcessStopped()
     m_pbStatusHttp.setToolTip( tr("Number of records to process: %1")
                                .arg( m_lblHttpCount.text() ) );
 }
-
+*/
 void cWndMain::slotMainWindowActivated()
 {
     m_bMainWindowActive = true;

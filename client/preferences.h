@@ -141,10 +141,10 @@ public:
     int             getPatientCardPartnerPriceVat() const;
     void            setBlnsHttpEnabled( bool p_bEnable, bool p_boSaveNow = false );
     bool            isBlnsHttpEnabled();
-    int             getBlnsHttpMessageWaitTime() const;
-    void            setBlnsHttpMessageWaitTime(const int p_inWaitTime );
-    bool            isBlnsHttpSuspended();
-    void            setBlnsHttpSuspended( bool p_bEnable );
+//    int             getBlnsHttpMessageWaitTime() const;
+//    void            setBlnsHttpMessageWaitTime(const int p_inWaitTime );
+//    bool            isBlnsHttpSuspended();
+//    void            setBlnsHttpSuspended( bool p_bEnable );
 
     unsigned int    getPanelId( int p_nPanelIterator );
 
@@ -215,10 +215,10 @@ public:
     bool            isTextTubeReplaceVisible();
     void            setTextSterilVisible( bool p_bTextSterilVisible, bool p_boSaveNow = false );
     bool            isTextSterilVisible();
-    void            setStartHttpSyncAuto( bool p_bStartHttpSyncAuto, bool p_boSaveNow = false );
-    bool            isStartHttpSyncAuto();
-    void            setStartHttpSyncAutoSeconds( const int p_nStartHttpSyncAutoSeconds );
-    int             getStartHttpSyncAutoSeconds() const;
+//    void            setStartHttpSyncAuto( bool p_bStartHttpSyncAuto, bool p_boSaveNow = false );
+//    bool            isStartHttpSyncAuto();
+//    void            setStartHttpSyncAutoSeconds( const int p_nStartHttpSyncAutoSeconds );
+//    int             getStartHttpSyncAutoSeconds() const;
     void            setBarcodeHidden( bool p_bBarcodeHidden, bool p_boSaveNow = false );
     bool            isBarcodeHidden();
     void            setUsageVisibleOnMain( bool p_bUsageVisibleOnMain, bool p_boSaveNow = false );
@@ -294,8 +294,8 @@ private:
     int             m_nPatientCardPartnerPriceVat;
     QStringList     m_qslPanelIds;
     bool            m_bBlnsHttpEnabled;
-    int             m_nBlnsHttpWaitTime;
-    bool            m_bBlnsHttpSuspended;
+//    int             m_nBlnsHttpWaitTime;
+//    bool            m_bBlnsHttpSuspended;
     QString         m_qsDirDbBinaries;
     QString         m_qsDirDbBackup;
     bool            m_bForceBackupDatabase;
@@ -320,8 +320,8 @@ private:
     int             m_nForceTimeSendCounter;
     bool            m_bIsTextTubeReplaceVisible;
     bool            m_bIsTextSterilVisible;
-    bool            m_bIsStartHttpSyncAuto;
-    int             m_nStartHttpSyncAutoSeconds;
+//    bool            m_bIsStartHttpSyncAuto;
+//    int             m_nStartHttpSyncAutoSeconds;
     bool            m_bBarcodeHidden;
     bool            m_bUsageVisibleOnMain;
     QString         m_qsLicenceLastValidated;
