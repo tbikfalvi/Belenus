@@ -80,7 +80,7 @@ private:
     bool                     m_bActionProcessing;
     bool                     m_bProgressErrorVisible;
     int                      m_nProgressCounter;
-    bool                     m_bBlnsHttpConnected;
+//    bool                     m_bBlnsHttpConnected;
 //    bool                     m_bBlnsHttpErrorVisible;
     unsigned int             m_uiBlnsErrorAppeared;
     int                      m_nCommunicationErrorCounter;
@@ -108,6 +108,7 @@ private:
 //    void _processHttpActions();
     void _checkVersions();
     void _checkIsActivationNeeded();
+    void _checkIsWebSyncNeeded();
 
 public slots:
     void processDeviceUsePayment( unsigned int p_uiPanelId, unsigned int p_uiLedgerId, int p_nPaymentType );

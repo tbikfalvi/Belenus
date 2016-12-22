@@ -1260,6 +1260,7 @@ void dlgMain::_disableHttpBySetting()
 
 //=================================================================================================
 void dlgMain::on_ledWebServerAddress_textEdited(const QString &/*arg1*/)
+//-------------------------------------------------------------------------------------------------
 {
     ui->lblServerAddress->setStyleSheet( "QLabel {font: normal;}" );
 
@@ -1279,13 +1280,16 @@ void dlgMain::on_ledWebServerAddress_textEdited(const QString &/*arg1*/)
 
 //=================================================================================================
 void dlgMain::on_chkHttpCommunicationEnabled_clicked()
+//-------------------------------------------------------------------------------------------------
 {
     QSettings   obBelenus( QString( "%1/belenus.ini" ).arg( QDir::currentPath() ), QSettings::IniFormat );
 
     obBelenus.setValue( "BlnsHttp/Enabled", ui->chkHttpCommunicationEnabled->isChecked() );
 }
 
+//=================================================================================================
 void dlgMain::on_pbTest_clicked()
+//-------------------------------------------------------------------------------------------------
 {
 /*    QFile   file( "ansi.php" );
 
@@ -1300,17 +1304,58 @@ void dlgMain::on_pbTest_clicked()
     g_obLogger(cSeverity::DEBUG) << "sha1: [" << sha1.left(40) << "]" << EOM;
     g_obLogger(cSeverity::DEBUG) << "gen:  [" << gen << "]" << EOM;
 
-    g_poDB->executeQTQuery( QString("INSERT INTO settings SET identifier=\"Ekezet teszt\", value=\"%1\" ").arg( _bytearrayToString(qbaTest) ) );*/
+    g_poDB->executeQTQuery( QString("INSERT INTO settings SET identifier=\"Ekezet teszt\", value=\"%1\" ").arg( _bytearrayToString(qbaTest) ) );
+
     _displayUserNotification( INFO_Custom, tr("árvíztűrő tükörfúrógép\nÁRVÍZTŰRŐ TÜKÖRFÚRÓGÉP") );
+*/
+    dlgLineEdit obDlgLineEdit(this);
+
+    if( obDlgLineEdit.exec() == QDialog::Accepted )
+    {
+        _isAppicationRunning( obDlgLineEdit.value() );
+    }
+
+    _displayUserNotification( INFO_Custom, tr("") );
 }
 
+//====================================================================================
 QString dlgMain::_bytearrayToString(QString p_qsString)
+//------------------------------------------------------------------------------------
 {
     return p_qsString;
 }
 
+//====================================================================================
 void dlgMain::on_ledPassword_returnPressed()
+//------------------------------------------------------------------------------------
 {
     on_pbAuthenticate_clicked();
+}
+
+//====================================================================================
+bool dlgMain::_isAppicationRunning(QString p_qsAppName)
+//------------------------------------------------------------------------------------
+{
+    QProcess process;
+    process.setReadChannel(QProcess::StandardOutput);
+    process.setReadChannelMode(QProcess::MergedChannels);
+    process.start("wmic.exe /OUTPUT:STDOUT PROCESS get Caption");
+
+    process.waitForStarted(1000);
+    process.waitForFinished(1000);
+
+    QString listOfRunningApps = QString( process.readAll() );
+
+    g_obLogger(cSeverity::DEBUG) << "Check if [" << p_qsAppName << "] is running" << EOM;
+//    g_obLogger(cSeverity::DEBUG) << listOfRunningApps << EOM;
+
+    if( listOfRunningApps.contains( p_qsAppName) )
+    {
+        g_obLogger(cSeverity::DEBUG) << "RUNNING" << EOM;
+        return true;
+    }
+
+    g_obLogger(cSeverity::DEBUG) << "NOT RUNNING" << EOM;
+    return false;
 }
 

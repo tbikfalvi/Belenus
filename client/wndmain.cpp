@@ -122,7 +122,7 @@ cWndMain::cWndMain( QWidget *parent ) : QMainWindow( parent )
     m_bActionProcessing             = false;
     m_bProgressErrorVisible         = false;
     m_nProgressCounter              = 0;
-    m_bBlnsHttpConnected            = false;
+//    m_bBlnsHttpConnected            = false;
     m_nCommunicationErrorCounter    = 0;
     m_nCommResetStep                = 0;
 //    m_bBlnsHttpErrorVisible         = false;
@@ -445,6 +445,7 @@ bool cWndMain::showLogIn()
 
     _checkVersions();
     _checkIsActivationNeeded();
+    _checkIsWebSyncNeeded();
 
     return true;
 }
@@ -1560,6 +1561,8 @@ void cWndMain::on_action_Preferences_triggered()
     m_bMainWindowActive = false;
 
     m_dlgProgress->showProgress();
+
+    g_poPrefs->loadConfFileSettings();
 
     cDlgPreferences  obDlgPrefs( this );
 
@@ -3920,6 +3923,38 @@ void cWndMain::_checkIsActivationNeeded()
                                   "and validate your application's licence" ) );
     }
 }
+
+void cWndMain::_checkIsWebSyncNeeded()
+{
+    if( g_poPrefs->isBlnsHttpEnabled() )
+    {
+        if( !g_obGen.isAppicationRunning( "websync.exe" ) )
+        {
+            if( g_poPrefs->isWebSyncAutoStart() ||
+                QMessageBox::question( this, tr("Question"),
+                                       tr("The http synchronization is enabled but "
+                                          "the WebSync application is not running.\n\n"
+                                          "Do you want to start this application now?"),
+                                       QMessageBox::Yes | QMessageBox::No, QMessageBox::Yes ) == QMessageBox::Yes )
+            {
+                QProcess *qpWebSync = new QProcess(this);
+
+                if( !qpWebSync->startDetached( QString("websync.exe") ) )
+                {
+                    QMessageBox::warning( this, tr("Warning"),
+                                          tr("Error occured when starting process:WebSync.exe\n\nError code: %1\n"
+                                             "0 > The process failed to start.\n"
+                                             "1 > The process crashed some time after starting successfully.\n"
+                                             "2 > The last waitFor...() function timed out.\n"
+                                             "4 > An error occurred when attempting to write to the process.\n"
+                                             "3 > An error occurred when attempting to read from the process.\n"
+                                             "5 > An unknown error occurred.").arg(qpWebSync->error()) );
+                }
+            }
+        }
+    }
+}
+
 /*
 void cWndMain::on_BlnsHttpProcessStopped()
 {

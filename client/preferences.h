@@ -229,6 +229,8 @@ public:
     bool            isDACanModifyWorktime();
     void            setDACanModifyExpDate( bool p_bDACanModifyExpDate, bool p_boSaveNow = false );
     bool            isDACanModifyExpDate();
+    void            setWebSyncAutoStart( bool p_bWebSyncAutoStart, bool p_boSaveNow = false );
+    bool            isWebSyncAutoStart();
 
 //void            setXXX( const QString &p_qsXXX, bool p_boSaveNow = false );
 //QString         getXXX() const;
@@ -327,6 +329,7 @@ private:
     QString         m_qsLicenceLastValidated;
     bool            m_bDACanModifyWorktime;
     bool            m_bDACanModifyExpDate;
+    bool            m_bWebSyncAutoStart;
 
     void init();
 };

@@ -106,15 +106,10 @@ private slots:
     void on_cmbOnlinePaymentMethod_currentIndexChanged(int index);
     void on_sliFileLogLevel_valueChanged(int value);
     void on_ledWebServerAddress_textEdited(const QString &arg1);
-
     void on_chkHttpCommunicationEnabled_clicked();
-
     void on_pbTest_clicked();
-
     void on_ledPassword_returnPressed();
-
     void on_pbClearPatientCard_clicked();
-
     void on_pbClearAllPatientCard_clicked();
 
 private:
@@ -196,6 +191,7 @@ private:
     void                _checkIfHttpDisabledByUser();
     void                _disableHttpBySetting();
     QString             _bytearrayToString( QString p_qsString );
+    bool                _isAppicationRunning( QString p_qsAppName );
 };
 
 #endif // DLGMAIN_H

@@ -86,6 +86,7 @@ void cPreferences::init()
     m_bBlnsHttpEnabled              = false;
 //    m_nBlnsHttpWaitTime             = 3;
 //    m_bBlnsHttpSuspended            = false;
+    m_bWebSyncAutoStart             = false;
 
     m_bIsTextSterilVisible          = false;
     m_bIsTextTubeReplaceVisible     = false;
@@ -217,6 +218,7 @@ void cPreferences::loadConfFileSettings()
         setLogLevels( uiConsoleLevel, uiDBLevel, uiGUILevel, uiFileLevel );
 
         m_bBlnsHttpEnabled          = obPrefFile.value( QString::fromAscii( "BlnsHttp/Enabled" ) ).toBool();
+        m_bWebSyncAutoStart         = obPrefFile.value( QString::fromAscii( "BlnsHttp/WebSyncAutoStart" ) ).toBool();
 //        m_nBlnsHttpWaitTime         = obPrefFile.value( QString::fromAscii( "BlnsHttp/MessageWaitTime" ), 12 ).toInt();
 //        m_bIsStartHttpSyncAuto      = obPrefFile.value( QString::fromAscii( "BlnsHttp/IsAutoStartSync"), false ).toBool();
 //        m_nStartHttpSyncAutoSeconds = obPrefFile.value( QString::fromAscii( "BlnsHttp/AutoStartSyncSeconds"), 15 ).toInt();
@@ -387,6 +389,7 @@ void cPreferences::save() const throw (cSevException)
     obPrefFile.setValue( QString::fromAscii( "Device/VAT" ), m_inDeviceUseVAT );
 
     obPrefFile.setValue( QString::fromAscii( "BlnsHttp/Enabled" ), m_bBlnsHttpEnabled );
+    obPrefFile.setValue( QString::fromAscii( "BlnsHttp/WebSyncAutoStart" ), m_bWebSyncAutoStart );
 //    obPrefFile.setValue( QString::fromAscii( "BlnsHttp/MessageWaitTime" ), m_nBlnsHttpWaitTime );
 //    obPrefFile.setValue( QString::fromAscii( "BlnsHttp/IsAutoStartSync"), m_bIsStartHttpSyncAuto );
 //    obPrefFile.setValue( QString::fromAscii( "BlnsHttp/AutoStartSyncSeconds"), m_nStartHttpSyncAutoSeconds );
@@ -1219,6 +1222,23 @@ bool cPreferences::isBlnsHttpEnabled()
 {
     return m_bBlnsHttpEnabled;
 }
+
+void cPreferences::setWebSyncAutoStart( bool p_bWebSyncAutoStart, bool p_boSaveNow )
+{
+    m_bWebSyncAutoStart = p_bWebSyncAutoStart;
+
+    if( p_boSaveNow )
+    {
+        QSettings  obPrefFile( m_qsFileName, QSettings::IniFormat );
+        obPrefFile.setValue( QString::fromAscii( "BlnsHttp/WebSyncAutoStart" ), m_bWebSyncAutoStart );
+    }
+}
+
+bool cPreferences::isWebSyncAutoStart()
+{
+    return m_bWebSyncAutoStart;
+}
+
 /*
 void cPreferences::setBlnsHttpMessageWaitTime(const int p_inWaitTime)
 {
