@@ -139,6 +139,7 @@ private:
     bool                         m_bIsNeedToBeCleaned;
     bool                         m_bIsDeviceStopped;
     bool                         m_bIsTubeReplaceNeeded;
+    bool                         m_bIsTubeCleanupNeeded;
     QString                      m_qsTransactionId;
     int                          m_nMinuteOfPanel;
     int                          m_nForceTimeSendCounter;

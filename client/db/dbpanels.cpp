@@ -32,6 +32,8 @@ void cDBPanel::init( const unsigned int p_uiId,
                      const QString &p_qsTitle,
                      const unsigned int p_uiWorkTime,
                      const unsigned int p_uiMaxWorkTime,
+                     const unsigned int p_uiCleanTime,
+                     const unsigned int p_uiMaxCleanTime,
                      const QString &p_qsModified,
                      const bool p_bActive,
                      const QString &p_qsArchive ) throw()
@@ -39,10 +41,12 @@ void cDBPanel::init( const unsigned int p_uiId,
     m_uiId              = p_uiId;
     m_uiLicenceId       = p_uiLicenceId;
     m_uiPanelTypeId     = p_uiPanelTypeId;
-    m_uiPanelGroupId     = p_uiPanelGroupId;
+    m_uiPanelGroupId    = p_uiPanelGroupId;
     m_qsTitle           = p_qsTitle;
     m_uiWorkTime        = p_uiWorkTime;
     m_uiMaxWorkTime     = p_uiMaxWorkTime;
+    m_uiCleanTime       = p_uiCleanTime;
+    m_uiMaxCleanTime    = p_uiMaxCleanTime;
     m_qsModified        = p_qsModified;
     m_bActive           = p_bActive;
     m_qsArchive         = p_qsArchive;
@@ -57,6 +61,8 @@ void cDBPanel::init( const QSqlRecord &p_obRecord ) throw()
     int inTitleIdx          = p_obRecord.indexOf( "title" );
     int inWorkTimeIdx       = p_obRecord.indexOf( "workTime" );
     int inMaxWorkTimeIdx    = p_obRecord.indexOf( "maxWorkTime" );
+    int inCleanTimeIdx      = p_obRecord.indexOf( "cleanTime" );
+    int inMaxCleanTimeIdx   = p_obRecord.indexOf( "maxCleanTime" );
     int inModifiedIdx       = p_obRecord.indexOf( "modified" );
     int inActiveIdx         = p_obRecord.indexOf( "active" );
     int inArchiveIdx        = p_obRecord.indexOf( "archive" );
@@ -68,6 +74,8 @@ void cDBPanel::init( const QSqlRecord &p_obRecord ) throw()
           p_obRecord.value( inTitleIdx ).toString(),
           p_obRecord.value( inWorkTimeIdx ).toUInt(),
           p_obRecord.value( inMaxWorkTimeIdx ).toUInt(),
+          p_obRecord.value( inCleanTimeIdx ).toUInt(),
+          p_obRecord.value( inMaxCleanTimeIdx ).toUInt(),
           p_obRecord.value( inModifiedIdx ).toString(),
           p_obRecord.value( inActiveIdx ).toBool(),
           p_obRecord.value( inArchiveIdx ).toString() );
@@ -108,6 +116,8 @@ void cDBPanel::save() throw( cSevException )
     qsQuery += QString( "title = \"%1\", " ).arg( m_qsTitle );
     qsQuery += QString( "workTime = \"%1\", " ).arg( m_uiWorkTime );
     qsQuery += QString( "maxWorkTime = \"%1\", " ).arg( m_uiMaxWorkTime );
+    qsQuery += QString( "cleanTime = \"%1\", " ).arg( m_uiCleanTime );
+    qsQuery += QString( "maxCleanTime = \"%1\", " ).arg( m_uiMaxCleanTime );
     qsQuery += QString( "modified = \"%1\", " ).arg( QDateTime::currentDateTime().toString( QString("yyyy-MM-dd hh:mm:ss") ) );
     qsQuery += QString( "active = %1, " ).arg( m_bActive );
     qsQuery += QString( "archive = \"%1\" " ).arg( m_qsArchive );
@@ -219,6 +229,26 @@ unsigned int cDBPanel::maxWorkTime() const throw()
 void cDBPanel::setMaxWorkTime( const unsigned int p_uiMaxWorkTime ) throw()
 {
     m_uiMaxWorkTime = p_uiMaxWorkTime;
+}
+
+unsigned int cDBPanel::cleanTime() const throw()
+{
+    return m_uiCleanTime;
+}
+
+void cDBPanel::setCleanTime( const unsigned int p_uiCleanTime ) throw()
+{
+    m_uiCleanTime = p_uiCleanTime;
+}
+
+unsigned int cDBPanel::maxCleanTime() const throw()
+{
+    return m_uiMaxCleanTime;
+}
+
+void cDBPanel::setMaxCleanTime( const unsigned int p_uiMaxCleanTime ) throw()
+{
+    m_uiMaxCleanTime = p_uiMaxCleanTime;
 }
 
 QString cDBPanel::modified() const throw()

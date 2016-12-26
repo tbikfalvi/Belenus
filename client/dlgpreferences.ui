@@ -1229,6 +1229,27 @@
               </item>
              </layout>
             </item>
+            <item row="2" column="0">
+             <widget class="QLabel" name="lblPanelTextTubeClean">
+              <property name="text">
+               <string>device clean is needed :</string>
+              </property>
+             </widget>
+            </item>
+            <item row="2" column="1">
+             <layout class="QHBoxLayout" name="horizontalLayout_38">
+              <item>
+               <widget class="QLineEdit" name="ledPanelTextTubeCleanup"/>
+              </item>
+              <item>
+               <widget class="QCheckBox" name="chkVisibleSecTubeCleanup">
+                <property name="text">
+                 <string>Visible on secondary window</string>
+                </property>
+               </widget>
+              </item>
+             </layout>
+            </item>
            </layout>
           </item>
          </layout>

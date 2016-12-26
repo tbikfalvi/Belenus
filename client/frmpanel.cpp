@@ -155,6 +155,7 @@ cFrmPanel::cFrmPanel( const unsigned int p_uiPanelId ) : QFrame()
     m_bIsNeedToBeCleaned    = false;
     m_bIsDeviceStopped      = false;
     m_bIsTubeReplaceNeeded  = false;
+    m_bIsTubeCleanupNeeded  = false;
 
     m_qsCashToPay               = "";
     m_qsTransactionId           = "";
@@ -692,7 +693,7 @@ void cFrmPanel::load( const unsigned int p_uiPanelId )
     QSqlQuery  *poQuery = NULL;
     try
     {
-        poQuery = g_poDB->executeQTQuery( QString( "SELECT panelTypeId, title, workTime, maxWorkTime FROM panels WHERE panelId=%1" ).arg( m_uiId ) );
+        poQuery = g_poDB->executeQTQuery( QString( "SELECT panelTypeId, title, workTime, maxWorkTime, cleanTime, maxCleanTime FROM panels WHERE panelId=%1" ).arg( m_uiId ) );
         if( poQuery->size() )
         {
             poQuery->first();
@@ -714,6 +715,16 @@ void cFrmPanel::load( const unsigned int p_uiPanelId )
             m_bIsTubeReplaceNeeded = true;
         }
         prgUsageMonitor->setVisible( g_poPrefs->isUsageVisibleOnMain() );
+
+        unsigned int uiCleanTime = poQuery->value(4).toUInt();
+        unsigned int uiCleanTimeMax = poQuery->value(5).toUInt();
+
+        m_bIsTubeCleanupNeeded = false;
+        g_obLogger(cSeverity::DEBUG) << "Cleantime for panel [" << poQuery->value( 1 ).toString() << "] is \'" << uiCleanTime/3600 << "\'" << EOM;
+        if( uiCleanTime/3600 >= uiCleanTimeMax )
+        {
+            m_bIsTubeCleanupNeeded = true;
+        }
 
         delete poQuery;
         poQuery = NULL;
@@ -752,11 +763,12 @@ void cFrmPanel::reload()
     QSqlQuery  *poQuery = NULL;
     try
     {
-        poQuery = g_poDB->executeQTQuery( QString( "SELECT panelTypeId, title, workTime, maxWorkTime FROM panels WHERE panelId=%1" ).arg( m_uiId ) );
+        poQuery = g_poDB->executeQTQuery( QString( "SELECT panelTypeId, title, workTime, maxWorkTime, cleanTime, maxCleanTime FROM panels WHERE panelId=%1" ).arg( m_uiId ) );
         if( poQuery->size() )
         {
             m_bIsTubeReplaceNeeded = false;
             poQuery->first();
+
             lblTitle->setText( poQuery->value( 1 ).toString() );
             prgUsageMonitor->setMaximum( poQuery->value(3).toInt() );
             prgUsageMonitor->setValue( poQuery->value(2).toInt()/3600 );
@@ -766,6 +778,17 @@ void cFrmPanel::reload()
                 prgUsageMonitor->setValue( prgUsageMonitor->maximum() );
                 m_bIsTubeReplaceNeeded = true;
             }
+
+            unsigned int uiCleanTime = poQuery->value(4).toUInt();
+            unsigned int uiCleanTimeMax = poQuery->value(5).toUInt();
+
+            m_bIsTubeCleanupNeeded = false;
+            g_obLogger(cSeverity::DEBUG) << "Cleantime for panel [" << poQuery->value( 1 ).toString() << "] is \'" << uiCleanTime/3600 << "\'" << EOM;
+            if( uiCleanTime/3600 >= uiCleanTimeMax )
+            {
+                m_bIsTubeCleanupNeeded = true;
+            }
+
             formatInfoString();
             prgUsageMonitor->setVisible( g_poPrefs->isUsageVisibleOnMain() );
         }
@@ -941,14 +964,26 @@ void cFrmPanel::formatInfoString()
         }
     }
 
+    if( m_bIsTubeCleanupNeeded )
+    {
+        if( qsMainInfoText.length() > 0 ) qsMainInfoText.append( "<br>" );
+        qsMainInfoText.append( g_poPrefs->getPanelTextTubeCleanup() );
+
+        if( g_poPrefs->isTextTubeCleanupVisible() )
+        {
+            if( qsSecondaryInfoText.length() > 0 ) qsSecondaryInfoText.append( "<br>" );
+            qsSecondaryInfoText.append( g_poPrefs->getPanelTextTubeCleanup() );
+        }
+    }
+
     if( m_bIsNeedToBeCleaned )
     {
         if( qsMainInfoText.length() > 0 ) qsMainInfoText.append( "<br>" );
         qsMainInfoText.append( g_poPrefs->getPanelTextSteril() );
 
-        if( qsSecondaryInfoText.length() > 0 ) qsSecondaryInfoText.append( "<br>" );
         if( g_poPrefs->isTextSterilVisible() )
         {
+            if( qsSecondaryInfoText.length() > 0 ) qsSecondaryInfoText.append( "<br>" );
             qsSecondaryInfoText.append( g_poPrefs->getPanelTextSteril() );
         }
     }
@@ -1080,26 +1115,37 @@ void cFrmPanel::closeAttendance()
     m_pDBLedgerDevice->save();
 
     QSqlQuery *poQuery;
-    poQuery = g_poDB->executeQTQuery( QString( "SELECT workTime FROM panels WHERE panelId=%1" ).arg(m_uiId) );
+    poQuery = g_poDB->executeQTQuery( QString( "SELECT workTime, cleanTime, maxCleanTime FROM panels WHERE panelId=%1" ).arg(m_uiId) );
     poQuery->first();
 
     unsigned int uiWorkTime = poQuery->value( 0 ).toUInt() + m_pDBLedgerDevice->timeReal();
+    unsigned int uiCleanTime = poQuery->value( 1 ).toUInt() + m_pDBLedgerDevice->timeReal();
+    unsigned int uiCleanTimeMax = poQuery->value(2).toUInt();
+
+    g_obLogger(cSeverity::DEBUG) << "Worktime for panel  [" << lblTitle->text() << "] is \'" << uiWorkTime/3600 << "\' [" << prgUsageMonitor->minimum() << "-" << prgUsageMonitor->maximum() << "]" << EOM;
+    g_obLogger(cSeverity::DEBUG) << "Cleantime for panel [" << lblTitle->text() << "] is \'" << uiCleanTime/3600 << "\' [" << prgUsageMonitor->minimum() << "-" << prgUsageMonitor->maximum() << "]" << EOM;
+
+    m_bIsTubeCleanupNeeded = false;
+    if( uiCleanTime/3600 >= uiCleanTimeMax )
+    {
+        m_bIsTubeCleanupNeeded = true;
+    }
 
     m_bIsTubeReplaceNeeded = false;
     prgUsageMonitor->setValue( uiWorkTime/3600 );
-    g_obLogger(cSeverity::DEBUG) << "Worktime for panel [" << lblTitle->text() << "] is \'" << uiWorkTime/3600 << "\' [" << prgUsageMonitor->minimum() << "-" << prgUsageMonitor->maximum() << "]" << EOM;
     if( prgUsageMonitor->value() >= prgUsageMonitor->maximum() )
     {
         prgUsageMonitor->setValue( prgUsageMonitor->maximum() );
         m_bIsTubeReplaceNeeded = true;
-        formatInfoString();
     }
+    formatInfoString();
 
     QString  qsQuery;
 
     qsQuery = "UPDATE panels SET ";
 
     qsQuery += QString( "workTime = \"%1\", " ).arg( uiWorkTime );
+    qsQuery += QString( "cleanTime = \"%1\", " ).arg( uiCleanTime );
     qsQuery += QString( "archive = \"%1\" " ).arg( "MOD" );
     qsQuery += QString( " WHERE panelId = %1" ).arg( m_uiId );
 
@@ -1303,6 +1349,7 @@ void cFrmPanel::slotPanelStopClicked()
 void cFrmPanel::slotPanelCassaClicked()
 {
     cTracer obTrace( "cFrmPanel::slotPanelCassaClicked" );
+    g_obLogger(cSeverity::DEBUG) << "PanelID [" << m_uiId << "]" << EOM;
 
     emit signalPaymentActivated( m_uiId );
 }

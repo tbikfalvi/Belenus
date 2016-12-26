@@ -157,8 +157,11 @@ lblAutoSync->setVisible( false );
     ledPanelTextSterile->setText( g_poPrefs->getPanelTextSteril() );
     ledPanelTextTubeReplacement->setText( g_poPrefs->getPanelTextTubeReplace() );
     ledPanelTextTubeReplacement->setEnabled( g_obUser.isInGroup( cAccessGroup::SYSTEM ) );
+    ledPanelTextTubeCleanup->setText( g_poPrefs->getPanelTextTubeCleanup() );
+    ledPanelTextTubeCleanup->setEnabled( g_obUser.isInGroup( cAccessGroup::SYSTEM ) );
     chkVisibleSecSteril->setChecked( g_poPrefs->isTextSterilVisible() );
     chkVisibleSecTubeReplace->setChecked( g_poPrefs->isTextTubeReplaceVisible() );
+    chkVisibleSecTubeCleanup->setChecked( g_poPrefs->isTextTubeCleanupVisible() );
     chkDAResetClock->setChecked( g_poPrefs->isDACanModifyWorktime() );
     chkDAResetClock->setEnabled( g_obUser.isInGroup( cAccessGroup::SYSTEM ) );
     chkDASetExpireDate->setChecked( g_poPrefs->isDACanModifyExpDate() );
@@ -407,6 +410,13 @@ void cDlgPreferences::accept()
     }
     g_poPrefs->setTextSterilVisible( chkVisibleSecSteril->isChecked() );
     g_poPrefs->setTextTubeReplaceVisible( chkVisibleSecTubeReplace->isChecked() );
+    if( ledPanelTextTubeCleanup->text().trimmed().length() < 1 )
+    {
+        QMessageBox::warning( this, tr("Warning"),
+                              tr("'Device clean needed' text can not be empty.") );
+        return;
+    }
+    g_poPrefs->setTextTubeCleanupVisible( chkVisibleSecTubeCleanup->isChecked() );
 
     g_poPrefs->setLogLevels( sliConsoleLogLevel->value(),
                              sliDBLogLevel->value(),
@@ -447,6 +457,7 @@ void cDlgPreferences::accept()
     g_poPrefs->setLicenceLastValidated( dteLicenceExpiration->dateTime().toString( "yyyy-MM-dd hh:mm:ss" ), true );
     g_poPrefs->setPanelTextSteril( ledPanelTextSterile->text() );
     g_poPrefs->setPanelTextTubeReplace( ledPanelTextTubeReplacement->text() );
+    g_poPrefs->setPanelTextTubeCleanup( ledPanelTextTubeCleanup->text() );
 
     g_poPrefs->setCassaAutoClose( chkAutoCloseCassa->isChecked() );
     g_poPrefs->setCassaAutoWithdrawal( chkCassaAutoWithdrawal->isChecked() );
