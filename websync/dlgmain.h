@@ -111,6 +111,7 @@ private slots:
     void on_ledPassword_returnPressed();
     void on_pbClearPatientCard_clicked();
     void on_pbClearAllPatientCard_clicked();
+    void on_PatientCardUpdated( unsigned int p_uiPatientCardId, QString p_qsBarcode );
 
 private:
     Ui::dlgMain         *ui;

@@ -171,9 +171,10 @@ dlgMain::dlgMain(QWidget *parent) : QDialog(parent), ui(new Ui::dlgMain)
     // Connecting to HTTP Server; Set status icon
     g_obLogger(cSeverity::DEBUG) << "Connecting to HTTP Server" << EOM;
 
-    connect( g_poBlnsHttp, SIGNAL(signalErrorOccured()),            this, SLOT(on_BlnsHttpErrorOccured()) );
-    connect( g_poBlnsHttp, SIGNAL(signalActionProcessed(QString)),  this, SLOT(on_BlnsHttpActionFinished(QString)) );
-    connect( g_poBlnsHttp, SIGNAL(signalStepProgress()),            this, SLOT(on_BlnsHttpStepProgress()) );
+    connect( g_poBlnsHttp, SIGNAL(signalErrorOccured()),                    this, SLOT(on_BlnsHttpErrorOccured()) );
+    connect( g_poBlnsHttp, SIGNAL(signalActionProcessed(QString)),          this, SLOT(on_BlnsHttpActionFinished(QString)) );
+    connect( g_poBlnsHttp, SIGNAL(signalStepProgress()),                    this, SLOT(on_BlnsHttpStepProgress()) );
+    connect( g_poBlnsHttp, SIGNAL(signalPatientCardUpdated(uint,QString)),  this, SLOT(on_PatientCardUpdated(uint,QString)) );
 
     ui->lblStatusIconWebServer->setPixmap( QPixmap( ":/status_yellow.png" ) );
     ui->chkHttpCommunicationEnabled->setChecked( m_bHttpEnabledByUser );
@@ -1359,3 +1360,9 @@ bool dlgMain::_isAppicationRunning(QString p_qsAppName)
     return false;
 }
 
+//====================================================================================
+void dlgMain::on_PatientCardUpdated(unsigned int p_uiPatientCardId, QString p_qsBarcode)
+//------------------------------------------------------------------------------------
+{
+    _sendPCData( p_uiPatientCardId, p_qsBarcode );
+}

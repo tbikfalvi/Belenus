@@ -1078,6 +1078,7 @@ bool cBlnsHttp::_processCommResponse(QByteArray p_qsResponse )
             {
                 uiLedgerId = _saveOnlineSell( uiCardId, qsBarcode, uiPatientId, qsCardSellDate );
                 _savePatientCardUnits( qsUnitCount, uiCardId, qsCardValidDate, uiLedgerId );
+                emit signalPatientCardUpdated( uiCardId, qsBarcode );
             }
         }
         m_qslProcessedRecordIds.append( qsRecordId );

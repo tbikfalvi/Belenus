@@ -175,6 +175,7 @@ signals:
     void             signalHideProgress();
     void             signalHttpProcessSuspended();
     void             signalHttpProcessDisabled();
+    void             signalPatientCardUpdated( unsigned int p_uiPatientCardId, QString p_qsBarcode );
 
 private slots:
     void            _slotHttpRequestFinished(int requestId, bool error);
