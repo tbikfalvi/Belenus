@@ -80,6 +80,7 @@ void cPreferences::init()
 
     m_qsPanelTextSteril             = "";
     m_qsPanelTextTubeReplace        = "";
+    m_qsPanelTextTubeCleanup        = "";
 
     m_bEnableHWDebug                = false;
 
@@ -89,6 +90,7 @@ void cPreferences::init()
 
     m_bIsTextSterilVisible          = false;
     m_bIsTextTubeReplaceVisible     = false;
+    m_bIsTextTubeCleanupVisible     = false;
 
     m_nStartHttpSyncAutoSeconds     = 15;
 
@@ -132,6 +134,7 @@ void cPreferences::loadConfFileSettings()
         m_bIsSecondaryCaptionVisible    = obPrefFile.value( QString::fromAscii( "SecondaryWindow/IsSecondaryCaptionVisible"), true ).toBool();
         m_bIsTextTubeReplaceVisible     = obPrefFile.value( QString::fromAscii( "SecondaryWindow/IsTextTubeReplaceVisible"), false ).toBool();
         m_bIsTextSterilVisible          = obPrefFile.value( QString::fromAscii( "SecondaryWindow/IsTextSterilVisible"), false ).toBool();
+        m_bIsTextTubeCleanupVisible     = obPrefFile.value( QString::fromAscii( "SecondaryWindow/IsTextTubeCleanupVisible"), false ).toBool();
 
         m_qsActiveCaptionBackground     = obPrefFile.value( QString::fromAscii( "Panels/ActiveCaptionBackground" ), "#000099" ).toString();
         m_qsActiveCaptionColor          = obPrefFile.value( QString::fromAscii( "Panels/ActiveCaptionColor" ), "#FFFFFF" ).toString();
@@ -142,6 +145,7 @@ void cPreferences::loadConfFileSettings()
         m_bIsStopInLine                 = obPrefFile.value( QString::fromAscii( "Panels/IsStopInLine"), true ).toBool();
         m_qsPanelTextSteril             = obPrefFile.value( QString::fromAscii( "Panels/TextSterile"), QObject::tr( " NOT STERILE " ) ).toString();
         m_qsPanelTextTubeReplace        = obPrefFile.value( QString::fromAscii( "Panels/TextTubeReplace"), QObject::tr( " TUBE REPLACEMENT NEEDED " ) ).toString();
+        m_qsPanelTextTubeCleanup        = obPrefFile.value( QString::fromAscii( "Panels/TextTubeCleanup"), QObject::tr( " TUBE CLEAN-UP NEEDED " ) ).toString();
 
         m_qpSecondaryPosition = QPoint( nLeft, nTop );
         m_qsSecondarySize = QSize( nWidth, nHeight );
@@ -341,6 +345,7 @@ void cPreferences::save() const throw (cSevException)
     obPrefFile.setValue( QString::fromAscii( "SecondaryWindow/Background" ), m_qsSecondaryBackground );
     obPrefFile.setValue( QString::fromAscii( "SecondaryWindow/IsTextTubeReplaceVisible"), m_bIsTextTubeReplaceVisible );
     obPrefFile.setValue( QString::fromAscii( "SecondaryWindow/IsTextSterilVisible"), m_bIsTextSterilVisible );
+    obPrefFile.setValue( QString::fromAscii( "SecondaryWindow/IsTextTubeCleanupVisible"), m_bIsTextTubeCleanupVisible );
 
     obPrefFile.setValue( QString::fromAscii( "Panels/ActiveCaptionBackground" ), m_qsActiveCaptionBackground );
     obPrefFile.setValue( QString::fromAscii( "Panels/ActiveCaptionColor" ), m_qsActiveCaptionColor );
@@ -351,6 +356,7 @@ void cPreferences::save() const throw (cSevException)
     obPrefFile.setValue( QString::fromAscii( "Panels/IsStopInLine"), m_bIsStopInLine );
     obPrefFile.setValue( QString::fromAscii( "Panels/TextSterile"), m_qsPanelTextSteril );
     obPrefFile.setValue( QString::fromAscii( "Panels/TextTubeReplace"), m_qsPanelTextTubeReplace );
+    obPrefFile.setValue( QString::fromAscii( "Panels/TextTubeCleanup"), m_qsPanelTextTubeCleanup );
 
     obPrefFile.setValue( QString::fromAscii( "SecondaryWindow/FrameColor" ), m_qsSecondaryFrame );
     obPrefFile.setValue( QString::fromAscii( "SecondaryWindow/IsSecondaryCaptionVisible" ), m_bIsSecondaryCaptionVisible );
@@ -1587,6 +1593,22 @@ QString cPreferences::getPanelTextTubeReplace() const
     return m_qsPanelTextTubeReplace;
 }
 
+void cPreferences::setPanelTextTubeCleanup( const QString &p_qsPanelTextTubeCleanup, bool p_boSaveNow )
+{
+    m_qsPanelTextTubeCleanup = p_qsPanelTextTubeCleanup;
+
+    if( p_boSaveNow )
+    {
+        QSettings  obPrefFile( m_qsFileName, QSettings::IniFormat );
+        obPrefFile.setValue( QString::fromAscii( "Panels/TextTubeCleanup"), m_qsPanelTextTubeCleanup );
+    }
+}
+
+QString cPreferences::getPanelTextTubeCleanup() const
+{
+    return m_qsPanelTextTubeCleanup;
+}
+
 void cPreferences::setHWDebug( bool p_bHWDebug )
 {
     m_bEnableHWDebug = p_bHWDebug;
@@ -1653,6 +1675,22 @@ void cPreferences::setTextTubeReplaceVisible( bool p_bTextTubeReplaceVisible, bo
 bool cPreferences::isTextTubeReplaceVisible()
 {
     return m_bIsTextTubeReplaceVisible;
+}
+
+void cPreferences::setTextTubeCleanupVisible( bool p_bTextTubeCleanupVisible, bool p_boSaveNow )
+{
+    m_bIsTextTubeCleanupVisible = p_bTextTubeCleanupVisible;
+
+    if( p_boSaveNow )
+    {
+        QSettings  obPrefFile( m_qsFileName, QSettings::IniFormat );
+        obPrefFile.setValue( QString::fromAscii( "SecondaryWindow/IsTextTubeCleanupVisible"), m_bIsTextTubeCleanupVisible );
+    }
+}
+
+bool cPreferences::isTextTubeCleanupVisible()
+{
+    return m_bIsTextTubeCleanupVisible;
 }
 
 void cPreferences::setTextSterilVisible( bool p_bTextSterilVisible, bool p_boSaveNow )

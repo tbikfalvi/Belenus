@@ -2761,18 +2761,12 @@ void cWndMain::on_action_PayCash_triggered()
     int             inPayType       = 0;
     QString         qsComment       = tr("Using device: %1").arg( mdiPanels->getActivePanelCaption() );
     bool            bShoppingCart   = false;
-    unsigned int    uiCouponId = 0;
-    cDBDiscount     obDBDiscount;
+    unsigned int    uiCouponId      = 0;
 
     obDlgCassaAction.cassaResult( &inPayType, &bShoppingCart, &uiCouponId );
 
     if( inCassaAction == QDialog::Accepted && !bShoppingCart )
     {
-        /*if( uiCouponId > 0 )
-        {
-            obDBDiscount.load( uiCouponId );
-            obDBShoppingCart.setItemDiscount( obDBShoppingCart.itemDiscount()+obDBDiscount.discount(obDBShoppingCart.itemSumPrice()) );
-        }*/
         unsigned int uiLedgerId = g_obCassa.cassaProcessDeviceUse( obDBShoppingCart, qsComment, inPayType, mdiPanels->getPanelCaption(obDBShoppingCart.panelId()) );
         processDeviceUsePayment( obDBShoppingCart.panelId(), uiLedgerId, inPayType );
     }

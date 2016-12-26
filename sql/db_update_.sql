@@ -10,9 +10,9 @@ USE `belenus`;
 
 -- -----------------------------------------------------------------------------------
 
-ALTER TABLE `panelstatuses`
- ADD `stopLevel`     INT(10)  NOT NULL DEFAULT '0'  AFTER `allowedToSkip`,
- ADD `allowedToStop` TINYINT  NOT NULL DEFAULT '0'   AFTER `stopLevel`;
+ALTER TABLE `panels`
+ ADD `cleanTime`    INT UNSIGNED NOT NULL DEFAULT '0' AFTER `maxWorkTime`,
+ ADD `maxCleanTime` INT UNSIGNED NOT NULL DEFAULT '0' AFTER `cleanTime`;
  
 -- -----------------------------------------------------------------------------------
 

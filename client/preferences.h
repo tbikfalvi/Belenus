@@ -203,6 +203,8 @@ public:
     QString         getPanelTextSteril() const;
     void            setPanelTextTubeReplace( const QString &p_qsPanelTextTubeReplace, bool p_boSaveNow = false );
     QString         getPanelTextTubeReplace() const;
+    void            setPanelTextTubeCleanup( const QString &p_qsPanelTextTubeCleanup, bool p_boSaveNow = false );
+    QString         getPanelTextTubeCleanup() const;
     void            setHWDebug( bool p_bHWDebug );
     bool            isHWDebugEnabled();
     void            setForceModuleSendTime( bool p_bForceModuleSendTime, bool p_boSaveNow = false );
@@ -213,6 +215,8 @@ public:
     int             getForceTimeSendCounter() const;
     void            setTextTubeReplaceVisible( bool p_bTextTubeReplaceVisible, bool p_boSaveNow = false );
     bool            isTextTubeReplaceVisible();
+    void            setTextTubeCleanupVisible( bool p_bTextTubeCleanupVisible, bool p_boSaveNow = false );
+    bool            isTextTubeCleanupVisible();
     void            setTextSterilVisible( bool p_bTextSterilVisible, bool p_boSaveNow = false );
     bool            isTextSterilVisible();
     void            setStartHttpSyncAuto( bool p_bStartHttpSyncAuto, bool p_boSaveNow = false );
@@ -314,11 +318,13 @@ private:
     bool            m_bIsStopInLine;
     QString         m_qsPanelTextSteril;
     QString         m_qsPanelTextTubeReplace;
+    QString         m_qsPanelTextTubeCleanup;
     bool            m_bEnableHWDebug;
     bool            m_bForceModuleSendTime;
     bool            m_bForceModuleCheckButton;
     int             m_nForceTimeSendCounter;
     bool            m_bIsTextTubeReplaceVisible;
+    bool            m_bIsTextTubeCleanupVisible;
     bool            m_bIsTextSterilVisible;
     bool            m_bIsStartHttpSyncAuto;
     int             m_nStartHttpSyncAutoSeconds;
