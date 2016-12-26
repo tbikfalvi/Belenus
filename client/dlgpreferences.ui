@@ -23,7 +23,7 @@
    <item>
     <widget class="QTabWidget" name="tbwPreferences">
      <property name="currentIndex">
-      <number>5</number>
+      <number>2</number>
      </property>
      <widget class="QWidget" name="tab_General">
       <attribute name="title">
@@ -1237,7 +1237,7 @@
              </widget>
             </item>
             <item row="2" column="1">
-             <layout class="QHBoxLayout" name="horizontalLayout_38">
+             <layout class="QHBoxLayout" name="horizontalLayout_381">
               <item>
                <widget class="QLineEdit" name="ledPanelTextTubeCleanup"/>
               </item>

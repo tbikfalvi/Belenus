@@ -2,8 +2,8 @@
 -- Belenus Szoftver Rendszer (c) Pagony Multimedia Studio Bt - 2013
 -- -----------------------------------------------------------------------------------
 -- Filename    : db_create.sql
--- AppVersion  : 1.5.5.4
--- DbVersion   : 1.7.3
+-- AppVersion  : 1.6.0.0
+-- DbVersion   : 1.7.5
 -- -----------------------------------------------------------------------------------
 -- Adatbazist letrehozo SQL script
 -- -----------------------------------------------------------------------------------
@@ -376,6 +376,8 @@ CREATE TABLE `panels` (
   `title`                   varchar(50)             NOT NULL,
   `workTime`                int(10) unsigned        NOT NULL DEFAULT 0,
   `maxWorkTime`             int(10) unsigned        NOT NULL,
+  `cleanTime`               int(10) unsigned        NOT NULL DEFAULT 0,
+  `maxCleanTime`            int(10) unsigned        NOT NULL DEFAULT 0,
   `modified`                datetime                NOT NULL,
   `active`                  tinyint(1)              DEFAULT 0,
   `archive`                 varchar(10)             NOT NULL,
