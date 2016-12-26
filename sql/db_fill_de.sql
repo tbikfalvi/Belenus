@@ -221,8 +221,8 @@ INSERT INTO `ledgerTypes` (`ledgerTypeId` ,`licenceId` ,`name` ,`active` ,`archi
  (4 , '0', 'Selling product', '1', 'ARC'),
  (5 , '0', 'Replacing lost patientcard', '1', 'ARC'),
  (6 , '0', 'Assign patientcard', '1', 'ARC'),
- (7 , '0', 'Other', '1', 'ARC'),
- (8 , '0', 'Other', '1', 'ARC'),
+ (7 , '0', 'Selling patientcard online', '1', 'ARC'),
+ (8 , '0', 'Filling patientcard online', '1', 'ARC'),
  (9 , '0', 'Storage action', '1', 'ARC'),
  (10, '0', 'Casssa expense', '1', 'ARC');
 

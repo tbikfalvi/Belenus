@@ -84,13 +84,14 @@ void cPreferences::init()
     m_bEnableHWDebug                = false;
 
     m_bBlnsHttpEnabled              = false;
-    m_nBlnsHttpWaitTime             = 3;
-    m_bBlnsHttpSuspended            = false;
+//    m_nBlnsHttpWaitTime             = 3;
+//    m_bBlnsHttpSuspended            = false;
+    m_bWebSyncAutoStart             = false;
 
     m_bIsTextSterilVisible          = false;
     m_bIsTextTubeReplaceVisible     = false;
 
-    m_nStartHttpSyncAutoSeconds     = 15;
+//    m_nStartHttpSyncAutoSeconds     = 15;
 
     m_bBarcodeHidden                = false;
 
@@ -217,9 +218,10 @@ void cPreferences::loadConfFileSettings()
         setLogLevels( uiConsoleLevel, uiDBLevel, uiGUILevel, uiFileLevel );
 
         m_bBlnsHttpEnabled          = obPrefFile.value( QString::fromAscii( "BlnsHttp/Enabled" ) ).toBool();
-        m_nBlnsHttpWaitTime         = obPrefFile.value( QString::fromAscii( "BlnsHttp/MessageWaitTime" ), 12 ).toInt();
-        m_bIsStartHttpSyncAuto      = obPrefFile.value( QString::fromAscii( "BlnsHttp/IsAutoStartSync"), false ).toBool();
-        m_nStartHttpSyncAutoSeconds = obPrefFile.value( QString::fromAscii( "BlnsHttp/AutoStartSyncSeconds"), 15 ).toInt();
+        m_bWebSyncAutoStart         = obPrefFile.value( QString::fromAscii( "BlnsHttp/WebSyncAutoStart" ) ).toBool();
+//        m_nBlnsHttpWaitTime         = obPrefFile.value( QString::fromAscii( "BlnsHttp/MessageWaitTime" ), 12 ).toInt();
+//        m_bIsStartHttpSyncAuto      = obPrefFile.value( QString::fromAscii( "BlnsHttp/IsAutoStartSync"), false ).toBool();
+//        m_nStartHttpSyncAutoSeconds = obPrefFile.value( QString::fromAscii( "BlnsHttp/AutoStartSyncSeconds"), 15 ).toInt();
 
         m_qsDirDbBinaries           = obPrefFile.value( QString::fromAscii( "DbBackup/DirDbBinaries" ) ).toString();
         m_qsDirDbBackup             = obPrefFile.value( QString::fromAscii( "DbBackup/DirDbBackup" ) ).toString();
@@ -387,9 +389,10 @@ void cPreferences::save() const throw (cSevException)
     obPrefFile.setValue( QString::fromAscii( "Device/VAT" ), m_inDeviceUseVAT );
 
     obPrefFile.setValue( QString::fromAscii( "BlnsHttp/Enabled" ), m_bBlnsHttpEnabled );
-    obPrefFile.setValue( QString::fromAscii( "BlnsHttp/MessageWaitTime" ), m_nBlnsHttpWaitTime );
-    obPrefFile.setValue( QString::fromAscii( "BlnsHttp/IsAutoStartSync"), m_bIsStartHttpSyncAuto );
-    obPrefFile.setValue( QString::fromAscii( "BlnsHttp/AutoStartSyncSeconds"), m_nStartHttpSyncAutoSeconds );
+    obPrefFile.setValue( QString::fromAscii( "BlnsHttp/WebSyncAutoStart" ), m_bWebSyncAutoStart );
+//    obPrefFile.setValue( QString::fromAscii( "BlnsHttp/MessageWaitTime" ), m_nBlnsHttpWaitTime );
+//    obPrefFile.setValue( QString::fromAscii( "BlnsHttp/IsAutoStartSync"), m_bIsStartHttpSyncAuto );
+//    obPrefFile.setValue( QString::fromAscii( "BlnsHttp/AutoStartSyncSeconds"), m_nStartHttpSyncAutoSeconds );
 
     obPrefFile.setValue( QString::fromAscii( "DbBackup/DirDbBinaries" ), m_qsDirDbBinaries );
     obPrefFile.setValue( QString::fromAscii( "DbBackup/DirDbBackup" ), m_qsDirDbBackup );
@@ -1220,6 +1223,23 @@ bool cPreferences::isBlnsHttpEnabled()
     return m_bBlnsHttpEnabled;
 }
 
+void cPreferences::setWebSyncAutoStart( bool p_bWebSyncAutoStart, bool p_boSaveNow )
+{
+    m_bWebSyncAutoStart = p_bWebSyncAutoStart;
+
+    if( p_boSaveNow )
+    {
+        QSettings  obPrefFile( m_qsFileName, QSettings::IniFormat );
+        obPrefFile.setValue( QString::fromAscii( "BlnsHttp/WebSyncAutoStart" ), m_bWebSyncAutoStart );
+    }
+}
+
+bool cPreferences::isWebSyncAutoStart()
+{
+    return m_bWebSyncAutoStart;
+}
+
+/*
 void cPreferences::setBlnsHttpMessageWaitTime(const int p_inWaitTime)
 {
     m_nBlnsHttpWaitTime = p_inWaitTime;
@@ -1242,7 +1262,7 @@ int cPreferences::getBlnsHttpMessageWaitTime() const
 {
     return m_nBlnsHttpWaitTime;
 }
-
+*/
 void cPreferences::setLogLevels( const unsigned int p_uiConLevel,
                                  const unsigned int p_uiDBLevel,
                                  const unsigned int p_uiGUILevel,
@@ -1669,7 +1689,7 @@ bool cPreferences::isTextSterilVisible()
 {
     return m_bIsTextSterilVisible;
 }
-
+/*
 void cPreferences::setStartHttpSyncAuto( bool p_bStartHttpSyncAuto, bool p_boSaveNow )
 {
     m_bIsStartHttpSyncAuto = p_bStartHttpSyncAuto;
@@ -1695,7 +1715,7 @@ int cPreferences::getStartHttpSyncAutoSeconds() const
 {
     return m_nStartHttpSyncAutoSeconds;
 }
-
+*/
 void cPreferences::setBarcodeHidden( bool p_bBarcodeHidden, bool p_boSaveNow )
 {
     m_bBarcodeHidden = p_bBarcodeHidden;

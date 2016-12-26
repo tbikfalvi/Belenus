@@ -64,7 +64,7 @@ cCassa                   g_obCassa;
 cGeneral                 g_obGen;
 cDBGuest                 g_obGuest;
 cLicenceManager          g_obLicenceManager;
-cBlnsHttp               *g_poBlnsHttp;
+//cBlnsHttp               *g_poBlnsHttp;
 
 // 'TO BE SOLVED' felirat, ahol még valamit meg kell oldani
 // g_obLogger(cSeverity::DEBUG) << QString("") << EOM;
@@ -154,6 +154,7 @@ int main( int argc, char *argv[] )
 #else
             sleep( 3 );
 #endif
+
         if( fileCheck.size() > 0 )
         {
             qsSpalsh += QObject::tr(" NOT RUNNING.\n");

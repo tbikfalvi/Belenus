@@ -328,7 +328,7 @@ void cDlgPatientCardTypeEdit::on_listValidInterval_currentItemChanged(QListWidge
     pbDelete->setEnabled( current != NULL ? true : false );
 }
 
-void cDlgPatientCardTypeEdit::on_ledPrice_textChanged(const QString &arg1)
+void cDlgPatientCardTypeEdit::on_ledPrice_textChanged(const QString &/*arg1*/)
 {
     cCurrency currPrice( ledPrice->text(), cCurrency::CURR_GROSS, ledVatpercent->text().toInt() );
 

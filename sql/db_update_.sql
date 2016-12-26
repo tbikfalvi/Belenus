@@ -1,4 +1,4 @@
--- -----------------------------------------------------------------------------------
+﻿-- -----------------------------------------------------------------------------------
 -- Belenus Szoftver Rendszer (c) Pagony Multimedia Studio Bt - 2014
 -- -----------------------------------------------------------------------------------
 -- Filename    : db_update_1_5_5_4.sql
@@ -10,10 +10,9 @@ USE `belenus`;
 
 -- -----------------------------------------------------------------------------------
 
-ALTER TABLE `panelstatuses`
- ADD `stopLevel`     INT(10)  NOT NULL DEFAULT '0'  AFTER `allowedToSkip`,
- ADD `allowedToStop` TINYINT  NOT NULL DEFAULT '0'   AFTER `stopLevel`;
- 
+UPDATE `ledgertypes` SET `name`='Online bérlet eladás' WHERE `ledgerTypeId` =7;
+UPDATE `ledgertypes` SET `name`='Online bérlet feltöltés' WHERE `ledgerTypeId` =8;
+
 -- -----------------------------------------------------------------------------------
 
 UPDATE settings SET value=NOW() WHERE identifier="GLOBAL_DATA_UPDATED";
