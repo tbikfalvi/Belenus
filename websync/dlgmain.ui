@@ -60,7 +60,7 @@
          </size>
         </property>
         <property name="title">
-         <string> v.  </string>
+         <string notr="true"> v.  </string>
         </property>
         <property name="alignment">
          <set>Qt::AlignRight|Qt::AlignTrailing|Qt::AlignVCenter</set>
@@ -730,7 +730,7 @@
                 </size>
                </property>
                <property name="text">
-                <string>NONE</string>
+                <string notr="true">NONE</string>
                </property>
               </widget>
              </item>
