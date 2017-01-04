@@ -3404,9 +3404,9 @@ void cWndMain::on_action_Import_triggered()
 {
     QMessageBox::warning( this, tr("Attention"), tr("Currently not allowed to use. Please contact your franchise provider.") );
 
-//    cDlgExportImport    obDlgExportImport( this, cDlgExportImport::PT_IMPORT );
+    cDlgExportImport    obDlgExportImport( this, cDlgExportImport::PT_IMPORT );
 
-//    obDlgExportImport.exec();
+    obDlgExportImport.exec();
 }
 
 void cWndMain::on_action_Export_triggered()

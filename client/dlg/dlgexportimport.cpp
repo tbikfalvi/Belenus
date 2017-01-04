@@ -39,13 +39,20 @@ cDlgExportImport::cDlgExportImport( QWidget *p_poParent, teProcessType p_teExpor
         lblTitle_1->setText( tr("Data export") );
         lblTitle_2->setText( tr("Select destination directory") );
 
-        rbPatientCard->setEnabled( false );
+//        rbPatientCard->setEnabled( false );
     }
     else
     {
         lblTitle_1->setText( tr("Data import") );
         lblTitle_2->setText( tr("Select file to be imported") );
     }
+
+    connect( chkDiscounts,          SIGNAL(clicked()), this, SLOT(slot_import_selected()) );
+    connect( chkPanelUses,          SIGNAL(clicked()), this, SLOT(slot_import_selected()) );
+    connect( chkPatientCardTypes,   SIGNAL(clicked()), this, SLOT(slot_import_selected()) );
+    connect( chkProducts,           SIGNAL(clicked()), this, SLOT(slot_import_selected()) );
+    connect( chkProductTypes,       SIGNAL(clicked()), this, SLOT(slot_import_selected()) );
+    connect( chkSkinTypes,          SIGNAL(clicked()), this, SLOT(slot_import_selected()) );
 }
 
 cDlgExportImport::~cDlgExportImport()
@@ -75,7 +82,7 @@ void cDlgExportImport::on_pbExecute_clicked()
 {
     if( m_teExportImport == PT_EXPORT )
     {
-        switch( m_teData )
+        /*switch( m_teData )
         {
             case DD_GUEST:
                 _ExportGuests();
@@ -86,7 +93,7 @@ void cDlgExportImport::on_pbExecute_clicked()
             case DD_PROD:
                 _ExportProducts();
                 break;
-        }
+        }*/
     }
     else
     {
@@ -110,6 +117,25 @@ void cDlgExportImport::on_pbExit_clicked()
     close();
 }
 
+void cDlgExportImport::slot_import_selected()
+{
+    if( chkDiscounts->isChecked() ||
+        chkPanelUses->isChecked() ||
+        chkPatientCardTypes->isChecked() ||
+        chkProducts->isChecked() ||
+        chkProductTypes->isChecked() ||
+        chkSkinTypes->isChecked() )
+    {
+        pbNext->setEnabled( true );
+    }
+    else
+    {
+        pbNext->setEnabled( false );
+        m_qsFile = "";
+        lblComment->setText( "" );
+    }
+}
+/*
 void cDlgExportImport::on_rbGuest_clicked()
 {
     pbNext->setEnabled( true );
@@ -142,7 +168,7 @@ void cDlgExportImport::on_rbProduct_clicked()
         lblComment->setText( tr("Products with duplicated barcodes will be skipped.") );
     }
 }
-
+*/
 void cDlgExportImport::_processPage( bool p_bMoveForward )
 {
     switch( pageWizard->currentIndex() )
@@ -151,7 +177,7 @@ void cDlgExportImport::_processPage( bool p_bMoveForward )
         {
             if( p_bMoveForward )
             {
-                if( m_teExportImport == PT_EXPORT )
+                /*if( m_teExportImport == PT_EXPORT )
                 {
                     switch( m_teData )
                     {
@@ -165,7 +191,7 @@ void cDlgExportImport::_processPage( bool p_bMoveForward )
                             m_qsFile = QString( "belenus_export_product_%1.txt" ).arg( QDateTime::currentDateTime().toString("yyyyMMddhhmmss") );
                             break;
                     }
-                }
+                }*/
                 QString qsTarget = QString("%1\\%2").arg( m_qsDir ).arg( m_qsFile );
                 ledTarget->setText( qsTarget );
                 ledTarget->setToolTip( qsTarget );
@@ -179,7 +205,7 @@ void cDlgExportImport::_processPage( bool p_bMoveForward )
         {
             if( m_teExportImport == PT_EXPORT )
             {
-                switch( m_teData )
+                /*switch( m_teData )
                 {
                     case DD_GUEST:
                         teInfo->setText( tr("Exporting guest data to the following file:\n\n"
@@ -193,11 +219,44 @@ void cDlgExportImport::_processPage( bool p_bMoveForward )
                         teInfo->setText( tr("Exporting product data to the following file:\n\n"
                                             "%1").arg(ledTarget->text()) );
                         break;
-                }
+                }*/
             }
             else
             {
-                switch( m_teData )
+                QString qsImported = "";
+
+                teInfo->append( tr("After clicking the Execute button, the application will import:\n") );
+                if( chkPatientCardTypes->isChecked() )
+                {
+                    if( qsImported.length() > 0 ) qsImported.append( ", " );
+                    qsImported.append( tr("patientcard types") );
+                }
+                if( chkPanelUses->isChecked() )
+                {
+                    if( qsImported.length() > 0 ) qsImported.append( ", " );
+                    qsImported.append( tr("panel uses") );
+                }
+                if( chkProductTypes->isChecked() )
+                {
+                    if( qsImported.length() > 0 ) qsImported.append( ", " );
+                    qsImported.append( tr("product types") );
+                }
+                if( chkProducts->isChecked() )
+                {
+                    if( qsImported.length() > 0 ) qsImported.append( ", " );
+                    qsImported.append( tr("products") );
+                }
+                if( chkDiscounts->isChecked() )
+                {
+                    if( qsImported.length() > 0 ) qsImported.append( ", " );
+                    qsImported.append( tr("discounts") );
+                }
+                if( chkSkinTypes->isChecked() )
+                {
+                    if( qsImported.length() > 0 ) qsImported.append( ", " );
+                    qsImported.append( tr("skin types") );
+                }
+                /*switch( m_teData )
                 {
                     case DD_GUEST:
                         teInfo->setText( tr("Importing guest data from the following file:\n\n"
@@ -211,7 +270,7 @@ void cDlgExportImport::_processPage( bool p_bMoveForward )
                         teInfo->setText( tr("Importing product data from the following file:\n\n"
                                             "%1").arg(ledTarget->text()) );
                         break;
-                }
+                }*/
             }
             pbPrev->setEnabled( true );
             pbNext->setEnabled( false );
@@ -222,14 +281,7 @@ void cDlgExportImport::_processPage( bool p_bMoveForward )
         default:
         {
             pbPrev->setEnabled( false );
-            if( rbGuest->isChecked() || rbPatientCard->isChecked() || rbProduct->isChecked() )
-            {
-                pbNext->setEnabled( true );
-            }
-            else
-            {
-                pbNext->setEnabled( false );
-            }
+            slot_import_selected();
             pbExecute->setEnabled( false );
             break;
         }

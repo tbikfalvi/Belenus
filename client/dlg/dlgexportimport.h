@@ -49,10 +49,11 @@ private slots:
     void on_pbNext_clicked();
     void on_pbExecute_clicked();
     void on_pbExit_clicked();
-    void on_rbGuest_clicked();
-    void on_rbPatientCard_clicked();
-    void on_rbProduct_clicked();
+//    void on_rbGuest_clicked();
+//    void on_rbPatientCard_clicked();
+//    void on_rbProduct_clicked();
     void on_pbDir_clicked();
+    void slot_import_selected();
 };
 
 #endif

@@ -6,8 +6,8 @@
    <rect>
     <x>0</x>
     <y>0</y>
-    <width>531</width>
-    <height>286</height>
+    <width>730</width>
+    <height>514</height>
    </rect>
   </property>
   <property name="windowTitle">
@@ -47,23 +47,44 @@
           </widget>
          </item>
          <item>
-          <widget class="QRadioButton" name="rbGuest">
+          <widget class="QCheckBox" name="chkPatientCardTypes">
            <property name="text">
-            <string>Guests</string>
+            <string>Patientcard types</string>
            </property>
           </widget>
          </item>
          <item>
-          <widget class="QRadioButton" name="rbPatientCard">
+          <widget class="QCheckBox" name="chkPanelUses">
            <property name="text">
-            <string>Patientcards</string>
+            <string>Panel uses</string>
            </property>
           </widget>
          </item>
          <item>
-          <widget class="QRadioButton" name="rbProduct">
+          <widget class="QCheckBox" name="chkProductTypes">
+           <property name="text">
+            <string>Product types</string>
+           </property>
+          </widget>
+         </item>
+         <item>
+          <widget class="QCheckBox" name="chkProducts">
            <property name="text">
             <string>Products</string>
+           </property>
+          </widget>
+         </item>
+         <item>
+          <widget class="QCheckBox" name="chkDiscounts">
+           <property name="text">
+            <string>Discounts</string>
+           </property>
+          </widget>
+         </item>
+         <item>
+          <widget class="QCheckBox" name="chkSkinTypes">
+           <property name="text">
+            <string>Skin types</string>
            </property>
           </widget>
          </item>
@@ -275,6 +296,21 @@
    </item>
   </layout>
  </widget>
+ <tabstops>
+  <tabstop>pbExit</tabstop>
+  <tabstop>chkPanelUses</tabstop>
+  <tabstop>chkProductTypes</tabstop>
+  <tabstop>chkProducts</tabstop>
+  <tabstop>chkDiscounts</tabstop>
+  <tabstop>chkSkinTypes</tabstop>
+  <tabstop>pbPrev</tabstop>
+  <tabstop>pbNext</tabstop>
+  <tabstop>chkPatientCardTypes</tabstop>
+  <tabstop>ledTarget</tabstop>
+  <tabstop>pbDir</tabstop>
+  <tabstop>teInfo</tabstop>
+  <tabstop>pbExecute</tabstop>
+ </tabstops>
  <resources/>
  <connections/>
 </ui>
