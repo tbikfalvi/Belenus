@@ -8,12 +8,12 @@
         <translation type="obsolete">Tálca</translation>
     </message>
     <message>
-        <location filename="main.cpp" line="60"/>
+        <location filename="main.cpp" line="67"/>
         <source>websync</source>
         <translation>WebSync</translation>
     </message>
     <message>
-        <location filename="main.cpp" line="61"/>
+        <location filename="main.cpp" line="68"/>
         <source>I couldn&apos;t detect any system tray on this system.</source>
         <translation>Nem találtam &apos;tálcát&apos; az operációs rendszeren.</translation>
     </message>
@@ -325,9 +325,8 @@ Ha nincs bepipálva, az alul megadott esemény következik be</translation>
         <translation>Belenus - WebSync</translation>
     </message>
     <message>
-        <location filename="dlgmain.ui" line="63"/>
         <source> v.  </source>
-        <translation>v.</translation>
+        <translation type="obsolete">v.</translation>
     </message>
     <message>
         <location filename="dlgmain.ui" line="149"/>
@@ -414,9 +413,8 @@ Ha nincs bepipálva, az alul megadott esemény következik be</translation>
         <translation>Log szint:</translation>
     </message>
     <message>
-        <location filename="dlgmain.ui" line="733"/>
         <source>NONE</source>
-        <translation>NONE</translation>
+        <translation type="obsolete">NONE</translation>
     </message>
     <message>
         <location filename="dlgmain.ui" line="783"/>
