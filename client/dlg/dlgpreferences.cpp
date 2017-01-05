@@ -26,7 +26,17 @@ cDlgPreferences::cDlgPreferences( QWidget *p_poParent )
     setWindowTitle( tr( "Preferences" ) );
     setWindowIcon( QIcon("./resources/40x40_settings.png") );
 
-    pbTestHttpConnection->setIcon( QIcon("./resources/40x40_check_connection.png") );
+// Hide obsolete old http connection settings
+//    pbTestHttpConnection->setIcon( QIcon("./resources/40x40_check_connection.png") );
+pbTestHttpConnection->setEnabled( false );
+pbTestHttpConnection->setVisible( false );
+lblHttpWaitTime->setVisible( false );
+sbHttpWaitTime->setVisible( false );
+chkHttpEnableAutoSync->setEnabled( false );
+chkHttpEnableAutoSync->setVisible( false );
+ledAutoSyncSeconds->setEnabled( false );
+ledAutoSyncSeconds->setVisible( false );
+lblAutoSync->setVisible( false );
 
     QPoint  qpDlgSize = g_poPrefs->getDialogSize( "EditPreferences", QPoint(460,410) );
     resize( qpDlgSize.x(), qpDlgSize.y() );
@@ -117,8 +127,8 @@ cDlgPreferences::cDlgPreferences( QWidget *p_poParent )
     }
 
     ledServerHost->setText( g_poPrefs->getServerAddress() );
-    chkHttpEnableAutoSync->setChecked( g_poPrefs->isStartHttpSyncAuto() );
-    ledAutoSyncSeconds->setText( QString::number( g_poPrefs->getStartHttpSyncAutoSeconds() ) );
+//    chkHttpEnableAutoSync->setChecked( g_poPrefs->isStartHttpSyncAuto() );
+//    ledAutoSyncSeconds->setText( QString::number( g_poPrefs->getStartHttpSyncAutoSeconds() ) );
 
     spbCOM->setValue( g_poPrefs->getCommunicationPort() );
     chkForceSendTime->setChecked( g_poPrefs->isForceModuleSendTime() );
@@ -147,8 +157,11 @@ cDlgPreferences::cDlgPreferences( QWidget *p_poParent )
     ledPanelTextSterile->setText( g_poPrefs->getPanelTextSteril() );
     ledPanelTextTubeReplacement->setText( g_poPrefs->getPanelTextTubeReplace() );
     ledPanelTextTubeReplacement->setEnabled( g_obUser.isInGroup( cAccessGroup::SYSTEM ) );
+    ledPanelTextTubeCleanup->setText( g_poPrefs->getPanelTextTubeCleanup() );
+    ledPanelTextTubeCleanup->setEnabled( g_obUser.isInGroup( cAccessGroup::SYSTEM ) );
     chkVisibleSecSteril->setChecked( g_poPrefs->isTextSterilVisible() );
     chkVisibleSecTubeReplace->setChecked( g_poPrefs->isTextTubeReplaceVisible() );
+    chkVisibleSecTubeCleanup->setChecked( g_poPrefs->isTextTubeCleanupVisible() );
     chkDAResetClock->setChecked( g_poPrefs->isDACanModifyWorktime() );
     chkDAResetClock->setEnabled( g_obUser.isInGroup( cAccessGroup::SYSTEM ) );
     chkDASetExpireDate->setChecked( g_poPrefs->isDACanModifyExpDate() );
@@ -199,9 +212,11 @@ cDlgPreferences::cDlgPreferences( QWidget *p_poParent )
     pbPanelSettings->setIcon( QIcon("./resources/40x40_settings.png") );
 
     chkEnableHttp->setChecked( g_poPrefs->isBlnsHttpEnabled() );
-    pbTestHttpConnection->setEnabled( g_poPrefs->isBlnsHttpEnabled() );
-    sbHttpWaitTime->setEnabled( g_poPrefs->isBlnsHttpEnabled() );
-    sbHttpWaitTime->setValue( g_poPrefs->getBlnsHttpMessageWaitTime() );
+    chkWebSyncAutoStart->setChecked( g_poPrefs->isWebSyncAutoStart() );
+    chkWebSyncAutoStart->setEnabled( g_poPrefs->isBlnsHttpEnabled() );
+//    pbTestHttpConnection->setEnabled( g_poPrefs->isBlnsHttpEnabled() );
+//    sbHttpWaitTime->setEnabled( g_poPrefs->isBlnsHttpEnabled() );
+//    sbHttpWaitTime->setValue( g_poPrefs->getBlnsHttpMessageWaitTime() );
 
     ledBinaryLocation->setText( g_poPrefs->getDirDbBinaries() );
     ledBackupLocation->setText( g_poPrefs->getDirDbBackup() );
@@ -395,6 +410,13 @@ void cDlgPreferences::accept()
     }
     g_poPrefs->setTextSterilVisible( chkVisibleSecSteril->isChecked() );
     g_poPrefs->setTextTubeReplaceVisible( chkVisibleSecTubeReplace->isChecked() );
+    if( ledPanelTextTubeCleanup->text().trimmed().length() < 1 )
+    {
+        QMessageBox::warning( this, tr("Warning"),
+                              tr("'Device clean needed' text can not be empty.") );
+        return;
+    }
+    g_poPrefs->setTextTubeCleanupVisible( chkVisibleSecTubeCleanup->isChecked() );
 
     g_poPrefs->setLogLevels( sliConsoleLogLevel->value(),
                              sliDBLogLevel->value(),
@@ -421,8 +443,8 @@ void cDlgPreferences::accept()
     g_poPrefs->setStopInLine( rbStopInLine->isChecked() );
 
     g_poPrefs->setServerAddress( ledServerHost->text().trimmed() );
-    g_poPrefs->setStartHttpSyncAuto( chkHttpEnableAutoSync->isChecked() );
-    g_poPrefs->setStartHttpSyncAutoSeconds( ledAutoSyncSeconds->text().toInt() );
+//    g_poPrefs->setStartHttpSyncAuto( chkHttpEnableAutoSync->isChecked() );
+//    g_poPrefs->setStartHttpSyncAutoSeconds( ledAutoSyncSeconds->text().toInt() );
 
     g_poPrefs->setCommunicationPort( spbCOM->value() );
     g_poPrefs->setForceModuleSendTime( chkForceSendTime->isChecked() );
@@ -435,6 +457,7 @@ void cDlgPreferences::accept()
     g_poPrefs->setLicenceLastValidated( dteLicenceExpiration->dateTime().toString( "yyyy-MM-dd hh:mm:ss" ), true );
     g_poPrefs->setPanelTextSteril( ledPanelTextSterile->text() );
     g_poPrefs->setPanelTextTubeReplace( ledPanelTextTubeReplacement->text() );
+    g_poPrefs->setPanelTextTubeCleanup( ledPanelTextTubeCleanup->text() );
 
     g_poPrefs->setCassaAutoClose( chkAutoCloseCassa->isChecked() );
     g_poPrefs->setCassaAutoWithdrawal( chkCassaAutoWithdrawal->isChecked() );
@@ -465,7 +488,8 @@ void cDlgPreferences::accept()
     g_poPrefs->setPatientCardPartnerPriceVat( ledPCPartnerVatpercent->text().toInt() );
 
     g_poPrefs->setBlnsHttpEnabled( chkEnableHttp->isChecked() );
-    g_poPrefs->setBlnsHttpMessageWaitTime( sbHttpWaitTime->value() );
+    g_poPrefs->setWebSyncAutoStart( chkWebSyncAutoStart->isChecked() );
+//    g_poPrefs->setBlnsHttpMessageWaitTime( sbHttpWaitTime->value() );
 
     if( g_obUser.isInGroup( cAccessGroup::SYSTEM ) )
     {
@@ -717,7 +741,7 @@ void cDlgPreferences::_decreasePatientCardBarcodes(bool p_bCutBegin)
     }
     m_dlgProgress->hideProgress();
 }
-
+/*
 void cDlgPreferences::on_pbTestHttpConnection_clicked()
 {
     g_poBlnsHttp->checkHttpServerAvailability();
@@ -725,11 +749,42 @@ void cDlgPreferences::on_pbTestHttpConnection_clicked()
 
     m_nTimer = startTimer( 5000 );
 }
-
+*/
 void cDlgPreferences::on_chkEnableHttp_clicked(bool checked)
 {
-    pbTestHttpConnection->setEnabled( checked );
-    sbHttpWaitTime->setEnabled( checked );
+    if( checked )
+    {
+        chkWebSyncAutoStart->setEnabled( true );
+        if( !g_obGen.isAppicationRunning( "websync.exe" ) )
+        {
+            if( QMessageBox::question( this, tr("Question"),
+                                       tr("You just enabled the http synchronization but "
+                                          "the WebSync application is not running.\n\n"
+                                          "Do you want to start this application now?"),
+                                       QMessageBox::Yes | QMessageBox::No, QMessageBox::Yes ) == QMessageBox::Yes )
+            {
+                QProcess *qpWebSync = new QProcess(this);
+
+                if( !qpWebSync->startDetached( QString("websync.exe") ) )
+                {
+                    QMessageBox::warning( this, tr("Warning"),
+                                          tr("Error occured when starting process:WebSync.exe\n\nError code: %1\n"
+                                             "0 > The process failed to start.\n"
+                                             "1 > The process crashed some time after starting successfully.\n"
+                                             "2 > The last waitFor...() function timed out.\n"
+                                             "4 > An error occurred when attempting to write to the process.\n"
+                                             "3 > An error occurred when attempting to read from the process.\n"
+                                             "5 > An unknown error occurred.").arg(qpWebSync->error()) );
+                }
+            }
+        }
+    }
+    else
+    {
+        chkWebSyncAutoStart->setEnabled( false );
+    }
+//    pbTestHttpConnection->setEnabled( checked );
+//    sbHttpWaitTime->setEnabled( checked );
 }
 
 void cDlgPreferences::on_btnSecondaryFrame_clicked()

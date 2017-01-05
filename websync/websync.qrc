@@ -1,0 +1,28 @@
+<RCC>
+    <qresource prefix="/">
+        <file>websync.png</file>
+        <file>cancel.png</file>
+        <file>ok.png</file>
+        <file>status_green.png</file>
+        <file>status_red.png</file>
+        <file>status_yellow.png</file>
+        <file>settings.png</file>
+        <file>reset.png</file>
+        <file>reset_http.png</file>
+        <file>reset_sql.png</file>
+        <file>hourglass.png</file>
+        <file>key.png</file>
+        <file>lock.png</file>
+        <file>exit.png</file>
+        <file>patientcards.png</file>
+        <file>trash.png</file>
+        <file>onlinepcsync.png</file>
+        <file>pause.png</file>
+        <file>start.png</file>
+        <file>websync_red.png</file>
+        <file>websync_yellow.png</file>
+        <file>user.png</file>
+        <file>patientcard_delete.png</file>
+        <file>patientcards_delete.png</file>
+    </qresource>
+</RCC>

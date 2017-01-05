@@ -9,7 +9,7 @@
    <rect>
     <x>0</x>
     <y>0</y>
-    <width>608</width>
+    <width>614</width>
     <height>536</height>
    </rect>
   </property>
@@ -1229,6 +1229,27 @@
               </item>
              </layout>
             </item>
+            <item row="2" column="0">
+             <widget class="QLabel" name="lblPanelTextTubeClean">
+              <property name="text">
+               <string>device clean is needed :</string>
+              </property>
+             </widget>
+            </item>
+            <item row="2" column="1">
+             <layout class="QHBoxLayout" name="horizontalLayout_381">
+              <item>
+               <widget class="QLineEdit" name="ledPanelTextTubeCleanup"/>
+              </item>
+              <item>
+               <widget class="QCheckBox" name="chkVisibleSecTubeCleanup">
+                <property name="text">
+                 <string>Visible on secondary window</string>
+                </property>
+               </widget>
+              </item>
+             </layout>
+            </item>
            </layout>
           </item>
          </layout>
@@ -1880,76 +1901,16 @@ is different :</string>
            </layout>
           </item>
           <item>
-           <layout class="QHBoxLayout" name="horizontalLayout_29">
+           <layout class="QHBoxLayout" name="horizontalLayout_38">
             <item>
-             <widget class="QLabel" name="lblHttpWaitTime">
+             <widget class="QCheckBox" name="chkWebSyncAutoStart">
               <property name="text">
-               <string>Length of Http message is visible in seconds :</string>
+               <string>Auto start WebSync application</string>
               </property>
              </widget>
             </item>
             <item>
-             <widget class="QSpinBox" name="sbHttpWaitTime">
-              <property name="enabled">
-               <bool>false</bool>
-              </property>
-              <property name="minimum">
-               <number>1</number>
-              </property>
-              <property name="maximum">
-               <number>10</number>
-              </property>
-             </widget>
-            </item>
-            <item>
-             <spacer name="horizontalSpacer_23">
-              <property name="orientation">
-               <enum>Qt::Horizontal</enum>
-              </property>
-              <property name="sizeHint" stdset="0">
-               <size>
-                <width>40</width>
-                <height>20</height>
-               </size>
-              </property>
-             </spacer>
-            </item>
-           </layout>
-          </item>
-          <item>
-           <layout class="QHBoxLayout" name="horizontalLayout_36">
-            <item>
-             <widget class="QCheckBox" name="chkHttpEnableAutoSync">
-              <property name="text">
-               <string>Synchronization automatically starts after</string>
-              </property>
-             </widget>
-            </item>
-            <item>
-             <widget class="QLineEdit" name="ledAutoSyncSeconds">
-              <property name="minimumSize">
-               <size>
-                <width>30</width>
-                <height>0</height>
-               </size>
-              </property>
-              <property name="maximumSize">
-               <size>
-                <width>30</width>
-                <height>16777215</height>
-               </size>
-              </property>
-             </widget>
-            </item>
-            <item>
-             <widget class="QLabel" name="lblAutoSync">
-              <property name="text">
-               <string>seconds if devices are not working</string>
-              </property>
-             </widget>
-            </item>
-            <item>
-             <spacer name="horizontalSpacer_27">
+             <spacer name="horizontalSpacer_29">
               <property name="orientation">
                <enum>Qt::Horizontal</enum>
               </property>
@@ -1965,6 +1926,90 @@ is different :</string>
           </item>
          </layout>
         </widget>
+       </item>
+       <item>
+        <layout class="QHBoxLayout" name="horizontalLayout_36">
+         <item>
+          <widget class="QCheckBox" name="chkHttpEnableAutoSync">
+           <property name="text">
+            <string>Synchronization automatically starts after</string>
+           </property>
+          </widget>
+         </item>
+         <item>
+          <widget class="QLineEdit" name="ledAutoSyncSeconds">
+           <property name="minimumSize">
+            <size>
+             <width>30</width>
+             <height>0</height>
+            </size>
+           </property>
+           <property name="maximumSize">
+            <size>
+             <width>30</width>
+             <height>16777215</height>
+            </size>
+           </property>
+          </widget>
+         </item>
+         <item>
+          <widget class="QLabel" name="lblAutoSync">
+           <property name="text">
+            <string>seconds if devices are not working</string>
+           </property>
+          </widget>
+         </item>
+         <item>
+          <spacer name="horizontalSpacer_27">
+           <property name="orientation">
+            <enum>Qt::Horizontal</enum>
+           </property>
+           <property name="sizeHint" stdset="0">
+            <size>
+             <width>40</width>
+             <height>20</height>
+            </size>
+           </property>
+          </spacer>
+         </item>
+        </layout>
+       </item>
+       <item>
+        <layout class="QHBoxLayout" name="horizontalLayout_29">
+         <item>
+          <widget class="QLabel" name="lblHttpWaitTime">
+           <property name="text">
+            <string>Length of Http message is visible in seconds :</string>
+           </property>
+          </widget>
+         </item>
+         <item>
+          <widget class="QSpinBox" name="sbHttpWaitTime">
+           <property name="enabled">
+            <bool>false</bool>
+           </property>
+           <property name="minimum">
+            <number>1</number>
+           </property>
+           <property name="maximum">
+            <number>10</number>
+           </property>
+          </widget>
+         </item>
+         <item>
+          <spacer name="horizontalSpacer_23">
+           <property name="orientation">
+            <enum>Qt::Horizontal</enum>
+           </property>
+           <property name="sizeHint" stdset="0">
+            <size>
+             <width>40</width>
+             <height>20</height>
+            </size>
+           </property>
+          </spacer>
+         </item>
+        </layout>
        </item>
        <item>
         <spacer name="verticalSpacer_2">
