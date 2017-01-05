@@ -1981,39 +1981,221 @@ Kérem csak számokat használjon.</translation>
 <context>
     <name>cDlgExportImport</name>
     <message>
-        <location filename="dlg/dlgexportimport.cpp" line="39"/>
+        <location filename="dlg/dlgexportimport.cpp" line="47"/>
         <source>Data export</source>
         <translation>Adat exportálás</translation>
     </message>
     <message>
-        <location filename="dlg/dlgexportimport.cpp" line="40"/>
+        <location filename="dlg/dlgexportimport.cpp" line="48"/>
         <source>Select destination directory</source>
         <translation>Válassza ki a célkönyvtárat</translation>
     </message>
     <message>
-        <location filename="dlg/dlgexportimport.cpp" line="46"/>
+        <location filename="dlg/dlgexportimport.cpp" line="61"/>
         <source>Data import</source>
         <translation>Adat importálás</translation>
     </message>
     <message>
-        <location filename="dlg/dlgexportimport.cpp" line="47"/>
+        <location filename="dlg/dlgexportimport.cpp" line="62"/>
         <source>Select file to be imported</source>
         <translation>Válassza ki az importálandó állományt</translation>
     </message>
     <message>
-        <location filename="dlg/dlgexportimport.cpp" line="129"/>
+        <location filename="dlg/dlgexportimport.cpp" line="144"/>
+        <source>Import process has been finished</source>
+        <translation>Az importálás befejeződött</translation>
+    </message>
+    <message>
+        <location filename="dlg/dlgexportimport.cpp" line="259"/>
+        <source>After clicking the Execute button, the application will import:
+</source>
+        <translation>A Végrehajtás gomb után az alkalmazás importálja:</translation>
+    </message>
+    <message>
+        <location filename="dlg/dlgexportimport.cpp" line="263"/>
+        <source>patientcard types</source>
+        <translation>bérlet típusok</translation>
+    </message>
+    <message>
+        <location filename="dlg/dlgexportimport.cpp" line="268"/>
+        <source>panel uses</source>
+        <translation>géphasználatok</translation>
+    </message>
+    <message>
+        <location filename="dlg/dlgexportimport.cpp" line="273"/>
+        <source>product types</source>
+        <translation>termék típusok</translation>
+    </message>
+    <message>
+        <location filename="dlg/dlgexportimport.cpp" line="278"/>
+        <source>products</source>
+        <translation>termékek</translation>
+    </message>
+    <message>
+        <location filename="dlg/dlgexportimport.cpp" line="283"/>
+        <source>discounts</source>
+        <translation>kedvezmények</translation>
+    </message>
+    <message>
+        <location filename="dlg/dlgexportimport.cpp" line="288"/>
+        <source>skin types</source>
+        <translation>bőrtípusok</translation>
+    </message>
+    <message>
+        <location filename="dlg/dlgexportimport.cpp" line="393"/>
+        <location filename="dlg/dlgexportimport.cpp" line="404"/>
+        <location filename="dlg/dlgexportimport.cpp" line="415"/>
+        <location filename="dlg/dlgexportimport.cpp" line="430"/>
+        <source>Warning</source>
+        <translation>Figyelmeztetés</translation>
+    </message>
+    <message>
+        <location filename="dlg/dlgexportimport.cpp" line="394"/>
+        <source>The following file is missing:
+%1
+
+Please create the file and fulfill it with proper data.
+For more information about import file, check the manual
+or contact the application provider.</source>
+        <translation>Az alábbi állomány nem található:
+%1
+
+Kérem töltse fel helyes adatokkal az állományt.
+További információkért, az import állományról, kérem nézze meg a
+felhasználói dokumentációt, vagy lépjen kapcsolatba az alkalmazás forgalmazójával.</translation>
+    </message>
+    <message>
+        <location filename="dlg/dlgexportimport.cpp" line="404"/>
+        <source>Unable to read the following file:
+%1</source>
+        <translation>Nem sikerült kiolvasni a megadott állományt:
+%1</translation>
+    </message>
+    <message>
+        <location filename="dlg/dlgexportimport.cpp" line="416"/>
+        <source>Error occured during parsing file:
+&apos;%1&apos;
+
+Error in line %2: %3</source>
+        <translation>Hiba történt a megadott állomány értelmezése közben:
+&apos;%1&apos;
+
+Hiba a %2 sorban: %3</translation>
+    </message>
+    <message>
+        <location filename="dlg/dlgexportimport.cpp" line="431"/>
+        <source>The version information in import file is not match.
+
+Correct version numbers:
+Application version number: %1
+Database version number: %2
+
+Version numbers in import file:
+Application version number: %3
+Database version number: %4
+
+Please use import file with correct versions.</source>
+        <translation>Az állományban tárolt verzió információk nem egyeznek meg.
+
+Helyes verziószámok:
+Alkalmazás verziószám: %1
+Adatbázis verziószám: %2
+
+Állományban tárolt verziószámok:
+Alkalmazás verziószám: %3
+Adatbázis verziószám: %4
+
+Kérem használjon megfelelő verziójú import állományt.</translation>
+    </message>
+    <message>
+        <location filename="dlg/dlgexportimport.cpp" line="489"/>
+        <source>
+Patientcard types imported:</source>
+        <translation>
+Importált bérlet típusok:</translation>
+    </message>
+    <message>
+        <location filename="dlg/dlgexportimport.cpp" line="534"/>
+        <source>00:00 =&gt; 23:59 Mon Tue Wed Thu Fri Sat Sun</source>
+        <translation>00:00 =&gt; 23 59 Hé Ke Sze Csü Pé Szo Vas</translation>
+    </message>
+    <message>
+        <location filename="dlg/dlgexportimport.cpp" line="558"/>
+        <source>
+Panel uses imported:</source>
+        <translation>
+Importált géphasználatok:</translation>
+    </message>
+    <message>
+        <location filename="dlg/dlgexportimport.cpp" line="608"/>
+        <source>
+Product types imported:</source>
+        <translation>
+Importált termék típusok:</translation>
+    </message>
+    <message>
+        <location filename="dlg/dlgexportimport.cpp" line="642"/>
+        <source>
+Products imported:</source>
+        <translation>
+Importált termékek:</translation>
+    </message>
+    <message>
+        <location filename="dlg/dlgexportimport.cpp" line="699"/>
+        <source>
+Discounts imported:</source>
+        <translation>
+Importált kedvezmények:</translation>
+    </message>
+    <message>
+        <location filename="dlg/dlgexportimport.cpp" line="714"/>
+        <source>Regular customer discount</source>
+        <translation>Törzsvendég kedvezmény</translation>
+    </message>
+    <message>
+        <location filename="dlg/dlgexportimport.cpp" line="718"/>
+        <source>Employee discount</source>
+        <translation>Alkalmazotti kedvezmény</translation>
+    </message>
+    <message>
+        <location filename="dlg/dlgexportimport.cpp" line="722"/>
+        <source>Service discount</source>
+        <translation>Szerviz kedvezmény</translation>
+    </message>
+    <message>
+        <location filename="dlg/dlgexportimport.cpp" line="732"/>
+        <source>Guest discount - %1</source>
+        <translation>Vendég kedvezmény - %1</translation>
+    </message>
+    <message>
+        <location filename="dlg/dlgexportimport.cpp" line="750"/>
+        <source>Product discount - %1</source>
+        <translation>Termék kedvezmény - %1</translation>
+    </message>
+    <message>
+        <location filename="dlg/dlgexportimport.cpp" line="764"/>
+        <source>Time zone discount - %1 - %2</source>
+        <translation>Időzóna kedvezmény - %1 - %2</translation>
+    </message>
+    <message>
+        <location filename="dlg/dlgexportimport.cpp" line="816"/>
+        <source>
+Skin types imported:</source>
+        <translation>
+Importált bőrtípusok:</translation>
+    </message>
+    <message>
         <source>Please note that only the barcode of the patientcards will be imported.
 Duplicated barcodes or barcodes with invalid length will be skipped.</source>
-        <translation>Kérjük vegye figyelembe, hogy csak a vonalkódok kerülnek importálásra.
+        <translation type="obsolete">Kérjük vegye figyelembe, hogy csak a vonalkódok kerülnek importálásra.
 A már létező vonalkódok illetve a nem megfelelő hosszúságúak kimaradnak az importálásból.</translation>
     </message>
     <message>
-        <location filename="dlg/dlgexportimport.cpp" line="142"/>
         <source>Products with duplicated barcodes will be skipped.</source>
-        <translation>A már létező vonalkódú termékek kimaradnak az importálásból.</translation>
+        <translation type="obsolete">A már létező vonalkódú termékek kimaradnak az importálásból.</translation>
     </message>
     <message>
-        <location filename="dlg/dlgexportimport.cpp" line="185"/>
+        <location filename="dlg/dlgexportimport.cpp" line="251"/>
         <source>Exporting guest data to the following file:
 
 %1</source>
@@ -2022,62 +2204,58 @@ A már létező vonalkódok illetve a nem megfelelő hosszúságúak kimaradnak 
 %1</translation>
     </message>
     <message>
-        <location filename="dlg/dlgexportimport.cpp" line="189"/>
         <source>Exporting patientcard data to the following file:
 
 %1</source>
-        <translation>Bérlet adatok exportálása a következő állományba:
+        <translation type="obsolete">Bérlet adatok exportálása a következő állományba:
 
 %1</translation>
     </message>
     <message>
-        <location filename="dlg/dlgexportimport.cpp" line="193"/>
         <source>Exporting product data to the following file:
 
 %1</source>
-        <translation>Termék adatok exportálása a következő állományba:
+        <translation type="obsolete">Termék adatok exportálása a következő állományba:
 
 %1</translation>
     </message>
     <message>
-        <location filename="dlg/dlgexportimport.cpp" line="203"/>
         <source>Importing guest data from the following file:
 
 %1</source>
-        <translation>Vendég adatok importálása a következő állományból:
+        <translation type="obsolete">Vendég adatok importálása a következő állományból:
 
 %1</translation>
     </message>
     <message>
-        <location filename="dlg/dlgexportimport.cpp" line="207"/>
         <source>Importing patientcard barcodes from the following file:
 
 %1</source>
-        <translation>Bérlet vonalkódok importálása a következő állományból:
+        <translation type="obsolete">Bérlet vonalkódok importálása a következő állományból:
 
 %1</translation>
     </message>
     <message>
-        <location filename="dlg/dlgexportimport.cpp" line="211"/>
         <source>Importing product data from the following file:
 
 %1</source>
-        <translation>Termék adatok importálása a következő állományból:
+        <translation type="obsolete">Termék adatok importálása a következő állományból:
 
 %1</translation>
     </message>
     <message>
-        <location filename="dlg/dlgexportimport.cpp" line="243"/>
+        <location filename="dlg/dlgexportimport.cpp" line="312"/>
         <source>Select target directory</source>
         <translation>Válassza ki a célkönyvtárat</translation>
     </message>
     <message>
-        <location filename="dlg/dlgexportimport.cpp" line="319"/>
+        <location filename="dlg/dlgexportimport.cpp" line="114"/>
+        <location filename="dlg/dlgexportimport.cpp" line="144"/>
         <source>Information</source>
         <translation>Információ</translation>
     </message>
     <message>
-        <location filename="dlg/dlgexportimport.cpp" line="320"/>
+        <location filename="dlg/dlgexportimport.cpp" line="114"/>
         <source>Export process has been finished.</source>
         <translation>Az exportálás befejeződött.</translation>
     </message>
@@ -2194,57 +2372,57 @@ A már létező vonalkódok illetve a nem megfelelő hosszúságúak kimaradnak 
         <translation type="obsolete">Hiba</translation>
     </message>
     <message>
-        <location filename="edit/dlgguestedit.cpp" line="252"/>
-        <location filename="edit/dlgguestedit.cpp" line="290"/>
+        <location filename="edit/dlgguestedit.cpp" line="253"/>
+        <location filename="edit/dlgguestedit.cpp" line="291"/>
         <source>Guest name cannot be empty.</source>
         <translation>Vendég neve nem lehet üres.</translation>
     </message>
     <message>
-        <location filename="edit/dlgguestedit.cpp" line="258"/>
-        <location filename="edit/dlgguestedit.cpp" line="296"/>
+        <location filename="edit/dlgguestedit.cpp" line="259"/>
+        <location filename="edit/dlgguestedit.cpp" line="297"/>
         <source>Gender of the guest must be set.</source>
         <translation>A vendég nemét meg kell adni.</translation>
     </message>
     <message>
-        <location filename="edit/dlgguestedit.cpp" line="268"/>
-        <location filename="edit/dlgguestedit.cpp" line="305"/>
+        <location filename="edit/dlgguestedit.cpp" line="269"/>
+        <location filename="edit/dlgguestedit.cpp" line="306"/>
         <source>Warning</source>
         <translation>Figyelmeztetés</translation>
     </message>
     <message>
-        <location filename="edit/dlgguestedit.cpp" line="366"/>
-        <location filename="edit/dlgguestedit.cpp" line="373"/>
+        <location filename="edit/dlgguestedit.cpp" line="367"/>
+        <location filename="edit/dlgguestedit.cpp" line="374"/>
         <source>Attention</source>
         <translation>Figyelmeztetés</translation>
     </message>
     <message>
-        <location filename="edit/dlgguestedit.cpp" line="367"/>
+        <location filename="edit/dlgguestedit.cpp" line="368"/>
         <source>This patientcard has been lost and replaced
 and can not be used or sold again.</source>
         <translation>Ez a bérlet elveszett és lecserélték másik bérletre
 ezért nem lehet használni vagy eladni újra.</translation>
     </message>
     <message>
-        <location filename="edit/dlgguestedit.cpp" line="374"/>
+        <location filename="edit/dlgguestedit.cpp" line="375"/>
         <source>This patientcard is in use. Active patientcard can not be sold again.</source>
         <oldsource>This patientcard is in use. Active patientcard can not be sold.
 Please refill the card if you want to add additional units.</oldsource>
         <translation>Ez a bérlet már használatban van. Aktív bérletet nem lehet eladni újra.</translation>
     </message>
     <message>
-        <location filename="edit/dlgguestedit.cpp" line="387"/>
+        <location filename="edit/dlgguestedit.cpp" line="388"/>
         <source>This barcode has not found in the database.
 Do you want to register it for a new patientcard?</source>
         <translation>Ez a vonalkód nincs elmentve az adatbázisban.
 Regisztrálni akarja a vonalkódot egy új bérlethez?</translation>
     </message>
     <message>
-        <location filename="edit/dlgguestedit.cpp" line="455"/>
+        <location filename="edit/dlgguestedit.cpp" line="456"/>
         <source>Are you sure you want to disjoin the selected card from patient?</source>
         <translation>Biztos benne, hogy leválasztja a kiválasztott bérletet a vendégről?</translation>
     </message>
     <message>
-        <location filename="edit/dlgguestedit.cpp" line="526"/>
+        <location filename="edit/dlgguestedit.cpp" line="527"/>
         <source>Assigned patientcards:
 Barcode	Patientcard type</source>
         <translation>Hozzárendelt bérletek:
@@ -2261,12 +2439,12 @@ Vonalkód	Bérlettípus</translation>
         <translation type="obsolete">El akarja menteni a változtatásokat és be akarja zárni a dialógus ablakot?</translation>
     </message>
     <message>
-        <location filename="edit/dlgguestedit.cpp" line="477"/>
+        <location filename="edit/dlgguestedit.cpp" line="478"/>
         <source>Information</source>
         <translation>Információ</translation>
     </message>
     <message>
-        <location filename="edit/dlgguestedit.cpp" line="477"/>
+        <location filename="edit/dlgguestedit.cpp" line="478"/>
         <source>Not implemented yet.</source>
         <translation>Nincs kész</translation>
     </message>
@@ -2275,14 +2453,14 @@ Vonalkód	Bérlettípus</translation>
         <translation type="obsolete">%1 Ft.</translation>
     </message>
     <message>
-        <location filename="edit/dlgguestedit.cpp" line="386"/>
-        <location filename="edit/dlgguestedit.cpp" line="427"/>
-        <location filename="edit/dlgguestedit.cpp" line="454"/>
+        <location filename="edit/dlgguestedit.cpp" line="387"/>
+        <location filename="edit/dlgguestedit.cpp" line="428"/>
+        <location filename="edit/dlgguestedit.cpp" line="455"/>
         <source>Question</source>
         <translation>Kérdés</translation>
     </message>
     <message>
-        <location filename="edit/dlgguestedit.cpp" line="428"/>
+        <location filename="edit/dlgguestedit.cpp" line="429"/>
         <source>Do you want to save changes then close the dialog?</source>
         <translation>El akarja menteni a változtatásokat és be akarja zárni a dialógus ablakot?</translation>
     </message>
@@ -8739,8 +8917,6 @@ Megjegyzés: Ha a NEM gombra kattint, új kassza nyílik az Ön nevére és ehhe
         <location filename="wndmain.cpp" line="2741"/>
         <location filename="wndmain.cpp" line="3037"/>
         <location filename="wndmain.cpp" line="3074"/>
-        <location filename="wndmain.cpp" line="3419"/>
-        <location filename="wndmain.cpp" line="3428"/>
         <location filename="wndmain.cpp" line="3649"/>
         <source>Attention</source>
         <translation>Figyelmeztetés</translation>
@@ -9126,14 +9302,12 @@ Hibakód: %1
         <translation>&lt;h2&gt;Belenus Szoftver Rendszer&lt;/h2&gt;&lt;p&gt;Alkalmazás verzió : %1&lt;br&gt;Adatbázis verzió : %2&lt;p&gt;Copyright 2013 Bikfalvi Tamás. Minden jog fenntartva.&lt;p&gt;Alkalmazás liszenszkulcs : %3&lt;p&gt;Az alkalmazás és minden hozzá kapcsolódó eszköz&lt;br&gt;a KiwiSun Franchise kizárólagos tulajdona.&lt;br&gt;További információkért látogasson el a &lt;a href=&quot;%4&quot;&gt;KiwiSun honlapjára&lt;/a&gt;</translation>
     </message>
     <message>
-        <location filename="wndmain.cpp" line="3419"/>
         <source>Currently not allowed to use. Please contact your franchise provider.</source>
-        <translation>Jelenleg nem használható. Kérem lépjen kapcsolatba a franchise szolgáltatóval.</translation>
+        <translation type="obsolete">Jelenleg nem használható. Kérem lépjen kapcsolatba a franchise szolgáltatóval.</translation>
     </message>
     <message>
-        <location filename="wndmain.cpp" line="3428"/>
         <source>Use report viewer application to display and export program related data.</source>
-        <translation>Kérem használja a Kimutatás kezelő alkalmazást az adatok megjelenítéséhez és exportálásához.</translation>
+        <translation type="obsolete">Kérem használja a Kimutatás kezelő alkalmazást az adatok megjelenítéséhez és exportálásához.</translation>
     </message>
     <message>
         <source>Process remaining actions</source>
@@ -10932,47 +11106,71 @@ váltópénz kivételével</translation>
         <translation>Export / Import</translation>
     </message>
     <message>
-        <location filename="dlgExportImport.ui" line="52"/>
+        <location filename="dlgExportImport.ui" line="55"/>
         <source>Guests</source>
         <translation>Vendégek</translation>
     </message>
     <message>
-        <location filename="dlgExportImport.ui" line="59"/>
         <source>Patientcards</source>
-        <translation>Bérletek</translation>
+        <translation type="obsolete">Bérletek</translation>
     </message>
     <message>
-        <location filename="dlgExportImport.ui" line="66"/>
+        <location filename="dlgExportImport.ui" line="65"/>
+        <source>Patientcard types</source>
+        <translation>Bérlet típusok</translation>
+    </message>
+    <message>
+        <location filename="dlgExportImport.ui" line="75"/>
+        <source>Panel uses</source>
+        <translation>Géphasználatok</translation>
+    </message>
+    <message>
+        <location filename="dlgExportImport.ui" line="85"/>
+        <source>Product types</source>
+        <translation>Termék típusok</translation>
+    </message>
+    <message>
+        <location filename="dlgExportImport.ui" line="95"/>
         <source>Products</source>
         <translation>Termékek</translation>
     </message>
     <message>
-        <location filename="dlgExportImport.ui" line="104"/>
+        <location filename="dlgExportImport.ui" line="105"/>
+        <source>Discounts</source>
+        <translation>Kedvezmények</translation>
+    </message>
+    <message>
+        <location filename="dlgExportImport.ui" line="115"/>
+        <source>Skin types</source>
+        <translation>Bőrtípusok</translation>
+    </message>
+    <message>
+        <location filename="dlgExportImport.ui" line="153"/>
         <source>Select source / destination</source>
         <translation>Válassza ki a forrás / célkönyvtárat</translation>
     </message>
     <message>
-        <location filename="dlgExportImport.ui" line="159"/>
+        <location filename="dlgExportImport.ui" line="208"/>
         <source>Summary</source>
         <translation>Összegzés</translation>
     </message>
     <message>
-        <location filename="dlgExportImport.ui" line="188"/>
+        <location filename="dlgExportImport.ui" line="237"/>
         <source>Execute</source>
         <translation>Végrehajtás</translation>
     </message>
     <message>
-        <location filename="dlgExportImport.ui" line="206"/>
+        <location filename="dlgExportImport.ui" line="255"/>
         <source>Back</source>
         <translation>Vissza</translation>
     </message>
     <message>
-        <location filename="dlgExportImport.ui" line="232"/>
+        <location filename="dlgExportImport.ui" line="281"/>
         <source>Next</source>
         <translation>Előre</translation>
     </message>
     <message>
-        <location filename="dlgExportImport.ui" line="251"/>
+        <location filename="dlgExportImport.ui" line="300"/>
         <source>Close</source>
         <translation>Bezárás</translation>
     </message>
@@ -11015,12 +11213,12 @@ váltópénz kivételével</translation>
         <translation>Egyedi azonosító :</translation>
     </message>
     <message>
-        <location filename="dlgguestedit.ui" line="190"/>
+        <location filename="dlgguestedit.ui" line="216"/>
         <source> Additional data </source>
         <translation> Egyéb adatok </translation>
     </message>
     <message>
-        <location filename="dlgguestedit.ui" line="198"/>
+        <location filename="dlgguestedit.ui" line="224"/>
         <source>E-Mail :</source>
         <translation>E-Mail :</translation>
     </message>
@@ -11038,12 +11236,12 @@ váltópénz kivételével</translation>
         <translation type="obsolete">yyyy/MM/dd</translation>
     </message>
     <message>
-        <location filename="dlgguestedit.ui" line="428"/>
+        <location filename="dlgguestedit.ui" line="454"/>
         <source>Age :</source>
         <translation>Életkor :</translation>
     </message>
     <message>
-        <location filename="dlgguestedit.ui" line="435"/>
+        <location filename="dlgguestedit.ui" line="461"/>
         <source>Not defined</source>
         <translation>Nincs megadva</translation>
     </message>
@@ -11052,42 +11250,42 @@ váltópénz kivételével</translation>
         <translation type="obsolete">buttonGroup</translation>
     </message>
     <message>
-        <location filename="dlgguestedit.ui" line="448"/>
+        <location filename="dlgguestedit.ui" line="474"/>
         <source>Under 18</source>
         <translation>18-nál fiatalabb</translation>
     </message>
     <message>
-        <location filename="dlgguestedit.ui" line="458"/>
+        <location filename="dlgguestedit.ui" line="484"/>
         <source>18 - 20</source>
         <translation>18 - 20</translation>
     </message>
     <message>
-        <location filename="dlgguestedit.ui" line="468"/>
+        <location filename="dlgguestedit.ui" line="494"/>
         <source>21 - 30</source>
         <translation>21 - 30</translation>
     </message>
     <message>
-        <location filename="dlgguestedit.ui" line="478"/>
+        <location filename="dlgguestedit.ui" line="504"/>
         <source>31 - 40</source>
         <translation>31 - 40</translation>
     </message>
     <message>
-        <location filename="dlgguestedit.ui" line="488"/>
+        <location filename="dlgguestedit.ui" line="514"/>
         <source>41 - 50</source>
         <translation>41 - 50</translation>
     </message>
     <message>
-        <location filename="dlgguestedit.ui" line="498"/>
+        <location filename="dlgguestedit.ui" line="524"/>
         <source>51 - 60</source>
         <translation>51 - 60</translation>
     </message>
     <message>
-        <location filename="dlgguestedit.ui" line="508"/>
+        <location filename="dlgguestedit.ui" line="534"/>
         <source>Above 60</source>
         <translation>60 fölött</translation>
     </message>
     <message>
-        <location filename="dlgguestedit.ui" line="289"/>
+        <location filename="dlgguestedit.ui" line="315"/>
         <source> Assigned card(s) </source>
         <oldsource> Guest&apos;s card </oldsource>
         <translation> Bérlet(ek) </translation>
@@ -11097,7 +11295,7 @@ váltópénz kivételével</translation>
         <translation type="obsolete">Vonalkód :</translation>
     </message>
     <message>
-        <location filename="dlgguestedit.ui" line="331"/>
+        <location filename="dlgguestedit.ui" line="357"/>
         <source>Disjoin card</source>
         <translation>Bérlet leválasztás</translation>
     </message>
@@ -11106,7 +11304,7 @@ váltópénz kivételével</translation>
         <translation type="obsolete">Bérlet típusa :</translation>
     </message>
     <message>
-        <location filename="dlgguestedit.ui" line="350"/>
+        <location filename="dlgguestedit.ui" line="376"/>
         <source> Statistical data </source>
         <translation> Statisztikai adatok </translation>
     </message>
@@ -11115,77 +11313,82 @@ váltópénz kivételével</translation>
         <translation type="obsolete">Visszatérő vendég</translation>
     </message>
     <message>
-        <location filename="dlgguestedit.ui" line="542"/>
+        <location filename="dlgguestedit.ui" line="568"/>
         <source> Discount </source>
         <translation> Kedvezmény </translation>
     </message>
     <message>
-        <location filename="dlgguestedit.ui" line="570"/>
+        <location filename="dlgguestedit.ui" line="596"/>
         <source>KiwiSun service</source>
         <translation>KiwiSun szerviz szakember</translation>
     </message>
     <message>
-        <location filename="dlgguestedit.ui" line="563"/>
+        <location filename="dlgguestedit.ui" line="589"/>
         <source>Employee</source>
         <translation>Alkalmazott</translation>
     </message>
     <message>
-        <location filename="dlgguestedit.ui" line="224"/>
+        <location filename="dlgguestedit.ui" line="172"/>
+        <source>Online unique Id : </source>
+        <translation>Online egyedi azonosító : </translation>
+    </message>
+    <message>
+        <location filename="dlgguestedit.ui" line="250"/>
         <source>Phone :</source>
         <translation>Telefonszám :</translation>
     </message>
     <message>
-        <location filename="dlgguestedit.ui" line="247"/>
+        <location filename="dlgguestedit.ui" line="273"/>
         <source>Address :</source>
         <translation>Cím :</translation>
     </message>
     <message>
-        <location filename="dlgguestedit.ui" line="268"/>
+        <location filename="dlgguestedit.ui" line="294"/>
         <source>Notes :</source>
         <translation>Megjegyzések :</translation>
     </message>
     <message>
-        <location filename="dlgguestedit.ui" line="358"/>
+        <location filename="dlgguestedit.ui" line="384"/>
         <source>Returning guest :</source>
         <translation>Visszatérő vendég :</translation>
     </message>
     <message>
-        <location filename="dlgguestedit.ui" line="372"/>
+        <location filename="dlgguestedit.ui" line="398"/>
         <source>Date of registration :</source>
         <translation>Regisztráció dátuma :</translation>
     </message>
     <message>
-        <location filename="dlgguestedit.ui" line="401"/>
+        <location filename="dlgguestedit.ui" line="427"/>
         <source>Type of skin :</source>
         <translation>Bőrtípus :</translation>
     </message>
     <message>
-        <location filename="dlgguestedit.ui" line="556"/>
+        <location filename="dlgguestedit.ui" line="582"/>
         <source>Regular customer</source>
         <translation>Törzsvendég</translation>
     </message>
     <message>
-        <location filename="dlgguestedit.ui" line="658"/>
+        <location filename="dlgguestedit.ui" line="684"/>
         <source>Loyalty points :</source>
         <translation>Hűségpontok :</translation>
     </message>
     <message>
-        <location filename="dlgguestedit.ui" line="765"/>
+        <location filename="dlgguestedit.ui" line="791"/>
         <source>Ok</source>
         <translation>Ok</translation>
     </message>
     <message>
-        <location filename="dlgguestedit.ui" line="813"/>
+        <location filename="dlgguestedit.ui" line="839"/>
         <source>Save</source>
         <translation>Mentés</translation>
     </message>
     <message>
-        <location filename="dlgguestedit.ui" line="781"/>
+        <location filename="dlgguestedit.ui" line="807"/>
         <source>Cancel</source>
         <translation>Mégsem</translation>
     </message>
     <message>
-        <location filename="dlgguestedit.ui" line="295"/>
+        <location filename="dlgguestedit.ui" line="321"/>
         <source>Barcode(s) :</source>
         <translation>Vonalkód(ok) :</translation>
     </message>
@@ -11194,63 +11397,63 @@ váltópénz kivételével</translation>
         <translation type="obsolete">...</translation>
     </message>
     <message>
-        <location filename="dlgguestedit.ui" line="583"/>
+        <location filename="dlgguestedit.ui" line="609"/>
         <source>Private discount :</source>
         <translation>Egyéni kedvezmény :</translation>
     </message>
     <message>
-        <location filename="dlgguestedit.ui" line="593"/>
+        <location filename="dlgguestedit.ui" line="619"/>
         <source>fix value</source>
         <translation>pontos összeg</translation>
     </message>
     <message>
-        <location filename="dlgguestedit.ui" line="606"/>
+        <location filename="dlgguestedit.ui" line="632"/>
         <source>percent</source>
         <translation>százalék</translation>
     </message>
     <message>
-        <location filename="dlgguestedit.ui" line="730"/>
+        <location filename="dlgguestedit.ui" line="756"/>
         <source>Edit</source>
         <translation>Szerkesztés</translation>
     </message>
     <message>
-        <location filename="dlgguestedit.ui" line="684"/>
+        <location filename="dlgguestedit.ui" line="710"/>
         <source>Sample :</source>
         <translation>Példa :</translation>
     </message>
     <message>
-        <location filename="dlgguestedit.ui" line="697"/>
+        <location filename="dlgguestedit.ui" line="723"/>
         <source>if total price is 10,000 $ then discounted price is</source>
         <oldsource>if total price is 1,000 $ then discounted price is</oldsource>
         <translation>ha a teljes ár 10,000 Ft. akkor a kedvezményes ár</translation>
     </message>
     <message>
-        <location filename="dlgguestedit.ui" line="704"/>
+        <location filename="dlgguestedit.ui" line="730"/>
         <source>10,000 $</source>
         <translation>10,000 Ft.</translation>
     </message>
     <message>
-        <location filename="dlgguestedit.ui" line="861"/>
+        <location filename="dlgguestedit.ui" line="887"/>
         <source>Join existing card to guest</source>
         <translation>Bérlet vendéghez rendelése</translation>
     </message>
     <message>
-        <location filename="dlgguestedit.ui" line="864"/>
+        <location filename="dlgguestedit.ui" line="890"/>
         <source>Join card</source>
         <translation>Bérlet hozzárendelés</translation>
     </message>
     <message>
-        <location filename="dlgguestedit.ui" line="842"/>
+        <location filename="dlgguestedit.ui" line="868"/>
         <source>Sell unactivated patientcard to guest.</source>
         <translation>Nem aktív bérlet eladása a vendégnek.</translation>
     </message>
     <message>
-        <location filename="dlgguestedit.ui" line="845"/>
+        <location filename="dlgguestedit.ui" line="871"/>
         <source>Sell card</source>
         <translation>Bérlet eladás</translation>
     </message>
     <message>
-        <location filename="dlgguestedit.ui" line="899"/>
+        <location filename="dlgguestedit.ui" line="925"/>
         <source>History</source>
         <translation>Előzmények</translation>
     </message>

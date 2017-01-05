@@ -1153,90 +1153,204 @@ Please use only numbers.</source>
 <context>
     <name>cDlgExportImport</name>
     <message>
-        <location filename="dlg/dlgexportimport.cpp" line="39"/>
+        <location filename="dlg/dlgexportimport.cpp" line="47"/>
         <source>Data export</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="dlg/dlgexportimport.cpp" line="40"/>
+        <location filename="dlg/dlgexportimport.cpp" line="48"/>
         <source>Select destination directory</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="dlg/dlgexportimport.cpp" line="46"/>
+        <location filename="dlg/dlgexportimport.cpp" line="61"/>
         <source>Data import</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="dlg/dlgexportimport.cpp" line="47"/>
+        <location filename="dlg/dlgexportimport.cpp" line="62"/>
         <source>Select file to be imported</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="dlg/dlgexportimport.cpp" line="129"/>
-        <source>Please note that only the barcode of the patientcards will be imported.
-Duplicated barcodes or barcodes with invalid length will be skipped.</source>
+        <location filename="dlg/dlgexportimport.cpp" line="144"/>
+        <source>Import process has been finished</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="dlg/dlgexportimport.cpp" line="142"/>
-        <source>Products with duplicated barcodes will be skipped.</source>
+        <location filename="dlg/dlgexportimport.cpp" line="259"/>
+        <source>After clicking the Execute button, the application will import:
+</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="dlg/dlgexportimport.cpp" line="185"/>
+        <location filename="dlg/dlgexportimport.cpp" line="263"/>
+        <source>patientcard types</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="dlg/dlgexportimport.cpp" line="268"/>
+        <source>panel uses</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="dlg/dlgexportimport.cpp" line="273"/>
+        <source>product types</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="dlg/dlgexportimport.cpp" line="278"/>
+        <source>products</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="dlg/dlgexportimport.cpp" line="283"/>
+        <source>discounts</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="dlg/dlgexportimport.cpp" line="288"/>
+        <source>skin types</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="dlg/dlgexportimport.cpp" line="393"/>
+        <location filename="dlg/dlgexportimport.cpp" line="404"/>
+        <location filename="dlg/dlgexportimport.cpp" line="415"/>
+        <location filename="dlg/dlgexportimport.cpp" line="430"/>
+        <source>Warning</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="dlg/dlgexportimport.cpp" line="394"/>
+        <source>The following file is missing:
+%1
+
+Please create the file and fulfill it with proper data.
+For more information about import file, check the manual
+or contact the application provider.</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="dlg/dlgexportimport.cpp" line="404"/>
+        <source>Unable to read the following file:
+%1</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="dlg/dlgexportimport.cpp" line="416"/>
+        <source>Error occured during parsing file:
+&apos;%1&apos;
+
+Error in line %2: %3</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="dlg/dlgexportimport.cpp" line="431"/>
+        <source>The version information in import file is not match.
+
+Correct version numbers:
+Application version number: %1
+Database version number: %2
+
+Version numbers in import file:
+Application version number: %3
+Database version number: %4
+
+Please use import file with correct versions.</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="dlg/dlgexportimport.cpp" line="489"/>
+        <source>
+Patientcard types imported:</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="dlg/dlgexportimport.cpp" line="534"/>
+        <source>00:00 =&gt; 23:59 Mon Tue Wed Thu Fri Sat Sun</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="dlg/dlgexportimport.cpp" line="558"/>
+        <source>
+Panel uses imported:</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="dlg/dlgexportimport.cpp" line="608"/>
+        <source>
+Product types imported:</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="dlg/dlgexportimport.cpp" line="642"/>
+        <source>
+Products imported:</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="dlg/dlgexportimport.cpp" line="699"/>
+        <source>
+Discounts imported:</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="dlg/dlgexportimport.cpp" line="714"/>
+        <source>Regular customer discount</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="dlg/dlgexportimport.cpp" line="718"/>
+        <source>Employee discount</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="dlg/dlgexportimport.cpp" line="722"/>
+        <source>Service discount</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="dlg/dlgexportimport.cpp" line="732"/>
+        <source>Guest discount - %1</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="dlg/dlgexportimport.cpp" line="750"/>
+        <source>Product discount - %1</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="dlg/dlgexportimport.cpp" line="764"/>
+        <source>Time zone discount - %1 - %2</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="dlg/dlgexportimport.cpp" line="816"/>
+        <source>
+Skin types imported:</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="dlg/dlgexportimport.cpp" line="251"/>
         <source>Exporting guest data to the following file:
 
 %1</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="dlg/dlgexportimport.cpp" line="189"/>
-        <source>Exporting patientcard data to the following file:
-
-%1</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <location filename="dlg/dlgexportimport.cpp" line="193"/>
-        <source>Exporting product data to the following file:
-
-%1</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <location filename="dlg/dlgexportimport.cpp" line="203"/>
-        <source>Importing guest data from the following file:
-
-%1</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <location filename="dlg/dlgexportimport.cpp" line="207"/>
-        <source>Importing patientcard barcodes from the following file:
-
-%1</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <location filename="dlg/dlgexportimport.cpp" line="211"/>
-        <source>Importing product data from the following file:
-
-%1</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <location filename="dlg/dlgexportimport.cpp" line="243"/>
+        <location filename="dlg/dlgexportimport.cpp" line="312"/>
         <source>Select target directory</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="dlg/dlgexportimport.cpp" line="319"/>
+        <location filename="dlg/dlgexportimport.cpp" line="114"/>
+        <location filename="dlg/dlgexportimport.cpp" line="144"/>
         <source>Information</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="dlg/dlgexportimport.cpp" line="320"/>
+        <location filename="dlg/dlgexportimport.cpp" line="114"/>
         <source>Export process has been finished.</source>
         <translation type="unfinished"></translation>
     </message>
@@ -1341,75 +1455,75 @@ Duplicated barcodes or barcodes with invalid length will be skipped.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="edit/dlgguestedit.cpp" line="252"/>
-        <location filename="edit/dlgguestedit.cpp" line="290"/>
+        <location filename="edit/dlgguestedit.cpp" line="253"/>
+        <location filename="edit/dlgguestedit.cpp" line="291"/>
         <source>Guest name cannot be empty.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="edit/dlgguestedit.cpp" line="258"/>
-        <location filename="edit/dlgguestedit.cpp" line="296"/>
+        <location filename="edit/dlgguestedit.cpp" line="259"/>
+        <location filename="edit/dlgguestedit.cpp" line="297"/>
         <source>Gender of the guest must be set.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="edit/dlgguestedit.cpp" line="268"/>
-        <location filename="edit/dlgguestedit.cpp" line="305"/>
+        <location filename="edit/dlgguestedit.cpp" line="269"/>
+        <location filename="edit/dlgguestedit.cpp" line="306"/>
         <source>Warning</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="edit/dlgguestedit.cpp" line="366"/>
-        <location filename="edit/dlgguestedit.cpp" line="373"/>
+        <location filename="edit/dlgguestedit.cpp" line="367"/>
+        <location filename="edit/dlgguestedit.cpp" line="374"/>
         <source>Attention</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="edit/dlgguestedit.cpp" line="367"/>
+        <location filename="edit/dlgguestedit.cpp" line="368"/>
         <source>This patientcard has been lost and replaced
 and can not be used or sold again.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="edit/dlgguestedit.cpp" line="374"/>
+        <location filename="edit/dlgguestedit.cpp" line="375"/>
         <source>This patientcard is in use. Active patientcard can not be sold again.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="edit/dlgguestedit.cpp" line="386"/>
-        <location filename="edit/dlgguestedit.cpp" line="427"/>
-        <location filename="edit/dlgguestedit.cpp" line="454"/>
+        <location filename="edit/dlgguestedit.cpp" line="387"/>
+        <location filename="edit/dlgguestedit.cpp" line="428"/>
+        <location filename="edit/dlgguestedit.cpp" line="455"/>
         <source>Question</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="edit/dlgguestedit.cpp" line="387"/>
+        <location filename="edit/dlgguestedit.cpp" line="388"/>
         <source>This barcode has not found in the database.
 Do you want to register it for a new patientcard?</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="edit/dlgguestedit.cpp" line="428"/>
+        <location filename="edit/dlgguestedit.cpp" line="429"/>
         <source>Do you want to save changes then close the dialog?</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="edit/dlgguestedit.cpp" line="455"/>
+        <location filename="edit/dlgguestedit.cpp" line="456"/>
         <source>Are you sure you want to disjoin the selected card from patient?</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="edit/dlgguestedit.cpp" line="477"/>
+        <location filename="edit/dlgguestedit.cpp" line="478"/>
         <source>Information</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="edit/dlgguestedit.cpp" line="477"/>
+        <location filename="edit/dlgguestedit.cpp" line="478"/>
         <source>Not implemented yet.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="edit/dlgguestedit.cpp" line="526"/>
+        <location filename="edit/dlgguestedit.cpp" line="527"/>
         <source>Assigned patientcards:
 Barcode	Patientcard type</source>
         <translation type="unfinished"></translation>
@@ -6127,8 +6241,6 @@ Please also check whether the defined licence key is valid and not used by someb
         <location filename="wndmain.cpp" line="2741"/>
         <location filename="wndmain.cpp" line="3037"/>
         <location filename="wndmain.cpp" line="3074"/>
-        <location filename="wndmain.cpp" line="3419"/>
-        <location filename="wndmain.cpp" line="3428"/>
         <location filename="wndmain.cpp" line="3649"/>
         <source>Attention</source>
         <translation type="unfinished"></translation>
@@ -6431,16 +6543,6 @@ Error code: %1
     <message>
         <location filename="wndmain.cpp" line="3307"/>
         <source>&lt;h2&gt;Belenus Software Application System&lt;/h2&gt;&lt;p&gt;Application version : %1&lt;br&gt;Database version : %2&lt;p&gt;Copyright 2013 Tamas Bikfalvi. All rights reserved.&lt;p&gt;Application Licence : %3&lt;p&gt;The application and all of its related products&lt;br&gt;is the property of KiwiSun Franchise.&lt;br&gt;For more information visit the &lt;a href=&quot;%4&quot;&gt;KiwiSun website&lt;/a&gt;</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <location filename="wndmain.cpp" line="3419"/>
-        <source>Currently not allowed to use. Please contact your franchise provider.</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <location filename="wndmain.cpp" line="3428"/>
-        <source>Use report viewer application to display and export program related data.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
@@ -7041,47 +7143,67 @@ removing cash</oldsource>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="dlgExportImport.ui" line="52"/>
+        <location filename="dlgExportImport.ui" line="55"/>
         <source>Guests</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="dlgExportImport.ui" line="59"/>
-        <source>Patientcards</source>
+        <location filename="dlgExportImport.ui" line="65"/>
+        <source>Patientcard types</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="dlgExportImport.ui" line="66"/>
+        <location filename="dlgExportImport.ui" line="75"/>
+        <source>Panel uses</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="dlgExportImport.ui" line="85"/>
+        <source>Product types</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="dlgExportImport.ui" line="95"/>
         <source>Products</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="dlgExportImport.ui" line="104"/>
+        <location filename="dlgExportImport.ui" line="105"/>
+        <source>Discounts</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="dlgExportImport.ui" line="115"/>
+        <source>Skin types</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="dlgExportImport.ui" line="153"/>
         <source>Select source / destination</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="dlgExportImport.ui" line="159"/>
+        <location filename="dlgExportImport.ui" line="208"/>
         <source>Summary</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="dlgExportImport.ui" line="188"/>
+        <location filename="dlgExportImport.ui" line="237"/>
         <source>Execute</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="dlgExportImport.ui" line="206"/>
+        <location filename="dlgExportImport.ui" line="255"/>
         <source>Back</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="dlgExportImport.ui" line="232"/>
+        <location filename="dlgExportImport.ui" line="281"/>
         <source>Next</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="dlgExportImport.ui" line="251"/>
+        <location filename="dlgExportImport.ui" line="300"/>
         <source>Close</source>
         <translation type="unfinished"></translation>
     </message>
@@ -7129,207 +7251,212 @@ removing cash</oldsource>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="dlgguestedit.ui" line="190"/>
+        <location filename="dlgguestedit.ui" line="172"/>
+        <source>Online unique Id : </source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="dlgguestedit.ui" line="216"/>
         <source> Additional data </source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="dlgguestedit.ui" line="198"/>
+        <location filename="dlgguestedit.ui" line="224"/>
         <source>E-Mail :</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="dlgguestedit.ui" line="224"/>
+        <location filename="dlgguestedit.ui" line="250"/>
         <source>Phone :</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="dlgguestedit.ui" line="247"/>
+        <location filename="dlgguestedit.ui" line="273"/>
         <source>Address :</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="dlgguestedit.ui" line="268"/>
+        <location filename="dlgguestedit.ui" line="294"/>
         <source>Notes :</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="dlgguestedit.ui" line="289"/>
+        <location filename="dlgguestedit.ui" line="315"/>
         <source> Assigned card(s) </source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="dlgguestedit.ui" line="295"/>
+        <location filename="dlgguestedit.ui" line="321"/>
         <source>Barcode(s) :</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="dlgguestedit.ui" line="331"/>
+        <location filename="dlgguestedit.ui" line="357"/>
         <source>Disjoin card</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="dlgguestedit.ui" line="350"/>
+        <location filename="dlgguestedit.ui" line="376"/>
         <source> Statistical data </source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="dlgguestedit.ui" line="358"/>
+        <location filename="dlgguestedit.ui" line="384"/>
         <source>Returning guest :</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="dlgguestedit.ui" line="372"/>
+        <location filename="dlgguestedit.ui" line="398"/>
         <source>Date of registration :</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="dlgguestedit.ui" line="428"/>
+        <location filename="dlgguestedit.ui" line="454"/>
         <source>Age :</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="dlgguestedit.ui" line="435"/>
+        <location filename="dlgguestedit.ui" line="461"/>
         <source>Not defined</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="dlgguestedit.ui" line="448"/>
+        <location filename="dlgguestedit.ui" line="474"/>
         <source>Under 18</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="dlgguestedit.ui" line="458"/>
+        <location filename="dlgguestedit.ui" line="484"/>
         <source>18 - 20</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="dlgguestedit.ui" line="468"/>
+        <location filename="dlgguestedit.ui" line="494"/>
         <source>21 - 30</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="dlgguestedit.ui" line="478"/>
+        <location filename="dlgguestedit.ui" line="504"/>
         <source>31 - 40</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="dlgguestedit.ui" line="488"/>
+        <location filename="dlgguestedit.ui" line="514"/>
         <source>41 - 50</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="dlgguestedit.ui" line="498"/>
+        <location filename="dlgguestedit.ui" line="524"/>
         <source>51 - 60</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="dlgguestedit.ui" line="508"/>
+        <location filename="dlgguestedit.ui" line="534"/>
         <source>Above 60</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="dlgguestedit.ui" line="401"/>
+        <location filename="dlgguestedit.ui" line="427"/>
         <source>Type of skin :</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="dlgguestedit.ui" line="542"/>
+        <location filename="dlgguestedit.ui" line="568"/>
         <source> Discount </source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="dlgguestedit.ui" line="556"/>
+        <location filename="dlgguestedit.ui" line="582"/>
         <source>Regular customer</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="dlgguestedit.ui" line="563"/>
+        <location filename="dlgguestedit.ui" line="589"/>
         <source>Employee</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="dlgguestedit.ui" line="570"/>
+        <location filename="dlgguestedit.ui" line="596"/>
         <source>KiwiSun service</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="dlgguestedit.ui" line="583"/>
+        <location filename="dlgguestedit.ui" line="609"/>
         <source>Private discount :</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="dlgguestedit.ui" line="593"/>
+        <location filename="dlgguestedit.ui" line="619"/>
         <source>fix value</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="dlgguestedit.ui" line="606"/>
+        <location filename="dlgguestedit.ui" line="632"/>
         <source>percent</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="dlgguestedit.ui" line="684"/>
+        <location filename="dlgguestedit.ui" line="710"/>
         <source>Sample :</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="dlgguestedit.ui" line="697"/>
+        <location filename="dlgguestedit.ui" line="723"/>
         <source>if total price is 10,000 $ then discounted price is</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="dlgguestedit.ui" line="704"/>
+        <location filename="dlgguestedit.ui" line="730"/>
         <source>10,000 $</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="dlgguestedit.ui" line="730"/>
+        <location filename="dlgguestedit.ui" line="756"/>
         <source>Edit</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="dlgguestedit.ui" line="658"/>
+        <location filename="dlgguestedit.ui" line="684"/>
         <source>Loyalty points :</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="dlgguestedit.ui" line="765"/>
+        <location filename="dlgguestedit.ui" line="791"/>
         <source>Ok</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="dlgguestedit.ui" line="781"/>
+        <location filename="dlgguestedit.ui" line="807"/>
         <source>Cancel</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="dlgguestedit.ui" line="813"/>
+        <location filename="dlgguestedit.ui" line="839"/>
         <source>Save</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="dlgguestedit.ui" line="842"/>
+        <location filename="dlgguestedit.ui" line="868"/>
         <source>Sell unactivated patientcard to guest.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="dlgguestedit.ui" line="845"/>
+        <location filename="dlgguestedit.ui" line="871"/>
         <source>Sell card</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="dlgguestedit.ui" line="861"/>
+        <location filename="dlgguestedit.ui" line="887"/>
         <source>Join existing card to guest</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="dlgguestedit.ui" line="864"/>
+        <location filename="dlgguestedit.ui" line="890"/>
         <source>Join card</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="dlgguestedit.ui" line="899"/>
+        <location filename="dlgguestedit.ui" line="925"/>
         <source>History</source>
         <translation type="unfinished"></translation>
     </message>
