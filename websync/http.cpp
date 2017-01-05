@@ -1055,6 +1055,8 @@ bool cBlnsHttp::_processCommResponse(QByteArray p_qsResponse )
 
     for( int i=0; i<obCards.count(); i++)
     {
+        m_qsDisplayMessage = "";
+
         unsigned int    uiPatientId = 0;
         unsigned int    uiCardId    = 0;
         unsigned int    uiLedgerId  = 0;
@@ -1079,8 +1081,13 @@ bool cBlnsHttp::_processCommResponse(QByteArray p_qsResponse )
                 uiLedgerId = _saveOnlineSell( uiCardId, qsBarcode, uiPatientId, qsCardSellDate );
                 _savePatientCardUnits( qsUnitCount, uiCardId, qsCardValidDate, uiLedgerId );
                 emit signalPatientCardUpdated( uiCardId, qsBarcode );
+                if( m_qsDisplayMessage.length() > 0 ) m_qsDisplayMessage.append( "\n" );
+                m_qsDisplayMessage.append( tr("Patientcard record for '%1' updated\n%2")
+                                           .arg(qsBarcode)
+                                           .arg(m_qsLedgerComment) );
             }
         }
+        emit signalDisplayNotification( m_qsDisplayMessage );
         m_qslProcessedRecordIds.append( qsRecordId );
     }
     return true;
@@ -1112,6 +1119,8 @@ unsigned int cBlnsHttp::_saveGuest(QString p_qsName, QString p_qsUniqueId, QStri
             qsQuery += QString( "WHERE patientId = \"%1\" " ).arg( uiId );
 
             poQuery = g_poDB->executeQTQuery( qsQuery );
+
+            m_qsDisplayMessage.append( tr("Data updated for guest:\n%1").arg(p_qsName) );
         }
         else
         {
@@ -1143,6 +1152,8 @@ unsigned int cBlnsHttp::_saveGuest(QString p_qsName, QString p_qsUniqueId, QStri
 
             poQuery = g_poDB->executeQTQuery( qsQuery );
             uiId = poQuery->lastInsertId().toUInt();
+
+            m_qsDisplayMessage.append( tr("New guest data record created:\n%1").arg(p_qsName) );
         }
     }
     catch( cSevException &e )

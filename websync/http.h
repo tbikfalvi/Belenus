@@ -140,6 +140,7 @@ private:
     unsigned int     m_uiPaymentMethod;
     bool             m_bGetOnlinePCProcessed;
     QStringList      m_qslProcessedRecordIds;
+    QString          m_qsDisplayMessage;
 
     QDomDocument    *obResponseXML;
 
@@ -176,6 +177,7 @@ signals:
     void             signalHttpProcessSuspended();
     void             signalHttpProcessDisabled();
     void             signalPatientCardUpdated( unsigned int p_uiPatientCardId, QString p_qsBarcode );
+    void             signalDisplayNotification( QString p_qsMessage );
 
 private slots:
     void            _slotHttpRequestFinished(int requestId, bool error);
