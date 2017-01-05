@@ -175,6 +175,7 @@ dlgMain::dlgMain(QWidget *parent) : QDialog(parent), ui(new Ui::dlgMain)
     connect( g_poBlnsHttp, SIGNAL(signalActionProcessed(QString)),          this, SLOT(on_BlnsHttpActionFinished(QString)) );
     connect( g_poBlnsHttp, SIGNAL(signalStepProgress()),                    this, SLOT(on_BlnsHttpStepProgress()) );
     connect( g_poBlnsHttp, SIGNAL(signalPatientCardUpdated(uint,QString)),  this, SLOT(on_PatientCardUpdated(uint,QString)) );
+    connect( g_poBlnsHttp, SIGNAL(signalDisplayNotification(QString)),      this, SLOT(slotShowModuleNotification(QString)) );
 
     ui->lblStatusIconWebServer->setPixmap( QPixmap( ":/status_yellow.png" ) );
     ui->chkHttpCommunicationEnabled->setChecked( m_bHttpEnabledByUser );
@@ -1365,4 +1366,11 @@ void dlgMain::on_PatientCardUpdated(unsigned int p_uiPatientCardId, QString p_qs
 //------------------------------------------------------------------------------------
 {
     _sendPCData( p_uiPatientCardId, p_qsBarcode );
+}
+
+//====================================================================================
+void dlgMain::slotShowModuleNotification(QString p_qsMessage)
+//------------------------------------------------------------------------------------
+{
+    _displayUserNotification( INFO_Custom, p_qsMessage );
 }

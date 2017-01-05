@@ -112,6 +112,7 @@ private slots:
     void on_pbClearPatientCard_clicked();
     void on_pbClearAllPatientCard_clicked();
     void on_PatientCardUpdated( unsigned int p_uiPatientCardId, QString p_qsBarcode );
+    void slotShowModuleNotification( QString p_qsMessage );
 
 private:
     Ui::dlgMain         *ui;
