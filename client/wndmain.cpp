@@ -3416,7 +3416,7 @@ void cWndMain::on_action_ManageSkinTypes_triggered()
 
 void cWndMain::on_action_Import_triggered()
 {
-    QMessageBox::warning( this, tr("Attention"), tr("Currently not allowed to use. Please contact your franchise provider.") );
+//    QMessageBox::warning( this, tr("Attention"), tr("Currently not allowed to use. Please contact your franchise provider.") );
 
     cDlgExportImport    obDlgExportImport( this, cDlgExportImport::PT_IMPORT );
 
@@ -3425,11 +3425,11 @@ void cWndMain::on_action_Import_triggered()
 
 void cWndMain::on_action_Export_triggered()
 {
-    QMessageBox::warning( this, tr("Attention"), tr("Use report viewer application to display and export program related data.") );
+//    QMessageBox::warning( this, tr("Attention"), tr("Use report viewer application to display and export program related data.") );
 
-//    cDlgExportImport    obDlgExportImport( this, cDlgExportImport::PT_EXPORT );
+    cDlgExportImport    obDlgExportImport( this, cDlgExportImport::PT_EXPORT );
 
-//    obDlgExportImport.exec();
+    obDlgExportImport.exec();
 }
 /*
 void cWndMain::on_BlnsHttpErrorOccured()

@@ -47,7 +47,20 @@
           </widget>
          </item>
          <item>
+          <widget class="QRadioButton" name="rbGuest">
+           <property name="enabled">
+            <bool>false</bool>
+           </property>
+           <property name="text">
+            <string>Guests</string>
+           </property>
+          </widget>
+         </item>
+         <item>
           <widget class="QCheckBox" name="chkPatientCardTypes">
+           <property name="enabled">
+            <bool>false</bool>
+           </property>
            <property name="text">
             <string>Patientcard types</string>
            </property>
@@ -55,6 +68,9 @@
          </item>
          <item>
           <widget class="QCheckBox" name="chkPanelUses">
+           <property name="enabled">
+            <bool>false</bool>
+           </property>
            <property name="text">
             <string>Panel uses</string>
            </property>
@@ -62,6 +78,9 @@
          </item>
          <item>
           <widget class="QCheckBox" name="chkProductTypes">
+           <property name="enabled">
+            <bool>false</bool>
+           </property>
            <property name="text">
             <string>Product types</string>
            </property>
@@ -69,6 +88,9 @@
          </item>
          <item>
           <widget class="QCheckBox" name="chkProducts">
+           <property name="enabled">
+            <bool>false</bool>
+           </property>
            <property name="text">
             <string>Products</string>
            </property>
@@ -76,6 +98,9 @@
          </item>
          <item>
           <widget class="QCheckBox" name="chkDiscounts">
+           <property name="enabled">
+            <bool>false</bool>
+           </property>
            <property name="text">
             <string>Discounts</string>
            </property>
@@ -83,6 +108,9 @@
          </item>
          <item>
           <widget class="QCheckBox" name="chkSkinTypes">
+           <property name="enabled">
+            <bool>false</bool>
+           </property>
            <property name="text">
             <string>Skin types</string>
            </property>

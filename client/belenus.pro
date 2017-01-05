@@ -1,5 +1,5 @@
 
-QT          += core gui network sql
+QT          += core gui network sql xml
 CONFIG      += qt
 RESOURCES   += belenus.qrc
 RC_FILE      = Belenus.rc
