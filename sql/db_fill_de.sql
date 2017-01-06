@@ -320,7 +320,8 @@ INSERT INTO `settings` (`settingId`, `identifier`, `value`) VALUES
  (NULL, 'GLOBAL_DATA_UPDATED', '2015-01-01 08:00:00'),
  (NULL, 'LICENCE_LAST_VALIDATED', '2000-01-01 12:00:00'),
  (NULL, 'ABOUT_INFO_LINK', 'http://www.kiwisun.eu/elerhetosegeink.html'),
- (NULL, 'APPLICATION_VERSION', '1_6_0_0')
+ (NULL, 'CURRENT_CASSA_ID', '0'),
+ (NULL, 'APPLICATION_VERSION', '1_6_0_0'),
  (NULL, 'DATABASE_VERSION', '1_7_5');
 
 -- -----------------------------------------------------------------------------------

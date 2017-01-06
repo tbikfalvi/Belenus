@@ -10,13 +10,16 @@ USE `belenus`;
 
 -- -----------------------------------------------------------------------------------
 
+INSERT INTO `settings` (`settingId`, `identifier`, `value`) VALUES
+ (NULL, 'CURRENT_CASSA_ID', '0');
+
 UPDATE `ledgertypes` SET `name`='Online bérlet eladás' WHERE `ledgerTypeId`=7;
 UPDATE `ledgertypes` SET `name`='Online bérlet feltöltés' WHERE `ledgerTypeId`=8;
 
 ALTER TABLE `panels`
  ADD `cleanTime`    INT UNSIGNED NOT NULL DEFAULT '0' AFTER `maxWorkTime`,
  ADD `maxCleanTime` INT UNSIGNED NOT NULL DEFAULT '0' AFTER `cleanTime`;
- 
+
 -- -----------------------------------------------------------------------------------
 
 UPDATE settings SET value=NOW() WHERE identifier="GLOBAL_DATA_UPDATED";

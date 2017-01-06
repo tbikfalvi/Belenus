@@ -1243,6 +1243,14 @@ unsigned int cBlnsHttp::_saveOnlineSell(unsigned int p_uiPatientCardId, QString 
 
     try
     {
+        unsigned int    uiCassaId = 0;
+
+        poQuery = g_poDB->executeQTQuery( QString( "SELECT value FROM settings WHERE identifier=\"CURRENT_CASSA_ID\" " ) );
+        if( poQuery->first() )
+        {
+            uiCassaId = poQuery->value( 0 ).toUInt();
+        }
+
         qsQuery = "INSERT INTO ledger SET ";
         qsQuery += QString( "licenceId = \"%1\", " ).arg( m_uiLicenceId );
         qsQuery += QString( "parentId = \"0\", " );
@@ -1271,6 +1279,24 @@ unsigned int cBlnsHttp::_saveOnlineSell(unsigned int p_uiPatientCardId, QString 
 
         poQuery = g_poDB->executeQTQuery( qsQuery );
         uiId = poQuery->lastInsertId().toUInt();
+
+        qsQuery = "INSERT INTO cassaHistory SET ";
+        qsQuery += QString( "licenceId = \"%1\", " ).arg( m_uiLicenceId );
+        qsQuery += QString( "parentId = \"0\", " );
+        qsQuery += QString( "cassaId = \"%1\", " ).arg( uiCassaId );
+        qsQuery += QString( "ledgerId = \"%1\", " ).arg( uiId );
+        qsQuery += QString( "userId = \"1\", " );   // Currently SystemAdministrator
+        qsQuery += QString( "patientId = \"%1\", " ).arg( p_uiPatientId );
+        qsQuery += QString( "actionValue = \"0\", " );
+        qsQuery += QString( "actionCard = \"0\", " );
+        qsQuery += QString( "actionCash = \"0\", " );
+        qsQuery += QString( "actionBalance = \"0\", " );
+        qsQuery += QString( "comment = \"%1\", " ).arg( m_qsLedgerComment );
+        qsQuery += QString( "modified = \"%1\", " ).arg( QDateTime::currentDateTime().toString( QString("yyyy-MM-dd hh:mm:ss") ) );
+        qsQuery += QString( "active = 1, " );
+        qsQuery += QString( "archive = \"NEW\" " );
+
+        poQuery = g_poDB->executeQTQuery( qsQuery );
     }
     catch( cSevException &e )
     {
