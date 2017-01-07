@@ -469,7 +469,7 @@
         </execute>
     </version>    
 
-    <version current="1.5.5.4" next="1.6.0.0">
+    <version current="1.5.5.4" next="1.6.0.a">
         <uncompress>
             <file path="%DOWNLOAD_DIR%" name="Update_1_6_0_0.zip" />
         </uncompress>

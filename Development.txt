@@ -75,3 +75,4 @@ Version 1.6.0.0
 ===============
 - Websync, online berlet eladas
 - Gep takaritasi ido
+- Import/Export

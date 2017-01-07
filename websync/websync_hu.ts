@@ -43,31 +43,31 @@
     </message>
     <message>
         <location filename="http.cpp" line="937"/>
-        <location filename="http.cpp" line="1347"/>
+        <location filename="http.cpp" line="1373"/>
         <source>Server did not received token</source>
         <translation>A webszerver nem kapta meg az elküldött token-t</translation>
     </message>
     <message>
         <location filename="http.cpp" line="944"/>
-        <location filename="http.cpp" line="1354"/>
+        <location filename="http.cpp" line="1380"/>
         <source>Server did not received Sha1 hash</source>
         <translation>A webszerver nem kapta meg az elküldött Sha1 kulcsot</translation>
     </message>
     <message>
         <location filename="http.cpp" line="951"/>
-        <location filename="http.cpp" line="1361"/>
+        <location filename="http.cpp" line="1387"/>
         <source>Server did not received Studio Id</source>
         <translation>A webszerver nem kapta meg az elküldött stúdió azonosítót</translation>
     </message>
     <message>
         <location filename="http.cpp" line="958"/>
-        <location filename="http.cpp" line="1368"/>
+        <location filename="http.cpp" line="1394"/>
         <source>Server did not received last successfull request Id</source>
         <translation>A webszerver nem kapta meg az elküldött kommunikációs azonosítót</translation>
     </message>
     <message>
         <location filename="http.cpp" line="965"/>
-        <location filename="http.cpp" line="1375"/>
+        <location filename="http.cpp" line="1401"/>
         <source>Token sent to server is invalid</source>
         <translation>A webszervernek elküldött token hibás</translation>
     </message>
@@ -88,7 +88,7 @@
     </message>
     <message>
         <location filename="http.cpp" line="993"/>
-        <location filename="http.cpp" line="1382"/>
+        <location filename="http.cpp" line="1408"/>
         <source>Sha1 code sent to server is invalid</source>
         <translation>A webszervernek elküldött Sha1 kulcs hibás</translation>
     </message>
@@ -114,7 +114,7 @@
 %1</translation>
     </message>
     <message>
-        <location filename="http.cpp" line="1453"/>
+        <location filename="http.cpp" line="1479"/>
         <source>Http error occured: %1</source>
         <translation>Http hiba következett be: %1</translation>
     </message>
@@ -126,8 +126,8 @@
     <message>
         <location filename="http.cpp" line="1163"/>
         <location filename="http.cpp" line="1230"/>
-        <location filename="http.cpp" line="1279"/>
-        <location filename="http.cpp" line="1317"/>
+        <location filename="http.cpp" line="1305"/>
+        <location filename="http.cpp" line="1343"/>
         <source>Error occured during executing database command</source>
         <translation>Hiba következett be adabázis parancs végrehajtása közben</translation>
     </message>
@@ -142,17 +142,17 @@
         <translation>Online bérlet eladás</translation>
     </message>
     <message>
-        <location filename="http.cpp" line="1389"/>
+        <location filename="http.cpp" line="1415"/>
         <source>Result not sent to server</source>
         <translation>Visszaigazolás nem érkezett meg a szerverhez</translation>
     </message>
     <message>
-        <location filename="http.cpp" line="1433"/>
+        <location filename="http.cpp" line="1459"/>
         <source>Http request aborted</source>
         <translation>Http lekérdezés megszakítva</translation>
     </message>
     <message>
-        <location filename="http.cpp" line="1444"/>
+        <location filename="http.cpp" line="1470"/>
         <source>Error occured during downloading HTTP file.</source>
         <translation>Hiba következett be a HTTP állomány letöltésekor.</translation>
     </message>

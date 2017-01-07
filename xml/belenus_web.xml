@@ -540,7 +540,7 @@
         </execute>
     </version>    
 
-    <version current="1.5.5.4" next="1.6.0.0">
+    <version current="1.5.5.4" next="1.6.0.a">
         <download>
             <file path="http://download.bikfalvi.hu/belenus/official/Update_1_6_0_0.zip" />
         </download>

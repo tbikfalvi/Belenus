@@ -12,6 +12,7 @@
     <patientcardtype name="100 egységes" price="53000" vat="" unit_count="100" unit_time="7" valid_from="" valid_to="" valid_days="365" /> 
     <patientcardtype name="10 alkalmas (100 perc)" price="8350" vat="" unit_count="10" unit_time="10" valid_from="" valid_to="" valid_days="365" /> 
     <patientcardtype name="Délelőtti + Hétvégi" price="5300" vat="" unit_count="10" unit_time="7" valid_from="" valid_to="" valid_days="365" /> 
+    <patientcardtype name="Online eladott" price="0" vat="" unit_count="0" unit_time="7" valid_from="" valid_to="" valid_days="365" /> 
   </patientcardtypes>
 
   <paneluses>
