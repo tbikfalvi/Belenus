@@ -70,3 +70,10 @@ Version 1.5.5.3
 Version 1.5.5.4
 ===============
 - A STOP gomb hasznalatat most mar a panel status beallitasoknal lehet szabalyozni
+
+Version 1.6.0.0
+===============
+- Webes szinkronizalas mostantol kulon programbol megy
+- Online berleteladas / feltolteskor
+- Takaritasi ido
+- Adatok importalasa / exportalasa
