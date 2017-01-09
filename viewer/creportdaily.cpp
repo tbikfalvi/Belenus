@@ -851,7 +851,13 @@ QString cReportDaily::_countsumPatientCardTypeSell( QString p_qsCassaId, unsigne
     QString         qsQuery;
     QSqlQuery      *poQueryResult;
     QString         qsRet           = "";
-    QString         qsPCCondition   = QString( "(ledgerTypeId=%1 OR ledgerTypeId=%2 OR ledgerTypeId=%3 OR ledgerTypeId=%4)" ).arg(LT_PC_SELL).arg(LT_PC_REFILL).arg(LT_PC_LOST_REPLACE).arg(LT_PC_ASSIGN_PARTNER);
+    QString         qsPCCondition   = QString( "(ledgerTypeId=%1 OR ledgerTypeId=%2 OR ledgerTypeId=%3 OR ledgerTypeId=%4 OR ledgerTypeId=%5 OR ledgerTypeId=%6)" )
+                                              .arg(LT_PC_SELL)
+                                              .arg(LT_PC_REFILL)
+                                              .arg(LT_PC_LOST_REPLACE)
+                                              .arg(LT_PC_ASSIGN_PARTNER)
+                                              .arg(LT_PC_ONLINE_SELL)
+                                              .arg(LT_PC_ONLINE_REFILL);
     QString         qsDateCondition = "";
 
     if( filterIsVisible() )
