@@ -67,7 +67,7 @@ void cReportLedger::refreshReport()
 
         // Patientcards sold
         addSeparator();
-        addSubTitle( tr( "Patientcards sold / attach" ) );
+        addSubTitle( tr( "Patientcards sold / refilled / attached" ) );
         unsigned int uiPatientCardTotal = _reportPartPatientCardSell();
 
         // Panel related data of the selected date
@@ -815,7 +815,13 @@ QString cReportLedger::_countsumPatientCardTypeSell( QString p_qsCassaId, unsign
     QString         qsQuery;
     QSqlQuery      *poQueryResult;
     QString         qsRet = "";
-    QString         qsPCCondition = QString( "(ledgerTypeId=%1 OR ledgerTypeId=%2 OR ledgerTypeId=%3 OR ledgerTypeId=%4)" ).arg(LT_PC_SELL).arg(LT_PC_REFILL).arg(LT_PC_LOST_REPLACE).arg(LT_PC_ASSIGN_PARTNER);
+    QString         qsPCCondition = QString( "(ledgerTypeId=%1 OR ledgerTypeId=%2 OR ledgerTypeId=%3 OR ledgerTypeId=%4 OR ledgerTypeId=%5 OR ledgerTypeId=%6)" )
+                                            .arg(LT_PC_SELL)
+                                            .arg(LT_PC_REFILL)
+                                            .arg(LT_PC_LOST_REPLACE)
+                                            .arg(LT_PC_ASSIGN_PARTNER)
+                                            .arg(LT_PC_ONLINE_SELL)
+                                            .arg(LT_PC_ONLINE_REFILL);
 
     qsQuery = QString("SELECT COUNT(totalPrice), SUM(totalPrice) "
                       "FROM cassahistory, ledger, patientCardTypes WHERE "

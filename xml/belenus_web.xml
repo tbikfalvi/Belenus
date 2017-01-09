@@ -540,4 +540,27 @@
         </execute>
     </version>    
 
+    <version current="1.5.5.4" next="1.6.0.a">
+        <download>
+            <file path="http://download.bikfalvi.hu/belenus/official/Update_1_6_0_0.zip" />
+        </download>
+        <uncompress>
+            <file path="%DOWNLOAD_DIR%" name="Update_1_6_0_0.zip" />
+        </uncompress>
+        <backup>
+            <file path="%INSTALL_DIR%" directory="" name="belenus.exe" move="yes" />
+        </backup>
+        <update>
+            <file src="%DOWNLOAD_DIR%/belenus.exe" dst="%INSTALL_DIR%/belenus.exe" />
+            <file src="%DOWNLOAD_DIR%/websync.exe" dst="%INSTALL_DIR%/websync.exe" />
+            <file src="%DOWNLOAD_DIR%/ReportViewer.exe" dst="%INSTALL_DIR%/ReportViewer.exe" />
+            <file src="%DOWNLOAD_DIR%/lang/brv_hu.qm" dst="%INSTALL_DIR%/lang/brv_hu.qm" />
+            <file src="%DOWNLOAD_DIR%/lang/belenus_hu.qm" dst="%INSTALL_DIR%/lang/belenus_hu.qm" />
+            <file src="%DOWNLOAD_DIR%/lang/websync_hu.qm" dst="%INSTALL_DIR%/lang/websync_hu.qm" />
+        </update>
+        <execute>
+            <application home="%CURRENT_DIR%" name="DBBackup.exe" params='-execute "%DOWNLOAD_DIR%/sql/db_update_1_6_0_0.sql"' />
+        </execute>
+    </version>    
+
 </Process>

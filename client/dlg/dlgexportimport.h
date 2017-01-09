@@ -1,6 +1,9 @@
 #ifndef DLGEXPORTIMPORT_H
 #define DLGEXPORTIMPORT_H
 
+#include <QFile>
+#include <QDomDocument>
+
 #include "../belenus.h"
 #include "ui_dlgExportImport.h"
 #include "dlgprogress.h"
@@ -34,14 +37,17 @@ private:
     QString          m_qsFile;
     QString          m_qsDir;
     cDlgProgress    *m_dlgProgress;
+    QDomDocument    *obProcessDoc;
 
     void            _processPage( bool p_bMoveForward = true );
     void            _ExportGuests();
-    void            _ExportPatientCards();
-    void            _ExportProducts();
-    void            _ImportGuests();
-    void            _ImportPatientCards();
-    void            _ImportProducts();
+    bool            _LoadImportFile();
+    void            _importPatientCardTypes();
+    void            _importPanelUses();
+    void            _importProductTypes();
+    void            _importProducts();
+    void            _importDiscounts();
+    void            _importSkinTypes();
 
 private slots:
 
@@ -49,10 +55,12 @@ private slots:
     void on_pbNext_clicked();
     void on_pbExecute_clicked();
     void on_pbExit_clicked();
-    void on_rbGuest_clicked();
-    void on_rbPatientCard_clicked();
-    void on_rbProduct_clicked();
+//    void on_rbGuest_clicked();
+//    void on_rbPatientCard_clicked();
+//    void on_rbProduct_clicked();
     void on_pbDir_clicked();
+    void slot_import_selected();
+    void slot_export_selected();
 };
 
 #endif

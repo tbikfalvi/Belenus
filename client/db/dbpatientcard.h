@@ -62,7 +62,7 @@ public:
     void            setActive( const bool p_bActive )                           throw();
     QString         archive() const                                             throw();
     void            setArchive( const QString &p_qsArchive )                    throw();
-    void            sendDataToWeb( bool p_bSendNow = true )                     throw();
+    void            sendDataToWeb()                                             throw();
 
 private:
     unsigned int    m_uiId;

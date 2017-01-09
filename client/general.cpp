@@ -408,6 +408,27 @@ bool cGeneral::isShoppingCartHasItems()
 
     return bRet;
 }
+
+//====================================================================================
+bool cGeneral::isAppicationRunning(QString p_qsAppName)
+//------------------------------------------------------------------------------------
+{
+    QProcess process;
+    process.setReadChannel(QProcess::StandardOutput);
+    process.setReadChannelMode(QProcess::MergedChannels);
+    process.start("wmic.exe /OUTPUT:STDOUT PROCESS get Caption");
+
+    process.waitForStarted(1000);
+    process.waitForFinished(1000);
+
+    QString listOfRunningApps = QString( process.readAll() );
+
+    if( listOfRunningApps.contains( p_qsAppName) )
+        return true;
+
+    return false;
+}
+
 //====================================================================================
 //QString cGeneral::convertCurrency( int p_nCurrencyValue, QString p_qsCurrency )
 //====================================================================================
