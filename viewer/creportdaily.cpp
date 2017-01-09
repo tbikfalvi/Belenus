@@ -53,7 +53,7 @@ void cReportDaily::refreshReport()
 
     // Patientcards sold
     addSeparator();
-    addSubTitle( tr( "Patientcards sold / attach" ) );
+    addSubTitle( tr( "Patientcards sold / refilled / attached" ) );
     unsigned int uiPatientCardTotal = _reportPartPatientCardSell();
 
     // Panel related data of the selected date
