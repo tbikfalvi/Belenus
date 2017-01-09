@@ -339,7 +339,8 @@
     </message>
     <message>
         <location filename="creportdaily.cpp" line="56"/>
-        <source>Patientcards sold / attach</source>
+        <source>Patientcards sold / refilled / attached</source>
+        <oldsource>Patientcards sold / attach</oldsource>
         <translation type="unfinished">Verkaufte Club Karten</translation>
     </message>
     <message>
@@ -707,7 +708,8 @@
     </message>
     <message>
         <location filename="creportledger.cpp" line="70"/>
-        <source>Patientcards sold / attach</source>
+        <source>Patientcards sold / refilled / attached</source>
+        <oldsource>Patientcards sold / attach</oldsource>
         <translation type="unfinished">Verkaufte Club Karten</translation>
     </message>
     <message>
@@ -865,8 +867,8 @@
     </message>
     <message>
         <location filename="creportmonthclose.cpp" line="48"/>
-        <source>Patientcards sold / attach</source>
-        <oldsource>Patientcards sold</oldsource>
+        <source>Patientcards sold / refilled / attached</source>
+        <oldsource>Patientcards sold / attach</oldsource>
         <translation type="unfinished">Verkaufte Club Karten</translation>
     </message>
     <message>

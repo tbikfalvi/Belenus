@@ -5149,12 +5149,12 @@ A bérlet típushoz bérletek vannak hozzárendelve.</translation>
         <translation type="obsolete">A hét napjaiból legalább az egyiket ki kell választani.</translation>
     </message>
     <message>
-        <location filename="edit/dlgpatientcardtypeedit.cpp" line="199"/>
+        <location filename="edit/dlgpatientcardtypeedit.cpp" line="204"/>
         <source>One time period must be set.</source>
         <translation>Legalább egy idő intervallumot meg kell adnia.</translation>
     </message>
     <message>
-        <location filename="edit/dlgpatientcardtypeedit.cpp" line="270"/>
+        <location filename="edit/dlgpatientcardtypeedit.cpp" line="275"/>
         <source>Error</source>
         <translation>Hiba</translation>
     </message>
@@ -5179,32 +5179,32 @@ A bérlet típushoz bérletek vannak hozzárendelve.</translation>
         <translation>A felhasználható egységek száma nem lehet üres.</translation>
     </message>
     <message>
-        <location filename="edit/dlgpatientcardtypeedit.cpp" line="170"/>
+        <location filename="edit/dlgpatientcardtypeedit.cpp" line="175"/>
         <source>Unittime of patientcard type must be set.</source>
         <translation>Az egységhez tartozó kezelési idő nem lehet üres.</translation>
     </message>
     <message>
-        <location filename="edit/dlgpatientcardtypeedit.cpp" line="177"/>
+        <location filename="edit/dlgpatientcardtypeedit.cpp" line="182"/>
         <source>Number of validation days of patientcard type must be set.</source>
         <translation>A bérlettípus érvényességét meghatározó napok száma nem lehet üres.</translation>
     </message>
     <message>
-        <location filename="edit/dlgpatientcardtypeedit.cpp" line="184"/>
+        <location filename="edit/dlgpatientcardtypeedit.cpp" line="189"/>
         <source>Invalid end date. End date must be in the future.</source>
         <translation>Nem megfelelő az érvényesség lejártát jelző dátum. A dátumnak a jövőbe kell mutatnia.</translation>
     </message>
     <message>
-        <location filename="edit/dlgpatientcardtypeedit.cpp" line="191"/>
+        <location filename="edit/dlgpatientcardtypeedit.cpp" line="196"/>
         <source>FROM date must be before TO date.</source>
         <translation>Az érvényesség kezdeti dátumának meg kell előznie a lejárati dátumot.</translation>
     </message>
     <message>
-        <location filename="edit/dlgpatientcardtypeedit.cpp" line="210"/>
+        <location filename="edit/dlgpatientcardtypeedit.cpp" line="215"/>
         <source>Question</source>
         <translation>Kérdés</translation>
     </message>
     <message>
-        <location filename="edit/dlgpatientcardtypeedit.cpp" line="211"/>
+        <location filename="edit/dlgpatientcardtypeedit.cpp" line="216"/>
         <source>The unit time of this patientcard was different.
 Old unit time: %1
 New unit time: %2
@@ -5219,19 +5219,19 @@ Régi egységidő: %1
 amelyek ehhez a bérlettípushoz tartoznak?</translation>
     </message>
     <message>
-        <location filename="edit/dlgpatientcardtypeedit.cpp" line="287"/>
-        <location filename="edit/dlgpatientcardtypeedit.cpp" line="308"/>
+        <location filename="edit/dlgpatientcardtypeedit.cpp" line="292"/>
+        <location filename="edit/dlgpatientcardtypeedit.cpp" line="313"/>
         <source>Warning</source>
         <translation>Figyelmeztetés</translation>
     </message>
     <message>
-        <location filename="edit/dlgpatientcardtypeedit.cpp" line="288"/>
-        <location filename="edit/dlgpatientcardtypeedit.cpp" line="309"/>
+        <location filename="edit/dlgpatientcardtypeedit.cpp" line="293"/>
+        <location filename="edit/dlgpatientcardtypeedit.cpp" line="314"/>
         <source>The selected time period already present in the list.</source>
         <translation>A kiválasztott időintervallum már szerepel a listában.</translation>
     </message>
     <message>
-        <location filename="edit/dlgpatientcardtypeedit.cpp" line="335"/>
+        <location filename="edit/dlgpatientcardtypeedit.cpp" line="340"/>
         <source>(%1 + %2 % VAT)</source>
         <oldsource>(%1 + %2 VAT)</oldsource>
         <translation>(%1 + %2 % ÁFA)</translation>

@@ -360,8 +360,9 @@
     </message>
     <message>
         <location filename="creportdaily.cpp" line="56"/>
-        <source>Patientcards sold / attach</source>
-        <translation>Eladott / társított bérletek</translation>
+        <source>Patientcards sold / refilled / attached</source>
+        <oldsource>Patientcards sold / attach</oldsource>
+        <translation>Eladott / feltöltött / társított bérletek</translation>
     </message>
     <message>
         <location filename="creportdaily.cpp" line="200"/>
@@ -816,8 +817,9 @@
     </message>
     <message>
         <location filename="creportledger.cpp" line="70"/>
-        <source>Patientcards sold / attach</source>
-        <translation>Eladott / társított bérletek</translation>
+        <source>Patientcards sold / refilled / attached</source>
+        <oldsource>Patientcards sold / attach</oldsource>
+        <translation>Eladott / feltöltött / társított bérletek</translation>
     </message>
     <message>
         <location filename="creportledger.cpp" line="85"/>
@@ -955,9 +957,9 @@
     </message>
     <message>
         <location filename="creportmonthclose.cpp" line="48"/>
-        <source>Patientcards sold / attach</source>
-        <oldsource>Patientcards sold</oldsource>
-        <translation>Eladott / társított bérletek</translation>
+        <source>Patientcards sold / refilled / attached</source>
+        <oldsource>Patientcards sold / attach</oldsource>
+        <translation>Eladott / feltöltött / társított bérletek</translation>
     </message>
     <message>
         <location filename="creportmonthclose.cpp" line="91"/>

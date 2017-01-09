@@ -175,16 +175,25 @@ void cBlnsHttp::sendPatientCardData(QString p_qsBarcode, QString p_qsPatientCard
         return;
     }
 
-    QString  qsQuery;
+    try
+    {
+        QString  qsQuery;
 
-    qsQuery = "INSERT INTO httppatientcardinfo SET ";
-    qsQuery += QString( "licenceId = \"%1\", " ).arg( m_uiLicenceId );
-    qsQuery += QString( "barcode = \"%1\", " ).arg( p_qsBarcode );
-    qsQuery += QString( "patientcardInfoText = \"%1\", " ).arg( p_qsPatientCardData );
-    qsQuery += QString( "active = 1, " );
-    qsQuery += QString( "archive = \"NEW\" " );
+        qsQuery = "INSERT INTO httppatientcardinfo SET ";
+        qsQuery += QString( "licenceId = \"%1\", " ).arg( m_uiLicenceId );
+        qsQuery += QString( "barcode = \"%1\", " ).arg( p_qsBarcode );
+        qsQuery += QString( "patientcardInfoText = \"%1\", " ).arg( p_qsPatientCardData );
+        qsQuery += QString( "active = 1, " );
+        qsQuery += QString( "archive = \"NEW\" " );
 
-    g_poDB->executeQTQuery( qsQuery );
+        g_poDB->executeQTQuery( qsQuery );
+    }
+    catch( cSevException &e )
+    {
+        cerr << ">> " << e.what() << endl << flush;;
+        g_obLogger(e.severity()) << e.what() << EOM;
+        m_qsError = tr("Error occured during executing database command");
+    }
 
     if( !p_bSendNow )
     {
@@ -385,26 +394,35 @@ void cBlnsHttp::_httpStartProcess()
     {
         g_obLogger(cSeverity::DEBUG) << "HTTP: Get first unsent record" << EOM;
 
-        QString      qsQuery    = "SELECT httpPatientcardInfoId, barcode, patientcardInfoText FROM "
-                                  "httppatientcardinfo WHERE "
-                                  "active=1 AND "
-                                  "archive='NEW' "
-                                  "LIMIT 1 ";
-        QSqlQuery   *poQuery    = g_poDB->executeQTQuery( qsQuery );
-
-        if( poQuery->size() != 1 )
+        try
         {
-            g_obLogger(cSeverity::DEBUG) << "HTTP no more record" << EOM;
-            _updateProcessedRecord();
-            emit signalHideProgress();
-            return;
+            QString      qsQuery    = "SELECT httpPatientcardInfoId, barcode, patientcardInfoText FROM "
+                                      "httppatientcardinfo WHERE "
+                                      "active=1 AND "
+                                      "archive='NEW' "
+                                      "LIMIT 1 ";
+            QSqlQuery   *poQuery    = g_poDB->executeQTQuery( qsQuery );
+
+            if( poQuery->size() != 1 )
+            {
+                g_obLogger(cSeverity::DEBUG) << "HTTP no more record" << EOM;
+                _updateProcessedRecord();
+                emit signalHideProgress();
+                return;
+            }
+
+            poQuery->first();
+
+            m_uiRecordId = poQuery->value(0).toUInt();
+            m_qsBarcode  = poQuery->value(1).toString();
+            m_qsCardData = poQuery->value(2).toString();
         }
-
-        poQuery->first();
-
-        m_uiRecordId = poQuery->value(0).toUInt();
-        m_qsBarcode  = poQuery->value(1).toString();
-        m_qsCardData = poQuery->value(2).toString();
+        catch( cSevException &e )
+        {
+            cerr << ">> " << e.what() << endl << flush;;
+            g_obLogger(e.severity()) << e.what() << EOM;
+            m_qsError = tr("Error occured during executing database command");
+        }
     }
 
     _httpExecuteProcess();
@@ -528,7 +546,16 @@ void cBlnsHttp::_httpSendCardData()
 void cBlnsHttp::_updateProcessedRecord()
 //-------------------------------------------------------------------------------------------------
 {
-    g_poDB->executeQTQuery( "DELETE FROM httppatientcardinfo WHERE active = 0 AND archive = \"ARC\" " );
+    try
+    {
+        g_poDB->executeQTQuery( "DELETE FROM httppatientcardinfo WHERE active = 0 AND archive = \"ARC\" " );
+    }
+    catch( cSevException &e )
+    {
+        cerr << ">> " << e.what() << endl << flush;;
+        g_obLogger(e.severity()) << e.what() << EOM;
+        m_qsError = tr("Error occured during executing database command");
+    }
 }
 
 //=================================================================================================
@@ -846,15 +873,24 @@ void cBlnsHttp::_readResponseFromFile()
                                      << "]"
                                      << EOM;
 
-        QString  qsQuery;
+        try
+        {
+            QString  qsQuery;
 
-        qsQuery = "UPDATE httppatientcardinfo SET ";
-        qsQuery += QString( "active = 0, " );
-        qsQuery += QString( "archive = \"ARC\" " );
-        qsQuery += QString( "WHERE httpPatientcardInfoId = \"%1\" " ).arg( m_uiRecordId );
+            qsQuery = "UPDATE httppatientcardinfo SET ";
+            qsQuery += QString( "active = 0, " );
+            qsQuery += QString( "archive = \"ARC\" " );
+            qsQuery += QString( "WHERE httpPatientcardInfoId = \"%1\" " ).arg( m_uiRecordId );
 
-        m_uiRecordId = 0;
-        g_poDB->executeQTQuery( qsQuery );
+            m_uiRecordId = 0;
+            g_poDB->executeQTQuery( qsQuery );
+        }
+        catch( cSevException &e )
+        {
+            cerr << ">> " << e.what() << endl << flush;;
+            g_obLogger(e.severity()) << e.what() << EOM;
+            m_qsError = tr("Error occured during executing database command");
+        }
     }
     else if( qsLine.contains( "false" ) )
     {
