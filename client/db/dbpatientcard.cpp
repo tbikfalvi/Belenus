@@ -652,7 +652,7 @@ void cDBPatientCard::setArchive( const QString &p_qsArchive ) throw()
     m_qsArchive = p_qsArchive;
 }
 
-void cDBPatientCard::sendDataToWeb( bool p_bSendNow ) throw()
+void cDBPatientCard::sendDataToWeb() throw()
 {
     try
     {
@@ -719,7 +719,15 @@ void cDBPatientCard::sendDataToWeb( bool p_bSendNow ) throw()
             }
         }
 
-        g_poBlnsHttp->sendPatientCardData( barcode(), qsMessageData, p_bSendNow );
+        qsQuery = "INSERT INTO httppatientcardinfo SET ";
+        qsQuery += QString( "licenceId = \"%1\", " ).arg( g_poPrefs->getLicenceId() );
+        qsQuery += QString( "barcode = \"%1\", " ).arg( barcode() );
+        qsQuery += QString( "patientcardInfoText = \"%1\", " ).arg( qsMessageData );
+        qsQuery += QString( "active = 1, " );
+        qsQuery += QString( "archive = \"NEW\" " );
+
+        g_poDB->executeQTQuery( qsQuery );
+//        g_poBlnsHttp->sendPatientCardData( barcode(), qsMessageData, p_bSendNow );
     }
     catch( cSevException &e )
     {

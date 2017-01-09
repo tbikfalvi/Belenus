@@ -17,9 +17,11 @@ public:
     QHBoxLayout     *horizontalLayout1;
     QLabel          *lblTitle;
     QLineEdit       *ledTitle;
+
     QSpacerItem     *horizontalSpacer1;
     QLabel          *lblType;
     QComboBox       *cmbPanelType;
+
     QHBoxLayout     *horizontalLayout2;
     QLabel          *lblWorkTime;
     QLineEdit       *ledWorkTimeHour;
@@ -28,6 +30,17 @@ public:
     QPushButton     *pbWTReset;
     QLabel          *lblMaxWorkTime;
     QLineEdit       *ledMaxWorkTime;
+
+    QHBoxLayout     *horizontalLayout4;
+    QLabel          *lblCleanTime;
+    QLineEdit       *ledCleanTimeHour;
+    QLineEdit       *ledCleanTimeMin;
+    QLineEdit       *ledCleanTimeSec;
+    QPushButton     *pbCTReset;
+    QLabel          *lblMaxCleanTime;
+    QLineEdit       *ledMaxCleanTime;
+    QSpacerItem     *horizontalSpacer4;
+
     QLabel          *lblGroup;
     QComboBox       *cmbPanelGroup;
     QSpacerItem     *horizontalSpacer2;
@@ -38,7 +51,11 @@ public:
     QPushButton     *pbEnableDeviceAdmin;
 
     cDlgPanelSettings( QWidget *p_poParent = 0, unsigned int p_uiPanelId = 0 );
-    virtual ~cDlgPanelSettings();
+    void             addTitleLayout();
+    void             addWorkTimeLayout();
+    void             addCleanTimeLayout();
+    void             addCopyTimeValuesLayout();
+    virtual         ~cDlgPanelSettings();
 
 private:
     bool             m_bIsSettingChanged;
@@ -56,6 +73,7 @@ protected slots:
     virtual void editClicked( bool );
     virtual void saveClicked( bool );
     virtual void on_pbWTReset_clicked( bool );
+    virtual void on_pbCTReset_clicked( bool );
     virtual void on_pbCopyToAll_clicked( bool );
     virtual void on_pbEnableSystemAdmin_clicked();
     virtual void on_pbEnableDeviceAdmin_clicked();

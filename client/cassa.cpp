@@ -654,6 +654,8 @@ void cCassa::cassaAddMoneyAction( int p_nCash, int p_nCard, unsigned int p_uiLed
 void cCassa::setEnabled()
 //====================================================================================
 {
+    g_poDB->executeQTQuery( QString( "UPDATE settings SET value='%1' WHERE identifier=\"CURRENT_CASSA_ID\" " )
+                            .arg( cassaId() ) );
     m_bCassaEnabled = true;
 }
 //====================================================================================

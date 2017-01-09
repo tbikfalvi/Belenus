@@ -2,8 +2,8 @@
 -- Belenus Szoftver Rendszer (c) Pagony Multimedia Studio Bt - 2013
 -- -----------------------------------------------------------------------------------
 -- Filename    : db_fill_de.sql
--- AppVersion  : 1.5.5.4
--- DbVersion   : 1.7.3
+-- AppVersion  : 1.6.0.0
+-- DbVersion   : 1.7.5
 -- Author      : Bikfalvi Tamas
 -- -----------------------------------------------------------------------------------
 -- Adatbazist default adatokkal feltolto SQL script
@@ -221,8 +221,8 @@ INSERT INTO `ledgerTypes` (`ledgerTypeId` ,`licenceId` ,`name` ,`active` ,`archi
  (4 , '0', 'Selling product', '1', 'ARC'),
  (5 , '0', 'Replacing lost patientcard', '1', 'ARC'),
  (6 , '0', 'Assign patientcard', '1', 'ARC'),
- (7 , '0', 'Other', '1', 'ARC'),
- (8 , '0', 'Other', '1', 'ARC'),
+ (7 , '0', 'Selling patientcard online', '1', 'ARC'),
+ (8 , '0', 'Filling patientcard online', '1', 'ARC'),
  (9 , '0', 'Storage action', '1', 'ARC'),
  (10, '0', 'Casssa expense', '1', 'ARC');
 
@@ -320,7 +320,8 @@ INSERT INTO `settings` (`settingId`, `identifier`, `value`) VALUES
  (NULL, 'GLOBAL_DATA_UPDATED', '2015-01-01 08:00:00'),
  (NULL, 'LICENCE_LAST_VALIDATED', '2000-01-01 12:00:00'),
  (NULL, 'ABOUT_INFO_LINK', 'http://www.kiwisun.eu/elerhetosegeink.html'),
- (NULL, 'APPLICATION_VERSION', '1_5_5_4')
- (NULL, 'DATABASE_VERSION', '1_7_3');
+ (NULL, 'CURRENT_CASSA_ID', '0'),
+ (NULL, 'APPLICATION_VERSION', '1_6_0_0'),
+ (NULL, 'DATABASE_VERSION', '1_7_5');
 
 -- -----------------------------------------------------------------------------------

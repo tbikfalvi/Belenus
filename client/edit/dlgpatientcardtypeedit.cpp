@@ -156,13 +156,18 @@ void cDlgPatientCardTypeEdit::on_pbSave_clicked()
     }
     if( ledVatpercent->text() == "" )
         ledVatpercent->setText( "0" );
-    if( ledUnits->text() == "" || ledUnits->text().toInt() < 1 )
+    if( ledUnits->text() == "" )
     {
         boCanBeSaved = false;
         if( qsErrorMessage.length() ) qsErrorMessage.append( "\n" );
         qsErrorMessage.append( tr( "Number of units of patientcard type must be set." ) );
         lblUnits->setStyleSheet( "QLabel {font: bold; color: red;}" );
     }
+    else if( ledUnits->text().toInt() == 0 )
+    {
+        lblUnits->setStyleSheet( "QLabel {font: bold; color: blue;}" );
+    }
+
     if( ledUnitTime->text() == "" || ledUnitTime->text().toInt() < 1 )
     {
         boCanBeSaved = false;
@@ -328,7 +333,7 @@ void cDlgPatientCardTypeEdit::on_listValidInterval_currentItemChanged(QListWidge
     pbDelete->setEnabled( current != NULL ? true : false );
 }
 
-void cDlgPatientCardTypeEdit::on_ledPrice_textChanged(const QString &arg1)
+void cDlgPatientCardTypeEdit::on_ledPrice_textChanged(const QString &/*arg1*/)
 {
     cCurrency currPrice( ledPrice->text(), cCurrency::CURR_GROSS, ledVatpercent->text().toInt() );
 

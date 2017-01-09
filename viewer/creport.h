@@ -31,8 +31,8 @@ public:
         LT_PROD_SELL,
         LT_PC_LOST_REPLACE,
         LT_PC_ASSIGN_PARTNER,
-        LT_OTHER7,
-        LT_OTHER8,
+        LT_PC_ONLINE_SELL,
+        LT_PC_ONLINE_REFILL,
         LT_PROD_STORAGE_CHANGE,
         LT_CASSA_EXPENSE
     };

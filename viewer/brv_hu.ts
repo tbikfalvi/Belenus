@@ -360,8 +360,9 @@
     </message>
     <message>
         <location filename="creportdaily.cpp" line="56"/>
-        <source>Patientcards sold / attach</source>
-        <translation>Eladott / társított bérletek</translation>
+        <source>Patientcards sold / refilled / attached</source>
+        <oldsource>Patientcards sold / attach</oldsource>
+        <translation>Eladott / feltöltött / társított bérletek</translation>
     </message>
     <message>
         <location filename="creportdaily.cpp" line="200"/>
@@ -816,8 +817,9 @@
     </message>
     <message>
         <location filename="creportledger.cpp" line="70"/>
-        <source>Patientcards sold / attach</source>
-        <translation>Eladott / társított bérletek</translation>
+        <source>Patientcards sold / refilled / attached</source>
+        <oldsource>Patientcards sold / attach</oldsource>
+        <translation>Eladott / feltöltött / társított bérletek</translation>
     </message>
     <message>
         <location filename="creportledger.cpp" line="85"/>
@@ -955,9 +957,9 @@
     </message>
     <message>
         <location filename="creportmonthclose.cpp" line="48"/>
-        <source>Patientcards sold / attach</source>
-        <oldsource>Patientcards sold</oldsource>
-        <translation>Eladott / társított bérletek</translation>
+        <source>Patientcards sold / refilled / attached</source>
+        <oldsource>Patientcards sold / attach</oldsource>
+        <translation>Eladott / feltöltött / társított bérletek</translation>
     </message>
     <message>
         <location filename="creportmonthclose.cpp" line="91"/>
@@ -1247,56 +1249,68 @@
     </message>
     <message>
         <location filename="creportpatientcardsell.cpp" line="41"/>
-        <location filename="creportpatientcardsell.cpp" line="95"/>
+        <location filename="creportpatientcardsell.cpp" line="119"/>
         <source>Patientcard sells</source>
         <translation>Bérlet eladások</translation>
     </message>
     <message>
         <location filename="creportpatientcardsell.cpp" line="53"/>
-        <location filename="creportpatientcardsell.cpp" line="100"/>
+        <location filename="creportpatientcardsell.cpp" line="124"/>
         <source>Patientcard refills</source>
         <translation>Bérlet feltöltések</translation>
     </message>
     <message>
         <location filename="creportpatientcardsell.cpp" line="65"/>
-        <location filename="creportpatientcardsell.cpp" line="105"/>
+        <location filename="creportpatientcardsell.cpp" line="129"/>
         <source>Lost patientcard replaces</source>
         <translation>Elveszett bérletek cseréje</translation>
     </message>
     <message>
         <location filename="creportpatientcardsell.cpp" line="77"/>
-        <location filename="creportpatientcardsell.cpp" line="110"/>
+        <location filename="creportpatientcardsell.cpp" line="134"/>
         <source>Patientcard shares</source>
         <translation>Bérletekhez társkártya rendelése</translation>
     </message>
     <message>
         <location filename="creportpatientcardsell.cpp" line="89"/>
+        <location filename="creportpatientcardsell.cpp" line="139"/>
+        <source>Patientcard online sells</source>
+        <translation>Online bérlet eladások</translation>
+    </message>
+    <message>
+        <location filename="creportpatientcardsell.cpp" line="101"/>
+        <location filename="creportpatientcardsell.cpp" line="144"/>
+        <source>Patientcard online refills</source>
+        <translation>Online bérlet feltöltések</translation>
+    </message>
+    <message>
+        <location filename="creportpatientcardsell.cpp" line="113"/>
         <source>Income summary</source>
         <translation>Bevétel összesítés</translation>
     </message>
     <message>
-        <location filename="creportpatientcardsell.cpp" line="119"/>
-        <location filename="creportpatientcardsell.cpp" line="173"/>
+        <location filename="creportpatientcardsell.cpp" line="155"/>
+        <location filename="creportpatientcardsell.cpp" line="209"/>
         <source>Sum total</source>
         <translation>Mind összesen</translation>
     </message>
     <message>
-        <location filename="creportpatientcardsell.cpp" line="152"/>
+        <location filename="creportpatientcardsell.cpp" line="188"/>
         <source>Date</source>
         <translation>Dátum</translation>
     </message>
     <message>
-        <location filename="creportpatientcardsell.cpp" line="153"/>
+        <location filename="creportpatientcardsell.cpp" line="189"/>
         <source>Patientcard barcode</source>
         <translation>Bérlet vonalkód</translation>
     </message>
     <message>
-        <location filename="creportpatientcardsell.cpp" line="154"/>
+        <location filename="creportpatientcardsell.cpp" line="190"/>
         <source>Patientcard type</source>
         <translation>Bérlettípus</translation>
     </message>
     <message>
-        <location filename="creportpatientcardsell.cpp" line="155"/>
+        <location filename="creportpatientcardsell.cpp" line="191"/>
         <source>Amount</source>
         <translation>Összeg</translation>
     </message>

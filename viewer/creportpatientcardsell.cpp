@@ -84,6 +84,30 @@ void cReportPatientcardSell::refreshReport()
         finishTable();
         finishSection();
 
+    //
+    addSeparator();
+    addSubTitle( tr( "Patientcard online sells" ) );
+
+        startSection();
+        addTable();
+
+        cCurrency obPCSellOnline( _reportPartPC( LT_PC_ONLINE_SELL ) );
+
+        finishTable();
+        finishSection();
+
+    //
+    addSeparator();
+    addSubTitle( tr( "Patientcard online refills" ) );
+
+        startSection();
+        addTable();
+
+        cCurrency obPCRefillOnline( _reportPartPC( LT_PC_ONLINE_REFILL ) );
+
+        finishTable();
+        finishSection();
+
     // Income summary
     addSeparator();
     addSubTitle( tr( "Income summary" ) );
@@ -111,10 +135,22 @@ void cReportPatientcardSell::refreshReport()
         addTableCell( ":", "bold");
         addTableCell( obPCShare.currencyFullStringShort(), "right" );
 
+        addTableRow();
+        addTableCell( tr("Patientcard online sells") );
+        addTableCell( ":", "bold");
+        addTableCell( obPCSellOnline.currencyFullStringShort(), "right" );
+
+        addTableRow();
+        addTableCell( tr("Patientcard online refills") );
+        addTableCell( ":", "bold");
+        addTableCell( obPCRefillOnline.currencyFullStringShort(), "right" );
+
         cCurrency   obTotal( obPCSell.currencyValue().toInt()+
                              obPCRefill.currencyValue().toInt()+
                              obPCReplace.currencyValue().toInt()+
-                             obPCShare.currencyValue().toInt() );
+                             obPCShare.currencyValue().toInt() +
+                             obPCSellOnline.currencyValue().toInt() +
+                             obPCRefillOnline.currencyValue().toInt() );
         addTableRow();
         addTableCell( tr("Sum total"), "bold" );
         addTableCell( ":", "bold");
