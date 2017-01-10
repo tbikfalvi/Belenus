@@ -50,7 +50,7 @@ cBlnsHttp::cBlnsHttp()
     m_qsLicenceString           = "BLNS_SERIAL_DEMO";
     m_uiPatientCardTypeId       = 0;
     m_nPatientCardTypePrice     = 0;
-    m_nPatientCardTypeUnits     = 0;
+    m_nPatientCardTypeUnits     = 1;
     m_nPatientCardTypeUnitTime  = 0;
     m_bGetOnlinePCProcessed     = false;
 
@@ -117,6 +117,8 @@ void cBlnsHttp::setOnlinePCType(unsigned int p_uiId, int p_nPrice, int p_nUnits,
     m_nPatientCardTypePrice     = p_nPrice;
     m_nPatientCardTypeUnits     = p_nUnits;
     m_nPatientCardTypeUnitTime  = p_nUnitTime;
+
+    if( m_nPatientCardTypeUnits == 0 )  m_nPatientCardTypeUnits = 1;
 }
 
 //=================================================================================================
