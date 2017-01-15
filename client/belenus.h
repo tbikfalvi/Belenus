@@ -25,7 +25,6 @@
 #include "communication.h"
 #include "cassa.h"
 #include "general.h"
-#include "http.h"
 
 //====================================================================================
 
@@ -55,7 +54,7 @@ extern CS_Communication        *g_poHardware;
 extern cCassa                   g_obCassa;
 extern cGeneral                 g_obGen;
 extern cDBGuest                 g_obGuest;
-extern cBlnsHttp               *g_poBlnsHttp;
+//extern cBlnsHttp               *g_poBlnsHttp;
 
 //====================================================================================
 

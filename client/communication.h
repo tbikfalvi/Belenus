@@ -13,7 +13,7 @@ public:
     CS_Communication() { m_stCustomCaption = "";
                          m_inPanelCount = 0;
                        }
-    ~CS_Communication() {}
+    virtual ~CS_Communication() {}
 
     virtual int getCountAvailablePorts() = 0;
     virtual int getComPort( int p_inIndex ) = 0;

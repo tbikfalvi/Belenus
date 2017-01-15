@@ -123,6 +123,7 @@ cDlgGuestEdit::cDlgGuestEdit( QWidget *p_poParent, cDBGuest *p_poGuest, cDBPostp
         }
         QDate   qdRegistration( QDate::fromString(m_poGuest->dateCreated().left(10),"yyyy-MM-dd") );
         ledMembership->setText( m_poGuest->membership() );
+        ledUniqueId->setText( m_poGuest->uniqueId() );
         ledEmail->setText( m_poGuest->email() );
         ledPhone->setText( m_poGuest->mobile() );
         teAddress->setText( m_poGuest->address() );

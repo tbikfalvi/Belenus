@@ -80,17 +80,20 @@ void cPreferences::init()
 
     m_qsPanelTextSteril             = "";
     m_qsPanelTextTubeReplace        = "";
+    m_qsPanelTextTubeCleanup        = "";
 
     m_bEnableHWDebug                = false;
 
     m_bBlnsHttpEnabled              = false;
-    m_nBlnsHttpWaitTime             = 3;
-    m_bBlnsHttpSuspended            = false;
+//    m_nBlnsHttpWaitTime             = 3;
+//    m_bBlnsHttpSuspended            = false;
+    m_bWebSyncAutoStart             = false;
 
     m_bIsTextSterilVisible          = false;
     m_bIsTextTubeReplaceVisible     = false;
+    m_bIsTextTubeCleanupVisible     = false;
 
-    m_nStartHttpSyncAutoSeconds     = 15;
+//    m_nStartHttpSyncAutoSeconds     = 15;
 
     m_bBarcodeHidden                = false;
 
@@ -132,6 +135,7 @@ void cPreferences::loadConfFileSettings()
         m_bIsSecondaryCaptionVisible    = obPrefFile.value( QString::fromAscii( "SecondaryWindow/IsSecondaryCaptionVisible"), true ).toBool();
         m_bIsTextTubeReplaceVisible     = obPrefFile.value( QString::fromAscii( "SecondaryWindow/IsTextTubeReplaceVisible"), false ).toBool();
         m_bIsTextSterilVisible          = obPrefFile.value( QString::fromAscii( "SecondaryWindow/IsTextSterilVisible"), false ).toBool();
+        m_bIsTextTubeCleanupVisible     = obPrefFile.value( QString::fromAscii( "SecondaryWindow/IsTextTubeCleanupVisible"), false ).toBool();
 
         m_qsActiveCaptionBackground     = obPrefFile.value( QString::fromAscii( "Panels/ActiveCaptionBackground" ), "#000099" ).toString();
         m_qsActiveCaptionColor          = obPrefFile.value( QString::fromAscii( "Panels/ActiveCaptionColor" ), "#FFFFFF" ).toString();
@@ -142,6 +146,7 @@ void cPreferences::loadConfFileSettings()
         m_bIsStopInLine                 = obPrefFile.value( QString::fromAscii( "Panels/IsStopInLine"), true ).toBool();
         m_qsPanelTextSteril             = obPrefFile.value( QString::fromAscii( "Panels/TextSterile"), QObject::tr( " NOT STERILE " ) ).toString();
         m_qsPanelTextTubeReplace        = obPrefFile.value( QString::fromAscii( "Panels/TextTubeReplace"), QObject::tr( " TUBE REPLACEMENT NEEDED " ) ).toString();
+        m_qsPanelTextTubeCleanup        = obPrefFile.value( QString::fromAscii( "Panels/TextTubeCleanup"), QObject::tr( " TUBE CLEAN-UP NEEDED " ) ).toString();
 
         m_qpSecondaryPosition = QPoint( nLeft, nTop );
         m_qsSecondarySize = QSize( nWidth, nHeight );
@@ -219,9 +224,10 @@ void cPreferences::loadConfFileSettings()
         setLogLevels( uiConsoleLevel, uiDBLevel, uiGUILevel, uiFileLevel );
 
         m_bBlnsHttpEnabled          = obPrefFile.value( QString::fromAscii( "BlnsHttp/Enabled" ) ).toBool();
-        m_nBlnsHttpWaitTime         = obPrefFile.value( QString::fromAscii( "BlnsHttp/MessageWaitTime" ), 12 ).toInt();
-        m_bIsStartHttpSyncAuto      = obPrefFile.value( QString::fromAscii( "BlnsHttp/IsAutoStartSync"), false ).toBool();
-        m_nStartHttpSyncAutoSeconds = obPrefFile.value( QString::fromAscii( "BlnsHttp/AutoStartSyncSeconds"), 15 ).toInt();
+        m_bWebSyncAutoStart         = obPrefFile.value( QString::fromAscii( "BlnsHttp/WebSyncAutoStart" ) ).toBool();
+//        m_nBlnsHttpWaitTime         = obPrefFile.value( QString::fromAscii( "BlnsHttp/MessageWaitTime" ), 12 ).toInt();
+//        m_bIsStartHttpSyncAuto      = obPrefFile.value( QString::fromAscii( "BlnsHttp/IsAutoStartSync"), false ).toBool();
+//        m_nStartHttpSyncAutoSeconds = obPrefFile.value( QString::fromAscii( "BlnsHttp/AutoStartSyncSeconds"), 15 ).toInt();
 
         m_qsDirDbBinaries           = obPrefFile.value( QString::fromAscii( "DbBackup/DirDbBinaries" ) ).toString();
         m_qsDirDbBackup             = obPrefFile.value( QString::fromAscii( "DbBackup/DirDbBackup" ) ).toString();
@@ -343,6 +349,7 @@ void cPreferences::save() const throw (cSevException)
     obPrefFile.setValue( QString::fromAscii( "SecondaryWindow/Background" ), m_qsSecondaryBackground );
     obPrefFile.setValue( QString::fromAscii( "SecondaryWindow/IsTextTubeReplaceVisible"), m_bIsTextTubeReplaceVisible );
     obPrefFile.setValue( QString::fromAscii( "SecondaryWindow/IsTextSterilVisible"), m_bIsTextSterilVisible );
+    obPrefFile.setValue( QString::fromAscii( "SecondaryWindow/IsTextTubeCleanupVisible"), m_bIsTextTubeCleanupVisible );
 
     obPrefFile.setValue( QString::fromAscii( "Panels/ActiveCaptionBackground" ), m_qsActiveCaptionBackground );
     obPrefFile.setValue( QString::fromAscii( "Panels/ActiveCaptionColor" ), m_qsActiveCaptionColor );
@@ -353,6 +360,7 @@ void cPreferences::save() const throw (cSevException)
     obPrefFile.setValue( QString::fromAscii( "Panels/IsStopInLine"), m_bIsStopInLine );
     obPrefFile.setValue( QString::fromAscii( "Panels/TextSterile"), m_qsPanelTextSteril );
     obPrefFile.setValue( QString::fromAscii( "Panels/TextTubeReplace"), m_qsPanelTextTubeReplace );
+    obPrefFile.setValue( QString::fromAscii( "Panels/TextTubeCleanup"), m_qsPanelTextTubeCleanup );
 
     obPrefFile.setValue( QString::fromAscii( "SecondaryWindow/FrameColor" ), m_qsSecondaryFrame );
     obPrefFile.setValue( QString::fromAscii( "SecondaryWindow/IsSecondaryCaptionVisible" ), m_bIsSecondaryCaptionVisible );
@@ -391,9 +399,10 @@ void cPreferences::save() const throw (cSevException)
     obPrefFile.setValue( QString::fromAscii( "Device/VAT" ), m_inDeviceUseVAT );
 
     obPrefFile.setValue( QString::fromAscii( "BlnsHttp/Enabled" ), m_bBlnsHttpEnabled );
-    obPrefFile.setValue( QString::fromAscii( "BlnsHttp/MessageWaitTime" ), m_nBlnsHttpWaitTime );
-    obPrefFile.setValue( QString::fromAscii( "BlnsHttp/IsAutoStartSync"), m_bIsStartHttpSyncAuto );
-    obPrefFile.setValue( QString::fromAscii( "BlnsHttp/AutoStartSyncSeconds"), m_nStartHttpSyncAutoSeconds );
+    obPrefFile.setValue( QString::fromAscii( "BlnsHttp/WebSyncAutoStart" ), m_bWebSyncAutoStart );
+//    obPrefFile.setValue( QString::fromAscii( "BlnsHttp/MessageWaitTime" ), m_nBlnsHttpWaitTime );
+//    obPrefFile.setValue( QString::fromAscii( "BlnsHttp/IsAutoStartSync"), m_bIsStartHttpSyncAuto );
+//    obPrefFile.setValue( QString::fromAscii( "BlnsHttp/AutoStartSyncSeconds"), m_nStartHttpSyncAutoSeconds );
 
     obPrefFile.setValue( QString::fromAscii( "DbBackup/DirDbBinaries" ), m_qsDirDbBinaries );
     obPrefFile.setValue( QString::fromAscii( "DbBackup/DirDbBackup" ), m_qsDirDbBackup );
@@ -1224,6 +1233,23 @@ bool cPreferences::isBlnsHttpEnabled()
     return m_bBlnsHttpEnabled;
 }
 
+void cPreferences::setWebSyncAutoStart( bool p_bWebSyncAutoStart, bool p_boSaveNow )
+{
+    m_bWebSyncAutoStart = p_bWebSyncAutoStart;
+
+    if( p_boSaveNow )
+    {
+        QSettings  obPrefFile( m_qsFileName, QSettings::IniFormat );
+        obPrefFile.setValue( QString::fromAscii( "BlnsHttp/WebSyncAutoStart" ), m_bWebSyncAutoStart );
+    }
+}
+
+bool cPreferences::isWebSyncAutoStart()
+{
+    return m_bWebSyncAutoStart;
+}
+
+/*
 void cPreferences::setBlnsHttpMessageWaitTime(const int p_inWaitTime)
 {
     m_nBlnsHttpWaitTime = p_inWaitTime;
@@ -1246,7 +1272,7 @@ int cPreferences::getBlnsHttpMessageWaitTime() const
 {
     return m_nBlnsHttpWaitTime;
 }
-
+*/
 void cPreferences::setLogLevels( const unsigned int p_uiConLevel,
                                  const unsigned int p_uiDBLevel,
                                  const unsigned int p_uiGUILevel,
@@ -1591,6 +1617,22 @@ QString cPreferences::getPanelTextTubeReplace() const
     return m_qsPanelTextTubeReplace;
 }
 
+void cPreferences::setPanelTextTubeCleanup( const QString &p_qsPanelTextTubeCleanup, bool p_boSaveNow )
+{
+    m_qsPanelTextTubeCleanup = p_qsPanelTextTubeCleanup;
+
+    if( p_boSaveNow )
+    {
+        QSettings  obPrefFile( m_qsFileName, QSettings::IniFormat );
+        obPrefFile.setValue( QString::fromAscii( "Panels/TextTubeCleanup"), m_qsPanelTextTubeCleanup );
+    }
+}
+
+QString cPreferences::getPanelTextTubeCleanup() const
+{
+    return m_qsPanelTextTubeCleanup;
+}
+
 void cPreferences::setHWDebug( bool p_bHWDebug )
 {
     m_bEnableHWDebug = p_bHWDebug;
@@ -1659,6 +1701,22 @@ bool cPreferences::isTextTubeReplaceVisible()
     return m_bIsTextTubeReplaceVisible;
 }
 
+void cPreferences::setTextTubeCleanupVisible( bool p_bTextTubeCleanupVisible, bool p_boSaveNow )
+{
+    m_bIsTextTubeCleanupVisible = p_bTextTubeCleanupVisible;
+
+    if( p_boSaveNow )
+    {
+        QSettings  obPrefFile( m_qsFileName, QSettings::IniFormat );
+        obPrefFile.setValue( QString::fromAscii( "SecondaryWindow/IsTextTubeCleanupVisible"), m_bIsTextTubeCleanupVisible );
+    }
+}
+
+bool cPreferences::isTextTubeCleanupVisible()
+{
+    return m_bIsTextTubeCleanupVisible;
+}
+
 void cPreferences::setTextSterilVisible( bool p_bTextSterilVisible, bool p_boSaveNow )
 {
     m_bIsTextSterilVisible = p_bTextSterilVisible;
@@ -1673,7 +1731,7 @@ bool cPreferences::isTextSterilVisible()
 {
     return m_bIsTextSterilVisible;
 }
-
+/*
 void cPreferences::setStartHttpSyncAuto( bool p_bStartHttpSyncAuto, bool p_boSaveNow )
 {
     m_bIsStartHttpSyncAuto = p_bStartHttpSyncAuto;
@@ -1699,7 +1757,7 @@ int cPreferences::getStartHttpSyncAutoSeconds() const
 {
     return m_nStartHttpSyncAutoSeconds;
 }
-
+*/
 void cPreferences::setBarcodeHidden( bool p_bBarcodeHidden, bool p_boSaveNow )
 {
     m_bBarcodeHidden = p_bBarcodeHidden;

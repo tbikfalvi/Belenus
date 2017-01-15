@@ -141,10 +141,10 @@ public:
     int             getPatientCardPartnerPriceVat() const;
     void            setBlnsHttpEnabled( bool p_bEnable, bool p_boSaveNow = false );
     bool            isBlnsHttpEnabled();
-    int             getBlnsHttpMessageWaitTime() const;
-    void            setBlnsHttpMessageWaitTime(const int p_inWaitTime );
-    bool            isBlnsHttpSuspended();
-    void            setBlnsHttpSuspended( bool p_bEnable );
+//    int             getBlnsHttpMessageWaitTime() const;
+//    void            setBlnsHttpMessageWaitTime(const int p_inWaitTime );
+//    bool            isBlnsHttpSuspended();
+//    void            setBlnsHttpSuspended( bool p_bEnable );
 
     unsigned int    getPanelId( int p_nPanelIterator );
 
@@ -203,6 +203,8 @@ public:
     QString         getPanelTextSteril() const;
     void            setPanelTextTubeReplace( const QString &p_qsPanelTextTubeReplace, bool p_boSaveNow = false );
     QString         getPanelTextTubeReplace() const;
+    void            setPanelTextTubeCleanup( const QString &p_qsPanelTextTubeCleanup, bool p_boSaveNow = false );
+    QString         getPanelTextTubeCleanup() const;
     void            setHWDebug( bool p_bHWDebug );
     bool            isHWDebugEnabled();
     void            setForceModuleSendTime( bool p_bForceModuleSendTime, bool p_boSaveNow = false );
@@ -213,12 +215,14 @@ public:
     int             getForceTimeSendCounter() const;
     void            setTextTubeReplaceVisible( bool p_bTextTubeReplaceVisible, bool p_boSaveNow = false );
     bool            isTextTubeReplaceVisible();
+    void            setTextTubeCleanupVisible( bool p_bTextTubeCleanupVisible, bool p_boSaveNow = false );
+    bool            isTextTubeCleanupVisible();
     void            setTextSterilVisible( bool p_bTextSterilVisible, bool p_boSaveNow = false );
     bool            isTextSterilVisible();
-    void            setStartHttpSyncAuto( bool p_bStartHttpSyncAuto, bool p_boSaveNow = false );
-    bool            isStartHttpSyncAuto();
-    void            setStartHttpSyncAutoSeconds( const int p_nStartHttpSyncAutoSeconds );
-    int             getStartHttpSyncAutoSeconds() const;
+//    void            setStartHttpSyncAuto( bool p_bStartHttpSyncAuto, bool p_boSaveNow = false );
+//    bool            isStartHttpSyncAuto();
+//    void            setStartHttpSyncAutoSeconds( const int p_nStartHttpSyncAutoSeconds );
+//    int             getStartHttpSyncAutoSeconds() const;
     void            setBarcodeHidden( bool p_bBarcodeHidden, bool p_boSaveNow = false );
     bool            isBarcodeHidden();
     void            setUsageVisibleOnMain( bool p_bUsageVisibleOnMain, bool p_boSaveNow = false );
@@ -233,6 +237,8 @@ public:
     bool            isDACanModifyWorktime();
     void            setDACanModifyExpDate( bool p_bDACanModifyExpDate, bool p_boSaveNow = false );
     bool            isDACanModifyExpDate();
+    void            setWebSyncAutoStart( bool p_bWebSyncAutoStart, bool p_boSaveNow = false );
+    bool            isWebSyncAutoStart();
 
 //void            setXXX( const QString &p_qsXXX, bool p_boSaveNow = false );
 //QString         getXXX() const;
@@ -298,8 +304,8 @@ private:
     int             m_nPatientCardPartnerPriceVat;
     QStringList     m_qslPanelIds;
     bool            m_bBlnsHttpEnabled;
-    int             m_nBlnsHttpWaitTime;
-    bool            m_bBlnsHttpSuspended;
+//    int             m_nBlnsHttpWaitTime;
+//    bool            m_bBlnsHttpSuspended;
     QString         m_qsDirDbBinaries;
     QString         m_qsDirDbBackup;
     bool            m_bForceBackupDatabase;
@@ -318,14 +324,16 @@ private:
     bool            m_bIsStopInLine;
     QString         m_qsPanelTextSteril;
     QString         m_qsPanelTextTubeReplace;
+    QString         m_qsPanelTextTubeCleanup;
     bool            m_bEnableHWDebug;
     bool            m_bForceModuleSendTime;
     bool            m_bForceModuleCheckButton;
     int             m_nForceTimeSendCounter;
     bool            m_bIsTextTubeReplaceVisible;
+    bool            m_bIsTextTubeCleanupVisible;
     bool            m_bIsTextSterilVisible;
-    bool            m_bIsStartHttpSyncAuto;
-    int             m_nStartHttpSyncAutoSeconds;
+//    bool            m_bIsStartHttpSyncAuto;
+//    int             m_nStartHttpSyncAutoSeconds;
     bool            m_bBarcodeHidden;
     bool            m_bUsageVisibleOnMain;
     bool            m_bRFIDEnabled;
@@ -333,6 +341,7 @@ private:
     QString         m_qsLicenceLastValidated;
     bool            m_bDACanModifyWorktime;
     bool            m_bDACanModifyExpDate;
+    bool            m_bWebSyncAutoStart;
 
     void init();
 };

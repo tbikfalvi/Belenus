@@ -61,3 +61,19 @@ PackageCreate update
 Version 1.5.5.2
 ===============
 - Http extended menu megjelenese javitva, connection suspend status ikon a http ikon mellett
+
+Version 1.5.5.3
+===============
+- Megint csak barnulasi ido alatt lehet a STOP gombot hasznalni
+- Torzsvendeg kedvezmeny, egesz pontosan a user kedvezmeny nem mukodott jol; javitva
+
+Version 1.5.5.4
+===============
+- A STOP gomb hasznalatat most mar a panel status beallitasoknal lehet szabalyozni
+
+Version 1.6.0.0
+===============
+- Webes szinkronizalas mostantol kulon programbol megy
+- Online berleteladas / feltolteskor
+- Takaritasi ido
+- Adatok importalasa / exportalasa

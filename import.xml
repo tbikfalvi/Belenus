@@ -1,0 +1,76 @@
+<belenus_import version_db="1.7.5" version_app="1.6.0.0">
+
+  <patientcardtypes>
+    <!-- 
+    <patientcardtype name="" price="" vat="" unit_count="" unit_time="" valid_from="" valid_to="" valid_days="" /> 
+    -->
+    <patientcardtype name="10 egységes" price="5900" vat="" unit_count="10" unit_time="7" valid_from="" valid_to="" valid_days="365" /> 
+    <patientcardtype name="20 egységes" price="11600" vat="" unit_count="20" unit_time="7" valid_from="" valid_to="" valid_days="365" /> 
+    <patientcardtype name="30 egységes" price="17100" vat="" unit_count="30" unit_time="7" valid_from="" valid_to="" valid_days="365" /> 
+    <patientcardtype name="40 egységes" price="22000" vat="" unit_count="40" unit_time="7" valid_from="" valid_to="" valid_days="365" /> 
+    <patientcardtype name="50 egységes" price="27000" vat="" unit_count="50" unit_time="7" valid_from="" valid_to="" valid_days="365" /> 
+    <patientcardtype name="100 egységes" price="53000" vat="" unit_count="100" unit_time="7" valid_from="" valid_to="" valid_days="365" /> 
+    <patientcardtype name="10 alkalmas (100 perc)" price="8350" vat="" unit_count="10" unit_time="10" valid_from="" valid_to="" valid_days="365" /> 
+    <patientcardtype name="Délelőtti + Hétvégi" price="5300" vat="" unit_count="10" unit_time="7" valid_from="" valid_to="" valid_days="365" /> 
+    <patientcardtype name="Online eladott" price="0" vat="" unit_count="0" unit_time="7" valid_from="" valid_to="" valid_days="365" /> 
+  </patientcardtypes>
+
+  <paneluses>
+    <!-- 
+    <paneluse name="" minute="" price="" />
+    -->
+    <paneluse name="7 perc" minute="7" price="750" />
+    <paneluse name="10 perc" minute="10" price="1070" />
+    <paneluse name="14 perc" minute="14" price="1500" />
+    <paneluse name="17 perc" minute="17" price="1820" />
+    <paneluse name="21 perc" minute="21" price="2250" />
+    <paneluse name="24 perc" minute="24" price="2570" />
+    <paneluse name="28 perc" minute="28" price="3000" />
+    <paneluse name="35 perc" minute="35" price="3750" />
+  </paneluses>
+  
+  <producttypes>
+    <!-- 
+    <producttype name="" />
+    -->
+    <producttype name="Krémek" />
+    <producttype name="Üdítők" />
+  </producttypes>
+  
+  <products>
+    <!-- 
+    <product name="" barcode="" count="" price_buy="" vat_buy="" price_sell="" vat_sell="" />
+    -->
+    <product name="Nestea citromos 1,5 l"     barcode="5449000017376" count="0" price_buy="300" vat_buy="0" price_sell="0" vat_sell="0" />
+    <product name="Szentkirályi mentes 1,5 l" barcode="5999881783650" count="0" price_buy="120" vat_buy="0" price_sell="0" vat_sell="0" />
+  </products>
+  
+  <discounts>
+    <!-- 
+    <discount name="" disc_type="" value_type="" value="" time_start="" time_stop="" />
+    'disc_type' can be only:
+      "1" -> Regular customer (name, time_start, time_stop will be ignored)
+      "2" -> Employee (name, time_start, time_stop will be ignored)
+      "3" -> Service person (name, time_start, time_stop will be ignored)
+      "4" -> Guest (name will identify the guest; time_start, time_stop will be ignored)
+      "6" -> Product (name will identify the product; time_start, time_stop will be ignored)
+      "8" -> Coupon (time_start, time_stop will be ignored)
+      "9" -> Time zone (name will be ignored)
+    'value_type' can be only "fix" or "percent"
+    'time_start' and 'time_stop' format has to be 'hh:mm:ss'
+    -->
+    <discount name="" disc_type="1" value_type="percent" value="10" time_start="" time_stop="" />
+    <discount name="Egészség magazin karácsony" disc_type="8" value_type="fix" value="500" time_start="" time_stop="" />
+    <discount name="" disc_type="9" value_type="percent" value="10" time_start="22:00:00" time_stop="23:00:00" />
+  </discounts>
+  
+  <skintypes>
+    <!-- 
+    <skintype name="" />
+    -->
+    <skintype name="Fehér" />
+    <skintype name="Szeplős" />
+    <skintype name="Világos barna" />
+  </skintypes>
+  
+</belenus_import>

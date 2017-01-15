@@ -28,7 +28,11 @@ public:
     void            setWorkTime( const unsigned int p_uiWorkTime)           throw();
     unsigned int    maxWorkTime() const                                     throw();
     void            setMaxWorkTime( const unsigned int p_uiMaxWorkTime)     throw();
-    QString         modified() const                                                throw();
+    unsigned int    cleanTime() const                                       throw();
+    void            setCleanTime( const unsigned int p_uiCleanTime)         throw();
+    unsigned int    maxCleanTime() const                                    throw();
+    void            setMaxCleanTime( const unsigned int p_uiMaxCleanTime)   throw();
+    QString         modified() const                                        throw();
     bool            active() const                                          throw();
     void            setActive( const bool p_bActive )                       throw();
     QString         archive() const                                         throw();
@@ -42,6 +46,8 @@ private:
     QString         m_qsTitle;
     unsigned int    m_uiWorkTime;
     unsigned int    m_uiMaxWorkTime;
+    unsigned int    m_uiCleanTime;
+    unsigned int    m_uiMaxCleanTime;
     QString         m_qsModified;
     bool            m_bActive;
     QString         m_qsArchive;
@@ -53,6 +59,8 @@ private:
                const QString &p_qsTitle = "",
                const unsigned int p_uiWorkTime = 0,
                const unsigned int p_uiMaxWorkTime = 0,
+               const unsigned int p_uiCleanTime = 0,
+               const unsigned int p_uiMaxCleanTime = 0,
                const QString &p_qsModified = "",
                const bool p_bActive = true,
                const QString &p_qsArchive = "NEW" )                  throw();

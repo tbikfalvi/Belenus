@@ -55,11 +55,11 @@ protected:
 private:
 
     QLabel                   m_lblStatusLeft;
-    QPushButton              m_pbStatusHttp;
+//    QPushButton              m_pbStatusHttp;
     QPushButton              m_pbStatusCommunication;
     QPushButton              m_pbStatusKeyboard;
-    QPushButton              m_pbStatusCommunicationSuspended;
-    QLabel                   m_lblHttpCount;
+//    QPushButton              m_pbStatusCommunicationSuspended;
+//    QLabel                   m_lblHttpCount;
     QLabel                   m_lblStatusRight;
     cMdiPanels              *mdiPanels;
     cDlgProgress            *m_dlgProgress;
@@ -80,14 +80,14 @@ private:
     bool                     m_bActionProcessing;
     bool                     m_bProgressErrorVisible;
     int                      m_nProgressCounter;
-    bool                     m_bBlnsHttpConnected;
-    bool                     m_bBlnsHttpErrorVisible;
+//    bool                     m_bBlnsHttpConnected;
+//    bool                     m_bBlnsHttpErrorVisible;
     unsigned int             m_uiBlnsErrorAppeared;
     int                      m_nCommunicationErrorCounter;
     int                      m_nCommResetStep;
     bool                     m_bClosingShift;
     bool                     m_bShoppingCartHasItem;
-    int                      m_nHttpCommCounter;
+//    int                      m_nHttpCommCounter;
     bool                     m_bMainWindowActive;
 
     vector<cDlgAdvertisementWindow *>   m_obAdWnd;
@@ -101,13 +101,14 @@ private:
     void processInputTimePeriod( int p_inMinute );
     void showAdWindows();
     void _resetCommunication();
-    void _updateAllPatientcardToWeb();
-    void _removeAllPatientcardFromWeb();
-    void _removePatientcardFromWeb();
+//    void _updateAllPatientcardToWeb();
+//    void _removeAllPatientcardFromWeb();
+//    void _removePatientcardFromWeb();
     void _setStatusText( QString p_qsText, bool p_bError = false );
-    void _processHttpActions();
+//    void _processHttpActions();
     void _checkVersions();
     void _checkIsActivationNeeded();
+    void _checkIsWebSyncNeeded();
 
 public slots:
     void processDeviceUsePayment( unsigned int p_uiPanelId, unsigned int p_uiLedgerId, int p_nPaymentType );
@@ -193,17 +194,17 @@ private slots:
     void on_action_ManageSkinTypes_triggered();
     void on_action_Import_triggered();
     void on_action_Export_triggered();
-    void on_BlnsHttpErrorOccured();
-    void on_BlnsHttpActionFinished( QString p_qsInfo );
-    void on_BlnsHttpIconClicked();
-    void on_BlnsHttpStepProgress();
-    void on_BlnsHttpHideProgress();
+//    void on_BlnsHttpErrorOccured();
+//    void on_BlnsHttpActionFinished( QString p_qsInfo );
+//    void on_BlnsHttpIconClicked();
+//    void on_BlnsHttpStepProgress();
+//    void on_BlnsHttpHideProgress();
     void on_action_Advertisements_triggered();
     void on_CommunicationButtonClicked();
     void on_action_PatientcardInformation_triggered();
     void on_KeyboardEnabled();
     void on_KeyboardDisabled();
-    void on_BlnsHttpProcessStopped();
+//    void on_BlnsHttpProcessStopped();
 };
 
 #endif

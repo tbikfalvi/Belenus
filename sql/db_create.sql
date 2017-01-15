@@ -2,8 +2,8 @@
 -- Belenus Szoftver Rendszer (c) Pagony Multimedia Studio Bt - 2013
 -- -----------------------------------------------------------------------------------
 -- Filename    : db_create.sql
--- AppVersion  : 1.5.5.2
--- DbVersion   : 1.7.2
+-- AppVersion  : 1.6.0.0
+-- DbVersion   : 1.7.5
 -- -----------------------------------------------------------------------------------
 -- Adatbazist letrehozo SQL script
 -- -----------------------------------------------------------------------------------
@@ -311,8 +311,10 @@ CREATE TABLE `panelStatuses` (
   `name`                    varchar(20)             NOT NULL,
   `length`                  int(10) unsigned        NOT NULL DEFAULT 0,
   `activateCmd`             int(10) unsigned        NOT NULL DEFAULT 0,
-  `skipLevel`               int(10)                 NOT NULL DEFAULT 4,
-  `allowedToSkip`           tinyint(1)              DEFAULT 0,
+  `skipLevel`               int(10)                 NOT NULL DEFAULT 0,
+  `allowedToSkip`           tinyint(1)              NOT NULL DEFAULT 0,
+  `stopLevel`               int(10)                 NOT NULL DEFAULT 0,
+  `allowedToStop`           tinyint(1)              NOT NULL DEFAULT 0,
   `modified`                datetime                NOT NULL,
   `active`                  tinyint(1)              DEFAULT 0,
   `archive`                 varchar(10)             NOT NULL,
@@ -375,6 +377,8 @@ CREATE TABLE `panels` (
   `title`                   varchar(50)             NOT NULL,
   `workTime`                int(10) unsigned        NOT NULL DEFAULT 0,
   `maxWorkTime`             int(10) unsigned        NOT NULL,
+  `cleanTime`               int(10) unsigned        NOT NULL DEFAULT 0,
+  `maxCleanTime`            int(10) unsigned        NOT NULL DEFAULT 0,
   `modified`                datetime                NOT NULL,
   `active`                  tinyint(1)              DEFAULT 0,
   `archive`                 varchar(10)             NOT NULL,

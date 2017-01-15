@@ -339,7 +339,8 @@
     </message>
     <message>
         <location filename="creportdaily.cpp" line="56"/>
-        <source>Patientcards sold / attach</source>
+        <source>Patientcards sold / refilled / attached</source>
+        <oldsource>Patientcards sold / attach</oldsource>
         <translation type="unfinished">Verkaufte Club Karten</translation>
     </message>
     <message>
@@ -707,7 +708,8 @@
     </message>
     <message>
         <location filename="creportledger.cpp" line="70"/>
-        <source>Patientcards sold / attach</source>
+        <source>Patientcards sold / refilled / attached</source>
+        <oldsource>Patientcards sold / attach</oldsource>
         <translation type="unfinished">Verkaufte Club Karten</translation>
     </message>
     <message>
@@ -865,8 +867,8 @@
     </message>
     <message>
         <location filename="creportmonthclose.cpp" line="48"/>
-        <source>Patientcards sold / attach</source>
-        <oldsource>Patientcards sold</oldsource>
+        <source>Patientcards sold / refilled / attached</source>
+        <oldsource>Patientcards sold / attach</oldsource>
         <translation type="unfinished">Verkaufte Club Karten</translation>
     </message>
     <message>
@@ -1140,56 +1142,68 @@
     </message>
     <message>
         <location filename="creportpatientcardsell.cpp" line="41"/>
-        <location filename="creportpatientcardsell.cpp" line="95"/>
+        <location filename="creportpatientcardsell.cpp" line="119"/>
         <source>Patientcard sells</source>
         <translation> verkaufte Club Karten </translation>
     </message>
     <message>
         <location filename="creportpatientcardsell.cpp" line="53"/>
-        <location filename="creportpatientcardsell.cpp" line="100"/>
+        <location filename="creportpatientcardsell.cpp" line="124"/>
         <source>Patientcard refills</source>
         <translation>Club-Karten Aufladungen</translation>
     </message>
     <message>
         <location filename="creportpatientcardsell.cpp" line="65"/>
-        <location filename="creportpatientcardsell.cpp" line="105"/>
+        <location filename="creportpatientcardsell.cpp" line="129"/>
         <source>Lost patientcard replaces</source>
         <translation>Tausch bei Clubkarten Verlust</translation>
     </message>
     <message>
         <location filename="creportpatientcardsell.cpp" line="77"/>
-        <location filename="creportpatientcardsell.cpp" line="110"/>
+        <location filename="creportpatientcardsell.cpp" line="134"/>
         <source>Patientcard shares</source>
         <translation>Partnerkarten Bestellungen zur Club-Karte</translation>
     </message>
     <message>
         <location filename="creportpatientcardsell.cpp" line="89"/>
+        <location filename="creportpatientcardsell.cpp" line="139"/>
+        <source>Patientcard online sells</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="creportpatientcardsell.cpp" line="101"/>
+        <location filename="creportpatientcardsell.cpp" line="144"/>
+        <source>Patientcard online refills</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="creportpatientcardsell.cpp" line="113"/>
         <source>Income summary</source>
         <translation>Einnahmen laut Gesamtbetrachtung</translation>
     </message>
     <message>
-        <location filename="creportpatientcardsell.cpp" line="119"/>
-        <location filename="creportpatientcardsell.cpp" line="173"/>
+        <location filename="creportpatientcardsell.cpp" line="155"/>
+        <location filename="creportpatientcardsell.cpp" line="209"/>
         <source>Sum total</source>
         <translation>Insgesammt</translation>
     </message>
     <message>
-        <location filename="creportpatientcardsell.cpp" line="152"/>
+        <location filename="creportpatientcardsell.cpp" line="188"/>
         <source>Date</source>
         <translation>Date</translation>
     </message>
     <message>
-        <location filename="creportpatientcardsell.cpp" line="153"/>
+        <location filename="creportpatientcardsell.cpp" line="189"/>
         <source>Patientcard barcode</source>
         <translation>Strichcode der Club-Karte</translation>
     </message>
     <message>
-        <location filename="creportpatientcardsell.cpp" line="154"/>
+        <location filename="creportpatientcardsell.cpp" line="190"/>
         <source>Patientcard type</source>
         <translation>Club Karten Typ</translation>
     </message>
     <message>
-        <location filename="creportpatientcardsell.cpp" line="155"/>
+        <location filename="creportpatientcardsell.cpp" line="191"/>
         <source>Amount</source>
         <translation>Preis</translation>
     </message>

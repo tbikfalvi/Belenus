@@ -35,6 +35,8 @@ void cDBPanelStatuses::init( const unsigned int p_uiId,
                              const unsigned int p_uiActivateCommand,
                              const int p_nSkipLevel,
                              const bool p_bAllowedToSkip,
+                             const int p_nStopLevel,
+                             const bool p_bAllowedToStop,
                              const QString &p_qsModified,
                              const bool p_bActive,
                              const QString &p_qsArchive ) throw()
@@ -48,6 +50,8 @@ void cDBPanelStatuses::init( const unsigned int p_uiId,
     m_uiActivateCommand = p_uiActivateCommand;
     m_nSkipLevel        = p_nSkipLevel;
     m_bAllowedToSkip    = p_bAllowedToSkip;
+    m_nStopLevel        = p_nStopLevel;
+    m_bAllowedToStop    = p_bAllowedToStop;
     m_qsModified        = p_qsModified;
     m_bActive           = p_bActive;
     m_qsArchive         = p_qsArchive;
@@ -64,6 +68,8 @@ void cDBPanelStatuses::init( const QSqlRecord &p_obRecord ) throw()
     int inActivateCommandIdx    = p_obRecord.indexOf( "activateCmd" );
     int inSkipLevelIdx          = p_obRecord.indexOf( "skipLevel" );
     int inAllowedToSkipIdx      = p_obRecord.indexOf( "allowedToSkip" );
+    int inStopLevelIdx          = p_obRecord.indexOf( "stopLevel" );
+    int inAllowedToStopIdx      = p_obRecord.indexOf( "allowedToStop" );
     int inModifiedIdx           = p_obRecord.indexOf( "modified" );
     int inActiveIdx             = p_obRecord.indexOf( "active" );
     int inArchiveIdx            = p_obRecord.indexOf( "archive" );
@@ -77,6 +83,8 @@ void cDBPanelStatuses::init( const QSqlRecord &p_obRecord ) throw()
           p_obRecord.value( inActivateCommandIdx ).toInt(),
           p_obRecord.value( inSkipLevelIdx ).toInt(),
           p_obRecord.value( inAllowedToSkipIdx ).toBool(),
+          p_obRecord.value( inStopLevelIdx ).toInt(),
+          p_obRecord.value( inAllowedToStopIdx ).toBool(),
           p_obRecord.value( inModifiedIdx ).toString(),
           p_obRecord.value( inActiveIdx ).toBool(),
           p_obRecord.value( inArchiveIdx ).toString() );
@@ -132,6 +140,8 @@ void cDBPanelStatuses::save() throw( cSevException )
     qsQuery += QString( "activateCmd = %1, " ).arg( m_uiActivateCommand );
     qsQuery += QString( "skipLevel = %1, " ).arg( m_nSkipLevel );
     qsQuery += QString( "allowedToSkip = %1, " ).arg( m_bAllowedToSkip );
+    qsQuery += QString( "stopLevel = %1, " ).arg( m_nStopLevel );
+    qsQuery += QString( "allowedToStop = %1, " ).arg( m_bAllowedToStop );
     qsQuery += QString( "modified = \"%1\", " ).arg( QDateTime::currentDateTime().toString( QString("yyyy-MM-dd hh:mm:ss") ) );
     qsQuery += QString( "active = %1, " ).arg( m_bActive );
     qsQuery += QString( "archive = \"%1\" " ).arg( m_qsArchive );
@@ -285,6 +295,26 @@ bool cDBPanelStatuses::allowedToSkip() const throw()
 void cDBPanelStatuses::setAllowedToSkip( const bool p_bAllowedToSkip ) throw()
 {
     m_bAllowedToSkip = p_bAllowedToSkip;
+}
+
+int cDBPanelStatuses::stopLevel() const throw()
+{
+    return m_nStopLevel;
+}
+
+void cDBPanelStatuses::setStopLevel( const int p_nStopLevel ) throw()
+{
+    m_nStopLevel = p_nStopLevel;
+}
+
+bool cDBPanelStatuses::allowedToStop() const throw()
+{
+    return m_bAllowedToStop;
+}
+
+void cDBPanelStatuses::setAllowedToStop( const bool p_bAllowedToStop ) throw()
+{
+    m_bAllowedToStop = p_bAllowedToStop;
 }
 
 QString cDBPanelStatuses::modified() const throw()
