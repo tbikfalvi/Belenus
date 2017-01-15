@@ -44,6 +44,7 @@
 #ifdef __WIN32__
     #include "communication_serial.h"
 #endif
+#include "communication_rfid.h"
 #include "wndmain.h"
 
 //====================================================================================
@@ -64,6 +65,7 @@ cCassa                   g_obCassa;
 cGeneral                 g_obGen;
 cDBGuest                 g_obGuest;
 cLicenceManager          g_obLicenceManager;
+cCommRFID               *g_poCommRFID;
 //cBlnsHttp               *g_poBlnsHttp;
 
 // 'TO BE SOLVED' felirat, ahol még valamit meg kell oldani
@@ -262,6 +264,19 @@ int main( int argc, char *argv[] )
         obSplash.showMessage(qsSpalsh,Qt::AlignLeft,QColor(59,44, 75));
 
 #ifdef __WIN32__
+
+        //-------------------------------------------------------------------------------
+        // Initialize and set RFID communication if enabled
+        //-------------------------------------------------------------------------------
+
+        g_poCommRFID = NULL;
+
+        if( g_poPrefs->isRFIDEnabled() )
+        {
+            qsSpalsh += QObject::tr("RFID communication enabled\n Checking RFID connection ...");
+            g_poCommRFID = new cCommRFID();
+            g_poCommRFID->init( g_poPrefs->getRFIDComPort() );
+        }
 
         //-------------------------------------------------------------------------------
         // If Hardware component active, process hardware initialization

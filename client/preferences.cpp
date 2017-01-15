@@ -98,6 +98,9 @@ void cPreferences::init()
     m_bBarcodeHidden                = false;
 
     m_qsLicenceLastValidated        = "";
+
+    m_bRFIDEnabled                  = false;
+    m_inRFIDCommunicationPort       = 2;
 }
 
 void cPreferences::loadConfFileSettings()
@@ -169,8 +172,8 @@ void cPreferences::loadConfFileSettings()
         m_bForceModuleSendTime          = obPrefFile.value( QString::fromAscii( "Hardware/ForceModuleSendTime") ).toBool();
         m_bForceModuleCheckButton       = obPrefFile.value( QString::fromAscii( "Hardware/ForceModuleCheckButton") ).toBool();
         m_nForceTimeSendCounter         = obPrefFile.value( QString::fromAscii( "Hardware/ForceTimeSendCounter") ).toInt();
-        m_bRFIDEnabled                  = obPrefFile.value( QString::fromAscii( "Hardware/RFIDEnabled") ).toBool();
-        m_inRFIDCommunicationPort       = obPrefFile.value( QString::fromAscii( "Hardware/RFIDComPort" ) ).toInt();
+        m_bRFIDEnabled                  = obPrefFile.value( QString::fromAscii( "Hardware/RFIDEnabled"), false ).toBool();
+        m_inRFIDCommunicationPort       = obPrefFile.value( QString::fromAscii( "Hardware/RFIDComPort" ), 2 ).toInt();
 
         m_qsCurrencyShort               = obPrefFile.value( QString::fromAscii( "Currency/Short" ), "Ft." ).toString();
         m_qsCurrencyLong                = obPrefFile.value( QString::fromAscii( "Currency/Long" ), "Forint" ).toString();
