@@ -430,6 +430,37 @@ bool cGeneral::isAppicationRunning(QString p_qsAppName)
 }
 
 //====================================================================================
+void cGeneral::initSysTrayIcon(QObject *parent)
+//------------------------------------------------------------------------------------
+{
+    m_stIcon = new QSystemTrayIcon( parent );
+
+    m_stIcon->setIcon( QIcon("./resources/belenus.ico") );
+    m_stIcon->show();
+}
+
+//====================================================================================
+void cGeneral::showTrayInfo( QString p_qsMessage )
+//------------------------------------------------------------------------------------
+{
+    m_stIcon->showMessage( QObject::tr("Information"), p_qsMessage, QSystemTrayIcon::Information, 5000 );
+}
+
+//====================================================================================
+void cGeneral::showTrayWarning( QString p_qsMessage )
+//------------------------------------------------------------------------------------
+{
+    m_stIcon->showMessage( QObject::tr("Information"), p_qsMessage, QSystemTrayIcon::Warning, 5000 );
+}
+
+//====================================================================================
+void cGeneral::showTrayError( QString p_qsMessage )
+//------------------------------------------------------------------------------------
+{
+    m_stIcon->showMessage( QObject::tr("Information"), p_qsMessage, QSystemTrayIcon::Critical, 5000 );
+}
+
+//====================================================================================
 //QString cGeneral::convertCurrency( int p_nCurrencyValue, QString p_qsCurrency )
 //====================================================================================
 /*{

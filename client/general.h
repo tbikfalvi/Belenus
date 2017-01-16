@@ -21,6 +21,7 @@
 #include <QApplication>
 #include <QTranslator>
 #include <QString>
+#include <QSystemTrayIcon>
 
 //====================================================================================
 class cGeneral
@@ -52,11 +53,16 @@ public:
     void             showPatientCardInformation( QString p_qsBarcode );
     bool             isShoppingCartHasItems();
     bool             isAppicationRunning( QString p_qsAppName );
+    void             initSysTrayIcon( QObject *parent = 0 );
+    void             showTrayInfo( QString p_qsMessage );
+    void             showTrayWarning( QString p_qsMessage );
+    void             showTrayError( QString p_qsMessage );
 
 private:
     QApplication    *m_poMainApplication;
     QTranslator     *m_poBlTr;
     QTranslator     *m_poQtTr;
+    QSystemTrayIcon *m_stIcon;
     bool             m_bIsLanguageLoaded;
 };
 //====================================================================================
