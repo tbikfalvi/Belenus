@@ -18,11 +18,8 @@
 
 //====================================================================================
 
-#include <QString>
-
-//====================================================================================
-
 #include <windows.h>
+#include <QString>
 
 //====================================================================================
 
@@ -37,6 +34,8 @@ public:
     ~cCommRFID();
 
     void                     init( int p_nCommPort );
+    bool                     openRFIDConnection();
+    void                     closeRFIDConnection();
     bool                     isRFIDConnected();
     QString                  readRFID();
 

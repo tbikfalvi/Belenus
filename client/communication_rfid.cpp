@@ -15,7 +15,6 @@
 
 #include "belenus.h"
 #include "communication_rfid.h"
-#include "windows.h"
 
 //====================================================================================
 cCommRFID::cCommRFID()
@@ -30,7 +29,10 @@ cCommRFID::cCommRFID()
 cCommRFID::~cCommRFID()
 //------------------------------------------------------------------------------------
 {
-
+    if( m_bPortOpened )
+    {
+        _portClose();
+    }
 }
 
 //====================================================================================
@@ -43,6 +45,20 @@ void cCommRFID::init(int p_nCommPort)
     {
         m_bPortOpened = true;
     }
+}
+
+//====================================================================================
+bool cCommRFID::openRFIDConnection()
+//------------------------------------------------------------------------------------
+{
+    return _portOpen();
+}
+
+//====================================================================================
+void cCommRFID::closeRFIDConnection()
+//------------------------------------------------------------------------------------
+{
+    _portClose();
 }
 
 //====================================================================================
@@ -84,12 +100,14 @@ bool cCommRFID::_portOpen()
 {
     cTracer obTrace( "cCommRFID::portOpen" );
 
+    if( m_nCommPort < 1 ) return false;
+
     char portName[20];
 
     memset( portName, 0, sizeof(portName) );
-    sprintf( portName, "COM%d", m_nCommPort );
+    sprintf( portName, "\\\\.\\COM%d", m_nCommPort );
 
-    g_obLogger(cSeverity::DEBUG) << QString("[RFID] Open serial connection with CreateFile") << EOM;
+    g_obLogger(cSeverity::DEBUG) << QString("[RFID] Open serial connection with CreateFile - port: %1").arg(portName) << EOM;
     m_hPort = CreateFile( portName,                      // port name
                           GENERIC_READ | GENERIC_WRITE,  // access mode
                           0,                             // share mode
@@ -98,7 +116,7 @@ bool cCommRFID::_portOpen()
                           FILE_ATTRIBUTE_NORMAL,         // synchronous mode
                           NULL );                        // no file model
 
-    if ( m_hPort == INVALID_HANDLE_VALUE )
+    if( m_hPort == INVALID_HANDLE_VALUE )
     {
         g_obLogger(cSeverity::DEBUG) << QString("[RFID] FAILED") << EOM;
         m_hPort = NULL;
@@ -118,7 +136,7 @@ bool cCommRFID::_portOpen()
     g_obLogger(cSeverity::DEBUG) << QString("[RFID] SUCCEEDED") << EOM;
 
  // dcb.DCBlength;                         // sizeof(DCB)
-    dcb.BaudRate = 0;                      // current baud rate
+    dcb.BaudRate = 9600;                   // current baud rate
     dcb.fBinary = 1;                       // binary mode, no EOF check
     dcb.fParity = 1;                       // enable parity checking
     dcb.fOutxCtsFlow = 0;                  // CTS output flow control

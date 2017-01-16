@@ -276,6 +276,18 @@ int main( int argc, char *argv[] )
             qsSpalsh += QObject::tr("RFID communication enabled\n Checking RFID connection ...");
             g_poCommRFID = new cCommRFID();
             g_poCommRFID->init( g_poPrefs->getRFIDComPort() );
+            if( g_poCommRFID->isRFIDConnected() )
+            {
+                qsSpalsh += QObject::tr("CONNECTED\n");
+            }
+            else
+            {
+                qsSpalsh += QObject::tr("FAILED\n");
+            }
+        }
+        else
+        {
+            qsSpalsh += QObject::tr("RFID communication disabled\n");
         }
 
         //-------------------------------------------------------------------------------

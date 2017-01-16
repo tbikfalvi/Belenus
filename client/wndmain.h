@@ -3,6 +3,7 @@
 
 #include <QString>
 #include <vector>
+#include <QSystemTrayIcon>
 
 #include "ui_wndmain.h"
 #include "mdipanels.h"
@@ -54,6 +55,7 @@ protected:
 
 private:
 
+    QSystemTrayIcon         *m_stIcon;
     QLabel                   m_lblStatusLeft;
 //    QPushButton              m_pbStatusHttp;
     QPushButton              m_pbStatusCommunication;
