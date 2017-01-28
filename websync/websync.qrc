@@ -24,5 +24,6 @@
         <file>user.png</file>
         <file>patientcard_delete.png</file>
         <file>patientcards_delete.png</file>
+        <file>save.png</file>
     </qresource>
 </RCC>
