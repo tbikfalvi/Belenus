@@ -554,6 +554,17 @@
                </property>
               </spacer>
              </item>
+             <item>
+              <widget class="QPushButton" name="pbSaveSettings">
+               <property name="text">
+                <string/>
+               </property>
+               <property name="icon">
+                <iconset resource="websync.qrc">
+                 <normaloff>:/save.png</normaloff>:/save.png</iconset>
+               </property>
+              </widget>
+             </item>
             </layout>
            </item>
            <item>

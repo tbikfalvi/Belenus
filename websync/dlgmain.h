@@ -113,6 +113,7 @@ private slots:
     void on_pbClearAllPatientCard_clicked();
     void on_PatientCardUpdated( unsigned int p_uiPatientCardId, QString p_qsBarcode );
     void slotShowModuleNotification( QString p_qsMessage );
+    void on_pbSaveSettings_clicked();
 
 private:
     Ui::dlgMain         *ui;
@@ -194,6 +195,7 @@ private:
     void                _disableHttpBySetting();
     QString             _bytearrayToString( QString p_qsString );
     bool                _isAppicationRunning( QString p_qsAppName );
+    void                _saveSettings();
 };
 
 #endif // DLGMAIN_H
