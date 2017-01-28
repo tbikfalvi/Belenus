@@ -205,7 +205,7 @@ MainWindow::MainWindow(QWidget *parent) : QMainWindow(parent), ui(new Ui::MainWi
                                      << "BLNS64"    // Budapest             Polus
                                      << "BLNS65"    // Budapest             Zuglo
 //                                     << "BLNS66"    //
-//                                     << "BLNS67"    //
+                                     << "BLNS67"    //
 //                                     << "BLNS68"    //
 //                                     << "BLNS69"    //
 //                                     << "BLNS70"    //
