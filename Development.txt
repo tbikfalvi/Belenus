@@ -73,6 +73,7 @@ Version 1.5.5.4
 
 Version 1.6.0.0
 ===============
-- Websync, online berlet eladas
-- Gep takaritasi ido
-- Import/Export
+- Webes szinkronizalas mostantol kulon programbol megy
+- Online berleteladas / feltolteskor
+- Takaritasi ido
+- Adatok importalasa / exportalasa

@@ -236,26 +236,11 @@ dlgMain::dlgMain(QWidget *parent) : QDialog(parent), ui(new Ui::dlgMain)
     m_nTimer = startTimer( 500 );
     m_bStartFinished = true;
 }
+
 //=================================================================================================
 dlgMain::~dlgMain()
 {
-    m_uiPatientCardTypeId = ui->cmbOnlinePatientCardType->itemData( ui->cmbOnlinePatientCardType->currentIndex() ).toUInt();
-    m_uiPaymentMethodId   = ui->cmbOnlinePaymentMethod->itemData( ui->cmbOnlinePaymentMethod->currentIndex() ).toUInt();
-
-    QSettings   obPref( QString( "%1/websync.inf" ).arg( QDir::currentPath() ), QSettings::IniFormat );
-
-    obPref.setValue( "Lang",                    m_qsLang );
-    obPref.setValue( "ShowMainWindowOnStart",   m_bShowMainWindowOnStart );
-
-    obPref.setValue( "WindowPosition/Mainwindow_left", x() );
-    obPref.setValue( "WindowPosition/Mainwindow_top", y() );
-    obPref.setValue( "WindowPosition/Mainwindow_width", width() );
-    obPref.setValue( "WindowPosition/Mainwindow_height", height() );
-    obPref.setValue( "TimerPCStatusSync", m_nTimerPCStatusSync );
-    obPref.setValue( "TimerPCOnlineSync", m_nTimerPCOnlineSync );
-    obPref.setValue( "OnlinePatientCardType", m_uiPatientCardTypeId );
-    obPref.setValue( "OnlinePaymentMethod", m_uiPaymentMethodId );
-    obPref.setValue( "LogLevel", m_nLogLevel );
+    _saveSettings();
 
     delete g_poDB;
 
@@ -263,6 +248,7 @@ dlgMain::~dlgMain()
 
     delete ui;
 }
+
 //=================================================================================================
 void dlgMain::timerEvent(QTimerEvent *)
 {
@@ -543,6 +529,13 @@ void dlgMain::on_pbRetranslate_clicked()
 
     m_bReloadLanguage = false;
 }
+
+//=================================================================================================
+void dlgMain::on_pbSaveSettings_clicked()
+{
+    _saveSettings();
+}
+
 //=================================================================================================
 void dlgMain::on_chkShowWindowOnStart_clicked()
 {
@@ -1373,4 +1366,31 @@ void dlgMain::slotShowModuleNotification(QString p_qsMessage)
 //------------------------------------------------------------------------------------
 {
     _displayUserNotification( INFO_Custom, p_qsMessage );
+}
+
+//====================================================================================
+void dlgMain::_saveSettings()
+//------------------------------------------------------------------------------------
+{
+    m_uiPatientCardTypeId = ui->cmbOnlinePatientCardType->itemData( ui->cmbOnlinePatientCardType->currentIndex() ).toUInt();
+    m_uiPaymentMethodId   = ui->cmbOnlinePaymentMethod->itemData( ui->cmbOnlinePaymentMethod->currentIndex() ).toUInt();
+
+    QSettings   obPref( QString( "%1/websync.inf" ).arg( QDir::currentPath() ), QSettings::IniFormat );
+
+    obPref.setValue( "Lang",                    m_qsLang );
+    obPref.setValue( "ShowMainWindowOnStart",   m_bShowMainWindowOnStart );
+
+    obPref.setValue( "WindowPosition/Mainwindow_left", x() );
+    obPref.setValue( "WindowPosition/Mainwindow_top", y() );
+    obPref.setValue( "WindowPosition/Mainwindow_width", width() );
+    obPref.setValue( "WindowPosition/Mainwindow_height", height() );
+    obPref.setValue( "TimerPCStatusSync", m_nTimerPCStatusSync );
+    obPref.setValue( "TimerPCOnlineSync", m_nTimerPCOnlineSync );
+    obPref.setValue( "OnlinePatientCardType", m_uiPatientCardTypeId );
+    obPref.setValue( "OnlinePaymentMethod", m_uiPaymentMethodId );
+    obPref.setValue( "LogLevel", m_nLogLevel );
+
+    QSettings   obBelenus( QString( "%1/belenus.ini" ).arg( QDir::currentPath() ), QSettings::IniFormat );
+
+    obBelenus.setValue( "Server/Address", ui->ledWebServerAddress->text() );
 }
