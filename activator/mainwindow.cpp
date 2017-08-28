@@ -201,17 +201,17 @@ MainWindow::MainWindow(QWidget *parent) : QMainWindow(parent), ui(new Ui::MainWi
                                      << "BLNS60"    // Csepel
                                      << "BLNS61"    // Dunakeszi
 //                                   << "BLNS62"    //
-//                                   << "BLNS63"    //
-//                                   << "BLNS64"    //
+                                   << "BLNS63"    // Budapest   Rakos ut
+                                   << "BLNS64"    // Romania    Nagyvarad
                                      << "BLNS65"    // Budapest             Csepel
                                      << "BLNS66"    // Budapest             Zuglo
                                      << "BLNS67"    // Torokbalint
 //                                     << "BLNS68"    //
 //                                     << "BLNS69"    //
-//                                     << "BLNS70"    //
-//                                     << "BLNS71"    //
-//                                     << "BLNS72"    //
-//                                     << "BLNS73"    //
+                                     << "BLNS70"    //
+                                     << "BLNS71"    //
+                                     << "BLNS72"    //
+                                     << "BLNS73"    //
 //                                     << "BLNS74"    //
 //                                     << "BLNS75"    //
 //                                     << "BLNS76"    //
