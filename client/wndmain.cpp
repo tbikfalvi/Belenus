@@ -137,6 +137,8 @@ cWndMain::cWndMain( QWidget *parent ) : QMainWindow( parent )
     frmLogin->setVisible( false );
     frmLogin->setEnabled( false );
 
+    g_obGen.initSysTrayIcon( this );
+
     showAdWindows();
 
     m_dlgProgress = new cDlgProgress( this );
@@ -531,6 +533,8 @@ void cWndMain::loginUser()
     { // root, vagy rendszeradmin felhasznalo lepett be, NINCS penztar akcio
         g_obLogger(cSeverity::INFO) << "User is system administrator. Cassa disabled." << EOM;
         g_obCassa.setDisabled();
+        g_obGen.showTrayInfo( tr("KiwiSun administrator logged in.\n"
+                                 "Please note cassa is disabled!") );
         return;
     }
 

@@ -155,7 +155,7 @@ MainWindow::MainWindow(QWidget *parent) : QMainWindow(parent), ui(new Ui::MainWi
                                      << "BLNS14"    // Budapest             Béke út
                                      << "BLNS15"    // München
                                      << "BLNS16"    // Debrecen
-//                                     << "BLNS17"    // Kisvárda
+//                                   << "BLNS17"    // Kisvárda
                                      << "BLNS18"    // Rózsadomb
                                      << "BLNS19"    // Pécs
                                      << "BLNS20"    // Sopron
@@ -168,7 +168,7 @@ MainWindow::MainWindow(QWidget *parent) : QMainWindow(parent), ui(new Ui::MainWi
                                      << "BLNS27"    // Miskolc
                                      << "BLNS28"    // Nyiregyhaza
                                      << "BLNS29"    // Kecskemét
-                                     << "BLNS30"    // Győr
+//                                   << "BLNS30"    // Győr
                                      << "BLNS31"    // Szeged
                                      << "BLNS32"    // Veszprém
                                      << "BLNS33"    // Irorszag             Cork
@@ -200,18 +200,18 @@ MainWindow::MainWindow(QWidget *parent) : QMainWindow(parent), ui(new Ui::MainWi
                                      << "BLNS59"    // Irorszag             Dublin
                                      << "BLNS60"    // Csepel
                                      << "BLNS61"    // Dunakeszi
-                                     << "BLNS62"    // Budapest             Blaha
-                                     << "BLNS63"    // Budapest             Kalvin ter
-                                     << "BLNS64"    // Budapest             Polus
+//                                   << "BLNS62"    //
+                                   << "BLNS63"    // Budapest   Rakos ut
+                                   << "BLNS64"    // Romania    Nagyvarad
                                      << "BLNS65"    // Budapest             Csepel
                                      << "BLNS66"    // Budapest             Zuglo
-                                     << "BLNS67"    //
+                                     << "BLNS67"    // Torokbalint
 //                                     << "BLNS68"    //
 //                                     << "BLNS69"    //
-//                                     << "BLNS70"    //
-//                                     << "BLNS71"    //
-//                                     << "BLNS72"    //
-//                                     << "BLNS73"    //
+                                     << "BLNS70"    //
+                                     << "BLNS71"    //
+                                     << "BLNS72"    //
+                                     << "BLNS73"    //
 //                                     << "BLNS74"    //
 //                                     << "BLNS75"    //
 //                                     << "BLNS76"    //
