@@ -268,6 +268,30 @@ void cBlnsHttp::getPatientCardsSoldOnline()
 }
 
 //=================================================================================================
+void cBlnsHttp::processWaitingMails()
+//-------------------------------------------------------------------------------------------------
+{
+    if( !m_bIsHttpEnabled )
+    {
+        m_qsError = tr("HTTP connection disabled");
+        m_inHttpProcessStep = HTTP_STATUS_DEFAULT;
+        g_obLogger(cSeverity::WARNING) << "HTTP: " << m_qsError << EOM;
+        emit signalErrorOccured();
+        return;
+    }
+
+    m_vrHttpActions.clear();
+    m_vrHttpActions.push_back( cBlnsHttpAction::HA_AUTHENTICATE );
+    m_vrHttpActions.push_back( cBlnsHttpAction::HA_SENDMAILTOSERVER );
+    m_vrHttpActions.push_back( cBlnsHttpAction::HA_PROCESSFINISHED );
+
+    m_teBlnsHttpProcess     = cBlnsHttpAction::HA_SENDMAILTOSERVER;
+    m_inHttpProcessStep     = 0;
+
+    _httpStartProcess();
+}
+
+//=================================================================================================
 //=================================================================================================
 //=================================================================================================
 //
@@ -470,6 +494,11 @@ void cBlnsHttp::_httpExecuteProcess()
             _httpConfirmRequestedData();
             break;
 
+        case cBlnsHttpAction::HA_SENDMAILTOSERVER:
+            g_obLogger(cSeverity::DEBUG) << "HTTP: Send mail to server" << EOM;
+            _httpSendMailToServer();
+            break;
+
         case cBlnsHttpAction::HA_PROCESSFINISHED:
             g_obLogger(cSeverity::DEBUG) << "HTTP: Finish process" << EOM;
             _httpProcessResponse();
@@ -542,6 +571,26 @@ void cBlnsHttp::_httpSendCardData()
                                  << EOM;
 
     _downloadFile( qsFileName );
+}
+
+//=================================================================================================
+void cBlnsHttp::_httpSendMailToServer()
+//-------------------------------------------------------------------------------------------------
+{
+    // https://www.kiwisun.hu/kiwi_ticket/belenusLetter.php
+    QString qsFileName  = m_qsServerAddress;
+    QString qsMd5Source = "";
+    QString qsTimeStamp = QString::number( QDateTime::currentDateTime().toTime_t() );
+
+    qsMd5Source.append( m_qsToken );
+
+    QString qsMd5Hash = QString(QCryptographicHash::hash(qsMd5Source.toStdString().c_str(),QCryptographicHash::Md5).toHex());
+
+    qsFileName.append( "/kiwi_ticket/belenusLetter.php" );
+
+    qsFileName = qsFileName.replace( "\\", "/" );
+    qsFileName = qsFileName.replace( "//kiwi", "/kiwi" );
+
 }
 
 //=================================================================================================

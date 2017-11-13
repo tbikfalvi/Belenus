@@ -20,13 +20,25 @@ cDlgPatientSelect::cDlgPatientSelect( QWidget *p_poParent )
 
     horizontalLayoutTop = new QHBoxLayout();
     horizontalLayoutTop->setObjectName( QString::fromUtf8( "horizontalLayoutTop" ) );
+
     lblName = new QLabel( this );
     lblName->setObjectName( QString::fromUtf8( "lblName" ) );
     lblName->setText( tr("Name: ") );
     horizontalLayoutTop->addWidget( lblName );
+
     ledName = new QLineEdit( this );
     ledName->setObjectName( QString::fromUtf8( "ledName" ) );
     horizontalLayoutTop->addWidget( ledName );
+
+    lblEmail = new QLabel( this );
+    lblEmail->setObjectName( QString::fromUtf8( "lblEmail" ) );
+    lblEmail->setText( tr("E-Mail: ") );
+    horizontalLayoutTop->addWidget( lblEmail );
+
+    ledEmail = new QLineEdit( this );
+    ledEmail->setObjectName( QString::fromUtf8( "ledEmail" ) );
+    horizontalLayoutTop->addWidget( ledEmail );
+
     horizontalSpacerTop = new QSpacerItem( 13, 20, QSizePolicy::Expanding, QSizePolicy::Minimum );
     horizontalLayoutTop->addItem( horizontalSpacerTop );
 /*    lblUniqueId = new QLabel( this );
@@ -55,6 +67,7 @@ cDlgPatientSelect::cDlgPatientSelect( QWidget *p_poParent )
     setupTableView();
 
     connect( ledName, SIGNAL(textChanged(QString)), this, SLOT(refreshTable()) );
+    connect( ledEmail, SIGNAL(textChanged(QString)), this, SLOT(refreshTable()) );
 //    connect( ledUniqueId, SIGNAL(textChanged(QString)), this, SLOT(refreshTable()) );
     connect( pbSelect, SIGNAL(clicked(bool)), this, SLOT(on_pbSelect_clicked()) );
 }
@@ -137,6 +150,12 @@ void cDlgPatientSelect::refreshTable()
     {
         m_qsQuery += " AND ";
         m_qsQuery += QString( "name LIKE '\%%1\%'" ).arg( stTemp );
+    }
+    stTemp = ledEmail->text();
+    if( stTemp != "" )
+    {
+        m_qsQuery += " AND ";
+        m_qsQuery += QString( "email LIKE '\%%1\%'" ).arg( stTemp );
     }
 //    stTemp = ledUniqueId->text();
 //    if( stTemp != "" )

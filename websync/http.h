@@ -57,6 +57,7 @@ public:
         HA_PROCESSQUEUE,
         HA_REQUESTDATA,
         HA_SENDREQUESTSFINISHED,
+        HA_SENDMAILTOSERVER,
         HA_PROCESSFINISHED
     };
 
@@ -71,6 +72,7 @@ public:
             case HA_PROCESSQUEUE:               return "HTTPMSG_04 Process waiting queue";                          break;
             case HA_REQUESTDATA:                return "HTTPMSG_05 Get patientcard data sold online";               break;
             case HA_SENDREQUESTSFINISHED:       return "HTTPMSG_06 Processing patientcards sold online finished";   break;
+            case HA_SENDMAILTOSERVER:           return "HTTPMSG_07 Send waiting mail to server";                    break;
             case HA_PROCESSFINISHED:            return "HTTPMSG_99";                                                break;
             default:                            return "HTTPMSGERR";
         }
@@ -99,6 +101,7 @@ public:
     void             sendPatientCardData( QString p_qsBarcode, QString p_qsPatientCardData, bool p_bSendNow = true );
     void             processWaitingCardData();
     void             getPatientCardsSoldOnline();
+    void             processWaitingMails();
 
     int              getNumberOfWaitingRecords();
     QString          errorMessage();
@@ -153,6 +156,7 @@ private:
     void            _httpProcessResponse();
     void            _httpGetToken();
     void            _httpSendCardData();
+    void            _httpSendMailToServer();
     void            _readTokenFromFile();
     void            _sendProcessFinished();
     void            _readResponseFromFile();

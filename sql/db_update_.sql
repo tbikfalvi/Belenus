@@ -1,27 +1,64 @@
 ﻿-- -----------------------------------------------------------------------------------
 -- Belenus Szoftver Rendszer (c) Pagony Multimedia Studio Bt - 2014
 -- -----------------------------------------------------------------------------------
--- Filename    : db_update_1_6_0_0.sql
--- AppVersion  : 1.6.0.0
--- DbVersion   : 1.7.5
+-- Filename    : db_update_1_6_1_0.sql
+-- AppVersion  : 1.6.1.0
+-- DbVersion   : 1.7.6
 -- -----------------------------------------------------------------------------------
 
 USE `belenus`;
 
 -- -----------------------------------------------------------------------------------
 
-INSERT INTO `settings` (`settingId`, `identifier`, `value`) VALUES
- (NULL, 'CURRENT_CASSA_ID', '0');
+-- -----------------------------------------------------------------------------------
+-- Email cimlista
+-- -----------------------------------------------------------------------------------
+CREATE TABLE `distlist` (
+  `distlistId`              int(10) unsigned        NOT NULL AUTO_INCREMENT,
+  `licenceId`               int(10) unsigned        NOT NULL,
+  `name`                    varchar(100)            NOT NULL,
+  `description`             varchar(500)            NOT NULL,
+  `modified`                datetime                NOT NULL,
+  `active`                  tinyint(1) unsigned     NOT NULL,
+  `archive`                 varchar(10)             NOT NULL,
+  PRIMARY KEY (`distlistId`,`licenceId`),
+  FOREIGN KEY (`licenceId`) REFERENCES `licences` (`licenceId`) ON UPDATE CASCADE ON DELETE RESTRICT
+) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
-UPDATE `ledgertypes` SET `name`='Online bérlet eladás' WHERE `ledgerTypeId`=7;
-UPDATE `ledgertypes` SET `name`='Online bérlet feltöltés' WHERE `ledgerTypeId`=8;
+-- -----------------------------------------------------------------------------------
+-- Pacienseket es email levelezo listakat osszekoto tabla, levelezo listak kezelesehez
+-- -----------------------------------------------------------------------------------
+CREATE TABLE `connectPatientWithDistList` (
+  `distlistId`              int(10) unsigned        NOT NULL,
+  `patientId`               int(10) unsigned        NOT NULL,
+  `licenceId`               int(10) unsigned        NOT NULL,
+  PRIMARY KEY (`distlistId`,`patientId`,`licenceId`),
+  FOREIGN KEY (`distlistId`) REFERENCES `distlist` (`distlistId`) ON UPDATE CASCADE ON DELETE RESTRICT,
+  FOREIGN KEY (`patientId`) REFERENCES `patients` (`patientId`) ON UPDATE CASCADE ON DELETE RESTRICT,
+  FOREIGN KEY (`licenceId`) REFERENCES `licences` (`licenceId`) ON UPDATE CASCADE ON DELETE RESTRICT
+) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
-ALTER TABLE `panels`
- ADD `cleanTime`    INT UNSIGNED NOT NULL DEFAULT '0' AFTER `maxWorkTime`,
- ADD `maxCleanTime` INT UNSIGNED NOT NULL DEFAULT '0' AFTER `cleanTime`;
+-- -----------------------------------------------------------------------------------
+-- Email kuldes ideiglenes tablaja. Minden sor egy kikuldendo level.
+-- -----------------------------------------------------------------------------------
+CREATE TABLE `httpsendmail` (
+  `httpSendMailId`          int(10) unsigned        NOT NULL AUTO_INCREMENT,
+  `licenceId`               int(10) unsigned        NOT NULL,
+  `mailTypeId`              int(10) unsigned        NOT NULL,
+  `variables`               text                    NOT NULL,
+  `dateOfSending`           date                    NOT NULL,
+  `recipients`              text                    NOT NULL,
+  `subject`                 varchar(500)            NOT NULL,
+  `mailbody`                text                    NOT NULL,
+  `active`                  tinyint(1)              DEFAULT 0,
+  `archive`                 varchar(10)             NOT NULL,  
+  PRIMARY KEY (`httpSendMailId`,`licenceId`),
+  FOREIGN KEY (`licenceId`) REFERENCES `licences` (`licenceId`) ON UPDATE CASCADE ON DELETE RESTRICT
+) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+
 
 -- -----------------------------------------------------------------------------------
 
 UPDATE settings SET value=NOW() WHERE identifier="GLOBAL_DATA_UPDATED";
-UPDATE settings SET value='1_6_0_0' WHERE identifier='APPLICATION_VERSION';
-UPDATE settings SET value='1_7_5' WHERE identifier='DATABASE_VERSION';
+UPDATE settings SET value='1_6_1_0' WHERE identifier='APPLICATION_VERSION';
+UPDATE settings SET value='1_7_6' WHERE identifier='DATABASE_VERSION';

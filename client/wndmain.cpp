@@ -62,6 +62,7 @@
 #include "crud/dlgskintypes.h"
 #include "crud/dlgadvertisements.h"
 #include "crud/dlgpatientcardselect.h"
+#include "crud/dlgdistlist.h"
 
 //====================================================================================
 
@@ -89,6 +90,7 @@
 #include "dlg/dlgmanagedatabase.h"
 #include "dlg/dlgexportimport.h"
 #include "dlg/dlgcomment.h"
+#include "dlg/dlgsendmail.h"
 
 //====================================================================================
 
@@ -225,6 +227,7 @@ cWndMain::cWndMain( QWidget *parent ) : QMainWindow( parent )
         action_ValidateSerialKey->setIcon( QIcon( "./resources/40x40_key.png" ) );
         action_ManageDatabase->setIcon( QIcon( "./resources/40x40_connect_db.png" ) );
         action_Advertisements->setIcon( QIcon( "./resources/40x40_advertisement.png" ) );
+        action_DistributionLists->setIcon( QIcon( "./resources/40x40_distlist.png" ) );
     action_Preferences->setIcon( QIcon("./resources/40x40_settings.png") );
 
     menuProduct->setIcon( QIcon("./resources/40x40_product.png") );
@@ -235,6 +238,9 @@ cWndMain::cWndMain( QWidget *parent ) : QMainWindow( parent )
         action_PCSaveToDatabase->setIcon( QIcon( "./resources/40x40_patientcardadd.png" ) );
         action_PCActivate->setIcon( QIcon("./resources/40x40_patientcard_sell.png") );
     menuDevice->setIcon( QIcon( "./resources/40x40_device.png" ) );
+
+    menuMail->setIcon( QIcon( "./resources/40x40_send.png" ) );
+        action_SendMail->setIcon( QIcon( "./resources/40x40_send.png" ) );
 
     action_ReportViewer->setIcon( QIcon( "./resources/40x40_book_ledger.png" ) );
     action_Accounting->setIcon( QIcon( "./resources/40x40_book.png" ) );
@@ -306,6 +312,9 @@ cWndMain::cWndMain( QWidget *parent ) : QMainWindow( parent )
     action_ManageDevicePanels->setEnabled( false );
 
     action_Advertisements->setEnabled( false );
+    action_DistributionLists->setEnabled( false );
+
+    action_SendMail->setEnabled( false );
 
     showElementsForComponents();
 
@@ -1151,6 +1160,8 @@ void cWndMain::showElementsForComponents()
         action_RegionZipCity->setEnabled( false );
         action_ManageSkinTypes->setEnabled( false );
         action_Advertisements->setEnabled( false );
+        action_DistributionLists->setEnabled( false );
+        action_SendMail->setEnabled( false );
 
         action_UseDeviceLater->setEnabled( false );
     }
@@ -1266,6 +1277,7 @@ void cWndMain::updateToolbar()
             action_EmptyDemoDB->setEnabled( bIsUserLoggedIn );
             action_ManageDevicePanels->setEnabled( !mdiPanels->isPanelWorking() );
             action_Advertisements->setEnabled( bIsUserLoggedIn && g_obUser.isInGroup(cAccessGroup::ADMIN) );
+            action_DistributionLists->setEnabled( bIsUserLoggedIn && g_obUser.isInGroup(cAccessGroup::ADMIN) );
         action_Preferences->setEnabled( bIsUserLoggedIn );
 
     menu_Action->setEnabled( bIsUserLoggedIn );
@@ -1289,6 +1301,8 @@ void cWndMain::updateToolbar()
             action_SellProduct->setEnabled( bIsUserLoggedIn );
         menuCassa->setEnabled( bIsUserLoggedIn );
             action_CassaActionStorno->setEnabled( bIsUserLoggedIn );
+        menuMail->setEnabled( bIsUserLoggedIn );
+            action_SendMail->setEnabled( bIsUserLoggedIn && g_obUser.isInGroup(cAccessGroup::ADMIN) );
 
     menu_Reports->setEnabled( bIsUserLoggedIn );
 
@@ -3654,6 +3668,24 @@ void cWndMain::on_action_Advertisements_triggered()
                           tr("Please note that you should restart the application for the modifications to take effect."));
 
     m_bMainWindowActive = true;
+}
+
+void cWndMain::on_action_DistributionLists_triggered()
+{
+    m_bMainWindowActive = false;
+
+    cDlgDistList  obDlgDistlist(this);
+
+    obDlgDistlist.exec();
+}
+
+void cWndMain::on_action_SendMail_triggered()
+{
+    m_bMainWindowActive = false;
+
+    dlgSendMail  obDlgSendMail(this);
+
+    obDlgSendMail.exec();
 }
 
 void cWndMain::on_CommunicationButtonClicked()

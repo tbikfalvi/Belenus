@@ -200,11 +200,13 @@ private slots:
 //    void on_BlnsHttpStepProgress();
 //    void on_BlnsHttpHideProgress();
     void on_action_Advertisements_triggered();
+    void on_action_DistributionLists_triggered();
     void on_CommunicationButtonClicked();
     void on_action_PatientcardInformation_triggered();
     void on_KeyboardEnabled();
     void on_KeyboardDisabled();
 //    void on_BlnsHttpProcessStopped();
+    void on_action_SendMail_triggered();
 };
 
 #endif

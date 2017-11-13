@@ -178,6 +178,8 @@
      <addaction name="separator"/>
      <addaction name="action_Advertisements"/>
      <addaction name="separator"/>
+     <addaction name="action_DistributionLists"/>
+     <addaction name="separator"/>
      <addaction name="action_ValidateSerialKey"/>
      <addaction name="action_EditLicenceInformation"/>
      <addaction name="separator"/>
@@ -239,6 +241,12 @@
      </property>
      <addaction name="action_CassaActionStorno"/>
     </widget>
+    <widget class="QMenu" name="menuMail">
+     <property name="title">
+      <string>E-Mail</string>
+     </property>
+     <addaction name="action_SendMail"/>
+    </widget>
     <addaction name="menuDevice"/>
     <addaction name="separator"/>
     <addaction name="menuPatientCard"/>
@@ -246,6 +254,8 @@
     <addaction name="menuProduct"/>
     <addaction name="separator"/>
     <addaction name="menuCassa"/>
+    <addaction name="separator"/>
+    <addaction name="menuMail"/>
    </widget>
    <widget class="QMenu" name="menu_Reports">
     <property name="title">
@@ -852,6 +862,16 @@
    </property>
    <property name="toolTip">
     <string>Logout from application with closing cassa and current shift</string>
+   </property>
+  </action>
+  <action name="action_DistributionLists">
+   <property name="text">
+    <string>Distribution lists</string>
+   </property>
+  </action>
+  <action name="action_SendMail">
+   <property name="text">
+    <string>Send ...</string>
    </property>
   </action>
  </widget>

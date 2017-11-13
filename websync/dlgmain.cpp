@@ -52,12 +52,14 @@ dlgMain::dlgMain(QWidget *parent) : QDialog(parent), ui(new Ui::dlgMain)
 
     m_bSyncPCToServer           = false;
     m_bSyncPCFromServer         = false;
+    m_bSendMailToServer         = false;
 
     m_nIndexPCStatusSync        = 0;
     m_nIndexPCOnlineSync        = 0;
     m_nIndexUpdateSyncDataCount = 0;
     m_nIndexUser                = 0;
     m_nIndexCheckEnablers       = 0;
+    m_nIndexSendMailSync        = 0;
 
     m_enGroup                   = GROUP_MIN;
 
@@ -76,6 +78,7 @@ dlgMain::dlgMain(QWidget *parent) : QDialog(parent), ui(new Ui::dlgMain)
     m_bShowMainWindowOnStart    = obPref.value( "ShowMainWindowOnStart", false ).toBool();
     m_nTimerPCStatusSync        = obPref.value( "TimerPCStatusSync", 2 ).toInt();
     m_nTimerPCOnlineSync        = obPref.value( "TimerPCOnlineSync", 60 ).toInt();
+    m_nTimerSendMailCheck       = obPref.value( "TimerSendMailCheck", 11 ).toInt();
     m_uiPatientCardTypeId       = obPref.value( "OnlinePatientCardType", 0 ).toUInt();
     m_uiPaymentMethodId         = obPref.value( "OnlinePaymentMethod", 0 ).toUInt();
     m_nLogLevel                 = obPref.value( "LogLevel", cSeverity::DEBUG ).toInt();
@@ -212,6 +215,7 @@ dlgMain::dlgMain(QWidget *parent) : QDialog(parent), ui(new Ui::dlgMain)
     ui->chkShowWindowOnStart->setChecked( m_bShowMainWindowOnStart );
     ui->ledTimerPCStatusSync->setText( QString::number( m_nTimerPCStatusSync ) );
     ui->ledTimerPCOnlineSync->setText( QString::number( m_nTimerPCOnlineSync ) );
+    ui->ledTimerMailSendCheck->setText( QString::number( m_nTimerSendMailCheck ) );
     ui->sliFileLogLevel->setValue( m_nLogLevel );
 
     //---------------------------------------------------------------------------------------------
@@ -338,7 +342,7 @@ void dlgMain::timerEvent(QTimerEvent *)
 
     //---------------------------------------------------------------------------------------------
     // Check if any action is in progress
-    if( m_bSyncPCToServer || m_bSyncPCFromServer )
+    if( m_bSyncPCToServer || m_bSyncPCFromServer || m_bSendMailToServer )
     {
         // Synchronization process in progress, wait for next time slot
         return;
@@ -390,7 +394,7 @@ void dlgMain::timerEvent(QTimerEvent *)
 
     //---------------------------------------------------------------------------------------------
     // Check if timer of PC data send is reached the value set
-    if( m_nIndexPCStatusSync >= m_nTimerPCStatusSync && !m_bSyncPCFromServer && !m_bSyncPCToServer )
+    if( m_nIndexPCStatusSync >= m_nTimerPCStatusSync && !m_bSyncPCFromServer && !m_bSyncPCToServer && !m_bSendMailToServer )
     {
         m_nIndexPCStatusSync = 0;
 
@@ -405,13 +409,24 @@ void dlgMain::timerEvent(QTimerEvent *)
 
     //---------------------------------------------------------------------------------------------
     // Check if timer of check online PC sold is reached the value set
-    if( m_nIndexPCOnlineSync >= m_nTimerPCOnlineSync && !m_bSyncPCFromServer && !m_bSyncPCToServer )
+    if( m_nIndexPCOnlineSync >= m_nTimerPCOnlineSync && !m_bSyncPCFromServer && !m_bSyncPCToServer && !m_bSendMailToServer )
     {
         m_nIndexPCOnlineSync = 0;
         m_bSyncPCFromServer = true;
         ui->lblStatusSync->setPixmap( QPixmap( ":/hourglass.png" ) );
         trayIcon->setIcon( QIcon( ":/hourglass.png" ) );
         g_poBlnsHttp->getPatientCardsSoldOnline();
+    }
+
+    //---------------------------------------------------------------------------------------------
+    // Check if timer of check online PC sold is reached the value set
+    if( m_nIndexSendMailSync >= m_nTimerSendMailCheck && !m_bSyncPCFromServer && !m_bSyncPCToServer && !m_bSendMailToServer )
+    {
+        m_nIndexSendMailSync = 0;
+        m_bSendMailToServer = true;
+        ui->lblStatusSync->setPixmap( QPixmap( ":/hourglass.png" ) );
+        trayIcon->setIcon( QIcon( ":/hourglass.png" ) );
+        g_poBlnsHttp->processWaitingMails();
     }
 }
 //=================================================================================================
@@ -550,6 +565,11 @@ void dlgMain::on_ledTimerPCStatusSync_textEdited(const QString &/*arg1*/)
 void dlgMain::on_ledTimerPCOnlineSync_textEdited(const QString &/*arg1*/)
 {
     m_nTimerPCOnlineSync = ui->ledTimerPCOnlineSync->text().toInt();
+}
+//=================================================================================================
+void dlgMain::on_ledTimerMailSendCheck_textEdited(const QString &/*arg1*/)
+{
+    m_nTimerSendMailCheck = ui->ledTimerMailSendCheck->text().toInt();
 }
 //=================================================================================================
 void dlgMain::on_pbSyncAllPatientCard_clicked()
@@ -736,6 +756,7 @@ void dlgMain::_setGUIEnabled(bool p_bEnabled)
     ui->chkShowWindowOnStart->setEnabled( p_bEnabled );
     ui->ledTimerPCStatusSync->setEnabled( p_bEnabled );
     ui->ledTimerPCOnlineSync->setEnabled( p_bEnabled );
+    ui->ledTimerMailSendCheck->setEnabled( p_bEnabled );
     ui->ledWebServerAddress->setEnabled( p_bEnabled && _isInGroup( GROUP_SYSTEM ) );
     ui->sliFileLogLevel->setEnabled( p_bEnabled && _isInGroup( GROUP_USER ) );
 
@@ -1386,6 +1407,7 @@ void dlgMain::_saveSettings()
     obPref.setValue( "WindowPosition/Mainwindow_height", height() );
     obPref.setValue( "TimerPCStatusSync", m_nTimerPCStatusSync );
     obPref.setValue( "TimerPCOnlineSync", m_nTimerPCOnlineSync );
+    obPref.setValue( "TimerSendMailCheck", m_nTimerSendMailCheck );
     obPref.setValue( "OnlinePatientCardType", m_uiPatientCardTypeId );
     obPref.setValue( "OnlinePaymentMethod", m_uiPaymentMethodId );
     obPref.setValue( "LogLevel", m_nLogLevel );
