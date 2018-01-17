@@ -77,3 +77,7 @@ Version 1.6.0.0
 - Online berleteladas / feltolteskor
 - Takaritasi ido
 - Adatok importalasa / exportalasa
+
+Version 1.6.1.0
+===============
+- 
