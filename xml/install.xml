@@ -132,6 +132,9 @@
         <file src="%CURRENT_DIR%/resources/40x40_keyboard_locked.png" dst="%INSTALL_DIR%/resources/40x40_keyboard_locked.png" />
         <file src="%CURRENT_DIR%/resources/40x40_http_disabled.png" dst="%INSTALL_DIR%/resources/40x40_http_disabled.png" />
         <file src="%CURRENT_DIR%/resources/40x40_http_enabled.png" dst="%INSTALL_DIR%/resources/40x40_http_enabled.png" />
+        <file src="%CURRENT_DIR%/resources/40x40_draftmail.png" dst="%INSTALL_DIR%/resources/40x40_draftmail.png" />
+        <file src="%CURRENT_DIR%/resources/40x40_patient_wait.png" dst="%INSTALL_DIR%/resources/40x40_patient_wait.png" />
+        <file src="%CURRENT_DIR%/resources/40x40_websync.png" dst="%INSTALL_DIR%/resources/40x40_websync.png" />
         
         <file src="%CURRENT_DIR%/sqldrivers/qsqlmysql4.dll" dst="%INSTALL_DIR%/sqldrivers/qsqlmysql4.dll" />
 

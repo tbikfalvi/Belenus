@@ -146,7 +146,7 @@ void cDBGuest::load( const unsigned int p_uiId ) throw( cSevException )
 
     QSqlQuery *poQuery = g_poDB->executeQTQuery( QString( "SELECT * FROM patients WHERE patientId = %1" ).arg( p_uiId ) );
 
-    if( poQuery->size() != 1 )
+    if( poQuery->size() < 1 )
         throw cSevException( cSeverity::ERROR, "Guest id not found" );
 
     poQuery->first();
@@ -160,8 +160,24 @@ void cDBGuest::load( const QString &p_qsName ) throw( cSevException )
 
     QSqlQuery *poQuery = g_poDB->executeQTQuery( "SELECT * FROM patients WHERE name = \"" + p_qsName + "\"" );
 
-    if( poQuery->size() != 1 )
+    if( poQuery->size() < 1 )
         throw cSevException( cSeverity::ERROR, "Guest name not found" );
+
+    poQuery->first();
+    init( poQuery->record() );
+}
+//====================================================================================
+void cDBGuest::load( const QString &p_qsName, const QString &p_qsEmail ) throw( cSevException )
+//====================================================================================
+{
+    cTracer obTrace( "cDBGuest::load", QString("name: \"%1\" email: \"%2\"").arg(p_qsName).arg(p_qsEmail) );
+
+    QSqlQuery *poQuery = g_poDB->executeQTQuery( "SELECT * FROM patients WHERE name = \"" + p_qsName + "\" AND email = \"" + p_qsEmail + "\" " );
+
+    if( poQuery->size() < 1 )
+        throw cSevException( cSeverity::ERROR, "Guest name/email not found" );
+    else if( poQuery->size() > 1 )
+        throw cSevException( cSeverity::ERROR, "More than one guest found" );
 
     poQuery->first();
     init( poQuery->record() );

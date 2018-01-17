@@ -98,6 +98,7 @@ private slots:
     void on_pbSyncAllPatientCard_clicked();
     void on_ledTimerPCStatusSync_textEdited(const QString &arg1);
     void on_ledTimerPCOnlineSync_textEdited(const QString &arg1);
+    void on_ledTimerMailSendCheck_textEdited(const QString &arg1);
     void on_pbClearPCData_clicked();
     void on_pbAuthenticate_clicked();
     void on_pbSyncOnlinePC_clicked();
@@ -153,11 +154,14 @@ private:
     bool                 m_bReloadLanguage;
     bool                 m_bSyncPCToServer;
     bool                 m_bSyncPCFromServer;
+    bool                 m_bSendMailToServer;
     int                  m_nTimerPCStatusSync;
     int                  m_nTimerPCOnlineSync;
+    int                  m_nTimerSendMailCheck;
     int                  m_nIndexUser;
     int                  m_nIndexPCStatusSync;
     int                  m_nIndexPCOnlineSync;
+    int                  m_nIndexSendMailSync;
     int                  m_enGroup;
     QString              m_qsRPSW;
     int                  m_nIndexUpdateSyncDataCount;

@@ -119,7 +119,7 @@
      <x>0</x>
      <y>0</y>
      <width>1361</width>
-     <height>26</height>
+     <height>21</height>
     </rect>
    </property>
    <widget class="QMenu" name="menu_System">
@@ -177,6 +177,8 @@
      <addaction name="action_PaymentMethods"/>
      <addaction name="separator"/>
      <addaction name="action_Advertisements"/>
+     <addaction name="separator"/>
+     <addaction name="action_DistributionLists"/>
      <addaction name="separator"/>
      <addaction name="action_ValidateSerialKey"/>
      <addaction name="action_EditLicenceInformation"/>
@@ -239,6 +241,13 @@
      </property>
      <addaction name="action_CassaActionStorno"/>
     </widget>
+    <widget class="QMenu" name="menuMail">
+     <property name="title">
+      <string>E-Mail</string>
+     </property>
+     <addaction name="action_LoadMail"/>
+     <addaction name="action_SendMail"/>
+    </widget>
     <addaction name="menuDevice"/>
     <addaction name="separator"/>
     <addaction name="menuPatientCard"/>
@@ -246,6 +255,8 @@
     <addaction name="menuProduct"/>
     <addaction name="separator"/>
     <addaction name="menuCassa"/>
+    <addaction name="separator"/>
+    <addaction name="menuMail"/>
    </widget>
    <widget class="QMenu" name="menu_Reports">
     <property name="title">
@@ -318,6 +329,7 @@
    <addaction name="action_PatientSelect"/>
    <addaction name="action_PatientEmpty"/>
    <addaction name="action_EditActualPatient"/>
+   <addaction name="action_WaitingPatients"/>
   </widget>
   <widget class="QToolBar" name="toolBarDeviceUse">
    <property name="windowTitle">
@@ -852,6 +864,29 @@
    </property>
    <property name="toolTip">
     <string>Logout from application with closing cassa and current shift</string>
+   </property>
+  </action>
+  <action name="action_DistributionLists">
+   <property name="text">
+    <string>Distribution lists</string>
+   </property>
+  </action>
+  <action name="action_SendMail">
+   <property name="text">
+    <string>Send ...</string>
+   </property>
+  </action>
+  <action name="action_LoadMail">
+   <property name="text">
+    <string>Load ...</string>
+   </property>
+  </action>
+  <action name="action_WaitingPatients">
+   <property name="text">
+    <string>WaitingPatients</string>
+   </property>
+   <property name="toolTip">
+    <string>List of guests waiting</string>
    </property>
   </action>
  </widget>

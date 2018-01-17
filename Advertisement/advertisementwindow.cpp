@@ -15,6 +15,7 @@ advertisementwindow::advertisementwindow(QWidget *parent, unsigned int id) : QDi
 
     m_qslCommands = QStringList() << ""
                                   << "REFRESH"
+                                  << "RESIZE"
                                   << "EXIT";
 
     setWindowIcon( QIcon(":/advertisement.ico") );
@@ -166,6 +167,11 @@ void advertisementwindow::timerEvent(QTimerEvent *)
                 on_pbRefresh_clicked();
                 break;
             case 2:
+                m_qsCMDAction = "_";
+                _updateCommand();
+                _loadPosition();
+                break;
+            case 3:
                 close();
                 break;
             default:

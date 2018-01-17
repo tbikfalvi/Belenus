@@ -98,6 +98,10 @@ void cPreferences::init()
     m_bBarcodeHidden                = false;
 
     m_qsLicenceLastValidated        = "";
+
+    m_bAutoMailOnPCSell             = false;
+    m_bAutoMailOnPCUse              = false;
+    m_bAutoMailOnPCExpiration       = false;
 }
 
 void cPreferences::loadConfFileSettings()
@@ -126,6 +130,7 @@ void cPreferences::loadConfFileSettings()
         m_bDBGlobalAutoSynchronize      = obPrefFile.value( QString::fromAscii( "DBGlobalAutoSynchronization" ), false ).toBool();
         m_uiComponent                   = obPrefFile.value( QString::fromAscii( "PanelSystemID" ), 0 ).toUInt();
         m_bIsSecondaryWindowVisible     = obPrefFile.value( QString::fromAscii( "IsSecondaryWindowVisible" ), false ).toBool();
+        m_nSecondsWaitOnSlpashScreen    = obPrefFile.value( QString::fromAscii( "SecondsWaitOnSlpashScreen" ), 3 ).toInt();
         int nLeft                       = obPrefFile.value( QString::fromAscii( "SecondaryWindow/Left" ), "10" ).toInt();
         int nTop                        = obPrefFile.value( QString::fromAscii( "SecondaryWindow/Top" ), "10" ).toInt();
         int nWidth                      = obPrefFile.value( QString::fromAscii( "SecondaryWindow/Width" ), "600" ).toInt();
@@ -238,6 +243,11 @@ void cPreferences::loadConfFileSettings()
         m_bFapados                  = obPrefFile.value( QString::fromAscii( "Component" ), false ).toBool();
 
         m_bUsageVisibleOnMain       = obPrefFile.value( QString::fromAscii( "PanelSettings/UsageVisibleOnMain"), true ).toBool();
+
+        m_bAutoMailOnPCSell         = obPrefFile.value( QString::fromAscii( "AutoMail/OnSell"), false ).toBool();
+        m_bAutoMailOnPCUse          = obPrefFile.value( QString::fromAscii( "AutoMail/OnUse"), false ).toBool();
+        m_bAutoMailOnPCExpiration   = obPrefFile.value( QString::fromAscii( "AutoMail/OnExpiration"), false ).toBool();
+        m_nPCExpirationDays         = obPrefFile.value( QString::fromAscii( "AutoMail/ExpirationDays"), 7 ).toInt();
     }
 }
 
@@ -339,6 +349,7 @@ void cPreferences::save() const throw (cSevException)
     obPrefFile.setValue( QString::fromAscii( "DBAutoSynchronization" ), m_bDBAutoArchive );
     obPrefFile.setValue( QString::fromAscii( "DBGlobalAutoSynchronization" ), m_bDBGlobalAutoSynchronize );
     obPrefFile.setValue( QString::fromAscii( "IsSecondaryWindowVisible" ), m_bIsSecondaryWindowVisible );
+    obPrefFile.setValue( QString::fromAscii( "SecondsWaitOnSlpashScreen" ), m_nSecondsWaitOnSlpashScreen );
 
     obPrefFile.setValue( QString::fromAscii( "SecondaryWindow/Left" ), m_qpSecondaryPosition.x() );
     obPrefFile.setValue( QString::fromAscii( "SecondaryWindow/Top" ), m_qpSecondaryPosition.y() );
@@ -420,6 +431,11 @@ void cPreferences::save() const throw (cSevException)
     {
         g_poDB->executeQTQuery( QString( "UPDATE settings SET value='42' WHERE identifier=\"COMPONENT_ID\" " ) );
     }
+
+    obPrefFile.setValue( QString::fromAscii( "AutoMail/OnSell"), m_bAutoMailOnPCSell );
+    obPrefFile.setValue( QString::fromAscii( "AutoMail/OnUse"), m_bAutoMailOnPCUse );
+    obPrefFile.setValue( QString::fromAscii( "AutoMail/OnExpiration"), m_bAutoMailOnPCExpiration );
+    obPrefFile.setValue( QString::fromAscii( "AutoMail/ExpirationDays"), m_nPCExpirationDays );
 }
 
 void cPreferences::setFileName( const QString &p_qsFileName )
@@ -1846,4 +1862,152 @@ bool cPreferences::isDACanModifyExpDate()
     return m_bDACanModifyExpDate;
 }
 
+void cPreferences::setAutoMailOnPCSell( bool p_bAutoMailOnPCSell, bool p_boSaveNow )
+{
+    m_bAutoMailOnPCSell = p_bAutoMailOnPCSell;
+
+    if( p_boSaveNow )
+    {
+        QSettings  obPrefFile( m_qsFileName, QSettings::IniFormat );
+        obPrefFile.setValue( QString::fromAscii( "AutoMail/OnSell"), m_bAutoMailOnPCSell );
+    }
+}
+
+bool cPreferences::isAutoMailOnPCSell()
+{
+    return m_bAutoMailOnPCSell;
+}
+
+void cPreferences::setAutoMailOnPCUse( bool p_bAutoMailOnPCUse, bool p_boSaveNow )
+{
+    m_bAutoMailOnPCUse = p_bAutoMailOnPCUse;
+
+    if( p_boSaveNow )
+    {
+        QSettings  obPrefFile( m_qsFileName, QSettings::IniFormat );
+        obPrefFile.setValue( QString::fromAscii( "AutoMail/OnUse"), m_bAutoMailOnPCUse );
+    }
+}
+
+bool cPreferences::isAutoMailOnPCUse()
+{
+    return m_bAutoMailOnPCUse;
+}
+
+void cPreferences::setAutoMailOnPCExpiration( bool p_bAutoMailOnPCExpiration, bool p_boSaveNow )
+{
+    m_bAutoMailOnPCExpiration = p_bAutoMailOnPCExpiration;
+
+    if( p_boSaveNow )
+    {
+        QSettings  obPrefFile( m_qsFileName, QSettings::IniFormat );
+        obPrefFile.setValue( QString::fromAscii( "AutoMail/OnExpiration"), m_bAutoMailOnPCExpiration );
+    }
+}
+
+bool cPreferences::isAutoMailOnPCExpiration()
+{
+    return m_bAutoMailOnPCExpiration;
+}
+
+void cPreferences::setPCExpirationDays( const int p_nPCExpirationDays, bool p_boSaveNow )
+{
+    m_nPCExpirationDays = p_nPCExpirationDays;
+
+    if( p_boSaveNow )
+    {
+        QSettings  obPrefFile( m_qsFileName, QSettings::IniFormat );
+        obPrefFile.setValue( QString::fromAscii( "AutoMail/ExpirationDays"), m_nPCExpirationDays );
+    }
+}
+
+int cPreferences::getPCExpirationDays() const
+{
+    return m_nPCExpirationDays;
+}
+
+void cPreferences::setAdvertisementSizeAndPos( const unsigned int p_uiId,
+                                               const unsigned int p_uiLeft,
+                                               const unsigned int p_uiTop,
+                                               const unsigned int p_uiWidth,
+                                               const unsigned int p_uiHeight,
+                                               bool p_boSaveNow )
+{
+    if( p_boSaveNow )
+    {
+        QSettings  obPrefFile( m_qsFileName, QSettings::IniFormat );
+        obPrefFile.setValue( QString::fromAscii( "Dialogs/Ad%1_left" ).arg(p_uiId), p_uiLeft );
+        obPrefFile.setValue( QString::fromAscii( "Dialogs/Ad%1_top" ).arg(p_uiId), p_uiTop );
+        obPrefFile.setValue( QString::fromAscii( "Dialogs/Ad%1_width" ).arg(p_uiId), p_uiWidth );
+        obPrefFile.setValue( QString::fromAscii( "Dialogs/Ad%1_height" ).arg(p_uiId), p_uiHeight );
+    }
+}
+
+void cPreferences::setSecondsWaitOnSlpashScreen( const int p_nSecondsWaitOnSlpashScreen, bool p_boSaveNow )
+{
+    m_nSecondsWaitOnSlpashScreen = p_nSecondsWaitOnSlpashScreen;
+
+    if( p_boSaveNow )
+    {
+        QSettings  obPrefFile( m_qsFileName, QSettings::IniFormat );
+        obPrefFile.setValue( QString::fromAscii( "SecondsWaitOnSlpashScreen" ), m_nSecondsWaitOnSlpashScreen );
+    }
+}
+
+int cPreferences::getSecondsWaitOnSlpashScreen() const
+{
+    return m_nSecondsWaitOnSlpashScreen;
+}
+
+void cPreferences::setValue( const QString &p_qsKey, const QString &p_qsValue )
+{
+    QSettings  obPrefFile( m_qsFileName, QSettings::IniFormat );
+
+    obPrefFile.setValue( p_qsKey, p_qsValue );
+}
+
+QString cPreferences::getValue( const QString &p_qsKey ) const
+{
+    QSettings  obPrefFile( m_qsFileName, QSettings::IniFormat );
+
+    return obPrefFile.value( p_qsKey ).toString();
+}
+
+void cPreferences::setWindowMain( QWidget *p_wHandle )
+{
+    m_wWindowMain = p_wHandle;
+}
+
+void cPreferences::setWindowSecondary(QWidget *p_wHandle )
+{
+    m_wWindowSecondary = p_wHandle;
+}
+
+void cPreferences::moveWindowMain( int posX, int posY )
+{
+    m_wWindowMain->move( posX, posY );
+
+    setMainWindowSizePos( posX, posY, m_uiMainWindowWidth, m_uiMainWindowHeight, true );
+}
+
+void cPreferences::resizeWindowMain( int width, int height )
+{
+    m_wWindowMain->resize( width, height );
+
+    setMainWindowSizePos( m_uiMainWindowLeft, m_uiMainWindowTop, width, height, true );
+}
+
+void cPreferences::moveWindowSecondary( int posX, int posY )
+{
+    m_wWindowSecondary->move( posX, posY );
+
+    setSecondaryWindowPosition( QPoint( posX, posY ), true );
+}
+
+void cPreferences::resizeWindowSecondary( int width, int height )
+{
+    m_wWindowSecondary->resize( width, height );
+
+    setSecondaryWindowSize( QSize( width, height ), true );
+}
 

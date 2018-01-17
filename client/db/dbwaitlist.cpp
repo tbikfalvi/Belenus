@@ -38,7 +38,8 @@ void cDBWaitlist::init(const unsigned int p_uiId,
                        const int p_nLengthCard,
                        const unsigned int p_uiUseTime,
                        const unsigned int p_uiUsePrice,
-                       const QString &p_qsComment ) throw()
+                       const QString &p_qsComment ,
+                       const QString &p_qsModified) throw()
 {
     m_uiId                  = p_uiId;
     m_uiLicenceId           = p_uiLicenceId;
@@ -54,6 +55,7 @@ void cDBWaitlist::init(const unsigned int p_uiId,
     m_uiUseTime             = p_uiUseTime;
     m_uiUsePrice            = p_uiUsePrice;
     m_qsComment             = p_qsComment;
+    m_qsModified            = p_qsModified;
 }
 
 void cDBWaitlist::init( const QSqlRecord &p_obRecord ) throw()
@@ -72,6 +74,7 @@ void cDBWaitlist::init( const QSqlRecord &p_obRecord ) throw()
     int inUseTimeIdx            = p_obRecord.indexOf( "useTime" );
     int inUsePriceIdx           = p_obRecord.indexOf( "usePrice" );
     int inCommentIdx            = p_obRecord.indexOf( "comment" );
+    int inModifiedIdx           = p_obRecord.indexOf( "modified" );
 
     init( p_obRecord.value( inIdIdx ).toUInt(),
           p_obRecord.value( inLicenceIdIdx ).toUInt(),
@@ -86,7 +89,8 @@ void cDBWaitlist::init( const QSqlRecord &p_obRecord ) throw()
           p_obRecord.value( inLengthCardIdx ).toInt(),
           p_obRecord.value( inUseTimeIdx ).toUInt(),
           p_obRecord.value( inUsePriceIdx ).toUInt(),
-          p_obRecord.value( inCommentIdx ).toString() );
+          p_obRecord.value( inCommentIdx ).toString(),
+          p_obRecord.value( inModifiedIdx ).toString() );
 }
 
 void cDBWaitlist::load( const unsigned int p_uiId ) throw( cSevException )
@@ -129,7 +133,8 @@ void cDBWaitlist::save() throw( cSevException )
     qsQuery += QString( "lengthCard = \"%1\", " ).arg( m_nLengthCard );
     qsQuery += QString( "useTime = \"%1\", " ).arg( m_uiUseTime );
     qsQuery += QString( "usePrice = \"%1\", " ).arg( m_uiUsePrice );
-    qsQuery += QString( "comment = \"%1\" " ).arg( m_qsComment );
+    qsQuery += QString( "comment = \"%1\", " ).arg( m_qsComment );
+    qsQuery += QString( "modified = \"%1\" " ).arg( QDateTime::currentDateTime().toString( QString("yyyy-MM-dd hh:mm:ss") ) );
 
     if( m_uiId )
     {
@@ -295,5 +300,10 @@ QString cDBWaitlist::Comment() const throw()
 void cDBWaitlist::setComment( const QString &p_qsComment ) throw()
 {
     m_qsComment = p_qsComment;
+}
+
+QString cDBWaitlist::modified() const throw()
+{
+    return m_qsModified;
 }
 

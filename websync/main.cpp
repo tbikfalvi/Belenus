@@ -15,6 +15,8 @@ QApplication    *apMainApp;
 #include "../framework/logger/FileWriter.h"
 #include "http.h"
 
+#include <windows.h>
+
 cQTLogger            g_obLogger;
 FileWriter           g_obLogFileWriter("websync_%1.log");
 cBlnsHttp           *g_poBlnsHttp;
@@ -30,7 +32,7 @@ int main(int argc, char *argv[])
 
     QProcessEnvironment qpeInfo = QProcessEnvironment::systemEnvironment();
 
-    QString qsBelenusTarget = QString( qpeInfo.value( "BelenusTarget", "C:/Program Files/Belenus" ) );
+    QString qsBelenusTarget = QString( qpeInfo.value( "BelenusTarget", "C:/KiwiSun/Belenus" ) );
     QDir::setCurrent( qsBelenusTarget );
 
     g_obLogger.attachWriter("file", &g_obLogFileWriter);
@@ -63,6 +65,24 @@ int main(int argc, char *argv[])
     }
 
     QApplication::setQuitOnLastWindowClosed(false);
+
+    QFile   fileCheck( "websync.chk" );
+
+    fileCheck.open( QIODevice::WriteOnly );
+    fileCheck.write( "CURRENTLY NOT RUNNING" );
+    fileCheck.close();
+
+    Sleep(3000);
+
+    if( fileCheck.size() > 0 )
+    {
+        g_obLogger(cSeverity::DEBUG) << "Previous instance not running. Starting application main processes." << EOM;
+    }
+    else
+    {
+        g_obLogger(cSeverity::DEBUG) << "Previous instance is running. Closing this instance." << EOM;
+        return 0;
+    }
 
     dlgMain obDlgMain;
 

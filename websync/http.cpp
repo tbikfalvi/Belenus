@@ -235,7 +235,7 @@ void cBlnsHttp::processWaitingCardData()
     m_vrHttpActions.push_back( cBlnsHttpAction::HA_PCUPDATERECORD );
     m_vrHttpActions.push_back( cBlnsHttpAction::HA_PROCESSFINISHED );
 
-    m_teBlnsHttpProcess = cBlnsHttpAction::HA_PROCESSQUEUE;
+    m_teBlnsHttpProcess = cBlnsHttpAction::HA_PCPROCESSQUEUE;
     m_inHttpProcessStep = 0;
 
     _httpStartProcess();
@@ -263,6 +263,31 @@ void cBlnsHttp::getPatientCardsSoldOnline()
     m_teBlnsHttpProcess     = cBlnsHttpAction::HA_REQUESTDATA;
     m_inHttpProcessStep     = 0;
     m_bGetOnlinePCProcessed = false;
+
+    _httpStartProcess();
+}
+
+//=================================================================================================
+void cBlnsHttp::processWaitingMails()
+//-------------------------------------------------------------------------------------------------
+{
+    if( !m_bIsHttpEnabled )
+    {
+        m_qsError = tr("HTTP connection disabled");
+        m_inHttpProcessStep = HTTP_STATUS_DEFAULT;
+        g_obLogger(cSeverity::WARNING) << "HTTP: " << m_qsError << EOM;
+        emit signalErrorOccured();
+        return;
+    }
+
+    m_vrHttpActions.clear();
+    m_vrHttpActions.push_back( cBlnsHttpAction::HA_AUTHENTICATE );
+    m_vrHttpActions.push_back( cBlnsHttpAction::HA_SENDMAILTOSERVER );
+    m_vrHttpActions.push_back( cBlnsHttpAction::HA_UPDATEMAILRECORD );
+    m_vrHttpActions.push_back( cBlnsHttpAction::HA_PROCESSFINISHED );
+
+    m_teBlnsHttpProcess     = cBlnsHttpAction::HA_MAILPROCESSQUEUE;
+    m_inHttpProcessStep     = 0;
 
     _httpStartProcess();
 }
@@ -392,7 +417,7 @@ void cBlnsHttp::_httpStartProcess()
     }
 
     if( m_teBlnsHttpProcess == cBlnsHttpAction::HA_PCSENDDATA ||
-        m_teBlnsHttpProcess == cBlnsHttpAction::HA_PROCESSQUEUE )
+        m_teBlnsHttpProcess == cBlnsHttpAction::HA_PCPROCESSQUEUE )
     {
         g_obLogger(cSeverity::DEBUG) << "HTTP: Get first unsent record" << EOM;
 
@@ -407,9 +432,9 @@ void cBlnsHttp::_httpStartProcess()
 
             if( poQuery->size() != 1 )
             {
+                emit signalHideProgress( "No more patientcard info to process" );
                 g_obLogger(cSeverity::DEBUG) << "HTTP no more record" << EOM;
                 _updateProcessedRecord();
-                emit signalHideProgress();
                 return;
             }
 
@@ -418,6 +443,135 @@ void cBlnsHttp::_httpStartProcess()
             m_uiRecordId = poQuery->value(0).toUInt();
             m_qsBarcode  = poQuery->value(1).toString();
             m_qsCardData = poQuery->value(2).toString();
+        }
+        catch( cSevException &e )
+        {
+            cerr << ">> " << e.what() << endl << flush;;
+            g_obLogger(e.severity()) << e.what() << EOM;
+            m_qsError = tr("Error occured during executing database command");
+        }
+    }
+
+    if( m_teBlnsHttpProcess == cBlnsHttpAction::HA_SENDMAILTOSERVER ||
+        m_teBlnsHttpProcess == cBlnsHttpAction::HA_MAILPROCESSQUEUE )
+    {
+        g_obLogger(cSeverity::DEBUG) << "HTTP: Get first unsent valid mail" << EOM;
+
+        try
+        {
+            QString      qsQuery            = "SELECT * FROM "
+                                              "httpsendmail WHERE "
+                                              "dateOfSending=\"" + QDate::currentDate().toString( "yyyy-MM-dd" ) + "\" AND "
+                                              "active=1 AND "
+                                              "archive='NEW' "
+                                              "LIMIT 1 ";
+            QSqlQuery   *poQuery            = g_poDB->executeQTQuery( qsQuery );
+            QByteArray   qbaSha1Base        = "";
+            QString      qsUnitIds          = "";
+
+            if( poQuery->size() != 1 )
+            {
+                emit signalHideProgress( "No more email to send" );
+                g_obLogger(cSeverity::DEBUG) << "HTTP no more mail" << EOM;
+                _updateMailRecord();
+                return;
+            }
+
+            poQuery->first();
+
+            m_uiRecordId        = poQuery->value(0).toUInt();
+            m_nMailTypeId       = poQuery->value(2).toInt();
+            m_qsMailRecipients  = poQuery->value(4).toString();
+            m_qsMailSubject     = poQuery->value(5).toString();
+            m_qsMailText        = poQuery->value(6).toString();
+            m_qsMailVarName     = poQuery->value(7).toString();
+            m_qsMailVarBarcode  = poQuery->value(8).toString();
+            m_qsMailVarCardInfo = poQuery->value(9).toString();
+            m_qsMailVarUnitCount= poQuery->value(10).toString();
+            m_qsMailVarDateTime = poQuery->value(11).toString();
+
+            if( m_nMailTypeId > 0 )
+            {
+                m_qsMailText = QString::number( m_nMailTypeId );
+            }
+
+            if( m_nMailTypeId == 3 )
+            {
+                qsUnitIds           = m_qsMailSubject;
+                m_qsMailSubject     = "";
+                unsigned int uiPCId = 0;
+
+                qsQuery = QString( "SELECT * FROM patientcardunits WHERE patientCardUnitId IN (%1) AND active=1 " ).arg( qsUnitIds );
+                poQuery = g_poDB->executeQTQuery( qsQuery );
+
+                if( poQuery->size() > 0 )
+                {
+                    QString qsCardInfo = "";
+                    poQuery->first();
+                    uiPCId = poQuery->value( 2 ).toUInt();
+
+                    QString qsQuery = QString( "SELECT patientCardUnitId, "
+                                                      "patientCardTypeId, "
+                                                      "unitTime, "
+                                                      "validDateFrom, "
+                                                      "validDateTo, "
+                                                      "COUNT(unitTime) "
+                                               "FROM patientcardunits "
+                                               "WHERE patientCardId=%1 "
+                                               "AND validDateFrom<=CURDATE() AND validDateTo>=CURDATE() "
+                                               "AND prepared=0 "
+                                               "AND active=1 "
+                                               "GROUP BY unitTime, validDateTo, patientCardTypeId ORDER BY validDateTo, patientCardUnitId" )
+                                             .arg( uiPCId );
+                    QSqlQuery  *poQuery = g_poDB->executeQTQuery( qsQuery );
+
+                    while( poQuery->next() )
+                    {
+                        QString qsValid = QString( "%1 -> %2" ).arg( poQuery->value( 3 ).toString() )
+                                                               .arg( poQuery->value( 4 ).toString() );
+                        unsigned int uiPCTId = poQuery->value( 1 ).toUInt();
+
+                        if( uiPCTId > 0 )
+                        {
+                            qsCardInfo.append( poQuery->value( 5 ).toString() );
+                            qsCardInfo.append( QObject::tr(" units (") );
+                            qsCardInfo.append( poQuery->value( 2 ).toString() );
+                            qsCardInfo.append( QObject::tr(" minutes) (") );
+                            qsCardInfo.append( _getNameForPatientCardType( uiPCTId ) );
+                            qsCardInfo.append( ") " );
+                            qsCardInfo.append( qsValid );
+                            qsCardInfo.append( "<br>" );
+                        }
+                    }
+                    m_qsMailVarCardInfo = qsCardInfo;
+                }
+                else
+                {
+                    g_obLogger(cSeverity::DEBUG) << "HTTP Expiration mail is obsolete, no need to send" << EOM;
+
+                    qsQuery = "UPDATE httpsendmail SET ";
+                    qsQuery += QString( "active = 0, " );
+                    qsQuery += QString( "archive = \"SENT\" " );
+                    qsQuery += QString( "WHERE httpSendMailId = \"%1\" " ).arg( m_uiRecordId );
+                    g_poDB->executeQTQuery( qsQuery );
+
+                    m_inHttpProcessStep = 2;
+                    _httpExecuteProcess();
+                    return;
+                }
+            }
+
+            qbaSha1Base.append( m_qsMailRecipients );
+            qbaSha1Base.append( m_qsLicenceString );
+            qbaSha1Base.append( m_qsMailVarBarcode );
+            qbaSha1Base.append( m_qsMailVarUnitCount );
+            qbaSha1Base.append( m_qsMailVarDateTime );
+            qbaSha1Base.append( "belenusLetter" );
+
+            m_qsMailSha1 = QString(QCryptographicHash::hash(qbaSha1Base,QCryptographicHash::Sha1).toHex());
+
+            g_obLogger(cSeverity::DEBUG) << "qbaSha1Base:  [" << _bytearrayToString(qbaSha1Base) << "]" << EOM;
+            g_obLogger(cSeverity::DEBUG) << "m_qsMailSha1: [" << m_qsMailSha1 << "]" << EOM;
         }
         catch( cSevException &e )
         {
@@ -468,6 +622,17 @@ void cBlnsHttp::_httpExecuteProcess()
         case cBlnsHttpAction::HA_SENDREQUESTSFINISHED:
             g_obLogger(cSeverity::DEBUG) << "HTTP: Confirm requested data arrived" << EOM;
             _httpConfirmRequestedData();
+            break;
+
+        case cBlnsHttpAction::HA_SENDMAILTOSERVER:
+            g_obLogger(cSeverity::DEBUG) << "HTTP: Send mail to server" << EOM;
+            _httpSendMailToServer();
+            break;
+
+        case cBlnsHttpAction::HA_UPDATEMAILRECORD:
+            g_obLogger(cSeverity::DEBUG) << "HTTP: Update mail record" << EOM;
+            _updateMailRecord();
+            _httpProcessResponse();
             break;
 
         case cBlnsHttpAction::HA_PROCESSFINISHED:
@@ -545,12 +710,60 @@ void cBlnsHttp::_httpSendCardData()
 }
 
 //=================================================================================================
+void cBlnsHttp::_httpSendMailToServer()
+//-------------------------------------------------------------------------------------------------
+{
+    // https://www.kiwisun.hu/kiwi_ticket/belenusLetter.php
+    QString qsFileName      = m_qsServerAddress;
+
+    qsFileName.append( "/kiwi_ticket/belenusLetter.php" );
+
+    qsFileName = qsFileName.replace( "\\", "/" );
+    qsFileName = qsFileName.replace( "//kiwi", "/kiwi" );
+
+    qsFileName.append( QString( "?token=%1" ).arg( m_qsToken ) );
+    qsFileName.append( QString( "&StudioId=%1" ).arg( m_qsLicenceString ) );
+    qsFileName.append( QString( "&email=%1" ).arg( m_qsMailRecipients ) );
+    qsFileName.append( QString( "&subject=%1" ).arg( m_qsMailSubject ) );
+    qsFileName.append( QString( "&text=%1" ).arg( m_qsMailText ) );
+    qsFileName.append( QString( "&name=%1" ).arg( m_qsMailVarName ) );
+    qsFileName.append( QString( "&cardId=%1" ).arg( m_qsMailVarBarcode ) );
+    qsFileName.append( QString( "&cardInfo=%1" ).arg( m_qsMailVarCardInfo ) );
+    qsFileName.append( QString( "&unitCount=%1" ).arg( m_qsMailVarUnitCount ) );
+    qsFileName.append( QString( "&dateTime=%1" ).arg( m_qsMailVarDateTime ) );
+    qsFileName.append( QString( "&code=%1" ).arg( m_qsMailSha1 ) );
+
+    g_obLogger(cSeverity::DEBUG) << "HTTP: Send mail ["
+                                 << qsFileName
+                                 << "]"
+                                 << EOM;
+
+    _downloadFile( qsFileName );
+}
+
+//=================================================================================================
 void cBlnsHttp::_updateProcessedRecord()
 //-------------------------------------------------------------------------------------------------
 {
     try
     {
         g_poDB->executeQTQuery( "DELETE FROM httppatientcardinfo WHERE active = 0 AND archive = \"ARC\" " );
+    }
+    catch( cSevException &e )
+    {
+        cerr << ">> " << e.what() << endl << flush;;
+        g_obLogger(e.severity()) << e.what() << EOM;
+        m_qsError = tr("Error occured during executing database command");
+    }
+}
+
+//=================================================================================================
+void cBlnsHttp::_updateMailRecord()
+//-------------------------------------------------------------------------------------------------
+{
+    try
+    {
+        g_poDB->executeQTQuery( "DELETE FROM httpsendmail WHERE active = 0 AND archive = \"SENT\" " );
     }
     catch( cSevException &e )
     {
@@ -661,7 +874,7 @@ void cBlnsHttp::_httpProcessResponse()
 
         case cBlnsHttpAction::HA_PCSENDDATA:
             g_obLogger(cSeverity::DEBUG) << "HTTP: Read response from save.php" << EOM;
-            _readResponseFromFile();
+            _readPCResponseFromFile();
             if( m_inHttpProcessStep > 0 )
             {
                 m_inHttpProcessStep++;
@@ -670,6 +883,22 @@ void cBlnsHttp::_httpProcessResponse()
             break;
 
         case cBlnsHttpAction::HA_PCUPDATERECORD:
+            g_obLogger(cSeverity::DEBUG) << "HTTP: Nothing to process after update" << EOM;
+            m_inHttpProcessStep++;
+            _httpExecuteProcess();
+            break;
+
+        case cBlnsHttpAction::HA_SENDMAILTOSERVER:
+            g_obLogger(cSeverity::DEBUG) << "HTTP: Read response from belenusLetter.php" << EOM;
+            _readMailResponseFromFile();
+            if( m_inHttpProcessStep > 0 )
+            {
+                m_inHttpProcessStep++;
+                _httpExecuteProcess();
+            }
+            break;
+
+        case cBlnsHttpAction::HA_UPDATEMAILRECORD:
             g_obLogger(cSeverity::DEBUG) << "HTTP: Nothing to process after update" << EOM;
             m_inHttpProcessStep++;
             _httpExecuteProcess();
@@ -829,12 +1058,22 @@ void cBlnsHttp::_sendProcessFinished()
                                                 .arg( m_qsBarcode ) );
             break;
 
-        case cBlnsHttpAction::HA_PROCESSQUEUE:
+        case cBlnsHttpAction::HA_PCPROCESSQUEUE:
             emit signalActionProcessed( QString("%1 succeeded (%2)")
                                                 .arg( cBlnsHttpAction::toStr( m_teBlnsHttpProcess ) )
                                                 .arg( m_qsBarcode ) );
             emit signalStepProgress();
-//            processWaitingCardData();
+            break;
+
+        case cBlnsHttpAction::HA_SENDMAILTOSERVER:
+            emit signalActionProcessed( QString("%1 succeeded")
+                                                .arg( cBlnsHttpAction::toStr( m_teBlnsHttpProcess ) ) );
+            break;
+
+        case cBlnsHttpAction::HA_MAILPROCESSQUEUE:
+            emit signalActionProcessed( QString("%1 succeeded")
+                                                .arg( cBlnsHttpAction::toStr( m_teBlnsHttpProcess ) ) );
+            emit signalStepProgress();
             break;
 
         case cBlnsHttpAction::HA_REQUESTDATA:
@@ -848,7 +1087,7 @@ void cBlnsHttp::_sendProcessFinished()
 }
 
 //=================================================================================================
-void cBlnsHttp::_readResponseFromFile()
+void cBlnsHttp::_readPCResponseFromFile()
 //-------------------------------------------------------------------------------------------------
 {
     QString fileName = QString("%1\\save.php").arg( QDir::currentPath() );
@@ -928,6 +1167,167 @@ void cBlnsHttp::_readResponseFromFile()
         g_obLogger(cSeverity::WARNING) << "HTTP: Server was unable to execute SQL command" << EOM;
         emit signalErrorOccured();
         m_inHttpProcessStep = HTTP_ERROR_SERVER_SQL;
+    }
+}
+
+//=================================================================================================
+void cBlnsHttp::_readMailResponseFromFile()
+//-------------------------------------------------------------------------------------------------
+{
+    QString fileName = QString("%1\\belenusLetter.php").arg( QDir::currentPath() );
+    QFile   file( fileName );
+
+    if (!file.open(QIODevice::ReadOnly | QIODevice::Text))
+    {
+        g_obLogger(cSeverity::ERROR) << "HTTP Unable to open file " << fileName << EOM;
+        return;
+    }
+
+    QTextStream qtsFile(&file);
+    QString     qsLine = qtsFile.readLine();
+
+    g_obLogger(cSeverity::DEBUG) << "HTTP: Response is ["
+                                 << qsLine
+                                 << "]"
+                                 << EOM;
+
+    if( qsLine.contains( "MailSent" ) )
+    {
+        g_obLogger(cSeverity::DEBUG) << "HTTP: Update record with id ["
+                                     << m_uiRecordId
+                                     << "]"
+                                     << EOM;
+
+        try
+        {
+            QString  qsQuery;
+
+            qsQuery = "UPDATE httpsendmail SET ";
+            qsQuery += QString( "active = 0, " );
+            qsQuery += QString( "archive = \"SENT\" " );
+            qsQuery += QString( "WHERE httpSendMailId = \"%1\" " ).arg( m_uiRecordId );
+
+            m_uiRecordId = 0;
+            g_poDB->executeQTQuery( qsQuery );
+        }
+        catch( cSevException &e )
+        {
+            cerr << ">> " << e.what() << endl << flush;;
+            g_obLogger(e.severity()) << e.what() << EOM;
+            m_qsError = tr("Error occured during executing database command");
+        }
+    }
+    else if( qsLine.contains( "false" ) )
+    {
+        m_qsError = tr("Unknown error occured on server side.");
+        g_obLogger(cSeverity::WARNING) << "HTTP: Unknown error occured on server side." << EOM;
+        emit signalErrorOccured();
+        m_inHttpProcessStep = HTTP_ERROR_UNKNOWN;
+    }
+    else if( qsLine.contains( "SQL error" ) )
+    {
+        m_qsError = tr("Database error occured on server side");
+        g_obLogger(cSeverity::WARNING) << "HTTP: Server was unable to execute SQL command" << EOM;
+        emit signalErrorOccured();
+        m_inHttpProcessStep = HTTP_ERROR_SERVER_SQL;
+    }
+    else if( qsLine.contains( "Token repeat" ) )
+    {
+        m_qsError = tr("Token already used before");
+        g_obLogger(cSeverity::WARNING) << "HTTP: Token used in a previous communication" << EOM;
+        emit signalErrorOccured();
+        m_inHttpProcessStep = HTTP_ERROR_TOKEN_REPEAT;
+    }
+    else if( qsLine.contains( "Old token" ) )
+    {
+        m_qsError = tr("Token expired");
+        g_obLogger(cSeverity::WARNING) << "HTTP: Token expired" << EOM;
+        emit signalErrorOccured();
+        m_inHttpProcessStep = HTTP_ERROR_TOKEN_EXPIRED;
+    }
+    else if( qsLine.contains( "Wrong token" ) )
+    {
+        m_qsError = tr("HTTP Session expired");
+        g_obLogger(cSeverity::WARNING) << "HTTP: Token not accepted by server" << EOM;
+        emit signalErrorOccured();
+        m_inHttpProcessStep = HTTP_ERROR_WRONG_TOKEN;
+    }
+    else if( qsLine.contains( "Check error" ) )
+    {
+        m_qsError = tr("HTTP security check failed");
+        g_obLogger(cSeverity::WARNING) << "HTTP: MD5 hash not accepted by server" << EOM;
+        emit signalErrorOccured();
+        m_inHttpProcessStep = HTTP_ERROR_MD5_MISMATCH;
+    }
+    else if( qsLine.contains( "Missing code" ) )
+    {
+        m_qsError = tr("HTTP Missing sha1 code");
+        g_obLogger(cSeverity::WARNING) << "HTTP: Missing sha1 code" << EOM;
+        emit signalErrorOccured();
+        m_inHttpProcessStep = HTTP_ERROR_SHA1_NOT_RECEIVED;
+    }
+    else if( qsLine.contains( "Missing StudioId" ) )
+    {
+        m_qsError = tr("HTTP Missing Studio identifier");
+        g_obLogger(cSeverity::WARNING) << "HTTP: Missing Studio identifier" << EOM;
+        emit signalErrorOccured();
+        m_inHttpProcessStep = HTTP_ERROR_MISSING_STUDIOID;
+    }
+    else if( qsLine.contains( "Missing email" ) )
+    {
+        m_qsError = tr("HTTP Missing mail recipient");
+        g_obLogger(cSeverity::WARNING) << "HTTP: Missing mail recipient" << EOM;
+        emit signalErrorOccured();
+        m_inHttpProcessStep = HTTP_ERROR_MISSING_MAIL_RECIP;
+    }
+    else if( qsLine.contains( "Missing subject" ) )
+    {
+        m_qsError = tr("HTTP Missing mail subject");
+        g_obLogger(cSeverity::WARNING) << "HTTP: Missing mail subject" << EOM;
+        emit signalErrorOccured();
+        m_inHttpProcessStep = HTTP_ERROR_MISSING_MAIL_SUBJ;
+    }
+    else if( qsLine.contains( "Missing text" ) )
+    {
+        m_qsError = tr("HTTP Missing mail body");
+        g_obLogger(cSeverity::WARNING) << "HTTP: Missing mail body" << EOM;
+        emit signalErrorOccured();
+        m_inHttpProcessStep = HTTP_ERROR_MISSING_MAIL_BODY;
+    }
+    else if( qsLine.contains( "Missing name" ) )
+    {
+        m_qsError = tr("HTTP Missing mail variable NAME");
+        g_obLogger(cSeverity::WARNING) << "HTTP: Missing mail variable NAME" << EOM;
+        emit signalErrorOccured();
+        m_inHttpProcessStep = HTTP_ERROR_MISSING_MAIL_VAR_NAME;
+    }
+    else if( qsLine.contains( "Missing cardId" ) )
+    {
+        m_qsError = tr("HTTP Missing mail variable BARCODE");
+        g_obLogger(cSeverity::WARNING) << "HTTP: Missing mail variable BARCODE" << EOM;
+        emit signalErrorOccured();
+        m_inHttpProcessStep = HTTP_ERROR_MISSING_MAIL_VAR_BARCODE;
+    }
+    else if( qsLine.contains( "Missing cardInfo" ) )
+    {
+        m_qsError = tr("HTTP Missing mail variable CARDINFO");
+        g_obLogger(cSeverity::WARNING) << "HTTP: Missing mail variable CARDINFO" << EOM;
+        emit signalErrorOccured();
+        m_inHttpProcessStep = HTTP_ERROR_MISSING_MAIL_VAR_CARDINFO;
+    }
+    else if( qsLine.contains( "Missing unitCount" ) )
+    {
+        m_qsError = tr("HTTP Missing mail variable UNITCOUNT");
+        g_obLogger(cSeverity::WARNING) << "HTTP: Missing mail variable UNITCOUNT" << EOM;
+        emit signalErrorOccured();
+        m_inHttpProcessStep = HTTP_ERROR_MISSING_MAIL_VAR_UNITCOUNT;
+    }
+    else if( qsLine.contains( "Missing dateTime" ) )
+    {
+        m_qsError = tr("HTTP Missing mail variable DATETIME");
+        g_obLogger(cSeverity::WARNING) << "HTTP: Missing mail variable DATETIME" << EOM;
+        emit signalErrorOccured();
+        m_inHttpProcessStep = HTTP_ERROR_MISSING_MAIL_VAR_DATETIME;
     }
 }
 
@@ -1380,6 +1780,18 @@ void cBlnsHttp::_savePatientCardUnits(QString p_qsUnitCount, unsigned int p_uiPa
         g_obLogger(e.severity()) << e.what() << EOM;
         m_qsError = tr("Error occured during executing database command");
     }
+}
+
+//=================================================================================================
+QString cBlnsHttp::_getNameForPatientCardType( unsigned int p_uiPatientCardTypeId )
+//-------------------------------------------------------------------------------------------------
+{
+    QString      qsQuery = QString( "SELECT name FROM `patientcardtypes` WHERE patientCardTypeId=%1 " ).arg( p_uiPatientCardTypeId );
+    QSqlQuery   *poQuery = g_poDB->executeQTQuery( qsQuery );
+
+    poQuery->first();
+
+    return poQuery->value( 0 ).toString();
 }
 
 //=================================================================================================

@@ -43,6 +43,7 @@ public:
     void            setUsePrice( const unsigned int p_uiUsePrice )              throw();
     QString         Comment() const                                             throw();
     void            setComment( const QString &p_qsComment )                    throw();
+    QString         modified() const                                                    throw();
 
 private:
     unsigned int    m_uiId;
@@ -59,6 +60,7 @@ private:
     unsigned int    m_uiUseTime;
     unsigned int    m_uiUsePrice;
     QString         m_qsComment;
+    QString         m_qsModified;
 
     void init( const unsigned int p_uiId = 0,
                const unsigned int p_uiLicenceId = 0,
@@ -73,7 +75,8 @@ private:
                const int p_nLengthCard = 0,
                const unsigned int p_uiUseTime = 0,
                const unsigned int p_uiUsePrice = 0,
-               const QString &p_qsComment = ""
+               const QString &p_qsComment = "",
+                const QString &p_qsModified = ""
               )                                                         throw();
     void init( const QSqlRecord &p_obRecord )                           throw();
 };

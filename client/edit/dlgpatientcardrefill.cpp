@@ -471,6 +471,16 @@ void cDlgPatientCardRefill::on_pbSell_clicked()
             }
 
             m_poPatientCard->sendDataToWeb();
+            if( g_poPrefs->isAutoMailOnPCSell() )
+            {
+                g_obLogger(cSeverity::INFO) << "PatientCard sold, send auto mail about sell" << EOM;
+                m_poPatientCard->sendAutoMail( AUTO_MAIL_ON_PCSELL, QDate::currentDate().toString("yyyy-MM-dd"), 0, "" );
+            }
+            if( g_poPrefs->isAutoMailOnPCExpiration() )
+            {
+                g_obLogger(cSeverity::INFO) << "PatientCard sold, send auto mail about expiration" << EOM;
+                m_poPatientCard->sendAutoMail( AUTO_MAIL_ON_EXPIRE , deValidDateTo->date().addDays( g_poPrefs->getPCExpirationDays()*(-1) ).toString("yyyy-MM-dd"), 0, qslUnitIds.join(",") );
+            }
 
             QDialog::accept();
 

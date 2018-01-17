@@ -47,6 +47,11 @@
 
 //====================================================================================
 
+#define AUTO_MAIL_ON_PCSELL             1
+#define AUTO_MAIL_ON_PCUSE              2
+#define AUTO_MAIL_ON_EXPIRE             3
+
+//====================================================================================
 extern QApplication            *apMainApp;
 extern cDBUser                  g_obUser;
 extern cPreferences            *g_poPrefs;

@@ -889,11 +889,62 @@ CREATE TABLE `waitlist` (
   `useTime`                 int(11)                 NOT NULL,
   `usePrice`                decimal(10,0)           NOT NULL,
   `comment`                 text                    DEFAULT NULL,
+  `modified`                datetime                NOT NULL,
   PRIMARY KEY (`waitlistId`,`licenceId`),
   FOREIGN KEY (`patientCardId`) REFERENCES `patientCards` (`patientCardId`) ON UPDATE CASCADE ON DELETE RESTRICT,
   FOREIGN KEY (`ledgerId`) REFERENCES `ledger` (`ledgerId`) ON UPDATE CASCADE ON DELETE RESTRICT,
   FOREIGN KEY (`shoppingCartItemId`) REFERENCES `shoppingCartItems` (`shoppingCartItemId`) ON UPDATE CASCADE ON DELETE RESTRICT,
   FOREIGN KEY (`panelTypeId`) REFERENCES `panelTypes` (`panelTypeId`) ON UPDATE CASCADE ON DELETE RESTRICT,
+  FOREIGN KEY (`licenceId`) REFERENCES `licences` (`licenceId`) ON UPDATE CASCADE ON DELETE RESTRICT
+) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+
+-- -----------------------------------------------------------------------------------
+-- Email cimlista
+-- -----------------------------------------------------------------------------------
+CREATE TABLE `distlist` (
+  `distlistId`              int(10) unsigned        NOT NULL AUTO_INCREMENT,
+  `licenceId`               int(10) unsigned        NOT NULL,
+  `name`                    varchar(100)            NOT NULL,
+  `description`             varchar(500)            NOT NULL,
+  `modified`                datetime                NOT NULL,
+  `active`                  tinyint(1) unsigned     NOT NULL,
+  `archive`                 varchar(10)             NOT NULL,
+  PRIMARY KEY (`distlistId`,`licenceId`),
+  FOREIGN KEY (`licenceId`) REFERENCES `licences` (`licenceId`) ON UPDATE CASCADE ON DELETE RESTRICT
+) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+
+-- -----------------------------------------------------------------------------------
+-- Pacienseket es email levelezo listakat osszekoto tabla, levelezo listak kezelesehez
+-- -----------------------------------------------------------------------------------
+CREATE TABLE `connectPatientWithDistList` (
+  `distlistId`              int(10) unsigned        NOT NULL,
+  `patientId`               int(10) unsigned        NOT NULL,
+  `licenceId`               int(10) unsigned        NOT NULL,
+  PRIMARY KEY (`distlistId`,`patientId`,`licenceId`),
+  FOREIGN KEY (`distlistId`) REFERENCES `distlist` (`distlistId`) ON UPDATE CASCADE ON DELETE RESTRICT,
+  FOREIGN KEY (`patientId`) REFERENCES `patients` (`patientId`) ON UPDATE CASCADE ON DELETE RESTRICT,
+  FOREIGN KEY (`licenceId`) REFERENCES `licences` (`licenceId`) ON UPDATE CASCADE ON DELETE RESTRICT
+) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+
+-- -----------------------------------------------------------------------------------
+-- Email kuldes ideiglenes tablaja. Minden sor egy kikuldendo level.
+-- -----------------------------------------------------------------------------------
+CREATE TABLE `httpsendmail` (
+  `httpSendMailId`          int(10) unsigned        NOT NULL AUTO_INCREMENT,
+  `licenceId`               int(10) unsigned        NOT NULL,
+  `mailTypeId`              int(10) unsigned        NOT NULL,
+  `dateOfSending`           date                    NOT NULL,
+  `recipients`              text                    NOT NULL,
+  `subject`                 varchar(500)            NOT NULL,
+  `mailbody`                text                    NOT NULL,
+  `var_name`                varchar(500)            NOT NULL,
+  `var_barcode`             varchar(20)             NOT NULL,
+  `var_cardinfo`            text                    NOT NULL,
+  `var_unitcount`           varchar(10)             NOT NULL,
+  `var_datetime`            varchar(50)             NOT NULL,
+  `active`                  tinyint(1)              DEFAULT 0,
+  `archive`                 varchar(10)             NOT NULL,  
+  PRIMARY KEY (`httpSendMailId`,`licenceId`),
   FOREIGN KEY (`licenceId`) REFERENCES `licences` (`licenceId`) ON UPDATE CASCADE ON DELETE RESTRICT
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
