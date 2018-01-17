@@ -45,17 +45,25 @@ CREATE TABLE `httpsendmail` (
   `httpSendMailId`          int(10) unsigned        NOT NULL AUTO_INCREMENT,
   `licenceId`               int(10) unsigned        NOT NULL,
   `mailTypeId`              int(10) unsigned        NOT NULL,
-  `variables`               text                    NOT NULL,
   `dateOfSending`           date                    NOT NULL,
   `recipients`              text                    NOT NULL,
   `subject`                 varchar(500)            NOT NULL,
   `mailbody`                text                    NOT NULL,
+  `var_name`                varchar(500)            NOT NULL,
+  `var_barcode`             varchar(20)             NOT NULL,
+  `var_cardinfo`            text                    NOT NULL,
+  `var_unitcount`           varchar(10)             NOT NULL,
+  `var_datetime`            varchar(50)             NOT NULL,
   `active`                  tinyint(1)              DEFAULT 0,
   `archive`                 varchar(10)             NOT NULL,  
   PRIMARY KEY (`httpSendMailId`,`licenceId`),
   FOREIGN KEY (`licenceId`) REFERENCES `licences` (`licenceId`) ON UPDATE CASCADE ON DELETE RESTRICT
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
+-- -----------------------------------------------------------------------------------
+-- Varakozok tablaja kiegeszitve datummal, hogy lehessen tudni, mikor kerult be a rekord.
+-- -----------------------------------------------------------------------------------
+ALTER TABLE `waitlist` ADD `modified` DATETIME NOT NULL;
 
 -- -----------------------------------------------------------------------------------
 

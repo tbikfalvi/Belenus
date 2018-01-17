@@ -104,6 +104,7 @@ dlgMain::dlgMain(QWidget *parent) : QDialog(parent), ui(new Ui::dlgMain)
     ui->prgbProcess->setVisible( false );
     ui->lblIndexPCData->setVisible( false );
     ui->lblIndexPCOnline->setVisible( false );
+    ui->lblIndexMailSendCheck->setVisible( false );
 
     resize( obPref.value( "WindowPosition/Mainwindow_width", 900 ).toInt(),
             obPref.value( "WindowPosition/Mainwindow_height", 600 ).toInt() );
@@ -179,6 +180,7 @@ dlgMain::dlgMain(QWidget *parent) : QDialog(parent), ui(new Ui::dlgMain)
     connect( g_poBlnsHttp, SIGNAL(signalStepProgress()),                    this, SLOT(on_BlnsHttpStepProgress()) );
     connect( g_poBlnsHttp, SIGNAL(signalPatientCardUpdated(uint,QString)),  this, SLOT(on_PatientCardUpdated(uint,QString)) );
     connect( g_poBlnsHttp, SIGNAL(signalDisplayNotification(QString)),      this, SLOT(slotShowModuleNotification(QString)) );
+    connect( g_poBlnsHttp, SIGNAL(signalHideProgress(QString)),             this, SLOT(on_BlnsHttpActionFinished(QString)) );
 
     ui->lblStatusIconWebServer->setPixmap( QPixmap( ":/status_yellow.png" ) );
     ui->chkHttpCommunicationEnabled->setChecked( m_bHttpEnabledByUser );
@@ -233,6 +235,7 @@ dlgMain::dlgMain(QWidget *parent) : QDialog(parent), ui(new Ui::dlgMain)
 
     ui->lblIndexPCData->setVisible( _isInGroup( GROUP_SYSTEM ) );
     ui->lblIndexPCOnline->setVisible( _isInGroup( GROUP_SYSTEM ) );
+    ui->lblIndexMailSendCheck->setVisible( _isInGroup( GROUP_SYSTEM ) );
     ui->pbTest->setVisible( _isInGroup( GROUP_SYSTEM ) );
     ui->pbTest->setEnabled( _isInGroup( GROUP_SYSTEM ) );
 
@@ -261,9 +264,11 @@ void dlgMain::timerEvent(QTimerEvent *)
     m_nIndexUpdateSyncDataCount++;
     m_nIndexUser++;
     m_nIndexCheckEnablers++;
+    m_nIndexSendMailSync++;
 
     ui->lblIndexPCData->setText( QString::number(m_nIndexPCStatusSync) );
     ui->lblIndexPCOnline->setText( QString::number(m_nIndexPCOnlineSync) );
+    ui->lblIndexMailSendCheck->setText( QString::number(m_nIndexSendMailSync ) );
 
     //---------------------------------------------------------------------------------------------
     // Executed only at the beginning
@@ -276,6 +281,16 @@ void dlgMain::timerEvent(QTimerEvent *)
         }
         m_bStartTimerOnStart = false;
         m_nTimer = startTimer( 1000 );
+        return;
+    }
+
+    QFile   fileCheck( "websync.chk" );
+
+    if( fileCheck.size() > 0 )
+    {
+        fileCheck.open( QIODevice::WriteOnly );
+        fileCheck.write( "" );
+        fileCheck.close();
     }
 
     //---------------------------------------------------------------------------------------------
@@ -345,6 +360,7 @@ void dlgMain::timerEvent(QTimerEvent *)
     if( m_bSyncPCToServer || m_bSyncPCFromServer || m_bSendMailToServer )
     {
         // Synchronization process in progress, wait for next time slot
+        g_obLogger(cSeverity::DEBUG) << "Processes: " << m_bSyncPCFromServer << "|" << m_bSyncPCFromServer << "|" << m_bSendMailToServer << EOM;
         return;
     }
 
@@ -401,6 +417,7 @@ void dlgMain::timerEvent(QTimerEvent *)
         if( ui->ledNumberOfCardsWaiting->text().toInt() > 0 )
         {
             m_bSyncPCToServer = true;
+            g_obLogger(cSeverity::DEBUG) << "Process started: sending patientcard data." << EOM;
             ui->lblStatusSync->setPixmap( QPixmap( ":/hourglass.png" ) );
             trayIcon->setIcon( QIcon( ":/hourglass.png" ) );
             g_poBlnsHttp->processWaitingCardData();
@@ -413,6 +430,7 @@ void dlgMain::timerEvent(QTimerEvent *)
     {
         m_nIndexPCOnlineSync = 0;
         m_bSyncPCFromServer = true;
+        g_obLogger(cSeverity::DEBUG) << "Process started: retrieving patientcard data sold online." << EOM;
         ui->lblStatusSync->setPixmap( QPixmap( ":/hourglass.png" ) );
         trayIcon->setIcon( QIcon( ":/hourglass.png" ) );
         g_poBlnsHttp->getPatientCardsSoldOnline();
@@ -424,6 +442,7 @@ void dlgMain::timerEvent(QTimerEvent *)
     {
         m_nIndexSendMailSync = 0;
         m_bSendMailToServer = true;
+        g_obLogger(cSeverity::DEBUG) << "Process started: sending mail." << EOM;
         ui->lblStatusSync->setPixmap( QPixmap( ":/hourglass.png" ) );
         trayIcon->setIcon( QIcon( ":/hourglass.png" ) );
         g_poBlnsHttp->processWaitingMails();
@@ -692,6 +711,7 @@ void dlgMain::on_BlnsHttpErrorOccured()
     QString qsTooltip   = "";
     m_bSyncPCToServer   = false;
     m_bSyncPCFromServer = false;
+    m_bSendMailToServer = false;
     m_qsHttpStatus      = g_poBlnsHttp->errorMessage();
 
     qsTooltip.append( m_qsHttpStatus );
@@ -716,6 +736,7 @@ void dlgMain::on_BlnsHttpActionFinished(QString p_qsInfo)
     QString qsTooltip   = "";
     m_bSyncPCToServer   = false;
     m_bSyncPCFromServer = false;
+    m_bSendMailToServer = false;
     m_qsHttpStatus      = tr("HTTP Connection established");
 
     qsTooltip.append( m_qsHttpStatus );
@@ -738,7 +759,8 @@ void dlgMain::on_BlnsHttpActionFinished(QString p_qsInfo)
 // Executed when patientcard data updated on server
 void dlgMain::on_BlnsHttpStepProgress()
 {
-    m_bSyncPCToServer = false;
+    m_bSyncPCToServer   = false;
+    m_bSendMailToServer = false;
 
     ui->lblStatusIconWebServer->setPixmap( QPixmap( ":/status_green.png" ) );
     actionStatusHttp->setIcon( QIcon( ":/status_green.png" ) );
@@ -780,6 +802,7 @@ void dlgMain::_setGUIEnabled(bool p_bEnabled)
 
     ui->lblIndexPCData->setVisible( _isInGroup( GROUP_SYSTEM ) );
     ui->lblIndexPCOnline->setVisible( _isInGroup( GROUP_SYSTEM ) );
+    ui->lblIndexMailSendCheck->setVisible( _isInGroup( GROUP_SYSTEM ) );
     ui->pbTest->setVisible( _isInGroup( GROUP_SYSTEM ) );
     ui->pbTest->setEnabled( _isInGroup( GROUP_SYSTEM ) );
 }
@@ -1307,6 +1330,36 @@ void dlgMain::on_chkHttpCommunicationEnabled_clicked()
 void dlgMain::on_pbTest_clicked()
 //-------------------------------------------------------------------------------------------------
 {
+    // Read text from database and test sha1
+    try
+    {
+        QString      qsQuery            = "SELECT * FROM "
+                                          "httpsendmail WHERE "
+                                          "dateOfSending=\"" + QDate::currentDate().toString( "yyyy-MM-dd" ) + "\" AND "
+                                          "active=1 AND "
+                                          "archive='NEW' "
+                                          "LIMIT 1 ";
+        QSqlQuery   *poQuery            = g_poDB->executeQTQuery( qsQuery );
+        QByteArray   qbaSha1Base        = "";
+
+        poQuery->first();
+        qbaSha1Base.append( poQuery->value(6).toString().toUtf8() );
+
+        QString qsSha1Gen = QString(QCryptographicHash::hash(qbaSha1Base,QCryptographicHash::Sha1).toHex());
+
+        _displayUserNotification( INFO_Custom, "Check logs for sha1 test values" );
+
+        g_obLogger(cSeverity::DEBUG) << "qbaSha1Base:  [" << _bytearrayToString(qbaSha1Base) << "]" << EOM;
+        g_obLogger(cSeverity::DEBUG) << "qsSha1Gen:    [" << qsSha1Gen << "]" << EOM;
+    }
+    catch( cSevException &e )
+    {
+        cerr << ">> " << e.what() << endl << flush;;
+        g_obLogger(e.severity()) << e.what() << EOM;
+    }
+
+
+
 /*    QFile   file( "ansi.php" );
 
     file.open(QIODevice::ReadOnly | QIODevice::Text);
@@ -1323,7 +1376,7 @@ void dlgMain::on_pbTest_clicked()
     g_poDB->executeQTQuery( QString("INSERT INTO settings SET identifier=\"Ekezet teszt\", value=\"%1\" ").arg( _bytearrayToString(qbaTest) ) );
 
     _displayUserNotification( INFO_Custom, tr("árvíztűrő tükörfúrógép\nÁRVÍZTŰRŐ TÜKÖRFÚRÓGÉP") );
-*/
+
     dlgLineEdit obDlgLineEdit(this);
 
     if( obDlgLineEdit.exec() == QDialog::Accepted )
@@ -1332,6 +1385,7 @@ void dlgMain::on_pbTest_clicked()
     }
 
     _displayUserNotification( INFO_Custom, tr("") );
+*/
 }
 
 //====================================================================================

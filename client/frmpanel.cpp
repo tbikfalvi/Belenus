@@ -1182,6 +1182,15 @@ void cFrmPanel::closeAttendance()
                 obDBPatientCard.synchronizeTime();
                 obDBPatientCard.save();
                 obDBPatientCard.sendDataToWeb();
+
+                if( g_poPrefs->isAutoMailOnPCUse() )
+                {
+                    g_obLogger(cSeverity::INFO) << "PatientCard used, send auto mail about usage" << EOM;
+                    obDBPatientCard.sendAutoMail( AUTO_MAIL_ON_PCUSE,
+                                                  QDate::currentDate().toString("yyyy-MM-dd"),
+                                                  stTemp->qslUnitIds.count(),
+                                                  QDateTime::currentDateTime().toString("yyyy-MM-dd hh:mm") );
+                }
             }
 
             cDBPatientCardHistory   obDBPatientCardHistory;
@@ -1322,7 +1331,15 @@ void cFrmPanel::slotPanelStartClicked()
     cTracer obTrace( "cFrmPanel::slotPanelStartClicked" );
 
     emit signalMainWindowActivated();
-    start();
+
+    if( isDeviceStopped() )
+    {
+        continueStoppedDevice();
+    }
+    else
+    {
+        start();
+    }
 }
 //====================================================================================
 void cFrmPanel::slotPanelNextClicked()

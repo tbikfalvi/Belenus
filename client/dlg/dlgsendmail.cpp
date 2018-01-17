@@ -23,10 +23,34 @@ dlgSendMail::dlgSendMail( QWidget *p_poParent, QString p_qsTitle ) : QDialog( p_
     connect( teMessageBody, SIGNAL(textChanged()), this, SLOT(slotRefreshWarningColors()) );
 
     slotRefreshWarningColors();
+
+    QPoint  qpDlgSize = g_poPrefs->getDialogSize( "SendMail", QPoint(270,70) );
+    resize( qpDlgSize.x(), qpDlgSize.y() );
 }
 
 dlgSendMail::~dlgSendMail()
 {
+    g_poPrefs->setDialogSize( "SendMail", QPoint( width(), height() ) );
+}
+
+void dlgSendMail::loadMail()
+{
+/*
+    try
+    {
+        cDBSendMail obDBSendMail;
+
+        obDBSendMail.load( p_uiMailId );
+
+        teTo->setPlainText( obDBSendMail.recipients() );
+        ledSubject->setText( obDBSendMail.subject() );
+        teMessageBody->setPlainText( obDBSendMail.message() );
+    }
+    catch( cSevException &e )
+    {
+        g_obLogger(e.severity()) << e.what() << EOM;
+    }
+*/
 }
 
 //===========================================================================================================
@@ -156,7 +180,6 @@ void dlgSendMail::on_pbSend_clicked()
         obDBSendMail.createNew();
         obDBSendMail.setLicenceId( g_poPrefs->getLicenceId() );
         obDBSendMail.setMailTypeId( 0 );
-        obDBSendMail.setVariables( "" );
         obDBSendMail.setDateSend( QDate::currentDate().toString("yyyy-MM-dd") );
         obDBSendMail.setRecipients( qslMailRecipients.join(";") );
         obDBSendMail.setSubject( ledSubject->text() );
@@ -173,6 +196,24 @@ void dlgSendMail::on_pbSend_clicked()
 
 void dlgSendMail::on_pbSave_clicked()
 {
+    try
+    {
+        cDBSendMail obDBSendMail;
+
+        obDBSendMail.createNew();
+        obDBSendMail.setLicenceId( g_poPrefs->getLicenceId() );
+        obDBSendMail.setMailTypeId( 0 );
+        obDBSendMail.setDateSend( "" );
+        obDBSendMail.setRecipients( teTo->toPlainText().trimmed() );
+        obDBSendMail.setSubject( ledSubject->text() );
+        obDBSendMail.setMessage( teMessageBody->toPlainText() );
+        obDBSendMail.save();
+    }
+    catch( cSevException &e )
+    {
+        g_obLogger(e.severity()) << e.what() << EOM;
+    }
+
     QDialog::accept();
 }
 

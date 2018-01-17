@@ -12,6 +12,7 @@ public:
     dlgSendMail( QWidget *p_poParent = 0, QString p_qsTitle = "" );
     virtual ~dlgSendMail();
 
+    void    loadMail();
 
 private slots:
     void slotRefreshWarningColors();

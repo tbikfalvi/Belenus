@@ -13,8 +13,8 @@
 // Alkalmazas fo allomanya.
 //====================================================================================
 
-#define APPLICATION_VERSION_NUMBER  "1.6.0.0"
-#define DATABASE_VERSION_NUMBER     "1.7.5"
+#define APPLICATION_VERSION_NUMBER  "1.6.1.0"
+#define DATABASE_VERSION_NUMBER     "1.7.6"
 
 //====================================================================================
 
@@ -149,11 +149,8 @@ int main( int argc, char *argv[] )
         fileCheck.open( QIODevice::WriteOnly );
         fileCheck.write( "CURRENTLY NOT RUNNING" );
         fileCheck.close();
-#ifdef __WIN32__
-            Sleep(3000);
-#else
-            sleep( 3 );
-#endif
+
+        Sleep( g_poPrefs->getSecondsWaitOnSlpashScreen()*1000 );
 
         if( fileCheck.size() > 0 )
         {
@@ -165,11 +162,8 @@ int main( int argc, char *argv[] )
             qsSpalsh += QObject::tr(" ALREADY RUNNING.\n");
             qsSpalsh += QObject::tr("\n\nPlease use the currently running application.\n");
             obSplash.showMessage(qsSpalsh,Qt::AlignLeft,QColor(59,44, 75));
-#ifdef __WIN32__
-            Sleep(5000);
-#else
-            sleep( 3 );
-#endif
+
+            Sleep( g_poPrefs->getSecondsWaitOnSlpashScreen()*1000 );
             return 0;
         }
 
@@ -180,6 +174,8 @@ int main( int argc, char *argv[] )
 
         qsSpalsh += QObject::tr("License is ... ");
         obSplash.showMessage(qsSpalsh,Qt::AlignLeft,QColor(59,44, 75));
+
+        Sleep(1000);
 
         int         nId = 0;
         QString     qsSerial = QObject::tr("NO_SERIAL_DETECTED");
@@ -202,6 +198,8 @@ int main( int argc, char *argv[] )
         qsSpalsh += "\n";
         obSplash.showMessage(qsSpalsh,Qt::AlignLeft,QColor(59,44, 75));
 
+        Sleep( g_poPrefs->getSecondsWaitOnSlpashScreen()*1000 );
+
         qsSpalsh += QObject::tr("Serial: %1\n").arg(qsSerial);
         obSplash.showMessage(qsSpalsh,Qt::AlignLeft,QColor(59,44,75));
 
@@ -223,13 +221,10 @@ int main( int argc, char *argv[] )
                                         "The application can be used only in DEMO mode.\n\n");
                 obSplash.showMessage(qsSpalsh,Qt::AlignLeft,QColor(59,44,75));
             }
-
-#ifdef __WIN32__
-            Sleep(3000);
-#else
-            sleep( 3 );
-#endif
         }
+
+
+        Sleep( g_poPrefs->getSecondsWaitOnSlpashScreen()*1000 );
 
         //-------------------------------------------------------------------------------
         // End of process connection initialization
@@ -261,7 +256,7 @@ int main( int argc, char *argv[] )
         qsSpalsh += "-----------------------------------------------------\n";
         obSplash.showMessage(qsSpalsh,Qt::AlignLeft,QColor(59,44, 75));
 
-#ifdef __WIN32__
+        Sleep( g_poPrefs->getSecondsWaitOnSlpashScreen()*1000 );
 
         //-------------------------------------------------------------------------------
         // If Hardware component active, process hardware initialization
@@ -272,6 +267,8 @@ int main( int argc, char *argv[] )
         {
             qsSpalsh += QObject::tr("Checking hardware connection ...");
             obSplash.showMessage(qsSpalsh,Qt::AlignLeft,QColor(59,44, 75));
+
+            Sleep( g_poPrefs->getSecondsWaitOnSlpashScreen()*1000 );
 
             g_poHardware = new CS_Communication_Serial();
             g_obLogger(cSeverity::DEBUG) << QString("COM: %1").arg(g_poPrefs->getCommunicationPort()) << EOM;
@@ -286,11 +283,15 @@ int main( int argc, char *argv[] )
 
                 delete g_poHardware;
                 g_poHardware = new CS_Communication_Demo();
+
+                Sleep( g_poPrefs->getSecondsWaitOnSlpashScreen()*1000 );
             }
             else
             {
                 qsSpalsh += QObject::tr("CONNECTED\n");
                 obSplash.showMessage(qsSpalsh,Qt::AlignLeft,QColor(59,44, 75));
+
+                Sleep( g_poPrefs->getSecondsWaitOnSlpashScreen()*1000 );
 
                 qsSpalsh += QObject::tr("Initializing hardware device ... ");
                 obSplash.showMessage(qsSpalsh,Qt::AlignLeft,QColor(59,44, 75));
@@ -298,6 +299,8 @@ int main( int argc, char *argv[] )
 
                 qsSpalsh += QObject::tr("FINISHED\n");
                 obSplash.showMessage(qsSpalsh,Qt::AlignLeft,QColor(59,44, 75));
+
+                Sleep( g_poPrefs->getSecondsWaitOnSlpashScreen()*1000 );
 
                 qsSpalsh += QObject::tr("Caption stored in hardware: %1\n").arg( QString::fromStdString(g_poHardware->getCustomCaption()) );
                 obSplash.showMessage(qsSpalsh,Qt::AlignLeft,QColor(59,44, 75));
@@ -307,6 +310,8 @@ int main( int argc, char *argv[] )
 
                 qsSpalsh += QObject::tr("Checking hardware panels:\n");
                 obSplash.showMessage(qsSpalsh,Qt::AlignLeft,QColor(59,44, 75));
+
+                Sleep( g_poPrefs->getSecondsWaitOnSlpashScreen()*1000 );
 
                 for( int i=0; i<g_poHardware->getPanelCount(); i++ )
                 {
@@ -323,6 +328,9 @@ int main( int argc, char *argv[] )
                         qsSpalsh += QObject::tr(" FAILED\n");
                         obSplash.showMessage(qsSpalsh,Qt::AlignLeft,QColor(59,44, 75));
                     }
+
+                    Sleep( g_poPrefs->getSecondsWaitOnSlpashScreen()*1000 );
+
                 }
             }
         }
@@ -333,25 +341,16 @@ int main( int argc, char *argv[] )
 
             g_poHardware = new CS_Communication_Demo();
         }
-#else
 
-        qsSpalsh += QObject::tr("Starting application in DEMO mode.\n");
-        obSplash.showMessage(qsSpalsh,Qt::AlignLeft,QColor(59,44, 75));
 
-        g_poHardware = new CS_Communication_Demo();
-
-#endif
+        Sleep( g_poPrefs->getSecondsWaitOnSlpashScreen()*1000 );
 
         cWndMain  obMainWindow;
 
         obMainWindow.move( g_poPrefs->getMainWindowLeft(), g_poPrefs->getMainWindowTop() );
         obMainWindow.resize( g_poPrefs->getMainWindowWidth(), g_poPrefs->getMainWindowHeight() );
 
-#ifdef __WIN32__
-        Sleep(2000);
-#else
-        sleep( 2 );
-#endif
+        Sleep( g_poPrefs->getSecondsWaitOnSlpashScreen()*1000 );
 
         obMainWindow.setCommunicationEnabled( g_poHardware->isHardwareConnected() );
 

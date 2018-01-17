@@ -79,20 +79,11 @@
         <item row="1" column="1">
          <layout class="QHBoxLayout" name="horizontalLayout_3">
           <item>
-           <widget class="QComboBox" name="cmbCardType"/>
-          </item>
-          <item>
-           <spacer name="horizontalSpacer_3">
-            <property name="orientation">
-             <enum>Qt::Horizontal</enum>
+           <widget class="QComboBox" name="cmbCardType">
+            <property name="enabled">
+             <bool>false</bool>
             </property>
-            <property name="sizeHint" stdset="0">
-             <size>
-              <width>40</width>
-              <height>20</height>
-             </size>
-            </property>
-           </spacer>
+           </widget>
           </item>
          </layout>
         </item>
@@ -132,40 +123,9 @@
         <string> Information </string>
        </property>
        <layout class="QFormLayout" name="formLayout_2">
-        <item row="0" column="0">
-         <widget class="QLabel" name="lblUnits">
-          <property name="text">
-           <string>Balance :</string>
-          </property>
-         </widget>
-        </item>
-        <item row="0" column="1">
-         <layout class="QHBoxLayout" name="horizontalLayout_4">
-          <item>
-           <widget class="QLineEdit" name="ledBalance">
-            <property name="enabled">
-             <bool>false</bool>
-            </property>
-           </widget>
-          </item>
-          <item>
-           <spacer name="horizontalSpacer_2">
-            <property name="orientation">
-             <enum>Qt::Horizontal</enum>
-            </property>
-            <property name="sizeType">
-             <enum>QSizePolicy::Preferred</enum>
-            </property>
-            <property name="sizeHint" stdset="0">
-             <size>
-              <width>20</width>
-              <height>20</height>
-             </size>
-            </property>
-           </spacer>
-          </item>
-         </layout>
-        </item>
+        <property name="fieldGrowthPolicy">
+         <enum>QFormLayout::AllNonFixedFieldsGrow</enum>
+        </property>
         <item row="1" column="0">
          <widget class="QLabel" name="lblValidDate">
           <property name="text">
@@ -263,6 +223,24 @@
         </item>
         <item row="2" column="1">
          <widget class="QPlainTextEdit" name="pteComment"/>
+        </item>
+        <item row="0" column="0">
+         <widget class="QLabel" name="lblUnits">
+          <property name="text">
+           <string>Units :</string>
+          </property>
+         </widget>
+        </item>
+        <item row="0" column="1">
+         <layout class="QHBoxLayout" name="horizontalLayout_4">
+          <item>
+           <widget class="QLabel" name="lblUnitInfo">
+            <property name="text">
+             <string>...</string>
+            </property>
+           </widget>
+          </item>
+         </layout>
         </item>
        </layout>
       </widget>
@@ -390,7 +368,6 @@
   <tabstop>pbCheckBarcode</tabstop>
   <tabstop>cmbCardType</tabstop>
   <tabstop>cmbPatient</tabstop>
-  <tabstop>ledBalance</tabstop>
   <tabstop>deValidDateFrom</tabstop>
   <tabstop>deValidDateTo</tabstop>
   <tabstop>pbChangeValidity</tabstop>

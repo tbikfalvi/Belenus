@@ -60,7 +60,7 @@ cDlgPatientCardEdit::cDlgPatientCardEdit( QWidget *p_poParent, cDBPatientCard *p
     if( m_poPatientCard )
     {
         ledBarcode->setText( m_poPatientCard->barcode() );
-        cmbCardType->addItem( tr("<Not selected>"), 0 );
+//        cmbCardType->addItem( tr("<Not selected>"), 0 );
         cmbPatient->addItem( tr("<Not selected>"), 0 );
 
         // Fill combo boxes only if card is active
@@ -74,10 +74,11 @@ cDlgPatientCardEdit::cDlgPatientCardEdit( QWidget *p_poParent, cDBPatientCard *p
                 // Add service card to list only if user is system administrator
                 if( poQuery->value(0) == 1 && !g_obUser.isInGroup( cAccessGroup::SYSTEM ) )
                     continue;
-
+/*
                 cmbCardType->addItem( poQuery->value( 1 ).toString(), poQuery->value( 0 ) );
                 if( m_poPatientCard->patientCardTypeId() == poQuery->value( 0 ) )
                     cmbCardType->setCurrentIndex( cmbCardType->count()-1 );
+*/
             }
 
             poQuery = g_poDB->executeQTQuery( QString( "SELECT patientId, name FROM patients WHERE active=1 AND archive<>\"DEL\" ORDER BY name " ) );
@@ -89,15 +90,17 @@ cDlgPatientCardEdit::cDlgPatientCardEdit( QWidget *p_poParent, cDBPatientCard *p
             }
         }
 
-        ledBalance->setText( tr( "%1 unit(s) including %2 minutes" ).arg(m_poPatientCard->units()).arg(m_poPatientCard->timeLeft()/60) );
+        lblUnitInfo->setText( g_obGen.getPatientCardInformationString( m_poPatientCard->barcode() ) );
         deValidDateFrom->setDate( QDate::fromString(m_poPatientCard->validDateFrom(),"yyyy-MM-dd") );
         deValidDateTo->setDate( QDate::fromString(m_poPatientCard->validDateTo(),"yyyy-MM-dd") );
         pteComment->setPlainText( m_poPatientCard->comment() );
     }
 
-    cmbCardType->setEnabled( m_poPatientCard->active() );
+lblCardType->setVisible( false );
+cmbCardType->setEnabled( false/*m_poPatientCard->active()*/ );
+cmbCardType->setVisible( false );
+
     cmbPatient->setEnabled( m_poPatientCard->active() );
-    ledBalance->setEnabled( false );
     deValidDateFrom->setEnabled( false );
     deValidDateTo->setEnabled( false );
     pbChangeValidity->setEnabled( m_poPatientCard->active() );
@@ -110,7 +113,7 @@ cDlgPatientCardEdit::cDlgPatientCardEdit( QWidget *p_poParent, cDBPatientCard *p
     {
         ledBarcode->setEnabled( false );
         pbCheckBarcode->setEnabled( false );
-        cmbCardType->setEnabled( false );
+//        cmbCardType->setEnabled( false );
         cmbPatient->setEnabled( false );
         pbChangeValidity->setEnabled( g_obUser.isInGroup( cAccessGroup::SYSTEM ) );
         pbDeactivate->setEnabled( g_obUser.isInGroup( cAccessGroup::SYSTEM ) );
@@ -121,7 +124,7 @@ cDlgPatientCardEdit::cDlgPatientCardEdit( QWidget *p_poParent, cDBPatientCard *p
     // If this is a partner card, do not modify it
     if( m_poPatientCard->parentId() > 0 )
     {
-        cmbCardType->setEnabled( false );
+//        cmbCardType->setEnabled( false );
         pbChangeValidity->setEnabled( false );
         pbSell->setEnabled( false );
         pbRefill->setEnabled( false );
@@ -158,13 +161,13 @@ void cDlgPatientCardEdit::slotRefreshWarningColors()
     {
         lblBarcode->setStyleSheet( "QLabel {font: bold; color: red;}" );
     }
-
+/*
     lblCardType->setStyleSheet( "QLabel {font: normal;}" );
     if( cmbCardType->currentIndex() == 0 )
     {
         lblCardType->setStyleSheet( "QLabel {font: bold; color: red;}" );
     }
-
+*/
     lblPatient->setStyleSheet( "QLabel {font: normal;}" );
     if( cmbPatient->currentIndex() == 0 )
     {
@@ -251,6 +254,7 @@ void cDlgPatientCardEdit::on_pbChangeValidity_clicked()
                 m_bIsValidationChanged = true;
             }
         }
+        lblUnitInfo->setText( g_obGen.getPatientCardInformationString( m_poPatientCard->barcode() ) );
     }
 }
 //-----------------------------------------------------------------------------------------------------------
@@ -267,7 +271,7 @@ void cDlgPatientCardEdit::on_pbSave_clicked()
     QString qsErrorMessage = "";
 
     lblBarcode->setStyleSheet( "QLabel {font: normal;}" );
-    lblCardType->setStyleSheet( "QLabel {font: normal;}" );
+//    lblCardType->setStyleSheet( "QLabel {font: normal;}" );
     lblPatient->setStyleSheet( "QLabel {font: normal;}" );
     lblValidDate->setStyleSheet( "QLabel {font: normal;}" );
 
@@ -275,6 +279,7 @@ void cDlgPatientCardEdit::on_pbSave_clicked()
 
     if( m_poPatientCard->active() )
     {
+/*
         if( cmbCardType->currentIndex() == 0 )
         {
             boCanBeSaved = false;
@@ -282,6 +287,7 @@ void cDlgPatientCardEdit::on_pbSave_clicked()
             qsErrorMessage.append( tr( "Invalid Patientcard type.\nFor active patientcard other type should be selected.\nIf you want to connect the card to this type,\ndeactivate the card with unchecking the Active checkbox." ) );
             lblCardType->setStyleSheet( "QLabel {font: bold; color: red;}" );
         }
+*/
         if( cmbPatient->currentIndex() == 0 )
         {
             lblPatient->setStyleSheet( "QLabel {font: bold; color: blue;}" );
@@ -292,7 +298,7 @@ void cDlgPatientCardEdit::on_pbSave_clicked()
     {
         m_poPatientCard->setLicenceId( g_poPrefs->getLicenceId() );
         m_poPatientCard->setBarcode( ledBarcode->text() );
-        m_poPatientCard->setPatientCardTypeId( cmbCardType->itemData( cmbCardType->currentIndex() ).toUInt() );
+//        m_poPatientCard->setPatientCardTypeId( cmbCardType->itemData( cmbCardType->currentIndex() ).toUInt() );
         m_poPatientCard->setPatientId( cmbPatient->itemData( cmbPatient->currentIndex() ).toUInt() );
         m_poPatientCard->setValidDateTo( deValidDateTo->date().toString("yyyy-MM-dd") );
         m_poPatientCard->setComment( pteComment->toPlainText() );
@@ -323,21 +329,20 @@ void cDlgPatientCardEdit::on_pbDeactivate_clicked()
 
         m_poPatientCard->deactivate();
 
-        cmbCardType->setCurrentIndex( 0 );
+//        cmbCardType->setCurrentIndex( 0 );
         cmbPatient->setCurrentIndex( 0 );
-        ledBalance->setText( "" );
         deValidDateFrom->setDate( QDate(0,0,0) );
         deValidDateTo->setDate( QDate(0,0,0) );
 
-        cmbCardType->setEnabled( m_poPatientCard->active() );
+//        cmbCardType->setEnabled( m_poPatientCard->active() );
         cmbPatient->setEnabled( m_poPatientCard->active() );
-        ledBalance->setEnabled( false );
         deValidDateFrom->setEnabled( false );
         deValidDateTo->setEnabled( false );
         pbChangeValidity->setEnabled( m_poPatientCard->active() );
         pbDeactivate->setEnabled( m_poPatientCard->active() );
         pbSell->setEnabled( !m_poPatientCard->active() );
         pbRefill->setEnabled( m_poPatientCard->active() );
+        lblUnitInfo->setText( g_obGen.getPatientCardInformationString( m_poPatientCard->barcode() ) );
 
         pbCancel->setEnabled( false );
     }

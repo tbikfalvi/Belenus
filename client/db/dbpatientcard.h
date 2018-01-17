@@ -63,6 +63,10 @@ public:
     QString         archive() const                                             throw();
     void            setArchive( const QString &p_qsArchive )                    throw();
     void            sendDataToWeb()                                             throw();
+    void            sendAutoMail( const int p_nMailType,
+                                  const QString &p_qsDate,
+                                  const int p_nUnitCount,
+                                  const QString &p_qsDateTime )                 throw();
 
 private:
     unsigned int    m_uiId;

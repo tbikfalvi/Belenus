@@ -25,27 +25,35 @@ cDBSendMail::~cDBSendMail()
 {
 }
 
-void cDBSendMail::init( const unsigned int p_uiId,
-                        const unsigned int p_uiLicenceId,
-                        unsigned int p_uiMailTypeId,
-                        QString p_qsVariables,
-                        QString p_qsDateSend,
-                        QString p_qsRecipients,
-                        QString p_qsSubject,
-                        QString p_qsMessage,
-                        const bool p_bActive,
-                        const QString &p_qsArchive ) throw()
+void cDBSendMail::init(const unsigned int p_uiId,
+                       const unsigned int p_uiLicenceId,
+                       unsigned int p_uiMailTypeId,
+                       QString p_qsDateSend,
+                       QString p_qsRecipients,
+                       QString p_qsSubject,
+                       QString p_qsMessage,
+                       QString p_qsVarName,
+                       QString p_qsVarBarcode,
+                       QString p_qsVarCardInfo,
+                       QString p_qsVarUnitCount,
+                       QString p_qsVarDateTime,
+                       const bool p_bActive,
+                       const QString &p_qsArchive ) throw()
 {
-    m_uiId          = p_uiId;
-    m_uiLicenceId   = p_uiLicenceId;
-    m_uiMailTypeId  = p_uiMailTypeId;
-    m_qsVariables   = p_qsVariables;
-    m_qsDateSend    = p_qsDateSend;
-    m_qsRecipients  = p_qsRecipients;
-    m_qsSubject     = p_qsSubject;
-    m_qsMessage     = p_qsMessage;
-    m_bActive       = p_bActive;
-    m_qsArchive     = p_qsArchive;
+    m_uiId              = p_uiId;
+    m_uiLicenceId       = p_uiLicenceId;
+    m_uiMailTypeId      = p_uiMailTypeId;
+    m_qsDateSend        = p_qsDateSend;
+    m_qsRecipients      = p_qsRecipients;
+    m_qsSubject         = p_qsSubject;
+    m_qsMessage         = p_qsMessage;
+    m_qsVarName         = p_qsVarName;
+    m_qsVarBarcode      = p_qsVarBarcode;
+    m_qsVarCardInfo     = p_qsVarCardInfo;
+    m_qsVarUnitCount    = p_qsVarUnitCount;
+    m_qsVarDateTime     = p_qsVarDateTime;
+    m_bActive           = p_bActive;
+    m_qsArchive         = p_qsArchive;
 }
 
 void cDBSendMail::init( const QSqlRecord &p_obRecord ) throw()
@@ -53,22 +61,30 @@ void cDBSendMail::init( const QSqlRecord &p_obRecord ) throw()
     int inIdIdx             = p_obRecord.indexOf( "httpSendMailId" );
     int inLicenceIdIdx      = p_obRecord.indexOf( "licenceId" );
     int inMailTypeIdx       = p_obRecord.indexOf( "mailTypeId" );
-    int inVariablesIdx      = p_obRecord.indexOf( "variables" );
     int inDateOfSendingIdx  = p_obRecord.indexOf( "dateOfSending" );
     int inRecipientsIdx     = p_obRecord.indexOf( "recipients" );
     int inSubjectIdx        = p_obRecord.indexOf( "subject" );
     int inMessageIdx        = p_obRecord.indexOf( "mailbody" );
+    int inVarNameIdx        = p_obRecord.indexOf( "var_name" );
+    int inVarBarcodeIdx     = p_obRecord.indexOf( "var_barcode" );
+    int inVarCardInfoIdx    = p_obRecord.indexOf( "var_cardinfo" );
+    int inVarUnitCountIdx   = p_obRecord.indexOf( "var_unitcount" );
+    int inVarDateTimeIdx    = p_obRecord.indexOf( "var_datetime" );
     int inActiveIdx         = p_obRecord.indexOf( "active" );
     int inArchiveIdx        = p_obRecord.indexOf( "archive" );
 
     init( p_obRecord.value( inIdIdx ).toInt(),
           p_obRecord.value( inLicenceIdIdx ).toInt(),
           p_obRecord.value( inMailTypeIdx ).toInt(),
-          p_obRecord.value( inVariablesIdx ).toString(),
           p_obRecord.value( inDateOfSendingIdx ).toString(),
           p_obRecord.value( inRecipientsIdx ).toString(),
           p_obRecord.value( inSubjectIdx ).toString(),
           p_obRecord.value( inMessageIdx ).toString(),
+          p_obRecord.value( inVarNameIdx ).toString(),
+          p_obRecord.value( inVarBarcodeIdx ).toString(),
+          p_obRecord.value( inVarCardInfoIdx ).toString(),
+          p_obRecord.value( inVarUnitCountIdx ).toString(),
+          p_obRecord.value( inVarDateTimeIdx ).toString(),
           p_obRecord.value( inActiveIdx ).toBool(),
           p_obRecord.value( inArchiveIdx ).toString() );
 }
@@ -104,11 +120,15 @@ void cDBSendMail::save() throw( cSevException )
     qsQuery += " httpsendmail SET ";
     qsQuery += QString( "licenceId = \"%1\", " ).arg( m_uiLicenceId );
     qsQuery += QString( "mailTypeId = \"%1\", " ).arg( m_uiMailTypeId );
-    qsQuery += QString( "variables = \"%1\", " ).arg( m_qsVariables );
     qsQuery += QString( "dateOfSending = \"%1\", " ).arg( m_qsDateSend );
     qsQuery += QString( "recipients = \"%1\", " ).arg( m_qsRecipients );
     qsQuery += QString( "subject = \"%1\", " ).arg( m_qsSubject );
     qsQuery += QString( "mailbody = \"%1\", " ).arg( m_qsMessage );
+    qsQuery += QString( "var_name = \"%1\", " ).arg( m_qsVarName );
+    qsQuery += QString( "var_barcode = \"%1\", " ).arg( m_qsVarBarcode );
+    qsQuery += QString( "var_cardinfo = \"%1\", " ).arg( m_qsVarCardInfo );
+    qsQuery += QString( "var_unitcount = \"%1\", " ).arg( m_qsVarUnitCount );
+    qsQuery += QString( "var_datetime = \"%1\", " ).arg( m_qsVarDateTime );
     qsQuery += QString( "active = %1, " ).arg( m_bActive );
     qsQuery += QString( "archive = \"%1\" " ).arg( m_qsArchive );
     if( m_uiId )
@@ -167,17 +187,6 @@ void cDBSendMail::setMailTypeId( const unsigned int p_nMailTypeId ) throw()
     m_uiMailTypeId = p_nMailTypeId;
 }
 
-QString cDBSendMail::variables() const throw()
-{
-    return m_qsVariables;
-}
-
-void cDBSendMail::setVariables( const QString &p_qsVariables ) throw()
-{
-    m_qsVariables = p_qsVariables;
-    m_qsVariables = m_qsVariables.replace( QString("\""), QString("\\\"") );
-}
-
 QString cDBSendMail::dateSend() const throw()
 {
     return m_qsDateSend;
@@ -218,6 +227,56 @@ void cDBSendMail::setMessage( const QString &p_qsMessage ) throw()
 {
     m_qsMessage = p_qsMessage;
     m_qsMessage = m_qsMessage.replace( QString("\""), QString("\\\"") );
+}
+
+QString cDBSendMail::varName() const throw()
+{
+    return m_qsVarName;
+}
+
+void cDBSendMail::setVarName( const QString &p_qsVarName ) throw()
+{
+    m_qsVarName = p_qsVarName;
+}
+
+QString cDBSendMail::varBardcode() const throw()
+{
+    return m_qsVarBarcode;
+}
+
+void cDBSendMail::setVarBardcode( const QString &p_qsVarBardcode ) throw()
+{
+    m_qsVarBarcode = p_qsVarBardcode;
+}
+
+QString cDBSendMail::varCardInfo() const throw()
+{
+    return m_qsVarCardInfo;
+}
+
+void cDBSendMail::setVarCardInfo( const QString &p_qsVarCardInfo ) throw()
+{
+    m_qsVarCardInfo = p_qsVarCardInfo;
+}
+
+QString cDBSendMail::varUnitCount() const throw()
+{
+    return m_qsVarUnitCount;
+}
+
+void cDBSendMail::setVarUnitCount( const QString &p_qsVarUnitCount ) throw()
+{
+    m_qsVarUnitCount = p_qsVarUnitCount;
+}
+
+QString cDBSendMail::varDateTime() const throw()
+{
+    return m_qsVarDateTime;
+}
+
+void cDBSendMail::setVarDateTime( const QString &p_qsVarDateTime ) throw()
+{
+    m_qsVarDateTime = p_qsVarDateTime;
 }
 
 bool cDBSendMail::active() const throw()
