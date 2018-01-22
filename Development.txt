@@ -80,4 +80,10 @@ Version 1.6.0.0
 
 Version 1.6.1.0
 ===============
-- 
+- Splash screen-en lassabban jon a szoveg, beallitasoknal lehet modositani
+- Van egy tray ikon, amin menuben lehet allitani a kul. ablakok poziciojat es meretet
+- Megvaltozott a berlet adat szerkeszto ablak es egyszerusodott a berlet ervenyessegi idejenek modositasa
+- Van egy uj toolbar gomb, ami megnyitja a varakozo vendege ablakot
+- A WebSync alkalmazas mostantol csak egy peldanyban indul el
+- A program szol, ha az archiv es az alkalmazas path-a ugyanugy kezdodik (drive utan a gyoker konyvtar ugyanaz)
+- Ha a vendeg pause-olja a gepet, mostantol a panelon megjeleno start gombbal is lehet tovabbinditani a gepet
