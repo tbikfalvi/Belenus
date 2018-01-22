@@ -608,6 +608,8 @@ void cDlgPanelUse::on_pbReloadPC_clicked()
 {
     cTracer obTracer( "cDlgPanelUse::on_pbReloadPC_clicked" );
 
+    m_obDBPatientCard.createNew();
+
     if( ledPatientCardBarcode->text().length() == 0 )
         return;
 
