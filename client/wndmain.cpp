@@ -501,6 +501,7 @@ bool cWndMain::showLogIn()
     _checkVersions();
     _checkIsActivationNeeded();
     _checkIsWebSyncNeeded();
+    _checkArchiveDir();
 
     return true;
 }
@@ -1086,7 +1087,8 @@ void cWndMain::keyPressEvent( QKeyEvent *p_poEvent )
             g_obLogger(cSeverity::INFO) << "User pressed CTRL + F12" << EOM;
             m_bCtrlPressed = false;
             _setStatusText( m_qsStatusText );
-            on_action_TestDlgStarted();
+            //on_action_TestDlgStarted();
+            g_obGen.isArchiveOnDifferentPath();
         }
     }
     else
@@ -1621,7 +1623,7 @@ void cWndMain::closeEvent( QCloseEvent *p_poEvent )
             }
 */
             p_poEvent->accept();
-
+            _checkArchiveDir();
             g_obGen.backupDatabase( this );
         }
         else
@@ -4070,6 +4072,19 @@ void cWndMain::_checkIsWebSyncNeeded()
                 }
             }
         }
+    }
+}
+
+void cWndMain::_checkArchiveDir()
+{
+    if( !g_obGen.isArchiveOnDifferentPath() )
+    {
+        QMessageBox::warning( this, tr("Warning"),
+                              tr( "The path of the application and the path of the archive directory is located on the same base directory.\n"
+                                  "For safety point of view it is recommended to separate archive directory from the application environment.\n"
+                                  "Please select a different directory path for 'archive' and manually move the content of the archive directory to the newly selected directory!\n\n"
+                                  "Example for application path: c:/Kiwisun/Belenus\n"
+                                  "Example for archive path: c:/Archive/BelenusDB" ) );
     }
 }
 

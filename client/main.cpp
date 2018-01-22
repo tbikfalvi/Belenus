@@ -77,6 +77,8 @@ int main( int argc, char *argv[] )
 
     g_obGen.setApplication( apMainApp );
 
+    QString qsCurrentPath = QDir::currentPath().replace( "\\", "/" );
+
     apMainApp->setWindowIcon( QIcon(":/icons/Belenus.ico") );
 
     g_obLogger.attachWriter("gui", &g_obLogGUIWriter);
@@ -88,11 +90,12 @@ int main( int argc, char *argv[] )
 
     g_poDB     = new cQTMySQLConnection;
 
-    g_poPrefs  = new cPreferences( QString::fromAscii( "./belenus.ini" ) );
+    g_poPrefs  = new cPreferences( QString( "%1/belenus.ini" ).arg( qsCurrentPath ) );
     g_poPrefs->setVersion( APPLICATION_VERSION_NUMBER );
     g_poPrefs->setVersionDb( DATABASE_VERSION_NUMBER );
     g_poPrefs->setLangFilePrefix( "belenus_" );
     g_poPrefs->setDBAccess( "localhost", "belenus", "belenus", "belenus" );
+    g_poPrefs->setApplicationPath( qsCurrentPath );
 
     g_obGen.setApplicationLanguage( g_poPrefs->getLang() );
 
