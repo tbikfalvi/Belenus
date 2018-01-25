@@ -58,6 +58,7 @@ public:
     void             showTrayInfo( QString p_qsMessage );
     void             showTrayWarning( QString p_qsMessage );
     void             showTrayError( QString p_qsMessage );
+    bool             isArchiveOnDifferentPath();
 
     QSystemTrayIcon *m_stIcon;
 

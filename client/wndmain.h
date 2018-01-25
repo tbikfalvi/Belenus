@@ -120,6 +120,7 @@ private:
     void _checkIsActivationNeeded();
     void _checkIsWebSyncNeeded();
     void _setTrayIconMenu();
+    void _checkArchiveDir();
 
 public slots:
     void processDeviceUsePayment( unsigned int p_uiPanelId, unsigned int p_uiLedgerId, int p_nPaymentType );

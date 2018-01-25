@@ -438,6 +438,16 @@ void cPreferences::save() const throw (cSevException)
     obPrefFile.setValue( QString::fromAscii( "AutoMail/ExpirationDays"), m_nPCExpirationDays );
 }
 
+void cPreferences::setApplicationPath( const QString &p_qsPath )
+{
+    m_qsApplicationPath = p_qsPath;
+}
+
+QString cPreferences::getApplicationPath() const
+{
+    return m_qsApplicationPath;
+}
+
 void cPreferences::setFileName( const QString &p_qsFileName )
 {
     m_qsFileName = p_qsFileName;

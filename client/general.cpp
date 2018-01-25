@@ -500,6 +500,21 @@ void cGeneral::showTrayError( QString p_qsMessage )
 {
     m_stIcon->showMessage( QObject::tr("Information"), p_qsMessage, QSystemTrayIcon::Critical, 5000 );
 }
+//====================================================================================
+bool cGeneral::isArchiveOnDifferentPath()
+//------------------------------------------------------------------------------------
+{
+    QString qsPathApp = g_poPrefs->getApplicationPath().right( g_poPrefs->getApplicationPath().length() - 3 ).replace( "\\", "/" );
+    QString qsPathArc = g_poPrefs->getDirDbBackup().right( g_poPrefs->getDirDbBackup().length() - 3 ).replace( "\\", "/" );
+
+    QString qsDirApp    = qsPathApp.left( qsPathApp.indexOf( '/' ) );
+    QString qsDirArc    = qsPathArc.left( qsPathArc.indexOf( '/' ) );
+
+    if( qsDirApp.compare( qsDirArc ) == 0 )
+        return false;
+
+    return true;
+}
 
 //====================================================================================
 //QString cGeneral::convertCurrency( int p_nCurrencyValue, QString p_qsCurrency )
