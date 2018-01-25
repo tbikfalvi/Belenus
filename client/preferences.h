@@ -29,6 +29,8 @@ public:
     cPreferences( const QString &p_qsFileName );
     ~cPreferences();
 
+    void            setApplicationPath( const QString &p_qsPath );
+    QString         getApplicationPath() const;
     void            setFileName( const QString &p_qsFileName );
     QString         getFileName() const;
     void            setVersion( const QString &p_qsVersion, bool p_boSaveNow = false );
@@ -272,6 +274,7 @@ public:
 private:
     QWidget        *m_wWindowMain;
     QWidget        *m_wWindowSecondary;
+    QString         m_qsApplicationPath;
     QString         m_qsFileName;
     QString         m_qsVersion;
     QString         m_qsVersionDb;
