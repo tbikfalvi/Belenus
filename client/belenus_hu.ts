@@ -8901,7 +8901,7 @@ Biztos benne, hogy el akarja menteni ezt a megyét és várost együtt?</transla
         <translation type="obsolete">Géphasználat (%1) visszavonása.</translation>
     </message>
     <message>
-        <location filename="frmpanel.cpp" line="1342"/>
+        <location filename="frmpanel.cpp" line="1350"/>
         <source>Question</source>
         <translation>Kérdés</translation>
     </message>
@@ -8960,18 +8960,18 @@ Kérem jelentkezzen ki és vissza a pénztárműveletek engedélyezéséhez.</tr
         <translation>A kezelés %1 másodperc után meg lett szakítva. Fel nem használt idő: %2 másodperc.</translation>
     </message>
     <message>
-        <location filename="frmpanel.cpp" line="1343"/>
+        <location filename="frmpanel.cpp" line="1351"/>
         <source>Do you want to jump to the next status of the device?</source>
         <translation>Biztos benne, hogy át akar ugrani a gép következő státuszára?</translation>
     </message>
     <message>
-        <location filename="frmpanel.cpp" line="1415"/>
         <location filename="frmpanel.cpp" line="1423"/>
+        <location filename="frmpanel.cpp" line="1431"/>
         <source>Warning</source>
         <translation>Figyelmeztetés</translation>
     </message>
     <message>
-        <location filename="frmpanel.cpp" line="1416"/>
+        <location filename="frmpanel.cpp" line="1424"/>
         <source>This time period did not saved in the database
 for the actually selected device.
 Please select valid value from the list.</source>
@@ -8980,7 +8980,7 @@ az aktuálisan kiválasztott géphez.
 Kérem válasszon egy helyes értéket a listából.</translation>
     </message>
     <message>
-        <location filename="frmpanel.cpp" line="1424"/>
+        <location filename="frmpanel.cpp" line="1432"/>
         <source>The selected device usage has been scheduled
 for a different device type.
 

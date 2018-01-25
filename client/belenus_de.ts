@@ -6080,30 +6080,30 @@ Please relogin to enable cassa.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="frmpanel.cpp" line="1342"/>
+        <location filename="frmpanel.cpp" line="1350"/>
         <source>Question</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="frmpanel.cpp" line="1343"/>
+        <location filename="frmpanel.cpp" line="1351"/>
         <source>Do you want to jump to the next status of the device?</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="frmpanel.cpp" line="1415"/>
         <location filename="frmpanel.cpp" line="1423"/>
+        <location filename="frmpanel.cpp" line="1431"/>
         <source>Warning</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="frmpanel.cpp" line="1416"/>
+        <location filename="frmpanel.cpp" line="1424"/>
         <source>This time period did not saved in the database
 for the actually selected device.
 Please select valid value from the list.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="frmpanel.cpp" line="1424"/>
+        <location filename="frmpanel.cpp" line="1432"/>
         <source>The selected device usage has been scheduled
 for a different device type.
 
