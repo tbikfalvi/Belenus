@@ -2,7 +2,7 @@
 -- Belenus Szoftver Rendszer (c) Pagony Multimedia Studio Bt - 2013
 -- -----------------------------------------------------------------------------------
 -- Filename    : db_fill_hu.sql
--- AppVersion  : 1.6.1.0
+-- AppVersion  : 1.6.1.beta
 -- DbVersion   : 1.7.6
 -- Author      : Bikfalvi Tamas
 -- -----------------------------------------------------------------------------------
@@ -13,10 +13,10 @@ USE `belenus`;
 
 -- -----------------------------------------------------------------------------------
 
-INSERT INTO `licences` (`licenceId`, `serial`, `country`, `region`, `city`, `zip`, `address`, `studio`, `contact`, `lastValidated`, `active`, `archive`) VALUES
- ( 0, 'BLNS_SERIAL_GLOBAL', 'Magyarország', 'Budapest', 'Budapest', '', '', 'KiwiSun Franchise', NULL, '2013-10-01', 1, 'ARC');
-INSERT INTO `licences` (`licenceId`, `serial`, `country`, `region`, `city`, `zip`, `address`, `studio`, `contact`, `lastValidated`, `active`, `archive`) VALUES
- ( 1, 'BLNS_SERIAL_DEMO', 'Magyarország', 'Budapest', 'Budapest', '', '', 'KiwiSun Franchise', NULL, '2013-10-01', 1, 'ARC');
+INSERT INTO `licences` (`licenceId`, `serial`, `country`, `region`, `city`, `zip`, `address`, `studio`, `contact`, `lastValidated`, `Act`, `Cod`, `active`, `archive`) VALUES
+ ( 0, 'BLNS_SERIAL_GLOBAL', 'Magyarország', 'Budapest', 'Budapest', '', '', 'KiwiSun Franchise', NULL, '2013-10-01', '', '', 1, 'ARC');
+INSERT INTO `licences` (`licenceId`, `serial`, `country`, `region`, `city`, `zip`, `address`, `studio`, `contact`, `lastValidated`, `Act`, `Cod`, `active`, `archive`) VALUES
+ ( 1, 'BLNS_SERIAL_DEMO', 'Magyarország', 'Budapest', 'Budapest', '', '', 'KiwiSun Franchise', NULL, '2013-10-01', '', '', 1, 'ARC');
 
 -- -----------------------------------------------------------------------------------
 
@@ -3646,11 +3646,11 @@ ALTER TABLE `shoppingcartitems` auto_increment=1;
 -- -----------------------------------------------------------------------------------
 
 INSERT INTO `settings` (`settingId`, `identifier`, `value`) VALUES
- (NULL, 'GLOBAL_DATA_UPDATED', '2018-01-23 21:30:00'),
+ (NULL, 'GLOBAL_DATA_UPDATED', '2018-02-01 12:00:00'),
  (NULL, 'LICENCE_LAST_VALIDATED', '2000-01-01 12:00:00'),
  (NULL, 'ABOUT_INFO_LINK', 'http://www.kiwisun.eu/elerhetosegeink.html'),
  (NULL, 'CURRENT_CASSA_ID', '0'),
- (NULL, 'APPLICATION_VERSION', '1_6_1_0'),
+ (NULL, 'APPLICATION_VERSION', '1_6_1_beta'),
  (NULL, 'DATABASE_VERSION', '1_7_6');
 
 -- -----------------------------------------------------------------------------------

@@ -143,6 +143,8 @@ cWndMain::cWndMain( QWidget *parent ) : QMainWindow( parent )
     frmLogin->setVisible( false );
     frmLogin->setEnabled( false );
 
+    lblDemoMode->setStyleSheet( "QLabel {color: blue;}" );
+
     g_obGen.initSysTrayIcon( this );
 
     action_WindowPosition = new QAction( tr( "Set window position / size" ), this);
@@ -1227,6 +1229,11 @@ void cWndMain::updateTitle()
     if( QString::fromStdString( g_poHardware->getCustomCaption() ).compare( "DEMO" ) == 0 )
     {
         action_Hardwaretest->setEnabled( false );
+        frmDemo->setVisible( true );
+    }
+    else
+    {
+        frmDemo->setVisible( false );
     }
 
     if( g_obUser.isLoggedIn() )
