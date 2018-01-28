@@ -242,8 +242,11 @@ cLicenceManager::cLicenceManager()
                                      << "363278"
                                      << "649200";
 
-    m_qsCode = "";
-    m_qsAct  = "";
+    m_nLicenceId        = 0;
+    m_qsLicenceString   = "";
+    m_qsAct             = "";
+    m_qsCod             = "";
+    m_qsCode            = "";
 }
 
 cLicenceManager::~cLicenceManager()
@@ -258,29 +261,30 @@ void cLicenceManager::initialize()
 
     try
     {
+        // Get the actually used licence data
+        poQuery = g_poDB->executeQTQuery( QString( "SELECT licenceId, serial, lastValidated, Act, Cod FROM licences ORDER BY licenceId DESC LIMIT 1" ) );
+        if( poQuery->first() )
+        {
+            m_nLicenceId        = poQuery->value( 0 ).toUInt();
+            m_qsLicenceString   = poQuery->value( 1 ).toString();
+            m_qdLastValidated   = poQuery->value( 2 ).toDate();
+            m_qsAct             = poQuery->value( 3 ).toString();
+            m_qsCod             = poQuery->value( 4 ).toString();
+        }
+        g_obLogger(cSeverity::INFO) << "Initialized with " << m_qsLicenceString
+                                    << " and " << nLicenceId
+                                    << ". Application is valid until " << m_qdLastValidated.toString("yyyy/MM/dd")
+                                    << EOM;
+
         // Check secret code and create if not exists
         _checkCode();
 
-        // Get latest serial string from database
-        // licenceId is 0 for default
-        // licenceId is 1 for DEMO
-        // First valid serial's id is 2
-//        poQuery = g_poDB->executeQTQuery( QString( "SELECT licenceId, serial, lastValidated FROM licences WHERE active=1 ORDER BY licenceId DESC LIMIT 1" ) );
-        poQuery = g_poDB->executeQTQuery( QString( "SELECT licenceId, serial, lastValidated FROM licences ORDER BY licenceId DESC LIMIT 1" ) );
-        if( poQuery->first() )
+        if( m_nLicenceId > 1 )
         {
-            m_qdLastValidated   = poQuery->value( 2 ).toDate();
-            m_qsLicenceString   = poQuery->value( 1 ).toString();
-            nLicenceId          = poQuery->value( 0 ).toInt();
-
-            if( nLicenceId > 1 )
-            {
-                m_LicenceType = LTYPE_REGISTERED;
-                _checkValidity();
-            }
-            g_poPrefs->setLicenceId( nLicenceId );
-            g_obLogger(cSeverity::INFO) << "Initialized with " << m_qsLicenceString << " and " << nLicenceId << ". Last validated = " << m_qdLastValidated.addMonths(6).toString("yyyy/MM/dd") << EOM;
+            m_LicenceType = LTYPE_REGISTERED;
+            _checkValidity();
         }
+        g_poPrefs->setLicenceId( m_nLicenceId );
 
         // Get last validated from settings and update with licence date if it has default value
         m_qdLicenceLastValidated = QDate::fromString( g_poPrefs->getLicenceLastValidated().left(10), "yyyy-MM-dd" );
@@ -475,11 +479,10 @@ int cLicenceManager::validateLicence(const QString &p_qsValidationString)
         return ERR_ACT_KEY_INCORRECT;
     }
 
-    QSettings   settings( "HKEY_LOCAL_MACHINE\\Software\\SV", QSettings::NativeFormat );
-
-    settings.setValue( "Active", qsCodeActivation );
-
-    g_poDB->executeQTQuery( QString("UPDATE licences SET active=1 WHERE licenceId=%1").arg( g_poPrefs->getLicenceId() ) );
+    m_qsAct = qsCodeActivation;
+    g_poDB->executeQTQuery( QString("UPDATE licences SET active=1, Act=\"%2\" WHERE licenceId=%1")
+                            .arg( g_poPrefs->getLicenceId() )
+                            .arg( m_qsAct ) );
 
     return nRet;
 }
@@ -514,27 +517,28 @@ QString cLicenceManager::activationKey()
 
 void cLicenceManager::_checkCode()
 {
-    QSettings   settings( "HKEY_LOCAL_MACHINE\\Software\\SV", QSettings::NativeFormat );
-
-    if( !settings.contains( "Code" ) )
+    // Cod nem letezik, letre kell hozni
+    if( m_nLicenceId > 1 && m_qsCod.length() < 1 )
     {
-        // Kod nem letezik, letre kell hozni
         int         nMin = 100000;
         int         nMax = 999999;
         QDateTime   startDate( QDate(2012,9,19), QTime(7,0,0,0) );
 
         qsrand( startDate.msecsTo( QDateTime::currentDateTime() ) );
 
-        settings.setValue( "Code", int( qrand() / (RAND_MAX + 1.0) * (nMax + 1 - nMin) + nMin ) );
-    }
+        int nCode = int( qrand() / (RAND_MAX + 1.0) * (nMax + 1 - nMin) + nMin );
 
-    QString qsCodeReg = settings.value( "Code", 999999 ).toString();
+        g_poDB->executeQTQuery( QString( "UPDATE licences SET Cod=\"%1\" WHERE licenceId=%2 " )
+                                        .arg( nCode )
+                                        .arg( m_nLicenceId ) );
+        m_qsCod = QString::number( nCode );
+    }
 
     m_qsCode = "";
 
     for( int i=0; i<6; i++ )
     {
-        m_qsCode += m_qslCode.at( i*10 + qsCodeReg.at(i).digitValue() );
+        m_qsCode += m_qslCode.at( i*10 + m_qsCod.at(i).digitValue() );
     }
 }
 
@@ -549,17 +553,16 @@ void cLicenceManager::_checkValidity()
     }
     else
     {
-        QSettings   settings( "HKEY_LOCAL_MACHINE\\Software\\SV", QSettings::NativeFormat );
-
-        if( settings.contains( "Active" ) )
+        if( m_qsAct.length() > 0 )
         {
-            QString qsCodeReg = settings.value( "Code", 999999 ).toString();
-            QString qsCodeAct = settings.value( "Active", 999999 ).toString();
+            QString qsCodeReg = m_qsCod;
+            QString qsCodeAct = m_qsAct;
             QString qsCodeLic = m_qslLicenceCodes.at( m_nLicenceOrderNumber-1 );
 
-            g_obLogger(cSeverity::DEBUG) << "L:" << qsCodeLic << EOM;
-            g_obLogger(cSeverity::DEBUG) << "C:" << qsCodeReg << EOM;
-            g_obLogger(cSeverity::DEBUG) << "A:" << qsCodeAct << EOM;
+            g_obLogger(cSeverity::DEBUG) << "L:" << qsCodeLic << EOM;   // Random number of the licence string decoded from last 6 digit
+            g_obLogger(cSeverity::DEBUG) << "C:" << qsCodeReg << EOM;   // Random 6 digit number created after valid licence string added
+            g_obLogger(cSeverity::DEBUG) << "A:" << qsCodeAct << EOM;   // Calculated once when Sys admin validates the licence string
+                                                                        // from L and C with this algorythm -> A(i) = ( L(i) + C(i) ) % 10
 
             QString qsCodeVer = "";
 
@@ -570,11 +573,11 @@ void cLicenceManager::_checkValidity()
                 qsCodeVer.append( QString::number(nSum % 10) );
             }
 
-            g_obLogger(cSeverity::DEBUG) << "V:" << qsCodeVer << EOM;
-
-            if( qsCodeVer.compare(qsCodeAct) == 0 )
+            g_obLogger(cSeverity::DEBUG) << "V:" << qsCodeVer << EOM;   // Calculated the same like A
+                                                                        // If application not validated or copied from another computer this shouldn't be the same like A
+                                                                        // DB reload should delete the A value
+            if( qsCodeVer.compare(qsCodeAct) == 0 )                     // A and V should be the same
             {
-                m_qsAct = qsCodeAct;
                 m_LicenceType = LTYPE_ACTIVATED;
             }
             else

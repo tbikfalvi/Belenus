@@ -66,6 +66,13 @@ CREATE TABLE `httpsendmail` (
 ALTER TABLE `waitlist` ADD `modified` DATETIME NOT NULL;
 
 -- -----------------------------------------------------------------------------------
+-- Liszensz tabla kiegeszitve kiegeszito adatokkal.
+-- -----------------------------------------------------------------------------------
+ALTER TABLE  `licences`
+ ADD  `Act` VARCHAR( 10 ) NOT NULL AFTER  `lastValidated`,
+ ADD  `Cod` VARCHAR( 10 ) NOT NULL AFTER  `Act`;
+
+-- -----------------------------------------------------------------------------------
 
 UPDATE settings SET value=NOW() WHERE identifier="GLOBAL_DATA_UPDATED";
 UPDATE settings SET value='1_6_1_0' WHERE identifier='APPLICATION_VERSION';

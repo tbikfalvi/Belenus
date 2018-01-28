@@ -138,10 +138,11 @@ void MainWindow::processRestore()
     QString     qsMysqlPath     = obPrefFile.value( QString::fromAscii( "DbBackup/DirDbBinaries" ), "" ).toString();
     QString     qsProcess       = QString( "\"%1/mysql.exe\" -u belenus -pbelenus belenus < " ).arg(qsMysqlPath);
     QString     qsCommand;
-    QString     qsDBRecreate    = QString( "dbrecreate.sql" );
     QString     qsImport        = QString( " \"%1\" ").arg(ui->ledDatabase->toolTip());
 
-    QFile qfRecreate(qsDBRecreate );
+    //-------------------------------------------------------------------------------------
+    // Recreate belenus database with temporary file 'dbrecreate.sql'
+    QFile qfRecreate( "dbrecreate.sql" );
 
     if( qfRecreate.open( QIODevice::WriteOnly ) )
     {
@@ -158,7 +159,7 @@ void MainWindow::processRestore()
 
     QProcess *qpRestore = new QProcess();
 
-    qsCommand = QString( "cmd /c %1 %2" ).arg( qsProcess ).arg( qsDBRecreate );
+    qsCommand = QString( "cmd /c %1 dbrecreate.sql " ).arg( qsProcess );
 
     if( qpRestore->execute( qsCommand ) )
     {
@@ -171,6 +172,8 @@ void MainWindow::processRestore()
     }
     qfRecreate.remove();
 
+    //-------------------------------------------------------------------------------------
+    // Execute database import
     qsCommand = QString( "cmd /c %1 %2" ).arg( qsProcess ).arg( qsImport );
 
     if( qpRestore->execute( qsCommand ) )
@@ -182,6 +185,36 @@ void MainWindow::processRestore()
         setControlsEnabled( true );
         return;
     }
+
+    //-------------------------------------------------------------------------------------
+    // Clear activation random code with temporary file 'dbreactivate.sql'
+    QFile qfReactivate( "dbreactivate.sql" );
+
+    if( qfReactivate.open( QIODevice::WriteOnly ) )
+    {
+        qfReactivate.write( "UPDATE licences SET Cod=\"\";\n" );
+        qfReactivate.close();
+    }
+    else
+    {
+        QMessageBox::warning( this, tr("Error"),
+                              tr("Unable to create temporary file: dbreactivate.sql") );
+        setControlsEnabled( true );
+        return;
+    }
+
+    qsCommand = QString( "cmd /c %1 dbreactivate.sql " ).arg( qsProcess );
+
+    if( qpRestore->execute( qsCommand ) )
+    {
+        QMessageBox::warning( this, tr("Error"),
+                              tr("Unable to execute the following command:\n"
+                                 "%1").arg(qsCommand) );
+        delete qpRestore;
+        setControlsEnabled( true );
+        return;
+    }
+    qfReactivate.remove();
 
     delete qpRestore;
 
