@@ -73,6 +73,17 @@ ALTER TABLE  `licences`
  ADD  `Cod` VARCHAR( 10 ) NOT NULL AFTER  `Act`;
 
 -- -----------------------------------------------------------------------------------
+-- Ideiglenes tabla berlet elettortenethez.
+-- -----------------------------------------------------------------------------------
+CREATE TABLE IF NOT EXISTS `report_cardhistory` (
+  `dateCardAction` 			datetime 				NOT NULL,
+  `cardAction` 				varchar(500)            NOT NULL,
+  `countAction` 			int(11) 				NOT NULL,
+  `priceAction` 			int(11) 				NOT NULL,
+  `userName` 				varchar(500)            NOT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+
+-- -----------------------------------------------------------------------------------
 
 UPDATE settings SET value=NOW() WHERE identifier="GLOBAL_DATA_UPDATED";
 UPDATE settings SET value='1_6_1_beta' WHERE identifier='APPLICATION_VERSION';

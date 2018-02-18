@@ -106,34 +106,13 @@ void cReportCardDetails::refreshReport()
         addTableCell( " : ", "bold" );
         addTableCell( poQueryResultCards->value(5).toString() );
         m_dlgProgress.increaseProgressValue();
-/*
-        addTableRow();
-        addTableCell( tr( "Patientcard type" ), "bold" );
-        addTableCell( " : ", "bold" );
-        addTableCell( poQueryResultCards->value(18).toString() );
-        m_dlgProgress.increaseProgressValue();
-*/
+
         addTableRow();
         addTableCell( tr( "Owner" ), "bold" );
         addTableCell( " : ", "bold" );
         addTableCell( poQueryResultCards->value(33).toString() );
         m_dlgProgress.increaseProgressValue();
-/*
-        addTableRow();
-        addTableCell( tr( "No. units" ), "bold" );
-        addTableCell( " : ", "bold" );
-        addTableCell( poQueryResultCards->value(7).toString() );
-        m_dlgProgress.increaseProgressValue();
 
-        unsigned int    uiTimeLeft = poQueryResultCards->value(9).toInt();
-        QTime           qtTemp( uiTimeLeft/3600, (uiTimeLeft%3600)/60, (uiTimeLeft%3600)%60, 0 );
-
-        addTableRow();
-        addTableCell( tr( "Time left" ), "bold" );
-        addTableCell( " : ", "bold" );
-        addTableCell( qtTemp.toString( "hh:mm:ss" ) );
-        m_dlgProgress.increaseProgressValue();
-*/
         addTableRow();
         addTableCell( tr( "Valid" ), "bold" );
         addTableCell( " : ", "bold" );
@@ -217,7 +196,7 @@ void cReportCardDetails::refreshReport()
         finishSection();
 
         addSeparator();
-        addSubTitle( tr( "Patientcard unit usages" ) );
+        addSubTitle( tr( "Patientcard life history" ) );
 
         m_dlgProgress.setProgressMax( 100 );
         m_dlgProgress.setProgressValue( 0 );
