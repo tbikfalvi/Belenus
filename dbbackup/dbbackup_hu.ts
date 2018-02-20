@@ -15,7 +15,7 @@
     </message>
     <message>
         <location filename="mainwindow.ui" line="155"/>
-        <location filename="mainwindow.cpp" line="261"/>
+        <location filename="mainwindow.cpp" line="294"/>
         <source>Please wait until the process finish.</source>
         <translation>Kérem várjon amíg a folyamat befejeződik.</translation>
     </message>
@@ -47,19 +47,22 @@
     </message>
     <message>
         <location filename="mainwindow.cpp" line="116"/>
-        <location filename="mainwindow.cpp" line="153"/>
-        <location filename="mainwindow.cpp" line="165"/>
-        <location filename="mainwindow.cpp" line="178"/>
-        <location filename="mainwindow.cpp" line="205"/>
-        <location filename="mainwindow.cpp" line="266"/>
+        <location filename="mainwindow.cpp" line="154"/>
+        <location filename="mainwindow.cpp" line="166"/>
+        <location filename="mainwindow.cpp" line="181"/>
+        <location filename="mainwindow.cpp" line="200"/>
+        <location filename="mainwindow.cpp" line="210"/>
+        <location filename="mainwindow.cpp" line="238"/>
+        <location filename="mainwindow.cpp" line="299"/>
         <source>Error</source>
         <translation>Hiba</translation>
     </message>
     <message>
         <location filename="mainwindow.cpp" line="117"/>
-        <location filename="mainwindow.cpp" line="166"/>
-        <location filename="mainwindow.cpp" line="179"/>
-        <location filename="mainwindow.cpp" line="206"/>
+        <location filename="mainwindow.cpp" line="167"/>
+        <location filename="mainwindow.cpp" line="182"/>
+        <location filename="mainwindow.cpp" line="211"/>
+        <location filename="mainwindow.cpp" line="239"/>
         <source>Unable to execute the following command:
 %1</source>
         <translation>Nem sikerült végrehajtani a következő folyamatot:
@@ -78,12 +81,17 @@ Please check your settings.</source>
 Kérem ellenőrizze a beállításokat.</translation>
     </message>
     <message>
-        <location filename="mainwindow.cpp" line="154"/>
+        <location filename="mainwindow.cpp" line="155"/>
         <source>Unable to create temporary file: dbrecreate.sql</source>
         <translation>Nem sikerült létrehozni a dbrecreate.sql ideiglenes állományt</translation>
     </message>
     <message>
-        <location filename="mainwindow.cpp" line="267"/>
+        <location filename="mainwindow.cpp" line="201"/>
+        <source>Unable to create temporary file: dbreactivate.sql</source>
+        <translation>Nem sikerült létrehozni a dbreactivate.sql ideiglenes állományt</translation>
+    </message>
+    <message>
+        <location filename="mainwindow.cpp" line="300"/>
         <source>The selected file not exists or not readable
 
 %1</source>
