@@ -4,38 +4,78 @@
 <context>
     <name>cReportCardDetails</name>
     <message>
-        <location filename="creportcarddetails.cpp" line="9"/>
+        <location filename="creportcarddetails.cpp" line="10"/>
         <source> Patientcards details </source>
         <translation> Bérlet adatok </translation>
     </message>
     <message>
-        <location filename="creportcarddetails.cpp" line="10"/>
+        <location filename="creportcarddetails.cpp" line="11"/>
         <source>This report shows the details of the selected patient card. Please enter the barcode of the patient card you interested in.</source>
         <translation>Ez a kimutatás a kiválasztott bérlet(ek) adatait mutatja meg. Kérem adja meg annak a bérletnek a vonalkódját, amelyikre kíváncsi.</translation>
     </message>
     <message>
-        <location filename="creportcarddetails.cpp" line="14"/>
+        <location filename="creportcarddetails.cpp" line="15"/>
         <source>Barcode contains :</source>
         <oldsource>Barcode :</oldsource>
         <translation>Vonalkód tartalmazza :</translation>
     </message>
     <message>
-        <location filename="creportcarddetails.cpp" line="17"/>
+        <location filename="creportcarddetails.cpp" line="18"/>
         <source>Patientcard types :</source>
         <translation>Bérlet típusok :</translation>
     </message>
     <message>
-        <location filename="creportcarddetails.cpp" line="21"/>
-        <location filename="creportcarddetails.cpp" line="30"/>
+        <location filename="creportcarddetails.cpp" line="22"/>
+        <location filename="creportcarddetails.cpp" line="31"/>
         <source>All type</source>
         <translation>Összes típus</translation>
+    </message>
+    <message>
+        <location filename="creportcarddetails.cpp" line="201"/>
+        <source>Patientcard life history</source>
+        <translation>Bérlet élettörténet</translation>
+    </message>
+    <message>
+        <location filename="creportcarddetails.cpp" line="209"/>
+        <source>Date of action</source>
+        <translation>Esemény dátuma</translation>
+    </message>
+    <message>
+        <location filename="creportcarddetails.cpp" line="210"/>
+        <source>Action name</source>
+        <translation>Esemény megnevezés</translation>
+    </message>
+    <message>
+        <location filename="creportcarddetails.cpp" line="211"/>
+        <source>Number of units</source>
+        <translation>Egységek száma</translation>
+    </message>
+    <message>
+        <location filename="creportcarddetails.cpp" line="214"/>
+        <source>Price</source>
+        <translation>Ár</translation>
+    </message>
+    <message>
+        <location filename="creportcarddetails.cpp" line="215"/>
+        <source>Action performed by</source>
+        <translation>Esemény végrehajtója</translation>
+    </message>
+    <message>
+        <location filename="creportcarddetails.cpp" line="225"/>
+        <source>Patientcard activated</source>
+        <translation>Bérlet létrehozása</translation>
+    </message>
+    <message>
+        <location filename="creportcarddetails.cpp" line="256"/>
+        <source>Patientcard usage</source>
+        <translation>Bérlet használat</translation>
     </message>
     <message>
         <source>Get data from database ...</source>
         <translation type="obsolete">Adatok lekérdezése az adatbázisból ...</translation>
     </message>
     <message>
-        <location filename="creportcarddetails.cpp" line="88"/>
+        <location filename="creportcarddetails.cpp" line="89"/>
         <source>No valid patientcard found for the selected filters</source>
         <translation>Nem találtam a megadott szűrőfeltételeknek megfelelő érvényes bérletet</translation>
     </message>
@@ -44,25 +84,24 @@
         <translation type="obsolete">Adatok megjelenítése ...</translation>
     </message>
     <message>
-        <location filename="creportcarddetails.cpp" line="105"/>
-        <location filename="creportcarddetails.cpp" line="303"/>
+        <location filename="creportcarddetails.cpp" line="107"/>
+        <location filename="creportcarddetails.cpp" line="422"/>
         <source>Barcode</source>
         <translation>Vonalkód</translation>
     </message>
     <message>
-        <location filename="creportcarddetails.cpp" line="307"/>
         <source>Patientcard type</source>
-        <translation>Bérlettípus</translation>
+        <translation type="obsolete">Bérlettípus</translation>
     </message>
     <message>
-        <location filename="creportcarddetails.cpp" line="117"/>
-        <location filename="creportcarddetails.cpp" line="308"/>
+        <location filename="creportcarddetails.cpp" line="113"/>
+        <location filename="creportcarddetails.cpp" line="426"/>
         <source>Owner</source>
         <translation>Tulajdonos</translation>
     </message>
     <message>
-        <location filename="creportcarddetails.cpp" line="185"/>
-        <location filename="creportcarddetails.cpp" line="304"/>
+        <location filename="creportcarddetails.cpp" line="166"/>
+        <location filename="creportcarddetails.cpp" line="423"/>
         <source>No. units</source>
         <translation>Egységek száma</translation>
     </message>
@@ -71,83 +110,79 @@
         <translation type="obsolete">Idő</translation>
     </message>
     <message>
-        <location filename="creportcarddetails.cpp" line="153"/>
+        <location filename="creportcarddetails.cpp" line="134"/>
         <source>Valid and active units</source>
         <translation>Érvényes egységek</translation>
     </message>
     <message>
-        <location filename="creportcarddetails.cpp" line="186"/>
-        <location filename="creportcarddetails.cpp" line="247"/>
+        <location filename="creportcarddetails.cpp" line="167"/>
+        <location filename="creportcarddetails.cpp" line="212"/>
         <source>Unit time</source>
         <translation>Egység idő</translation>
     </message>
     <message>
-        <location filename="creportcarddetails.cpp" line="187"/>
-        <location filename="creportcarddetails.cpp" line="248"/>
+        <location filename="creportcarddetails.cpp" line="168"/>
+        <location filename="creportcarddetails.cpp" line="213"/>
         <source>Unit type</source>
         <translation>Egység típus</translation>
     </message>
     <message>
-        <location filename="creportcarddetails.cpp" line="189"/>
+        <location filename="creportcarddetails.cpp" line="170"/>
         <source>Valid till ...</source>
         <translation>Érvényes még ...</translation>
     </message>
     <message>
-        <location filename="creportcarddetails.cpp" line="202"/>
+        <location filename="creportcarddetails.cpp" line="183"/>
         <source>%1 day(s)</source>
         <translation>%1 napig</translation>
     </message>
     <message>
-        <location filename="creportcarddetails.cpp" line="220"/>
         <source>Patientcard unit usages</source>
-        <translation>Bérlet egység használatok</translation>
+        <translation type="obsolete">Bérlet egység használatok</translation>
     </message>
     <message>
-        <location filename="creportcarddetails.cpp" line="245"/>
         <source>Date of usage</source>
-        <translation>Használat dátuma</translation>
+        <translation type="obsolete">Használat dátuma</translation>
     </message>
     <message>
-        <location filename="creportcarddetails.cpp" line="246"/>
         <source>Unit count</source>
-        <translation>Egységek száma</translation>
+        <translation type="obsolete">Egységek száma</translation>
     </message>
     <message>
-        <location filename="creportcarddetails.cpp" line="268"/>
-        <location filename="creportcarddetails.cpp" line="338"/>
+        <location filename="creportcarddetails.cpp" line="455"/>
         <source>Sum</source>
         <translation>Összesen</translation>
     </message>
     <message>
-        <location filename="creportcarddetails.cpp" line="305"/>
+        <location filename="creportcarddetails.cpp" line="424"/>
         <source>Time</source>
         <translation>Idő</translation>
     </message>
     <message>
-        <location filename="creportcarddetails.cpp" line="138"/>
-        <location filename="creportcarddetails.cpp" line="188"/>
-        <location filename="creportcarddetails.cpp" line="306"/>
+        <location filename="creportcarddetails.cpp" line="119"/>
+        <location filename="creportcarddetails.cpp" line="169"/>
+        <location filename="creportcarddetails.cpp" line="425"/>
         <source>Valid</source>
         <translation>Érvényes</translation>
     </message>
     <message>
-        <location filename="creportcarddetails.cpp" line="36"/>
+        <location filename="creportcarddetails.cpp" line="37"/>
         <source>Create selected report ...</source>
         <translation>Kimutatás összeállítása ...</translation>
     </message>
     <message>
-        <location filename="creportcarddetails.cpp" line="48"/>
+        <location filename="creportcarddetails.cpp" line="49"/>
         <source>Patientcard type: &apos;%1&apos;</source>
         <translation>Bérlet típus : &apos;%1&apos;</translation>
     </message>
     <message>
-        <location filename="creportcarddetails.cpp" line="53"/>
+        <location filename="creportcarddetails.cpp" line="54"/>
         <source>%1Patientcard barcode contains: &apos;%2&apos;</source>
         <translation>%1Bérlet vonalkód tartalmazza: &apos;%2&apos;</translation>
     </message>
     <message>
-        <location filename="creportcarddetails.cpp" line="144"/>
-        <location filename="creportcarddetails.cpp" line="309"/>
+        <location filename="creportcarddetails.cpp" line="125"/>
+        <location filename="creportcarddetails.cpp" line="427"/>
         <source>Comment</source>
         <translation>Megjegyzés</translation>
     </message>
