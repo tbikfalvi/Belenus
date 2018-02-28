@@ -254,7 +254,7 @@ void cReportCardDetails::refreshReport()
                                              " VALUES ( '%1', '%2', '%3', '%4', '%5', '%6', '%7' ) " )
                                             .arg( poQueryResultCards->value(0).toDateTime().toString( "yyyy-MM-dd hh:mm:ss" ) )
                                             .arg( tr( "Patientcard usage" ) )
-                                            .arg( poQueryResultCards->value(1).toString() )
+                                            .arg( QString( "-%1" ).arg( poQueryResultCards->value(1).toString() ) )
                                             .arg( poQueryResultCards->value(2).toString() )
                                             .arg( poQueryResultCards->value(3).toString() )
                                             .arg( "" )
@@ -277,41 +277,7 @@ void cReportCardDetails::refreshReport()
                                 "AND ledger.userid = users.userid "
                                 "AND ledger.patientcardtypeid = patientcardtypes.patientcardtypeid "
                                 "AND ledger.ledgertypeid = ledgertypes.ledgertypeid "
-                                "AND ledger.patientcardid = %1 "
-                                "GROUP BY ledger.ledgerid" ).arg( uiPatientCardId );
-        poQueryResultCards = g_poDB->executeQTQuery( qsQueryCards );
-        m_dlgProgress.increaseProgressMax( poQueryResultCards->size() );
-
-        while( poQueryResultCards->next() )
-        {
-            g_poDB->executeQTQuery( QString( "INSERT INTO `report_cardhistory` ( `dateCardAction`, `cardAction`, `countUnits`, `unitTime`, `unitType`, `priceAction`, `userName` ) "
-                                             " VALUES ( '%1', '%2', '%3', '%4', '%5', '%6', '%7' ) " )
-                                            .arg( poQueryResultCards->value(0).toDateTime().toString( "yyyy-MM-dd hh:mm:ss" ) )
-                                            .arg( poQueryResultCards->value(1).toString() )
-                                            .arg( poQueryResultCards->value(3).toString() )
-                                            .arg( poQueryResultCards->value(4).toString() )
-                                            .arg( poQueryResultCards->value(2).toString() )
-                                            .arg( poQueryResultCards->value(5).toString() )
-                                            .arg( poQueryResultCards->value(6).toString() ) );
-
-            m_dlgProgress.increaseProgressValue();
-        }
-
-        //----------------------------------------------------------------------------------------------
-        // Unit sell, refill of prev card
-        qsQueryCards = QString( "SELECT ledger.ledgertime, "
-                                "ledgertypes.name, "
-                                "patientcardtypes.name, "
-                                "COUNT( patientcardunits.unittime ), "
-                                "patientcardunits.unittime, "
-                                "ledger.totalprice, "
-                                "users.realname "
-                                "FROM `ledger` , `ledgertypes` , `patientcardtypes` , `users` , `patientcardunits` "
-                                "WHERE ledger.ledgerid = patientcardunits.ledgerid "
-                                "AND ledger.userid = users.userid "
-                                "AND ledger.patientcardtypeid = patientcardtypes.patientcardtypeid "
-                                "AND ledger.ledgertypeid = ledgertypes.ledgertypeid "
-                                "AND patientcardunits.patientcardid = %1 "
+                                "AND (ledger.patientcardid = %1 OR patientcardunits.patientcardid = %1) "
                                 "GROUP BY ledger.ledgerid" ).arg( uiPatientCardId );
         poQueryResultCards = g_poDB->executeQTQuery( qsQueryCards );
         m_dlgProgress.increaseProgressMax( poQueryResultCards->size() );
@@ -334,14 +300,13 @@ void cReportCardDetails::refreshReport()
         //----------------------------------------------------------------------------------------------
         // Replace card
         qsQueryCards = QString( "SELECT ledger.ledgertime, "
-                                "ledgertypes.name, "
+                                "ledger.comment, "
                                 "patientcardtypes.name, "
                                 "ledger.totalprice, "
                                 "users.realname "
-                                "FROM `ledger`, `ledgertypes`, `patientcardtypes`, `users` WHERE "
+                                "FROM `ledger`, `patientcardtypes`, `users` WHERE "
                                 "ledger.userid = users.userid AND "
                                 "ledger.patientcardtypeid = patientcardtypes.patientcardtypeid AND "
-                                "ledger.ledgertypeid = ledgertypes.ledgertypeid AND "
                                 "(ledger.ledgertypeid=5 OR ledger.ledgertypeid=6) AND "
                                 "ledger.patientcardid = %1" ).arg( uiPatientCardId );
         poQueryResultCards = g_poDB->executeQTQuery( qsQueryCards );
@@ -366,6 +331,9 @@ void cReportCardDetails::refreshReport()
         // Show history
         poQueryResultCards = g_poDB->executeQTQuery( "SELECT * FROM `report_cardhistory` ORDER BY dateCardAction " );
 
+        int nSumCount = 0;
+        int nSumPrice = 0;
+
         while( poQueryResultCards->next() )
         {
             cCurrency   obPrice( poQueryResultCards->value(5).toInt() );
@@ -387,7 +355,21 @@ void cReportCardDetails::refreshReport()
             else
                 addTableCell( obPrice.currencyFullStringShort(), "right" );
             addTableCell( poQueryResultCards->value(6).toString(), "" );
+
+            nSumCount += poQueryResultCards->value(2).toInt();
+            nSumPrice += poQueryResultCards->value(5).toInt();
         }
+
+        cCurrency   obSumPrice( nSumPrice );
+
+        addTableRow();
+        addTableCell( "", "" );
+        addTableCell( "", "" );
+        addTableCell( QString::number( nSumCount ), "center bold" );
+        addTableCell( "", "" );
+        addTableCell( "", "" );
+        addTableCell( obSumPrice.currencyFullStringShort(), "right bold" );
+        addTableCell( "", "" );
 
         finishTable();
         finishSection();
