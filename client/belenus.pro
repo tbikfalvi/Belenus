@@ -6,7 +6,8 @@ RC_FILE      = Belenus.rc
 TEMPLATE     = app
 DESTDIR      = ..
 TRANSLATIONS = belenus_hu.ts \
-               belenus_de.ts
+               belenus_de.ts \
+               belenus_it.ts
 
 win32:DEFINES -= UNICODE
 

@@ -6,8 +6,8 @@
    <rect>
     <x>0</x>
     <y>0</y>
-    <width>721</width>
-    <height>298</height>
+    <width>813</width>
+    <height>492</height>
    </rect>
   </property>
   <property name="windowTitle">
@@ -305,6 +305,42 @@
     </item>
     <item>
      <widget class="QLineEdit" name="ledMd5Hash"/>
+    </item>
+   </layout>
+  </widget>
+  <widget class="QGroupBox" name="groupBox">
+   <property name="geometry">
+    <rect>
+     <x>20</x>
+     <y>310</y>
+     <width>741</width>
+     <height>77</height>
+    </rect>
+   </property>
+   <property name="title">
+    <string> Bérlet lehasználás </string>
+   </property>
+   <layout class="QVBoxLayout" name="verticalLayout_4">
+    <item>
+     <widget class="QLabel" name="label">
+      <property name="text">
+       <string>Tab separated text file. Három oszlop. 1 oszlop a bérlet vonalkód, második oszlop a használat dátuma, harmadik pedig a megmaradt egységek száma</string>
+      </property>
+     </widget>
+    </item>
+    <item>
+     <layout class="QHBoxLayout" name="horizontalLayout_4">
+      <item>
+       <widget class="QLineEdit" name="ledBerletLehasznalas"/>
+      </item>
+      <item>
+       <widget class="QPushButton" name="pbBerletHaszn">
+        <property name="text">
+         <string>Execute</string>
+        </property>
+       </widget>
+      </item>
+     </layout>
     </item>
    </layout>
   </widget>

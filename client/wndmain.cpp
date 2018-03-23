@@ -1089,7 +1089,7 @@ void cWndMain::keyPressEvent( QKeyEvent *p_poEvent )
             g_obLogger(cSeverity::INFO) << "User pressed CTRL + F12" << EOM;
             m_bCtrlPressed = false;
             _setStatusText( m_qsStatusText );
-            //on_action_TestDlgStarted();
+            on_action_TestDlgStarted();
             g_obGen.isArchiveOnDifferentPath();
         }
     }

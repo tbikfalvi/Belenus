@@ -51,7 +51,7 @@
     </message>
     <message>
         <location filename="creportcarddetails.cpp" line="107"/>
-        <location filename="creportcarddetails.cpp" line="422"/>
+        <location filename="creportcarddetails.cpp" line="404"/>
         <source>Barcode</source>
         <translation>Strichcode</translation>
     </message>
@@ -102,7 +102,7 @@
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="creportcarddetails.cpp" line="455"/>
+        <location filename="creportcarddetails.cpp" line="437"/>
         <source>Sum</source>
         <translation type="unfinished">Insgesammt</translation>
     </message>
@@ -112,13 +112,13 @@
     </message>
     <message>
         <location filename="creportcarddetails.cpp" line="113"/>
-        <location filename="creportcarddetails.cpp" line="426"/>
+        <location filename="creportcarddetails.cpp" line="408"/>
         <source>Owner</source>
         <translation>Besitzer</translation>
     </message>
     <message>
         <location filename="creportcarddetails.cpp" line="166"/>
-        <location filename="creportcarddetails.cpp" line="423"/>
+        <location filename="creportcarddetails.cpp" line="405"/>
         <source>No. units</source>
         <translation>Anzahl der Einheiten</translation>
     </message>
@@ -129,13 +129,13 @@
     <message>
         <location filename="creportcarddetails.cpp" line="119"/>
         <location filename="creportcarddetails.cpp" line="169"/>
-        <location filename="creportcarddetails.cpp" line="425"/>
+        <location filename="creportcarddetails.cpp" line="407"/>
         <source>Valid</source>
         <translation>Gültig</translation>
     </message>
     <message>
         <location filename="creportcarddetails.cpp" line="125"/>
-        <location filename="creportcarddetails.cpp" line="427"/>
+        <location filename="creportcarddetails.cpp" line="409"/>
         <source>Comment</source>
         <translation>Bemerkung</translation>
     </message>
@@ -173,7 +173,7 @@
         <translation type="obsolete">Anzahl der Einheiten</translation>
     </message>
     <message>
-        <location filename="creportcarddetails.cpp" line="424"/>
+        <location filename="creportcarddetails.cpp" line="406"/>
         <source>Time</source>
         <translation>Zeit</translation>
     </message>

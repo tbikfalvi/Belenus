@@ -15,7 +15,7 @@ RESOURCES   += install.qrc
 CONFIG      += qt
 TRANSLATIONS = setup_hu.ts \
                setup_de.ts \
-               qt_hu.ts
+               setup_it.ts
 
 win32:DEFINES -= UNICODE
 
