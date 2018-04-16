@@ -51,73 +51,73 @@
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="db/dbpatientcard.cpp" line="424"/>
+        <location filename="db/dbpatientcard.cpp" line="431"/>
         <location filename="db/dbvalidtimeperiods.cpp" line="164"/>
         <location filename="general.cpp" line="139"/>
         <source>Mon</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="db/dbpatientcard.cpp" line="424"/>
+        <location filename="db/dbpatientcard.cpp" line="431"/>
         <location filename="db/dbvalidtimeperiods.cpp" line="165"/>
         <location filename="general.cpp" line="140"/>
         <source>Tue</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="db/dbpatientcard.cpp" line="424"/>
+        <location filename="db/dbpatientcard.cpp" line="431"/>
         <location filename="db/dbvalidtimeperiods.cpp" line="166"/>
         <location filename="general.cpp" line="141"/>
         <source>Wed</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="db/dbpatientcard.cpp" line="424"/>
+        <location filename="db/dbpatientcard.cpp" line="431"/>
         <location filename="db/dbvalidtimeperiods.cpp" line="167"/>
         <location filename="general.cpp" line="142"/>
         <source>Thu</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="db/dbpatientcard.cpp" line="424"/>
+        <location filename="db/dbpatientcard.cpp" line="431"/>
         <location filename="db/dbvalidtimeperiods.cpp" line="168"/>
         <location filename="general.cpp" line="143"/>
         <source>Fri</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="db/dbpatientcard.cpp" line="424"/>
+        <location filename="db/dbpatientcard.cpp" line="431"/>
         <location filename="db/dbvalidtimeperiods.cpp" line="169"/>
         <location filename="general.cpp" line="144"/>
         <source>Sat</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="db/dbpatientcard.cpp" line="424"/>
+        <location filename="db/dbpatientcard.cpp" line="431"/>
         <location filename="db/dbvalidtimeperiods.cpp" line="170"/>
         <location filename="general.cpp" line="145"/>
         <source>Sun</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="db/dbpatientcard.cpp" line="816"/>
-        <location filename="db/dbpatientcard.cpp" line="856"/>
+        <location filename="db/dbpatientcard.cpp" line="823"/>
+        <location filename="db/dbpatientcard.cpp" line="863"/>
         <source> units (</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="db/dbpatientcard.cpp" line="818"/>
-        <location filename="db/dbpatientcard.cpp" line="858"/>
+        <location filename="db/dbpatientcard.cpp" line="825"/>
+        <location filename="db/dbpatientcard.cpp" line="865"/>
         <source> minutes) (</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="db/dbpatientcard.cpp" line="862"/>
+        <location filename="db/dbpatientcard.cpp" line="869"/>
         <source>&lt;i&gt; (prepared for usage)&lt;/i&gt;&lt;br&gt;</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="db/dbpatientcard.cpp" line="868"/>
+        <location filename="db/dbpatientcard.cpp" line="875"/>
         <source>&lt;i&gt;There is no valid, useable unit on this card.&lt;/i&gt;</source>
         <translation type="unfinished"></translation>
     </message>
@@ -252,18 +252,13 @@
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="general.cpp" line="406"/>
+        <location filename="general.cpp" line="403"/>
         <source>%1 units </source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="general.cpp" line="407"/>
+        <location filename="general.cpp" line="404"/>
         <source>(%1 minutes) </source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <location filename="general.cpp" line="409"/>
-        <source>valid on %1 </source>
         <translation type="unfinished"></translation>
     </message>
     <message>
@@ -905,17 +900,29 @@ Please relogin to enable cassa.</source>
 <context>
     <name>cDlgChangePCValidity</name>
     <message>
-        <location filename="dlg/dlgchangepcvalidity.cpp" line="24"/>
+        <location filename="dlg/dlgchangepcvalidity.cpp" line="36"/>
         <source>Change validity</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="dlg/dlgchangepcvalidity.cpp" line="156"/>
+        <location filename="dlg/dlgchangepcvalidity.cpp" line="106"/>
+        <location filename="dlg/dlgchangepcvalidity.cpp" line="113"/>
+        <location filename="dlg/dlgchangepcvalidity.cpp" line="120"/>
         <source>Warning</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="dlg/dlgchangepcvalidity.cpp" line="157"/>
+        <location filename="dlg/dlgchangepcvalidity.cpp" line="107"/>
+        <source>You must select a date or time intervall.</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="dlg/dlgchangepcvalidity.cpp" line="114"/>
+        <source>You must select at least on type of patientcard units.</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="dlg/dlgchangepcvalidity.cpp" line="121"/>
         <source>Incorrect validation date (%1).
 Validation of an active patientcard could not end in the past.</source>
         <translation type="unfinished"></translation>
@@ -2975,39 +2982,42 @@ All of the assigned card will be deactivated.</source>
     </message>
     <message>
         <location filename="edit/dlgpatientcardedit.cpp" line="246"/>
-        <location filename="edit/dlgpatientcardedit.cpp" line="324"/>
+        <location filename="edit/dlgpatientcardedit.cpp" line="326"/>
         <source>Attention</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
         <location filename="edit/dlgpatientcardedit.cpp" line="247"/>
         <source>Are you sure you want to change the validity date
-from:  %1  to:  %2  ?</source>
+from:  %1  to:  %2  
+for the selected patientcard units?</source>
+        <oldsource>Are you sure you want to change the validity date
+from:  %1  to:  %2  ?</oldsource>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="edit/dlgpatientcardedit.cpp" line="316"/>
-        <location filename="edit/dlgpatientcardedit.cpp" line="371"/>
+        <location filename="edit/dlgpatientcardedit.cpp" line="318"/>
+        <location filename="edit/dlgpatientcardedit.cpp" line="373"/>
         <source>Warning</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="edit/dlgpatientcardedit.cpp" line="325"/>
+        <location filename="edit/dlgpatientcardedit.cpp" line="327"/>
         <source>Are you sure you want to deactivate this patientcard?</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="edit/dlgpatientcardedit.cpp" line="404"/>
+        <location filename="edit/dlgpatientcardedit.cpp" line="406"/>
         <source>Barcode cannot be empty.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="edit/dlgpatientcardedit.cpp" line="411"/>
+        <location filename="edit/dlgpatientcardedit.cpp" line="413"/>
         <source>Invalid barcode. Barcode should be %1 character length.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="edit/dlgpatientcardedit.cpp" line="423"/>
+        <location filename="edit/dlgpatientcardedit.cpp" line="425"/>
         <source>Invalid barcode. This barcode already saved into database.</source>
         <translation type="unfinished"></translation>
     </message>
