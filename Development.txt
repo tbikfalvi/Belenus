@@ -91,3 +91,10 @@ Version 1.6.1.0
 - A kedvezmeny torles nem mukodott rendesen
 - A fokepernyon demo mod eseten nagy felirat
 - Berlet elettortenet kimutatas 
+
+Version 1.7.0.0
+===============
+- Mindaz, ami az 1.6.1.0-ban van
+- Olasz nyelv
+- Berlet ervenyesseg meghosszabbitas berletegyseg tipusonkent
+
