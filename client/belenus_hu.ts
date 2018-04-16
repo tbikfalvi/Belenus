@@ -519,9 +519,9 @@ Kérem indítsa el a WampServer alkalmazást, majd indítsa újra a Belenus alka
     </message>
     <message>
         <location filename="general.cpp" line="78"/>
-        <location filename="general.cpp" line="487"/>
-        <location filename="general.cpp" line="494"/>
-        <location filename="general.cpp" line="501"/>
+        <location filename="general.cpp" line="542"/>
+        <location filename="general.cpp" line="549"/>
+        <location filename="general.cpp" line="556"/>
         <location filename="wndmain.cpp" line="3439"/>
         <source>Information</source>
         <translation>Információ</translation>
@@ -600,22 +600,22 @@ Kérem indítsa el a WampServer alkalmazást, majd indítsa újra a Belenus alka
         <translation type="obsolete">&lt;b&gt;Lejárt érvényességű egységek:&lt;/b&gt;</translation>
     </message>
     <message>
-        <location filename="general.cpp" line="392"/>
+        <location filename="general.cpp" line="447"/>
         <source>&lt;tr&gt;&lt;td width=&quot;100&quot;&gt;&lt;b&gt;Owner:&lt;/b&gt;&lt;/td&gt;&lt;td&gt;%1&lt;/td&gt;&lt;/tr&gt;</source>
         <translation>&lt;tr&gt;&lt;td width=&quot;100&quot;&gt;&lt;b&gt;Tulajdonos:&lt;/b&gt;&lt;/td&gt;&lt;td&gt;%1&lt;/td&gt;&lt;/tr&gt;</translation>
     </message>
     <message>
-        <location filename="general.cpp" line="395"/>
+        <location filename="general.cpp" line="450"/>
         <source>&lt;tr&gt;&lt;td&gt;&lt;b&gt;Valid:&lt;/b&gt;&lt;/td&gt;&lt;td&gt;%1 -&gt; %2&lt;/td&gt;&lt;/tr&gt;</source>
         <translation>&lt;tr&gt;&lt;td&gt;&lt;b&gt;Érvényes:&lt;/b&gt;&lt;/td&gt;&lt;td&gt;%1 -&gt; %2&lt;/td&gt;&lt;/tr&gt;</translation>
     </message>
     <message>
-        <location filename="general.cpp" line="399"/>
+        <location filename="general.cpp" line="454"/>
         <source>&lt;tr&gt;&lt;td&gt;&lt;b&gt;Valid:&lt;/b&gt;&lt;/td&gt;&lt;td&gt;&lt;/td&gt;&lt;/tr&gt;</source>
         <translation>&lt;tr&gt;&lt;td&gt;&lt;b&gt;Érvényes:&lt;/b&gt;&lt;/td&gt;&lt;td&gt;&lt;/td&gt;&lt;/tr&gt;</translation>
     </message>
     <message>
-        <location filename="general.cpp" line="402"/>
+        <location filename="general.cpp" line="457"/>
         <source>&lt;tr&gt;&lt;td&gt;&lt;b&gt;Comment:&lt;/b&gt;&lt;/td&gt;&lt;/tr&gt;</source>
         <translation>&lt;tr&gt;&lt;td&gt;&lt;b&gt;Megjegyzés:&lt;/b&gt;&lt;/td&gt;&lt;/tr&gt;</translation>
     </message>
@@ -629,12 +629,27 @@ Kérem indítsa el a WampServer alkalmazást, majd indítsa újra a Belenus alka
         <translation>&lt;br&gt;&lt;b&gt;%1 egység (%2 perc) (%3) lejárt &lt;/b&gt;%4</translation>
     </message>
     <message>
-        <location filename="general.cpp" line="419"/>
+        <location filename="general.cpp" line="406"/>
+        <source>%1 units </source>
+        <translation>%1 egység </translation>
+    </message>
+    <message>
+        <location filename="general.cpp" line="407"/>
+        <source>(%1 minutes) </source>
+        <translation>(%1 perc) </translation>
+    </message>
+    <message>
+        <location filename="general.cpp" line="409"/>
+        <source>valid on %1 </source>
+        <translation>érvényes %1 </translation>
+    </message>
+    <message>
+        <location filename="general.cpp" line="474"/>
         <source> - INACTIVE Patientcard</source>
         <translation> - INAKTÍV / ÉRVÉNYTELEN Bérlet</translation>
     </message>
     <message>
-        <location filename="general.cpp" line="401"/>
+        <location filename="general.cpp" line="456"/>
         <source>&lt;tr&gt;&lt;td&gt;&lt;b&gt;Units:&lt;/b&gt;&lt;/td&gt;&lt;td&gt;%1&lt;/td&gt;&lt;/tr&gt;</source>
         <translation>&lt;tr&gt;&lt;td&gt;&lt;b&gt;Egységek:&lt;/b&gt;&lt;/td&gt;&lt;td&gt;%1&lt;/td&gt;&lt;/tr&gt;</translation>
     </message>
@@ -1390,17 +1405,17 @@ Kérem jelentkezzen ki és vissza a pénztárműveletek engedélyezéséhez.</tr
 <context>
     <name>cDlgChangePCValidity</name>
     <message>
-        <location filename="dlg/dlgchangepcvalidity.cpp" line="13"/>
+        <location filename="dlg/dlgchangepcvalidity.cpp" line="24"/>
         <source>Change validity</source>
         <translation>Érvényesség megváltoztatása</translation>
     </message>
     <message>
-        <location filename="dlg/dlgchangepcvalidity.cpp" line="67"/>
+        <location filename="dlg/dlgchangepcvalidity.cpp" line="156"/>
         <source>Warning</source>
         <translation>Figyelmeztetés</translation>
     </message>
     <message>
-        <location filename="dlg/dlgchangepcvalidity.cpp" line="68"/>
+        <location filename="dlg/dlgchangepcvalidity.cpp" line="157"/>
         <source>Incorrect validation date (%1).
 Validation of an active patientcard could not end in the past.</source>
         <translation>Nem megfelelő az érvényesség dátuma (%1).
@@ -3864,7 +3879,7 @@ amihez egy vagy több gép van hozzárendelve.</translation>
 <context>
     <name>cDlgPanelUse</name>
     <message>
-        <location filename="dlg/dlgpaneluse.cpp" line="189"/>
+        <location filename="dlg/dlgpaneluse.cpp" line="191"/>
         <source>Start</source>
         <translation>Indítás</translation>
     </message>
@@ -3874,21 +3889,21 @@ amihez egy vagy több gép van hozzárendelve.</translation>
         <translation type="obsolete">Bérlettípus : </translation>
     </message>
     <message>
-        <location filename="dlg/dlgpaneluse.cpp" line="194"/>
+        <location filename="dlg/dlgpaneluse.cpp" line="196"/>
         <source>Owner : </source>
         <oldsource>Owner :</oldsource>
         <translation>Tulajdonos : </translation>
     </message>
     <message>
-        <location filename="dlg/dlgpaneluse.cpp" line="195"/>
-        <location filename="dlg/dlgpaneluse.cpp" line="754"/>
+        <location filename="dlg/dlgpaneluse.cpp" line="197"/>
+        <location filename="dlg/dlgpaneluse.cpp" line="756"/>
         <source>Comment :
 </source>
         <translation>Megjegyzés :
 </translation>
     </message>
     <message>
-        <location filename="dlg/dlgpaneluse.cpp" line="223"/>
+        <location filename="dlg/dlgpaneluse.cpp" line="225"/>
         <source>&lt;No time intervall selected&gt;</source>
         <translation>&lt;Nincs időintervallum kiválasztva&gt;</translation>
     </message>
@@ -3903,27 +3918,27 @@ amihez egy vagy több gép van hozzárendelve.</translation>
         <translation type="obsolete">&lt;h3&gt;%1&lt;/h3&gt;&lt;b&gt;Tulajdonos:&lt;/b&gt; %2&lt;br&gt;&lt;b&gt;Érvényes:&lt;/b&gt; %3&lt;br&gt;&lt;b&gt;Felhasználható:&lt;/b&gt;%4</translation>
     </message>
     <message>
-        <location filename="dlg/dlgpaneluse.cpp" line="343"/>
+        <location filename="dlg/dlgpaneluse.cpp" line="345"/>
         <source>
 &lt;b&gt;%1 units (%2 minutes) valid on&lt;/b&gt;%3</source>
         <translation>
 &lt;b&gt;%1 egység (%2 perc) érvényes &lt;/b&gt;%3</translation>
     </message>
     <message>
-        <location filename="dlg/dlgpaneluse.cpp" line="396"/>
+        <location filename="dlg/dlgpaneluse.cpp" line="398"/>
         <source>Comment :
 %1</source>
         <translation>Megjegyzés :
 %1</translation>
     </message>
     <message>
-        <location filename="dlg/dlgpaneluse.cpp" line="441"/>
-        <location filename="dlg/dlgpaneluse.cpp" line="617"/>
+        <location filename="dlg/dlgpaneluse.cpp" line="443"/>
+        <location filename="dlg/dlgpaneluse.cpp" line="619"/>
         <source>Warning</source>
         <translation>Figyelmeztetés</translation>
     </message>
     <message>
-        <location filename="dlg/dlgpaneluse.cpp" line="442"/>
+        <location filename="dlg/dlgpaneluse.cpp" line="444"/>
         <source>This time period did not saved in the database
 for the actually selected device.
 Please select valid value from the list.</source>
@@ -3932,39 +3947,39 @@ az aktuálisan kiválasztott géphez.
 Kérem válasszon egy helyes értéket a listából.</translation>
     </message>
     <message>
-        <location filename="dlg/dlgpaneluse.cpp" line="571"/>
+        <location filename="dlg/dlgpaneluse.cpp" line="573"/>
         <source>Ok</source>
         <translation>Rendben</translation>
     </message>
     <message>
-        <location filename="dlg/dlgpaneluse.cpp" line="618"/>
+        <location filename="dlg/dlgpaneluse.cpp" line="620"/>
         <source>Invalid barcode length.
 The length of the barcode should be %1.</source>
         <translation>Nem megfelelő vonalkód hosszúság.
 A vonalkódnak %1 karakter hosszúnak kell lennie.</translation>
     </message>
     <message>
-        <location filename="dlg/dlgpaneluse.cpp" line="631"/>
-        <location filename="dlg/dlgpaneluse.cpp" line="639"/>
+        <location filename="dlg/dlgpaneluse.cpp" line="633"/>
+        <location filename="dlg/dlgpaneluse.cpp" line="641"/>
         <source>Attention</source>
         <translation>Figyelmeztetés</translation>
     </message>
     <message>
-        <location filename="dlg/dlgpaneluse.cpp" line="632"/>
+        <location filename="dlg/dlgpaneluse.cpp" line="634"/>
         <source>You are not allowed to use system administrator card.
 Please log in as a system administrator if you want to use this card.</source>
         <translation>Nincs jogosultsága szervízkártya használatára.
 Ha használni akarja a kártyát, jelentkezzen be rendszer adminisztrátorként.</translation>
     </message>
     <message>
-        <location filename="dlg/dlgpaneluse.cpp" line="640"/>
+        <location filename="dlg/dlgpaneluse.cpp" line="642"/>
         <source>This patientcard has been lost and replaced
 and can not be used or sold again.</source>
         <translation>Ez a bérlet elveszett és lecserélték másik bérletre
 ezért nem lehet használni vagy eladni újra.</translation>
     </message>
     <message>
-        <location filename="dlg/dlgpaneluse.cpp" line="656"/>
+        <location filename="dlg/dlgpaneluse.cpp" line="658"/>
         <source>
 
 Due to there is no time left, the patientcard will be reseted and deactivated.</source>
@@ -3973,14 +3988,14 @@ Due to there is no time left, the patientcard will be reseted and deactivated.</
 A bérleten nincs felhasználható idő, ezért a bérlet deaktiválásra kerül.</translation>
     </message>
     <message>
-        <location filename="dlg/dlgpaneluse.cpp" line="658"/>
-        <location filename="dlg/dlgpaneluse.cpp" line="692"/>
-        <location filename="dlg/dlgpaneluse.cpp" line="716"/>
+        <location filename="dlg/dlgpaneluse.cpp" line="660"/>
+        <location filename="dlg/dlgpaneluse.cpp" line="694"/>
+        <location filename="dlg/dlgpaneluse.cpp" line="718"/>
         <source>Question</source>
         <translation>Kérdés</translation>
     </message>
     <message>
-        <location filename="dlg/dlgpaneluse.cpp" line="659"/>
+        <location filename="dlg/dlgpaneluse.cpp" line="661"/>
         <source>This patientcard can not be used with these settings:
 
 Available units: %1
@@ -4005,14 +4020,14 @@ Kérem ellenőrizze a bérlet érvényességi időintervallumát.
 %1</translation>
     </message>
     <message>
-        <location filename="dlg/dlgpaneluse.cpp" line="693"/>
+        <location filename="dlg/dlgpaneluse.cpp" line="695"/>
         <source>This barcode has not been activated yet.
 Do you want to activate and sell it now?</source>
         <translation>Ilyen vonalkóddal bérlet még nincs aktiválva.
 Akarja aktiválni és eladni most?</translation>
     </message>
     <message>
-        <location filename="dlg/dlgpaneluse.cpp" line="717"/>
+        <location filename="dlg/dlgpaneluse.cpp" line="719"/>
         <source>This barcode has not found in the database.
 Do you want to save it and sell it now?</source>
         <translation>Ez a vonalkód nincs elmentve az adatbázisban.
@@ -4027,7 +4042,7 @@ Do you want to save it and sell it now?</source>
         <translation type="obsolete">Típus : %1</translation>
     </message>
     <message>
-        <location filename="dlg/dlgpaneluse.cpp" line="395"/>
+        <location filename="dlg/dlgpaneluse.cpp" line="397"/>
         <source>Owner : %1</source>
         <translation>Tulajdonos : %1</translation>
     </message>
@@ -8333,20 +8348,68 @@ amihez egy vagy több vendég van hozzárendelve.</translation>
         <source>Generate MD5 hash</source>
         <translation>MD5 hash generálás</translation>
     </message>
+    <message utf8="true">
+        <location filename="cdlgtest.ui" line="321"/>
+        <source> Bérlet lehasználás </source>
+        <translation> Bérlet lehasználás </translation>
+    </message>
+    <message utf8="true">
+        <location filename="cdlgtest.ui" line="327"/>
+        <source>Tab separated text file. Három oszlop. 1 oszlop a bérlet vonalkód, második oszlop a használat dátuma, harmadik pedig a megmaradt egységek száma</source>
+        <translation></translation>
+    </message>
     <message>
-        <location filename="cdlgtest.cpp" line="43"/>
+        <location filename="cdlgtest.ui" line="339"/>
+        <source>Execute</source>
+        <translation>Végrehajtás</translation>
+    </message>
+    <message>
+        <location filename="cdlgtest.cpp" line="44"/>
         <source>Test connection</source>
         <translation>Kapcsolat tesztelés</translation>
     </message>
     <message>
-        <location filename="cdlgtest.cpp" line="44"/>
+        <location filename="cdlgtest.cpp" line="45"/>
         <source>Enable</source>
         <translation>Engedélyezés</translation>
     </message>
     <message>
-        <location filename="cdlgtest.cpp" line="45"/>
+        <location filename="cdlgtest.cpp" line="46"/>
         <source>Disable</source>
         <translation>Tiltás</translation>
+    </message>
+    <message>
+        <location filename="cdlgtest.cpp" line="98"/>
+        <location filename="cdlgtest.cpp" line="109"/>
+        <source>Warning</source>
+        <translation>Figyelmeztetés</translation>
+    </message>
+    <message>
+        <location filename="cdlgtest.cpp" line="99"/>
+        <source>The following file is missing:
+%1
+
+Please create the file and fulfill it with proper data.
+For more information about import file, check the manual
+or contact the application provider.</source>
+        <translation>Az alábbi állomány nem található:
+%1
+
+Kérem töltse fel helyes adatokkal az állományt.
+További információkért, az import állományról, kérem nézze meg a
+felhasználói dokumentációt, vagy lépjen kapcsolatba az alkalmazás forgalmazójával.</translation>
+    </message>
+    <message>
+        <location filename="cdlgtest.cpp" line="109"/>
+        <source>Unable to read the following file:
+%1</source>
+        <translation>Nem sikerült kiolvasni a megadott állományt:
+%1</translation>
+    </message>
+    <message>
+        <location filename="cdlgtest.cpp" line="159"/>
+        <source>Information</source>
+        <translation>Információ</translation>
     </message>
 </context>
 <context>
@@ -11026,52 +11089,57 @@ váltópénz kivételével</translation>
         <translation>Dialog</translation>
     </message>
     <message>
-        <location filename="dlgchangepcvalidity.ui" line="20"/>
+        <location filename="dlgchangepcvalidity.ui" line="22"/>
         <source> Increase validity ... </source>
         <translation> Érvényesség meghosszabbítása </translation>
     </message>
     <message>
-        <location filename="dlgchangepcvalidity.ui" line="26"/>
+        <location filename="dlgchangepcvalidity.ui" line="33"/>
         <source>with one day</source>
         <translation>egy nappal</translation>
     </message>
     <message>
-        <location filename="dlgchangepcvalidity.ui" line="33"/>
+        <location filename="dlgchangepcvalidity.ui" line="61"/>
         <source>with one week</source>
         <translation>egy héttel</translation>
     </message>
     <message>
-        <location filename="dlgchangepcvalidity.ui" line="40"/>
+        <location filename="dlgchangepcvalidity.ui" line="68"/>
         <source>with two weeks</source>
         <translation>két héttel</translation>
     </message>
     <message>
-        <location filename="dlgchangepcvalidity.ui" line="47"/>
+        <location filename="dlgchangepcvalidity.ui" line="40"/>
         <source>with one month</source>
         <translation>egy hónappal</translation>
     </message>
     <message>
-        <location filename="dlgchangepcvalidity.ui" line="54"/>
+        <location filename="dlgchangepcvalidity.ui" line="47"/>
         <source>with three months</source>
         <translation>három hónappal</translation>
     </message>
     <message>
-        <location filename="dlgchangepcvalidity.ui" line="61"/>
+        <location filename="dlgchangepcvalidity.ui" line="54"/>
         <source>with half year</source>
         <translation>fél évvel</translation>
     </message>
     <message>
-        <location filename="dlgchangepcvalidity.ui" line="68"/>
+        <location filename="dlgchangepcvalidity.ui" line="79"/>
         <source>to custom date</source>
         <translation>egy megadott dátumig</translation>
     </message>
     <message>
-        <location filename="dlgchangepcvalidity.ui" line="120"/>
+        <location filename="dlgchangepcvalidity.ui" line="121"/>
+        <source> ... for the selected units </source>
+        <translation> ... a kiválasztott egységekre </translation>
+    </message>
+    <message>
+        <location filename="dlgchangepcvalidity.ui" line="149"/>
         <source>Ok</source>
         <translation>Rendben</translation>
     </message>
     <message>
-        <location filename="dlgchangepcvalidity.ui" line="133"/>
+        <location filename="dlgchangepcvalidity.ui" line="162"/>
         <source>Cancel</source>
         <translation>Mégsem</translation>
     </message>

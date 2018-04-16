@@ -368,6 +368,61 @@ QString cGeneral::getPatientCardInformationString(QString p_qsBarcode)
     return qsText;
 }
 //====================================================================================
+QStringList cGeneral::getPatientCardValidUnits(unsigned int p_uiCardId)
+//------------------------------------------------------------------------------------
+{
+    QStringList qslValidUnits = QStringList();
+    QString     qsText = "";
+    try
+    {
+        cDBPatientCard  obDBPatientCard;
+        obDBPatientCard.load( p_uiCardId );
+
+        QString qsQuery = QString( "SELECT patientCardUnitId, patientCardTypeId, unitTime, validDateFrom, validDateTo, COUNT(unitTime) "
+                                   "FROM patientcardunits "
+                                   "WHERE patientCardId=%1 "
+                                   "AND validDateFrom<=CURDATE() AND validDateTo>=CURDATE() "
+                                   "AND prepared=0 "
+                                   "AND active=1 "
+                                   "GROUP BY unitTime, validDateTo, patientCardTypeId ORDER BY validDateTo, patientCardUnitId" ).arg( obDBPatientCard.id() );
+        QSqlQuery  *poQuery = g_poDB->executeQTQuery( qsQuery );
+
+        if( poQuery->size() > 0 )
+        {
+            while( poQuery->next() )
+            {
+                unsigned int uiPCTId = poQuery->value( 1 ).toUInt();
+
+                if( uiPCTId > 0 )
+                {
+                    qsText = "";
+                    cDBPatientCardType obDBPatientCardType;
+
+                    obDBPatientCardType.load( uiPCTId );
+
+                    qsText.append( QObject::tr("%1 units ").arg( poQuery->value( 5 ).toString() ) );
+                    qsText.append( QObject::tr("(%1 minutes) ").arg( poQuery->value( 2 ).toString() ) );
+                    qsText.append( QString("(%1) ").arg( obDBPatientCardType.name() ) );
+                    qsText.append( QString("%1 -> ").arg( poQuery->value( 3 ).toString() ) );
+                    qsText.append( QString("%1").arg( poQuery->value( 4 ).toString() ) );
+                    qsText.append( "#" );
+                    qsText.append( QString("%1|%2|%3").arg( poQuery->value(2).toInt() )
+                                                      .arg( poQuery->value(4).toString() )
+                                                      .arg( poQuery->value(1).toUInt() ) );
+
+                    qslValidUnits << qsText;
+                }
+            }
+        }
+    }
+    catch( cSevException &e )
+    {
+        g_obLogger(e.severity()) << e.what() << EOM;
+    }
+
+    return qslValidUnits;
+}
+//====================================================================================
 void cGeneral::showPatientCardInformation(QString p_qsBarcode)
 //------------------------------------------------------------------------------------
 {
