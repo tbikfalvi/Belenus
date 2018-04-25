@@ -364,6 +364,7 @@ QString cGeneral::getPatientCardInformationString(QString p_qsBarcode)
     catch( cSevException &e )
     {
         g_obLogger(e.severity()) << e.what() << EOM;
+        g_obGen.showTrayError( e.what() );
     }
     return qsText;
 }
@@ -418,6 +419,7 @@ QStringList cGeneral::getPatientCardValidUnits(unsigned int p_uiCardId)
     catch( cSevException &e )
     {
         g_obLogger(e.severity()) << e.what() << EOM;
+        g_obGen.showTrayError( e.what() );
     }
 
     return qslValidUnits;
@@ -480,6 +482,7 @@ void cGeneral::showPatientCardInformation(QString p_qsBarcode)
     catch( cSevException &e )
     {
         g_obLogger(e.severity()) << e.what() << EOM;
+        g_obGen.showTrayError( e.what() );
     }
 }
 //====================================================================================
@@ -500,6 +503,7 @@ bool cGeneral::isShoppingCartHasItems()
     catch( cSevException &e )
     {
         g_obLogger(e.severity()) << e.what() << EOM;
+        g_obGen.showTrayError( e.what() );
     }
 
     return bRet;
@@ -526,13 +530,20 @@ bool cGeneral::isAppicationRunning(QString p_qsAppName)
 }
 
 //====================================================================================
-void cGeneral::initSysTrayIcon(QObject *parent)
+void cGeneral::initSysTrayIcon()
 //------------------------------------------------------------------------------------
 {
-    m_stIcon = new QSystemTrayIcon( parent );
+    m_stIcon = new QSystemTrayIcon();
 
     m_stIcon->setIcon( QIcon("./resources/belenus.ico") );
     m_stIcon->show();
+}
+
+//====================================================================================
+void cGeneral::setSysTrayIconParent( QObject *parent )
+//------------------------------------------------------------------------------------
+{
+    m_stIcon->setParent( parent );
 }
 
 //====================================================================================

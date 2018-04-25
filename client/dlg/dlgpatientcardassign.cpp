@@ -379,6 +379,7 @@ void cDlgPatientCardAssign::_fillOldCardAssignStructure()
     catch( cSevException &e )
     {
         g_obLogger(e.severity()) << e.what() << EOM;
+        g_obGen.showTrayError( e.what() );
     }
 }
 //===========================================================================================================
@@ -440,6 +441,7 @@ bool cDlgPatientCardAssign::_checkIfExists(QString p_qsBarcode)
         if( QString(e.what()).compare("Patientcard barcode not found") != 0 )
         {
             g_obLogger(e.severity()) << e.what() << EOM;
+            g_obGen.showTrayError( e.what() );
             bRet = false;
         }
         else
@@ -519,6 +521,7 @@ void cDlgPatientCardAssign::_loadAssignedCard()
     catch( cSevException &e )
     {
         g_obLogger(e.severity()) << e.what() << EOM;
+        g_obGen.showTrayError( e.what() );
     }
 }
 //===========================================================================================================
@@ -710,6 +713,7 @@ void cDlgPatientCardAssign::_processSelectedToMain()
     catch( cSevException &e )
     {
         g_obLogger(e.severity()) << e.what() << EOM;
+        g_obGen.showTrayError( e.what() );
     }
 }
 //===========================================================================================================
@@ -759,6 +763,7 @@ void cDlgPatientCardAssign::_processRemoveAndDeactivate()
     catch( cSevException &e )
     {
         g_obLogger(e.severity()) << e.what() << EOM;
+        g_obGen.showTrayError( e.what() );
     }
 }
 

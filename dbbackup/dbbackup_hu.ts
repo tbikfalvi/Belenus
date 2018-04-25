@@ -15,7 +15,7 @@
     </message>
     <message>
         <location filename="mainwindow.ui" line="155"/>
-        <location filename="mainwindow.cpp" line="294"/>
+        <location filename="mainwindow.cpp" line="302"/>
         <source>Please wait until the process finish.</source>
         <translation>Kérem várjon amíg a folyamat befejeződik.</translation>
     </message>
@@ -46,52 +46,52 @@
         <translation>Adatbázis frissítés</translation>
     </message>
     <message>
-        <location filename="mainwindow.cpp" line="116"/>
-        <location filename="mainwindow.cpp" line="154"/>
-        <location filename="mainwindow.cpp" line="166"/>
-        <location filename="mainwindow.cpp" line="181"/>
-        <location filename="mainwindow.cpp" line="200"/>
-        <location filename="mainwindow.cpp" line="210"/>
-        <location filename="mainwindow.cpp" line="238"/>
-        <location filename="mainwindow.cpp" line="299"/>
+        <location filename="mainwindow.cpp" line="118"/>
+        <location filename="mainwindow.cpp" line="158"/>
+        <location filename="mainwindow.cpp" line="170"/>
+        <location filename="mainwindow.cpp" line="185"/>
+        <location filename="mainwindow.cpp" line="204"/>
+        <location filename="mainwindow.cpp" line="214"/>
+        <location filename="mainwindow.cpp" line="244"/>
+        <location filename="mainwindow.cpp" line="307"/>
         <source>Error</source>
         <translation>Hiba</translation>
     </message>
     <message>
-        <location filename="mainwindow.cpp" line="117"/>
-        <location filename="mainwindow.cpp" line="167"/>
-        <location filename="mainwindow.cpp" line="182"/>
-        <location filename="mainwindow.cpp" line="211"/>
-        <location filename="mainwindow.cpp" line="239"/>
+        <location filename="mainwindow.cpp" line="119"/>
+        <location filename="mainwindow.cpp" line="171"/>
+        <location filename="mainwindow.cpp" line="186"/>
+        <location filename="mainwindow.cpp" line="215"/>
+        <location filename="mainwindow.cpp" line="245"/>
         <source>Unable to execute the following command:
 %1</source>
         <translation>Nem sikerült végrehajtani a következő folyamatot:
 %1</translation>
     </message>
     <message>
-        <location filename="mainwindow.cpp" line="125"/>
+        <location filename="mainwindow.cpp" line="127"/>
         <source>Warning</source>
         <translation>Figyelmeztetés</translation>
     </message>
     <message>
-        <location filename="mainwindow.cpp" line="126"/>
+        <location filename="mainwindow.cpp" line="128"/>
         <source>Location of the MySQL archive application is not set.
 Please check your settings.</source>
         <translation>A MySQL archiváló alkalmazás elérési útvonala nincs megadva.
 Kérem ellenőrizze a beállításokat.</translation>
     </message>
     <message>
-        <location filename="mainwindow.cpp" line="155"/>
+        <location filename="mainwindow.cpp" line="159"/>
         <source>Unable to create temporary file: dbrecreate.sql</source>
         <translation>Nem sikerült létrehozni a dbrecreate.sql ideiglenes állományt</translation>
     </message>
     <message>
-        <location filename="mainwindow.cpp" line="201"/>
+        <location filename="mainwindow.cpp" line="205"/>
         <source>Unable to create temporary file: dbreactivate.sql</source>
         <translation>Nem sikerült létrehozni a dbreactivate.sql ideiglenes állományt</translation>
     </message>
     <message>
-        <location filename="mainwindow.cpp" line="300"/>
+        <location filename="mainwindow.cpp" line="308"/>
         <source>The selected file not exists or not readable
 
 %1</source>

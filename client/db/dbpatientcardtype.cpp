@@ -321,6 +321,7 @@ void cDBPatientCardType::updatePatientCardUnits( int p_nUnitTime ) throw()
         catch( cSevException &e )
         {
             g_obLogger(e.severity()) << e.what() << EOM;
+            g_obGen.showTrayError( e.what() );
         }
     }
 }

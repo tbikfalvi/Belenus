@@ -129,6 +129,7 @@ void cDlgProductTypeEdit::on_pbSave_clicked()
         catch( cSevException &e )
         {
             g_obLogger(e.severity()) << e.what() << EOM;
+            g_obGen.showTrayError( e.what() );
         }
 
         QDialog::accept();

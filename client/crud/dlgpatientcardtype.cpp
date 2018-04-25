@@ -196,6 +196,7 @@ void cDlgPatientCardType::editClicked( bool )
     {
         if( poPatientCardType ) delete poPatientCardType;
         g_obLogger(e.severity()) << e.what() << EOM;
+        g_obGen.showTrayError( e.what() );
     }
 }
 
@@ -238,6 +239,7 @@ void cDlgPatientCardType::deleteClicked( bool )
         {
             if( poPatientCardType ) delete poPatientCardType;
             g_obLogger(e.severity()) << e.what() << EOM;
+            g_obGen.showTrayError( e.what() );
         }
     }
 }

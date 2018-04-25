@@ -93,7 +93,9 @@ void MainWindow::timerEvent(QTimerEvent *)
 void MainWindow::processBackup()
 //-------------------------------------------------------------------------------------------------
 {
-    QSettings   obPrefFile( "belenus.ini", QSettings::IniFormat );
+    QString qsCurrentPath = QDir::currentPath().replace( "\\", "/" );
+
+    QSettings   obPrefFile( QString( "%1/belenus.ini" ).arg( qsCurrentPath ), QSettings::IniFormat );
     QString     qsMysqlPath     = obPrefFile.value( QString::fromAscii( "DbBackup/DirDbBinaries" ), "" ).toString();
     QString     qsBackupPath    = obPrefFile.value( QString::fromAscii( "DbBackup/DirDbBackup" ), "" ).toString();
     QString     qsProcess       = QString( "\"%1/mysqldump.exe\"" ).arg(qsMysqlPath);
@@ -134,7 +136,9 @@ void MainWindow::processBackup()
 void MainWindow::processRestore()
 //-------------------------------------------------------------------------------------------------
 {
-    QSettings   obPrefFile( "belenus.ini", QSettings::IniFormat );
+    QString qsCurrentPath = QDir::currentPath().replace( "\\", "/" );
+
+    QSettings   obPrefFile( QString( "%1/belenus.ini" ).arg( qsCurrentPath ), QSettings::IniFormat );
     QString     qsMysqlPath     = obPrefFile.value( QString::fromAscii( "DbBackup/DirDbBinaries" ), "" ).toString();
     QString     qsProcess       = QString( "\"%1/mysql.exe\" -u belenus -pbelenus belenus < " ).arg(qsMysqlPath);
     QString     qsCommand;
@@ -225,7 +229,9 @@ void MainWindow::processRestore()
 void MainWindow::processExecute()
 //-------------------------------------------------------------------------------------------------
 {
-    QSettings   obPrefFile( "belenus.ini", QSettings::IniFormat );
+    QString qsCurrentPath = QDir::currentPath().replace( "\\", "/" );
+
+    QSettings   obPrefFile( QString( "%1/belenus.ini" ).arg( qsCurrentPath ), QSettings::IniFormat );
     QString     qsMysqlPath     = obPrefFile.value( QString::fromAscii( "DbBackup/DirDbBinaries" ), "" ).toString();
     QString     qsProcess       = QString( "\"%1/mysql.exe\" -u belenus -pbelenus belenus < " ).arg(qsMysqlPath);
     QString     qsExecute       = QString( " \"%1\" ").arg(m_qsFileName);
@@ -256,7 +262,9 @@ void MainWindow::on_pbExit_clicked()
 
 void MainWindow::on_pbSelect_clicked()
 {
-    QSettings   obPrefFile( "belenus.ini", QSettings::IniFormat );
+    QString qsCurrentPath = QDir::currentPath().replace( "\\", "/" );
+
+    QSettings   obPrefFile( QString( "%1/belenus.ini" ).arg( qsCurrentPath ), QSettings::IniFormat );
     QString     qsBackupPath = obPrefFile.value( QString::fromAscii( "DbBackup/DirDbBackup" ), "" ).toString();
     QString     qsFile = "";
 

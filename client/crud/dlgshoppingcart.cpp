@@ -340,6 +340,7 @@ void cDlgShoppingCart::deleteClicked( bool )
                 catch( cSevException &e )
                 {
                     g_obLogger(e.severity()) << e.what() << EOM;
+                    g_obGen.showTrayError( e.what() );
                 }
             }
             else if( obDBShoppingCart.ledgerTypeId() == cDBLedger::LT_PROD_SELL )
@@ -487,5 +488,6 @@ void cDlgShoppingCart::on_pbPayment_clicked()
     catch( cSevException &e )
     {
         g_obLogger(e.severity()) << e.what() << EOM;
+        g_obGen.showTrayError( e.what() );
     }
 }

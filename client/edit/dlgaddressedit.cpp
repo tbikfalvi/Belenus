@@ -100,6 +100,7 @@ void cDlgAddressEdit::accept ()
         catch( cSevException &e )
         {
             g_obLogger(e.severity()) << e.what() << EOM;
+            g_obGen.showTrayError( e.what() );
         }
 
         QDialog::accept();
@@ -121,6 +122,7 @@ void cDlgAddressEdit::on_pbCitySearch_clicked()
         if( QString(e.what()).compare("ZipRegionCity city not found") != 0 )
         {
             g_obLogger(e.severity()) << e.what() << EOM;
+            g_obGen.showTrayError( e.what() );
         }
         else
         {
@@ -148,6 +150,7 @@ void cDlgAddressEdit::on_ledZip_textEdited(QString )
             if( QString(e.what()).compare("ZipRegionCity zip not found") != 0 )
             {
                 g_obLogger(e.severity()) << e.what() << EOM;
+                g_obGen.showTrayError( e.what() );
             }
             else
             {
@@ -195,6 +198,7 @@ void cDlgAddressEdit::checkRegionZipCity()
             if( QString(e.what()).compare("ZipRegionCity zip not found") != 0 )
             {
                 g_obLogger(e.severity()) << e.what() << EOM;
+                g_obGen.showTrayError( e.what() );
             }
             else
             {
@@ -241,6 +245,7 @@ void cDlgAddressEdit::checkRegionZipCity()
                     if( QString(e.what()).compare("ZipRegionCity zip not found") != 0 )
                     {
                         g_obLogger(e.severity()) << e.what() << EOM;
+                        g_obGen.showTrayError( e.what() );
                     }
                     else
                     {

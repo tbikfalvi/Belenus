@@ -63,6 +63,7 @@ cDlgChangePCValidity::cDlgChangePCValidity(QWidget *p_poParent , unsigned int p_
     catch( cSevException &e )
     {
         g_obLogger(e.severity()) << e.what() << EOM;
+        g_obGen.showTrayError( e.what() );
     }
 
 }

@@ -85,6 +85,7 @@ cDlgReportCardUses::cDlgReportCardUses( QWidget *parent ) : cDlgPreview( parent 
     catch( cSevException &e )
     {
         g_obLogger(e.severity()) << e.what() << EOM;
+        g_obGen.showTrayError( e.what() );
     }*/
 
     cmbPatientCard->addItem( tr("<All patientcards>") );
@@ -99,6 +100,7 @@ cDlgReportCardUses::cDlgReportCardUses( QWidget *parent ) : cDlgPreview( parent 
     catch( cSevException &e )
     {
         g_obLogger(e.severity()) << e.what() << EOM;
+        g_obGen.showTrayError( e.what() );
     }
     if( poQuery ) delete poQuery;
 }

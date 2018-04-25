@@ -493,6 +493,7 @@ void cFrmPanel::setMainProcessTime( const int p_inLength, const int p_inPrice )
     catch( cSevException &e )
     {
 //        g_obLogger(e.severity()) << e.what() << EOM;
+//        g_obGen.showTrayError( e.what() );
     }
 
     g_obLogger(cSeverity::INFO) << "Device set cash time Id ["
@@ -683,6 +684,7 @@ void cFrmPanel::timerEvent ( QTimerEvent * )
     catch( cSevException &e )
     {
         g_obLogger(e.severity()) << e.what() << EOM;
+        g_obGen.showTrayError( e.what() );
     }
 }
 //====================================================================================
@@ -754,6 +756,7 @@ void cFrmPanel::load( const unsigned int p_uiPanelId )
     catch( cSevException &e )
     {
         g_obLogger(e.severity()) << e.what() << EOM;
+        g_obGen.showTrayError( e.what() );
         if( poQuery ) delete poQuery;
     }
 }
@@ -797,6 +800,7 @@ void cFrmPanel::reload()
     catch( cSevException &e )
     {
         g_obLogger(e.severity()) << e.what() << EOM;
+        g_obGen.showTrayError( e.what() );
         if( poQuery ) delete poQuery;
     }
 }
@@ -1458,6 +1462,7 @@ void cFrmPanel::setUsageFromWaitingQueue()
         catch( cSevException &e )
         {
             g_obLogger(e.severity()) << e.what() << EOM;
+            g_obGen.showTrayError( e.what() );
         }
     }
 

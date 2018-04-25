@@ -49,6 +49,7 @@ void dlgSendMail::loadMail()
     catch( cSevException &e )
     {
         g_obLogger(e.severity()) << e.what() << EOM;
+        g_obGen.showTrayError( e.what() );
     }
 */
 }
@@ -119,6 +120,7 @@ void dlgSendMail::on_pbSend_clicked()
                 else
                 {
                     g_obLogger(e.severity()) << e.what() << EOM;
+                    g_obGen.showTrayError( e.what() );
                     return;
                 }
             }
@@ -146,6 +148,7 @@ void dlgSendMail::on_pbSend_clicked()
                 else
                 {
                     g_obLogger(e.severity()) << e.what() << EOM;
+                    g_obGen.showTrayError( e.what() );
                     return;
                 }
             }
@@ -189,6 +192,7 @@ void dlgSendMail::on_pbSend_clicked()
     catch( cSevException &e )
     {
         g_obLogger(e.severity()) << e.what() << EOM;
+        g_obGen.showTrayError( e.what() );
     }
 
     QDialog::accept();
@@ -212,6 +216,7 @@ void dlgSendMail::on_pbSave_clicked()
     catch( cSevException &e )
     {
         g_obLogger(e.severity()) << e.what() << EOM;
+        g_obGen.showTrayError( e.what() );
     }
 
     QDialog::accept();

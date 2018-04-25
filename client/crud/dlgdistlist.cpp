@@ -123,6 +123,7 @@ void cDlgDistList::editClicked( bool )
     {
         if( poDistList ) delete poDistList;
         g_obLogger(e.severity()) << e.what() << EOM;
+        g_obGen.showTrayError( e.what() );
     }
 }
 
@@ -148,6 +149,7 @@ void cDlgDistList::deleteClicked( bool )
         {
             if( poDistList ) delete poDistList;
             g_obLogger(e.severity()) << e.what() << EOM;
+            g_obGen.showTrayError( e.what() );
         }
     }
 }

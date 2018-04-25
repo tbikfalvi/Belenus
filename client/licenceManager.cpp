@@ -7,10 +7,12 @@
 #include "preferences.h"
 #include "../framework/qtmysqlconnection.h"
 #include "../framework/qtlogger.h"
+#include "general.h"
 
-extern cPreferences *g_poPrefs;
-extern cQTMySQLConnection *g_poDB;
-extern cQTLogger g_obLogger;
+extern cPreferences        *g_poPrefs;
+extern cQTMySQLConnection  *g_poDB;
+extern cQTLogger            g_obLogger;
+extern cGeneral             g_obGen;
 
 cLicenceManager::cLicenceManager()
 {
@@ -300,6 +302,7 @@ void cLicenceManager::initialize()
     {
         if( poQuery ) delete poQuery;
         g_obLogger(e.severity()) << e.what() << EOM;
+        g_obGen.showTrayError( e.what() );
     }
 }
 
@@ -416,6 +419,7 @@ int cLicenceManager::activateLicence(const QString &p_qsLicenceString , bool p_b
         {
             if( poQuery ) delete poQuery;
             g_obLogger(e.severity()) << e.what() << EOM;
+            g_obGen.showTrayError( e.what() );
         }
     }
 

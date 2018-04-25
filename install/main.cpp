@@ -62,7 +62,7 @@ int main(int argc, char *argv[])
     QString qsLangInst  = "hu";
     QString qsLangApp   = "hu";
     QString qsComPort   = "";
-    QString qsDir       = "c:/Program Files/belenus";
+    QString qsDir       = "c:/kiwisun/belenus";
 
     for( int i=1; i<argc; i++ )
     {

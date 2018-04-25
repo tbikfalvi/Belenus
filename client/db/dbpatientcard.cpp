@@ -439,6 +439,7 @@ bool cDBPatientCard::isPatientCardCanBeUsed( unsigned int p_uiPatientCardTypeId,
     catch( cSevException &e )
     {
         g_obLogger(e.severity()) << e.what() << EOM;
+        g_obGen.showTrayError( e.what() );
     }
 
     *p_qsValid = ""; //QObject::tr( "Patientcard can be used:" );
@@ -741,6 +742,7 @@ void cDBPatientCard::sendDataToWeb() throw()
     catch( cSevException &e )
     {
         g_obLogger(e.severity()) << e.what() << EOM;
+        g_obGen.showTrayError( e.what() );
     }
 }
 
@@ -894,6 +896,7 @@ void cDBPatientCard::sendAutoMail( const int p_nMailType,
     catch( cSevException &e )
     {
         g_obLogger(e.severity()) << e.what() << EOM;
+        g_obGen.showTrayError( e.what() );
     }
 }
 

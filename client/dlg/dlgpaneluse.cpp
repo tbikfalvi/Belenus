@@ -106,6 +106,7 @@ cPanelPCUnitUse::cPanelPCUnitUse(QWidget *p_poParent, QStringList *p_qslParamete
     catch( cSevException &e )
     {
         g_obLogger(e.severity()) << e.what() << EOM;
+        g_obGen.showTrayError( e.what() );
     }
 }
 //----------------------------------------------------------------------------------------------
@@ -376,6 +377,7 @@ void cDlgPanelUse::setPanelUsePatientCard(unsigned int p_uiPatientCardId)
     catch( cSevException &e )
     {
         g_obLogger(e.severity()) << e.what() << EOM;
+        g_obGen.showTrayError( e.what() );
     }
 
     if( qvPanelUseUnits.count() == 1 )
@@ -479,6 +481,7 @@ void cDlgPanelUse::setPanelUsePrice()
     catch( cSevException &e )
     {
 //        g_obLogger(e.severity()) << e.what() << EOM;
+//        g_obGen.showTrayError( e.what() );
     }
 
     cCurrency   cPrice( m_uiPanelUsePrice-nTimezoneDiscount );
@@ -712,6 +715,7 @@ void cDlgPanelUse::on_pbReloadPC_clicked()
         if( QString(e.what()).compare("Patientcard barcode not found") != 0 )
         {
             g_obLogger(e.severity()) << e.what() << EOM;
+            g_obGen.showTrayError( e.what() );
         }
         else
         {

@@ -327,30 +327,6 @@ void dlgMain::_initializeInstall()
         }
     }
 
-    // Check Belenus client     nem erdekes, nem baj ha mar telepitve van, felulvagjuk
-
-/*    m_bBelenusAlreadyInstalled = g_obReg.isRegPathExists( "HKEY_LOCAL_MACHINE\\SOFTWARE\\Microsoft\\Windows\\CurrentVersion\\Uninstall\\Belenus" );
-
-    _logProcess( QString("Belenus application %1").arg(m_bBelenusAlreadyInstalled?"installed":"not installed") );
-
-    if( m_bBelenusAlreadyInstalled )
-    {
-        _logProcess( QString("Belenus application installed") );
-        m_qsClientInstallDir = g_obReg.keyValueS( "HKEY_LOCAL_MACHINE\\SOFTWARE\\Microsoft\\Windows\\CurrentVersion\\Uninstall\\Belenus", "InstallLocation", "" );
-        m_qsLanguage = g_obReg.keyValueS( "HKEY_LOCAL_MACHINE\\SOFTWARE\\Microsoft\\Windows\\CurrentVersion\\Uninstall\\Belenus", QString("Language"), "hu" );
-        QString qsTemp = g_obReg.keyValueS( "HKEY_LOCAL_MACHINE\\SOFTWARE\\Microsoft\\Windows\\CurrentVersion\\Uninstall\\Belenus", "Components", "" );
-        m_qslComponents = qsTemp.split( "#" );
-        _logProcess( QString("Application location: %1").arg(m_qsClientInstallDir) );
-        _logProcess( QString("Setup application language: %1").arg(m_qsLanguage) );
-        _logProcess( QString("Installed components:") );
-        for( int i=0; i<m_qslComponents.count(); i++ )
-        {
-            _logProcess( QString("%1").arg(m_qslComponents.at(i)) );
-        }
-
-        m_qsIniFileName = QString( "%1\\belenus.ini" ).arg(m_qsClientInstallDir);
-    }*/
-
     if( m_bSilentIstallCalled )
     {
         ledPanelsInstalled->setText( QString::number( m_nCountDevices ) );

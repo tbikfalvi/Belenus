@@ -3,7 +3,6 @@
 
 #include "../qtlogger.h"
 
-
 class GUIWriter : public LogWriter {
 public:
     GUIWriter(const cSeverity::teSeverity minSev = cSeverity::WARNING) : LogWriter(minSev) {}
