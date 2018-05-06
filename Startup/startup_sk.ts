@@ -153,12 +153,12 @@ Error code: ErrLogCreateFail
     </message>
     <message>
         <location filename="mainwindow.cpp" line="531"/>
-        <location filename="mainwindow.cpp" line="683"/>
-        <location filename="mainwindow.cpp" line="717"/>
-        <location filename="mainwindow.cpp" line="744"/>
-        <location filename="mainwindow.cpp" line="775"/>
-        <location filename="mainwindow.cpp" line="801"/>
-        <location filename="mainwindow.cpp" line="827"/>
+        <location filename="mainwindow.cpp" line="688"/>
+        <location filename="mainwindow.cpp" line="722"/>
+        <location filename="mainwindow.cpp" line="749"/>
+        <location filename="mainwindow.cpp" line="781"/>
+        <location filename="mainwindow.cpp" line="809"/>
+        <location filename="mainwindow.cpp" line="835"/>
         <source>Warning</source>
         <translation type="unfinished"></translation>
     </message>
@@ -172,7 +172,7 @@ Please create the directory manually and restart process.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="mainwindow.cpp" line="678"/>
+        <location filename="mainwindow.cpp" line="683"/>
         <source>Error occured during parsing file:
 &apos;%1&apos;
 
@@ -180,8 +180,8 @@ Error in line %2: %3</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="mainwindow.cpp" line="684"/>
-        <location filename="mainwindow.cpp" line="718"/>
+        <location filename="mainwindow.cpp" line="689"/>
+        <location filename="mainwindow.cpp" line="723"/>
         <source>Unable to copy updater files.
 Please check the error report file:
 
@@ -189,7 +189,7 @@ Please check the error report file:
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="mainwindow.cpp" line="745"/>
+        <location filename="mainwindow.cpp" line="750"/>
         <source>Unable to copy updater file.
 Please check the error report file:
 
@@ -197,9 +197,9 @@ Please check the error report file:
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="mainwindow.cpp" line="776"/>
-        <location filename="mainwindow.cpp" line="802"/>
-        <location filename="mainwindow.cpp" line="828"/>
+        <location filename="mainwindow.cpp" line="782"/>
+        <location filename="mainwindow.cpp" line="810"/>
+        <location filename="mainwindow.cpp" line="836"/>
         <source>Error occured when starting process:
 
 %1

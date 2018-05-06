@@ -111,6 +111,78 @@
       </layout>
      </widget>
     </item>
+    <item>
+     <widget class="QFrame" name="frmDemo">
+      <property name="frameShape">
+       <enum>QFrame::Panel</enum>
+      </property>
+      <property name="frameShadow">
+       <enum>QFrame::Raised</enum>
+      </property>
+      <property name="lineWidth">
+       <number>2</number>
+      </property>
+      <layout class="QHBoxLayout" name="horizontalLayout_2">
+       <item>
+        <spacer name="horizontalSpacer_2">
+         <property name="orientation">
+          <enum>Qt::Horizontal</enum>
+         </property>
+         <property name="sizeHint" stdset="0">
+          <size>
+           <width>217</width>
+           <height>20</height>
+          </size>
+         </property>
+        </spacer>
+       </item>
+       <item>
+        <layout class="QVBoxLayout" name="verticalLayout_2">
+         <item>
+          <widget class="QLabel" name="lblDemoMode">
+           <property name="font">
+            <font>
+             <pointsize>22</pointsize>
+             <weight>75</weight>
+             <bold>true</bold>
+            </font>
+           </property>
+           <property name="text">
+            <string>The application runs in DEMO mode.</string>
+           </property>
+           <property name="alignment">
+            <set>Qt::AlignCenter</set>
+           </property>
+          </widget>
+         </item>
+         <item>
+          <widget class="QLabel" name="lblDemoNotes">
+           <property name="text">
+            <string>Please note, in DEMO mode you are not able to control the real hardware devices (solarium machines etc.) from the application. Every action related to hardware devices are virtual.</string>
+           </property>
+           <property name="alignment">
+            <set>Qt::AlignCenter</set>
+           </property>
+          </widget>
+         </item>
+        </layout>
+       </item>
+       <item>
+        <spacer name="horizontalSpacer_3">
+         <property name="orientation">
+          <enum>Qt::Horizontal</enum>
+         </property>
+         <property name="sizeHint" stdset="0">
+          <size>
+           <width>216</width>
+           <height>20</height>
+          </size>
+         </property>
+        </spacer>
+       </item>
+      </layout>
+     </widget>
+    </item>
    </layout>
   </widget>
   <widget class="QMenuBar" name="menubar">
@@ -119,7 +191,7 @@
      <x>0</x>
      <y>0</y>
      <width>1361</width>
-     <height>26</height>
+     <height>21</height>
     </rect>
    </property>
    <widget class="QMenu" name="menu_System">
@@ -177,6 +249,8 @@
      <addaction name="action_PaymentMethods"/>
      <addaction name="separator"/>
      <addaction name="action_Advertisements"/>
+     <addaction name="separator"/>
+     <addaction name="action_DistributionLists"/>
      <addaction name="separator"/>
      <addaction name="action_ValidateSerialKey"/>
      <addaction name="action_EditLicenceInformation"/>
@@ -239,6 +313,13 @@
      </property>
      <addaction name="action_CassaActionStorno"/>
     </widget>
+    <widget class="QMenu" name="menuMail">
+     <property name="title">
+      <string>E-Mail</string>
+     </property>
+     <addaction name="action_LoadMail"/>
+     <addaction name="action_SendMail"/>
+    </widget>
     <addaction name="menuDevice"/>
     <addaction name="separator"/>
     <addaction name="menuPatientCard"/>
@@ -246,6 +327,8 @@
     <addaction name="menuProduct"/>
     <addaction name="separator"/>
     <addaction name="menuCassa"/>
+    <addaction name="separator"/>
+    <addaction name="menuMail"/>
    </widget>
    <widget class="QMenu" name="menu_Reports">
     <property name="title">
@@ -318,6 +401,7 @@
    <addaction name="action_PatientSelect"/>
    <addaction name="action_PatientEmpty"/>
    <addaction name="action_EditActualPatient"/>
+   <addaction name="action_WaitingPatients"/>
   </widget>
   <widget class="QToolBar" name="toolBarDeviceUse">
    <property name="windowTitle">
@@ -852,6 +936,29 @@
    </property>
    <property name="toolTip">
     <string>Logout from application with closing cassa and current shift</string>
+   </property>
+  </action>
+  <action name="action_DistributionLists">
+   <property name="text">
+    <string>Distribution lists</string>
+   </property>
+  </action>
+  <action name="action_SendMail">
+   <property name="text">
+    <string>Send ...</string>
+   </property>
+  </action>
+  <action name="action_LoadMail">
+   <property name="text">
+    <string>Load ...</string>
+   </property>
+  </action>
+  <action name="action_WaitingPatients">
+   <property name="text">
+    <string>WaitingPatients</string>
+   </property>
+   <property name="toolTip">
+    <string>List of guests waiting</string>
    </property>
   </action>
  </widget>

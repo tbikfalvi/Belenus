@@ -7,7 +7,8 @@ RESOURCES   += websync.qrc
 RC_FILE      = websync.rc
 TEMPLATE     = app
 DESTDIR      = ..
-TRANSLATIONS = websync_hu.ts
+TRANSLATIONS = websync_hu.ts \
+               websync_it.ts
 TARGET       = websync
 
 HEADERS     += ../framework/dbconnection.h \

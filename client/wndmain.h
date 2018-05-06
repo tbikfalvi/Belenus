@@ -54,6 +54,14 @@ protected:
 
 private:
 
+    QAction                 *action_ResetMainWindow;
+    QAction                 *action_ResetSecondaryWindow;
+    QAction                 *action_ResetAdWindows;
+    QAction                 *action_CloseAdWindows;
+    QAction                 *action_StartAdWindows;
+    QAction                 *action_StartWebSync;
+    QAction                 *action_WindowPosition;
+
     QLabel                   m_lblStatusLeft;
 //    QPushButton              m_pbStatusHttp;
     QPushButton              m_pbStatusCommunication;
@@ -89,6 +97,8 @@ private:
     bool                     m_bShoppingCartHasItem;
 //    int                      m_nHttpCommCounter;
     bool                     m_bMainWindowActive;
+    bool                     m_bResetAdWindows;
+    int                      m_nCounterAdWindowReset;
 
     vector<cDlgAdvertisementWindow *>   m_obAdWnd;
 
@@ -109,6 +119,8 @@ private:
     void _checkVersions();
     void _checkIsActivationNeeded();
     void _checkIsWebSyncNeeded();
+    void _setTrayIconMenu();
+    void _checkArchiveDir();
 
 public slots:
     void processDeviceUsePayment( unsigned int p_uiPanelId, unsigned int p_uiLedgerId, int p_nPaymentType );
@@ -144,6 +156,7 @@ private slots:
     void on_action_ReasonToVisit_triggered()        {}
     void on_action_Patients_triggered()             {}
     void on_action_PatientNew_triggered();
+    void on_action_WaitingPatients_triggered();
     void on_action_DeviceClear_triggered();
     void on_action_DeviceStart_triggered();
     void on_action_DeviceReset_triggered();
@@ -200,11 +213,21 @@ private slots:
 //    void on_BlnsHttpStepProgress();
 //    void on_BlnsHttpHideProgress();
     void on_action_Advertisements_triggered();
+    void on_action_DistributionLists_triggered();
     void on_CommunicationButtonClicked();
     void on_action_PatientcardInformation_triggered();
     void on_KeyboardEnabled();
     void on_KeyboardDisabled();
 //    void on_BlnsHttpProcessStopped();
+    void on_action_SendMail_triggered();
+    void on_action_LoadMail_triggered();
+    void slotResetMainWindow();
+    void slotResetSecondaryWindow();
+    void slotResetAdvertisementWindows();
+    void slotAdWindowsStart();
+    void slotAdWindowsStop();
+    void slotWebSyncStart();
+    void slotWindowPosition();
 };
 
 #endif

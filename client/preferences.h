@@ -29,6 +29,8 @@ public:
     cPreferences( const QString &p_qsFileName );
     ~cPreferences();
 
+    void            setApplicationPath( const QString &p_qsPath );
+    QString         getApplicationPath() const;
     void            setFileName( const QString &p_qsFileName );
     QString         getFileName() const;
     void            setVersion( const QString &p_qsVersion, bool p_boSaveNow = false );
@@ -235,15 +237,44 @@ public:
     bool            isDACanModifyExpDate();
     void            setWebSyncAutoStart( bool p_bWebSyncAutoStart, bool p_boSaveNow = false );
     bool            isWebSyncAutoStart();
+    void            setAutoMailOnPCSell( bool p_bAutoMailOnPCSell, bool p_boSaveNow = false );
+    bool            isAutoMailOnPCSell();
+    void            setAutoMailOnPCUse( bool p_bAutoMailOnPCUse, bool p_boSaveNow = false );
+    bool            isAutoMailOnPCUse();
+    void            setAutoMailOnPCExpiration( bool p_bAutoMailOnPCExpiration, bool p_boSaveNow = false );
+    bool            isAutoMailOnPCExpiration();
+    void            setPCExpirationDays( const int p_nPCExpirationDays, bool p_boSaveNow = false  );
+    int             getPCExpirationDays() const;
+    void            setAdvertisementSizeAndPos( const unsigned int p_uiId,
+                                                const unsigned int p_uiLeft,
+                                                const unsigned int p_uiTop,
+                                                const unsigned int p_uiWidth,
+                                                const unsigned int p_uiHeight,
+                                                bool p_boSaveNow = false );
+    void            setSecondsWaitOnSlpashScreen( const int p_nSecondsWaitOnSlpashScreen, bool p_boSaveNow = false );
+    int             getSecondsWaitOnSlpashScreen() const;
+
+    void            setValue(const QString &p_qsKey, const QString &p_qsValue);
+    QString         getValue( const QString &p_qsKey ) const;
+
+    void            setWindowMain( QWidget *p_wHandle );
+    void            setWindowSecondary( QWidget *p_wHandle );
+    void            moveWindowMain( int posX, int posY );
+    void            resizeWindowMain( int width, int height );
+    void            moveWindowSecondary( int posX, int posY );
+    void            resizeWindowSecondary( int width, int height );
 
 //void            setXXX( const QString &p_qsXXX, bool p_boSaveNow = false );
 //QString         getXXX() const;
-//void            setXXX( const int p_nXXX );
+//void            setXXX( const int p_nXXX, bool p_boSaveNow = false );
 //int             getXXX() const;
 //void            setXXX( bool p_bXXX, bool p_boSaveNow = false );
 //bool            isXXX();
 
 private:
+    QWidget        *m_wWindowMain;
+    QWidget        *m_wWindowSecondary;
+    QString         m_qsApplicationPath;
     QString         m_qsFileName;
     QString         m_qsVersion;
     QString         m_qsVersionDb;
@@ -336,6 +367,11 @@ private:
     bool            m_bDACanModifyWorktime;
     bool            m_bDACanModifyExpDate;
     bool            m_bWebSyncAutoStart;
+    bool            m_bAutoMailOnPCSell;
+    bool            m_bAutoMailOnPCUse;
+    bool            m_bAutoMailOnPCExpiration;
+    int             m_nPCExpirationDays;
+    int             m_nSecondsWaitOnSlpashScreen;
 
     void init();
 };

@@ -22,6 +22,7 @@ public:
     void        setProgressMax( int p_nMax );
     void        setProgressValue( int p_nValue );
     void        increaseProgressValue();
+    void        increaseProgressMax( int p_nMax );
 
 private:
     Ui::dlgProgress *ui;

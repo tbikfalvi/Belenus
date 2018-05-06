@@ -2,8 +2,8 @@
 -- Belenus Szoftver Rendszer (c) Pagony Multimedia Studio Bt - 2013
 -- -----------------------------------------------------------------------------------
 -- Filename    : db_fill_en.sql
--- AppVersion  : 1.6.0.0
--- DbVersion   : 1.7.5
+-- AppVersion  : 1.7.0.0
+-- DbVersion   : 1.7.7
 -- Author      : Bikfalvi Tamas
 -- -----------------------------------------------------------------------------------
 -- Adatbazist default adatokkal feltolto SQL script
@@ -13,10 +13,10 @@ USE `belenus`;
 
 -- -----------------------------------------------------------------------------------
 
-INSERT INTO `licences` (`licenceId`, `serial`, `country`, `region`, `city`, `zip`, `address`, `studio`, `contact`, `lastValidated`, `active`, `archive`) VALUES
- ( 0, 'BLNS_SERIAL_GLOBAL', 'Hungary', 'Budapest', 'Budapest', '', '', 'KiwiSun Franchise', NULL, '2013-10-01', 1, 'ARC');
-INSERT INTO `licences` (`licenceId`, `serial`, `country`, `region`, `city`, `zip`, `address`, `studio`, `contact`, `lastValidated`, `active`, `archive`) VALUES
- ( 1, 'BLNS_SERIAL_DEMO', 'Hungary', 'Budapest', 'Budapest', '', '', 'KiwiSun Franchise', NULL, '2013-10-01', 1, 'ARC');
+INSERT INTO `licences` (`licenceId`, `serial`, `country`, `region`, `city`, `zip`, `address`, `studio`, `contact`, `lastValidated`, `Act`, `Cod`, `active`, `archive`) VALUES
+ ( 0, 'BLNS_SERIAL_GLOBAL', 'Hungary', 'Budapest', 'Budapest', '', '', 'KiwiSun Franchise', NULL, '2013-10-01', '', '', 1, 'ARC');
+INSERT INTO `licences` (`licenceId`, `serial`, `country`, `region`, `city`, `zip`, `address`, `studio`, `contact`, `lastValidated`, `Act`, `Cod`, `active`, `archive`) VALUES
+ ( 1, 'BLNS_SERIAL_DEMO', 'Hungary', 'Budapest', 'Budapest', '', '', 'KiwiSun Franchise', NULL, '2013-10-01', '', '', 1, 'ARC');
 
 -- -----------------------------------------------------------------------------------
 
@@ -317,11 +317,11 @@ ALTER TABLE `shoppingcartitems` auto_increment=1;
 -- -----------------------------------------------------------------------------------
 
 INSERT INTO `settings` (`settingId`, `identifier`, `value`) VALUES
- (NULL, 'GLOBAL_DATA_UPDATED', '2015-01-01 08:00:00'),
+ (NULL, 'GLOBAL_DATA_UPDATED', '2018-04-25 12:00:00'),
  (NULL, 'LICENCE_LAST_VALIDATED', '2000-01-01 12:00:00'),
  (NULL, 'ABOUT_INFO_LINK', 'http://www.kiwisun.eu/elerhetosegeink.html'),
  (NULL, 'CURRENT_CASSA_ID', '0'),
- (NULL, 'APPLICATION_VERSION', '1_6_0_0'),
- (NULL, 'DATABASE_VERSION', '1_7_5');
+ (NULL, 'APPLICATION_VERSION', '1_7_0_0'),
+ (NULL, 'DATABASE_VERSION', '1_7_0');
 
 -- -----------------------------------------------------------------------------------

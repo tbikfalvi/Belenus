@@ -493,6 +493,7 @@ void cFrmPanel::setMainProcessTime( const int p_inLength, const int p_inPrice )
     catch( cSevException &e )
     {
 //        g_obLogger(e.severity()) << e.what() << EOM;
+//        g_obGen.showTrayError( e.what() );
     }
 
     g_obLogger(cSeverity::INFO) << "Device set cash time Id ["
@@ -683,6 +684,7 @@ void cFrmPanel::timerEvent ( QTimerEvent * )
     catch( cSevException &e )
     {
         g_obLogger(e.severity()) << e.what() << EOM;
+        g_obGen.showTrayError( e.what() );
     }
 }
 //====================================================================================
@@ -754,6 +756,7 @@ void cFrmPanel::load( const unsigned int p_uiPanelId )
     catch( cSevException &e )
     {
         g_obLogger(e.severity()) << e.what() << EOM;
+        g_obGen.showTrayError( e.what() );
         if( poQuery ) delete poQuery;
     }
 }
@@ -797,6 +800,7 @@ void cFrmPanel::reload()
     catch( cSevException &e )
     {
         g_obLogger(e.severity()) << e.what() << EOM;
+        g_obGen.showTrayError( e.what() );
         if( poQuery ) delete poQuery;
     }
 }
@@ -1182,6 +1186,15 @@ void cFrmPanel::closeAttendance()
                 obDBPatientCard.synchronizeTime();
                 obDBPatientCard.save();
                 obDBPatientCard.sendDataToWeb();
+
+                if( g_poPrefs->isAutoMailOnPCUse() )
+                {
+                    g_obLogger(cSeverity::INFO) << "PatientCard used, send auto mail about usage" << EOM;
+                    obDBPatientCard.sendAutoMail( AUTO_MAIL_ON_PCUSE,
+                                                  QDate::currentDate().toString("yyyy-MM-dd"),
+                                                  stTemp->qslUnitIds.count(),
+                                                  QDateTime::currentDateTime().toString("yyyy-MM-dd hh:mm") );
+                }
             }
 
             cDBPatientCardHistory   obDBPatientCardHistory;
@@ -1322,7 +1335,15 @@ void cFrmPanel::slotPanelStartClicked()
     cTracer obTrace( "cFrmPanel::slotPanelStartClicked" );
 
     emit signalMainWindowActivated();
-    start();
+
+    if( isDeviceStopped() )
+    {
+        continueStoppedDevice();
+    }
+    else
+    {
+        start();
+    }
 }
 //====================================================================================
 void cFrmPanel::slotPanelNextClicked()
@@ -1441,6 +1462,7 @@ void cFrmPanel::setUsageFromWaitingQueue()
         catch( cSevException &e )
         {
             g_obLogger(e.severity()) << e.what() << EOM;
+            g_obGen.showTrayError( e.what() );
         }
     }
 

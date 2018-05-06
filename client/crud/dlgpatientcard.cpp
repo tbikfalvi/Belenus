@@ -276,6 +276,7 @@ void cDlgPatientCard::editClicked( bool )
     {
         if( poPatientCard ) delete poPatientCard;
         g_obLogger(e.severity()) << e.what() << EOM;
+        g_obGen.showTrayError( e.what() );
     }
 }
 
@@ -305,6 +306,7 @@ void cDlgPatientCard::deleteClicked( bool )
         {
             if( poPatientCard ) delete poPatientCard;
             g_obLogger(e.severity()) << e.what() << EOM;
+            g_obGen.showTrayError( e.what() );
         }
     }
 }
@@ -330,6 +332,7 @@ bool cDlgPatientCard::_isPatientCardNotForService()
     {
         if( poPatientCard ) delete poPatientCard;
         g_obLogger(e.severity()) << e.what() << EOM;
+        g_obGen.showTrayError( e.what() );
     }
 
     return bRet;

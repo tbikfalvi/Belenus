@@ -16,6 +16,8 @@ public:
     QHBoxLayout *horizontalLayoutTop;
     QLabel      *lblName;
     QLineEdit   *ledName;
+    QLabel      *lblEmail;
+    QLineEdit   *ledEmail;
     QSpacerItem *horizontalSpacerTop;
     QLabel      *lblUniqueId;
     QLineEdit   *ledUniqueId;

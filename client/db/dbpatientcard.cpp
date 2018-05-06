@@ -18,6 +18,8 @@
 #include "dbvalidtimeperiods.h"
 #include "dbpatientcardunits.h"
 #include "dbpatientcardtype.h"
+#include "dbsendmail.h"
+#include "dbguest.h"
 
 cDBPatientCard::cDBPatientCard()
 {
@@ -406,11 +408,18 @@ void cDBPatientCard::synchronizeUnitTime(int p_nUnitTime) throw()
     }
 }
 
-void cDBPatientCard::updateActiveUnits(QDate p_qdNew) throw()
+void cDBPatientCard::updateActiveUnits(QDate p_qdNew, QString p_qsCondition) throw()
 {
-    QString qsQuery = QString( "UPDATE patientcardunits SET validDateTo='%1' WHERE patientCardId=%2 AND active=1" ).arg( p_qdNew.toString("yyyy-MM-dd") ).arg( m_uiId );
+    QString qsQuery = QString( "UPDATE patientcardunits SET validDateTo='%1' WHERE patientCardId=%2 AND active=1" )
+                             .arg( p_qdNew.toString("yyyy-MM-dd") )
+                             .arg( m_uiId );
+    if( p_qsCondition.length() > 0 )
+    {
+        qsQuery.append( " AND " );
+        qsQuery.append( p_qsCondition );
 
-    g_poDB->executeQTQuery( qsQuery );
+        g_poDB->executeQTQuery( qsQuery );
+    }
 }
 
 bool cDBPatientCard::isPatientCardCanBeUsed( unsigned int p_uiPatientCardTypeId, QString *p_qsValid ) throw()
@@ -430,6 +439,7 @@ bool cDBPatientCard::isPatientCardCanBeUsed( unsigned int p_uiPatientCardTypeId,
     catch( cSevException &e )
     {
         g_obLogger(e.severity()) << e.what() << EOM;
+        g_obGen.showTrayError( e.what() );
     }
 
     *p_qsValid = ""; //QObject::tr( "Patientcard can be used:" );
@@ -732,5 +742,161 @@ void cDBPatientCard::sendDataToWeb() throw()
     catch( cSevException &e )
     {
         g_obLogger(e.severity()) << e.what() << EOM;
+        g_obGen.showTrayError( e.what() );
     }
 }
+
+void cDBPatientCard::sendAutoMail( const int p_nMailType,
+                                   const QString &p_qsDate,
+                                   const int p_nUnitCount,
+                                   const QString &p_qsDateTime ) throw()
+{
+    try
+    {
+        QString         qsCardInfo      = "";
+        unsigned int    uiPatientId     = 0;
+        QString         qsPatientName   = "";
+        QString         qsPatientEmail  = "";
+        QString         qsUnitIds       = "";
+        QString         qsDateTime      = p_qsDateTime;
+
+        if( p_nMailType == AUTO_MAIL_ON_EXPIRE )
+        {
+            qsUnitIds = p_qsDateTime;
+            qsDateTime = "";
+        }
+
+        if( m_uiPatientId > 0 )
+        {
+            uiPatientId = m_uiPatientId;
+        }
+        else
+        {
+            QSqlQuery  *poQuery = g_poDB->executeQTQuery( QString( "SELECT patientId FROM connectpatientwithcard WHERE patientCardId=%1 " ).arg( m_uiId ) );
+
+            if( poQuery->size() > 0 )
+            {
+                poQuery->first();
+                uiPatientId = poQuery->value( 0 ).toUInt();
+            }
+        }
+
+        if( uiPatientId == 0 )
+            return;
+
+        cDBGuest    obDBGuest;
+
+        obDBGuest.load( uiPatientId );
+        qsPatientName   = obDBGuest.name();
+        qsPatientEmail  = obDBGuest.email().trimmed();
+
+        QSqlQuery  *poQuery = NULL;
+        QString     qsQuery = QString( "SELECT patientCardUnitId, "
+                                        "patientCardTypeId, "
+                                        "unitTime, "
+                                        "validDateFrom, "
+                                        "validDateTo, "
+                                       "COUNT(unitTime) "
+                                       "FROM patientcardunits "
+                                       "WHERE patientCardId=%1 "
+                                       "AND validDateFrom<=CURDATE() AND validDateTo>=CURDATE() "
+                                       "AND prepared=0 "
+                                       "AND active=1 "
+                                       "GROUP BY unitTime, validDateTo, patientCardTypeId ORDER BY validDateTo, patientCardUnitId" )
+                                 .arg( id() );
+        poQuery = g_poDB->executeQTQuery( qsQuery );
+
+        while( poQuery->next() )
+        {
+            QString qsValid = QString( "%1 -> %2" ).arg( poQuery->value( 3 ).toString() )
+                                                   .arg( poQuery->value( 4 ).toString() );
+            unsigned int uiPCTId = poQuery->value( 1 ).toUInt();
+
+            if( uiPCTId == 0 )
+            {
+                uiPCTId = patientCardTypeId();
+            }
+            if( uiPCTId > 0 )
+            {
+                cDBPatientCardType obDBPatientCardType;
+
+                obDBPatientCardType.load( uiPCTId );
+                qsCardInfo.append( poQuery->value( 5 ).toString() );
+                qsCardInfo.append( QObject::tr(" units (") );
+                qsCardInfo.append( poQuery->value( 2 ).toString() );
+                qsCardInfo.append( QObject::tr(" minutes) (") );
+                qsCardInfo.append( obDBPatientCardType.name() );
+                qsCardInfo.append( ") " );
+                qsCardInfo.append( qsValid );
+                qsCardInfo.append( "<br>" );
+            }
+        }
+
+        qsQuery = QString( "SELECT patientCardUnitId, "
+                            "patientCardTypeId, "
+                            "unitTime, "
+                            "validDateFrom, "
+                            "validDateTo, "
+                           "COUNT(unitTime) "
+                           "FROM patientcardunits "
+                           "WHERE patientCardId=%1 "
+                           "AND validDateFrom<=CURDATE() AND validDateTo>=CURDATE() "
+                           "AND prepared=1 "
+                           "GROUP BY unitTime, validDateTo, patientCardTypeId ORDER BY validDateTo, patientCardUnitId" )
+                        .arg( id() );
+        poQuery = g_poDB->executeQTQuery( qsQuery );
+
+        while( poQuery->next() )
+        {
+            QString qsValid = QString( "%1 -> %2" ).arg( poQuery->value( 3 ).toString() )
+                                                   .arg( poQuery->value( 4 ).toString() );
+            unsigned int uiPCTId = poQuery->value( 1 ).toUInt();
+
+            if( uiPCTId == 0 )
+            {
+                uiPCTId = patientCardTypeId();
+            }
+            if( uiPCTId > 0 )
+            {
+                cDBPatientCardType obDBPatientCardType;
+
+                obDBPatientCardType.load( uiPCTId );
+                qsCardInfo.append( poQuery->value( 5 ).toString() );
+                qsCardInfo.append( QObject::tr(" units (") );
+                qsCardInfo.append( poQuery->value( 2 ).toString() );
+                qsCardInfo.append( QObject::tr(" minutes) (") );
+                qsCardInfo.append( obDBPatientCardType.name() );
+                qsCardInfo.append( ") " );
+                qsCardInfo.append( qsValid );
+                qsCardInfo.append( QObject::tr("<i> (prepared for usage)</i><br>") );
+            }
+        }
+
+        if( qsCardInfo.length() < 1 )
+        {
+            qsCardInfo = QObject::tr( "<i>There is no valid, useable unit on this card.</i>" );
+        }
+
+        cDBSendMail obDBSendMail;
+
+        obDBSendMail.createNew();
+        obDBSendMail.setLicenceId( m_uiLicenceId );
+        obDBSendMail.setMailTypeId( p_nMailType );
+        obDBSendMail.setDateSend( p_qsDate );
+        obDBSendMail.setRecipients( qsPatientEmail );
+        obDBSendMail.setSubject( qsUnitIds );
+        obDBSendMail.setMessage( "" );
+        obDBSendMail.setVarName( qsPatientName );
+        obDBSendMail.setVarBardcode( m_qsBarcode );
+        obDBSendMail.setVarCardInfo( qsCardInfo );
+        obDBSendMail.setVarUnitCount( QString::number( p_nUnitCount ) );
+        obDBSendMail.setVarDateTime( qsDateTime );
+        obDBSendMail.save();
+    }
+    catch( cSevException &e )
+    {
+        g_obLogger(e.severity()) << e.what() << EOM;
+        g_obGen.showTrayError( e.what() );
+    }
+}
+

@@ -327,6 +327,7 @@ void cDBDiscount::remove() throw( cSevException )
 
     if( m_uiId )
     {
+/*
         QString  qsQuery;
 
         if( m_qsArchive.compare( "NEW" ) == 0 )
@@ -341,6 +342,8 @@ void cDBDiscount::remove() throw( cSevException )
 
         QSqlQuery  *poQuery = g_poDB->executeQTQuery( qsQuery );
         if( poQuery ) delete poQuery;
+*/
+        g_poDB->executeQTQuery( QString( "DELETE FROM discounts WHERE discountId = %1" ).arg( m_uiId ) );
     }
 }
 

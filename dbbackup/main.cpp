@@ -15,7 +15,9 @@ int main(int argc, char *argv[])
 {
     apMainApp = new QApplication(argc, argv);
 
-    QSettings   obPrefFile( "belenus.ini", QSettings::IniFormat );
+    QString qsCurrentPath = QDir::currentPath().replace( "\\", "/" );
+
+    QSettings   obPrefFile( QString( "%1/belenus.ini" ).arg( qsCurrentPath ), QSettings::IniFormat );
     QString     qsLang = obPrefFile.value( QString::fromAscii( "Lang" ), "en" ).toString();
 
     poTransBackup = new QTranslator();

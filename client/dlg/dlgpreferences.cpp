@@ -54,7 +54,7 @@ lblAutoSync->setVisible( false );
     g_poPrefs->getLogLevels( &uiConLevel, &uiDBLevel, &uiGUILevel, &uiFileLevel );
     sliConsoleLogLevel->setValue( 1/*uiConLevel*/ );
     sliDBLogLevel->setValue( 1/*uiDBLevel*/ );
-    sliGUILogLevel->setValue( uiGUILevel );
+    sliGUILogLevel->setValue( 2/*uiGUILevel*/ );
     sliFileLogLevel->setValue( uiFileLevel );
 
     QStringList obFilters( g_poPrefs->getLangFilePrefix() + "*.qm" );
@@ -83,6 +83,7 @@ lblAutoSync->setVisible( false );
     poQuery->first();
     ledAboutLink->setText( poQuery->value(0).toString() );
     ledAboutLink->setEnabled( g_obUser.isInGroup( cAccessGroup::SYSTEM ) );
+    ledWaitSecondsOnSplashScreen->setText( QString::number( g_poPrefs->getSecondsWaitOnSlpashScreen() ) );
 
     ledBarcodePrefix->setValidator( new QIntValidator( ledBarcodePrefix ) );
     spbBarcodeLen->setValue( g_poPrefs->getBarcodeLength() );
@@ -155,13 +156,17 @@ lblAutoSync->setVisible( false );
     pbCancelModifyPsw->setIcon( QIcon("./resources/40x40_cancel.png") );
     pbCancelModifyPsw->setVisible( false );
     ledPanelTextSterile->setText( g_poPrefs->getPanelTextSteril() );
+    ledPanelTextSterile->setEnabled( g_obUser.isInGroup( cAccessGroup::SYSTEM ) );
     ledPanelTextTubeReplacement->setText( g_poPrefs->getPanelTextTubeReplace() );
     ledPanelTextTubeReplacement->setEnabled( g_obUser.isInGroup( cAccessGroup::SYSTEM ) );
     ledPanelTextTubeCleanup->setText( g_poPrefs->getPanelTextTubeCleanup() );
     ledPanelTextTubeCleanup->setEnabled( g_obUser.isInGroup( cAccessGroup::SYSTEM ) );
     chkVisibleSecSteril->setChecked( g_poPrefs->isTextSterilVisible() );
+    chkVisibleSecSteril->setEnabled( g_obUser.isInGroup( cAccessGroup::SYSTEM ) );
     chkVisibleSecTubeReplace->setChecked( g_poPrefs->isTextTubeReplaceVisible() );
+    chkVisibleSecTubeReplace->setEnabled( g_obUser.isInGroup( cAccessGroup::SYSTEM ) );
     chkVisibleSecTubeCleanup->setChecked( g_poPrefs->isTextTubeCleanupVisible() );
+    chkVisibleSecTubeCleanup->setEnabled( g_obUser.isInGroup( cAccessGroup::SYSTEM ) );
     chkDAResetClock->setChecked( g_poPrefs->isDACanModifyWorktime() );
     chkDAResetClock->setEnabled( g_obUser.isInGroup( cAccessGroup::SYSTEM ) );
     chkDASetExpireDate->setChecked( g_poPrefs->isDACanModifyExpDate() );
@@ -210,6 +215,11 @@ lblAutoSync->setVisible( false );
     ledPCPartnerVatpercent->setText( QString::number(g_poPrefs->getPatientCardPartnerPriceVat()) );
 
     pbPanelSettings->setIcon( QIcon("./resources/40x40_settings.png") );
+
+    chkAutoMailPCSell->setChecked( g_poPrefs->isAutoMailOnPCSell() );
+    chkAutoMailPCUse->setChecked( g_poPrefs->isAutoMailOnPCUse() );
+    chkAutoMailPCExpire->setChecked( g_poPrefs->isAutoMailOnPCExpiration() );
+    ledAutoMailPCExpireDays->setText( QString::number(g_poPrefs->getPCExpirationDays()) );
 
     chkEnableHttp->setChecked( g_poPrefs->isBlnsHttpEnabled() );
     chkWebSyncAutoStart->setChecked( g_poPrefs->isWebSyncAutoStart() );
@@ -277,6 +287,19 @@ lblAutoSync->setVisible( false );
 
         tbwPreferences->setTabEnabled( 5, g_obUser.isInGroup( cAccessGroup::SYSTEM ) );
     }
+
+    lblConsoleLogLevel->setVisible( false );
+    lblConsoleLogLevelValue->setVisible( false );
+    sliConsoleLogLevel->setVisible( false );
+
+    lblDBLogLevel->setVisible( false );
+    lblDBLogLevelValue->setVisible( false );
+    sliDBLogLevel->setVisible( false );
+
+    lblGUILogLevel->setVisible( false );
+    lblGUILogLevelValue->setVisible( false );
+    sliGUILogLevel->setVisible( false );
+
 }
 
 cDlgPreferences::~cDlgPreferences()
@@ -431,7 +454,7 @@ void cDlgPreferences::accept()
 //        QMessageBox::information( this, tr( "Information" ),
 //                                  tr( "Some of the changes you made will only be applied after the application is restarted." ) );
     }
-
+    g_poPrefs->setSecondsWaitOnSlpashScreen( ledWaitSecondsOnSplashScreen->text().toInt() );
 
     g_poPrefs->setPanelsPerRow( spbPanels->value() );
     g_poPrefs->setUsageVisibleOnMain( chkUsageVisibleOnMain->isChecked() );
@@ -486,6 +509,11 @@ void cDlgPreferences::accept()
 
     g_poPrefs->setPatientCardPartnerPrice( cPricePartner.currencyValue().toInt() );
     g_poPrefs->setPatientCardPartnerPriceVat( ledPCPartnerVatpercent->text().toInt() );
+
+    g_poPrefs->setAutoMailOnPCSell( chkAutoMailPCSell->isChecked() );
+    g_poPrefs->setAutoMailOnPCUse( chkAutoMailPCUse->isChecked() );
+    g_poPrefs->setAutoMailOnPCExpiration( chkAutoMailPCExpire->isChecked() );
+    g_poPrefs->setPCExpirationDays( ledAutoMailPCExpireDays->text().toInt() );
 
     g_poPrefs->setBlnsHttpEnabled( chkEnableHttp->isChecked() );
     g_poPrefs->setWebSyncAutoStart( chkWebSyncAutoStart->isChecked() );

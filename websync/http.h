@@ -30,19 +30,29 @@
 
 using namespace std;
 
-#define HTTP_STATUS_DEFAULT              -1
-#define HTTP_ERROR_INVALID_TOKEN         -2
-#define HTTP_ERROR_WRONG_TOKEN           -3
-#define HTTP_ERROR_MD5_MISMATCH          -4
-#define HTTP_ERROR_INVALID_STUDIO        -5
-#define HTTP_ERROR_SERVER_SQL            -6
-#define HTTP_ERROR_SHA1_MISMATCH         -7
-#define HTTP_ERROR_SHA1_NOT_RECEIVED     -8
-#define HTTP_ERROR_MISSING_STUDIOID      -9
-#define HTTP_ERROR_MISSING_COMMID       -10
-#define HTTP_ERROR_OBSOLETE_TOKEN       -11
-#define HTTP_ERROR_RESULT_NOT_SENT      -12
-#define HTTP_ERROR_UNKNOWN              -99
+#define HTTP_STATUS_DEFAULT                          -1
+#define HTTP_ERROR_INVALID_TOKEN                     -2
+#define HTTP_ERROR_WRONG_TOKEN                       -3
+#define HTTP_ERROR_MD5_MISMATCH                      -4
+#define HTTP_ERROR_INVALID_STUDIO                    -5
+#define HTTP_ERROR_SERVER_SQL                        -6
+#define HTTP_ERROR_SHA1_MISMATCH                     -7
+#define HTTP_ERROR_SHA1_NOT_RECEIVED                 -8
+#define HTTP_ERROR_MISSING_STUDIOID                  -9
+#define HTTP_ERROR_MISSING_COMMID                   -10
+#define HTTP_ERROR_OBSOLETE_TOKEN                   -11
+#define HTTP_ERROR_RESULT_NOT_SENT                  -12
+#define HTTP_ERROR_TOKEN_REPEAT                     -13
+#define HTTP_ERROR_TOKEN_EXPIRED                    -14
+#define HTTP_ERROR_MISSING_MAIL_RECIP               -15
+#define HTTP_ERROR_MISSING_MAIL_SUBJ                -16
+#define HTTP_ERROR_MISSING_MAIL_BODY                -17
+#define HTTP_ERROR_MISSING_MAIL_VAR_NAME            -18
+#define HTTP_ERROR_MISSING_MAIL_VAR_BARCODE         -19
+#define HTTP_ERROR_MISSING_MAIL_VAR_CARDINFO        -20
+#define HTTP_ERROR_MISSING_MAIL_VAR_UNITCOUNT       -21
+#define HTTP_ERROR_MISSING_MAIL_VAR_DATETIME        -22
+#define HTTP_ERROR_UNKNOWN                          -99
 
 //====================================================================================
 class cBlnsHttpAction
@@ -54,9 +64,12 @@ public:
         HA_AUTHENTICATE,
         HA_PCSENDDATA,
         HA_PCUPDATERECORD,
-        HA_PROCESSQUEUE,
+        HA_PCPROCESSQUEUE,
         HA_REQUESTDATA,
         HA_SENDREQUESTSFINISHED,
+        HA_SENDMAILTOSERVER,
+        HA_MAILPROCESSQUEUE,
+        HA_UPDATEMAILRECORD,
         HA_PROCESSFINISHED
     };
 
@@ -68,9 +81,12 @@ public:
             case HA_AUTHENTICATE:               return "HTTPMSG_01 Authentication with server";                     break;
             case HA_PCSENDDATA:                 return "HTTPMSG_02 Send patientcard data to server";                break;
             case HA_PCUPDATERECORD:             return "HTTPMSG_03 Update patientcard record on server";            break;
-            case HA_PROCESSQUEUE:               return "HTTPMSG_04 Process waiting queue";                          break;
+            case HA_PCPROCESSQUEUE:             return "HTTPMSG_04 Process waiting patientcard queue";              break;
             case HA_REQUESTDATA:                return "HTTPMSG_05 Get patientcard data sold online";               break;
             case HA_SENDREQUESTSFINISHED:       return "HTTPMSG_06 Processing patientcards sold online finished";   break;
+            case HA_SENDMAILTOSERVER:           return "HTTPMSG_07 Send waiting mail to server";                    break;
+            case HA_MAILPROCESSQUEUE:           return "HTTPMSG_08 Process waiting mails queue";                    break;
+            case HA_UPDATEMAILRECORD:           return "HTTPMSG_09 Update mail record";                             break;
             case HA_PROCESSFINISHED:            return "HTTPMSG_99";                                                break;
             default:                            return "HTTPMSGERR";
         }
@@ -99,6 +115,7 @@ public:
     void             sendPatientCardData( QString p_qsBarcode, QString p_qsPatientCardData, bool p_bSendNow = true );
     void             processWaitingCardData();
     void             getPatientCardsSoldOnline();
+    void             processWaitingMails();
 
     int              getNumberOfWaitingRecords();
     QString          errorMessage();
@@ -141,6 +158,16 @@ private:
     bool             m_bGetOnlinePCProcessed;
     QStringList      m_qslProcessedRecordIds;
     QString          m_qsDisplayMessage;
+    int              m_nMailTypeId;
+    QString          m_qsMailRecipients;
+    QString          m_qsMailSubject;
+    QString          m_qsMailText;
+    QString          m_qsMailVarName;
+    QString          m_qsMailVarBarcode;
+    QString          m_qsMailVarCardInfo;
+    QString          m_qsMailVarDateTime;
+    QString          m_qsMailVarUnitCount;
+    QString          m_qsMailSha1;
 
     QDomDocument    *obResponseXML;
 
@@ -153,9 +180,10 @@ private:
     void            _httpProcessResponse();
     void            _httpGetToken();
     void            _httpSendCardData();
+    void            _httpSendMailToServer();
     void            _readTokenFromFile();
     void            _sendProcessFinished();
-    void            _readResponseFromFile();
+    void            _readPCResponseFromFile();
     void            _updateProcessedRecord();
     void            _httpGetOnlineRecords();
     void            _httpConfirmRequestedData();
@@ -167,17 +195,21 @@ private:
     unsigned int    _saveOnlineSell( unsigned int p_uiPatientCardId, QString p_qsBarcode, unsigned int p_uiPatientId, QString p_qsLedgerTime );
     void            _savePatientCardUnits( QString p_qsUnitCount, unsigned int p_uiPatientCardId, QString p_qsValidDateTo, unsigned int p_uiLedgerId );
     QString         _bytearrayToString( QString p_qsString );
+    void            _updateMailRecord();
+    void            _readMailResponseFromFile();
+    QString         _getNameForPatientCardType( unsigned int p_uiPatientCardTypeId );
 
 signals:
 
     void             signalErrorOccured();
     void             signalActionProcessed( QString p_qsInfo );
     void             signalStepProgress();
-    void             signalHideProgress();
+//    void             signalHideProgress();
     void             signalHttpProcessSuspended();
     void             signalHttpProcessDisabled();
     void             signalPatientCardUpdated( unsigned int p_uiPatientCardId, QString p_qsBarcode );
     void             signalDisplayNotification( QString p_qsMessage );
+    void             signalHideProgress( QString p_qsInfo );
 
 private slots:
     void            _slotHttpRequestFinished(int requestId, bool error);

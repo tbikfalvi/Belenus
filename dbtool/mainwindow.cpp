@@ -18,7 +18,7 @@ MainWindow::MainWindow(QWidget *parent) : QMainWindow(parent), ui(new Ui::MainWi
     ui->setupUi(this);
 
     m_nCurrentPage              = CONST_PAGE_START;
-    m_qdExpCurrentDir           = "C:/Program Files/Solarium/";
+    m_qdExpCurrentDir           = "C:/KiwiSun/Belenus/";
     m_nProgramType              = DBTool::KiwiSun;
     m_poDB                      = NULL;
     m_qsLogFileName             = "";

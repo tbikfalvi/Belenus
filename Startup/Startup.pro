@@ -11,6 +11,7 @@ DESTDIR      = ..
 TRANSLATIONS = startup_hu.ts \
                startup_de.ts \
                startup_sk.ts \
+               startup_it.ts
 
 HEADERS     += mainwindow.h
 

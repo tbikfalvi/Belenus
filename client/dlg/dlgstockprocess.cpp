@@ -147,6 +147,7 @@ void dlgStockProcess::on_pbStockIncrease_clicked()
     catch( cSevException &e )
     {
         g_obLogger(e.severity()) << e.what() << EOM;
+        g_obGen.showTrayError( e.what() );
     }
 }
 
@@ -180,6 +181,7 @@ void dlgStockProcess::on_pbStockDecrease_clicked()
     catch( cSevException &e )
     {
         g_obLogger(e.severity()) << e.what() << EOM;
+        g_obGen.showTrayError( e.what() );
     }
 }
 

@@ -122,6 +122,7 @@ void cDlgUsers::editClicked( bool )
     {
         if( poUser ) delete poUser;
         g_obLogger(e.severity()) << e.what() << EOM;
+        g_obGen.showTrayError( e.what() );
     }
 }
 
@@ -152,6 +153,7 @@ void cDlgUsers::deleteClicked( bool )
         {
             if( poUser ) delete poUser;
             g_obLogger(e.severity()) << e.what() << EOM;
+            g_obGen.showTrayError( e.what() );
         }
     }
 }

@@ -2,10 +2,28 @@
 #define DLGCHANGEPCVALIDITY_H
 
 #include <QDate>
+#include <QCheckBox>
 
 #include "../belenus.h"
 #include "ui_dlgchangepcvalidity.h"
 
+//====================================================================================
+class cPCUnit : public QCheckBox
+{
+    Q_OBJECT
+
+public:
+    cPCUnit( QWidget *p_poParent = 0, QString p_qsText = "" );
+    virtual ~cPCUnit() {}
+
+    QString     unitCondition()     { return m_qsCondition; }
+
+private:
+    QString     m_qsCondition;
+
+};
+
+//====================================================================================
 class cDlgChangePCValidity : public QDialog, protected Ui::dlgChangePCValidity
 {
     Q_OBJECT
@@ -23,13 +41,19 @@ public:
         SV_CUSTOM
     };
 
-    cDlgChangePCValidity( QWidget *p_poParent = 0 );
+    cDlgChangePCValidity( QWidget *p_poParent = 0, unsigned int p_uiCardId = 0 );
     virtual ~cDlgChangePCValidity() {}
-    selValidity selectionValidity( QDate *p_qdDate );
+    QString         unitCondition() { return m_qsUnitCondition; }
+    selValidity     selectionValidity( QDate *p_qdDate );
+    bool            isUnitsNotSelected();
 
 private:
 
-    selValidity m_selValidity;
+    QVector<cPCUnit*>   qvPCUnits;
+    selValidity         m_selValidity;
+    unsigned int        m_uiCardId;
+    cDBPatientCard      m_obDBPatientCard;
+    QString             m_qsUnitCondition;
 
 private slots:
     void on_pbOk_clicked();

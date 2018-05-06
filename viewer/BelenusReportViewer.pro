@@ -14,7 +14,8 @@ TEMPLATE     = app
 DESTDIR      = ..
 RESOURCES   += reportviewer.qrc
 TRANSLATIONS = brv_hu.ts \
-               brv_de.ts
+               brv_de.ts \
+               brv_it.ts
 RC_FILE      = reportviewer.rc
 
 SOURCES      = ../framework/dbconnection.cpp \

@@ -6,7 +6,8 @@ RC_FILE      = Belenus.rc
 TEMPLATE     = app
 DESTDIR      = ..
 TRANSLATIONS = belenus_hu.ts \
-               belenus_de.ts
+               belenus_de.ts \
+               belenus_it.ts
 
 win32:DEFINES -= UNICODE
 
@@ -63,6 +64,10 @@ FORMS = ../framework/dlgcrud.ui \
     dlgAdvertisementedit.ui \
     dlgcomment.ui \
     dlgStockProcess.ui \
+    dlgDistListEdit.ui \
+    dlgSendMail.ui \
+    dlgSelectMailRecipient.ui \
+    dlgWindowPosition.ui \
     dlgInformation.ui
 
 HEADERS = belenus.h \
@@ -108,6 +113,8 @@ HEADERS = belenus.h \
     crud/dlgpaymentmethod.h \
     crud/dlgadvertisements.h \
     crud/dlgwaitlist.h \
+    crud/dlgwaitlistinfo.h \
+    crud/dlgdistlist.h \
     db/dbreasontovisit.h \
     db/dbpatientcard.h \
     db/dbpatientcardtype.h \
@@ -142,6 +149,8 @@ HEADERS = belenus.h \
     db/dbapplicationaction.h \
     db/dbadvertisements.h \
     db/dbwaitlist.h \
+    db/dbdistlist.h \
+    db/dbsendmail.h \
     dlg/dlghardwaretest.h \
     dlg/dlglogin.h \
     dlg/dlglogs.h \
@@ -162,6 +171,9 @@ HEADERS = belenus.h \
     dlg/dlgcomment.h \
     dlg/dlgstockprocess.h \
     dlg/dlginformation.h \
+    dlg/dlgsendmail.h \
+    dlg/dlgselectmailrecipient.h \
+    dlg/dlgwindowposition.h \
     edit/dlgpaneltypeedit.h \
     edit/dlgskintypeedit.h \
     edit/dlgpanelgroupedit.h \
@@ -186,6 +198,7 @@ HEADERS = belenus.h \
     edit/dlgdiscountedit.h \
     edit/dlgpaymentmethodedit.h \
     edit/dlgadvertisementedit.h \
+    edit/dlgdistlistedit.h \
     report/dlgpreview.h \
     report/reppatientcards.h \
     report/reppatientcardsobs.h \
@@ -252,6 +265,8 @@ SOURCES = main.cpp \
     crud/dlgpaymentmethod.cpp \
     crud/dlgadvertisements.cpp \
     crud/dlgwaitlist.cpp \
+    crud/dlgwaitlistinfo.cpp \
+    crud/dlgdistlist.cpp \
     db/dbreasontovisit.cpp \
     db/dbpatientcard.cpp \
     db/dbpatientcardtype.cpp \
@@ -286,6 +301,8 @@ SOURCES = main.cpp \
     db/dbapplicationaction.cpp \
     db/dbadvertisements.cpp \
     db/dbwaitlist.cpp \
+    db/dbdistlist.cpp \
+    db/dbsendmail.cpp \
     dlg/dlghardwaretest.cpp \
     dlg/dlglogin.cpp \
     dlg/dlglogs.cpp \
@@ -306,6 +323,9 @@ SOURCES = main.cpp \
     dlg/dlgcomment.cpp \
     dlg/dlgstockprocess.cpp \
     dlg/dlginformation.cpp \
+    dlg/dlgsendmail.cpp \
+    dlg/dlgselectmailrecipient.cpp \
+    dlg/dlgwindowposition.cpp \
     edit/dlgpaneltypeedit.cpp \
     edit/dlgskintypeedit.cpp \
     edit/dlgpanelgroupedit.cpp \
@@ -331,6 +351,7 @@ SOURCES = main.cpp \
     edit/dlgdiscountedit.cpp \
     edit/dlgpaymentmethodedit.cpp \
     edit/dlgadvertisementedit.cpp \
+    edit/dlgdistlistedit.cpp \
     report/reppatientcards.cpp \
     report/reppatientcardsobs.cpp \
     report/dlgpreview.cpp \

@@ -422,6 +422,7 @@ void cDlgPanelSettings::editClicked( bool )
     {
         if( poPanelUse ) delete poPanelUse;
         g_obLogger(e.severity()) << e.what() << EOM;
+        g_obGen.showTrayError( e.what() );
     }
 }
 
@@ -446,6 +447,7 @@ void cDlgPanelSettings::deleteClicked( bool )
         {
             if( poPanelUse ) delete poPanelUse;
             g_obLogger(e.severity()) << e.what() << EOM;
+            g_obGen.showTrayError( e.what() );
         }
     }
 }

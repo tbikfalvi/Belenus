@@ -62,6 +62,8 @@
 #include "crud/dlgskintypes.h"
 #include "crud/dlgadvertisements.h"
 #include "crud/dlgpatientcardselect.h"
+#include "crud/dlgdistlist.h"
+#include "crud/dlgwaitlistinfo.h"
 
 //====================================================================================
 
@@ -89,6 +91,8 @@
 #include "dlg/dlgmanagedatabase.h"
 #include "dlg/dlgexportimport.h"
 #include "dlg/dlgcomment.h"
+#include "dlg/dlgsendmail.h"
+#include "dlg/dlgwindowposition.h"
 
 //====================================================================================
 
@@ -100,12 +104,14 @@
 
 //====================================================================================
 
-extern DatabaseWriter   g_obLogDBWriter;
+//extern DatabaseWriter   g_obLogDBWriter;
 extern cLicenceManager  g_obLicenceManager;
 
 //====================================================================================
 cWndMain::cWndMain( QWidget *parent ) : QMainWindow( parent )
 {
+    g_obLogger(cSeverity::DEBUG) << "cWndMain::cWndMain" << EOM;
+
     setupUi( this );
 
     m_qsStatusText                  = "";
@@ -131,14 +137,52 @@ cWndMain::cWndMain( QWidget *parent ) : QMainWindow( parent )
     m_bShoppingCartHasItem          = g_obGen.isShoppingCartHasItems();
 //    m_nHttpCommCounter              = 0;
     m_bMainWindowActive             = false;
+    m_bResetAdWindows               = false;
+    m_nCounterAdWindowReset         = 0;
 
     pbLogin->setIcon( QIcon("./resources/40x40_ok.png") );
 
     frmLogin->setVisible( false );
     frmLogin->setEnabled( false );
 
-    g_obGen.initSysTrayIcon( this );
+    lblDemoMode->setStyleSheet( "QLabel {color: blue;}" );
 
+    g_obGen.setSysTrayIconParent( this );
+
+    action_WindowPosition = new QAction( tr( "Set window position / size" ), this);
+    action_WindowPosition->setIcon( QIcon( "./resources/40x40_settings.png" ) );
+    connect( action_WindowPosition, SIGNAL(triggered()), this, SLOT(slotWindowPosition()) );
+
+    action_ResetMainWindow = new QAction( tr( "Reset main window position" ), this);
+    action_ResetMainWindow->setIcon( QIcon( "./resources/40x40_refresh.png" ) );
+    connect( action_ResetMainWindow, SIGNAL(triggered()), this, SLOT(slotResetMainWindow()) );
+
+    action_ResetSecondaryWindow = new QAction( tr( "Reset secondary window position" ), this);
+    action_ResetSecondaryWindow->setIcon( QIcon( "./resources/40x40_refresh.png" ) );
+    connect( action_ResetSecondaryWindow, SIGNAL(triggered()), this, SLOT(slotResetSecondaryWindow()) );
+
+    action_ResetAdWindows = new QAction( tr( "Reset advertisement windows position" ), this);
+    action_ResetAdWindows->setIcon( QIcon( "./resources/40x40_refresh.png" ) );
+    connect( action_ResetAdWindows, SIGNAL(triggered()), this, SLOT(slotResetAdvertisementWindows()) );
+
+    action_StartAdWindows = new QAction( tr( "Start" ), this);
+    action_StartAdWindows->setIcon( QIcon( "./resources/40x40_start.png" ) );
+    connect( action_StartAdWindows, SIGNAL(triggered()), this, SLOT(slotAdWindowsStart()) );
+
+    action_CloseAdWindows = new QAction( tr( "Stop" ), this);
+    action_CloseAdWindows->setIcon( QIcon( "./resources/40x40_stop.png" ) );
+    connect( action_CloseAdWindows, SIGNAL(triggered()), this, SLOT(slotAdWindowsStop()) );
+
+    action_StartWebSync = new QAction( tr( "Start" ), this);
+    action_StartWebSync->setIcon( QIcon( "./resources/40x40_start.png" ) );
+    connect( action_StartWebSync, SIGNAL(triggered()), this, SLOT(slotWebSyncStart()) );
+
+    action_StartWebSync->setEnabled( false );
+
+    g_obLogger(cSeverity::DEBUG) << "cWndMain::cWndMain setTrayIconMenu" << EOM;
+    _setTrayIconMenu();
+
+    g_obLogger(cSeverity::DEBUG) << "cWndMain::cWndMain showAdWindows" << EOM;
     showAdWindows();
 
     m_dlgProgress = new cDlgProgress( this );
@@ -177,6 +221,7 @@ cWndMain::cWndMain( QWidget *parent ) : QMainWindow( parent )
     action_PatientEmpty->setIcon( QIcon("./resources/40x40_patient_deselect.png") );
     action_EditActualPatient->setIcon( QIcon("./resources/40x40_patient_edit.png") );
     action_PatientNew->setIcon( QIcon("./resources/40x40_patient_new.png") );
+    action_WaitingPatients->setIcon( QIcon("./resources/40x40_patient_wait.png") );
 
     action_UseDevice->setIcon( QIcon( "./resources/40x40_device.png" ) );
     action_UseDeviceLater->setIcon( QIcon( "./resources/40x40_device_later.png" ) );
@@ -225,6 +270,7 @@ cWndMain::cWndMain( QWidget *parent ) : QMainWindow( parent )
         action_ValidateSerialKey->setIcon( QIcon( "./resources/40x40_key.png" ) );
         action_ManageDatabase->setIcon( QIcon( "./resources/40x40_connect_db.png" ) );
         action_Advertisements->setIcon( QIcon( "./resources/40x40_advertisement.png" ) );
+        action_DistributionLists->setIcon( QIcon( "./resources/40x40_distlist.png" ) );
     action_Preferences->setIcon( QIcon("./resources/40x40_settings.png") );
 
     menuProduct->setIcon( QIcon("./resources/40x40_product.png") );
@@ -235,6 +281,10 @@ cWndMain::cWndMain( QWidget *parent ) : QMainWindow( parent )
         action_PCSaveToDatabase->setIcon( QIcon( "./resources/40x40_patientcardadd.png" ) );
         action_PCActivate->setIcon( QIcon("./resources/40x40_patientcard_sell.png") );
     menuDevice->setIcon( QIcon( "./resources/40x40_device.png" ) );
+
+    menuMail->setIcon( QIcon( "./resources/40x40_send.png" ) );
+        action_LoadMail->setIcon( QIcon( "./resources/40x40_draftmail.png" ) );
+        action_SendMail->setIcon( QIcon( "./resources/40x40_send.png" ) );
 
     action_ReportViewer->setIcon( QIcon( "./resources/40x40_book_ledger.png" ) );
     action_Accounting->setIcon( QIcon( "./resources/40x40_book.png" ) );
@@ -268,6 +318,7 @@ cWndMain::cWndMain( QWidget *parent ) : QMainWindow( parent )
     action_PatientEmpty->setVisible( false );
     action_PatientNew->setEnabled( false );
     action_EditActualPatient->setEnabled( false );
+    action_WaitingPatients->setEnabled( false );
     action_UseDevice->setEnabled( false );
     action_UseDeviceLater->setEnabled( false );
     action_DeviceClear->setEnabled( false );
@@ -306,6 +357,10 @@ cWndMain::cWndMain( QWidget *parent ) : QMainWindow( parent )
     action_ManageDevicePanels->setEnabled( false );
 
     action_Advertisements->setEnabled( false );
+    action_DistributionLists->setEnabled( false );
+
+    action_LoadMail->setEnabled( false );
+    action_SendMail->setEnabled( false );
 
     showElementsForComponents();
 
@@ -393,6 +448,10 @@ cWndMain::cWndMain( QWidget *parent ) : QMainWindow( parent )
                                    .arg( m_lblHttpCount.text() ) );
     }
 */
+
+    g_poPrefs->setWindowMain( this );
+    g_poPrefs->setWindowSecondary( m_dlgSecondaryWindow );
+
     this->setFocus();
 }
 //====================================================================================
@@ -448,6 +507,7 @@ bool cWndMain::showLogIn()
     _checkVersions();
     _checkIsActivationNeeded();
     _checkIsWebSyncNeeded();
+    _checkArchiveDir();
 
     return true;
 }
@@ -468,7 +528,7 @@ void cWndMain::on_pbLogin_clicked()
 
         enableElementsByLogin( true );
 
-        g_obLogDBWriter.setAppUser( g_obUser.id() );
+//        g_obLogDBWriter.setAppUser( g_obUser.id() );
         g_obLogger(cSeverity::WARNING) << "User " << g_obUser.name() << " (" << g_obUser.realName() << ") logged in" << EOM;
 
         if( g_obUser.password() == "da39a3ee5e6b4b0d3255bfef95601890afd80709" ) //password is an empty string
@@ -493,8 +553,7 @@ void cWndMain::on_pbLogin_clicked()
         g_obLogger(cSeverity::WARNING) << "User " << cmbName->currentText() << " failed to log in" << EOM;
 
         g_obUser.logOut();
-        QMessageBox::critical( this, tr( "Login failed" ),
-                               tr( "Incorrect User Name and/or Password. Please try again." ) );
+        g_obGen.showTrayError( tr( "Incorrect User Name and/or Password. Please try again." ) );
     }
 }
 //====================================================================================
@@ -1034,6 +1093,7 @@ void cWndMain::keyPressEvent( QKeyEvent *p_poEvent )
             m_bCtrlPressed = false;
             _setStatusText( m_qsStatusText );
             on_action_TestDlgStarted();
+            g_obGen.isArchiveOnDifferentPath();
         }
     }
     else
@@ -1151,8 +1211,13 @@ void cWndMain::showElementsForComponents()
         action_RegionZipCity->setEnabled( false );
         action_ManageSkinTypes->setEnabled( false );
         action_Advertisements->setEnabled( false );
+        action_DistributionLists->setEnabled( false );
+        action_LoadMail->setEnabled( false );
+        action_SendMail->setEnabled( false );
 
         action_UseDeviceLater->setEnabled( false );
+
+        action_StartWebSync->setEnabled( false );
     }
 }
 //====================================================================================
@@ -1167,6 +1232,11 @@ void cWndMain::updateTitle()
     if( QString::fromStdString( g_poHardware->getCustomCaption() ).compare( "DEMO" ) == 0 )
     {
         action_Hardwaretest->setEnabled( false );
+        frmDemo->setVisible( true );
+    }
+    else
+    {
+        frmDemo->setVisible( false );
     }
 
     if( g_obUser.isLoggedIn() )
@@ -1266,6 +1336,7 @@ void cWndMain::updateToolbar()
             action_EmptyDemoDB->setEnabled( bIsUserLoggedIn );
             action_ManageDevicePanels->setEnabled( !mdiPanels->isPanelWorking() );
             action_Advertisements->setEnabled( bIsUserLoggedIn && g_obUser.isInGroup(cAccessGroup::ADMIN) );
+            action_DistributionLists->setEnabled( bIsUserLoggedIn && g_obUser.isInGroup(cAccessGroup::SYSTEM) );
         action_Preferences->setEnabled( bIsUserLoggedIn );
 
     menu_Action->setEnabled( bIsUserLoggedIn );
@@ -1289,6 +1360,9 @@ void cWndMain::updateToolbar()
             action_SellProduct->setEnabled( bIsUserLoggedIn );
         menuCassa->setEnabled( bIsUserLoggedIn );
             action_CassaActionStorno->setEnabled( bIsUserLoggedIn );
+        menuMail->setEnabled( bIsUserLoggedIn && g_obUser.isInGroup(cAccessGroup::SYSTEM) );
+            action_LoadMail->setEnabled( bIsUserLoggedIn && g_obUser.isInGroup(cAccessGroup::SYSTEM) );
+            action_SendMail->setEnabled( bIsUserLoggedIn && g_obUser.isInGroup(cAccessGroup::SYSTEM) );
 
     menu_Reports->setEnabled( bIsUserLoggedIn );
 
@@ -1303,6 +1377,7 @@ action_Logs->setVisible( false );
         action_PatientSelect->setEnabled( bIsUserLoggedIn && !(g_obGuest.id()>0) );
         action_PatientEmpty->setEnabled( bIsUserLoggedIn && g_obGuest.id()>0 );
         action_EditActualPatient->setEnabled( bIsUserLoggedIn && g_obGuest.id()>0 );
+        action_WaitingPatients->setEnabled( bIsUserLoggedIn );
 
     toolBarDeviceUse->setEnabled( bIsUserLoggedIn );
         action_DeviceSettings->setEnabled( bIsUserLoggedIn && !mdiPanels->isPanelWorking(mdiPanels->activePanel()) );
@@ -1322,6 +1397,8 @@ action_Logs->setVisible( false );
     }
 //    m_pbStatusHttp.setEnabled( bIsUserLoggedIn );
 //    m_pbStatusCommunicationSuspended.setEnabled( bIsUserLoggedIn );
+
+    action_StartWebSync->setEnabled( g_poPrefs->isBlnsHttpEnabled() );
 
     showElementsForComponents();
 }
@@ -1496,6 +1573,19 @@ void cWndMain::timerEvent(QTimerEvent *)
     }
 
     updateTitle();
+
+    if( m_bResetAdWindows )
+    {
+        m_nCounterAdWindowReset++;
+
+        if( m_nCounterAdWindowReset > 20 )
+        {
+            m_bResetAdWindows = false;
+            m_nCounterAdWindowReset = 0;
+            showAdWindows();
+            m_dlgProgress->hideProgress();
+        }
+    }
 }
 //====================================================================================
 void cWndMain::closeEvent( QCloseEvent *p_poEvent )
@@ -1543,7 +1633,7 @@ void cWndMain::closeEvent( QCloseEvent *p_poEvent )
             }
 */
             p_poEvent->accept();
-
+            _checkArchiveDir();
             g_obGen.backupDatabase( this );
         }
         else
@@ -1677,7 +1767,7 @@ void cWndMain::on_action_LogOut_triggered()
     g_obLogger(cSeverity::INFO) << "User " << g_obUser.name() << " (" << g_obUser.realName() << ") logged out" << EOM;
 
     g_obUser.logOut();
-    g_obLogDBWriter.setAppUser( 0 );
+//    g_obLogDBWriter.setAppUser( 0 );
     updateTitle();
 
     if( !showLogIn() ) close();
@@ -1784,6 +1874,13 @@ void cWndMain::on_action_PatientNew_triggered()
     m_bMainWindowActive = true;
 }
 //====================================================================================
+void cWndMain::on_action_WaitingPatients_triggered()
+{
+    cDlgWaitlistInfo    obDlgWaitlistInfo;
+
+    obDlgWaitlistInfo.exec();
+}
+//====================================================================================
 void cWndMain::on_action_DeviceClear_triggered()
 {
     cTracer obTrace( "cWndMain::on_action_DeviceClear_triggered" );
@@ -1864,6 +1961,7 @@ void cWndMain::on_action_PatientSelect_triggered()
         catch( cSevException &e )
         {
             g_obLogger(e.severity()) << e.what() << EOM;
+            g_obGen.showTrayError( e.what() );
         }
         updateTitle();
     }
@@ -2065,6 +2163,7 @@ void cWndMain::on_action_UseDeviceLater_triggered()
             catch( cSevException &e )
             {
         //        g_obLogger(e.severity()) << e.what() << EOM;
+//                g_obGen.showTrayError( e.what() );
             }
 
             cDBShoppingCart obDBShoppingCart;
@@ -2120,37 +2219,45 @@ void cWndMain::on_action_UseDeviceLater_triggered()
             qsComment = obDlgComment.resultComment();
         }
 
-        cDBWaitlist obDBWaitlist;
-
-        obDBWaitlist.setLicenceId( g_poPrefs->getLicenceId() );
-        obDBWaitlist.setPatientCardId( uiPatientCardId );
-        obDBWaitlist.setLedgerId( uiLedgerId );
-        obDBWaitlist.setShoppingCartItemId( uiShoppingCartItemId );
-        obDBWaitlist.setPanelTypeId( uiPanelTypeId );
-        obDBWaitlist.setBarcode( qsBarcode );
-        obDBWaitlist.setUnitIds( qsUnitIds );
-        obDBWaitlist.setLengthCash( inLengthCash );
-        obDBWaitlist.setLengthCard( inLengthCard );
-        obDBWaitlist.setUseTime( inLengthCash );
-        obDBWaitlist.setUsePrice( inPrice );
-        obDBWaitlist.setComment( qsComment );
-        obDBWaitlist.save();
-
-        QStringList qslUnitIds = qsUnitIds.split( '|' );
-
-        for( int i=0; i<qslUnitIds.count(); i++ )
+        try
         {
-            cDBPatientcardUnit obDBPatientcardUnit;
+            cDBWaitlist obDBWaitlist;
 
-            obDBPatientcardUnit.load( qslUnitIds.at(i).toInt() );
-            obDBPatientcardUnit.setPrepared( true );
-            obDBPatientcardUnit.save();
+            obDBWaitlist.setLicenceId( g_poPrefs->getLicenceId() );
+            obDBWaitlist.setPatientCardId( uiPatientCardId );
+            obDBWaitlist.setLedgerId( uiLedgerId );
+            obDBWaitlist.setShoppingCartItemId( uiShoppingCartItemId );
+            obDBWaitlist.setPanelTypeId( uiPanelTypeId );
+            obDBWaitlist.setBarcode( qsBarcode );
+            obDBWaitlist.setUnitIds( qsUnitIds );
+            obDBWaitlist.setLengthCash( inLengthCash );
+            obDBWaitlist.setLengthCard( inLengthCard );
+            obDBWaitlist.setUseTime( inLengthCash );
+            obDBWaitlist.setUsePrice( inPrice );
+            obDBWaitlist.setComment( qsComment );
+            obDBWaitlist.save();
+
+            QStringList qslUnitIds = qsUnitIds.split( '|' );
+
+            for( int i=0; i<qslUnitIds.count(); i++ )
+            {
+                cDBPatientcardUnit obDBPatientcardUnit;
+
+                obDBPatientcardUnit.load( qslUnitIds.at(i).toInt() );
+                obDBPatientcardUnit.setPrepared( true );
+                obDBPatientcardUnit.save();
+            }
+
+            mdiPanels->addPatientToWaitingQueue( true );
+    //        mdiPanels->addPatientToWaitingQueue( inLengthCash, inPrice, uiPatientCardId, qsUnitIds, inLengthCard, uiLedgerId, inPayType );
+
+            m_bShoppingCartHasItem = g_obGen.isShoppingCartHasItems();
         }
-
-        mdiPanels->addPatientToWaitingQueue( true );
-//        mdiPanels->addPatientToWaitingQueue( inLengthCash, inPrice, uiPatientCardId, qsUnitIds, inLengthCard, uiLedgerId, inPayType );
-
-        m_bShoppingCartHasItem = g_obGen.isShoppingCartHasItems();
+        catch( cSevException &e )
+        {
+            g_obLogger(e.severity()) << e.what() << EOM;
+            g_obGen.showTrayError( e.what() );
+        }
     }
 
     m_bMainWindowActive = true;
@@ -2464,6 +2571,7 @@ void cWndMain::on_action_PatientCardSell_triggered()
             if( QString(e.what()).compare("Patientcard barcode not found") != 0 )
             {
                 g_obLogger(e.severity()) << e.what() << EOM;
+                g_obGen.showTrayError( e.what() );
             }
             else
             {
@@ -2831,19 +2939,11 @@ void cWndMain::processProductSellPayment( const cDBShoppingCart &p_obDBShoppingC
     QString         qsComment = tr("Selling product: %1").arg( obDBShoppingCart.itemName() );
     bool            bShoppingCart = false;
     unsigned int    uiCouponId = 0;
-    cDBDiscount     obDBDiscount;
 
     obDlgCassaAction.cassaResult( &inPayType, &bShoppingCart, &uiCouponId );
 
     if( inCassaAction == QDialog::Accepted && !bShoppingCart )
     {
-        /*if( uiCouponId > 0 )
-        {
-            obDBDiscount.load( uiCouponId );
-
-            obDBShoppingCart.setItemDiscount( obDBShoppingCart.itemDiscount()+obDBDiscount.discount(obDBShoppingCart.itemSumPrice()) );
-        }*/
-
         g_obLogger(cSeverity::DEBUG) << "processProductSellPayment >> Name: " << obDBShoppingCart.itemName() <<
                                         " | Net: " << obDBShoppingCart.itemNetPrice() <<
                                         " | Count: " << obDBShoppingCart.itemCount() <<
@@ -3003,6 +3103,7 @@ void cWndMain::on_action_EmptyDemoDB_triggered()
         m_dlgProgress->hideProgress();
 
         g_obLogger(e.severity()) << e.what() << EOM;
+        g_obGen.showTrayError( e.what() );
     }
 
     m_bMainWindowActive = true;
@@ -3087,6 +3188,7 @@ void cWndMain::slotReplacePatientCard(const QString &p_qsBarcode,
             if( QString(e.what()).compare("Patientcard barcode not found") != 0 )
             {
                 g_obLogger(e.severity()) << e.what() << EOM;
+                g_obGen.showTrayError( e.what() );
             }
             else
             {
@@ -3649,11 +3751,39 @@ void cWndMain::on_action_Advertisements_triggered()
     }
 
     delete qpAdv;
-
+/*
     QMessageBox::warning( this, tr("Attention"),
                           tr("Please note that you should restart the application for the modifications to take effect."));
-
+*/
     m_bMainWindowActive = true;
+}
+
+void cWndMain::on_action_DistributionLists_triggered()
+{
+    m_bMainWindowActive = false;
+
+    cDlgDistList  obDlgDistlist(this);
+
+    obDlgDistlist.exec();
+}
+
+void cWndMain::on_action_SendMail_triggered()
+{
+    m_bMainWindowActive = false;
+
+    dlgSendMail  obDlgSendMail(this, tr("Send custom e-mail") );
+
+    obDlgSendMail.exec();
+}
+
+void cWndMain::on_action_LoadMail_triggered()
+{
+    m_bMainWindowActive = false;
+
+    dlgSendMail  obDlgSendMail(this, tr("Send custom e-mail") );
+
+    obDlgSendMail.loadMail();
+    obDlgSendMail.exec();
 }
 
 void cWndMain::on_CommunicationButtonClicked()
@@ -3764,6 +3894,7 @@ void cWndMain::_updateAllPatientcardToWeb()
         catch( cSevException &e )
         {
             g_obLogger(e.severity()) << e.what() << EOM;
+        g_obGen.showTrayError( e.what() );
         }
     }
 
@@ -3795,6 +3926,7 @@ void cWndMain::_removeAllPatientcardFromWeb()
         catch( cSevException &e )
         {
             g_obLogger(e.severity()) << e.what() << EOM;
+        g_obGen.showTrayError( e.what() );
         }
     }
 
@@ -3820,6 +3952,7 @@ void cWndMain::_removePatientcardFromWeb()
         catch( cSevException &e )
         {
             g_obLogger(e.severity()) << e.what() << EOM;
+        g_obGen.showTrayError( e.what() );
         }
     }
 }
@@ -3953,6 +4086,19 @@ void cWndMain::_checkIsWebSyncNeeded()
     }
 }
 
+void cWndMain::_checkArchiveDir()
+{
+    if( !g_obGen.isArchiveOnDifferentPath() )
+    {
+        QMessageBox::warning( this, tr("Warning"),
+                              tr( "The path of the application and the path of the archive directory is located on the same base directory.\n"
+                                  "For safety point of view it is recommended to separate archive directory from the application environment.\n"
+                                  "Please select a different directory path for 'archive' and manually move the content of the archive directory to the newly selected directory!\n\n"
+                                  "Example for application path: c:/Kiwisun/Belenus\n"
+                                  "Example for archive path: c:/Archive/BelenusDB" ) );
+    }
+}
+
 /*
 void cWndMain::on_BlnsHttpProcessStopped()
 {
@@ -3967,3 +4113,119 @@ void cWndMain::slotMainWindowActivated()
     m_bMainWindowActive = true;
     setCursor( Qt::ArrowCursor);
 }
+
+void cWndMain::_setTrayIconMenu()
+{
+    QMenu *trayIconMenu     = new QMenu(this);
+    QMenu *menuResetWindows = new QMenu(this);
+    QMenu *menuAdWindows    = new QMenu(this);
+    QMenu *menuWebSync      = new QMenu(this);
+
+    menuResetWindows->setTitle( tr("Windows") );
+    menuResetWindows->setIcon( QIcon( "./resources/40x40_refresh.png" ) );
+    menuResetWindows->addAction( action_WindowPosition );
+    menuResetWindows->addSeparator();
+    menuResetWindows->addAction( action_ResetMainWindow );
+    menuResetWindows->addAction( action_ResetSecondaryWindow );
+    menuResetWindows->addAction( action_ResetAdWindows );
+
+    menuAdWindows->setTitle( tr("Advertisements") );
+    menuAdWindows->setIcon( QIcon( "./resources/40x40_advertisement.png" ) );
+    menuAdWindows->addAction( action_StartAdWindows );
+    menuAdWindows->addAction( action_CloseAdWindows );
+
+    menuWebSync->setTitle( tr("WebSync application") );
+    menuWebSync->setIcon( QIcon( "./resources/40x40_websync.png" ) );
+    menuWebSync->addAction( action_StartWebSync );
+
+    trayIconMenu->addMenu( menuResetWindows );
+    trayIconMenu->addSeparator();
+    trayIconMenu->addMenu( menuAdWindows );
+    trayIconMenu->addSeparator();
+    trayIconMenu->addMenu( menuWebSync );
+
+    g_obGen.m_stIcon->setContextMenu( trayIconMenu );
+}
+
+void cWndMain::slotResetMainWindow()
+{
+    g_poPrefs->setMainWindowSizePos( 0, 0, 1024, 768, true );
+    move( g_poPrefs->getMainWindowLeft(), g_poPrefs->getMainWindowTop() );
+    resize( g_poPrefs->getMainWindowWidth(), g_poPrefs->getMainWindowHeight() );
+}
+
+void cWndMain::slotResetSecondaryWindow()
+{
+    g_poPrefs->setSecondaryWindowPosition( QPoint( 0, 0 ), true );
+    g_poPrefs->setSecondaryWindowSize( QSize( 1024, 768 ) );
+    m_dlgSecondaryWindow->move( g_poPrefs->secondaryWindowPosition() );
+    m_dlgSecondaryWindow->resize( g_poPrefs->secondaryWindowSize() );
+}
+
+void cWndMain::slotResetAdvertisementWindows()
+{
+    m_dlgProgress->showProgress();
+
+    QSettings   obPrefFile( "advertisement.cmd", QSettings::IniFormat );
+    QSqlQuery *poQuery = g_poDB->executeQTQuery( "SELECT advertisementid FROM advertisements ");
+
+    while( poQuery->next() )
+    {
+        obPrefFile.setValue( QString::fromAscii( "Advertisement%1/Command" ).arg( poQuery->value(0).toInt() ), "EXIT" );
+        g_poPrefs->setAdvertisementSizeAndPos( poQuery->value(0).toUInt(), 0, 0, 200, 200, true );
+    }
+
+    m_bResetAdWindows = true;
+    m_nCounterAdWindowReset = 0;
+}
+
+void cWndMain::slotAdWindowsStart()
+{
+    showAdWindows();
+
+    this->setFocus();
+}
+
+void cWndMain::slotAdWindowsStop()
+{
+    QSettings   obPrefFile( "advertisement.cmd", QSettings::IniFormat );
+    QSqlQuery *poQuery = g_poDB->executeQTQuery( "SELECT advertisementid FROM advertisements ");
+
+    while( poQuery->next() )
+    {
+        obPrefFile.setValue( QString::fromAscii( "Advertisement%1/Command" ).arg( poQuery->value(0).toInt() ), "EXIT" );
+    }
+
+    this->setFocus();
+}
+
+void cWndMain::slotWebSyncStart()
+{
+    if( g_poPrefs->isBlnsHttpEnabled() )
+    {
+        if( !g_obGen.isAppicationRunning( "websync.exe" ) )
+        {
+            QProcess *qpWebSync = new QProcess(this);
+
+            if( !qpWebSync->startDetached( QString("websync.exe") ) )
+            {
+                QMessageBox::warning( this, tr("Warning"),
+                                      tr("Error occured when starting process:WebSync.exe\n\nError code: %1\n"
+                                         "0 > The process failed to start.\n"
+                                         "1 > The process crashed some time after starting successfully.\n"
+                                         "2 > The last waitFor...() function timed out.\n"
+                                         "4 > An error occurred when attempting to write to the process.\n"
+                                         "3 > An error occurred when attempting to read from the process.\n"
+                                         "5 > An unknown error occurred.").arg(qpWebSync->error()) );
+            }
+        }
+    }
+}
+
+void cWndMain::slotWindowPosition()
+{
+    cDlgWindowPosition  obDlgWindowPosition;
+
+    obDlgWindowPosition.exec();
+}
+

@@ -194,6 +194,7 @@ void cDlgGuest::editClicked( bool )
     {
         if( poGuest ) delete poGuest;
         g_obLogger(e.severity()) << e.what() << EOM;
+        g_obGen.showTrayError( e.what() );
     }
 }
 
@@ -224,7 +225,8 @@ void cDlgGuest::deleteClicked( bool )
         catch( cSevException &e )
         {
             if( poGuest ) delete poGuest;
-        g_obLogger(e.severity()) << e.what() << EOM;
+            g_obLogger(e.severity()) << e.what() << EOM;
+            g_obGen.showTrayError( e.what() );
         }
     }
 }

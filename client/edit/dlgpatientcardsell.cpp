@@ -465,12 +465,25 @@ void cDlgPatientCardSell::on_pbSell_clicked()
 
             m_poPatientCard->sendDataToWeb();
 
+            QDate   deValidDateTo = QDate::fromString( m_poPatientCard->validDateTo(), "yyyy-MM-dd" );
+            if( g_poPrefs->isAutoMailOnPCSell() )
+            {
+                g_obLogger(cSeverity::INFO) << "PatientCard sold, send auto mail about sell" << EOM;
+                m_poPatientCard->sendAutoMail( AUTO_MAIL_ON_PCSELL, QDate::currentDate().toString("yyyy-MM-dd"), 0, "" );
+            }
+            if( g_poPrefs->isAutoMailOnPCExpiration() )
+            {
+                g_obLogger(cSeverity::INFO) << "PatientCard sold, send auto mail about expiration" << EOM;
+                m_poPatientCard->sendAutoMail( AUTO_MAIL_ON_EXPIRE, deValidDateTo.addDays( g_poPrefs->getPCExpirationDays()*(-1) ).toString("yyyy-MM-dd"), 0, qslUnitIds.join(",") );
+            }
+
             QDialog::accept();
 
         }
         catch( cSevException &e )
         {
             g_obLogger(e.severity()) << e.what() << EOM;
+            g_obGen.showTrayError( e.what() );
         }
     }
     else

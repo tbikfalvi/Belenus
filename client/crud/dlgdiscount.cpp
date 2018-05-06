@@ -194,6 +194,7 @@ void cDlgDiscount::editClicked( bool )
     {
         if( poDiscount ) delete poDiscount;
         g_obLogger(e.severity()) << e.what() << EOM;
+        g_obGen.showTrayError( e.what() );
     }
 }
 
@@ -224,6 +225,7 @@ void cDlgDiscount::deleteClicked( bool )
         {
             if( poDiscount ) delete poDiscount;
             g_obLogger(e.severity()) << e.what() << EOM;
+            g_obGen.showTrayError( e.what() );
         }
     }
 }

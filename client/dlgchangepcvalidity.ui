@@ -6,8 +6,8 @@
    <rect>
     <x>0</x>
     <y>0</y>
-    <width>259</width>
-    <height>234</height>
+    <width>589</width>
+    <height>219</height>
    </rect>
   </property>
   <property name="windowTitle">
@@ -15,106 +15,135 @@
   </property>
   <layout class="QHBoxLayout" name="horizontalLayout_2">
    <item>
-    <widget class="QGroupBox" name="gbIncrease">
-     <property name="title">
-      <string> Increase validity ... </string>
-     </property>
-     <layout class="QVBoxLayout" name="verticalLayout">
-      <item>
-       <widget class="QRadioButton" name="rbOneDay">
-        <property name="text">
-         <string>with one day</string>
-        </property>
-       </widget>
-      </item>
-      <item>
-       <widget class="QRadioButton" name="rbOneWeek">
-        <property name="text">
-         <string>with one week</string>
-        </property>
-       </widget>
-      </item>
-      <item>
-       <widget class="QRadioButton" name="rbTwoWeek">
-        <property name="text">
-         <string>with two weeks</string>
-        </property>
-       </widget>
-      </item>
-      <item>
-       <widget class="QRadioButton" name="rbOneMonth">
-        <property name="text">
-         <string>with one month</string>
-        </property>
-       </widget>
-      </item>
-      <item>
-       <widget class="QRadioButton" name="rbThreeMonths">
-        <property name="text">
-         <string>with three months</string>
-        </property>
-       </widget>
-      </item>
-      <item>
-       <widget class="QRadioButton" name="rbHalfYear">
-        <property name="text">
-         <string>with half year</string>
-        </property>
-       </widget>
-      </item>
-      <item>
-       <widget class="QRadioButton" name="rbCustom">
-        <property name="text">
-         <string>to custom date</string>
-        </property>
-       </widget>
-      </item>
-      <item>
-       <layout class="QHBoxLayout" name="horizontalLayout">
+    <layout class="QVBoxLayout" name="verticalLayout_3">
+     <item>
+      <widget class="QGroupBox" name="gbIncrease">
+       <property name="title">
+        <string> Increase validity ... </string>
+       </property>
+       <layout class="QVBoxLayout" name="verticalLayout">
         <item>
-         <spacer name="horizontalSpacer">
-          <property name="orientation">
-           <enum>Qt::Horizontal</enum>
+         <layout class="QGridLayout" name="gridLayout">
+          <property name="horizontalSpacing">
+           <number>0</number>
           </property>
-          <property name="sizeType">
-           <enum>QSizePolicy::Fixed</enum>
-          </property>
-          <property name="sizeHint" stdset="0">
-           <size>
-            <width>15</width>
-            <height>20</height>
-           </size>
-          </property>
-         </spacer>
+          <item row="0" column="0">
+           <widget class="QRadioButton" name="rbOneDay">
+            <property name="text">
+             <string>with one day</string>
+            </property>
+           </widget>
+          </item>
+          <item row="1" column="0">
+           <widget class="QRadioButton" name="rbOneMonth">
+            <property name="text">
+             <string>with one month</string>
+            </property>
+           </widget>
+          </item>
+          <item row="1" column="1">
+           <widget class="QRadioButton" name="rbThreeMonths">
+            <property name="text">
+             <string>with three months</string>
+            </property>
+           </widget>
+          </item>
+          <item row="1" column="2">
+           <widget class="QRadioButton" name="rbHalfYear">
+            <property name="text">
+             <string>with half year</string>
+            </property>
+           </widget>
+          </item>
+          <item row="0" column="1">
+           <widget class="QRadioButton" name="rbOneWeek">
+            <property name="text">
+             <string>with one week</string>
+            </property>
+           </widget>
+          </item>
+          <item row="0" column="2">
+           <widget class="QRadioButton" name="rbTwoWeek">
+            <property name="text">
+             <string>with two weeks</string>
+            </property>
+           </widget>
+          </item>
+         </layout>
         </item>
         <item>
-         <widget class="QDateEdit" name="deCustom">
-          <property name="enabled">
-           <bool>false</bool>
-          </property>
-          <property name="date">
-           <date>
-            <year>2013</year>
-            <month>1</month>
-            <day>1</day>
-           </date>
-          </property>
-          <property name="calendarPopup">
-           <bool>true</bool>
-          </property>
-         </widget>
+         <layout class="QHBoxLayout" name="horizontalLayout">
+          <item>
+           <widget class="QRadioButton" name="rbCustom">
+            <property name="text">
+             <string>to custom date</string>
+            </property>
+           </widget>
+          </item>
+          <item>
+           <widget class="QDateEdit" name="deCustom">
+            <property name="enabled">
+             <bool>false</bool>
+            </property>
+            <property name="calendarPopup">
+             <bool>true</bool>
+            </property>
+            <property name="date">
+             <date>
+              <year>2013</year>
+              <month>1</month>
+              <day>1</day>
+             </date>
+            </property>
+           </widget>
+          </item>
+          <item>
+           <spacer name="horizontalSpacer">
+            <property name="orientation">
+             <enum>Qt::Horizontal</enum>
+            </property>
+            <property name="sizeHint" stdset="0">
+             <size>
+              <width>40</width>
+              <height>20</height>
+             </size>
+            </property>
+           </spacer>
+          </item>
+         </layout>
         </item>
        </layout>
-      </item>
-     </layout>
-    </widget>
+      </widget>
+     </item>
+     <item>
+      <widget class="QGroupBox" name="gbUnits">
+       <property name="title">
+        <string> ... for the selected units </string>
+       </property>
+       <layout class="QVBoxLayout" name="vlUnits"/>
+      </widget>
+     </item>
+     <item>
+      <spacer name="verticalSpacer_2">
+       <property name="orientation">
+        <enum>Qt::Vertical</enum>
+       </property>
+       <property name="sizeHint" stdset="0">
+        <size>
+         <width>20</width>
+         <height>40</height>
+        </size>
+       </property>
+      </spacer>
+     </item>
+    </layout>
    </item>
    <item>
     <layout class="QVBoxLayout" name="verticalLayout_2">
      <item>
       <widget class="QPushButton" name="pbOk">
        <property name="enabled">
-        <bool>false</bool>
+        <bool>true</bool>
        </property>
        <property name="text">
         <string>Ok</string>
@@ -148,7 +177,7 @@
        <property name="sizeHint" stdset="0">
         <size>
          <width>20</width>
-         <height>248</height>
+         <height>40</height>
         </size>
        </property>
       </spacer>
@@ -160,10 +189,7 @@
  <tabstops>
   <tabstop>rbOneDay</tabstop>
   <tabstop>rbOneWeek</tabstop>
-  <tabstop>rbTwoWeek</tabstop>
   <tabstop>rbOneMonth</tabstop>
-  <tabstop>rbThreeMonths</tabstop>
-  <tabstop>rbHalfYear</tabstop>
   <tabstop>rbCustom</tabstop>
   <tabstop>deCustom</tabstop>
   <tabstop>pbOk</tabstop>

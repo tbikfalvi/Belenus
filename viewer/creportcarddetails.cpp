@@ -3,6 +3,7 @@
 
 #include "../framework/qtframework.h"
 #include "creportcarddetails.h"
+#include "currency.h"
 
 cReportCardDetails::cReportCardDetails(QWidget *parent, QString p_qsReportName, bool p_bIsAdmin) : cReport(parent,p_qsReportName,p_bIsAdmin)
 {
@@ -90,13 +91,14 @@ void cReportCardDetails::refreshReport()
         finishSection();
     }
     else if( poQueryResultCards->size() == 1 )
-    {
+    {        
         m_dlgProgress.setProgressMax( 7 );
         m_dlgProgress.setProgressValue( 0 );
 
         poQueryResultCards->first();
 
         unsigned int    uiPatientCardId = poQueryResultCards->value(0).toUInt();
+        QString         qsCardSold      = poQueryResultCards->value(10).toString();
 
         startSection();
         addTable();
@@ -106,34 +108,13 @@ void cReportCardDetails::refreshReport()
         addTableCell( " : ", "bold" );
         addTableCell( poQueryResultCards->value(5).toString() );
         m_dlgProgress.increaseProgressValue();
-/*
-        addTableRow();
-        addTableCell( tr( "Patientcard type" ), "bold" );
-        addTableCell( " : ", "bold" );
-        addTableCell( poQueryResultCards->value(18).toString() );
-        m_dlgProgress.increaseProgressValue();
-*/
+
         addTableRow();
         addTableCell( tr( "Owner" ), "bold" );
         addTableCell( " : ", "bold" );
         addTableCell( poQueryResultCards->value(33).toString() );
         m_dlgProgress.increaseProgressValue();
-/*
-        addTableRow();
-        addTableCell( tr( "No. units" ), "bold" );
-        addTableCell( " : ", "bold" );
-        addTableCell( poQueryResultCards->value(7).toString() );
-        m_dlgProgress.increaseProgressValue();
 
-        unsigned int    uiTimeLeft = poQueryResultCards->value(9).toInt();
-        QTime           qtTemp( uiTimeLeft/3600, (uiTimeLeft%3600)/60, (uiTimeLeft%3600)%60, 0 );
-
-        addTableRow();
-        addTableCell( tr( "Time left" ), "bold" );
-        addTableCell( " : ", "bold" );
-        addTableCell( qtTemp.toString( "hh:mm:ss" ) );
-        m_dlgProgress.increaseProgressValue();
-*/
         addTableRow();
         addTableCell( tr( "Valid" ), "bold" );
         addTableCell( " : ", "bold" );
@@ -217,11 +198,39 @@ void cReportCardDetails::refreshReport()
         finishSection();
 
         addSeparator();
-        addSubTitle( tr( "Patientcard unit usages" ) );
+        addSubTitle( tr( "Patientcard life history" ) );
 
-        m_dlgProgress.setProgressMax( 100 );
+        g_poDB->executeQTQuery( "DELETE FROM `report_cardhistory` " );
+
+        startSection();
+        addTable();
+
+        addTableRow();
+        addTableCell( tr( "Date of action" ), "center bold" );
+        addTableCell( tr( "Action name" ), "center bold" );
+        addTableCell( tr( "Number of units" ), "center bold" );
+        addTableCell( tr( "Unit time" ), "center bold" );
+        addTableCell( tr( "Unit type" ), "center bold" );
+        addTableCell( tr( "Price" ), "center bold" );
+        addTableCell( tr( "Action performed by" ), "center bold" );
+
+        m_dlgProgress.setProgressMax( 50 );
         m_dlgProgress.setProgressValue( 0 );
 
+        //----------------------------------------------------------------------------------------------
+        // First activated
+        g_poDB->executeQTQuery( QString( "INSERT INTO `report_cardhistory` ( `dateCardAction`, `cardAction`, `countUnits`, `unitTime`, `unitType`, `priceAction`, `userName` ) "
+                                         " VALUES ( '%1', '%2', '%3', '%4', '%5', '%6', '%7' ) " )
+                                        .arg( qsCardSold )
+                                        .arg( tr( "Patientcard activated" ) )
+                                        .arg( "" )
+                                        .arg( "" )
+                                        .arg( "" )
+                                        .arg( "" )
+                                        .arg( "" ) );
+
+        //----------------------------------------------------------------------------------------------
+        // Usages
         qsQueryCards = QString( "SELECT "
                                 "patientcardunits.dateTimeUsed, "
                                 "COUNT(patientcardunits.dateTimeUsed), "
@@ -237,37 +246,129 @@ void cReportCardDetails::refreshReport()
         poQueryResultCards = g_poDB->executeQTQuery( qsQueryCards );
 
         m_dlgProgress.setProgressValue( 10 );
-
-        startSection();
-        addTable();
-
-        addTableRow();
-        addTableCell( tr( "Date of usage" ), "center bold" );
-        addTableCell( tr( "Unit count" ), "center bold" );
-        addTableCell( tr( "Unit time" ), "center bold" );
-        addTableCell( tr( "Unit type" ), "center bold" );
-
-        m_dlgProgress.setProgressMax( poQueryResultCards->size()+10 );
-
-        nSumUnits = 0;
+        m_dlgProgress.increaseProgressMax( poQueryResultCards->size() );
 
         while( poQueryResultCards->next() )
         {
-            addTableRow();
-            addTableCell( poQueryResultCards->value(0).toDateTime().toString( "yyyy-MM-dd hh:mm" ), "center" );
-            addTableCell( poQueryResultCards->value(1).toString(), "center" );
-            addTableCell( poQueryResultCards->value(2).toString(), "center" );
-            addTableCell( poQueryResultCards->value(3).toString(), "center" );
-
-            nSumUnits += poQueryResultCards->value(1).toInt();
+            g_poDB->executeQTQuery( QString( "INSERT INTO `report_cardhistory` ( `dateCardAction`, `cardAction`, `countUnits`, `unitTime`, `unitType`, `priceAction`, `userName` ) "
+                                             " VALUES ( '%1', '%2', '%3', '%4', '%5', '%6', '%7' ) " )
+                                            .arg( poQueryResultCards->value(0).toDateTime().toString( "yyyy-MM-dd hh:mm:ss" ) )
+                                            .arg( tr( "Patientcard usage" ) )
+                                            .arg( QString( "-%1" ).arg( poQueryResultCards->value(1).toString() ) )
+                                            .arg( poQueryResultCards->value(2).toString() )
+                                            .arg( poQueryResultCards->value(3).toString() )
+                                            .arg( "" )
+                                            .arg( "" ) );
 
             m_dlgProgress.increaseProgressValue();
         }
 
+        //----------------------------------------------------------------------------------------------
+        // Unit sell, refill
+        qsQueryCards = QString( "SELECT ledger.ledgertime, "
+                                "ledgertypes.name, "
+                                "patientcardtypes.name, "
+                                "COUNT( patientcardunits.unittime ), "
+                                "patientcardunits.unittime, "
+                                "ledger.totalprice, "
+                                "users.realname "
+                                "FROM `ledger` , `ledgertypes` , `patientcardtypes` , `users` , `patientcardunits` "
+                                "WHERE ledger.ledgerid = patientcardunits.ledgerid "
+                                "AND ledger.userid = users.userid "
+                                "AND ledger.patientcardtypeid = patientcardtypes.patientcardtypeid "
+                                "AND ledger.ledgertypeid = ledgertypes.ledgertypeid "
+                                "AND (ledger.patientcardid = %1 OR patientcardunits.patientcardid = %1) "
+                                "GROUP BY ledger.ledgerid" ).arg( uiPatientCardId );
+        poQueryResultCards = g_poDB->executeQTQuery( qsQueryCards );
+        m_dlgProgress.increaseProgressMax( poQueryResultCards->size() );
+
+        while( poQueryResultCards->next() )
+        {
+            g_poDB->executeQTQuery( QString( "INSERT INTO `report_cardhistory` ( `dateCardAction`, `cardAction`, `countUnits`, `unitTime`, `unitType`, `priceAction`, `userName` ) "
+                                             " VALUES ( '%1', '%2', '%3', '%4', '%5', '%6', '%7' ) " )
+                                            .arg( poQueryResultCards->value(0).toDateTime().toString( "yyyy-MM-dd hh:mm:ss" ) )
+                                            .arg( poQueryResultCards->value(1).toString() )
+                                            .arg( poQueryResultCards->value(3).toString() )
+                                            .arg( poQueryResultCards->value(4).toString() )
+                                            .arg( poQueryResultCards->value(2).toString() )
+                                            .arg( poQueryResultCards->value(5).toString() )
+                                            .arg( poQueryResultCards->value(6).toString() ) );
+
+            m_dlgProgress.increaseProgressValue();
+        }
+
+        //----------------------------------------------------------------------------------------------
+        // Replace card
+        qsQueryCards = QString( "SELECT ledger.ledgertime, "
+                                "ledger.comment, "
+                                "patientcardtypes.name, "
+                                "ledger.totalprice, "
+                                "users.realname "
+                                "FROM `ledger`, `patientcardtypes`, `users` WHERE "
+                                "ledger.userid = users.userid AND "
+                                "ledger.patientcardtypeid = patientcardtypes.patientcardtypeid AND "
+                                "(ledger.ledgertypeid=5 OR ledger.ledgertypeid=6) AND "
+                                "ledger.patientcardid = %1" ).arg( uiPatientCardId );
+        poQueryResultCards = g_poDB->executeQTQuery( qsQueryCards );
+        m_dlgProgress.increaseProgressMax( poQueryResultCards->size() );
+
+        while( poQueryResultCards->next() )
+        {
+            g_poDB->executeQTQuery( QString( "INSERT INTO `report_cardhistory` ( `dateCardAction`, `cardAction`, `countUnits`, `unitTime`, `unitType`, `priceAction`, `userName` ) "
+                                             " VALUES ( '%1', '%2', '%3', '%4', '%5', '%6', '%7' ) " )
+                                            .arg( poQueryResultCards->value(0).toDateTime().toString( "yyyy-MM-dd hh:mm:ss" ) )
+                                            .arg( poQueryResultCards->value(1).toString() )
+                                            .arg( "" )
+                                            .arg( "" )
+                                            .arg( poQueryResultCards->value(2).toString() )
+                                            .arg( poQueryResultCards->value(3).toString() )
+                                            .arg( poQueryResultCards->value(4).toString() ) );
+
+            m_dlgProgress.increaseProgressValue();
+        }
+
+        //----------------------------------------------------------------------------------------------
+        // Show history
+        poQueryResultCards = g_poDB->executeQTQuery( "SELECT * FROM `report_cardhistory` ORDER BY dateCardAction " );
+
+        int nSumCount = 0;
+        int nSumPrice = 0;
+
+        while( poQueryResultCards->next() )
+        {
+            cCurrency   obPrice( poQueryResultCards->value(5).toInt() );
+
+            addTableRow();
+            addTableCell( poQueryResultCards->value(0).toDateTime().toString( "yyyy-MM-dd hh:mm" ), "center" );
+            addTableCell( poQueryResultCards->value(1).toString(), "" );
+            if( poQueryResultCards->value(2).toInt() == 0 )
+                addTableCell( "", "" );
+            else
+                addTableCell( poQueryResultCards->value(2).toString(), "center" );
+            if( poQueryResultCards->value(3).toInt() == 0 )
+                addTableCell( "", "" );
+            else
+                addTableCell( poQueryResultCards->value(3).toString(), "center" );
+            addTableCell( poQueryResultCards->value(4).toString(), "" );
+            if( poQueryResultCards->value(5).toInt() == 0 )
+                addTableCell( "", "" );
+            else
+                addTableCell( obPrice.currencyFullStringShort(), "right" );
+            addTableCell( poQueryResultCards->value(6).toString(), "" );
+
+            nSumCount += poQueryResultCards->value(2).toInt();
+            nSumPrice += poQueryResultCards->value(5).toInt();
+        }
+
+        cCurrency   obSumPrice( nSumPrice );
+
         addTableRow();
-        addTableCell( tr( "Sum" ), "center bold" );
-        addTableCell( QString::number( nSumUnits ), "center bold" );
         addTableCell( "", "" );
+        addTableCell( "", "" );
+        addTableCell( QString::number( nSumCount ), "center bold" );
+        addTableCell( "", "" );
+        addTableCell( "", "" );
+        addTableCell( obSumPrice.currencyFullStringShort(), "right bold" );
         addTableCell( "", "" );
 
         finishTable();
@@ -304,7 +405,6 @@ void cReportCardDetails::refreshReport()
         addTableCell( tr( "No. units"), "center bold"  );
         addTableCell( tr( "Time" ), "center bold" );
         addTableCell( tr( "Valid" ), "center bold" );
-        addTableCell( tr( "Patientcard type" ), "bold" );
         addTableCell( tr( "Owner" ), "bold" );
         addTableCell( tr( "Comment" ), "bold" );
 
@@ -325,7 +425,6 @@ void cReportCardDetails::refreshReport()
             addTableCell( QString::number(nUnits), "center" );
             addTableCell( qtTemp.toString( "hh:mm:ss" ), "center" );
             addTableCell( QString("%1 -> %2").arg( qslRecord.at(3) ).arg( qslRecord.at(4) ), "center" );
-            addTableCell( qslRecord.at(5) );
             addTableCell( qslRecord.at(6) );
             addTableCell( qslRecord.at(7) );
 
@@ -337,7 +436,6 @@ void cReportCardDetails::refreshReport()
         addTableRow();
         addTableCell( tr( "Sum" ), "center bold" );
         addTableCell( QString::number(nSumUnits), "center bold"  );
-        addTableCell( "", "" );
         addTableCell( "", "" );
         addTableCell( "", "" );
         addTableCell( "", "" );
