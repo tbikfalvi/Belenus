@@ -97,4 +97,4 @@ Version 1.7.0.0
 - Mindaz, ami az 1.6.1.0-ban van
 - Olasz nyelv
 - Berlet ervenyesseg meghosszabbitas berletegyseg tipusonkent
-
+- Masodlagos ablakon szovegek kijelzese csak system admin modosit
