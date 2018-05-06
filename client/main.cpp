@@ -13,8 +13,8 @@
 // Alkalmazas fo allomanya.
 //====================================================================================
 
-#define APPLICATION_VERSION_NUMBER  "1.6.1.0"
-#define DATABASE_VERSION_NUMBER     "1.7.6"
+#define APPLICATION_VERSION_NUMBER  "1.7.0.0"
+#define DATABASE_VERSION_NUMBER     "1.7.7"
 
 //====================================================================================
 
@@ -50,9 +50,9 @@
 
 QApplication            *apMainApp;
 cQTLogger                g_obLogger;
-DatabaseWriter           g_obLogDBWriter;
-GUIWriter                g_obLogGUIWriter;
-ConsoleWriter            g_obLogConsoleWriter;
+//DatabaseWriter           g_obLogDBWriter;
+//GUIWriter                g_obLogGUIWriter;
+//ConsoleWriter            g_obLogConsoleWriter;
 //FileWriter               g_obLogFileWriter("client_%1_%2.log");
 FileWriter               g_obLogFileWriter("belenus_%1.log");
 cQTMySQLConnection      *g_poDB;
@@ -76,13 +76,14 @@ int main( int argc, char *argv[] )
     apMainApp = new QApplication(argc, argv);
 
     g_obGen.setApplication( apMainApp );
+    g_obGen.initSysTrayIcon();
 
     QString qsCurrentPath = QDir::currentPath().replace( "\\", "/" );
 
     apMainApp->setWindowIcon( QIcon(":/icons/Belenus.ico") );
 
-    g_obLogger.attachWriter("gui", &g_obLogGUIWriter);
-    g_obLogger.attachWriter("db", &g_obLogDBWriter);
+//    g_obLogger.attachWriter("gui", &g_obLogGUIWriter);
+//    g_obLogger.attachWriter("db", &g_obLogDBWriter);
 //    g_obLogger.attachWriter("console", &g_obLogConsoleWriter);
     g_obLogger.attachWriter("file", &g_obLogFileWriter);
 
@@ -134,7 +135,7 @@ int main( int argc, char *argv[] )
         obSplash.showMessage(qsSpalsh,Qt::AlignLeft,QColor(59,44, 75));
 
         g_poDB->open();
-        g_obLogDBWriter.setDBConnection(g_poDB);
+//        g_obLogDBWriter.setDBConnection(g_poDB);
         g_poPrefs->loadDBSettings();
 
         g_obLogger(cSeverity::INFO) << "SUCCEEDED" << EOM;
@@ -395,6 +396,7 @@ int main( int argc, char *argv[] )
                                    "Please start WampServer application then restart Belenus application." );
         }
         g_obLogger(e.severity()) << qsError << EOM;
+        g_obGen.showTrayError( qsError );
     }
 
 //    g_poServer->quit();

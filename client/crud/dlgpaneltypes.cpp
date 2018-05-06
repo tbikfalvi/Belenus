@@ -116,6 +116,7 @@ void cDlgPanelTypes::editClicked( bool )
     {
         if( poPanelTypes ) delete poPanelTypes;
         g_obLogger(e.severity()) << e.what() << EOM;
+        g_obGen.showTrayError( e.what() );
     }
 }
 
@@ -155,6 +156,7 @@ void cDlgPanelTypes::deleteClicked( bool )
         {
             if( poPanelTypes ) delete poPanelTypes;
             g_obLogger(e.severity()) << e.what() << EOM;
+            g_obGen.showTrayError( e.what() );
         }
     }
 }

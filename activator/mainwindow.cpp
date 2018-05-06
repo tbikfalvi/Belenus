@@ -168,7 +168,7 @@ MainWindow::MainWindow(QWidget *parent) : QMainWindow(parent), ui(new Ui::MainWi
                                      << "BLNS27"    // Miskolc
                                      << "BLNS28"    // Nyiregyhaza
                                      << "BLNS29"    // Kecskemét
-//                                   << "BLNS30"    // Győr
+                                     << "BLNS30"    // Győr
                                      << "BLNS31"    // Szeged
                                      << "BLNS32"    // Veszprém
                                      << "BLNS33"    // Irorszag             Cork

@@ -12,7 +12,7 @@ RC_FILE      = dbbackup.rc
 RESOURCES   += dbbackup.qrc
 TRANSLATIONS = dbbackup_hu.ts \
                dbbackup_de.ts \
-               qt_hu.ts
+               dbbackup_it.ts
 
 SOURCES     += main.cpp\
                mainwindow.cpp

@@ -408,11 +408,18 @@ void cDBPatientCard::synchronizeUnitTime(int p_nUnitTime) throw()
     }
 }
 
-void cDBPatientCard::updateActiveUnits(QDate p_qdNew) throw()
+void cDBPatientCard::updateActiveUnits(QDate p_qdNew, QString p_qsCondition) throw()
 {
-    QString qsQuery = QString( "UPDATE patientcardunits SET validDateTo='%1' WHERE patientCardId=%2 AND active=1" ).arg( p_qdNew.toString("yyyy-MM-dd") ).arg( m_uiId );
+    QString qsQuery = QString( "UPDATE patientcardunits SET validDateTo='%1' WHERE patientCardId=%2 AND active=1" )
+                             .arg( p_qdNew.toString("yyyy-MM-dd") )
+                             .arg( m_uiId );
+    if( p_qsCondition.length() > 0 )
+    {
+        qsQuery.append( " AND " );
+        qsQuery.append( p_qsCondition );
 
-    g_poDB->executeQTQuery( qsQuery );
+        g_poDB->executeQTQuery( qsQuery );
+    }
 }
 
 bool cDBPatientCard::isPatientCardCanBeUsed( unsigned int p_uiPatientCardTypeId, QString *p_qsValid ) throw()
@@ -432,6 +439,7 @@ bool cDBPatientCard::isPatientCardCanBeUsed( unsigned int p_uiPatientCardTypeId,
     catch( cSevException &e )
     {
         g_obLogger(e.severity()) << e.what() << EOM;
+        g_obGen.showTrayError( e.what() );
     }
 
     *p_qsValid = ""; //QObject::tr( "Patientcard can be used:" );
@@ -734,6 +742,7 @@ void cDBPatientCard::sendDataToWeb() throw()
     catch( cSevException &e )
     {
         g_obLogger(e.severity()) << e.what() << EOM;
+        g_obGen.showTrayError( e.what() );
     }
 }
 
@@ -887,6 +896,7 @@ void cDBPatientCard::sendAutoMail( const int p_nMailType,
     catch( cSevException &e )
     {
         g_obLogger(e.severity()) << e.what() << EOM;
+        g_obGen.showTrayError( e.what() );
     }
 }
 

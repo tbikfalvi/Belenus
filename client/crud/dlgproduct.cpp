@@ -284,6 +284,7 @@ void cDlgProduct::editClicked( bool )
     {
         if( poProduct ) delete poProduct;
         g_obLogger(e.severity()) << e.what() << EOM;
+        g_obGen.showTrayError( e.what() );
     }
 }
 
@@ -321,6 +322,7 @@ void cDlgProduct::deleteClicked( bool )
         {
             if( poProduct ) delete poProduct;
             g_obLogger(e.severity()) << e.what() << EOM;
+            g_obGen.showTrayError( e.what() );
         }
     }
 }

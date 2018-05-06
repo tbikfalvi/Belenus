@@ -208,7 +208,7 @@ void cDlgPatientCardEdit::on_pbCheckBarcode_clicked()
 void cDlgPatientCardEdit::on_pbChangeValidity_clicked()
 //-----------------------------------------------------------------------------------------------------------
 {
-    cDlgChangePCValidity    obDlgChangePCValidity;
+    cDlgChangePCValidity    obDlgChangePCValidity( this, m_poPatientCard->id() );
 
     if( obDlgChangePCValidity.exec() == QDialog::Accepted )
     {
@@ -245,12 +245,14 @@ void cDlgPatientCardEdit::on_pbChangeValidity_clicked()
         {
             if( QMessageBox::question( this, tr("Attention"),
                                        tr("Are you sure you want to change the validity date\n"
-                                          "from:  %1  to:  %2  ?")
+                                          "from:  %1  to:  %2  "
+                                          "\nfor the selected patientcard units?")
                                        .arg( deValidDateTo->date().toString(g_poPrefs->getDateFormat().replace("-",".")) )
                                        .arg( qdNewDate.toString(g_poPrefs->getDateFormat().replace("-",".")) ),
                                        QMessageBox::Yes | QMessageBox::No, QMessageBox::Yes ) == QMessageBox::Yes )
             {
                 deValidDateTo->setDate( qdNewDate );
+                m_qsUnitCondition = obDlgChangePCValidity.unitCondition();
                 m_bIsValidationChanged = true;
             }
         }
@@ -305,7 +307,7 @@ void cDlgPatientCardEdit::on_pbSave_clicked()
         m_poPatientCard->save();
         if( m_bIsValidationChanged )
         {
-            m_poPatientCard->updateActiveUnits( deValidDateTo->date() );
+            m_poPatientCard->updateActiveUnits( deValidDateTo->date(), m_qsUnitCondition );
         }
         m_poPatientCard->synchronizeUnits();
 

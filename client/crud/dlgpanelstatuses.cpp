@@ -171,6 +171,7 @@ void cDlgPanelStatuses::editClicked( bool )
     {
         if( poPanelStatuses ) delete poPanelStatuses;
         g_obLogger(e.severity()) << e.what() << EOM;
+        g_obGen.showTrayError( e.what() );
     }
 }
 
@@ -208,6 +209,7 @@ void cDlgPanelStatuses::deleteClicked( bool )
         {
             if( poPanelStatuses ) delete poPanelStatuses;
             g_obLogger(e.severity()) << e.what() << EOM;
+            g_obGen.showTrayError( e.what() );
         }
     }
 }

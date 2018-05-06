@@ -483,6 +483,7 @@ void cDlgPatientCardSell::on_pbSell_clicked()
         catch( cSevException &e )
         {
             g_obLogger(e.severity()) << e.what() << EOM;
+            g_obGen.showTrayError( e.what() );
         }
     }
     else

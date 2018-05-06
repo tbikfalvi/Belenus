@@ -158,6 +158,7 @@ void cCassa::createNew( unsigned int p_uiUserId, int p_inBalance )
     catch( cSevException &e )
     {
         g_obLogger(e.severity()) << e.what() << EOM;
+        g_obGen.showTrayError( e.what() );
     }
 
     if( poQuery ) delete poQuery;
@@ -446,6 +447,7 @@ void cCassa::cassaConnectLedgerWithLedgerDevice( unsigned int p_uiLedgerId, unsi
     catch( cSevException &e )
     {
         g_obLogger(e.severity()) << e.what() << EOM;
+        g_obGen.showTrayError( e.what() );
     }
 }
 //====================================================================================
@@ -467,6 +469,7 @@ void cCassa::cassaProcessRevokeDeviceUse( unsigned int p_uiLedgerId )
     catch( cSevException &e )
     {
         g_obLogger(e.severity()) << e.what() << EOM;
+        g_obGen.showTrayError( e.what() );
     }
 }
 //====================================================================================

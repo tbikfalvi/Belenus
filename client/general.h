@@ -52,9 +52,11 @@ public:
     bool             isExtendedOrSystemAdmin();
     void             showPatientCardInformation( QString p_qsBarcode );
     QString          getPatientCardInformationString( QString p_qsBarcode );
+    QStringList      getPatientCardValidUnits( unsigned int p_uiCardId );
     bool             isShoppingCartHasItems();
     bool             isAppicationRunning( QString p_qsAppName );
-    void             initSysTrayIcon( QObject *parent = 0 );
+    void             initSysTrayIcon();
+    void             setSysTrayIconParent( QObject *parent = 0 );
     void             showTrayInfo( QString p_qsMessage );
     void             showTrayWarning( QString p_qsMessage );
     void             showTrayError( QString p_qsMessage );

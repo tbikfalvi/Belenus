@@ -1,6 +1,7 @@
 
 #include <QMenu>
 #include <QCryptographicHash>
+#include <QMessageBox>
 
 #include "belenus.h"
 #include "cdlgtest.h"
@@ -85,4 +86,75 @@ void cDlgTest::on_pbGenerateMd5Hash_clicked()
     QString blah = QString(QCryptographicHash::hash(qsSource.toStdString().c_str(),QCryptographicHash::Md5).toHex());
 
     ui->ledMd5Hash->setText( blah );
+}
+
+void cDlgTest::on_pbBerletHaszn_clicked()
+{
+    QString m_qsFile = ui->ledBerletLehasznalas->text();
+    QFile   qfFile( m_qsFile );
+
+    if( !qfFile.exists() )
+    {
+        QMessageBox::warning( this, tr("Warning"),
+                              tr("The following file is missing:\n"
+                                 "%1\n\n"
+                                 "Please create the file and fulfill it with proper data.\n"
+                                 "For more information about import file, check the manual\n"
+                                 "or contact the application provider.").arg( m_qsFile ) );
+        return;
+    }
+
+    if( !qfFile.open(QIODevice::ReadOnly) )
+    {
+        QMessageBox::warning( this, tr("Warning"), tr("Unable to read the following file:\n"
+                                                      "%1").arg( m_qsFile ) );
+        return;
+    }
+
+    char strLine[1000];
+
+    memset( strLine, 0, 1000 );
+
+    while( qfFile.readLine( strLine, 1000 ) > 0 )
+    {
+        QStringList qslData = QString( strLine ).split( "\t" );
+
+        QString barcode     = qslData.at(0);
+        QString dateused    = qslData.at(1);
+        int unitsleft       = qslData.at(2).toInt();
+
+        unsigned int id;
+
+        QSqlQuery *poQuery = g_poDB->executeQTQuery( "SELECT patientcardid FROM patientCards WHERE barcode = \"" + barcode + "\"" );
+
+        if( poQuery->size() != 1 )
+        {
+            // létre kell hozni
+            g_poDB->executeQTQuery( QString( "INSERT INTO patientcards SET licenceId=%1, barcode=\"%2\", comment=\"Adatbazis javitas soran letrehozva\" " ).arg( g_poPrefs->getLicenceId() ).arg( barcode ) );
+        }
+        else
+        {
+            // update-elni kell
+            poQuery->first();
+
+            id = poQuery->value(0).toUInt();
+
+            poQuery = g_poDB->executeQTQuery( QString( "SELECT patientcardunitid FROM patientcardunits WHERE patientcardid=%1 AND active=1" ).arg( id ) );
+
+            int darab = poQuery->size() - unitsleft;
+
+            for( int i=0; i<darab; i++ )
+            {
+                poQuery->next();
+
+                unsigned int unitid = poQuery->value( 0 ).toUInt();
+
+                g_poDB->executeQTQuery( QString( "UPDATE patientcardunits SET datetimeused=\"%1\", active=0 WHERE patientcardunitid=%2 AND active=1" ).arg( dateused ).arg( unitid ) );
+            }
+        }
+    }
+
+    qfFile.close();
+
+    QMessageBox::information( this, tr("Information"), "Kesz" );
 }

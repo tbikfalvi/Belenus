@@ -104,12 +104,14 @@
 
 //====================================================================================
 
-extern DatabaseWriter   g_obLogDBWriter;
+//extern DatabaseWriter   g_obLogDBWriter;
 extern cLicenceManager  g_obLicenceManager;
 
 //====================================================================================
 cWndMain::cWndMain( QWidget *parent ) : QMainWindow( parent )
 {
+    g_obLogger(cSeverity::DEBUG) << "cWndMain::cWndMain" << EOM;
+
     setupUi( this );
 
     m_qsStatusText                  = "";
@@ -143,7 +145,9 @@ cWndMain::cWndMain( QWidget *parent ) : QMainWindow( parent )
     frmLogin->setVisible( false );
     frmLogin->setEnabled( false );
 
-    g_obGen.initSysTrayIcon( this );
+    lblDemoMode->setStyleSheet( "QLabel {color: blue;}" );
+
+    g_obGen.setSysTrayIconParent( this );
 
     action_WindowPosition = new QAction( tr( "Set window position / size" ), this);
     action_WindowPosition->setIcon( QIcon( "./resources/40x40_settings.png" ) );
@@ -175,8 +179,10 @@ cWndMain::cWndMain( QWidget *parent ) : QMainWindow( parent )
 
     action_StartWebSync->setEnabled( false );
 
+    g_obLogger(cSeverity::DEBUG) << "cWndMain::cWndMain setTrayIconMenu" << EOM;
     _setTrayIconMenu();
 
+    g_obLogger(cSeverity::DEBUG) << "cWndMain::cWndMain showAdWindows" << EOM;
     showAdWindows();
 
     m_dlgProgress = new cDlgProgress( this );
@@ -522,7 +528,7 @@ void cWndMain::on_pbLogin_clicked()
 
         enableElementsByLogin( true );
 
-        g_obLogDBWriter.setAppUser( g_obUser.id() );
+//        g_obLogDBWriter.setAppUser( g_obUser.id() );
         g_obLogger(cSeverity::WARNING) << "User " << g_obUser.name() << " (" << g_obUser.realName() << ") logged in" << EOM;
 
         if( g_obUser.password() == "da39a3ee5e6b4b0d3255bfef95601890afd80709" ) //password is an empty string
@@ -547,8 +553,7 @@ void cWndMain::on_pbLogin_clicked()
         g_obLogger(cSeverity::WARNING) << "User " << cmbName->currentText() << " failed to log in" << EOM;
 
         g_obUser.logOut();
-        QMessageBox::critical( this, tr( "Login failed" ),
-                               tr( "Incorrect User Name and/or Password. Please try again." ) );
+        g_obGen.showTrayError( tr( "Incorrect User Name and/or Password. Please try again." ) );
     }
 }
 //====================================================================================
@@ -1087,7 +1092,7 @@ void cWndMain::keyPressEvent( QKeyEvent *p_poEvent )
             g_obLogger(cSeverity::INFO) << "User pressed CTRL + F12" << EOM;
             m_bCtrlPressed = false;
             _setStatusText( m_qsStatusText );
-            //on_action_TestDlgStarted();
+            on_action_TestDlgStarted();
             g_obGen.isArchiveOnDifferentPath();
         }
     }
@@ -1227,6 +1232,11 @@ void cWndMain::updateTitle()
     if( QString::fromStdString( g_poHardware->getCustomCaption() ).compare( "DEMO" ) == 0 )
     {
         action_Hardwaretest->setEnabled( false );
+        frmDemo->setVisible( true );
+    }
+    else
+    {
+        frmDemo->setVisible( false );
     }
 
     if( g_obUser.isLoggedIn() )
@@ -1757,7 +1767,7 @@ void cWndMain::on_action_LogOut_triggered()
     g_obLogger(cSeverity::INFO) << "User " << g_obUser.name() << " (" << g_obUser.realName() << ") logged out" << EOM;
 
     g_obUser.logOut();
-    g_obLogDBWriter.setAppUser( 0 );
+//    g_obLogDBWriter.setAppUser( 0 );
     updateTitle();
 
     if( !showLogIn() ) close();
@@ -1951,6 +1961,7 @@ void cWndMain::on_action_PatientSelect_triggered()
         catch( cSevException &e )
         {
             g_obLogger(e.severity()) << e.what() << EOM;
+            g_obGen.showTrayError( e.what() );
         }
         updateTitle();
     }
@@ -2152,6 +2163,7 @@ void cWndMain::on_action_UseDeviceLater_triggered()
             catch( cSevException &e )
             {
         //        g_obLogger(e.severity()) << e.what() << EOM;
+//                g_obGen.showTrayError( e.what() );
             }
 
             cDBShoppingCart obDBShoppingCart;
@@ -2244,6 +2256,7 @@ void cWndMain::on_action_UseDeviceLater_triggered()
         catch( cSevException &e )
         {
             g_obLogger(e.severity()) << e.what() << EOM;
+            g_obGen.showTrayError( e.what() );
         }
     }
 
@@ -2558,6 +2571,7 @@ void cWndMain::on_action_PatientCardSell_triggered()
             if( QString(e.what()).compare("Patientcard barcode not found") != 0 )
             {
                 g_obLogger(e.severity()) << e.what() << EOM;
+                g_obGen.showTrayError( e.what() );
             }
             else
             {
@@ -2925,19 +2939,11 @@ void cWndMain::processProductSellPayment( const cDBShoppingCart &p_obDBShoppingC
     QString         qsComment = tr("Selling product: %1").arg( obDBShoppingCart.itemName() );
     bool            bShoppingCart = false;
     unsigned int    uiCouponId = 0;
-    cDBDiscount     obDBDiscount;
 
     obDlgCassaAction.cassaResult( &inPayType, &bShoppingCart, &uiCouponId );
 
     if( inCassaAction == QDialog::Accepted && !bShoppingCart )
     {
-        /*if( uiCouponId > 0 )
-        {
-            obDBDiscount.load( uiCouponId );
-
-            obDBShoppingCart.setItemDiscount( obDBShoppingCart.itemDiscount()+obDBDiscount.discount(obDBShoppingCart.itemSumPrice()) );
-        }*/
-
         g_obLogger(cSeverity::DEBUG) << "processProductSellPayment >> Name: " << obDBShoppingCart.itemName() <<
                                         " | Net: " << obDBShoppingCart.itemNetPrice() <<
                                         " | Count: " << obDBShoppingCart.itemCount() <<
@@ -3097,6 +3103,7 @@ void cWndMain::on_action_EmptyDemoDB_triggered()
         m_dlgProgress->hideProgress();
 
         g_obLogger(e.severity()) << e.what() << EOM;
+        g_obGen.showTrayError( e.what() );
     }
 
     m_bMainWindowActive = true;
@@ -3181,6 +3188,7 @@ void cWndMain::slotReplacePatientCard(const QString &p_qsBarcode,
             if( QString(e.what()).compare("Patientcard barcode not found") != 0 )
             {
                 g_obLogger(e.severity()) << e.what() << EOM;
+                g_obGen.showTrayError( e.what() );
             }
             else
             {
@@ -3886,6 +3894,7 @@ void cWndMain::_updateAllPatientcardToWeb()
         catch( cSevException &e )
         {
             g_obLogger(e.severity()) << e.what() << EOM;
+        g_obGen.showTrayError( e.what() );
         }
     }
 
@@ -3917,6 +3926,7 @@ void cWndMain::_removeAllPatientcardFromWeb()
         catch( cSevException &e )
         {
             g_obLogger(e.severity()) << e.what() << EOM;
+        g_obGen.showTrayError( e.what() );
         }
     }
 
@@ -3942,6 +3952,7 @@ void cWndMain::_removePatientcardFromWeb()
         catch( cSevException &e )
         {
             g_obLogger(e.severity()) << e.what() << EOM;
+        g_obGen.showTrayError( e.what() );
         }
     }
 }

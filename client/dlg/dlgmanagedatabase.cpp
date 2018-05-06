@@ -156,6 +156,7 @@ void cDlgManageDatabase::_actionUpdatePatientCardUnits()
     catch( cSevException &e )
     {
         g_obLogger(e.severity()) << e.what() << EOM;
+        g_obGen.showTrayError( e.what() );
     }
 
     m_dlgProgress->hideProgress();
@@ -188,6 +189,7 @@ void cDlgManageDatabase::_actionDeactivatePC()
     catch( cSevException &e )
     {
         g_obLogger(e.severity()) << e.what() << EOM;
+        g_obGen.showTrayError( e.what() );
     }
 }
 
@@ -264,6 +266,7 @@ void cDlgManageDatabase::_actionDeleteInactivePC()
     catch( cSevException &e )
     {
         g_obLogger(e.severity()) << e.what() << EOM;
+        g_obGen.showTrayError( e.what() );
     }
 
     m_dlgProgress->hideProgress();
@@ -308,6 +311,7 @@ void cDlgManageDatabase::_actionDeleteNotUsedPCT()
     catch( cSevException &e )
     {
         g_obLogger(e.severity()) << e.what() << EOM;
+        g_obGen.showTrayError( e.what() );
     }
 }
 
@@ -438,6 +442,7 @@ void cDlgManageDatabase::_actionDeleteLedgerEntries()
     catch( cSevException &e )
     {
         g_obLogger(e.severity()) << e.what() << EOM;
+        g_obGen.showTrayError( e.what() );
     }
 
     m_dlgProgress->hideProgress();
@@ -506,6 +511,7 @@ void cDlgManageDatabase::_actionRepairPatientcardsWithoutType()
         catch( cSevException &e )
         {
             g_obLogger(e.severity()) << e.what() << EOM;
+            g_obGen.showTrayError( e.what() );
         }
 
         m_dlgProgress->hideProgress();

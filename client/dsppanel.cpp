@@ -110,6 +110,7 @@ void cDspPanel::setPanelStatus( const unsigned int p_uiPanelStatusId )
     catch( cSevException &e )
     {
         g_obLogger(e.severity()) << e.what() << EOM;
+        g_obGen.showTrayError( e.what() );
 
         m_obDBPanelStatusSettings.createNew();
 
@@ -193,6 +194,7 @@ void cDspPanel::_load()
     catch( cSevException &e )
     {
         g_obLogger(e.severity()) << e.what() << EOM;
+        g_obGen.showTrayError( e.what() );
         if( poQuery ) delete poQuery;
     }
 }

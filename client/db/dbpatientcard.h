@@ -28,7 +28,7 @@ public:
     void            synchronizeUnits()                                          throw();
     void            synchronizeTime()                                           throw();
     void            synchronizeUnitTime( int p_nUnitTime )                      throw();
-    void            updateActiveUnits( QDate p_qdNew )                          throw();
+    void            updateActiveUnits( QDate p_qdNew, QString p_qsCondition )   throw();
     void            createNew()                                                 throw();
     unsigned int    id() const                                                  throw();
     unsigned int    licenceId() const                                           throw();

@@ -2,8 +2,8 @@
 -- Belenus Szoftver Rendszer (c) Pagony Multimedia Studio Bt - 2013
 -- -----------------------------------------------------------------------------------
 -- Filename    : db_create.sql
--- AppVersion  : 1.6.0.0
--- DbVersion   : 1.7.5
+-- AppVersion  : 1.7.0.0
+-- DbVersion   : 1.7.7
 -- -----------------------------------------------------------------------------------
 -- Adatbazist letrehozo SQL script
 -- -----------------------------------------------------------------------------------
@@ -24,6 +24,8 @@ CREATE TABLE `licences` (
   `studio`                  varchar(100)            DEFAULT NULL,
   `contact`                 varchar(100)            DEFAULT NULL,
   `lastValidated`           DATE                    NULL DEFAULT NULL,
+  `Act` 					VARCHAR( 10 ) 			NOT NULL,
+  `Cod` 					VARCHAR( 10 ) 			NOT NULL,
   `active`                  tinyint(1)              DEFAULT 0,
   `archive`                 varchar(10)             NOT NULL,
   PRIMARY KEY (`licenceId`)
@@ -946,5 +948,18 @@ CREATE TABLE `httpsendmail` (
   `archive`                 varchar(10)             NOT NULL,  
   PRIMARY KEY (`httpSendMailId`,`licenceId`),
   FOREIGN KEY (`licenceId`) REFERENCES `licences` (`licenceId`) ON UPDATE CASCADE ON DELETE RESTRICT
+) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+
+-- -----------------------------------------------------------------------------------
+-- Ideiglenes tabla berlet elettortenethez.
+-- -----------------------------------------------------------------------------------
+CREATE TABLE IF NOT EXISTS `report_cardhistory` (
+  `dateCardAction` 			datetime 				NOT NULL,
+  `cardAction` 				varchar(500)            NOT NULL,
+  `countUnits`	 			int(11) 				NOT NULL,
+  `unitTime`	 			int(11) 				NOT NULL,
+  `unitType` 				varchar(500)            NOT NULL,
+  `priceAction` 			int(11) 				NOT NULL,
+  `userName` 				varchar(500)            NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 

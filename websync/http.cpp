@@ -461,7 +461,7 @@ void cBlnsHttp::_httpStartProcess()
         {
             QString      qsQuery            = "SELECT * FROM "
                                               "httpsendmail WHERE "
-                                              "dateOfSending=\"" + QDate::currentDate().toString( "yyyy-MM-dd" ) + "\" AND "
+                                              "dateOfSending>=\"" + QDate::currentDate().toString( "yyyy-MM-dd" ) + "\" AND "
                                               "active=1 AND "
                                               "archive='NEW' "
                                               "LIMIT 1 ";

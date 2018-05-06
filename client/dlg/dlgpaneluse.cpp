@@ -106,6 +106,7 @@ cPanelPCUnitUse::cPanelPCUnitUse(QWidget *p_poParent, QStringList *p_qslParamete
     catch( cSevException &e )
     {
         g_obLogger(e.severity()) << e.what() << EOM;
+        g_obGen.showTrayError( e.what() );
     }
 }
 //----------------------------------------------------------------------------------------------
@@ -169,11 +170,13 @@ void cPanelPCUnitUse::setOrderNum(unsigned int p_uiOrderNum)
     m_uiOrderNum = p_uiOrderNum;
     pbUseUnitType->setText( QString("&%1. %2").arg(p_uiOrderNum).arg(pbUseUnitType->text()) );
 }
-//==============================================================================================
+//=====================================================================================================================
+//=====================================================================================================================
 //
 //
 //
-//==============================================================================================
+//=====================================================================================================================
+//=====================================================================================================================
 cDlgPanelUse::cDlgPanelUse( QWidget *p_poParent, unsigned int p_uiPanelId ) : QDialog( p_poParent )
 {
     m_bInit = true;
@@ -374,6 +377,7 @@ void cDlgPanelUse::setPanelUsePatientCard(unsigned int p_uiPatientCardId)
     catch( cSevException &e )
     {
         g_obLogger(e.severity()) << e.what() << EOM;
+        g_obGen.showTrayError( e.what() );
     }
 
     if( qvPanelUseUnits.count() == 1 )
@@ -477,6 +481,7 @@ void cDlgPanelUse::setPanelUsePrice()
     catch( cSevException &e )
     {
 //        g_obLogger(e.severity()) << e.what() << EOM;
+//        g_obGen.showTrayError( e.what() );
     }
 
     cCurrency   cPrice( m_uiPanelUsePrice-nTimezoneDiscount );
@@ -710,6 +715,7 @@ void cDlgPanelUse::on_pbReloadPC_clicked()
         if( QString(e.what()).compare("Patientcard barcode not found") != 0 )
         {
             g_obLogger(e.severity()) << e.what() << EOM;
+            g_obGen.showTrayError( e.what() );
         }
         else
         {

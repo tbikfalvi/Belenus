@@ -260,7 +260,7 @@ unsigned int cReportLedger::_reportPartPatientCardSell()
 //    }
 //    addTableCell( tr("Sum"), "center bold" );
 
-    poQueryResult = g_poDB->executeQTQuery( "SELECT * FROM patientcardtypes WHERE patientCardTypeId>1" );
+    poQueryResult = g_poDB->executeQTQuery( "SELECT * FROM patientcardtypes WHERE patientCardTypeId<>1" );
 
     while( poQueryResult->next() )
     {
@@ -296,7 +296,14 @@ unsigned int cReportLedger::_reportPartPatientCardSell()
         if( uiPricePCTSum > 0 || uiCountPCTSum > 0 )
         {
             addTableRow();
-            addTableCell( poQueryResult->value(2).toString() );
+            if( poQueryResult->value(0).toUInt() == 0 )
+            {
+                addTableCell( tr("Attached, lost cards") );
+            }
+            else
+            {
+                addTableCell( poQueryResult->value(2).toString() );
+            }
 
 //            for( int i=0; i<qslCells.count(); i++ )
 //            {
@@ -306,7 +313,7 @@ unsigned int cReportLedger::_reportPartPatientCardSell()
             cCurrency   obPricePCTSum( uiPricePCTSum );
 
             qsPricePCTSum = obPricePCTSum.currencyFullStringShort();
-            addTableCell( QString( "%1 / %2" ).arg( uiCountPCTSum ).arg( qsPricePCTSum ) );
+            addTableCell( QString( "%1 / %2" ).arg( uiCountPCTSum ).arg( qsPricePCTSum ), "right" );
         }
 
         uiTotalCardSell += uiPricePCTSum;

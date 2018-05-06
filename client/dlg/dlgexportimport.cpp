@@ -545,6 +545,7 @@ void cDlgExportImport::_importPatientCardTypes()
         catch( cSevException &e )
         {
             g_obLogger(e.severity()) << e.what() << EOM;
+            g_obGen.showTrayError( e.what() );
         }
     }
 }
@@ -595,6 +596,7 @@ void cDlgExportImport::_importPanelUses()
         catch( cSevException &e )
         {
             g_obLogger(e.severity()) << e.what() << EOM;
+            g_obGen.showTrayError( e.what() );
         }
     }
 }
@@ -629,6 +631,7 @@ void cDlgExportImport::_importProductTypes()
         catch( cSevException &e )
         {
             g_obLogger(e.severity()) << e.what() << EOM;
+            g_obGen.showTrayError( e.what() );
         }
     }
 }
@@ -686,6 +689,7 @@ void cDlgExportImport::_importProducts()
         catch( cSevException &e )
         {
             g_obLogger(e.severity()) << e.what() << EOM;
+            g_obGen.showTrayError( e.what() );
         }
     }
 }
@@ -803,6 +807,7 @@ void cDlgExportImport::_importDiscounts()
         catch( cSevException &e )
         {
             g_obLogger(e.severity()) << e.what() << EOM;
+            g_obGen.showTrayError( e.what() );
         }
     }
 }
@@ -837,6 +842,7 @@ void cDlgExportImport::_importSkinTypes()
         catch( cSevException &e )
         {
             g_obLogger(e.severity()) << e.what() << EOM;
+            g_obGen.showTrayError( e.what() );
         }
     }
 }

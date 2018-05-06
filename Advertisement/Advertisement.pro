@@ -9,7 +9,8 @@ TEMPLATE     = app
 TARGET       = Advertisement
 DESTDIR      = ..
 TRANSLATIONS = advertisement_hu.ts \
-               advertisement_de.ts
+               advertisement_de.ts \
+               advertisement_it.ts
 
 HEADERS     += advertisementwindow.h
 

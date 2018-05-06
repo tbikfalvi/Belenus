@@ -53,3 +53,8 @@ void dlgProgress::increaseProgressValue()
 {
     ui->prgIndicator->setValue( ui->prgIndicator->value()+1 );
 }
+
+void dlgProgress::increaseProgressMax(int p_nMax)
+{
+    ui->prgIndicator->setMaximum( ui->prgIndicator->maximum() + p_nMax );
+}
