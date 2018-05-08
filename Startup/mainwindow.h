@@ -35,6 +35,7 @@ private slots:
     void on_pbLangEn_clicked();
     void on_pbLangDe_clicked();
     void on_pbLangHu_clicked();
+    void on_pbLangIt_clicked();
 
 private:
     Ui::MainWindow          *ui;
