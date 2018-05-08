@@ -8,5 +8,6 @@
         <file>flag_de.png</file>
         <file>flag_en.png</file>
         <file>flag_hu.png</file>
+        <file>flag_it.png</file>
     </qresource>
 </RCC>

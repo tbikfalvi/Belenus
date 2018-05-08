@@ -258,7 +258,6 @@ cLicenceManager::~cLicenceManager()
 
 void cLicenceManager::initialize()
 {
-    int          nLicenceId = 0;
     QSqlQuery   *poQuery = NULL;
 
     try
@@ -274,7 +273,7 @@ void cLicenceManager::initialize()
             m_qsCod             = poQuery->value( 4 ).toString();
         }
         g_obLogger(cSeverity::INFO) << "Initialized with " << m_qsLicenceString
-                                    << " and " << nLicenceId
+                                    << " and " << m_nLicenceId
                                     << ". Application is valid until " << m_qdLastValidated.toString("yyyy/MM/dd")
                                     << EOM;
 
@@ -297,6 +296,7 @@ void cLicenceManager::initialize()
         {
             g_poPrefs->setLicenceLastValidated( QString( "%1 12:00:00" ).arg( m_qdLastValidated.toString("yyyy-MM-dd") ), true );
         }
+        g_obLogger(cSeverity::INFO) << "Initialization finished" << EOM;
     }
     catch( cSevException &e )
     {
