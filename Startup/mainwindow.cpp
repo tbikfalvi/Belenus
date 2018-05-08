@@ -29,7 +29,7 @@ MainWindow::MainWindow(QWidget *parent) : QMainWindow(parent), ui(new Ui::MainWi
     ui->cmbLanguage->addItem( "Magyar (hu)" );
     ui->cmbLanguage->addItem( "English (en)" );
     ui->cmbLanguage->addItem( "Deutsch (de)" );
-//    ui->cmbLanguage->addItem( "Slovensky (sk)" );
+    ui->cmbLanguage->addItem( "Italiano (it)" );
 
     connect( ui->rbProcessInstall, SIGNAL(clicked()), this, SLOT(on_process_selected()) );
     connect( ui->rbProcessUpdate, SIGNAL(clicked()), this, SLOT(on_process_selected()) );
@@ -40,8 +40,8 @@ MainWindow::MainWindow(QWidget *parent) : QMainWindow(parent), ui(new Ui::MainWi
 
     QProcessEnvironment qpeInfo = QProcessEnvironment::systemEnvironment();
 
-    ui->ledDirectoryStartup->setText( qpeInfo.value( "BelenusStartup", "C:/BelenusUpdate" ) );
-    ui->ledDirectoryTarget->setText( qpeInfo.value( "BelenusTarget", "C:/Program Files/Belenus" ) );
+    ui->ledDirectoryStartup->setText( qpeInfo.value( "BelenusStartup", "C:/Kiwisun/BelenusUpdate" ) );
+    ui->ledDirectoryTarget->setText( qpeInfo.value( "BelenusTarget", "C:/Kiwisun/Belenus" ) );
     ui->ledDirectoryResource->setText( qpeInfo.value( "BelenusResource", "Download" ) );
     ui->ledDirectoryBackup->setText( qpeInfo.value( "BelenusBackup", "Backup" ) );
 
@@ -95,6 +95,7 @@ MainWindow::~MainWindow()
 void MainWindow::on_pbLangEn_clicked()
 {
     ui->pbLangEn->setChecked( true );
+    ui->pbLangIt->setChecked( false );
     ui->pbLangDe->setChecked( false );
     ui->pbLangHu->setChecked( false );
     apMainApp->removeTranslator( poTransStartup );
@@ -106,6 +107,7 @@ void MainWindow::on_pbLangEn_clicked()
 void MainWindow::on_pbLangDe_clicked()
 {
     ui->pbLangEn->setChecked( false );
+    ui->pbLangIt->setChecked( false );
     ui->pbLangDe->setChecked( true );
     ui->pbLangHu->setChecked( false );
     apMainApp->removeTranslator( poTransStartup );
@@ -123,6 +125,7 @@ void MainWindow::on_pbLangDe_clicked()
 void MainWindow::on_pbLangHu_clicked()
 {
     ui->pbLangEn->setChecked( false );
+    ui->pbLangIt->setChecked( false );
     ui->pbLangDe->setChecked( false );
     ui->pbLangHu->setChecked( true );
     apMainApp->removeTranslator( poTransStartup );
@@ -136,6 +139,25 @@ void MainWindow::on_pbLangHu_clicked()
     ui->retranslateUi( this );
     m_qsLangInstaller = "hu";
 }
+
+void MainWindow::on_pbLangIt_clicked()
+{
+    ui->pbLangEn->setChecked( false );
+    ui->pbLangIt->setChecked( true );
+    ui->pbLangDe->setChecked( false );
+    ui->pbLangHu->setChecked( false );
+    apMainApp->removeTranslator( poTransStartup );
+    apMainApp->removeTranslator( poTransQT );
+    QString qsLangSetup = QString("%1\\lang\\startup_it.qm").arg(QDir::currentPath());
+    QString qsLangQT = QString("%1\\lang\\qt_it.qm").arg(QDir::currentPath());
+    poTransStartup->load( qsLangSetup );
+    poTransQT->load( qsLangQT );
+    apMainApp->installTranslator( poTransStartup );
+    apMainApp->installTranslator( poTransQT );
+    ui->retranslateUi( this );
+    m_qsLangInstaller = "it";
+}
+
 void MainWindow::on_cmbLanguage_currentIndexChanged(int /*index*/)
 {
 //    QString qsLanguage = ui->cmbLanguage->itemText( ui->cmbLanguage->currentIndex() ).right(3).left(2);
@@ -230,8 +252,8 @@ void MainWindow::on_pbDefault_clicked()
 {
     QProcessEnvironment qpeInfo = QProcessEnvironment::systemEnvironment();
 
-    ui->ledDirectoryStartup->setText( qpeInfo.value( "BelenusStartup", "C:/BelenusUpdate" ) );
-    ui->ledDirectoryTarget->setText( qpeInfo.value( "BelenusTarget", "C:/Program Files/Belenus" ) );
+    ui->ledDirectoryStartup->setText( qpeInfo.value( "BelenusStartup", "C:/Kiwisun/BelenusUpdate" ) );
+    ui->ledDirectoryTarget->setText( qpeInfo.value( "BelenusTarget", "C:/Kiwisun/Belenus" ) );
     ui->ledDirectoryResource->setText( qpeInfo.value( "BelenusResource", "Download" ) );
     ui->ledDirectoryBackup->setText( qpeInfo.value( "BelenusBackup", "Backup" ) );
 
@@ -359,8 +381,6 @@ void MainWindow::on_pbDirectoryBackup_clicked()
 //-------------------------------------------------------------------------------------------------
 void MainWindow::on_pbStart_clicked()
 {
-    _updateEnvironmentVariables();
-
     ui->pbStart->setVisible( false );
     ui->progressBar->setVisible( true );
 
@@ -368,6 +388,8 @@ void MainWindow::on_pbStart_clicked()
     {
         case PROCESS_INSTALL:
         {
+            _updateEnvironmentVariables();
+
             // Create directories for updater and for Belenus if not exists
             if( !_createPaths() ) { return; }
             ui->progressBar->setValue( 1 );
@@ -399,7 +421,7 @@ void MainWindow::on_pbStart_clicked()
             {
                 ui->progressBar->setMaximum( 100 );
                 ui->progressBar->setValue( 1 );
-                _deleteRegistryKey( "HKEY_LOCAL_MACHINE\\SOFTWARE\\Microsoft\\Windows\\CurrentVersion\\Uninstall\\Belenus" );
+/*                _deleteRegistryKey( "HKEY_LOCAL_MACHINE\\SOFTWARE\\Microsoft\\Windows\\CurrentVersion\\Uninstall\\Belenus" );
                 _deleteRegistryKey( "HKEY_LOCAL_MACHINE\\System\\CurrentControlSet\\Control\\Session Manager\\Environment",
                                     "BelenusStartup" );
                 _deleteRegistryKey( "HKEY_LOCAL_MACHINE\\System\\CurrentControlSet\\Control\\Session Manager\\Environment",
@@ -411,7 +433,7 @@ void MainWindow::on_pbStart_clicked()
                 _progressStep();
 
                 SendMessage( HWND_BROADCAST, WM_SETTINGCHANGE, 0, (LPARAM)L"Environment" );
-                _progressStep();
+*/                _progressStep();
 
                 _removeShortcuts();
                 _progressStep();
@@ -437,6 +459,8 @@ void MainWindow::on_pbStart_clicked()
         }
         case PROCESS_UPDATE:
         {
+            _updateEnvironmentVariables();
+
             // Create directories for updater and for Belenus if not exists
             if( !_createPaths() ) { return; }
             ui->progressBar->setValue( 1 );
@@ -471,6 +495,75 @@ void MainWindow::on_pbStart_clicked()
 //-------------------------------------------------------------------------------------------------
 void MainWindow::_updateEnvironmentVariables()
 {
+    QProcess *qpProcess  = new QProcess(this);
+    QString   qsProcess  = "";
+
+    qsProcess = QString( "c:/windows/system32/setx.exe BelenusStartup \"%1\" " ).arg( ui->ledDirectoryStartup->text() );
+
+    if( !qpProcess->startDetached( qsProcess ) )
+    {
+        QMessageBox::warning( this, tr("Warning"),
+                              tr("Error occured when starting process:\n\n%1\n\nError code: %2\n"
+                                 "0 > The process failed to start.\n"
+                                 "1 > The process crashed some time after starting successfully.\n"
+                                 "2 > The last waitFor...() function timed out.\n"
+                                 "4 > An error occurred when attempting to write to the process.\n"
+                                 "3 > An error occurred when attempting to read from the process.\n"
+                                 "5 > An unknown error occurred.")
+                              .arg( qsProcess )
+                              .arg( qpProcess->error() ) );
+    }
+
+    qsProcess = QString( "c:/windows/system32/setx.exe BelenusTarget \"%1\" " ).arg( ui->ledDirectoryTarget->text() );
+
+    if( !qpProcess->startDetached( qsProcess ) )
+    {
+        QMessageBox::warning( this, tr("Warning"),
+                              tr("Error occured when starting process:\n\n%1\n\nError code: %2\n"
+                                 "0 > The process failed to start.\n"
+                                 "1 > The process crashed some time after starting successfully.\n"
+                                 "2 > The last waitFor...() function timed out.\n"
+                                 "4 > An error occurred when attempting to write to the process.\n"
+                                 "3 > An error occurred when attempting to read from the process.\n"
+                                 "5 > An unknown error occurred.")
+                              .arg( qsProcess )
+                              .arg( qpProcess->error() ) );
+    }
+
+    qsProcess = QString( "c:/windows/system32/setx.exe BelenusResource \"%1\" " ).arg( ui->ledDirectoryResource->toolTip() );
+
+    if( !qpProcess->startDetached( qsProcess ) )
+    {
+        QMessageBox::warning( this, tr("Warning"),
+                              tr("Error occured when starting process:\n\n%1\n\nError code: %2\n"
+                                 "0 > The process failed to start.\n"
+                                 "1 > The process crashed some time after starting successfully.\n"
+                                 "2 > The last waitFor...() function timed out.\n"
+                                 "4 > An error occurred when attempting to write to the process.\n"
+                                 "3 > An error occurred when attempting to read from the process.\n"
+                                 "5 > An unknown error occurred.")
+                              .arg( qsProcess )
+                              .arg( qpProcess->error() ) );
+    }
+
+    qsProcess = QString( "c:/windows/system32/setx.exe BelenusBackup \"%1\" " ).arg( ui->ledDirectoryBackup->toolTip() );
+
+    if( !qpProcess->startDetached( qsProcess ) )
+    {
+        QMessageBox::warning( this, tr("Warning"),
+                              tr("Error occured when starting process:\n\n%1\n\nError code: %2\n"
+                                 "0 > The process failed to start.\n"
+                                 "1 > The process crashed some time after starting successfully.\n"
+                                 "2 > The last waitFor...() function timed out.\n"
+                                 "4 > An error occurred when attempting to write to the process.\n"
+                                 "3 > An error occurred when attempting to read from the process.\n"
+                                 "5 > An unknown error occurred.")
+                              .arg( qsProcess )
+                              .arg( qpProcess->error() ) );
+    }
+
+    delete qpProcess;
+/*
     QSettings obPref( "HKEY_LOCAL_MACHINE\\System\\CurrentControlSet\\Control\\Session Manager\\Environment",
                       QSettings::NativeFormat );
 
@@ -496,6 +589,7 @@ void MainWindow::_updateEnvironmentVariables()
                                   "[%1]").arg( m_qsErrorReportFile ) );
         return;
     }
+*/
 }
 //=================================================================================================
 // _createPaths
@@ -986,3 +1080,4 @@ void MainWindow::_removeDirectory( QString p_qsPath )
 
     qdTarget.rmpath( p_qsPath );
 }
+

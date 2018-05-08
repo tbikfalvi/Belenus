@@ -87,3 +87,14 @@ Version 1.6.1.0
 - A WebSync alkalmazas mostantol csak egy peldanyban indul el
 - A program szol, ha az archiv es az alkalmazas path-a ugyanugy kezdodik (drive utan a gyoker konyvtar ugyanaz)
 - Ha a vendeg pause-olja a gepet, mostantol a panelon megjeleno start gombbal is lehet tovabbinditani a gepet
+- A berlet csere, tarsitas nem latszott rendesen a napi konyben
+- A kedvezmeny torles nem mukodott rendesen
+- A fokepernyon demo mod eseten nagy felirat
+- Berlet elettortenet kimutatas 
+
+Version 1.7.0.0
+===============
+- Mindaz, ami az 1.6.1.0-ban van
+- Olasz nyelv
+- Berlet ervenyesseg meghosszabbitas berletegyseg tipusonkent
+- Masodlagos ablakon szovegek kijelzese csak system admin modosit
