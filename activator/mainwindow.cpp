@@ -168,7 +168,7 @@ MainWindow::MainWindow(QWidget *parent) : QMainWindow(parent), ui(new Ui::MainWi
                                      << "BLNS27"    // Miskolc
                                      << "BLNS28"    // Nyiregyhaza
                                      << "BLNS29"    // Kecskemét
-                                     << "BLNS30"    // Győr
+//                                   << "BLNS30"    //                      Győri liszensz
                                      << "BLNS31"    // Szeged
                                      << "BLNS32"    // Veszprém
                                      << "BLNS33"    // Irorszag             Cork
@@ -200,22 +200,22 @@ MainWindow::MainWindow(QWidget *parent) : QMainWindow(parent), ui(new Ui::MainWi
                                      << "BLNS59"    // Irorszag             Dublin
                                      << "BLNS60"    // Csepel
                                      << "BLNS61"    // Dunakeszi
-//                                   << "BLNS62"    //
-                                   << "BLNS63"    // Budapest   Rakos ut
-                                   << "BLNS64"    // Romania    Nagyvarad
+                                     << "BLNS62"    // Budapest Blaha
+                                     << "BLNS63"    // Budapest   Rakos ut
+                                     << "BLNS64"    // Romania    Nagyvarad
                                      << "BLNS65"    // Budapest             Csepel
                                      << "BLNS66"    // Budapest             Zuglo
                                      << "BLNS67"    // Torokbalint
-//                                     << "BLNS68"    //
-//                                     << "BLNS69"    //
-                                     << "BLNS70"    //
-                                     << "BLNS71"    //
-                                     << "BLNS72"    //
-                                     << "BLNS73"    //
-//                                     << "BLNS74"    //
-//                                     << "BLNS75"    //
-//                                     << "BLNS76"    //
-//                                     << "BLNS77"    //
+                                     << "BLNS68"    // Dublin   Dun Laogharie
+                                     << "BLNS69"    //
+                                     << "BLNS70"    // Budapest             Alkotas
+                                     << "BLNS71"    // Kolozsvar
+                                     << "BLNS72"    // Verona
+                                     << "BLNS73"    // Ajka
+                                     << "BLNS74"    //
+                                     << "BLNS75"    //
+                                     << "BLNS76"    //
+                                     << "BLNS77"    //
 //                                     << "BLNS78"    //
 //                                     << "BLNS79"    //
 //                                     << "BLNS80"    //
