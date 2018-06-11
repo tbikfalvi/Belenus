@@ -51,7 +51,7 @@ cDlgChangePCValidity::cDlgChangePCValidity(QWidget *p_poParent , unsigned int p_
 
     try
     {
-        QStringList qslUnits = g_obGen.getPatientCardValidUnits( p_uiCardId );
+        QStringList qslUnits = g_obGen.getPatientCardUnusedUnits( p_uiCardId );
 
         for( int i=0;i<qslUnits.count();i++)
         {
