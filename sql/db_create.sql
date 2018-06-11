@@ -2,7 +2,7 @@
 -- Belenus Szoftver Rendszer (c) Pagony Multimedia Studio Bt - 2013
 -- -----------------------------------------------------------------------------------
 -- Filename    : db_create.sql
--- AppVersion  : 1.7.0.0
+-- AppVersion  : 1.7.0.1
 -- DbVersion   : 1.7.7
 -- -----------------------------------------------------------------------------------
 -- Adatbazist letrehozo SQL script

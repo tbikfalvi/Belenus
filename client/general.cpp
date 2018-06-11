@@ -341,7 +341,7 @@ QString cGeneral::getPatientCardInformationString(QString p_qsBarcode)
 
         if( poQuery->size() > 0 )
         {
-            qsText.append( QObject::tr("<br><b>Expired units:</b>") );
+            qsText.append( QObject::tr("<br><br><b>Expired units:</b><br>") );
 
             while( poQuery->next() )
             {
@@ -352,7 +352,7 @@ QString cGeneral::getPatientCardInformationString(QString p_qsBarcode)
                     cDBPatientCardType obDBPatientCardType;
 
                     obDBPatientCardType.load( uiPCTId );
-                    qsText.append( QObject::tr("<br><b>%1 units (%2 minutes) (%3) expired on</b>%4")
+                    qsText.append( QObject::tr("<br>%1 units (%2 minutes) (%3) expired on %4")
                                    .arg( poQuery->value( 5 ).toString() )
                                    .arg( poQuery->value( 2 ).toString() )
                                    .arg( obDBPatientCardType.name() )
@@ -369,7 +369,7 @@ QString cGeneral::getPatientCardInformationString(QString p_qsBarcode)
     return qsText;
 }
 //====================================================================================
-QStringList cGeneral::getPatientCardValidUnits(unsigned int p_uiCardId)
+QStringList cGeneral::getPatientCardUnusedUnits(unsigned int p_uiCardId)
 //------------------------------------------------------------------------------------
 {
     QStringList qslValidUnits = QStringList();
@@ -387,6 +387,43 @@ QStringList cGeneral::getPatientCardValidUnits(unsigned int p_uiCardId)
                                    "AND active=1 "
                                    "GROUP BY unitTime, validDateTo, patientCardTypeId ORDER BY validDateTo, patientCardUnitId" ).arg( obDBPatientCard.id() );
         QSqlQuery  *poQuery = g_poDB->executeQTQuery( qsQuery );
+
+        if( poQuery->size() > 0 )
+        {
+            while( poQuery->next() )
+            {
+                unsigned int uiPCTId = poQuery->value( 1 ).toUInt();
+
+                if( uiPCTId > 0 )
+                {
+                    qsText = "";
+                    cDBPatientCardType obDBPatientCardType;
+
+                    obDBPatientCardType.load( uiPCTId );
+
+                    qsText.append( QObject::tr("%1 units ").arg( poQuery->value( 5 ).toString() ) );
+                    qsText.append( QObject::tr("(%1 minutes) ").arg( poQuery->value( 2 ).toString() ) );
+                    qsText.append( QString("(%1) ").arg( obDBPatientCardType.name() ) );
+                    qsText.append( QString("%1 -> ").arg( poQuery->value( 3 ).toString() ) );
+                    qsText.append( QString("%1").arg( poQuery->value( 4 ).toString() ) );
+                    qsText.append( "#" );
+                    qsText.append( QString("%1|%2|%3").arg( poQuery->value(2).toInt() )
+                                                      .arg( poQuery->value(4).toString() )
+                                                      .arg( poQuery->value(1).toUInt() ) );
+
+                    qslValidUnits << qsText;
+                }
+            }
+        }
+
+        qsQuery = QString( "SELECT patientCardUnitId, patientCardTypeId, unitTime, validDateFrom, validDateTo, COUNT(unitTime) "
+                           "FROM patientcardunits "
+                           "WHERE patientCardId=%1 "
+                           "AND validDateTo<CURDATE() "
+                           "AND prepared=0 "
+                           "AND active=1 "
+                           "GROUP BY unitTime, validDateTo, patientCardTypeId ORDER BY validDateTo, patientCardUnitId" ).arg( obDBPatientCard.id() );
+        poQuery = g_poDB->executeQTQuery( qsQuery );
 
         if( poQuery->size() > 0 )
         {
