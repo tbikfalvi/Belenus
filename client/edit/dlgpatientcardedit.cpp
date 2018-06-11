@@ -36,7 +36,7 @@ cDlgPatientCardEdit::cDlgPatientCardEdit( QWidget *p_poParent, cDBPatientCard *p
 //-----------------------------------------------------------------------------------------------------------
 {
     m_bIsCardDeactivated = false;
-    m_bIsValidationChanged = false;
+//    m_bIsValidationChanged = false;
 
     setupUi( this );
 
@@ -246,14 +246,20 @@ void cDlgPatientCardEdit::on_pbChangeValidity_clicked()
             if( QMessageBox::question( this, tr("Attention"),
                                        tr("Are you sure you want to change the validity date\n"
                                           "from:  %1  to:  %2  "
-                                          "\nfor the selected patientcard units?")
+                                          "\nfor the selected patientcard units?\n\n"
+                                          "Please note this change cannot be undone!")
                                        .arg( deValidDateTo->date().toString(g_poPrefs->getDateFormat().replace("-",".")) )
                                        .arg( qdNewDate.toString(g_poPrefs->getDateFormat().replace("-",".")) ),
                                        QMessageBox::Yes | QMessageBox::No, QMessageBox::Yes ) == QMessageBox::Yes )
             {
                 deValidDateTo->setDate( qdNewDate );
                 m_qsUnitCondition = obDlgChangePCValidity.unitCondition();
-                m_bIsValidationChanged = true;
+//                m_bIsValidationChanged = true;
+//                if( m_bIsValidationChanged )
+//                {
+                    m_poPatientCard->updateActiveUnits( deValidDateTo->date(), m_qsUnitCondition );
+//                }
+                m_poPatientCard->synchronizeUnits();
             }
         }
         lblUnitInfo->setText( g_obGen.getPatientCardInformationString( m_poPatientCard->barcode() ) );
@@ -305,11 +311,11 @@ void cDlgPatientCardEdit::on_pbSave_clicked()
         m_poPatientCard->setValidDateTo( deValidDateTo->date().toString("yyyy-MM-dd") );
         m_poPatientCard->setComment( pteComment->toPlainText() );
         m_poPatientCard->save();
-        if( m_bIsValidationChanged )
+/*        if( m_bIsValidationChanged )
         {
             m_poPatientCard->updateActiveUnits( deValidDateTo->date(), m_qsUnitCondition );
         }
-        m_poPatientCard->synchronizeUnits();
+        m_poPatientCard->synchronizeUnits();*/
 
         QDialog::accept();
     }
