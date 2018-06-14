@@ -31,6 +31,7 @@
 #include "../framework/logger/ConsoleWriter.h"
 #include "../framework/logger/FileWriter.h"
 #include "../framework/qtmysqlconnection.h"
+#include "../language/language.h"
 #include "db/dbuser.h"
 #include "db/dbguest.h"
 #include "preferences.h"
@@ -64,7 +65,7 @@ cCassa                   g_obCassa;
 cGeneral                 g_obGen;
 cDBGuest                 g_obGuest;
 cLicenceManager          g_obLicenceManager;
-//cBlnsHttp               *g_poBlnsHttp;
+cLanguage                g_obLanguage;
 
 // 'TO BE SOLVED' felirat, ahol még valamit meg kell oldani
 // g_obLogger(cSeverity::DEBUG) << QString("") << EOM;
@@ -129,6 +130,20 @@ int main( int argc, char *argv[] )
     try
     {
         g_obLogger(cSeverity::INFO) << "Belenus Version " << g_poPrefs->getVersion() << " started." << EOM;
+
+g_obLogger(cSeverity::INFO) << "Get languages from 'language.inf'" << EOM;
+QStringList qslLanguages = g_obLanguage.getLanguages();
+g_obLogger(cSeverity::INFO) << "ErrCode: " << g_obLanguage.errorCode() << EOM;
+
+g_obLogger(cSeverity::INFO) << "Available languages:" << EOM;
+for(int nLang=0;nLang<qslLanguages.count();nLang++)
+{
+    g_obLogger(cSeverity::INFO) << qslLanguages.at(nLang).split("|").at(0)
+                                << " ("
+                                << qslLanguages.at(nLang).split("|").at(1)
+                                << ")"
+                                << EOM;
+}
 
         qsSpalsh += QObject::tr("Connecting to database ...");
         g_obLogger(cSeverity::INFO) << "Connecting to database ..." << EOM;

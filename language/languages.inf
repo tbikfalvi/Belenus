@@ -1,0 +1,9 @@
+<languages>
+
+    <!-- 
+	<language name="" shortname="" />
+    -->
+	<language name="English" shortname="en" />
+	<language name="Magyar" shortname="hu" />
+
+</languages>
