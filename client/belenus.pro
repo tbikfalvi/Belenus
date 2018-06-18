@@ -7,7 +7,8 @@ TEMPLATE     = app
 DESTDIR      = ..
 TRANSLATIONS = belenus_hu.ts \
                belenus_de.ts \
-               belenus_it.ts
+               belenus_it.ts \
+               belenus_ro.ts
 
 win32:DEFINES -= UNICODE
 

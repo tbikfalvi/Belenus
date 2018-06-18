@@ -5,5 +5,8 @@
     -->
 	<language name="English" shortname="en" />
 	<language name="Magyar" shortname="hu" />
+	<language name="Deutsch" shortname="de" />
+	<language name="Italiano" shortname="it" />
+	<language name="Românesc" shortname="ro" />
 
 </languages>

@@ -4,7 +4,7 @@
 #
 #-------------------------------------------------
 
-QT          += core gui
+QT          += core gui xml
 TARGET       = DBBackup
 DESTDIR      = ..
 TEMPLATE     = app
@@ -12,12 +12,15 @@ RC_FILE      = dbbackup.rc
 RESOURCES   += dbbackup.qrc
 TRANSLATIONS = dbbackup_hu.ts \
                dbbackup_de.ts \
-               dbbackup_it.ts
+               dbbackup_it.ts \
+               dbbackup_ro.ts
 
-SOURCES     += main.cpp\
+SOURCES     += ../language/language.cpp \
+               main.cpp \
                mainwindow.cpp
 
-HEADERS     += mainwindow.h
+HEADERS     += ../language/language.h \
+               mainwindow.h
 
 FORMS       += mainwindow.ui
 

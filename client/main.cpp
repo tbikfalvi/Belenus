@@ -99,7 +99,8 @@ int main( int argc, char *argv[] )
     g_poPrefs->setDBAccess( "localhost", "belenus", "belenus", "belenus" );
     g_poPrefs->setApplicationPath( qsCurrentPath );
 
-    g_obGen.setApplicationLanguage( g_poPrefs->getLang() );
+//    g_obGen.setApplicationLanguage( g_poPrefs->getLang() );
+    g_obLanguage.init( apMainApp, "belenus", "_", g_poPrefs->getLang() );
 
     QPixmap          obPixmap("resources/splash.png");
     QSplashScreen    obSplash( obPixmap );
@@ -131,19 +132,17 @@ int main( int argc, char *argv[] )
     {
         g_obLogger(cSeverity::INFO) << "Belenus Version " << g_poPrefs->getVersion() << " started." << EOM;
 
-g_obLogger(cSeverity::INFO) << "Get languages from 'language.inf'" << EOM;
-QStringList qslLanguages = g_obLanguage.getLanguages();
-g_obLogger(cSeverity::INFO) << "ErrCode: " << g_obLanguage.errorCode() << EOM;
-
-g_obLogger(cSeverity::INFO) << "Available languages:" << EOM;
-for(int nLang=0;nLang<qslLanguages.count();nLang++)
-{
-    g_obLogger(cSeverity::INFO) << qslLanguages.at(nLang).split("|").at(0)
-                                << " ("
-                                << qslLanguages.at(nLang).split("|").at(1)
-                                << ")"
-                                << EOM;
-}
+        g_obLogger(cSeverity::INFO) << "Get languages from 'language.inf'" << EOM;
+        QStringList qslLanguages = g_obLanguage.getLanguages();
+        g_obLogger(cSeverity::INFO) << "Available languages:" << EOM;
+        for(int nLang=0;nLang<qslLanguages.count();nLang++)
+        {
+            g_obLogger(cSeverity::INFO) << qslLanguages.at(nLang).split("|").at(0)
+                                        << " ("
+                                        << qslLanguages.at(nLang).split("|").at(1)
+                                        << ")"
+                                        << EOM;
+        }
 
         qsSpalsh += QObject::tr("Connecting to database ...");
         g_obLogger(cSeverity::INFO) << "Connecting to database ..." << EOM;

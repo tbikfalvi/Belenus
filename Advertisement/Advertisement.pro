@@ -1,7 +1,7 @@
 
 greaterThan(QT_MAJOR_VERSION, 4): QT += widgets
 
-QT          += core gui sql
+QT          += core gui sql xml
 CONFIG      += qt
 RESOURCES   += advertisement.qrc
 RC_FILE      = advertisement.rc
@@ -10,11 +10,14 @@ TARGET       = Advertisement
 DESTDIR      = ..
 TRANSLATIONS = advertisement_hu.ts \
                advertisement_de.ts \
-               advertisement_it.ts
+               advertisement_it.ts \
+               advertisement_ro.ts
 
-HEADERS     += advertisementwindow.h
+HEADERS     += ../language/language.h \
+               advertisementwindow.h
 
-SOURCES     += main.cpp\
+SOURCES     += ../language/language.cpp \
+               main.cpp\
                advertisementwindow.cpp
 
 FORMS       += advertisementwindow.ui

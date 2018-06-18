@@ -23,6 +23,7 @@
 #include <QString>
 #include <QFile>
 #include <QDomDocument>
+#include <QComboBox>
 
 //====================================================================================
 
@@ -46,6 +47,7 @@ public:
                           const QString &p_qsLang = "" );
     void             reloadLanguage( const QString &p_qsLang = "" );
     QStringList      getLanguages();
+    int              setLanguageCombo( QComboBox *p_cmbLang );
 
     int              errorCode()    { return m_nErrorCode; }
 
@@ -57,6 +59,7 @@ private:
     QTranslator     *m_poApTr;
     QTranslator     *m_poQtTr;
     QDomDocument    *obProcessDoc;
+    QComboBox       *m_cmbLang;
     bool             m_bIsLanguageLoaded;
     QString          m_qsApplicationPrefix;
     QString          m_qsLang;

@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <!DOCTYPE TS>
-<TS version="2.0" language="it_IT">
+<TS version="2.0" language="ro_MD">
 <context>
     <name>QObject</name>
     <message>
@@ -253,13 +253,11 @@
     <message>
         <location filename="general.cpp" line="344"/>
         <source>&lt;br&gt;&lt;br&gt;&lt;b&gt;Expired units:&lt;/b&gt;&lt;br&gt;</source>
-        <oldsource>&lt;br&gt;&lt;b&gt;Expired units:&lt;/b&gt;</oldsource>
         <translation type="unfinished"></translation>
     </message>
     <message>
         <location filename="general.cpp" line="355"/>
         <source>&lt;br&gt;%1 units (%2 minutes) (%3) expired on %4</source>
-        <oldsource>&lt;br&gt;&lt;b&gt;%1 units (%2 minutes) (%3) expired on&lt;/b&gt;%4</oldsource>
         <translation type="unfinished"></translation>
     </message>
     <message>
@@ -2994,9 +2992,6 @@ from:  %1  to:  %2
 for the selected patientcard units?
 
 Please note this change cannot be undone!</source>
-        <oldsource>Are you sure you want to change the validity date
-from:  %1  to:  %2  
-for the selected patientcard units?</oldsource>
         <translation type="unfinished"></translation>
     </message>
     <message>
@@ -7254,16 +7249,6 @@ with removing cash</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="dlgchangepcvalidity.ui" line="61"/>
-        <source>with one week</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <location filename="dlgchangepcvalidity.ui" line="68"/>
-        <source>with two weeks</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
         <location filename="dlgchangepcvalidity.ui" line="40"/>
         <source>with one month</source>
         <translation type="unfinished"></translation>
@@ -7276,6 +7261,16 @@ with removing cash</source>
     <message>
         <location filename="dlgchangepcvalidity.ui" line="54"/>
         <source>with half year</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="dlgchangepcvalidity.ui" line="61"/>
+        <source>with one week</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="dlgchangepcvalidity.ui" line="68"/>
+        <source>with two weeks</source>
         <translation type="unfinished"></translation>
     </message>
     <message>

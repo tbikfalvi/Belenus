@@ -110,6 +110,35 @@ QStringList cLanguage::getLanguages()
     return qslRet;
 }
 //====================================================================================
+int cLanguage::setLanguageCombo(QComboBox *p_cmbLang)
+//------------------------------------------------------------------------------------
+{
+    int inLangIdx = 0;
+
+    if( m_bIsLanguageLoaded )
+    {
+        m_cmbLang = p_cmbLang;
+
+        QStringList qslLanguages = getLanguages();
+        QStringList obLangCodes;
+
+        for( int nLang=0; nLang<qslLanguages.count(); nLang++ )
+        {
+            obLangCodes << QString( "%1 (%2)" ).arg( qslLanguages.at(nLang).split("|").at(0) )
+                                               .arg( qslLanguages.at(nLang).split("|").at(1) );
+            if( qslLanguages.at(nLang).split("|").at(0).compare( m_qsLang ) == 0 )
+            {
+                inLangIdx = nLang;
+            }
+        }
+
+        m_cmbLang->addItems( obLangCodes );
+        m_cmbLang->setCurrentIndex( inLangIdx );
+    }
+
+    return inLangIdx;
+}
+//====================================================================================
 void cLanguage::setApplicationLanguage( const QString &p_qsLang )
 //------------------------------------------------------------------------------------
 {
