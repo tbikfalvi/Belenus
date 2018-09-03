@@ -636,4 +636,37 @@
         </execute>
     </version>    
 
+    <version current="1.7.0.1" next="1.7.1.0">
+        <download>
+            <file path="http://download.bikfalvi.hu/belenus/official/Update_1_7_1_0.zip" />
+        </download>
+        <uncompress>
+            <file path="%DOWNLOAD_DIR%" name="Update_1_7_1_0.zip" />
+        </uncompress>
+        <backup>
+            <file path="%INSTALL_DIR%" directory="" name="Advertisement.exe" move="yes" />
+            <file path="%INSTALL_DIR%" directory="" name="belenus.exe" move="yes" />
+            <file path="%INSTALL_DIR%" directory="" name="DBBackup.exe" move="yes" />
+            <file path="%INSTALL_DIR%" directory="" name="ReportViewer.exe" move="yes" />
+            <file path="%INSTALL_DIR%" directory="" name="websync.exe" move="yes" />
+        </backup>
+        <update>
+            <file src="%DOWNLOAD_DIR%/lang/languages.inf" dst="%INSTALL_DIR%/lang/languages.inf" />
+            <file src="%DOWNLOAD_DIR%/lang/advertisement_ro.qm" dst="%INSTALL_DIR%/lang/advertisement_ro.qm" />
+            <file src="%DOWNLOAD_DIR%/lang/belenus_hu.qm" dst="%INSTALL_DIR%/lang/belenus_hu.qm" />
+            <file src="%DOWNLOAD_DIR%/lang/belenus_ro.qm" dst="%INSTALL_DIR%/lang/belenus_ro.qm" />
+            <file src="%DOWNLOAD_DIR%/lang/brv_ro.qm" dst="%INSTALL_DIR%/lang/brv_ro.qm" />
+            <file src="%DOWNLOAD_DIR%/lang/dbbackup_ro.qm" dst="%INSTALL_DIR%/lang/dbbackup_ro.qm" />
+            <file src="%DOWNLOAD_DIR%/lang/websync_ro.qm" dst="%INSTALL_DIR%/lang/websync_ro.qm" />
+            <file src="%DOWNLOAD_DIR%/Advertisement.exe" dst="%INSTALL_DIR%/Advertisement.exe" />
+            <file src="%DOWNLOAD_DIR%/belenus.exe" dst="%INSTALL_DIR%/belenus.exe" />
+            <file src="%DOWNLOAD_DIR%/DBBackup.exe" dst="%INSTALL_DIR%/DBBackup.exe" />
+            <file src="%DOWNLOAD_DIR%/ReportViewer.exe" dst="%INSTALL_DIR%/ReportViewer.exe" />
+            <file src="%DOWNLOAD_DIR%/websync.exe" dst="%INSTALL_DIR%/websync.exe" />
+        </update>
+        <execute>
+            <application home="%CURRENT_DIR%" name="DBBackup.exe" params='-execute "%DOWNLOAD_DIR%/sql/db_update_1_7_1_0.sql"' />
+        </execute>
+    </version>    
+
 </Process>

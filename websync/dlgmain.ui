@@ -515,16 +515,6 @@
                <property name="toolTip">
                 <string>Language of the application GUI</string>
                </property>
-               <item>
-                <property name="text">
-                 <string>en (English)</string>
-                </property>
-               </item>
-               <item>
-                <property name="text">
-                 <string>hu (Magyar)</string>
-                </property>
-               </item>
               </widget>
              </item>
              <item>

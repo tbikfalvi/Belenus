@@ -209,10 +209,11 @@ dlgMain::dlgMain(QWidget *parent) : QDialog(parent), ui(new Ui::dlgMain)
     // Application settings
     g_obLogger(cSeverity::DEBUG) << "Application settings" << EOM;
 
+    g_obLanguage.setLanguageCombo( ui->cmbLang );
     m_qsLang            = obPref.value( "Lang", "en" ).toString();
-    int nCurrentIndex   = ui->cmbLang->findText( QString("%1 (").arg(m_qsLang), Qt::MatchContains );
+/*    int nCurrentIndex   = ui->cmbLang->findText( QString("%1 (").arg(m_qsLang), Qt::MatchContains );
 
-    ui->cmbLang->setCurrentIndex( nCurrentIndex );
+    ui->cmbLang->setCurrentIndex( nCurrentIndex );*/
 
     ui->chkShowWindowOnStart->setChecked( m_bShowMainWindowOnStart );
     ui->ledTimerPCStatusSync->setText( QString::number( m_nTimerPCStatusSync ) );
@@ -546,6 +547,8 @@ void dlgMain::on_pbRetranslate_clicked()
 {
     m_bReloadLanguage = true;
 
+    g_obLanguage.reloadLanguage( m_qsLang );
+/*
     apMainApp->removeTranslator( poTransApp );
     apMainApp->removeTranslator( poTransQT );
 
@@ -553,13 +556,13 @@ void dlgMain::on_pbRetranslate_clicked()
     poTransQT->load( QString("%1\\lang\\qt_%2.qm").arg( QDir::currentPath() ).arg(m_qsLang) );
 
     apMainApp->installTranslator( poTransApp );
-    apMainApp->installTranslator( poTransQT );
+    apMainApp->installTranslator( poTransQT );*/
 
     ui->retranslateUi( this );
 
-    int nCurrentIndex   = ui->cmbLang->findText( QString("%1 (").arg(m_qsLang), Qt::MatchContains );
-
-    ui->cmbLang->setCurrentIndex( nCurrentIndex );
+//    int nCurrentIndex   = ui->cmbLang->findText( QString("%1 (").arg(m_qsLang), Qt::MatchContains );
+//
+//    ui->cmbLang->setCurrentIndex( nCurrentIndex );
 
     m_bReloadLanguage = false;
 }

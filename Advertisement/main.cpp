@@ -6,7 +6,10 @@
 #include <QtSql>
 #include <QProcess>
 
+#include "../language/language.h"
 #include "advertisementwindow.h"
+
+cLanguage                g_obLanguage;
 
 int main(int argc, char *argv[])
 {
@@ -17,7 +20,9 @@ int main(int argc, char *argv[])
     QSettings   obPrefFile( QString( "%1/belenus.ini" ).arg( qsCurrentPath ), QSettings::IniFormat );
     QString     qsLang = obPrefFile.value( QString::fromAscii( "Lang" ), "en" ).toString();
 
-    QTranslator *poTransAdv = new QTranslator();
+    g_obLanguage.init( &a, "advertisement", "_", qsLang );
+
+/*    QTranslator *poTransAdv = new QTranslator();
     QTranslator *poTransQT = new QTranslator();
 
     poTransAdv->load( QString("%1\\lang\\advertisement_%2.qm").arg( QDir::currentPath() ).arg( qsLang ) );
@@ -25,7 +30,7 @@ int main(int argc, char *argv[])
 
     a.installTranslator( poTransAdv );
     a.installTranslator( poTransQT );
-
+*/
     if( argc < 2 )
     {
         QSqlDatabase       *m_poDB;

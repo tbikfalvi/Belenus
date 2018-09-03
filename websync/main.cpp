@@ -13,14 +13,16 @@ QApplication    *apMainApp;
 #include "../framework/qtlogger.h"
 #include "../framework/qtframework.h"
 #include "../framework/logger/FileWriter.h"
+#include "../language/language.h"
 #include "http.h"
 
 #include <windows.h>
 
-cQTLogger            g_obLogger;
-FileWriter           g_obLogFileWriter("websync_%1.log");
-cBlnsHttp           *g_poBlnsHttp;
-cQTMySQLConnection  *g_poDB;
+cQTLogger                g_obLogger;
+FileWriter               g_obLogFileWriter("websync_%1.log");
+cBlnsHttp               *g_poBlnsHttp;
+cQTMySQLConnection      *g_poDB;
+cLanguage                g_obLanguage;
 
 using namespace std;
 
@@ -46,6 +48,8 @@ int main(int argc, char *argv[])
     QSettings   obPref( QString( "%1/websync.inf" ).arg( QDir::currentPath() ), QSettings::IniFormat );
     QString     qsLang = obPref.value( "Lang", "en" ).toString();
 
+    g_obLanguage.init( apMainApp, "websync", "_", qsLang );
+/*
     poTransApp = new QTranslator();
     poTransQT = new QTranslator();
 
@@ -53,7 +57,7 @@ int main(int argc, char *argv[])
     poTransQT->load( QString("%1\\lang\\qt_%2.qm").arg( QDir::currentPath() ).arg(qsLang) );
 
     apMainApp->installTranslator( poTransApp );
-    apMainApp->installTranslator( poTransQT );
+    apMainApp->installTranslator( poTransQT );*/
 
     g_obLogger.setMinimumSeverity("file", (cSeverity::teSeverity)obPref.value( "LogLevel", cSeverity::DEBUG ).toUInt() );
 

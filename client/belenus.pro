@@ -7,7 +7,8 @@ TEMPLATE     = app
 DESTDIR      = ..
 TRANSLATIONS = belenus_hu.ts \
                belenus_de.ts \
-               belenus_it.ts
+               belenus_it.ts \
+               belenus_ro.ts
 
 win32:DEFINES -= UNICODE
 
@@ -87,6 +88,7 @@ HEADERS = belenus.h \
     ../framework/network/protocolException.h \
     ../framework/network/packet.h \
     ../framework/network/CommunicationProtocol.h \
+    ../language/language.h \
     crud/dlgpaneltypes.h \
     crud/dlgskintypes.h \
     crud/dlgpanelgroups.h \
@@ -239,6 +241,7 @@ SOURCES = main.cpp \
     ../framework/network/sqlResult.cpp \
     ../framework/network/packet.cpp \
     ../framework/network/CommunicationProtocol.cpp \
+    ../language/language.cpp \
     crud/dlgpaneltypes.cpp \
     crud/dlgskintypes.cpp \
     crud/dlgpanelgroups.cpp \

@@ -6,10 +6,12 @@
 #include <QMessageBox>
 
 #include "mainwindow.h"
+#include "../language/language.h"
 
-QApplication    *apMainApp;
-QTranslator     *poTransBackup;
-QTranslator     *poTransQT;
+QApplication            *apMainApp;
+cLanguage                g_obLanguage;
+//QTranslator     *poTransBackup;
+//QTranslator     *poTransQT;
 
 int main(int argc, char *argv[])
 {
@@ -20,7 +22,9 @@ int main(int argc, char *argv[])
     QSettings   obPrefFile( QString( "%1/belenus.ini" ).arg( qsCurrentPath ), QSettings::IniFormat );
     QString     qsLang = obPrefFile.value( QString::fromAscii( "Lang" ), "en" ).toString();
 
-    poTransBackup = new QTranslator();
+    g_obLanguage.init( apMainApp, "dbbackup", "_", qsLang );
+
+/*    poTransBackup = new QTranslator();
     poTransQT = new QTranslator();
 
     poTransBackup->load( QString("%1\\lang\\dbbackup_%2.qm").arg(QDir::currentPath()).arg(qsLang) );
@@ -28,7 +32,7 @@ int main(int argc, char *argv[])
 
     apMainApp->installTranslator( poTransBackup );
     apMainApp->installTranslator( poTransQT );
-
+*/
     MainWindow::teAction    teAction    = MainWindow::ACT_BACKUP;
     QString                 qsFileName  = "";
 

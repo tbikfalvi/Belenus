@@ -13,13 +13,15 @@
 #include <QPushButton>
 
 #include "../framework/qtframework.h"
+#include "../language/language.h"
 #include "http.h"
 
-extern QTranslator          *poTransApp;
-extern QTranslator          *poTransQT;
-extern QApplication         *apMainApp;
-extern cQTMySQLConnection   *g_poDB;
-extern cBlnsHttp            *g_poBlnsHttp;
+extern QTranslator              *poTransApp;
+extern QTranslator              *poTransQT;
+extern QApplication             *apMainApp;
+extern cQTMySQLConnection       *g_poDB;
+extern cBlnsHttp                *g_poBlnsHttp;
+extern cLanguage                 g_obLanguage;
 
 #define app_version "1.0.0"
 

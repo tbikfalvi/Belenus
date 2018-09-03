@@ -57,6 +57,20 @@ lblAutoSync->setVisible( false );
     sliGUILogLevel->setValue( 2/*uiGUILevel*/ );
     sliFileLogLevel->setValue( uiFileLevel );
 
+//    QStringList qslLanguages = g_obLanguage.getLanguages();
+//    QStringList obLangCodes;
+
+//    for(int nLang=0;nLang<qslLanguages.count();nLang++)
+//    {
+//        obLangCodes << QString( "%1 (%2)" ).arg( qslLanguages.at(nLang).split("|").at(0) )
+//                                           .arg( qslLanguages.at(nLang).split("|").at(1) );
+//        if( qslLanguages.at(nLang).split("|").at(0).compare( g_poPrefs->getLang() ) == 0 )
+//        {
+//            m_inLangIdx = nLang;
+//        }
+//    }
+
+/*
     QStringList obFilters( g_poPrefs->getLangFilePrefix() + "*.qm" );
     QDir        obLangDir( "lang" );
     QStringList obLangFiles = obLangDir.entryList( obFilters, QDir::Files | QDir::Readable, QDir::Name );
@@ -69,10 +83,13 @@ lblAutoSync->setVisible( false );
     }
     obLangCodes << "en";
     obLangCodes.sort();
-    cmbAppLang->addItems( obLangCodes );
-    m_inLangIdx = cmbAppLang->findText( g_poPrefs->getLang() );
-    //if( m_inLangIdx == -1 ) m_inLangIdx = cmbAppLang->findText( "uk" );
-    cmbAppLang->setCurrentIndex( m_inLangIdx );
+*/
+//    cmbAppLang->addItems( obLangCodes );
+//    m_inLangIdx = cmbAppLang->findText( g_poPrefs->getLang() );
+//    cmbAppLang->setCurrentIndex( m_inLangIdx );
+
+    m_inLangIdx = g_obLanguage.setLanguageCombo( cmbAppLang );
+    g_obLogger(cSeverity::DEBUG) << QString( "Lang: %1 Id: %2" ).arg(g_poPrefs->getLang()).arg(m_inLangIdx) << EOM;
 
     cmbDateFormat->setCurrentIndex(-1);
     int nDateFormatIndex = cmbDateFormat->findText( g_poPrefs->getDateFormat() );
@@ -446,10 +463,11 @@ void cDlgPreferences::accept()
                              sliGUILogLevel->value(),
                              sliFileLogLevel->value() );
 
-    g_poPrefs->setLang( cmbAppLang->currentText() );
+    g_poPrefs->setLang( cmbAppLang->currentText().left(2) );
     if( m_inLangIdx != cmbAppLang->currentIndex() )
     {
-        g_obGen.setApplicationLanguage( cmbAppLang->currentText() );
+        g_obLanguage.reloadLanguage( cmbAppLang->currentText().left(2) );
+//        g_obGen.setApplicationLanguage( cmbAppLang->currentText() );
         _updateDatabaseLanguage();
 //        QMessageBox::information( this, tr( "Information" ),
 //                                  tr( "Some of the changes you made will only be applied after the application is restarted." ) );
