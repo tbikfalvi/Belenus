@@ -164,6 +164,7 @@ GOTO :proc_error
 :: *********************************************************************************************
 :translate_belenus
 C:\DevEnv\Qt\4.8.6\bin\linguist belenus_hu.ts
+C:\DevEnv\Qt\4.8.6\bin\linguist belenus_ro.ts
 :return_translate_belenus
 SET /P cmdMenu="Enter '0' to return > "
 IF "%cmdMenu%" == "0" ( GOTO :translate_menu )
@@ -172,6 +173,7 @@ GOTO :return_translate_belenus
 :: *********************************************************************************************
 :translate_advertisement
 C:\DevEnv\Qt\4.8.6\bin\linguist advertisement_hu.ts
+C:\DevEnv\Qt\4.8.6\bin\linguist advertisement_ro.ts
 :return_translate_advertisement
 SET /P cmdMenu="Enter '0' to return > "
 IF "%cmdMenu%" == "0" ( GOTO :translate_menu )
@@ -180,6 +182,7 @@ GOTO :return_translate_advertisement
 :: *********************************************************************************************
 :translate_reportviewer
 C:\DevEnv\Qt\4.8.6\bin\linguist brv_hu.ts
+C:\DevEnv\Qt\4.8.6\bin\linguist brv_ro.ts
 :return_translate_reportviewer
 SET /P cmdMenu="Enter '0' to return > "
 IF "%cmdMenu%" == "0" ( GOTO :translate_menu )
@@ -188,6 +191,7 @@ GOTO :return_translate_reportviewer
 :: *********************************************************************************************
 :translate_websync
 C:\DevEnv\Qt\4.8.6\bin\linguist websync_hu.ts
+C:\DevEnv\Qt\4.8.6\bin\linguist websync_ro.ts
 :return_translate_websync
 SET /P cmdMenu="Enter '0' to return > "
 IF "%cmdMenu%" == "0" ( GOTO :translate_menu )
@@ -196,6 +200,7 @@ GOTO :return_translate_websync
 :: *********************************************************************************************
 :translate_dbbackup
 C:\DevEnv\Qt\4.8.6\bin\linguist dbbackup_hu.ts
+C:\DevEnv\Qt\4.8.6\bin\linguist dbbackup_ro.ts
 :return_translate_dbbackup
 SET /P cmdMenu="Enter '0' to return > "
 IF "%cmdMenu%" == "0" ( GOTO :translate_menu )
