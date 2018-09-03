@@ -11,6 +11,12 @@ echo.
 echo This process will guide you the Belenus language translator process.
 echo.
 pause
+
+:: *********************************************************************************************
+:: 
+:: Main menu
+:: 
+:: *********************************************************************************************
 :main_menu
 cls
 echo.
@@ -33,6 +39,11 @@ IF "%cmdMenu%" == "3" ( GOTO :update_files )
 IF "%cmdMenu%" == "0" ( GOTO :end_process )
 GOTO :proc_error
 
+:: *********************************************************************************************
+:: 
+:: Main menu / 1. Rebuild language files ...
+:: 
+:: *********************************************************************************************
 :rebuild_menu
 cls
 echo.
@@ -59,6 +70,7 @@ IF "%cmdMenu%" == "5" ( GOTO :rebuild_dbbackup )
 IF "%cmdMenu%" == "0" ( GOTO :main_menu )
 GOTO :proc_error
 
+:: *********************************************************************************************
 :rebuild_belenus
 cd ../client
 C:\DevEnv\Qt\4.8.6\bin\lupdate belenus.pro
@@ -70,6 +82,7 @@ SET /P cmdMenu="Enter '0' to return > "
 IF "%cmdMenu%" == "0" ( GOTO :rebuild_menu )
 GOTO :return_rebuild_belenus
 
+:: *********************************************************************************************
 :rebuild_advertisement
 cd ../advertisement
 C:\DevEnv\Qt\4.8.6\bin\lupdate advertisement.pro
@@ -81,6 +94,7 @@ SET /P cmdMenu="Enter '0' to return > "
 IF "%cmdMenu%" == "0" ( GOTO :rebuild_menu )
 GOTO :return_rebuild_advertisement
 
+:: *********************************************************************************************
 :rebuild_reportviewer
 cd ../viewer
 C:\DevEnv\Qt\4.8.6\bin\lupdate BelenusReportViewer.pro
@@ -92,6 +106,7 @@ SET /P cmdMenu="Enter '0' to return > "
 IF "%cmdMenu%" == "0" ( GOTO :rebuild_menu )
 GOTO :return_rebuild_reportviewer
 
+:: *********************************************************************************************
 :rebuild_websync
 cd ../websync
 C:\DevEnv\Qt\4.8.6\bin\lupdate websync.pro
@@ -103,6 +118,7 @@ SET /P cmdMenu="Enter '0' to return > "
 IF "%cmdMenu%" == "0" ( GOTO :rebuild_menu )
 GOTO :return_rebuild_websync
 
+:: *********************************************************************************************
 :rebuild_dbbackup
 cd ../dbbackup
 C:\DevEnv\Qt\4.8.6\bin\lupdate dbbackup.pro
@@ -114,6 +130,11 @@ SET /P cmdMenu="Enter '0' to return > "
 IF "%cmdMenu%" == "0" ( GOTO :rebuild_menu )
 GOTO :return_rebuild_dbbackup
 
+:: *********************************************************************************************
+:: 
+:: Main menu / 2. Translate application language ...
+:: 
+:: *********************************************************************************************
 :translate_menu
 cls
 echo.
@@ -140,6 +161,7 @@ IF "%cmdMenu%" == "5" ( GOTO :translate_dbbackup )
 IF "%cmdMenu%" == "0" ( GOTO :main_menu )
 GOTO :proc_error
 
+:: *********************************************************************************************
 :translate_belenus
 C:\DevEnv\Qt\4.8.6\bin\linguist belenus_hu.ts
 :return_translate_belenus
@@ -147,6 +169,7 @@ SET /P cmdMenu="Enter '0' to return > "
 IF "%cmdMenu%" == "0" ( GOTO :translate_menu )
 GOTO :return_translate_belenus
 
+:: *********************************************************************************************
 :translate_advertisement
 C:\DevEnv\Qt\4.8.6\bin\linguist advertisement_hu.ts
 :return_translate_advertisement
@@ -154,6 +177,7 @@ SET /P cmdMenu="Enter '0' to return > "
 IF "%cmdMenu%" == "0" ( GOTO :translate_menu )
 GOTO :return_translate_advertisement
 
+:: *********************************************************************************************
 :translate_reportviewer
 C:\DevEnv\Qt\4.8.6\bin\linguist brv_hu.ts
 :return_translate_reportviewer
@@ -161,6 +185,7 @@ SET /P cmdMenu="Enter '0' to return > "
 IF "%cmdMenu%" == "0" ( GOTO :translate_menu )
 GOTO :return_translate_reportviewer
 
+:: *********************************************************************************************
 :translate_websync
 C:\DevEnv\Qt\4.8.6\bin\linguist websync_hu.ts
 :return_translate_websync
@@ -168,6 +193,7 @@ SET /P cmdMenu="Enter '0' to return > "
 IF "%cmdMenu%" == "0" ( GOTO :translate_menu )
 GOTO :return_translate_websync
 
+:: *********************************************************************************************
 :translate_dbbackup
 C:\DevEnv\Qt\4.8.6\bin\linguist dbbackup_hu.ts
 :return_translate_dbbackup
@@ -175,20 +201,11 @@ SET /P cmdMenu="Enter '0' to return > "
 IF "%cmdMenu%" == "0" ( GOTO :translate_menu )
 GOTO :return_translate_dbbackup
 
-
-
-
-
-
-
-
-
-
-
-
-
-
-
+:: *********************************************************************************************
+:: 
+:: Main menu / 3. Update language files ...
+:: 
+:: *********************************************************************************************
 :update_files
 cd %dirCurrent%
 copy *.qm c:\KiwiSun\Belenus\lang\*.qm
@@ -198,7 +215,11 @@ SET /P cmdMenu="Enter '0' to return > "
 IF "%cmdMenu%" == "0" ( GOTO :main_menu )
 GOTO :return_update_files
 
-
+:: *********************************************************************************************
+:: 
+:: END
+:: 
+:: *********************************************************************************************
 :end_process
 echo.
 echo Thanks for using this tool. Have a good day! :)
@@ -207,7 +228,10 @@ pause
 cls
 GOTO:eof
 
+:: *********************************************************************************************
 :proc_error
 echo.
 echo Something went wrong
 pause
+
+:: *********************************************************************************************
