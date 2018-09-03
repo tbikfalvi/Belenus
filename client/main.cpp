@@ -13,7 +13,7 @@
 // Alkalmazas fo allomanya.
 //====================================================================================
 
-#define APPLICATION_VERSION_NUMBER  "1.7.0.1"
+#define APPLICATION_VERSION_NUMBER  "1.7.1.0"
 #define DATABASE_VERSION_NUMBER     "1.7.7"
 
 //====================================================================================
@@ -31,6 +31,7 @@
 #include "../framework/logger/ConsoleWriter.h"
 #include "../framework/logger/FileWriter.h"
 #include "../framework/qtmysqlconnection.h"
+#include "../language/language.h"
 #include "db/dbuser.h"
 #include "db/dbguest.h"
 #include "preferences.h"
@@ -64,7 +65,7 @@ cCassa                   g_obCassa;
 cGeneral                 g_obGen;
 cDBGuest                 g_obGuest;
 cLicenceManager          g_obLicenceManager;
-//cBlnsHttp               *g_poBlnsHttp;
+cLanguage                g_obLanguage;
 
 // 'TO BE SOLVED' felirat, ahol még valamit meg kell oldani
 // g_obLogger(cSeverity::DEBUG) << QString("") << EOM;
@@ -98,7 +99,8 @@ int main( int argc, char *argv[] )
     g_poPrefs->setDBAccess( "localhost", "belenus", "belenus", "belenus" );
     g_poPrefs->setApplicationPath( qsCurrentPath );
 
-    g_obGen.setApplicationLanguage( g_poPrefs->getLang() );
+//    g_obGen.setApplicationLanguage( g_poPrefs->getLang() );
+    g_obLanguage.init( apMainApp, "belenus", "_", g_poPrefs->getLang() );
 
     QPixmap          obPixmap("resources/splash.png");
     QSplashScreen    obSplash( obPixmap );
@@ -129,6 +131,18 @@ int main( int argc, char *argv[] )
     try
     {
         g_obLogger(cSeverity::INFO) << "Belenus Version " << g_poPrefs->getVersion() << " started." << EOM;
+
+        g_obLogger(cSeverity::INFO) << "Get languages from 'language.inf'" << EOM;
+        QStringList qslLanguages = g_obLanguage.getLanguages();
+        g_obLogger(cSeverity::INFO) << "Available languages:" << EOM;
+        for(int nLang=0;nLang<qslLanguages.count();nLang++)
+        {
+            g_obLogger(cSeverity::INFO) << qslLanguages.at(nLang).split("|").at(0)
+                                        << " ("
+                                        << qslLanguages.at(nLang).split("|").at(1)
+                                        << ")"
+                                        << EOM;
+        }
 
         qsSpalsh += QObject::tr("Connecting to database ...");
         g_obLogger(cSeverity::INFO) << "Connecting to database ..." << EOM;
