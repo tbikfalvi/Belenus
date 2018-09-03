@@ -15,12 +15,13 @@
 #include "../framework/qtlogger.h"
 #include "../framework/qtframework.h"
 #include "../framework/logger/FileWriter.h"
+#include "../language/language.h"
 
 //====================================================================================
 
-cQTLogger            g_obLogger;
-//FileWriter           g_obLogFileWriter("client_%1_%2.log");
-FileWriter           g_obLogFileWriter("reportviewer_%1.log");
+cQTLogger                g_obLogger;
+FileWriter               g_obLogFileWriter("reportviewer_%1.log");
+cLanguage                g_obLanguage;
 
 cQTMySQLConnection  *g_poDB;
 
@@ -51,7 +52,9 @@ int main( int argc, char *argv[] )
 
         QSettings   obPrefFile( QString( "%1/belenus.ini" ).arg( qsCurrentPath ), QSettings::IniFormat );
         QString     qsLang = obPrefFile.value( QString::fromAscii( "Lang" ), "en" ).toString();
-        QString     qsLangBl = QString("lang/brv_%1.qm").arg( qsLang );
+
+        g_obLanguage.init( &apMainApp, "brv", "_", qsLang );
+/*        QString     qsLangBl = QString("lang/brv_%1.qm").arg( qsLang );
         QString     qsLangQT = QString("lang/qt_%1.qm").arg( qsLang );
 
         g_obLogger(cSeverity::INFO) << "Language file: " << qsLangBl << EOM;
@@ -63,7 +66,7 @@ int main( int argc, char *argv[] )
         obQtTr.load( qsLangQT );
 
         apMainApp.installTranslator( &obBlTr );
-        apMainApp.installTranslator( &obQtTr );
+        apMainApp.installTranslator( &obQtTr );*/
 
         cWndMain  obMainWindow;
         obMainWindow.show();
