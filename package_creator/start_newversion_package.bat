@@ -174,7 +174,7 @@ echo Copy document files
 copy c:\KiwiSun\PackageCreate\docs\*.pdf c:\KiwiSun\MasterCD\docs\*.*
 echo.
 echo Copy language files
-copy c:\KiwiSun\PackageCreate\lang\*.qm c:\KiwiSun\MasterCD\lang\*.*
+copy c:\KiwiSun\PackageCreate\lang\*.* c:\KiwiSun\MasterCD\lang\*.*
 echo.
 echo Copy package files
 copy %dirCurrent%\Update_*.zip c:\KiwiSun\MasterCD\package\*.*

@@ -1,4 +1,4 @@
-<installer version="1.7.0.1">
+<installer version="1.7.1.0">
 
     <files>
 
@@ -12,17 +12,31 @@
         <file src="%CURRENT_DIR%/imageformats/qtga4.dll" dst="%INSTALL_DIR%/imageformats/qtga4.dll" />
         <file src="%CURRENT_DIR%/imageformats/qtiff4.dll" dst="%INSTALL_DIR%/imageformats/qtiff4.dll" />
 
-        <file src="%CURRENT_DIR%/lang/advertisement_hu.qm" dst="%INSTALL_DIR%/lang/advertisement_hu.qm" />
+        <file src="%CURRENT_DIR%/lang/languages.inf" dst="%INSTALL_DIR%/lang/languages.inf" />
         <file src="%CURRENT_DIR%/lang/advertisement_de.qm" dst="%INSTALL_DIR%/lang/advertisement_de.qm" />
-        <file src="%CURRENT_DIR%/lang/belenus_hu.qm" dst="%INSTALL_DIR%/lang/belenus_hu.qm" />
+        <file src="%CURRENT_DIR%/lang/advertisement_hu.qm" dst="%INSTALL_DIR%/lang/advertisement_hu.qm" />
+        <file src="%CURRENT_DIR%/lang/advertisement_it.qm" dst="%INSTALL_DIR%/lang/advertisement_it.qm" />
+        <file src="%CURRENT_DIR%/lang/advertisement_ro.qm" dst="%INSTALL_DIR%/lang/advertisement_ro.qm" />
         <file src="%CURRENT_DIR%/lang/belenus_de.qm" dst="%INSTALL_DIR%/lang/belenus_de.qm" />
-        <file src="%CURRENT_DIR%/lang/brv_hu.qm" dst="%INSTALL_DIR%/lang/brv_hu.qm" />
+        <file src="%CURRENT_DIR%/lang/belenus_hu.qm" dst="%INSTALL_DIR%/lang/belenus_hu.qm" />
+        <file src="%CURRENT_DIR%/lang/belenus_it.qm" dst="%INSTALL_DIR%/lang/belenus_it.qm" />
+        <file src="%CURRENT_DIR%/lang/belenus_ro.qm" dst="%INSTALL_DIR%/lang/belenus_ro.qm" />
         <file src="%CURRENT_DIR%/lang/brv_de.qm" dst="%INSTALL_DIR%/lang/brv_de.qm" />
-        <file src="%CURRENT_DIR%/lang/dbbackup_hu.qm" dst="%INSTALL_DIR%/lang/dbbackup_hu.qm" />
+        <file src="%CURRENT_DIR%/lang/brv_hu.qm" dst="%INSTALL_DIR%/lang/brv_hu.qm" />
+        <file src="%CURRENT_DIR%/lang/brv_it.qm" dst="%INSTALL_DIR%/lang/brv_it.qm" />
+        <file src="%CURRENT_DIR%/lang/brv_ro.qm" dst="%INSTALL_DIR%/lang/brv_ro.qm" />
         <file src="%CURRENT_DIR%/lang/dbbackup_de.qm" dst="%INSTALL_DIR%/lang/dbbackup_de.qm" />
-        <file src="%CURRENT_DIR%/lang/qt_hu.qm" dst="%INSTALL_DIR%/lang/qt_hu.qm" />
+        <file src="%CURRENT_DIR%/lang/dbbackup_hu.qm" dst="%INSTALL_DIR%/lang/dbbackup_hu.qm" />
+        <file src="%CURRENT_DIR%/lang/dbbackup_it.qm" dst="%INSTALL_DIR%/lang/dbbackup_it.qm" />
+        <file src="%CURRENT_DIR%/lang/dbbackup_ro.qm" dst="%INSTALL_DIR%/lang/dbbackup_ro.qm" />
         <file src="%CURRENT_DIR%/lang/qt_de.qm" dst="%INSTALL_DIR%/lang/qt_de.qm" />
+        <file src="%CURRENT_DIR%/lang/qt_hu.qm" dst="%INSTALL_DIR%/lang/qt_hu.qm" />
+        <file src="%CURRENT_DIR%/lang/qt_it.qm" dst="%INSTALL_DIR%/lang/qt_it.qm" />
+        <file src="%CURRENT_DIR%/lang/qt_ro.qm" dst="%INSTALL_DIR%/lang/qt_ro.qm" />
+        <file src="%CURRENT_DIR%/lang/websync_de.qm" dst="%INSTALL_DIR%/lang/websync_de.qm" />
         <file src="%CURRENT_DIR%/lang/websync_hu.qm" dst="%INSTALL_DIR%/lang/websync_hu.qm" />
+        <file src="%CURRENT_DIR%/lang/websync_it.qm" dst="%INSTALL_DIR%/lang/websync_it.qm" />
+        <file src="%CURRENT_DIR%/lang/websync_ro.qm" dst="%INSTALL_DIR%/lang/websync_ro.qm" />
 
         <file src="%CURRENT_DIR%/resources/35x35_export.png" dst="%INSTALL_DIR%/resources/35x35_export.png" />
         <file src="%CURRENT_DIR%/resources/35x35_import.png" dst="%INSTALL_DIR%/resources/35x35_import.png" />
