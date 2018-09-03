@@ -105,3 +105,4 @@ Version 1.7.0.1
 
 Version 1.7.1.0
 ===============
+- Nyelv betoltes dinamikusan language.inf file-bol
