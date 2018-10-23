@@ -10,6 +10,8 @@ QTranslator     *poTransApp;
 QTranslator     *poTransQT;
 QApplication    *apMainApp;
 
+#define APPLICATION_VERSION_NUMBER  "1.7.1.0"
+
 #include "../framework/qtlogger.h"
 #include "../framework/qtframework.h"
 #include "../framework/logger/FileWriter.h"
