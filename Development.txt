@@ -109,4 +109,6 @@ Version 1.7.1.0
 
 Version 1.7.1.1
 ===============
+- Szerviz kartya ellenorzes javitva.
+- Mail kuldes hiba - nem kuldte el a korabbi datumu leveleket - javitva
 
