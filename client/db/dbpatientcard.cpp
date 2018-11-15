@@ -260,6 +260,8 @@ void cDBPatientCard::deactivate() throw( cSevException )
 
 bool cDBPatientCard::isServiceCard() throw()
 {
+    int     nBarcodeValue = barcode().toInt();
+/*
     QSqlQuery       *poQuery;
     unsigned int     uiCount = 0;
 
@@ -268,6 +270,8 @@ bool cDBPatientCard::isServiceCard() throw()
     uiCount += poQuery->size();
 
     if( uiCount > 0 )
+*/
+    if( nBarcodeValue == 0 )
         return true;
     else
         return false;
