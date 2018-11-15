@@ -461,9 +461,9 @@ void cBlnsHttp::_httpStartProcess()
         {
             QString      qsQuery            = "SELECT * FROM "
                                               "httpsendmail WHERE "
-                                              "dateOfSending>=\"" + QDate::currentDate().toString( "yyyy-MM-dd" ) + "\" AND "
+                                              "dateOfSending<=\"" + QDate::currentDate().toString( "yyyy-MM-dd" ) + "\" AND "
                                               "active=1 AND "
-                                              "archive='NEW' "
+                                              "( archive='NEW' OR archive='MOD' ) "
                                               "LIMIT 1 ";
             QSqlQuery   *poQuery            = g_poDB->executeQTQuery( qsQuery );
             QByteArray   qbaSha1Base        = "";

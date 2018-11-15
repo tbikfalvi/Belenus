@@ -20,7 +20,23 @@ cDlgEmailsEdit::cDlgEmailsEdit( QWidget *p_poParent, cDBSendMail *p_poEmails ) :
     m_poEmails = p_poEmails;
     if( m_poEmails )
     {
+        deDateOfSending->setDate( QDate::fromString( m_poEmails->dateSend(), "yyyy-MM-dd" ) );
         ledRecipients->setText( m_poEmails->recipients() );
+        switch( m_poEmails->mailTypeId() )
+        {
+            case AUTO_MAIL_ON_PCSELL:
+                lblReasonText->setText( tr("Patientcard sell / refill") );
+                break;
+            case AUTO_MAIL_ON_PCUSE:
+                lblReasonText->setText( tr("Patientcard usage") );
+                break;
+            case AUTO_MAIL_ON_EXPIRE:
+                lblReasonText->setText( tr("Patientcard expiration") );
+                break;
+            default:
+                lblReasonText->setText( tr("Undefined") );
+                break;
+        }
     }
 }
 
@@ -42,8 +58,8 @@ void cDlgEmailsEdit::accept ()
     {
         try
         {
-//            m_poEmails->setRecipients( ledName->text() );
-//            m_poEmails->save();
+            m_poEmails->setRecipients( ledRecipients->text() );
+            m_poEmails->save();
         }
         catch( cSevException &e )
         {
