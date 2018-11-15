@@ -64,6 +64,7 @@
 #include "crud/dlgpatientcardselect.h"
 #include "crud/dlgdistlist.h"
 #include "crud/dlgwaitlistinfo.h"
+#include "crud/dlgemails.h"
 
 //====================================================================================
 
@@ -271,6 +272,7 @@ cWndMain::cWndMain( QWidget *parent ) : QMainWindow( parent )
         action_ManageDatabase->setIcon( QIcon( "./resources/40x40_connect_db.png" ) );
         action_Advertisements->setIcon( QIcon( "./resources/40x40_advertisement.png" ) );
         action_DistributionLists->setIcon( QIcon( "./resources/40x40_distlist.png" ) );
+        action_EditEmails->setIcon( QIcon( "./resources/40x40_draftmail.png" ) );
     action_Preferences->setIcon( QIcon("./resources/40x40_settings.png") );
 
     menuProduct->setIcon( QIcon("./resources/40x40_product.png") );
@@ -358,6 +360,7 @@ cWndMain::cWndMain( QWidget *parent ) : QMainWindow( parent )
 
     action_Advertisements->setEnabled( false );
     action_DistributionLists->setEnabled( false );
+    action_EditEmails->setEnabled( false );
 
     action_LoadMail->setEnabled( false );
     action_SendMail->setEnabled( false );
@@ -1212,6 +1215,7 @@ void cWndMain::showElementsForComponents()
         action_ManageSkinTypes->setEnabled( false );
         action_Advertisements->setEnabled( false );
         action_DistributionLists->setEnabled( false );
+        action_EditEmails->setEnabled( false );
         action_LoadMail->setEnabled( false );
         action_SendMail->setEnabled( false );
 
@@ -1337,6 +1341,7 @@ void cWndMain::updateToolbar()
             action_ManageDevicePanels->setEnabled( !mdiPanels->isPanelWorking() );
             action_Advertisements->setEnabled( bIsUserLoggedIn && g_obUser.isInGroup(cAccessGroup::ADMIN) );
             action_DistributionLists->setEnabled( bIsUserLoggedIn && g_obUser.isInGroup(cAccessGroup::SYSTEM) );
+            action_EditEmails->setEnabled( bIsUserLoggedIn && g_obUser.isInGroup(cAccessGroup::ADMIN) );
         action_Preferences->setEnabled( bIsUserLoggedIn );
 
     menu_Action->setEnabled( bIsUserLoggedIn );
@@ -3765,6 +3770,15 @@ void cWndMain::on_action_DistributionLists_triggered()
     cDlgDistList  obDlgDistlist(this);
 
     obDlgDistlist.exec();
+}
+
+void cWndMain::on_action_EditEmails_triggered()
+{
+    m_bMainWindowActive = false;
+
+    cDlgEmails  obDlgEmails(this);
+
+    obDlgEmails.exec();
 }
 
 void cWndMain::on_action_SendMail_triggered()
