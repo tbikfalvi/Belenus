@@ -59,6 +59,7 @@ void cDlgEmailsEdit::accept ()
         try
         {
             m_poEmails->setRecipients( ledRecipients->text() );
+            m_poEmails->setActive( true );
             m_poEmails->save();
         }
         catch( cSevException &e )

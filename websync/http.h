@@ -52,6 +52,7 @@ using namespace std;
 #define HTTP_ERROR_MISSING_MAIL_VAR_CARDINFO        -20
 #define HTTP_ERROR_MISSING_MAIL_VAR_UNITCOUNT       -21
 #define HTTP_ERROR_MISSING_MAIL_VAR_DATETIME        -22
+#define HTTP_ERROR_INVALID_EMAIL_ADDRESS            -23
 #define HTTP_ERROR_UNKNOWN                          -99
 
 //====================================================================================

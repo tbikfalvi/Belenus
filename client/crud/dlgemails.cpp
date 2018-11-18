@@ -21,6 +21,17 @@ void cDlgEmails::setupTableView()
 {
     cTracer obTracer( "cDlgEmails::setupTableView" );
 
+    pbRefresh = new QPushButton( tr( "Refresh" ), this );
+    pbRefresh->setObjectName( QString::fromUtf8( "pbRefresh" ) );
+    pbRefresh->setIconSize( QSize(20, 20) );
+    pbRefresh->setIcon( QIcon("./resources/40x40_refresh.png") );
+    btbButtons->addButton( pbRefresh, QDialogButtonBox::ActionRole );
+    connect( pbRefresh, SIGNAL(clicked()), this, SLOT(_slotTableRefresh()) );
+
+    m_poBtnNew->setEnabled( false );
+    m_poBtnNew->setVisible( false );
+    m_poBtnSave->setVisible( false );
+
     refreshTable();
 
     cDlgCrud::setupTableView();
@@ -139,3 +150,9 @@ void cDlgEmails::deleteClicked( bool )
         }
     }
 }
+
+void cDlgEmails::_slotTableRefresh()
+{
+    refreshTable();
+}
+
