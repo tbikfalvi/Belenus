@@ -214,6 +214,7 @@ private slots:
 //    void on_BlnsHttpHideProgress();
     void on_action_Advertisements_triggered();
     void on_action_DistributionLists_triggered();
+    void on_action_EditEmails_triggered();
     void on_CommunicationButtonClicked();
     void on_action_PatientcardInformation_triggered();
     void on_KeyboardEnabled();

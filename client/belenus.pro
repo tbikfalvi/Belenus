@@ -69,7 +69,8 @@ FORMS = ../framework/dlgcrud.ui \
     dlgSendMail.ui \
     dlgSelectMailRecipient.ui \
     dlgWindowPosition.ui \
-    dlgInformation.ui
+    dlgInformation.ui \
+    dlgemailsedit.ui
 
 HEADERS = belenus.h \
     ../framework/dbconnection.h \
@@ -117,6 +118,7 @@ HEADERS = belenus.h \
     crud/dlgwaitlist.h \
     crud/dlgwaitlistinfo.h \
     crud/dlgdistlist.h \
+    crud/dlgemails.h \
     db/dbreasontovisit.h \
     db/dbpatientcard.h \
     db/dbpatientcardtype.h \
@@ -201,6 +203,7 @@ HEADERS = belenus.h \
     edit/dlgpaymentmethodedit.h \
     edit/dlgadvertisementedit.h \
     edit/dlgdistlistedit.h \
+    edit/dlgemailsedit.h \
     report/dlgpreview.h \
     report/reppatientcards.h \
     report/reppatientcardsobs.h \
@@ -270,6 +273,7 @@ SOURCES = main.cpp \
     crud/dlgwaitlist.cpp \
     crud/dlgwaitlistinfo.cpp \
     crud/dlgdistlist.cpp \
+    crud/dlgemails.cpp \
     db/dbreasontovisit.cpp \
     db/dbpatientcard.cpp \
     db/dbpatientcardtype.cpp \
@@ -355,6 +359,7 @@ SOURCES = main.cpp \
     edit/dlgpaymentmethodedit.cpp \
     edit/dlgadvertisementedit.cpp \
     edit/dlgdistlistedit.cpp \
+    edit/dlgemailsedit.cpp \
     report/reppatientcards.cpp \
     report/reppatientcardsobs.cpp \
     report/dlgpreview.cpp \

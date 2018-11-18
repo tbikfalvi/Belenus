@@ -438,7 +438,7 @@ void dlgMain::timerEvent(QTimerEvent *)
     }
 
     //---------------------------------------------------------------------------------------------
-    // Check if timer of check online PC sold is reached the value set
+    // Check if timer of mail send is reached the value set
     if( m_nIndexSendMailSync >= m_nTimerSendMailCheck && !m_bSyncPCFromServer && !m_bSyncPCToServer && !m_bSendMailToServer )
     {
         m_nIndexSendMailSync = 0;
