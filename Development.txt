@@ -111,4 +111,5 @@ Version 1.7.1.1
 ===============
 - Szerviz kartya ellenorzes javitva.
 - Mail kuldes hiba - nem kuldte el a korabbi datumu leveleket - javitva
+- Levelkuldes hiba eseten ERROR flag, kuldendo leveleket lehet szerkeszteni
 
