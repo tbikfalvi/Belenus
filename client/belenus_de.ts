@@ -51,73 +51,73 @@
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="db/dbpatientcard.cpp" line="431"/>
+        <location filename="db/dbpatientcard.cpp" line="433"/>
         <location filename="db/dbvalidtimeperiods.cpp" line="164"/>
         <location filename="general.cpp" line="139"/>
         <source>Mon</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="db/dbpatientcard.cpp" line="431"/>
+        <location filename="db/dbpatientcard.cpp" line="433"/>
         <location filename="db/dbvalidtimeperiods.cpp" line="165"/>
         <location filename="general.cpp" line="140"/>
         <source>Tue</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="db/dbpatientcard.cpp" line="431"/>
+        <location filename="db/dbpatientcard.cpp" line="433"/>
         <location filename="db/dbvalidtimeperiods.cpp" line="166"/>
         <location filename="general.cpp" line="141"/>
         <source>Wed</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="db/dbpatientcard.cpp" line="431"/>
+        <location filename="db/dbpatientcard.cpp" line="433"/>
         <location filename="db/dbvalidtimeperiods.cpp" line="167"/>
         <location filename="general.cpp" line="142"/>
         <source>Thu</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="db/dbpatientcard.cpp" line="431"/>
+        <location filename="db/dbpatientcard.cpp" line="433"/>
         <location filename="db/dbvalidtimeperiods.cpp" line="168"/>
         <location filename="general.cpp" line="143"/>
         <source>Fri</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="db/dbpatientcard.cpp" line="431"/>
+        <location filename="db/dbpatientcard.cpp" line="433"/>
         <location filename="db/dbvalidtimeperiods.cpp" line="169"/>
         <location filename="general.cpp" line="144"/>
         <source>Sat</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="db/dbpatientcard.cpp" line="431"/>
+        <location filename="db/dbpatientcard.cpp" line="433"/>
         <location filename="db/dbvalidtimeperiods.cpp" line="170"/>
         <location filename="general.cpp" line="145"/>
         <source>Sun</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="db/dbpatientcard.cpp" line="825"/>
-        <location filename="db/dbpatientcard.cpp" line="865"/>
+        <location filename="db/dbpatientcard.cpp" line="827"/>
+        <location filename="db/dbpatientcard.cpp" line="867"/>
         <source> units (</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="db/dbpatientcard.cpp" line="827"/>
-        <location filename="db/dbpatientcard.cpp" line="867"/>
+        <location filename="db/dbpatientcard.cpp" line="829"/>
+        <location filename="db/dbpatientcard.cpp" line="869"/>
         <source> minutes) (</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="db/dbpatientcard.cpp" line="871"/>
+        <location filename="db/dbpatientcard.cpp" line="873"/>
         <source>&lt;i&gt; (prepared for usage)&lt;/i&gt;&lt;br&gt;</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="db/dbpatientcard.cpp" line="877"/>
+        <location filename="db/dbpatientcard.cpp" line="879"/>
         <source>&lt;i&gt;There is no valid, useable unit on this card.&lt;/i&gt;</source>
         <translation type="unfinished"></translation>
     </message>
@@ -3515,7 +3515,9 @@ Please relogin to enable cassa.</source>
     <message>
         <location filename="crud/dlgpatientcardtype.cpp" line="217"/>
         <source>Unfortunatelly delete of this card type is not possible.
-There are patientcards attached to this card type.</source>
+There are active patientcard units attached to this card type.</source>
+        <oldsource>Unfortunatelly delete of this card type is not possible.
+There are patientcards attached to this card type.</oldsource>
         <translation type="unfinished"></translation>
     </message>
     <message>

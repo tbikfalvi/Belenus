@@ -439,73 +439,73 @@ Kérem indítsa el a WampServer alkalmazást, majd indítsa újra a Belenus alka
         <translation> Vas</translation>
     </message>
     <message>
-        <location filename="db/dbpatientcard.cpp" line="431"/>
+        <location filename="db/dbpatientcard.cpp" line="433"/>
         <location filename="db/dbvalidtimeperiods.cpp" line="164"/>
         <location filename="general.cpp" line="139"/>
         <source>Mon</source>
         <translation>Hé</translation>
     </message>
     <message>
-        <location filename="db/dbpatientcard.cpp" line="431"/>
+        <location filename="db/dbpatientcard.cpp" line="433"/>
         <location filename="db/dbvalidtimeperiods.cpp" line="165"/>
         <location filename="general.cpp" line="140"/>
         <source>Tue</source>
         <translation>Ke</translation>
     </message>
     <message>
-        <location filename="db/dbpatientcard.cpp" line="431"/>
+        <location filename="db/dbpatientcard.cpp" line="433"/>
         <location filename="db/dbvalidtimeperiods.cpp" line="166"/>
         <location filename="general.cpp" line="141"/>
         <source>Wed</source>
         <translation>Sze</translation>
     </message>
     <message>
-        <location filename="db/dbpatientcard.cpp" line="431"/>
+        <location filename="db/dbpatientcard.cpp" line="433"/>
         <location filename="db/dbvalidtimeperiods.cpp" line="167"/>
         <location filename="general.cpp" line="142"/>
         <source>Thu</source>
         <translation>Csü</translation>
     </message>
     <message>
-        <location filename="db/dbpatientcard.cpp" line="431"/>
+        <location filename="db/dbpatientcard.cpp" line="433"/>
         <location filename="db/dbvalidtimeperiods.cpp" line="168"/>
         <location filename="general.cpp" line="143"/>
         <source>Fri</source>
         <translation>Pé</translation>
     </message>
     <message>
-        <location filename="db/dbpatientcard.cpp" line="431"/>
+        <location filename="db/dbpatientcard.cpp" line="433"/>
         <location filename="db/dbvalidtimeperiods.cpp" line="169"/>
         <location filename="general.cpp" line="144"/>
         <source>Sat</source>
         <translation>Szo</translation>
     </message>
     <message>
-        <location filename="db/dbpatientcard.cpp" line="431"/>
+        <location filename="db/dbpatientcard.cpp" line="433"/>
         <location filename="db/dbvalidtimeperiods.cpp" line="170"/>
         <location filename="general.cpp" line="145"/>
         <source>Sun</source>
         <translation>Vas</translation>
     </message>
     <message>
-        <location filename="db/dbpatientcard.cpp" line="825"/>
-        <location filename="db/dbpatientcard.cpp" line="865"/>
+        <location filename="db/dbpatientcard.cpp" line="827"/>
+        <location filename="db/dbpatientcard.cpp" line="867"/>
         <source> units (</source>
         <translation> egység (</translation>
     </message>
     <message>
-        <location filename="db/dbpatientcard.cpp" line="827"/>
-        <location filename="db/dbpatientcard.cpp" line="867"/>
+        <location filename="db/dbpatientcard.cpp" line="829"/>
+        <location filename="db/dbpatientcard.cpp" line="869"/>
         <source> minutes) (</source>
         <translation> perc) (</translation>
     </message>
     <message>
-        <location filename="db/dbpatientcard.cpp" line="871"/>
+        <location filename="db/dbpatientcard.cpp" line="873"/>
         <source>&lt;i&gt; (prepared for usage)&lt;/i&gt;&lt;br&gt;</source>
         <translation>&lt;i&gt; (használatra előkészítve)&lt;/i&gt;&lt;br&gt;</translation>
     </message>
     <message>
-        <location filename="db/dbpatientcard.cpp" line="877"/>
+        <location filename="db/dbpatientcard.cpp" line="879"/>
         <source>&lt;i&gt;There is no valid, useable unit on this card.&lt;/i&gt;</source>
         <translation>&lt;i&gt;Nincs érvényes, felhasználható egység a bérleten.&lt;/i&gt;</translation>
     </message>
@@ -5442,9 +5442,11 @@ days</oldsource>
     <message>
         <location filename="crud/dlgpatientcardtype.cpp" line="217"/>
         <source>Unfortunatelly delete of this card type is not possible.
-There are patientcards attached to this card type.</source>
+There are active patientcard units attached to this card type.</source>
+        <oldsource>Unfortunatelly delete of this card type is not possible.
+There are patientcards attached to this card type.</oldsource>
         <translation>A bérlet típus törlése sajnos nem lehetséges.
-A bérlet típushoz bérletek vannak hozzárendelve.</translation>
+A bérlet típushoz érvényes bérlet egységek vannak hozzárendelve.</translation>
     </message>
 </context>
 <context>
