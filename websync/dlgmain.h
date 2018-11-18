@@ -23,8 +23,6 @@ extern cQTMySQLConnection       *g_poDB;
 extern cBlnsHttp                *g_poBlnsHttp;
 extern cLanguage                 g_obLanguage;
 
-#define app_version "1.0.0"
-
 namespace Ui { class dlgMain; }
 
 class dlgMain : public QDialog
@@ -65,7 +63,7 @@ class dlgMain : public QDialog
     };
 
 public:
-    explicit dlgMain(QWidget *parent = 0);
+    explicit dlgMain(QWidget *parent = 0, QString p_qsAppVersion = "1.0.0.0");
     ~dlgMain();
     bool checkTimeValues();
 
