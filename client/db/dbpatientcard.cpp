@@ -284,11 +284,9 @@ bool cDBPatientCard::isPatientCardTypeLinked( const unsigned int p_PCTId ) throw
     QSqlQuery       *poQuery;
     unsigned int     uiCount = 0;
 
-    poQuery = g_poDB->executeQTQuery( QString( "SELECT * FROM patientCards WHERE patientCardTypeId = %1" ).arg( p_PCTId ) );
+    poQuery = g_poDB->executeQTQuery( QString( "UPDATE patientCards SET patientCardTypeId = 0 WHERE patientCardTypeId = %1" ).arg( p_PCTId ) );
 
-    uiCount += poQuery->size();
-
-    poQuery = g_poDB->executeQTQuery( QString( "SELECT * FROM patientCardUnits WHERE patientCardTypeId = %1" ).arg( p_PCTId ) );
+    poQuery = g_poDB->executeQTQuery( QString( "SELECT * FROM patientCardUnits WHERE patientCardTypeId = %1 AND active = 1" ).arg( p_PCTId ) );
 
     uiCount += poQuery->size();
 
