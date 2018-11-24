@@ -14,12 +14,12 @@
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="main.cpp" line="66"/>
+        <location filename="main.cpp" line="68"/>
         <source>websync</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="main.cpp" line="67"/>
+        <location filename="main.cpp" line="69"/>
         <source>I couldn&apos;t detect any system tray on this system.</source>
         <translation type="unfinished"></translation>
     </message>
@@ -39,10 +39,11 @@
         <location filename="http.cpp" line="772"/>
         <location filename="http.cpp" line="1133"/>
         <location filename="http.cpp" line="1217"/>
-        <location filename="http.cpp" line="1601"/>
-        <location filename="http.cpp" line="1668"/>
-        <location filename="http.cpp" line="1743"/>
-        <location filename="http.cpp" line="1781"/>
+        <location filename="http.cpp" line="1243"/>
+        <location filename="http.cpp" line="1635"/>
+        <location filename="http.cpp" line="1702"/>
+        <location filename="http.cpp" line="1777"/>
+        <location filename="http.cpp" line="1815"/>
         <source>Error occured during executing database command</source>
         <translation type="unfinished"></translation>
     </message>
@@ -95,19 +96,19 @@
     </message>
     <message>
         <location filename="http.cpp" line="1138"/>
-        <location filename="http.cpp" line="1222"/>
+        <location filename="http.cpp" line="1248"/>
         <source>Unknown error occured on server side.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
         <location filename="http.cpp" line="1145"/>
-        <location filename="http.cpp" line="1250"/>
+        <location filename="http.cpp" line="1276"/>
         <source>HTTP Session expired</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
         <location filename="http.cpp" line="1152"/>
-        <location filename="http.cpp" line="1257"/>
+        <location filename="http.cpp" line="1283"/>
         <source>HTTP security check failed</source>
         <translation type="unfinished"></translation>
     </message>
@@ -118,171 +119,176 @@
     </message>
     <message>
         <location filename="http.cpp" line="1166"/>
-        <location filename="http.cpp" line="1229"/>
+        <location filename="http.cpp" line="1255"/>
         <source>Database error occured on server side</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="http.cpp" line="1236"/>
+        <location filename="http.cpp" line="1262"/>
         <source>Token already used before</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="http.cpp" line="1243"/>
+        <location filename="http.cpp" line="1269"/>
         <source>Token expired</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="http.cpp" line="1264"/>
+        <location filename="http.cpp" line="1290"/>
         <source>HTTP Missing sha1 code</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="http.cpp" line="1271"/>
+        <location filename="http.cpp" line="1297"/>
         <source>HTTP Missing Studio identifier</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="http.cpp" line="1278"/>
+        <location filename="http.cpp" line="1304"/>
         <source>HTTP Missing mail recipient</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="http.cpp" line="1285"/>
+        <location filename="http.cpp" line="1311"/>
         <source>HTTP Missing mail subject</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="http.cpp" line="1292"/>
+        <location filename="http.cpp" line="1318"/>
         <source>HTTP Missing mail body</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="http.cpp" line="1299"/>
+        <location filename="http.cpp" line="1325"/>
         <source>HTTP Missing mail variable NAME</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="http.cpp" line="1306"/>
+        <location filename="http.cpp" line="1332"/>
         <source>HTTP Missing mail variable BARCODE</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="http.cpp" line="1313"/>
+        <location filename="http.cpp" line="1339"/>
         <source>HTTP Missing mail variable CARDINFO</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="http.cpp" line="1320"/>
+        <location filename="http.cpp" line="1346"/>
         <source>HTTP Missing mail variable UNITCOUNT</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="http.cpp" line="1327"/>
+        <location filename="http.cpp" line="1353"/>
         <source>HTTP Missing mail variable DATETIME</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="http.cpp" line="1364"/>
+        <location filename="http.cpp" line="1360"/>
+        <source>HTTP Invalid e-mail address</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="http.cpp" line="1398"/>
         <source>SHA1 code mismatch in comm response</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="http.cpp" line="1375"/>
-        <location filename="http.cpp" line="1823"/>
+        <location filename="http.cpp" line="1409"/>
+        <location filename="http.cpp" line="1857"/>
         <source>Server did not received token</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="http.cpp" line="1382"/>
-        <location filename="http.cpp" line="1830"/>
+        <location filename="http.cpp" line="1416"/>
+        <location filename="http.cpp" line="1864"/>
         <source>Server did not received Sha1 hash</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="http.cpp" line="1389"/>
-        <location filename="http.cpp" line="1837"/>
+        <location filename="http.cpp" line="1423"/>
+        <location filename="http.cpp" line="1871"/>
         <source>Server did not received Studio Id</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="http.cpp" line="1396"/>
-        <location filename="http.cpp" line="1844"/>
+        <location filename="http.cpp" line="1430"/>
+        <location filename="http.cpp" line="1878"/>
         <source>Server did not received last successfull request Id</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="http.cpp" line="1403"/>
-        <location filename="http.cpp" line="1851"/>
+        <location filename="http.cpp" line="1437"/>
+        <location filename="http.cpp" line="1885"/>
         <source>Token sent to server is invalid</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="http.cpp" line="1410"/>
+        <location filename="http.cpp" line="1444"/>
         <source>SQL error occured on server side</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="http.cpp" line="1417"/>
+        <location filename="http.cpp" line="1451"/>
         <source>Token sent to server is already sent</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="http.cpp" line="1424"/>
+        <location filename="http.cpp" line="1458"/>
         <source>Token sent to server is obsolete</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="http.cpp" line="1431"/>
-        <location filename="http.cpp" line="1858"/>
+        <location filename="http.cpp" line="1465"/>
+        <location filename="http.cpp" line="1892"/>
         <source>Sha1 code sent to server is invalid</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="http.cpp" line="1523"/>
+        <location filename="http.cpp" line="1557"/>
         <source>Patientcard record for &apos;%1&apos; updated
 %2</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="http.cpp" line="1561"/>
+        <location filename="http.cpp" line="1595"/>
         <source>Data updated for guest:
 %1</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="http.cpp" line="1594"/>
+        <location filename="http.cpp" line="1628"/>
         <source>New guest data record created:
 %1</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="http.cpp" line="1636"/>
+        <location filename="http.cpp" line="1670"/>
         <source>Patientcard refilled online</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="http.cpp" line="1659"/>
+        <location filename="http.cpp" line="1693"/>
         <source>Patientcard sold online</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="http.cpp" line="1865"/>
+        <location filename="http.cpp" line="1899"/>
         <source>Result not sent to server</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="http.cpp" line="1909"/>
+        <location filename="http.cpp" line="1943"/>
         <source>Http request aborted</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="http.cpp" line="1920"/>
+        <location filename="http.cpp" line="1954"/>
         <source>Error occured during downloading HTTP file.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="http.cpp" line="1929"/>
+        <location filename="http.cpp" line="1963"/>
         <source>Http error occured: %1</source>
         <translation type="unfinished"></translation>
     </message>
