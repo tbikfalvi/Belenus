@@ -216,9 +216,9 @@ MainWindow::MainWindow(QWidget *parent) : QMainWindow(parent), ui(new Ui::MainWi
                                      << "BLNS75"    //
                                      << "BLNS76"    //
                                      << "BLNS77"    //
-//                                     << "BLNS78"    //
-//                                     << "BLNS79"    //
-//                                     << "BLNS80"    //
+                                     << "BLNS78"    //
+                                     << "BLNS79"    //
+                                     << "BLNS80"    //
 //                                     << "BLNS81"    //
 //                                     << "BLNS82"    //
 //                                     << "BLNS83"    //

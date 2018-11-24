@@ -251,6 +251,7 @@
      <addaction name="action_Advertisements"/>
      <addaction name="separator"/>
      <addaction name="action_DistributionLists"/>
+     <addaction name="action_EditEmails"/>
      <addaction name="separator"/>
      <addaction name="action_ValidateSerialKey"/>
      <addaction name="action_EditLicenceInformation"/>
@@ -959,6 +960,11 @@
    </property>
    <property name="toolTip">
     <string>List of guests waiting</string>
+   </property>
+  </action>
+  <action name="action_EditEmails">
+   <property name="text">
+    <string>Edit emails ...</string>
    </property>
   </action>
  </widget>

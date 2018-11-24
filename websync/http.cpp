@@ -461,9 +461,9 @@ void cBlnsHttp::_httpStartProcess()
         {
             QString      qsQuery            = "SELECT * FROM "
                                               "httpsendmail WHERE "
-                                              "dateOfSending>=\"" + QDate::currentDate().toString( "yyyy-MM-dd" ) + "\" AND "
+                                              "dateOfSending<=\"" + QDate::currentDate().toString( "yyyy-MM-dd" ) + "\" AND "
                                               "active=1 AND "
-                                              "archive='NEW' "
+                                              "( archive='NEW' OR archive='MOD' ) "
                                               "LIMIT 1 ";
             QSqlQuery   *poQuery            = g_poDB->executeQTQuery( qsQuery );
             QByteArray   qbaSha1Base        = "";
@@ -1217,117 +1217,151 @@ void cBlnsHttp::_readMailResponseFromFile()
             m_qsError = tr("Error occured during executing database command");
         }
     }
-    else if( qsLine.contains( "false" ) )
+    else
     {
-        m_qsError = tr("Unknown error occured on server side.");
-        g_obLogger(cSeverity::WARNING) << "HTTP: Unknown error occured on server side." << EOM;
-        emit signalErrorOccured();
-        m_inHttpProcessStep = HTTP_ERROR_UNKNOWN;
-    }
-    else if( qsLine.contains( "SQL error" ) )
-    {
-        m_qsError = tr("Database error occured on server side");
-        g_obLogger(cSeverity::WARNING) << "HTTP: Server was unable to execute SQL command" << EOM;
-        emit signalErrorOccured();
-        m_inHttpProcessStep = HTTP_ERROR_SERVER_SQL;
-    }
-    else if( qsLine.contains( "Token repeat" ) )
-    {
-        m_qsError = tr("Token already used before");
-        g_obLogger(cSeverity::WARNING) << "HTTP: Token used in a previous communication" << EOM;
-        emit signalErrorOccured();
-        m_inHttpProcessStep = HTTP_ERROR_TOKEN_REPEAT;
-    }
-    else if( qsLine.contains( "Old token" ) )
-    {
-        m_qsError = tr("Token expired");
-        g_obLogger(cSeverity::WARNING) << "HTTP: Token expired" << EOM;
-        emit signalErrorOccured();
-        m_inHttpProcessStep = HTTP_ERROR_TOKEN_EXPIRED;
-    }
-    else if( qsLine.contains( "Wrong token" ) )
-    {
-        m_qsError = tr("HTTP Session expired");
-        g_obLogger(cSeverity::WARNING) << "HTTP: Token not accepted by server" << EOM;
-        emit signalErrorOccured();
-        m_inHttpProcessStep = HTTP_ERROR_WRONG_TOKEN;
-    }
-    else if( qsLine.contains( "Check error" ) )
-    {
-        m_qsError = tr("HTTP security check failed");
-        g_obLogger(cSeverity::WARNING) << "HTTP: MD5 hash not accepted by server" << EOM;
-        emit signalErrorOccured();
-        m_inHttpProcessStep = HTTP_ERROR_MD5_MISMATCH;
-    }
-    else if( qsLine.contains( "Missing code" ) )
-    {
-        m_qsError = tr("HTTP Missing sha1 code");
-        g_obLogger(cSeverity::WARNING) << "HTTP: Missing sha1 code" << EOM;
-        emit signalErrorOccured();
-        m_inHttpProcessStep = HTTP_ERROR_SHA1_NOT_RECEIVED;
-    }
-    else if( qsLine.contains( "Missing StudioId" ) )
-    {
-        m_qsError = tr("HTTP Missing Studio identifier");
-        g_obLogger(cSeverity::WARNING) << "HTTP: Missing Studio identifier" << EOM;
-        emit signalErrorOccured();
-        m_inHttpProcessStep = HTTP_ERROR_MISSING_STUDIOID;
-    }
-    else if( qsLine.contains( "Missing email" ) )
-    {
-        m_qsError = tr("HTTP Missing mail recipient");
-        g_obLogger(cSeverity::WARNING) << "HTTP: Missing mail recipient" << EOM;
-        emit signalErrorOccured();
-        m_inHttpProcessStep = HTTP_ERROR_MISSING_MAIL_RECIP;
-    }
-    else if( qsLine.contains( "Missing subject" ) )
-    {
-        m_qsError = tr("HTTP Missing mail subject");
-        g_obLogger(cSeverity::WARNING) << "HTTP: Missing mail subject" << EOM;
-        emit signalErrorOccured();
-        m_inHttpProcessStep = HTTP_ERROR_MISSING_MAIL_SUBJ;
-    }
-    else if( qsLine.contains( "Missing text" ) )
-    {
-        m_qsError = tr("HTTP Missing mail body");
-        g_obLogger(cSeverity::WARNING) << "HTTP: Missing mail body" << EOM;
-        emit signalErrorOccured();
-        m_inHttpProcessStep = HTTP_ERROR_MISSING_MAIL_BODY;
-    }
-    else if( qsLine.contains( "Missing name" ) )
-    {
-        m_qsError = tr("HTTP Missing mail variable NAME");
-        g_obLogger(cSeverity::WARNING) << "HTTP: Missing mail variable NAME" << EOM;
-        emit signalErrorOccured();
-        m_inHttpProcessStep = HTTP_ERROR_MISSING_MAIL_VAR_NAME;
-    }
-    else if( qsLine.contains( "Missing cardId" ) )
-    {
-        m_qsError = tr("HTTP Missing mail variable BARCODE");
-        g_obLogger(cSeverity::WARNING) << "HTTP: Missing mail variable BARCODE" << EOM;
-        emit signalErrorOccured();
-        m_inHttpProcessStep = HTTP_ERROR_MISSING_MAIL_VAR_BARCODE;
-    }
-    else if( qsLine.contains( "Missing cardInfo" ) )
-    {
-        m_qsError = tr("HTTP Missing mail variable CARDINFO");
-        g_obLogger(cSeverity::WARNING) << "HTTP: Missing mail variable CARDINFO" << EOM;
-        emit signalErrorOccured();
-        m_inHttpProcessStep = HTTP_ERROR_MISSING_MAIL_VAR_CARDINFO;
-    }
-    else if( qsLine.contains( "Missing unitCount" ) )
-    {
-        m_qsError = tr("HTTP Missing mail variable UNITCOUNT");
-        g_obLogger(cSeverity::WARNING) << "HTTP: Missing mail variable UNITCOUNT" << EOM;
-        emit signalErrorOccured();
-        m_inHttpProcessStep = HTTP_ERROR_MISSING_MAIL_VAR_UNITCOUNT;
-    }
-    else if( qsLine.contains( "Missing dateTime" ) )
-    {
-        m_qsError = tr("HTTP Missing mail variable DATETIME");
-        g_obLogger(cSeverity::WARNING) << "HTTP: Missing mail variable DATETIME" << EOM;
-        emit signalErrorOccured();
-        m_inHttpProcessStep = HTTP_ERROR_MISSING_MAIL_VAR_DATETIME;
+        g_obLogger(cSeverity::ERROR) << "HTTP: Mark error record with id ["
+                                     << m_uiRecordId
+                                     << "]"
+                                     << EOM;
+
+        try
+        {
+            QString  qsQuery;
+
+            qsQuery = "UPDATE httpsendmail SET ";
+            qsQuery += QString( "active = 0, " );
+            qsQuery += QString( "archive = \"ERROR\" " );
+            qsQuery += QString( "WHERE httpSendMailId = \"%1\" " ).arg( m_uiRecordId );
+
+            m_uiRecordId = 0;
+            g_poDB->executeQTQuery( qsQuery );
+        }
+        catch( cSevException &e )
+        {
+            cerr << ">> " << e.what() << endl << flush;;
+            g_obLogger(e.severity()) << e.what() << EOM;
+            m_qsError = tr("Error occured during executing database command");
+        }
+
+        if( qsLine.contains( "false" ) )
+        {
+            m_qsError = tr("Unknown error occured on server side.");
+            g_obLogger(cSeverity::WARNING) << "HTTP: Unknown error occured on server side." << EOM;
+            emit signalErrorOccured();
+            m_inHttpProcessStep = HTTP_ERROR_UNKNOWN;
+        }
+        else if( qsLine.contains( "SQL error" ) )
+        {
+            m_qsError = tr("Database error occured on server side");
+            g_obLogger(cSeverity::WARNING) << "HTTP: Server was unable to execute SQL command" << EOM;
+            emit signalErrorOccured();
+            m_inHttpProcessStep = HTTP_ERROR_SERVER_SQL;
+        }
+        else if( qsLine.contains( "Token repeat" ) )
+        {
+            m_qsError = tr("Token already used before");
+            g_obLogger(cSeverity::WARNING) << "HTTP: Token used in a previous communication" << EOM;
+            emit signalErrorOccured();
+            m_inHttpProcessStep = HTTP_ERROR_TOKEN_REPEAT;
+        }
+        else if( qsLine.contains( "Old token" ) )
+        {
+            m_qsError = tr("Token expired");
+            g_obLogger(cSeverity::WARNING) << "HTTP: Token expired" << EOM;
+            emit signalErrorOccured();
+            m_inHttpProcessStep = HTTP_ERROR_TOKEN_EXPIRED;
+        }
+        else if( qsLine.contains( "Wrong token" ) )
+        {
+            m_qsError = tr("HTTP Session expired");
+            g_obLogger(cSeverity::WARNING) << "HTTP: Token not accepted by server" << EOM;
+            emit signalErrorOccured();
+            m_inHttpProcessStep = HTTP_ERROR_WRONG_TOKEN;
+        }
+        else if( qsLine.contains( "Check error" ) )
+        {
+            m_qsError = tr("HTTP security check failed");
+            g_obLogger(cSeverity::WARNING) << "HTTP: MD5 hash not accepted by server" << EOM;
+            emit signalErrorOccured();
+            m_inHttpProcessStep = HTTP_ERROR_MD5_MISMATCH;
+        }
+        else if( qsLine.contains( "Missing code" ) )
+        {
+            m_qsError = tr("HTTP Missing sha1 code");
+            g_obLogger(cSeverity::WARNING) << "HTTP: Missing sha1 code" << EOM;
+            emit signalErrorOccured();
+            m_inHttpProcessStep = HTTP_ERROR_SHA1_NOT_RECEIVED;
+        }
+        else if( qsLine.contains( "Missing StudioId" ) )
+        {
+            m_qsError = tr("HTTP Missing Studio identifier");
+            g_obLogger(cSeverity::WARNING) << "HTTP: Missing Studio identifier" << EOM;
+            emit signalErrorOccured();
+            m_inHttpProcessStep = HTTP_ERROR_MISSING_STUDIOID;
+        }
+        else if( qsLine.contains( "Missing email" ) )
+        {
+            m_qsError = tr("HTTP Missing mail recipient");
+            g_obLogger(cSeverity::WARNING) << "HTTP: Missing mail recipient" << EOM;
+            emit signalErrorOccured();
+            m_inHttpProcessStep = HTTP_ERROR_MISSING_MAIL_RECIP;
+        }
+        else if( qsLine.contains( "Missing subject" ) )
+        {
+            m_qsError = tr("HTTP Missing mail subject");
+            g_obLogger(cSeverity::WARNING) << "HTTP: Missing mail subject" << EOM;
+            emit signalErrorOccured();
+            m_inHttpProcessStep = HTTP_ERROR_MISSING_MAIL_SUBJ;
+        }
+        else if( qsLine.contains( "Missing text" ) )
+        {
+            m_qsError = tr("HTTP Missing mail body");
+            g_obLogger(cSeverity::WARNING) << "HTTP: Missing mail body" << EOM;
+            emit signalErrorOccured();
+            m_inHttpProcessStep = HTTP_ERROR_MISSING_MAIL_BODY;
+        }
+        else if( qsLine.contains( "Missing name" ) )
+        {
+            m_qsError = tr("HTTP Missing mail variable NAME");
+            g_obLogger(cSeverity::WARNING) << "HTTP: Missing mail variable NAME" << EOM;
+            emit signalErrorOccured();
+            m_inHttpProcessStep = HTTP_ERROR_MISSING_MAIL_VAR_NAME;
+        }
+        else if( qsLine.contains( "Missing cardId" ) )
+        {
+            m_qsError = tr("HTTP Missing mail variable BARCODE");
+            g_obLogger(cSeverity::WARNING) << "HTTP: Missing mail variable BARCODE" << EOM;
+            emit signalErrorOccured();
+            m_inHttpProcessStep = HTTP_ERROR_MISSING_MAIL_VAR_BARCODE;
+        }
+        else if( qsLine.contains( "Missing cardInfo" ) )
+        {
+            m_qsError = tr("HTTP Missing mail variable CARDINFO");
+            g_obLogger(cSeverity::WARNING) << "HTTP: Missing mail variable CARDINFO" << EOM;
+            emit signalErrorOccured();
+            m_inHttpProcessStep = HTTP_ERROR_MISSING_MAIL_VAR_CARDINFO;
+        }
+        else if( qsLine.contains( "Missing unitCount" ) )
+        {
+            m_qsError = tr("HTTP Missing mail variable UNITCOUNT");
+            g_obLogger(cSeverity::WARNING) << "HTTP: Missing mail variable UNITCOUNT" << EOM;
+            emit signalErrorOccured();
+            m_inHttpProcessStep = HTTP_ERROR_MISSING_MAIL_VAR_UNITCOUNT;
+        }
+        else if( qsLine.contains( "Missing dateTime" ) )
+        {
+            m_qsError = tr("HTTP Missing mail variable DATETIME");
+            g_obLogger(cSeverity::WARNING) << "HTTP: Missing mail variable DATETIME" << EOM;
+            emit signalErrorOccured();
+            m_inHttpProcessStep = HTTP_ERROR_MISSING_MAIL_VAR_DATETIME;
+        }
+        else if( qsLine.contains( "Invalid e-mail address" ) )
+        {
+            m_qsError = tr("HTTP Invalid e-mail address");
+            g_obLogger(cSeverity::WARNING) << "HTTP: Invalid e-mail address" << EOM;
+            emit signalErrorOccured();
+            m_inHttpProcessStep = HTTP_ERROR_INVALID_EMAIL_ADDRESS;
+        }
     }
 }
 

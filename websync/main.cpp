@@ -10,6 +10,8 @@ QTranslator     *poTransApp;
 QTranslator     *poTransQT;
 QApplication    *apMainApp;
 
+#define APPLICATION_VERSION_NUMBER  "1.7.1.1"
+
 #include "../framework/qtlogger.h"
 #include "../framework/qtframework.h"
 #include "../framework/logger/FileWriter.h"
@@ -88,7 +90,7 @@ int main(int argc, char *argv[])
         return 0;
     }
 
-    dlgMain obDlgMain;
+    dlgMain obDlgMain( 0, QString( APPLICATION_VERSION_NUMBER ) );
 
     if( argc > 1 )
     {
