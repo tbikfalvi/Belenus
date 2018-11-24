@@ -498,6 +498,40 @@ Please start WampServer application then restart Belenus application.</source>
     </message>
 </context>
 <context>
+    <name>cDlgAddUnits</name>
+    <message>
+        <location filename="edit/dlgaddunits.cpp" line="37"/>
+        <source>Add units to patientcard</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="edit/dlgaddunits.cpp" line="48"/>
+        <source>&lt;Not selected&gt;</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="edit/dlgaddunits.cpp" line="126"/>
+        <source>Number of units must be greater than zero.</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="edit/dlgaddunits.cpp" line="134"/>
+        <source>Invalid Patientcard type.
+You must select a valid patientcard type.</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="edit/dlgaddunits.cpp" line="142"/>
+        <source>Incorrect expiration date.</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="edit/dlgaddunits.cpp" line="201"/>
+        <source>Error</source>
+        <translation type="unfinished"></translation>
+    </message>
+</context>
+<context>
     <name>cDlgAddress</name>
     <message>
         <location filename="crud/dlgaddress.cpp" line="10"/>
@@ -2784,103 +2818,108 @@ Do you want to save it and sell it now?</source>
 <context>
     <name>cDlgPatientCard</name>
     <message>
-        <location filename="crud/dlgpatientcard.cpp" line="10"/>
+        <location filename="crud/dlgpatientcard.cpp" line="11"/>
         <source>Patient Card List</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="crud/dlgpatientcard.cpp" line="28"/>
+        <location filename="crud/dlgpatientcard.cpp" line="29"/>
         <source>Barcode: </source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="crud/dlgpatientcard.cpp" line="38"/>
+        <location filename="crud/dlgpatientcard.cpp" line="39"/>
         <source>Owner: </source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="crud/dlgpatientcard.cpp" line="76"/>
+        <location filename="crud/dlgpatientcard.cpp" line="77"/>
+        <source>Add units</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="crud/dlgpatientcard.cpp" line="84"/>
         <source>Replace lost</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="crud/dlgpatientcard.cpp" line="83"/>
+        <location filename="crud/dlgpatientcard.cpp" line="91"/>
         <source>Assign partner</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="crud/dlgpatientcard.cpp" line="117"/>
+        <location filename="crud/dlgpatientcard.cpp" line="125"/>
         <source>Id</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="crud/dlgpatientcard.cpp" line="118"/>
+        <location filename="crud/dlgpatientcard.cpp" line="126"/>
         <source>LicenceId</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="crud/dlgpatientcard.cpp" line="119"/>
-        <location filename="crud/dlgpatientcard.cpp" line="141"/>
+        <location filename="crud/dlgpatientcard.cpp" line="127"/>
+        <location filename="crud/dlgpatientcard.cpp" line="149"/>
         <source>Barcode</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="crud/dlgpatientcard.cpp" line="120"/>
-        <location filename="crud/dlgpatientcard.cpp" line="142"/>
+        <location filename="crud/dlgpatientcard.cpp" line="128"/>
+        <location filename="crud/dlgpatientcard.cpp" line="150"/>
         <source>Owner</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="crud/dlgpatientcard.cpp" line="121"/>
-        <location filename="crud/dlgpatientcard.cpp" line="143"/>
+        <location filename="crud/dlgpatientcard.cpp" line="129"/>
+        <location filename="crud/dlgpatientcard.cpp" line="151"/>
         <source>Valid from</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="crud/dlgpatientcard.cpp" line="122"/>
-        <location filename="crud/dlgpatientcard.cpp" line="144"/>
+        <location filename="crud/dlgpatientcard.cpp" line="130"/>
+        <location filename="crud/dlgpatientcard.cpp" line="152"/>
         <source>Valid to</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="crud/dlgpatientcard.cpp" line="123"/>
-        <location filename="crud/dlgpatientcard.cpp" line="145"/>
+        <location filename="crud/dlgpatientcard.cpp" line="131"/>
+        <location filename="crud/dlgpatientcard.cpp" line="153"/>
         <source>Comment</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="crud/dlgpatientcard.cpp" line="124"/>
-        <location filename="crud/dlgpatientcard.cpp" line="146"/>
+        <location filename="crud/dlgpatientcard.cpp" line="132"/>
+        <location filename="crud/dlgpatientcard.cpp" line="154"/>
         <source>Active</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="crud/dlgpatientcard.cpp" line="125"/>
+        <location filename="crud/dlgpatientcard.cpp" line="133"/>
         <source>Archive</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="crud/dlgpatientcard.cpp" line="249"/>
+        <location filename="crud/dlgpatientcard.cpp" line="262"/>
         <source>New Patientcard</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="crud/dlgpatientcard.cpp" line="287"/>
+        <location filename="crud/dlgpatientcard.cpp" line="300"/>
         <source>Question</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="crud/dlgpatientcard.cpp" line="288"/>
+        <location filename="crud/dlgpatientcard.cpp" line="301"/>
         <source>Are you sure you want to delete this Patientcard?</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="crud/dlgpatientcard.cpp" line="297"/>
+        <location filename="crud/dlgpatientcard.cpp" line="310"/>
         <source>Warning</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="crud/dlgpatientcard.cpp" line="298"/>
+        <location filename="crud/dlgpatientcard.cpp" line="311"/>
         <source>You are not allowed to delete studio independent data.</source>
         <translation type="unfinished"></translation>
     </message>
@@ -7025,6 +7064,49 @@ Error code: %1
         <location filename="wndmain.cpp" line="3820"/>
         <location filename="wndmain.cpp" line="3831"/>
         <source>Reset communication</source>
+        <translation type="unfinished"></translation>
+    </message>
+</context>
+<context>
+    <name>dlgAddUnits</name>
+    <message>
+        <location filename="dlgaddunits.ui" line="14"/>
+        <source>Dialog</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="dlgaddunits.ui" line="20"/>
+        <source> Add ... </source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="dlgaddunits.ui" line="41"/>
+        <source>units to patientcard </source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="dlgaddunits.ui" line="78"/>
+        <source>with data of patientcard type :</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="dlgaddunits.ui" line="109"/>
+        <source>and with expiration date :</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="dlgaddunits.ui" line="119"/>
+        <source>yyyy/MM/dd</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="dlgaddunits.ui" line="162"/>
+        <source>Add</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="dlgaddunits.ui" line="175"/>
+        <source>Cancel</source>
         <translation type="unfinished"></translation>
     </message>
 </context>

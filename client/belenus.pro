@@ -70,7 +70,8 @@ FORMS = ../framework/dlgcrud.ui \
     dlgSelectMailRecipient.ui \
     dlgWindowPosition.ui \
     dlgInformation.ui \
-    dlgemailsedit.ui
+    dlgemailsedit.ui \
+    dlgaddunits.ui
 
 HEADERS = belenus.h \
     ../framework/dbconnection.h \
@@ -204,6 +205,7 @@ HEADERS = belenus.h \
     edit/dlgadvertisementedit.h \
     edit/dlgdistlistedit.h \
     edit/dlgemailsedit.h \
+    edit/dlgaddunits.h \
     report/dlgpreview.h \
     report/reppatientcards.h \
     report/reppatientcardsobs.h \
@@ -360,6 +362,7 @@ SOURCES = main.cpp \
     edit/dlgadvertisementedit.cpp \
     edit/dlgdistlistedit.cpp \
     edit/dlgemailsedit.cpp \
+    edit/dlgaddunits.cpp \
     report/reppatientcards.cpp \
     report/reppatientcardsobs.cpp \
     report/dlgpreview.cpp \
