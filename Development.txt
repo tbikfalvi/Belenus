@@ -113,4 +113,5 @@ Version 1.7.1.1
 - Mail kuldes hiba - nem kuldte el a korabbi datumu leveleket - javitva
 - Levelkuldes hiba eseten ERROR flag, kuldendo leveleket lehet szerkeszteni
 - Berlettipus torles fix
+- Berlet feltoltes egysegekkel rendszeradminnak
 
