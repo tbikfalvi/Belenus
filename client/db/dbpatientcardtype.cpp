@@ -170,7 +170,7 @@ void cDBPatientCardType::remove() throw( cSevException )
         }
         else
         {
-            qsQuery = "UPDATE patientCardTypes SET active=0, archive=\"MOD\" ";
+            qsQuery = "UPDATE patientCardTypes SET units=0, validDateFrom=\"0000-00-00\", validDateTo=\"0000-00-00\", validDays=0, unitTime=0, active=0, archive=\"DEL\" ";
         }
         qsQuery += QString( " WHERE patientCardTypeId = %1" ).arg( m_uiId );
 

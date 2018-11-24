@@ -4,6 +4,7 @@
 #include "dlgpatientcard.h"
 #include "dlgpatientcardtype.h"
 #include "../edit/dlgpatientcardedit.h"
+#include "../edit/dlgaddunits.h"
 
 cDlgPatientCard::cDlgPatientCard( QWidget *p_poParent ) : cDlgCrud( p_poParent )
 {
@@ -73,6 +74,13 @@ cDlgPatientCard::cDlgPatientCard( QWidget *p_poParent ) : cDlgCrud( p_poParent )
     btbButtonsSide->addButton( pbPatientCardType, QDialogButtonBox::RejectRole );
     connect( pbPatientCardType, SIGNAL(clicked()), this, SLOT(_slotPatientCardTypes()) );
 */
+    pbAddUnits = new QPushButton( tr( "Add units" ), this );
+    pbAddUnits->setObjectName( QString::fromUtf8( "pbAddUnits" ) );
+    pbAddUnits->setIconSize( QSize(20, 20) );
+    pbAddUnits->setIcon( QIcon("./resources/40x40_patientcard.png") );
+    btbButtons->addButton( pbAddUnits, QDialogButtonBox::ActionRole );
+    connect( pbAddUnits, SIGNAL(clicked()), this, SLOT(_slotAddUnits()) );
+
     pbPatientCardReplace = new QPushButton( tr( "Replace lost" ), this );
     pbPatientCardReplace->setObjectName( QString::fromUtf8( "pbPatientCardReplace" ) );
     pbPatientCardReplace->setIconSize( QSize(20, 20) );
@@ -236,8 +244,13 @@ void cDlgPatientCard::enableButtons()
     m_poBtnNew->setEnabled( g_obUser.isInGroup( cAccessGroup::ADMIN ) );
     m_poBtnEdit->setEnabled( bUserCanModify );
     m_poBtnDelete->setEnabled( bUserCanModify && m_uiSelectedId > 1 );
+    m_poBtnSave->setEnabled( false );
+    pbAddUnits->setEnabled( g_obUser.isInGroup( cAccessGroup::SYSTEM ) && m_uiSelectedId > 1 );
     pbPatientCardReplace->setEnabled( bCanBeReplaced );
     pbPartnerCardAssign->setEnabled( bCanBeParent );
+
+    pbAddUnits->setVisible( g_obUser.isInGroup( cAccessGroup::SYSTEM ) );
+    m_poBtnSave->setVisible( false );
 }
 
 void cDlgPatientCard::newClicked( bool )
@@ -346,6 +359,18 @@ void cDlgPatientCard::_slotPatientCardTypes()
     obDlgPatientCardType.exec();
 }
 */
+void cDlgPatientCard::_slotAddUnits()
+{
+    cDBPatientCard  *poPatientCard = new cDBPatientCard;
+    poPatientCard->load( m_uiSelectedId );
+
+    cDlgAddUnits    obDlgAddUnits( this, poPatientCard );
+
+    obDlgAddUnits.exec();
+
+    refreshTable();
+}
+
 void cDlgPatientCard::_slotPatientCardReplace()
 {
     cDBPatientCard  *poPatientCard = new cDBPatientCard;

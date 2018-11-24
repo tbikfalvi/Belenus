@@ -18,7 +18,7 @@
 using namespace std;
 
 //=================================================================================================
-dlgMain::dlgMain(QWidget *parent) : QDialog(parent), ui(new Ui::dlgMain)
+dlgMain::dlgMain(QWidget *parent, QString p_qsAppVersion) : QDialog(parent), ui(new Ui::dlgMain)
 {
     ui->setupUi(this);
 
@@ -91,7 +91,7 @@ dlgMain::dlgMain(QWidget *parent) : QDialog(parent), ui(new Ui::dlgMain)
     g_obLogger(cSeverity::DEBUG) << "Set main window settings" << EOM;
 
 //    setWindowFlags( Qt::Dialog | Qt::FramelessWindowHint );
-    ui->gbTitle->setTitle( QString(" v.%1 ").arg(app_version) );
+    ui->gbTitle->setTitle( QString(" v.%1 ").arg( p_qsAppVersion ) );
 
     _setActions();
     _setMenu();
@@ -438,7 +438,7 @@ void dlgMain::timerEvent(QTimerEvent *)
     }
 
     //---------------------------------------------------------------------------------------------
-    // Check if timer of check online PC sold is reached the value set
+    // Check if timer of mail send is reached the value set
     if( m_nIndexSendMailSync >= m_nTimerSendMailCheck && !m_bSyncPCFromServer && !m_bSyncPCToServer && !m_bSendMailToServer )
     {
         m_nIndexSendMailSync = 0;
