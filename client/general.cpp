@@ -31,6 +31,8 @@ cGeneral::cGeneral()
     m_poBlTr            = new QTranslator();
     m_poQtTr            = new QTranslator();
     m_bIsLanguageLoaded = false;
+    m_poWindowMain      = 0;
+    m_poWindowSecondary = 0;
 }
 //====================================================================================
 cGeneral::~cGeneral()
@@ -523,6 +525,41 @@ void cGeneral::showPatientCardInformation(QString p_qsBarcode)
     }
 }
 //====================================================================================
+void cGeneral::showPatientLastVisitInformation(QString p_qsBarcode, int p_nCloseSeconds)
+//------------------------------------------------------------------------------------
+{
+    try
+    {
+        QWidget        *poParent = m_poWindowMain;
+
+        if( g_poPrefs->getShowInfoOnWindow() == 2 )
+            poParent = m_poWindowSecondary;
+
+        cDlgInformation obDlgInformation( poParent );
+        QString         qsTitle;
+        QString         qsText;
+        cDBPatientCard  obDBPatientCard;
+        cDBGuest        obDBGuest;
+
+        obDBPatientCard.load( p_qsBarcode );
+        obDBGuest.load( obDBPatientCard.patientId() );
+
+        QString qsOwner     = obDBGuest.name();
+
+        qsTitle = QObject::tr("%1 last visit information").arg( qsOwner );
+
+        obDlgInformation.setInformationTitle( qsTitle );
+        obDlgInformation.setInformationText( qsText );
+        obDlgInformation.setTimer( p_nCloseSeconds );
+        obDlgInformation.exec();
+    }
+    catch( cSevException &e )
+    {
+        g_obLogger(e.severity()) << e.what() << EOM;
+        g_obGen.showTrayError( e.what() );
+    }
+}
+//====================================================================================
 bool cGeneral::isShoppingCartHasItems()
 //------------------------------------------------------------------------------------
 {
@@ -617,6 +654,18 @@ bool cGeneral::isArchiveOnDifferentPath()
         return false;
 
     return true;
+}
+//====================================================================================
+void cGeneral::setWindowMainWidget( QWidget *poWindow )
+//------------------------------------------------------------------------------------
+{
+    m_poWindowMain = poWindow;
+}
+//====================================================================================
+void cGeneral::setWindowSecondaryWidget( QWidget *poWindow )
+//------------------------------------------------------------------------------------
+{
+    m_poWindowSecondary = poWindow;
 }
 
 //====================================================================================

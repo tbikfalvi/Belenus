@@ -264,6 +264,13 @@ public:
     void            moveWindowSecondary( int posX, int posY );
     void            resizeWindowSecondary( int width, int height );
 
+    void            setShowPatientInfoOnStart( bool p_bShowPatientInfoOnStart, bool p_boSaveNow = false );
+    bool            isShowPatientInfoOnStart();
+    void            setShowInfoOnWindow( const int p_nShowInfoOnWindow, bool p_boSaveNow = false );
+    int             getShowInfoOnWindow() const;
+    void            setCloseInfoWindowAfterSecs( const int p_nCloseInfoWindowAfterSecs, bool p_boSaveNow = false );
+    int             getCloseInfoWindowAfterSecs() const;
+
 //void            setXXX( const QString &p_qsXXX, bool p_boSaveNow = false );
 //QString         getXXX() const;
 //void            setXXX( const int p_nXXX, bool p_boSaveNow = false );
@@ -372,6 +379,9 @@ private:
     bool            m_bAutoMailOnPCExpiration;
     int             m_nPCExpirationDays;
     int             m_nSecondsWaitOnSlpashScreen;
+    bool            m_bShowPatientInfoOnStart;
+    int             m_nShowInfoOnWindow;
+    int             m_nCloseInfoWindowAfterSecs;
 
     void init();
 };
