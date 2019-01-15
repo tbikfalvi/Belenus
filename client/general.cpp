@@ -582,7 +582,7 @@ void cGeneral::showPatientLastVisitInformation(QString p_qsBarcode, int p_nClose
         {
             poQuery->last();
 
-            QString qsDate      = poQuery->value(0).toDateTime().toString( "yyyy MMM dd. - hh:mm" );
+            QString qsDate      = poQuery->value(0).toDateTime().toString( QString("%1  hh:mm").arg( g_poPrefs->getDateFormat() ) );
             QString qsLength    = QString::number( poQuery->value(1).toInt()*poQuery->value(2).toInt() );
 
             qsText.append( QObject::tr("<tr><td width=\"150\"><b>Date:</b></td><td>%1</td></tr>").arg( qsDate ) );
