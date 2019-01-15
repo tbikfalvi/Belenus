@@ -32,6 +32,15 @@ cDlgInformation::~cDlgInformation()
 {
 }
 //====================================================================================
+void cDlgInformation::timerEvent(QTimerEvent *)
+//------------------------------------------------------------------------------------
+{
+    killTimer( m_nTimer );
+    m_nTimer = 0;
+
+    close();
+}
+//====================================================================================
 void cDlgInformation::setInformationTitle(QString p_qsTitle)
 //------------------------------------------------------------------------------------
 {
@@ -47,6 +56,15 @@ void cDlgInformation::setInformationText(QString p_qsInformation)
 //------------------------------------------------------------------------------------
 {
     lblInformation->setText( p_qsInformation );
+}
+//====================================================================================
+void cDlgInformation::setTimer(int p_nSeconds)
+//------------------------------------------------------------------------------------
+{
+    if( p_nSeconds == 0 )
+        return;
+
+    m_nTimer = startTimer( p_nSeconds * 1000 );
 }
 //====================================================================================
 void cDlgInformation::on_pbOk_clicked()
