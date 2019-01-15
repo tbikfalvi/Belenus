@@ -13,8 +13,8 @@
 // Alkalmazas fo allomanya.
 //====================================================================================
 
-#define APPLICATION_VERSION_NUMBER  "1.7.1.1"
-#define DATABASE_VERSION_NUMBER     "1.7.7"
+#define APPLICATION_VERSION_NUMBER  "1.7.2.0"
+#define DATABASE_VERSION_NUMBER     "1.7.8"
 
 //====================================================================================
 

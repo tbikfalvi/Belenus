@@ -102,6 +102,10 @@ void cPreferences::init()
     m_bAutoMailOnPCSell             = false;
     m_bAutoMailOnPCUse              = false;
     m_bAutoMailOnPCExpiration       = false;
+
+    m_bShowPatientInfoOnStart       = false;
+    m_nShowInfoOnWindow             = 1;
+    m_nCloseInfoWindowAfterSecs     = 5;
 }
 
 void cPreferences::loadConfFileSettings()
@@ -187,7 +191,10 @@ void cPreferences::loadConfFileSettings()
         m_nPatientCardLostPriceVat      = obPrefFile.value( QString::fromAscii( "PatientCard/PriceLostVat" ), 0 ).toUInt();
         m_nPatientCardPartnerPrice      = obPrefFile.value( QString::fromAscii( "PatientCard/PricePartner" ), 0 ).toUInt();
         m_nPatientCardPartnerPriceVat   = obPrefFile.value( QString::fromAscii( "PatientCard/PricePartnerVat" ), 0 ).toUInt();
-        m_bBarcodeHidden               = obPrefFile.value( QString::fromAscii( "PatientCard/Hidden"), false ).toBool();
+        m_bBarcodeHidden                = obPrefFile.value( QString::fromAscii( "PatientCard/Hidden"), false ).toBool();
+        m_bShowPatientInfoOnStart       = obPrefFile.value( QString::fromAscii( "PatientCard/ShowPatientLastVisitInfo"), false ).toBool();
+        m_nShowInfoOnWindow             = obPrefFile.value( QString::fromAscii( "PatientCard/ShowInfoOnWindow"), 1 ).toInt();
+        m_nCloseInfoWindowAfterSecs     = obPrefFile.value( QString::fromAscii( "PatientCard/CloseInfoWindowAfterSecs"), 5 ).toInt();
 
         unsigned int uiConsoleLevel = obPrefFile.value( QString::fromAscii( "LogLevels/ConsoleLogLevel" ), cSeverity::WARNING ).toUInt();
         if( (uiConsoleLevel >= cSeverity::MAX) ||
@@ -379,7 +386,10 @@ void cPreferences::save() const throw (cSevException)
     obPrefFile.setValue( QString::fromAscii( "PatientCard/PriceLostVat" ), m_nPatientCardLostPriceVat );
     obPrefFile.setValue( QString::fromAscii( "PatientCard/PricePartner" ), m_nPatientCardPartnerPrice );
     obPrefFile.setValue( QString::fromAscii( "PatientCard/PricePartnerVat" ), m_nPatientCardPartnerPriceVat );
-    obPrefFile.setValue( QString::fromAscii( "PatientCard/Hidden"), m_bBarcodeHidden );
+    obPrefFile.setValue( QString::fromAscii( "PatientCard/Hidden" ), m_bBarcodeHidden );
+    obPrefFile.setValue( QString::fromAscii( "PatientCard/ShowPatientLastVisitInfo" ), m_bShowPatientInfoOnStart );
+    obPrefFile.setValue( QString::fromAscii( "PatientCard/ShowInfoOnWindow" ), m_nShowInfoOnWindow );
+    obPrefFile.setValue( QString::fromAscii( "PatientCard/CloseInfoWindowAfterSecs" ), m_nCloseInfoWindowAfterSecs );
 
     unsigned int  uiConLevel, uiDBLevel, uiGUILevel, uiFileLevel;
     getLogLevels( &uiConLevel, &uiDBLevel, &uiGUILevel, &uiFileLevel );
@@ -1795,6 +1805,53 @@ void cPreferences::setBarcodeHidden( bool p_bBarcodeHidden, bool p_boSaveNow )
 bool cPreferences::isBarcodeHidden()
 {
     return m_bBarcodeHidden;
+}
+
+void cPreferences::setShowPatientInfoOnStart( bool p_bShowPatientInfoOnStart, bool p_boSaveNow )
+{
+    m_bShowPatientInfoOnStart = p_bShowPatientInfoOnStart;
+
+    if( p_boSaveNow )
+    {
+        QSettings  obPrefFile( m_qsFileName, QSettings::IniFormat );
+        obPrefFile.setValue( QString::fromAscii( "PatientCard/ShowPatientLastVisitInfo"), m_bShowPatientInfoOnStart );
+    }
+}
+
+bool cPreferences::isShowPatientInfoOnStart()
+{
+    return m_bShowPatientInfoOnStart;
+}
+
+void cPreferences::setShowInfoOnWindow( const int p_nShowInfoOnWindow, bool p_boSaveNow )
+{
+    m_nShowInfoOnWindow = p_nShowInfoOnWindow;
+
+    if( p_boSaveNow )
+    {
+        QSettings  obPrefFile( m_qsFileName, QSettings::IniFormat );
+        obPrefFile.setValue( QString::fromAscii( "PatientCard/ShowInfoOnWindow"), m_nShowInfoOnWindow );
+    }
+}
+
+int cPreferences::getShowInfoOnWindow() const
+{
+    return m_nShowInfoOnWindow;
+}
+
+void cPreferences::setCloseInfoWindowAfterSecs( const int p_nCloseInfoWindowAfterSecs, bool p_boSaveNow )
+{
+    m_nCloseInfoWindowAfterSecs = p_nCloseInfoWindowAfterSecs;
+
+    if( p_boSaveNow )
+    {
+        QSettings  obPrefFile( m_qsFileName, QSettings::IniFormat );
+        obPrefFile.setValue( QString::fromAscii( "PatientCard/CloseInfoWindowAfterSecs" ), m_nCloseInfoWindowAfterSecs );
+    }
+}
+int cPreferences::getCloseInfoWindowAfterSecs() const
+{
+    return m_nCloseInfoWindowAfterSecs;
 }
 
 void cPreferences::setUsageVisibleOnMain( bool p_bUsageVisibleOnMain, bool p_boSaveNow )

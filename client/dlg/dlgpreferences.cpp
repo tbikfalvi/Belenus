@@ -108,6 +108,20 @@ lblAutoSync->setVisible( false );
     chkCardProductBarcodeLength->setChecked( g_poPrefs->isBarcodeLengthDifferent() );
     chkBarcodeHidden->setChecked( g_poPrefs->isBarcodeHidden() );
     chkBarcodeHidden->setEnabled( g_obUser.isInGroup( cAccessGroup::ADMIN ) );
+    chkShowPatientInfoOnStart->setChecked( g_poPrefs->isShowPatientInfoOnStart() );
+    chkShowPatientInfoOnStart->setEnabled( g_obUser.isInGroup( cAccessGroup::ADMIN ) );
+    if( g_poPrefs->getShowInfoOnWindow() == 1 )
+    {
+        rbShowInfoOnMain->setChecked( true );
+    }
+    else
+    {
+        rbShowInfoOnSecondary->setChecked( true );
+    }
+    rbShowInfoOnMain->setEnabled( g_obUser.isInGroup( cAccessGroup::ADMIN ) && chkShowPatientInfoOnStart->isEnabled() );
+    rbShowInfoOnSecondary->setEnabled( g_obUser.isInGroup( cAccessGroup::ADMIN ) && chkShowPatientInfoOnStart->isEnabled() && g_poPrefs->isSecondaryWindowVisible() );
+    ledCloseInfoWindowSecs->setText( QString::number( g_poPrefs->getCloseInfoWindowAfterSecs() ) );
+    ledCloseInfoWindowSecs->setEnabled( chkShowPatientInfoOnStart->isChecked() );
 
     spbPanels->setMaximum( g_poPrefs->getPanelCount() );
     spbPanels->setValue( g_poPrefs->getPanelsPerRow() );
@@ -480,6 +494,16 @@ void cDlgPreferences::accept()
     g_poPrefs->setBarcodePrefix( ledBarcodePrefix->text() );
     g_poPrefs->setBarcodeLengthDifferent( chkCardProductBarcodeLength->isChecked() );
     g_poPrefs->setBarcodeHidden( chkBarcodeHidden->isChecked() );
+    g_poPrefs->setShowPatientInfoOnStart( chkShowPatientInfoOnStart->isChecked() );
+    if( rbShowInfoOnSecondary->isChecked() && pbSecondaryWindow->isChecked() )
+    {
+        g_poPrefs->setShowInfoOnWindow( 2 );
+    }
+    else
+    {
+        g_poPrefs->setShowInfoOnWindow( 1 );
+    }
+    g_poPrefs->setCloseInfoWindowAfterSecs( ledCloseInfoWindowSecs->text().toInt() );
 
     g_poPrefs->setStopInLine( rbStopInLine->isChecked() );
 
@@ -592,11 +616,14 @@ void cDlgPreferences::on_pbSecondaryWindow_toggled(bool checked)
     {
         pbSecondaryWindow->setIcon( QIcon("./resources/40x40_secondary_on.png") );
         lblSecondaryWindow->setText( tr("Visible") );
+        rbShowInfoOnSecondary->setEnabled( g_obUser.isInGroup( cAccessGroup::ADMIN ) && chkShowPatientInfoOnStart->isEnabled() );
     }
     else
     {
         pbSecondaryWindow->setIcon( QIcon("./resources/40x40_secondary_off.png") );
         lblSecondaryWindow->setText( tr("Hidden") );
+        rbShowInfoOnMain->setChecked( true );
+        rbShowInfoOnSecondary->setEnabled( false );
     }
 }
 
@@ -970,5 +997,21 @@ void cDlgPreferences::on_pbModifyExpDate_clicked()
         QMessageBox::warning( this, tr("Warning"),
                               tr("The password you entered is not valid\n"
                                  "to modify application expiration day.") );
+    }
+}
+
+void cDlgPreferences::on_chkShowPatientInfoOnStart_toggled(bool checked)
+{
+    if( checked )
+    {
+        rbShowInfoOnMain->setEnabled( g_obUser.isInGroup( cAccessGroup::ADMIN ) );
+        rbShowInfoOnSecondary->setEnabled( g_obUser.isInGroup( cAccessGroup::ADMIN ) && chkShowPatientInfoOnStart->isEnabled() && g_poPrefs->isSecondaryWindowVisible() );
+        ledCloseInfoWindowSecs->setEnabled( g_obUser.isInGroup( cAccessGroup::ADMIN ) );
+    }
+    else
+    {
+        rbShowInfoOnMain->setEnabled( false );
+        rbShowInfoOnSecondary->setEnabled( false );
+        ledCloseInfoWindowSecs->setEnabled( false );
     }
 }

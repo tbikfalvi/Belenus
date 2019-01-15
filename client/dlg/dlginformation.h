@@ -14,11 +14,14 @@ public:
 
     void    setInformationTitle( QString p_qsTitle );
     void    setInformationText( QString p_qsInformation );
+    void    setTimer( int p_nSeconds );
 
 protected:
+    void    timerEvent( QTimerEvent *p_poEvent );
 
 private:
     QWidget *m_poParent;
+    int      m_nTimer;
 
 private slots:
     void on_pbOk_clicked();

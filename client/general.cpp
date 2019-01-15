@@ -23,6 +23,7 @@
 #include "dlg/dlginformation.h"
 #include "db/dbguest.h"
 #include "db/dbpatientcardtype.h"
+#include "db/dbskintypes.h"
 
 //====================================================================================
 cGeneral::cGeneral()
@@ -31,6 +32,8 @@ cGeneral::cGeneral()
     m_poBlTr            = new QTranslator();
     m_poQtTr            = new QTranslator();
     m_bIsLanguageLoaded = false;
+    m_poWindowMain      = 0;
+    m_poWindowSecondary = 0;
 }
 //====================================================================================
 cGeneral::~cGeneral()
@@ -467,7 +470,7 @@ void cGeneral::showPatientCardInformation(QString p_qsBarcode)
 {
     try
     {
-        cDlgInformation obDlgInformation;
+        cDlgInformation obDlgInformation( m_poWindowMain );
         QString         qsTitle;
         QString         qsText;
         cDBPatientCard  obDBPatientCard;
@@ -514,6 +517,86 @@ void cGeneral::showPatientCardInformation(QString p_qsBarcode)
         }
         obDlgInformation.setInformationTitle( qsTitle );
         obDlgInformation.setInformationText( qsText );
+        obDlgInformation.exec();
+    }
+    catch( cSevException &e )
+    {
+        g_obLogger(e.severity()) << e.what() << EOM;
+        g_obGen.showTrayError( e.what() );
+    }
+}
+//====================================================================================
+void cGeneral::showPatientLastVisitInformation(QString p_qsBarcode, int p_nCloseSeconds)
+//------------------------------------------------------------------------------------
+{
+    try
+    {
+        QWidget        *poParent = m_poWindowMain;
+
+        if( g_poPrefs->getShowInfoOnWindow() == 2 )
+            poParent = m_poWindowSecondary;
+
+        cDlgInformation obDlgInformation( poParent );
+        QString         qsTitle;
+        QString         qsText;
+        cDBPatientCard  obDBPatientCard;
+        cDBGuest        obDBGuest;
+        cDBSkinTypes    obDBSkinType;
+
+        obDBPatientCard.load( p_qsBarcode );
+        obDBGuest.load( obDBPatientCard.patientId() );
+        obDBSkinType.load( obDBGuest.skinTypeId() );
+
+        QString qsOwner     = obDBGuest.name();
+        QString qsSkinType  = obDBSkinType.name();
+        QString qsBarcode   = "";
+
+        if( g_poPrefs->isBarcodeHidden() && !g_obUser.isInGroup( cAccessGroup::ADMIN ) )
+        {
+            QString qsTemp = obDBPatientCard.barcode();
+            qsBarcode = qsTemp.fill('*');
+        }
+        else
+        {
+            qsBarcode = obDBPatientCard.barcode();
+        }
+
+        qsTitle = QObject::tr("%1 last visit information").arg( qsOwner );
+
+        qsText.append( QString("<table>") );
+        qsText.append( QObject::tr("<tr><td width=\"150\"><b>Skin type:</b></td><td>%1</td></tr>").arg( qsSkinType ) );
+        qsText.append( QObject::tr("<tr><td width=\"150\"><b>Patientcard barcode:</b></td><td>%1</td></tr>").arg( qsBarcode ) );
+        qsText.append( QString("</table>") );
+        qsText.append( "<p>" );
+
+        QString qsQuery = QString( "SELECT dateTimeUsed, COUNT(dateTimeUsed), patientcardunits.unitTime "
+                                   "FROM patientcardunits WHERE "
+                                   "patientcardunits.active=0 AND "
+                                   "patientcardid=%1 GROUP BY "
+                                   "patientcardid, dateTimeUsed ORDER BY dateTimeUsed" ).arg( obDBPatientCard.id() );
+        QSqlQuery *poQuery = g_poDB->executeQTQuery( qsQuery );
+
+        qsText.append( QObject::tr("<table><tr><td><b>Last visit</b></td></tr></table>") );
+        qsText.append( QString("<table>") );
+        if( poQuery->size() > 0 )
+        {
+            poQuery->last();
+
+            QString qsDate      = poQuery->value(0).toDateTime().toString( QString("%1  hh:mm").arg( g_poPrefs->getDateFormat() ) );
+            QString qsLength    = QString::number( poQuery->value(1).toInt()*poQuery->value(2).toInt() );
+
+            qsText.append( QObject::tr("<tr><td width=\"150\"><b>Date:</b></td><td>%1</td></tr>").arg( qsDate ) );
+            qsText.append( QObject::tr("<tr><td width=\"150\"><b>Length:</b></td><td>%1 minutes</td></tr>").arg( qsLength ) );
+        }
+        else
+        {
+            qsText.append( QObject::tr("<tr><td><i>There is no recorded usage of this card yet</i></td></tr>") );
+        }
+        qsText.append( QString("</table>") );
+
+        obDlgInformation.setInformationTitle( qsTitle );
+        obDlgInformation.setInformationText( qsText );
+        obDlgInformation.setTimer( p_nCloseSeconds );
         obDlgInformation.exec();
     }
     catch( cSevException &e )
@@ -617,6 +700,18 @@ bool cGeneral::isArchiveOnDifferentPath()
         return false;
 
     return true;
+}
+//====================================================================================
+void cGeneral::setWindowMainWidget( QWidget *poWindow )
+//------------------------------------------------------------------------------------
+{
+    m_poWindowMain = poWindow;
+}
+//====================================================================================
+void cGeneral::setWindowSecondaryWidget( QWidget *poWindow )
+//------------------------------------------------------------------------------------
+{
+    m_poWindowSecondary = poWindow;
 }
 
 //====================================================================================
