@@ -149,6 +149,7 @@ cWndMain::cWndMain( QWidget *parent ) : QMainWindow( parent )
     lblDemoMode->setStyleSheet( "QLabel {color: blue;}" );
 
     g_obGen.setSysTrayIconParent( this );
+    g_obGen.setWindowMainWidget( this );
 
     action_WindowPosition = new QAction( tr( "Set window position / size" ), this);
     action_WindowPosition->setIcon( QIcon( "./resources/40x40_settings.png" ) );
@@ -368,6 +369,8 @@ cWndMain::cWndMain( QWidget *parent ) : QMainWindow( parent )
     showElementsForComponents();
 
     m_dlgSecondaryWindow = new cDlgSecondaryWindow( this );
+
+    g_obGen.setWindowSecondaryWidget( m_dlgSecondaryWindow );
 
     m_dlgSecondaryWindow->initPanels();
     m_dlgSecondaryWindow->setCaption( tr("Belenus Software System - %1 - (c) Pagony Multimedia Studio Bt.").arg( g_poPrefs->getVersion() ) );

@@ -53,49 +53,49 @@
     <message>
         <location filename="db/dbpatientcard.cpp" line="433"/>
         <location filename="db/dbvalidtimeperiods.cpp" line="164"/>
-        <location filename="general.cpp" line="139"/>
+        <location filename="general.cpp" line="142"/>
         <source>Mon</source>
         <translation>Luni</translation>
     </message>
     <message>
         <location filename="db/dbpatientcard.cpp" line="433"/>
         <location filename="db/dbvalidtimeperiods.cpp" line="165"/>
-        <location filename="general.cpp" line="140"/>
+        <location filename="general.cpp" line="143"/>
         <source>Tue</source>
         <translation>Marți</translation>
     </message>
     <message>
         <location filename="db/dbpatientcard.cpp" line="433"/>
         <location filename="db/dbvalidtimeperiods.cpp" line="166"/>
-        <location filename="general.cpp" line="141"/>
+        <location filename="general.cpp" line="144"/>
         <source>Wed</source>
         <translation>Miercuri</translation>
     </message>
     <message>
         <location filename="db/dbpatientcard.cpp" line="433"/>
         <location filename="db/dbvalidtimeperiods.cpp" line="167"/>
-        <location filename="general.cpp" line="142"/>
+        <location filename="general.cpp" line="145"/>
         <source>Thu</source>
         <translation>Joi</translation>
     </message>
     <message>
         <location filename="db/dbpatientcard.cpp" line="433"/>
         <location filename="db/dbvalidtimeperiods.cpp" line="168"/>
-        <location filename="general.cpp" line="143"/>
+        <location filename="general.cpp" line="146"/>
         <source>Fri</source>
         <translation>Vineri</translation>
     </message>
     <message>
         <location filename="db/dbpatientcard.cpp" line="433"/>
         <location filename="db/dbvalidtimeperiods.cpp" line="169"/>
-        <location filename="general.cpp" line="144"/>
+        <location filename="general.cpp" line="147"/>
         <source>Sat</source>
         <translation>Sâmbătă</translation>
     </message>
     <message>
         <location filename="db/dbpatientcard.cpp" line="433"/>
         <location filename="db/dbvalidtimeperiods.cpp" line="170"/>
-        <location filename="general.cpp" line="145"/>
+        <location filename="general.cpp" line="148"/>
         <source>Sun</source>
         <translation>Duminică</translation>
     </message>
@@ -187,120 +187,155 @@
         <translation> Duminică</translation>
     </message>
     <message>
-        <location filename="general.cpp" line="78"/>
-        <location filename="general.cpp" line="590"/>
-        <location filename="general.cpp" line="597"/>
-        <location filename="general.cpp" line="604"/>
-        <location filename="wndmain.cpp" line="3445"/>
+        <location filename="general.cpp" line="81"/>
+        <location filename="general.cpp" line="673"/>
+        <location filename="general.cpp" line="680"/>
+        <location filename="general.cpp" line="687"/>
+        <location filename="wndmain.cpp" line="3448"/>
         <source>Information</source>
         <translation>Informații</translation>
     </message>
     <message>
-        <location filename="general.cpp" line="82"/>
-        <location filename="wndmain.cpp" line="3449"/>
+        <location filename="general.cpp" line="85"/>
+        <location filename="wndmain.cpp" line="3452"/>
         <source>Warning</source>
         <translation>Avertisment</translation>
     </message>
     <message>
-        <location filename="general.cpp" line="86"/>
-        <location filename="wndmain.cpp" line="3453"/>
+        <location filename="general.cpp" line="89"/>
+        <location filename="wndmain.cpp" line="3456"/>
         <source>Attention</source>
         <translation>Atenție</translation>
     </message>
     <message>
-        <location filename="general.cpp" line="90"/>
-        <location filename="wndmain.cpp" line="3457"/>
+        <location filename="general.cpp" line="93"/>
+        <location filename="wndmain.cpp" line="3460"/>
         <source>Error</source>
         <translation>Eroare</translation>
     </message>
     <message>
-        <location filename="general.cpp" line="94"/>
-        <location filename="general.cpp" line="182"/>
-        <location filename="wndmain.cpp" line="3461"/>
+        <location filename="general.cpp" line="97"/>
+        <location filename="general.cpp" line="185"/>
+        <location filename="wndmain.cpp" line="3464"/>
         <source>Question</source>
         <translation>Întrebare</translation>
     </message>
     <message>
-        <location filename="general.cpp" line="183"/>
+        <location filename="general.cpp" line="186"/>
         <source>Do you want to backup database now?</source>
         <translation>Vrei să realizezi o copie de siguranță a bazei de date acum?</translation>
     </message>
     <message>
-        <location filename="general.cpp" line="288"/>
+        <location filename="general.cpp" line="291"/>
         <source>&lt;b&gt;Valid units:&lt;/b&gt;</source>
         <translation>&lt;b&gt;Unități valabile:&lt;/b&gt;</translation>
     </message>
     <message>
-        <location filename="general.cpp" line="306"/>
+        <location filename="general.cpp" line="309"/>
         <source>&lt;td&gt;&lt;b&gt;%1 units&lt;/b&gt;&lt;/td&gt;</source>
         <translation>&lt;td&gt;&lt;b&gt;%1 unități&lt;/b&gt;&lt;/td&gt;</translation>
     </message>
     <message>
-        <location filename="general.cpp" line="307"/>
+        <location filename="general.cpp" line="310"/>
         <source>&lt;td&gt;(&lt;i&gt;%1 minutes&lt;/i&gt;)&lt;/td&gt;</source>
         <translation>&lt;td&gt;(&lt;i&gt;%1 minute&lt;/i&gt;)&lt;/td&gt;</translation>
     </message>
     <message>
-        <location filename="general.cpp" line="309"/>
+        <location filename="general.cpp" line="312"/>
         <source>&lt;td&gt;valid on %1&lt;/td&gt;</source>
         <translation>&lt;td&gt;valabil la %1&lt;/td&gt;</translation>
     </message>
     <message>
-        <location filename="general.cpp" line="330"/>
+        <location filename="general.cpp" line="333"/>
         <source>&lt;br&gt;&lt;i&gt;There is no valid, useable unit on this card.&lt;/i&gt;</source>
         <translation>&lt;br&gt;&lt;i&gt;Pe acest card nu există unități valabile, care ar putea fi folosite.&lt;/i&gt;</translation>
     </message>
     <message>
-        <location filename="general.cpp" line="344"/>
+        <location filename="general.cpp" line="347"/>
         <source>&lt;br&gt;&lt;br&gt;&lt;b&gt;Expired units:&lt;/b&gt;&lt;br&gt;</source>
         <translation>&lt;br&gt;&lt;br&gt;&lt;b&gt;Unități expirate:&lt;/b&gt;&lt;br&gt;</translation>
     </message>
     <message>
-        <location filename="general.cpp" line="355"/>
+        <location filename="general.cpp" line="358"/>
         <source>&lt;br&gt;%1 units (%2 minutes) (%3) expired on %4</source>
         <translation>&lt;br&gt;%1 unități (%2 minute) (%3) expirate la %4</translation>
     </message>
     <message>
-        <location filename="general.cpp" line="404"/>
-        <location filename="general.cpp" line="441"/>
+        <location filename="general.cpp" line="407"/>
+        <location filename="general.cpp" line="444"/>
         <source>%1 units </source>
         <translation>%1 unități </translation>
     </message>
     <message>
-        <location filename="general.cpp" line="405"/>
-        <location filename="general.cpp" line="442"/>
+        <location filename="general.cpp" line="408"/>
+        <location filename="general.cpp" line="445"/>
         <source>(%1 minutes) </source>
         <translation>(%1 minute) </translation>
     </message>
     <message>
-        <location filename="general.cpp" line="486"/>
+        <location filename="general.cpp" line="489"/>
         <source>&lt;tr&gt;&lt;td width=&quot;100&quot;&gt;&lt;b&gt;Owner:&lt;/b&gt;&lt;/td&gt;&lt;td&gt;%1&lt;/td&gt;&lt;/tr&gt;</source>
         <translation>&lt;tr&gt;&lt;td width=&quot;100&quot;&gt;&lt;b&gt;Proprietar:&lt;/b&gt;&lt;/td&gt;&lt;td&gt;%1&lt;/td&gt;&lt;/tr&gt;</translation>
     </message>
     <message>
-        <location filename="general.cpp" line="489"/>
+        <location filename="general.cpp" line="492"/>
         <source>&lt;tr&gt;&lt;td&gt;&lt;b&gt;Valid:&lt;/b&gt;&lt;/td&gt;&lt;td&gt;%1 -&gt; %2&lt;/td&gt;&lt;/tr&gt;</source>
         <translation>&lt;tr&gt;&lt;td&gt;&lt;b&gt;Valabil la:&lt;/b&gt;&lt;/td&gt;&lt;td&gt;%1 -&gt; %2&lt;/td&gt;&lt;/tr&gt;</translation>
     </message>
     <message>
-        <location filename="general.cpp" line="493"/>
+        <location filename="general.cpp" line="496"/>
         <source>&lt;tr&gt;&lt;td&gt;&lt;b&gt;Valid:&lt;/b&gt;&lt;/td&gt;&lt;td&gt;&lt;/td&gt;&lt;/tr&gt;</source>
         <translation>&lt;tr&gt;&lt;td&gt;&lt;b&gt;Valabil:&lt;/b&gt;&lt;/td&gt;&lt;td&gt;&lt;/td&gt;&lt;/tr&gt;</translation>
     </message>
     <message>
-        <location filename="general.cpp" line="495"/>
+        <location filename="general.cpp" line="498"/>
         <source>&lt;tr&gt;&lt;td&gt;&lt;b&gt;Units:&lt;/b&gt;&lt;/td&gt;&lt;td&gt;%1&lt;/td&gt;&lt;/tr&gt;</source>
         <translation>&lt;tr&gt;&lt;td&gt;&lt;b&gt;Unități:&lt;/b&gt;&lt;/td&gt;&lt;td&gt;%1&lt;/td&gt;&lt;/tr&gt;</translation>
     </message>
     <message>
-        <location filename="general.cpp" line="496"/>
+        <location filename="general.cpp" line="499"/>
         <source>&lt;tr&gt;&lt;td&gt;&lt;b&gt;Comment:&lt;/b&gt;&lt;/td&gt;&lt;/tr&gt;</source>
         <translation>&lt;tr&gt;&lt;td&gt;&lt;b&gt;Observații:&lt;/b&gt;&lt;/td&gt;&lt;/tr&gt;</translation>
     </message>
     <message>
-        <location filename="general.cpp" line="513"/>
+        <location filename="general.cpp" line="516"/>
         <source> - INACTIVE Patientcard</source>
         <translation> - Card de pacient INACTIV</translation>
+    </message>
+    <message>
+        <location filename="general.cpp" line="564"/>
+        <source>%1 last visit information</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="general.cpp" line="567"/>
+        <source>&lt;tr&gt;&lt;td width=&quot;150&quot;&gt;&lt;b&gt;Skin type:&lt;/b&gt;&lt;/td&gt;&lt;td&gt;%1&lt;/td&gt;&lt;/tr&gt;</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="general.cpp" line="568"/>
+        <source>&lt;tr&gt;&lt;td width=&quot;150&quot;&gt;&lt;b&gt;Patientcard barcode:&lt;/b&gt;&lt;/td&gt;&lt;td&gt;%1&lt;/td&gt;&lt;/tr&gt;</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="general.cpp" line="579"/>
+        <source>&lt;table&gt;&lt;tr&gt;&lt;td&gt;&lt;b&gt;Last visit&lt;/b&gt;&lt;/td&gt;&lt;/tr&gt;&lt;/table&gt;</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="general.cpp" line="588"/>
+        <source>&lt;tr&gt;&lt;td width=&quot;150&quot;&gt;&lt;b&gt;Date:&lt;/b&gt;&lt;/td&gt;&lt;td&gt;%1&lt;/td&gt;&lt;/tr&gt;</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="general.cpp" line="589"/>
+        <source>&lt;tr&gt;&lt;td width=&quot;150&quot;&gt;&lt;b&gt;Length:&lt;/b&gt;&lt;/td&gt;&lt;td&gt;%1 minutes&lt;/td&gt;&lt;/tr&gt;</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="general.cpp" line="593"/>
+        <source>&lt;tr&gt;&lt;td&gt;&lt;i&gt;There is no recorded usage of this card yet&lt;/i&gt;&lt;/td&gt;&lt;/tr&gt;</source>
+        <translation type="unfinished"></translation>
     </message>
     <message>
         <location filename="main.cpp" line="116"/>
@@ -503,17 +538,17 @@ Aplicația Belenus nu poate fi pornită fără server bază de date activ..
 Te rog, pornește aplicația WampServer și apoi repornește aplicația Belenus.</translation>
     </message>
     <message>
-        <location filename="preferences.cpp" line="152"/>
+        <location filename="preferences.cpp" line="156"/>
         <source> NOT STERILE </source>
         <translation> NESTERIL </translation>
     </message>
     <message>
-        <location filename="preferences.cpp" line="153"/>
+        <location filename="preferences.cpp" line="157"/>
         <source> TUBE REPLACEMENT NEEDED </source>
         <translation> TUBUL TREBUIE ÎNLOCUIT </translation>
     </message>
     <message>
-        <location filename="preferences.cpp" line="154"/>
+        <location filename="preferences.cpp" line="158"/>
         <source> TUBE CLEAN-UP NEEDED </source>
         <translation> TUBUL TREBUIE CURĂȚAT </translation>
     </message>
@@ -2693,55 +2728,55 @@ asociat cu unul sau mai multe panouri nu este permisă.</translation>
 <context>
     <name>cDlgPanelUse</name>
     <message>
-        <location filename="dlg/dlgpaneluse.cpp" line="192"/>
+        <location filename="dlg/dlgpaneluse.cpp" line="194"/>
         <source>Start</source>
         <translation>Start</translation>
     </message>
     <message>
-        <location filename="dlg/dlgpaneluse.cpp" line="197"/>
+        <location filename="dlg/dlgpaneluse.cpp" line="199"/>
         <source>Owner : </source>
         <translation>Proprietar : </translation>
     </message>
     <message>
-        <location filename="dlg/dlgpaneluse.cpp" line="198"/>
-        <location filename="dlg/dlgpaneluse.cpp" line="760"/>
+        <location filename="dlg/dlgpaneluse.cpp" line="200"/>
+        <location filename="dlg/dlgpaneluse.cpp" line="776"/>
         <source>Comment :
 </source>
         <translation>Observații :
 </translation>
     </message>
     <message>
-        <location filename="dlg/dlgpaneluse.cpp" line="226"/>
+        <location filename="dlg/dlgpaneluse.cpp" line="228"/>
         <source>&lt;No time intervall selected&gt;</source>
         <translation>&lt;Nu a fost selectat interval de tip&gt;</translation>
     </message>
     <message>
-        <location filename="dlg/dlgpaneluse.cpp" line="346"/>
+        <location filename="dlg/dlgpaneluse.cpp" line="351"/>
         <source>
 &lt;b&gt;%1 units (%2 minutes) valid on&lt;/b&gt;%3</source>
         <translation>
 &lt;b&gt;%1 unități (%2 minute) valabile la&lt;/b&gt;%3</translation>
     </message>
     <message>
-        <location filename="dlg/dlgpaneluse.cpp" line="399"/>
+        <location filename="dlg/dlgpaneluse.cpp" line="404"/>
         <source>Owner : %1</source>
         <translation>Proprietar : %1</translation>
     </message>
     <message>
-        <location filename="dlg/dlgpaneluse.cpp" line="400"/>
+        <location filename="dlg/dlgpaneluse.cpp" line="405"/>
         <source>Comment :
 %1</source>
         <translation>Observații :
 %1</translation>
     </message>
     <message>
-        <location filename="dlg/dlgpaneluse.cpp" line="445"/>
-        <location filename="dlg/dlgpaneluse.cpp" line="622"/>
+        <location filename="dlg/dlgpaneluse.cpp" line="461"/>
+        <location filename="dlg/dlgpaneluse.cpp" line="638"/>
         <source>Warning</source>
         <translation>Avertisment</translation>
     </message>
     <message>
-        <location filename="dlg/dlgpaneluse.cpp" line="446"/>
+        <location filename="dlg/dlgpaneluse.cpp" line="462"/>
         <source>This time period did not saved in the database
 for the actually selected device.
 Please select valid value from the list.</source>
@@ -2750,39 +2785,39 @@ pentru dispozitivul actual selectat.
 Te rog, selectează valoarea validă de pe listă.</translation>
     </message>
     <message>
-        <location filename="dlg/dlgpaneluse.cpp" line="576"/>
+        <location filename="dlg/dlgpaneluse.cpp" line="592"/>
         <source>Ok</source>
         <translation>OK</translation>
     </message>
     <message>
-        <location filename="dlg/dlgpaneluse.cpp" line="623"/>
+        <location filename="dlg/dlgpaneluse.cpp" line="639"/>
         <source>Invalid barcode length.
 The length of the barcode should be %1.</source>
         <translation>Lungimea codului de bare este incorectă.
 Lungimea codului de bare ar trebui să fie %1.</translation>
     </message>
     <message>
-        <location filename="dlg/dlgpaneluse.cpp" line="636"/>
-        <location filename="dlg/dlgpaneluse.cpp" line="644"/>
+        <location filename="dlg/dlgpaneluse.cpp" line="652"/>
+        <location filename="dlg/dlgpaneluse.cpp" line="660"/>
         <source>Attention</source>
         <translation>Atenție</translation>
     </message>
     <message>
-        <location filename="dlg/dlgpaneluse.cpp" line="637"/>
+        <location filename="dlg/dlgpaneluse.cpp" line="653"/>
         <source>You are not allowed to use system administrator card.
 Please log in as a system administrator if you want to use this card.</source>
         <translation>Nu ai voie să folosești cardul de administrator sistem.
 Te rog, înregistrează-te ca administrator de sistem dacă vrei să folosești acest card.</translation>
     </message>
     <message>
-        <location filename="dlg/dlgpaneluse.cpp" line="645"/>
+        <location filename="dlg/dlgpaneluse.cpp" line="661"/>
         <source>This patientcard has been lost and replaced
 and can not be used or sold again.</source>
         <translation>Acest card pacient a fost pierdut și înlocuit
 și nu poate fi folosit sau vândut din nou.</translation>
     </message>
     <message>
-        <location filename="dlg/dlgpaneluse.cpp" line="661"/>
+        <location filename="dlg/dlgpaneluse.cpp" line="677"/>
         <source>
 
 Due to there is no time left, the patientcard will be reseted and deactivated.</source>
@@ -2791,14 +2826,14 @@ Due to there is no time left, the patientcard will be reseted and deactivated.</
 Deoarece nu a mai rămas timp, cardul de pacient va fi resetat și dezactivat.</translation>
     </message>
     <message>
-        <location filename="dlg/dlgpaneluse.cpp" line="663"/>
-        <location filename="dlg/dlgpaneluse.cpp" line="697"/>
-        <location filename="dlg/dlgpaneluse.cpp" line="722"/>
+        <location filename="dlg/dlgpaneluse.cpp" line="679"/>
+        <location filename="dlg/dlgpaneluse.cpp" line="713"/>
+        <location filename="dlg/dlgpaneluse.cpp" line="738"/>
         <source>Question</source>
         <translation>Întrebare</translation>
     </message>
     <message>
-        <location filename="dlg/dlgpaneluse.cpp" line="664"/>
+        <location filename="dlg/dlgpaneluse.cpp" line="680"/>
         <source>This patientcard can not be used with these settings:
 
 Available units: %1
@@ -2813,14 +2848,14 @@ Timp disponibil: %2 (hh:mm:ss)
 Vrei să reîncarci cardul de pacient acum?%3</translation>
     </message>
     <message>
-        <location filename="dlg/dlgpaneluse.cpp" line="698"/>
+        <location filename="dlg/dlgpaneluse.cpp" line="714"/>
         <source>This barcode has not been activated yet.
 Do you want to activate and sell it now?</source>
         <translation>Acest cod de bare nu a fost încă activat.
 Vrei să-l activezi și să-l vinzi acum?</translation>
     </message>
     <message>
-        <location filename="dlg/dlgpaneluse.cpp" line="723"/>
+        <location filename="dlg/dlgpaneluse.cpp" line="739"/>
         <source>This barcode has not found in the database.
 Do you want to save it and sell it now?</source>
         <translation>Acest cod de bare nu a fost găsit în baza de date.
@@ -4062,70 +4097,70 @@ sau reîncarcă cardul de pacient înainte de utilizare.</translation>
         <translation>&amp;Anulează</translation>
     </message>
     <message>
-        <location filename="dlg/dlgpreferences.cpp" line="119"/>
-        <location filename="dlg/dlgpreferences.cpp" line="594"/>
+        <location filename="dlg/dlgpreferences.cpp" line="133"/>
+        <location filename="dlg/dlgpreferences.cpp" line="618"/>
         <source>Visible</source>
         <translation>Vizibil</translation>
     </message>
     <message>
-        <location filename="dlg/dlgpreferences.cpp" line="124"/>
-        <location filename="dlg/dlgpreferences.cpp" line="599"/>
+        <location filename="dlg/dlgpreferences.cpp" line="138"/>
+        <location filename="dlg/dlgpreferences.cpp" line="624"/>
         <source>Hidden</source>
         <translation>Ascuns</translation>
     </message>
     <message>
-        <location filename="dlg/dlgpreferences.cpp" line="290"/>
+        <location filename="dlg/dlgpreferences.cpp" line="304"/>
         <source>Mon</source>
         <translation>Luni</translation>
     </message>
     <message>
-        <location filename="dlg/dlgpreferences.cpp" line="291"/>
+        <location filename="dlg/dlgpreferences.cpp" line="305"/>
         <source>Tue</source>
         <translation>Marți</translation>
     </message>
     <message>
-        <location filename="dlg/dlgpreferences.cpp" line="292"/>
+        <location filename="dlg/dlgpreferences.cpp" line="306"/>
         <source>Wed</source>
         <translation>Miercuri</translation>
     </message>
     <message>
-        <location filename="dlg/dlgpreferences.cpp" line="293"/>
+        <location filename="dlg/dlgpreferences.cpp" line="307"/>
         <source>Thu</source>
         <translation>Joi</translation>
     </message>
     <message>
-        <location filename="dlg/dlgpreferences.cpp" line="294"/>
+        <location filename="dlg/dlgpreferences.cpp" line="308"/>
         <source>Fri</source>
         <translation>Vineri</translation>
     </message>
     <message>
-        <location filename="dlg/dlgpreferences.cpp" line="295"/>
+        <location filename="dlg/dlgpreferences.cpp" line="309"/>
         <source>Sat</source>
         <translation>Sâmbătă</translation>
     </message>
     <message>
-        <location filename="dlg/dlgpreferences.cpp" line="296"/>
+        <location filename="dlg/dlgpreferences.cpp" line="310"/>
         <source>Sun</source>
         <translation>Duminică</translation>
     </message>
     <message>
-        <location filename="dlg/dlgpreferences.cpp" line="389"/>
+        <location filename="dlg/dlgpreferences.cpp" line="403"/>
         <source>Attention</source>
         <translation>Atenție</translation>
     </message>
     <message>
-        <location filename="dlg/dlgpreferences.cpp" line="390"/>
+        <location filename="dlg/dlgpreferences.cpp" line="404"/>
         <source>Decimal symbol and Digit grouping symbol can not be the same.</source>
         <translation>Separatorul zecimal și separatorul pentru mii nu poate fi identic.</translation>
     </message>
     <message>
-        <location filename="dlg/dlgpreferences.cpp" line="396"/>
-        <location filename="dlg/dlgpreferences.cpp" line="806"/>
+        <location filename="dlg/dlgpreferences.cpp" line="410"/>
+        <location filename="dlg/dlgpreferences.cpp" line="833"/>
         <source>Question</source>
         <translation>Întrebare</translation>
     </message>
     <message>
-        <location filename="dlg/dlgpreferences.cpp" line="397"/>
+        <location filename="dlg/dlgpreferences.cpp" line="411"/>
         <source>Are you sure want to increase the length of the barcode of the patientcard?
 
 Please note that the barcodes will be supplemented with additional &apos;0&apos; characters at the beginning of the barcode for every patientcards, where the barcode is shorter than %1 characters.</source>
@@ -4134,12 +4169,12 @@ Please note that the barcodes will be supplemented with additional &apos;0&apos;
 Te rog, ia în considerare faptul că, pentru fiecare card de pacient. la codurile de bare vor fi adăugate &apos;0&apos; caractere suplimentare la începutul codului de bare, în situațiile în care codul de bare este mai scurt de %1 caractere.</translation>
     </message>
     <message>
-        <location filename="dlg/dlgpreferences.cpp" line="409"/>
+        <location filename="dlg/dlgpreferences.cpp" line="423"/>
         <source> Cut the beginning | Cut the end | Abort  </source>
         <translation> Taie începutul | Taie sfârșitul | Întrerupe  </translation>
     </message>
     <message>
-        <location filename="dlg/dlgpreferences.cpp" line="410"/>
+        <location filename="dlg/dlgpreferences.cpp" line="424"/>
         <source>Are you sure you want to decrease the length of the barcode of the patientcard?
 
 Please note that all of the patientcards will be affectedwhere the length of the barcode is longer than %1 characters</source>
@@ -4148,245 +4183,245 @@ Please note that all of the patientcards will be affectedwhere the length of the
 Te rog, ia în considerare faptul că toate cardurile de pacient vor fi afectate, în situațiile în care codul de bare este mai lung de %1 caractere</translation>
     </message>
     <message>
-        <location filename="dlg/dlgpreferences.cpp" line="414"/>
+        <location filename="dlg/dlgpreferences.cpp" line="428"/>
         <source>If you select &apos;Cut the beginning&apos; the first %1 characters will be removed from the beginning of the barcode
 If you select &apos;Cut the end&apos; the last %1 characters willbe removed at the end of the barcode</source>
         <translation>Dacă selectezi &apos;Taie începutul&apos;, primele %1 caractere vor fi înlăturate de la începtul codului de bare
 Dacă selectezi &apos;Taie sfârșitul&apos;, primele %1 caractere vor fi eliminate de la sfârșitul codului de bare</translation>
     </message>
     <message>
-        <location filename="dlg/dlgpreferences.cpp" line="440"/>
-        <location filename="dlg/dlgpreferences.cpp" line="447"/>
-        <location filename="dlg/dlgpreferences.cpp" line="455"/>
-        <location filename="dlg/dlgpreferences.cpp" line="816"/>
-        <location filename="dlg/dlgpreferences.cpp" line="907"/>
-        <location filename="dlg/dlgpreferences.cpp" line="953"/>
-        <location filename="dlg/dlgpreferences.cpp" line="970"/>
+        <location filename="dlg/dlgpreferences.cpp" line="454"/>
+        <location filename="dlg/dlgpreferences.cpp" line="461"/>
+        <location filename="dlg/dlgpreferences.cpp" line="469"/>
+        <location filename="dlg/dlgpreferences.cpp" line="843"/>
+        <location filename="dlg/dlgpreferences.cpp" line="934"/>
+        <location filename="dlg/dlgpreferences.cpp" line="980"/>
+        <location filename="dlg/dlgpreferences.cpp" line="997"/>
         <source>Warning</source>
         <translation>Avertisment</translation>
     </message>
     <message>
-        <location filename="dlg/dlgpreferences.cpp" line="441"/>
+        <location filename="dlg/dlgpreferences.cpp" line="455"/>
         <source>&apos;Not sterile&apos; text can not be empty.</source>
         <translation>Textul &apos;Nesteril&apos; nu poate fi gol.</translation>
     </message>
     <message>
-        <location filename="dlg/dlgpreferences.cpp" line="448"/>
+        <location filename="dlg/dlgpreferences.cpp" line="462"/>
         <source>&apos;Tube replacement needed&apos; text can not be empty.</source>
         <translation>Textul &apos;Este nevoie de tub de înlocuire&apos; nu poate fi gol.</translation>
     </message>
     <message>
-        <location filename="dlg/dlgpreferences.cpp" line="456"/>
+        <location filename="dlg/dlgpreferences.cpp" line="470"/>
         <source>&apos;Device clean needed&apos; text can not be empty.</source>
         <translation>Textul &apos;Este nevoie de curățarea dispozitivului&apos; nu poate fi gol.</translation>
     </message>
     <message>
-        <location filename="dlg/dlgpreferences.cpp" line="558"/>
+        <location filename="dlg/dlgpreferences.cpp" line="582"/>
         <source> Mon</source>
         <translation> Luni</translation>
     </message>
     <message>
-        <location filename="dlg/dlgpreferences.cpp" line="559"/>
+        <location filename="dlg/dlgpreferences.cpp" line="583"/>
         <source> Tue</source>
         <translation> Marți</translation>
     </message>
     <message>
-        <location filename="dlg/dlgpreferences.cpp" line="560"/>
+        <location filename="dlg/dlgpreferences.cpp" line="584"/>
         <source> Wed</source>
         <translation> Miercuri</translation>
     </message>
     <message>
-        <location filename="dlg/dlgpreferences.cpp" line="561"/>
+        <location filename="dlg/dlgpreferences.cpp" line="585"/>
         <source> Thu</source>
         <translation> Joi</translation>
     </message>
     <message>
-        <location filename="dlg/dlgpreferences.cpp" line="562"/>
+        <location filename="dlg/dlgpreferences.cpp" line="586"/>
         <source> Fri</source>
         <translation> Vineri</translation>
     </message>
     <message>
-        <location filename="dlg/dlgpreferences.cpp" line="563"/>
+        <location filename="dlg/dlgpreferences.cpp" line="587"/>
         <source> Sat</source>
         <translation> Sâmbătă</translation>
     </message>
     <message>
-        <location filename="dlg/dlgpreferences.cpp" line="564"/>
+        <location filename="dlg/dlgpreferences.cpp" line="588"/>
         <source> Sun</source>
         <translation> Duminică</translation>
     </message>
     <message>
-        <location filename="dlg/dlgpreferences.cpp" line="584"/>
+        <location filename="dlg/dlgpreferences.cpp" line="608"/>
         <source>Information</source>
         <translation>Informații</translation>
     </message>
     <message>
-        <location filename="dlg/dlgpreferences.cpp" line="585"/>
+        <location filename="dlg/dlgpreferences.cpp" line="609"/>
         <source>Some of the changes you made will only be applied after the application is restarted.</source>
         <translation>Unele modificări efectuate vor fi aplicate numai după repornirea aplicației.</translation>
     </message>
     <message>
-        <location filename="dlg/dlgpreferences.cpp" line="617"/>
-        <location filename="dlg/dlgpreferences.cpp" line="624"/>
+        <location filename="dlg/dlgpreferences.cpp" line="644"/>
+        <location filename="dlg/dlgpreferences.cpp" line="651"/>
         <source>(%1 + %2 % VAT)</source>
         <translation>(%1 + %2 % TVA)</translation>
     </message>
     <message>
-        <location filename="dlg/dlgpreferences.cpp" line="653"/>
-        <location filename="dlg/dlgpreferences.cpp" line="667"/>
+        <location filename="dlg/dlgpreferences.cpp" line="680"/>
+        <location filename="dlg/dlgpreferences.cpp" line="694"/>
         <source>Select Directory</source>
         <translation>Selectează directorul</translation>
     </message>
     <message>
-        <location filename="dlg/dlgpreferences.cpp" line="680"/>
-        <location filename="dlg/dlgpreferences.cpp" line="684"/>
-        <location filename="dlg/dlgpreferences.cpp" line="688"/>
+        <location filename="dlg/dlgpreferences.cpp" line="707"/>
+        <location filename="dlg/dlgpreferences.cpp" line="711"/>
+        <location filename="dlg/dlgpreferences.cpp" line="715"/>
         <source>Not defined</source>
         <translation>Nedefinit</translation>
     </message>
     <message>
-        <location filename="dlg/dlgpreferences.cpp" line="681"/>
+        <location filename="dlg/dlgpreferences.cpp" line="708"/>
         <source>Younger than 18</source>
         <translation>Sub 18 ani</translation>
     </message>
     <message>
-        <location filename="dlg/dlgpreferences.cpp" line="682"/>
+        <location filename="dlg/dlgpreferences.cpp" line="709"/>
         <source>Above 60</source>
         <translation>Peste 60</translation>
     </message>
     <message>
-        <location filename="dlg/dlgpreferences.cpp" line="685"/>
+        <location filename="dlg/dlgpreferences.cpp" line="712"/>
         <source>Male</source>
         <translation>Bărbat</translation>
     </message>
     <message>
-        <location filename="dlg/dlgpreferences.cpp" line="686"/>
+        <location filename="dlg/dlgpreferences.cpp" line="713"/>
         <source>Female</source>
         <translation>Femeie</translation>
     </message>
     <message>
-        <location filename="dlg/dlgpreferences.cpp" line="690"/>
+        <location filename="dlg/dlgpreferences.cpp" line="717"/>
         <source>Service cards</source>
         <translation>Carduri servicii</translation>
     </message>
     <message>
-        <location filename="dlg/dlgpreferences.cpp" line="692"/>
+        <location filename="dlg/dlgpreferences.cpp" line="719"/>
         <source>Service card, only for service usage.</source>
         <translation>Card servicii, numai pentru utilizare serviciu.</translation>
     </message>
     <message>
-        <location filename="dlg/dlgpreferences.cpp" line="694"/>
+        <location filename="dlg/dlgpreferences.cpp" line="721"/>
         <source>&lt;No group associated&gt;</source>
         <translation>&lt;Nu există niciun grup asociat&gt;</translation>
     </message>
     <message>
-        <location filename="dlg/dlgpreferences.cpp" line="696"/>
+        <location filename="dlg/dlgpreferences.cpp" line="723"/>
         <source>Using solarium</source>
         <translation>Folosirea solarului</translation>
     </message>
     <message>
-        <location filename="dlg/dlgpreferences.cpp" line="697"/>
+        <location filename="dlg/dlgpreferences.cpp" line="724"/>
         <source>Selling patientcard</source>
         <translation>Vânzare card pacient</translation>
     </message>
     <message>
-        <location filename="dlg/dlgpreferences.cpp" line="698"/>
+        <location filename="dlg/dlgpreferences.cpp" line="725"/>
         <source>Filling patientcard</source>
         <translation>Încărcare card pacient</translation>
     </message>
     <message>
-        <location filename="dlg/dlgpreferences.cpp" line="699"/>
+        <location filename="dlg/dlgpreferences.cpp" line="726"/>
         <source>Selling product</source>
         <translation>Vânzare produs</translation>
     </message>
     <message>
-        <location filename="dlg/dlgpreferences.cpp" line="700"/>
+        <location filename="dlg/dlgpreferences.cpp" line="727"/>
         <source>Replacing lost patientcard</source>
         <translation>Înlocuire card pacient pierdut</translation>
     </message>
     <message>
-        <location filename="dlg/dlgpreferences.cpp" line="701"/>
+        <location filename="dlg/dlgpreferences.cpp" line="728"/>
         <source>Assign patientcard</source>
         <translation>Alocare card pacient</translation>
     </message>
     <message>
-        <location filename="dlg/dlgpreferences.cpp" line="702"/>
-        <location filename="dlg/dlgpreferences.cpp" line="703"/>
+        <location filename="dlg/dlgpreferences.cpp" line="729"/>
+        <location filename="dlg/dlgpreferences.cpp" line="730"/>
         <source>Other</source>
         <translation>Alt</translation>
     </message>
     <message>
-        <location filename="dlg/dlgpreferences.cpp" line="704"/>
+        <location filename="dlg/dlgpreferences.cpp" line="731"/>
         <source>Storage action</source>
         <translation>Acțiune depozitare</translation>
     </message>
     <message>
-        <location filename="dlg/dlgpreferences.cpp" line="705"/>
+        <location filename="dlg/dlgpreferences.cpp" line="732"/>
         <source>Casssa expense</source>
         <translation>Cheltuială casă</translation>
     </message>
     <message>
-        <location filename="dlg/dlgpreferences.cpp" line="707"/>
+        <location filename="dlg/dlgpreferences.cpp" line="734"/>
         <source>Add product to storage</source>
         <translation>Adaugă produs la depozit</translation>
     </message>
     <message>
-        <location filename="dlg/dlgpreferences.cpp" line="708"/>
+        <location filename="dlg/dlgpreferences.cpp" line="735"/>
         <source>Product disposal</source>
         <translation>Eliminare produs</translation>
     </message>
     <message>
-        <location filename="dlg/dlgpreferences.cpp" line="709"/>
+        <location filename="dlg/dlgpreferences.cpp" line="736"/>
         <source>Product donate</source>
         <translation>Donare produs</translation>
     </message>
     <message>
-        <location filename="dlg/dlgpreferences.cpp" line="711"/>
+        <location filename="dlg/dlgpreferences.cpp" line="738"/>
         <source>Cash</source>
         <translation>Numerar</translation>
     </message>
     <message>
-        <location filename="dlg/dlgpreferences.cpp" line="712"/>
+        <location filename="dlg/dlgpreferences.cpp" line="739"/>
         <source>Credit card</source>
         <translation>Card de credit</translation>
     </message>
     <message>
-        <location filename="dlg/dlgpreferences.cpp" line="714"/>
+        <location filename="dlg/dlgpreferences.cpp" line="741"/>
         <source>Guest entered into database</source>
         <translation>Oaspete introdus în baza de date</translation>
     </message>
     <message>
-        <location filename="dlg/dlgpreferences.cpp" line="715"/>
+        <location filename="dlg/dlgpreferences.cpp" line="742"/>
         <source>Purchase patientcard</source>
         <translation>Achiziționează card de pacient</translation>
     </message>
     <message>
-        <location filename="dlg/dlgpreferences.cpp" line="716"/>
+        <location filename="dlg/dlgpreferences.cpp" line="743"/>
         <source>Refill patientcard</source>
         <translation>Reîncarcare card pacient</translation>
     </message>
     <message>
-        <location filename="dlg/dlgpreferences.cpp" line="717"/>
+        <location filename="dlg/dlgpreferences.cpp" line="744"/>
         <source>Purchase product</source>
         <translation>Achiziționare produs</translation>
     </message>
     <message>
-        <location filename="dlg/dlgpreferences.cpp" line="718"/>
+        <location filename="dlg/dlgpreferences.cpp" line="745"/>
         <source>Using device with card</source>
         <translation>Folosirea dispozitivului cu cardul</translation>
     </message>
     <message>
-        <location filename="dlg/dlgpreferences.cpp" line="719"/>
+        <location filename="dlg/dlgpreferences.cpp" line="746"/>
         <source>Using device with cash</source>
         <translation>Folosirea dispozitivului cu numerar</translation>
     </message>
     <message>
-        <location filename="dlg/dlgpreferences.cpp" line="724"/>
+        <location filename="dlg/dlgpreferences.cpp" line="751"/>
         <source>(example %1)</source>
         <translation>(exemplu %1)</translation>
     </message>
     <message>
-        <location filename="dlg/dlgpreferences.cpp" line="807"/>
+        <location filename="dlg/dlgpreferences.cpp" line="834"/>
         <source>You just enabled the http synchronization but the WebSync application is not running.
 
 Do you want to start this application now?</source>
@@ -4395,7 +4430,7 @@ Do you want to start this application now?</source>
 Vrei să pornești această aplicație acum?</translation>
     </message>
     <message>
-        <location filename="dlg/dlgpreferences.cpp" line="817"/>
+        <location filename="dlg/dlgpreferences.cpp" line="844"/>
         <source>Error occured when starting process:WebSync.exe
 
 Error code: %1
@@ -4416,29 +4451,29 @@ Cod eroare: %1
 5 &gt; A intervenit o eroare necunoscută.</translation>
     </message>
     <message>
-        <location filename="dlg/dlgpreferences.cpp" line="853"/>
+        <location filename="dlg/dlgpreferences.cpp" line="880"/>
         <source>Error</source>
         <translation>Eroare</translation>
     </message>
     <message>
-        <location filename="dlg/dlgpreferences.cpp" line="854"/>
+        <location filename="dlg/dlgpreferences.cpp" line="881"/>
         <source>Values of the Password and Retype Password fields are not the same</source>
         <translation>Valoarea câmpului Parolă și cea a câmpului Retastează parola nu este identică</translation>
     </message>
     <message>
-        <location filename="dlg/dlgpreferences.cpp" line="908"/>
+        <location filename="dlg/dlgpreferences.cpp" line="935"/>
         <source>The password you entered is not valid
 to modify device admin password.</source>
         <translation>Parola introdusă nu este valabilă
 pentru modificarea parolei de administrator dispozitiv.</translation>
     </message>
     <message>
-        <location filename="dlg/dlgpreferences.cpp" line="954"/>
+        <location filename="dlg/dlgpreferences.cpp" line="981"/>
         <source>You are not allowed to modify application expiration day.</source>
         <translation>Modificarea datei expirării aplicației nu este permisă.</translation>
     </message>
     <message>
-        <location filename="dlg/dlgpreferences.cpp" line="971"/>
+        <location filename="dlg/dlgpreferences.cpp" line="998"/>
         <source>The password you entered is not valid
 to modify application expiration day.</source>
         <translation>Parola introdusă nu este valabilă
@@ -6669,101 +6704,101 @@ Vor fi afișate numai %1 panouri.</translation>
 <context>
     <name>cWndMain</name>
     <message>
-        <location filename="wndmain.cpp" line="153"/>
+        <location filename="wndmain.cpp" line="154"/>
         <source>Set window position / size</source>
         <translation>Setează poziția / mărimea ferestrei</translation>
     </message>
     <message>
-        <location filename="wndmain.cpp" line="157"/>
+        <location filename="wndmain.cpp" line="158"/>
         <source>Reset main window position</source>
         <translation>Resetează poziția principală a ferestrei</translation>
     </message>
     <message>
-        <location filename="wndmain.cpp" line="161"/>
+        <location filename="wndmain.cpp" line="162"/>
         <source>Reset secondary window position</source>
         <translation>Resetează poziția secundară a ferestrei</translation>
     </message>
     <message>
-        <location filename="wndmain.cpp" line="165"/>
+        <location filename="wndmain.cpp" line="166"/>
         <source>Reset advertisement windows position</source>
         <translation>Resetează poziția ferestrelor de publicitate</translation>
     </message>
     <message>
-        <location filename="wndmain.cpp" line="169"/>
-        <location filename="wndmain.cpp" line="177"/>
+        <location filename="wndmain.cpp" line="170"/>
+        <location filename="wndmain.cpp" line="178"/>
         <source>Start</source>
         <translation>Start</translation>
     </message>
     <message>
-        <location filename="wndmain.cpp" line="173"/>
+        <location filename="wndmain.cpp" line="174"/>
         <source>Stop</source>
         <translation>Stop</translation>
     </message>
     <message>
-        <location filename="wndmain.cpp" line="373"/>
+        <location filename="wndmain.cpp" line="376"/>
         <source>Belenus Software System - %1 - (c) Pagony Multimedia Studio Bt.</source>
         <translation>Belenus Software System - %1 - (c) Pagony Multimedia Studio Bt.</translation>
     </message>
     <message>
-        <location filename="wndmain.cpp" line="539"/>
+        <location filename="wndmain.cpp" line="542"/>
         <source>Password</source>
         <translation>Parolă</translation>
     </message>
     <message>
-        <location filename="wndmain.cpp" line="540"/>
+        <location filename="wndmain.cpp" line="543"/>
         <source>Your password is empty. Please change it to a valid password.</source>
         <translation>Parola ta este goală. Te rog, schimb-o pe o parol valabilă.</translation>
     </message>
     <message>
-        <location filename="wndmain.cpp" line="559"/>
+        <location filename="wndmain.cpp" line="562"/>
         <source>Incorrect User Name and/or Password. Please try again.</source>
         <translation>Nume de utilizator și/sau parolă incorectă. Te rog să încerci din nou.</translation>
     </message>
     <message>
-        <location filename="wndmain.cpp" line="598"/>
+        <location filename="wndmain.cpp" line="601"/>
         <source>KiwiSun administrator logged in.
 Please note cassa is disabled!</source>
         <translation>Administrator KiwiSun autentificat.
 Te rog, ia în considerare faptul că casa este dezactivată!</translation>
     </message>
     <message>
-        <location filename="wndmain.cpp" line="623"/>
-        <location filename="wndmain.cpp" line="633"/>
-        <location filename="wndmain.cpp" line="669"/>
-        <location filename="wndmain.cpp" line="679"/>
-        <location filename="wndmain.cpp" line="711"/>
-        <location filename="wndmain.cpp" line="721"/>
-        <location filename="wndmain.cpp" line="795"/>
-        <location filename="wndmain.cpp" line="804"/>
-        <location filename="wndmain.cpp" line="843"/>
-        <location filename="wndmain.cpp" line="852"/>
+        <location filename="wndmain.cpp" line="626"/>
+        <location filename="wndmain.cpp" line="636"/>
+        <location filename="wndmain.cpp" line="672"/>
+        <location filename="wndmain.cpp" line="682"/>
+        <location filename="wndmain.cpp" line="714"/>
+        <location filename="wndmain.cpp" line="724"/>
+        <location filename="wndmain.cpp" line="798"/>
+        <location filename="wndmain.cpp" line="807"/>
+        <location filename="wndmain.cpp" line="846"/>
+        <location filename="wndmain.cpp" line="855"/>
         <source>Cash left in cassa.</source>
         <translation>A rămas numerar în casă.</translation>
     </message>
     <message>
-        <location filename="wndmain.cpp" line="636"/>
-        <location filename="wndmain.cpp" line="672"/>
-        <location filename="wndmain.cpp" line="724"/>
-        <location filename="wndmain.cpp" line="765"/>
-        <location filename="wndmain.cpp" line="806"/>
+        <location filename="wndmain.cpp" line="639"/>
+        <location filename="wndmain.cpp" line="675"/>
+        <location filename="wndmain.cpp" line="727"/>
+        <location filename="wndmain.cpp" line="768"/>
+        <location filename="wndmain.cpp" line="809"/>
         <source>Cassa continue with balance</source>
         <translation>Casa contiună cu balanța</translation>
     </message>
     <message>
-        <location filename="wndmain.cpp" line="645"/>
-        <location filename="wndmain.cpp" line="735"/>
+        <location filename="wndmain.cpp" line="648"/>
+        <location filename="wndmain.cpp" line="738"/>
         <source> Use opened cassa | Start new cassa with balance | Start new cassa </source>
         <translation> Folosește casa deschisă | Pornește casă nouă cu balanță | Pornește casă nouă </translation>
     </message>
     <message>
-        <location filename="wndmain.cpp" line="646"/>
+        <location filename="wndmain.cpp" line="649"/>
         <source>The latest cassa opened on a different date.
 What would you like to do?</source>
         <translation>Ultima casă a deschis la o dată diferită.
 Ce ai dori să faci?</translation>
     </message>
     <message>
-        <location filename="wndmain.cpp" line="648"/>
+        <location filename="wndmain.cpp" line="651"/>
         <source>The previously created and not closed cassa started to be used on a different date. If you continue to use that cassa, your daily report will include summary of more than one day.
 Click the &apos;Use opened cassa&apos; button if you want to use the opened cassa. In this case the start and the end date will be different of the cassa and the cassa daily report could be misleading.
 Click the &apos;Start new cassa with balance&apos; button if you want to use a new cassa but you want to use the balance of the old cassa as a starting balance. In this case the previous cassa balance will be reseted and a new cassa will be opened for you with balance of the previous cassa
@@ -6774,7 +6809,7 @@ Dă click pe butonul &apos;Pornește casă nouă cu balanță&apos; dacă vrei s
 Dă click pe butonul &apos;Pornește casă nouă cu balanță&apos; dacă vrei să folosești o casă nouă. În acest caz, balanța casei precedente va fi resetată și ți se va deschide o nouă casă.</translation>
     </message>
     <message>
-        <location filename="wndmain.cpp" line="736"/>
+        <location filename="wndmain.cpp" line="739"/>
         <source>The latest cassa record still not closed:
 
 Owner: %1
@@ -6789,7 +6824,7 @@ Balanță: %2
 Ce ai dori să faci?</translation>
     </message>
     <message>
-        <location filename="wndmain.cpp" line="740"/>
+        <location filename="wndmain.cpp" line="743"/>
         <source>Cassa still not closed means the cassa owner did not closed his/her cassa and possibly would like to continue the work with the cassa.
 But it is possible that the cassa owner forgot to close his/her cassa.
 You can decide how to start your work:
@@ -6804,18 +6839,18 @@ Dă click pe butonul &apos;Pornește casă nouă cu balanță&apos; dacă vrei s
 Dă click pe butonul &apos;Pornește casă nouă cu balanță&apos; dacă vrei să folosești o casă nouă. În acest caz, balanța casei precedente va fi resetată și ți se va deschide o nouă casă.</translation>
     </message>
     <message>
-        <location filename="wndmain.cpp" line="762"/>
-        <location filename="wndmain.cpp" line="771"/>
+        <location filename="wndmain.cpp" line="765"/>
+        <location filename="wndmain.cpp" line="774"/>
         <source>Cassa left in open.</source>
         <translation>Casă lăsată deschisă.</translation>
     </message>
     <message>
-        <location filename="wndmain.cpp" line="817"/>
+        <location filename="wndmain.cpp" line="820"/>
         <source> Reopen cassa | Start new cassa with balance | Start new cassa </source>
         <translation> Redeschide casa | Pornește casă nouă cu balanță | Pornește casă nouă </translation>
     </message>
     <message>
-        <location filename="wndmain.cpp" line="818"/>
+        <location filename="wndmain.cpp" line="821"/>
         <source>The latest cassa record closed with balance:
 
 Owner: %1
@@ -6832,7 +6867,7 @@ Vrei să continui această casă?
 </translation>
     </message>
     <message>
-        <location filename="wndmain.cpp" line="822"/>
+        <location filename="wndmain.cpp" line="825"/>
         <source>Cassa closed with balance means that previously the owner closed the cassa but there are cash left in cassa. The default action when closing the cassa is to withdraw money from the cassa therefore the cassa balance will be zero.
 Click the &apos;Reopen cassa&apos; if previously the cassa closed with reason without money withdraw and now you want to use that cassa again.
 Click the &apos;Start new cassa with balance&apos; button if you want to use a new cassa but you want to use the balance of the old cassa as a starting balance. In this case the previous cassa balance will be reseted and a new cassa will be opened for you with balance of the previous cassa
@@ -6843,17 +6878,17 @@ Dă click pe butonul &apos;Pornește casă nouă cu balanță&apos; dacă vrei s
 Dă click pe butonul &apos;Pornește casă nouă cu balanță&apos; dacă vrei să folosești o casă nouă. În acest caz, balanța casei precedente va fi resetată și ți se va deschide o nouă casă.</translation>
     </message>
     <message>
-        <location filename="wndmain.cpp" line="845"/>
+        <location filename="wndmain.cpp" line="848"/>
         <source>Start cassa with balance</source>
         <translation>Pornește casă nouă cu balanță</translation>
     </message>
     <message>
-        <location filename="wndmain.cpp" line="878"/>
+        <location filename="wndmain.cpp" line="881"/>
         <source> Reopen cassa | Start new cassa </source>
         <translation> Redeschide casa | Pornește casă nouă </translation>
     </message>
     <message>
-        <location filename="wndmain.cpp" line="879"/>
+        <location filename="wndmain.cpp" line="882"/>
         <source>The latest cassa record used:
 
 from %1 to %2
@@ -6866,7 +6901,7 @@ de la %1 până la %2
 Vrei să continui această casă?</translation>
     </message>
     <message>
-        <location filename="wndmain.cpp" line="882"/>
+        <location filename="wndmain.cpp" line="885"/>
         <source>It is possible to use your latest cassa with reopening it for example if you closed it previously for security reasons.
 Click the &apos;Reopen cassa&apos; if you want to use your previously closed cassa.
 Click the &apos;Start new cassa&apos; if you don&apos;t want to use the previously closed cassa. In this case a new cassa will be opened for you.</source>
@@ -6875,37 +6910,37 @@ Dă click pe &apos;Redeschide casa&apos; dacă vrei să-ți folosești casa prec
 Dă click pe &apos;Pornește casă npuă&apos; dacă nu vrei să folosești casa precendentă, pe care ai închis-o. În acest caz, ți se va deschide o nouă casă.</translation>
     </message>
     <message>
-        <location filename="wndmain.cpp" line="926"/>
-        <location filename="wndmain.cpp" line="1527"/>
-        <location filename="wndmain.cpp" line="1540"/>
-        <location filename="wndmain.cpp" line="1615"/>
-        <location filename="wndmain.cpp" line="1783"/>
-        <location filename="wndmain.cpp" line="1903"/>
-        <location filename="wndmain.cpp" line="2061"/>
-        <location filename="wndmain.cpp" line="2073"/>
-        <location filename="wndmain.cpp" line="2513"/>
-        <location filename="wndmain.cpp" line="2583"/>
-        <location filename="wndmain.cpp" line="2605"/>
-        <location filename="wndmain.cpp" line="2628"/>
-        <location filename="wndmain.cpp" line="3200"/>
-        <location filename="wndmain.cpp" line="4079"/>
+        <location filename="wndmain.cpp" line="929"/>
+        <location filename="wndmain.cpp" line="1530"/>
+        <location filename="wndmain.cpp" line="1543"/>
+        <location filename="wndmain.cpp" line="1618"/>
+        <location filename="wndmain.cpp" line="1786"/>
+        <location filename="wndmain.cpp" line="1906"/>
+        <location filename="wndmain.cpp" line="2064"/>
+        <location filename="wndmain.cpp" line="2076"/>
+        <location filename="wndmain.cpp" line="2516"/>
+        <location filename="wndmain.cpp" line="2586"/>
+        <location filename="wndmain.cpp" line="2608"/>
+        <location filename="wndmain.cpp" line="2631"/>
+        <location filename="wndmain.cpp" line="3203"/>
+        <location filename="wndmain.cpp" line="4082"/>
         <source>Question</source>
         <translation>Întrebare</translation>
     </message>
     <message>
-        <location filename="wndmain.cpp" line="927"/>
+        <location filename="wndmain.cpp" line="930"/>
         <source>Do you want to close your cassa?</source>
         <translation>Vrei să-ți închizi casa?</translation>
     </message>
     <message>
-        <location filename="wndmain.cpp" line="936"/>
-        <location filename="wndmain.cpp" line="973"/>
+        <location filename="wndmain.cpp" line="939"/>
+        <location filename="wndmain.cpp" line="976"/>
         <source>Withdraw cash|Leave cash in cassa</source>
         <translation>Ridică numerar|Lasă numerar în casă</translation>
     </message>
     <message>
-        <location filename="wndmain.cpp" line="937"/>
-        <location filename="wndmain.cpp" line="974"/>
+        <location filename="wndmain.cpp" line="940"/>
+        <location filename="wndmain.cpp" line="977"/>
         <source>There are some cash left in your cassa.
 Current balance: %1
 
@@ -6918,8 +6953,8 @@ Vrei să închizi casa cu ridicare automată de numerar?
 </translation>
     </message>
     <message>
-        <location filename="wndmain.cpp" line="940"/>
-        <location filename="wndmain.cpp" line="977"/>
+        <location filename="wndmain.cpp" line="943"/>
+        <location filename="wndmain.cpp" line="980"/>
         <source>You can decide if you want to leave the cash in the cassa or withdraw cash from the cassa.
 Click on the &apos;Withdraw cash&apos; button if you want to withdraw cash from cassa before closing it
 Click on the &apos;Leave cash in cassa&apos; if you want to leave the cash in the cassa before closing it</source>
@@ -6928,19 +6963,19 @@ Dă click pe butonul &apos;Ridicare numerar&apos; dacă vrei să ridici numerar 
 Poți să te decizi dacă vrei să lași numerar în casă sau să scoți numerar din casă</translation>
     </message>
     <message>
-        <location filename="wndmain.cpp" line="948"/>
-        <location filename="wndmain.cpp" line="985"/>
-        <location filename="wndmain.cpp" line="997"/>
+        <location filename="wndmain.cpp" line="951"/>
+        <location filename="wndmain.cpp" line="988"/>
+        <location filename="wndmain.cpp" line="1000"/>
         <source>Automatic cassa close.</source>
         <translation>Închiderea automată a casei.</translation>
     </message>
     <message>
-        <location filename="wndmain.cpp" line="1041"/>
+        <location filename="wndmain.cpp" line="1044"/>
         <source>Q -&gt; Exit application | F -&gt; pay device usage | S -&gt; start device | N -&gt; skip status | T -&gt; device cleared | K -&gt; open shopping kart</source>
         <translation>Q -&gt; părăsirea aplicației | F -&gt; plătește folosirea dispozitivului | S -&gt; pornește dispozitivul | N -&gt; sari starea | T -&gt; dispozitiv aprobat| K -&gt; deschide căruciorul pentru cumpărături</translation>
     </message>
     <message>
-        <location filename="wndmain.cpp" line="1230"/>
+        <location filename="wndmain.cpp" line="1233"/>
         <source>Belenus </source>
         <translation>Belenus </translation>
     </message>
@@ -6949,35 +6984,35 @@ Poți să te decizi dacă vrei să lași numerar în casă sau să scoți numera
         <translation type="obsolete"> &lt;=&gt; Pacient actual: &lt;</translation>
     </message>
     <message>
-        <location filename="wndmain.cpp" line="1257"/>
+        <location filename="wndmain.cpp" line="1260"/>
         <source> &lt;=&gt; Current patient: [</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="wndmain.cpp" line="1263"/>
+        <location filename="wndmain.cpp" line="1266"/>
         <source> &lt;=&gt; NO PATIENT SELECTED</source>
         <translation> &lt;=&gt; NU A FOST SELECTAT NICIUN PACIENT</translation>
     </message>
     <message>
-        <location filename="wndmain.cpp" line="1281"/>
+        <location filename="wndmain.cpp" line="1284"/>
         <source>SPACE -&gt; Enter time/barcode ...</source>
         <translation>BARA DE SPAȚIU -&gt; Introdu ora/codul de bare ...</translation>
     </message>
     <message>
-        <location filename="wndmain.cpp" line="1286"/>
-        <location filename="wndmain.cpp" line="1291"/>
-        <location filename="wndmain.cpp" line="1296"/>
-        <location filename="wndmain.cpp" line="1301"/>
+        <location filename="wndmain.cpp" line="1289"/>
+        <location filename="wndmain.cpp" line="1294"/>
+        <location filename="wndmain.cpp" line="1299"/>
+        <location filename="wndmain.cpp" line="1304"/>
         <source> | ENTER -&gt; %1</source>
         <translation> | INTRODU-&gt; %1</translation>
     </message>
     <message>
-        <location filename="wndmain.cpp" line="1507"/>
+        <location filename="wndmain.cpp" line="1510"/>
         <source>Communication stopped with hardware controller</source>
         <translation>A încetat comunicarea cu controlerul hardware-ului</translation>
     </message>
     <message>
-        <location filename="wndmain.cpp" line="1528"/>
+        <location filename="wndmain.cpp" line="1531"/>
         <source>Application licence key successfully registered.
 The application users currently attached to DEMO licence key.
 
@@ -6988,29 +7023,29 @@ Utilizatorii aplicației au atașat în prezent cheie de licență la DEMO.
 Vrei să actualizezi utilizatorii aplicației și să îi atașezi de cheia de licență nou înregistrată?</translation>
     </message>
     <message>
-        <location filename="wndmain.cpp" line="1541"/>
+        <location filename="wndmain.cpp" line="1544"/>
         <source>Do you want to set the additional information of the studio now?</source>
         <translation>Vrei să setezi acum informația suplimentară a studioului?</translation>
     </message>
     <message>
-        <location filename="wndmain.cpp" line="1556"/>
-        <location filename="wndmain.cpp" line="1928"/>
-        <location filename="wndmain.cpp" line="2530"/>
-        <location filename="wndmain.cpp" line="3215"/>
-        <location filename="wndmain.cpp" line="3374"/>
-        <location filename="wndmain.cpp" line="3716"/>
-        <location filename="wndmain.cpp" line="3748"/>
-        <location filename="wndmain.cpp" line="4030"/>
-        <location filename="wndmain.cpp" line="4055"/>
-        <location filename="wndmain.cpp" line="4064"/>
-        <location filename="wndmain.cpp" line="4089"/>
-        <location filename="wndmain.cpp" line="4107"/>
-        <location filename="wndmain.cpp" line="4226"/>
+        <location filename="wndmain.cpp" line="1559"/>
+        <location filename="wndmain.cpp" line="1931"/>
+        <location filename="wndmain.cpp" line="2533"/>
+        <location filename="wndmain.cpp" line="3218"/>
+        <location filename="wndmain.cpp" line="3377"/>
+        <location filename="wndmain.cpp" line="3719"/>
+        <location filename="wndmain.cpp" line="3751"/>
+        <location filename="wndmain.cpp" line="4033"/>
+        <location filename="wndmain.cpp" line="4058"/>
+        <location filename="wndmain.cpp" line="4067"/>
+        <location filename="wndmain.cpp" line="4092"/>
+        <location filename="wndmain.cpp" line="4110"/>
+        <location filename="wndmain.cpp" line="4229"/>
         <source>Warning</source>
         <translation>Avertisment</translation>
     </message>
     <message>
-        <location filename="wndmain.cpp" line="1557"/>
+        <location filename="wndmain.cpp" line="1560"/>
         <source>Registration of the licence key has been failed.
 
 Please check your internet connection and try to restart the application.
@@ -7021,93 +7056,93 @@ Te rog, verifică-ți conexiunea la internet și încearcă să reposrneși apli
 De asemenea, te rog să verifici dacă cheia de licență definită este valabilă și nu este folosită de altcineva. Cu privire la această informație, te rog să contactezi distributorul tău de franciză.</translation>
     </message>
     <message>
-        <location filename="wndmain.cpp" line="1606"/>
-        <location filename="wndmain.cpp" line="2145"/>
-        <location filename="wndmain.cpp" line="2372"/>
-        <location filename="wndmain.cpp" line="2567"/>
-        <location filename="wndmain.cpp" line="2660"/>
-        <location filename="wndmain.cpp" line="2858"/>
-        <location filename="wndmain.cpp" line="3147"/>
-        <location filename="wndmain.cpp" line="3184"/>
+        <location filename="wndmain.cpp" line="1609"/>
+        <location filename="wndmain.cpp" line="2148"/>
+        <location filename="wndmain.cpp" line="2375"/>
+        <location filename="wndmain.cpp" line="2570"/>
+        <location filename="wndmain.cpp" line="2663"/>
+        <location filename="wndmain.cpp" line="2861"/>
+        <location filename="wndmain.cpp" line="3150"/>
+        <location filename="wndmain.cpp" line="3187"/>
         <source>Attention</source>
         <translation>Atenție</translation>
     </message>
     <message>
-        <location filename="wndmain.cpp" line="1607"/>
+        <location filename="wndmain.cpp" line="1610"/>
         <source>At least one Panel is still working.
 Please stop them before closing the application.</source>
         <translation>Cel puțin un panou încă funcționează.
 Te rog să le oprești înainte de închiderea aplicației.</translation>
     </message>
     <message>
-        <location filename="wndmain.cpp" line="1616"/>
+        <location filename="wndmain.cpp" line="1619"/>
         <source>Are you sure you want to close the application?</source>
         <translation>Sigur vrei să închizi aplicația?</translation>
     </message>
     <message>
-        <location filename="wndmain.cpp" line="1756"/>
-        <location filename="wndmain.cpp" line="2002"/>
-        <location filename="wndmain.cpp" line="3103"/>
+        <location filename="wndmain.cpp" line="1759"/>
+        <location filename="wndmain.cpp" line="2005"/>
+        <location filename="wndmain.cpp" line="3106"/>
         <source>Information</source>
         <translation>Informații</translation>
     </message>
     <message>
-        <location filename="wndmain.cpp" line="1757"/>
+        <location filename="wndmain.cpp" line="1760"/>
         <source>This area is restricted for system administrators only!</source>
         <translation>Această zonă este rezervată administratorilor de sistem!</translation>
     </message>
     <message>
-        <location filename="wndmain.cpp" line="1784"/>
+        <location filename="wndmain.cpp" line="1787"/>
         <source>Are you sure you want to close the current shift?</source>
         <translation>Sigur vrei să închizi tura actuală?</translation>
     </message>
     <message>
-        <location filename="wndmain.cpp" line="1861"/>
+        <location filename="wndmain.cpp" line="1864"/>
         <source>New Patient</source>
         <translation>Pacient nou</translation>
     </message>
     <message>
-        <location filename="wndmain.cpp" line="1904"/>
+        <location filename="wndmain.cpp" line="1907"/>
         <source>Do you want to prepare the device from the waiting queue?</source>
         <translation>Vrei să pregătești dispozitivul din rândul de așteptare?</translation>
     </message>
     <message>
-        <location filename="wndmain.cpp" line="1929"/>
+        <location filename="wndmain.cpp" line="1932"/>
         <source>The device usage has to be payed.
 Please process the payment first.</source>
         <translation>Folosirea dispozitivului trebuie plătit.
 Te rog, procesează mai întâi plata.</translation>
     </message>
     <message>
-        <location filename="wndmain.cpp" line="2003"/>
+        <location filename="wndmain.cpp" line="2006"/>
         <source>Some of the changes you made will only be applied after the application is restarted.</source>
         <translation>Unele modificări efectuate vor fi aplicate numai după repornirea aplicației.</translation>
     </message>
     <message>
-        <location filename="wndmain.cpp" line="2062"/>
+        <location filename="wndmain.cpp" line="2065"/>
         <source>This patientcard has been assigned to a different patient.
 Are you sure you want to use this patientcard?</source>
         <translation>Acest card de pacient a fost alocat unui alt pacient.
 Sigur vrei să folosești acest card de pacient?</translation>
     </message>
     <message>
-        <location filename="wndmain.cpp" line="2074"/>
+        <location filename="wndmain.cpp" line="2077"/>
         <source>There is no patient assigned to this patientcard.
 Do you want to assign this patientcard to the actual patient?</source>
         <translation>Niciun pacient nu este alocat la acest card de pacient.
 Vrei să aloci acest card de pacient la pacientul actual?</translation>
     </message>
     <message>
-        <location filename="wndmain.cpp" line="2092"/>
+        <location filename="wndmain.cpp" line="2095"/>
         <source>%1 units left on the selected card</source>
         <translation>%1 unități rămase pe cardul selectat</translation>
     </message>
     <message>
-        <location filename="wndmain.cpp" line="2146"/>
-        <location filename="wndmain.cpp" line="2373"/>
-        <location filename="wndmain.cpp" line="2661"/>
-        <location filename="wndmain.cpp" line="2859"/>
-        <location filename="wndmain.cpp" line="3148"/>
+        <location filename="wndmain.cpp" line="2149"/>
+        <location filename="wndmain.cpp" line="2376"/>
+        <location filename="wndmain.cpp" line="2664"/>
+        <location filename="wndmain.cpp" line="2862"/>
+        <location filename="wndmain.cpp" line="3151"/>
         <source>Cassa is disabled!
 
 Please relogin to enable cassa.</source>
@@ -7116,58 +7151,58 @@ Please relogin to enable cassa.</source>
 Te rog, reautentifică-te pentru a activa casa.</translation>
     </message>
     <message>
-        <location filename="wndmain.cpp" line="2183"/>
-        <location filename="wndmain.cpp" line="2886"/>
+        <location filename="wndmain.cpp" line="2186"/>
+        <location filename="wndmain.cpp" line="2889"/>
         <source>Using panel</source>
         <translation>Utilizare panou</translation>
     </message>
     <message>
-        <location filename="wndmain.cpp" line="2195"/>
+        <location filename="wndmain.cpp" line="2198"/>
         <source>Using device later</source>
         <translation>Utilizarea dispozitivului mai târziu</translation>
     </message>
     <message>
-        <location filename="wndmain.cpp" line="2219"/>
+        <location filename="wndmain.cpp" line="2222"/>
         <source>Enter comment</source>
         <translation>Introdu comentariu</translation>
     </message>
     <message>
-        <location filename="wndmain.cpp" line="2514"/>
+        <location filename="wndmain.cpp" line="2517"/>
         <source>Do you want to jump to the next status of the device?</source>
         <translation>Vrei să stari la următoarea stare a dispozitivului?</translation>
     </message>
     <message>
-        <location filename="wndmain.cpp" line="2531"/>
+        <location filename="wndmain.cpp" line="2534"/>
         <source>You are not authorized to activate or modify
 the licence key or the application&apos;s validity.</source>
         <translation>Nu ești autorizat să activezi sau să modifici
 cheia de licență sau valabilitatea aplicației.</translation>
     </message>
     <message>
-        <location filename="wndmain.cpp" line="2568"/>
-        <location filename="wndmain.cpp" line="3185"/>
+        <location filename="wndmain.cpp" line="2571"/>
+        <location filename="wndmain.cpp" line="3188"/>
         <source>This patientcard has been lost and replaced
 and can not be used or sold again.</source>
         <translation>Acest card pacient a fost pierdut și înlocuit
 și nu poate fi folosit sau vândut din nou.</translation>
     </message>
     <message>
-        <location filename="wndmain.cpp" line="2584"/>
-        <location filename="wndmain.cpp" line="3201"/>
+        <location filename="wndmain.cpp" line="2587"/>
+        <location filename="wndmain.cpp" line="3204"/>
         <source>This barcode has not found in the database.
 Do you want to register it for a new patientcard?</source>
         <translation>Acest cod de bare nu a fost găsit în baza de date.
 Vrei să-l înregistrezi pentru un nou card de pacient?</translation>
     </message>
     <message>
-        <location filename="wndmain.cpp" line="2603"/>
+        <location filename="wndmain.cpp" line="2606"/>
         <source>
 Due to there is no time left, the patientcard will be reseted and deactivated.</source>
         <translation>
 Deoarece nu a mai rămas timp, cardul de pacient va fi resetat și dezactivat.</translation>
     </message>
     <message>
-        <location filename="wndmain.cpp" line="2606"/>
+        <location filename="wndmain.cpp" line="2609"/>
         <source>This patientcard has the following settings:
 
 Available units: %1
@@ -7182,82 +7217,82 @@ Timp disponibil: %2 (hh:mm:ss)
 Vrei să reîncarci cardul de pacient acum?%3</translation>
     </message>
     <message>
-        <location filename="wndmain.cpp" line="2629"/>
+        <location filename="wndmain.cpp" line="2632"/>
         <source>This patientcard still can be used.
 Do you want to refill anyway?</source>
         <translation>Acest card de pacient poate fi folosit în continuare.
 Totuși vrei să reîncarci?</translation>
     </message>
     <message>
-        <location filename="wndmain.cpp" line="2668"/>
-        <location filename="wndmain.cpp" line="2676"/>
-        <location filename="wndmain.cpp" line="3166"/>
+        <location filename="wndmain.cpp" line="2671"/>
+        <location filename="wndmain.cpp" line="2679"/>
+        <location filename="wndmain.cpp" line="3169"/>
         <source>Request</source>
         <translation>Cerere</translation>
     </message>
     <message>
-        <location filename="wndmain.cpp" line="2668"/>
+        <location filename="wndmain.cpp" line="2671"/>
         <source>Please select the guest from the list</source>
         <translation>Te rog, selectează oaspetele de pe listă</translation>
     </message>
     <message>
-        <location filename="wndmain.cpp" line="2676"/>
+        <location filename="wndmain.cpp" line="2679"/>
         <source>Please select the patientcard from the list</source>
         <translation>Te rog, selectează cardul de pacient de pe listă</translation>
     </message>
     <message>
-        <location filename="wndmain.cpp" line="2705"/>
-        <location filename="wndmain.cpp" line="2763"/>
+        <location filename="wndmain.cpp" line="2708"/>
+        <location filename="wndmain.cpp" line="2766"/>
         <source>Reset device|Add to wait list ...|Cancel</source>
         <translation>Resetează dispozitivul|Adaugă la lista de așteptare ...|Anulare</translation>
     </message>
     <message>
-        <location filename="wndmain.cpp" line="2706"/>
+        <location filename="wndmain.cpp" line="2709"/>
         <source>This device already prepared with a patientcard.</source>
         <translation>Acest dispozitiv a fost deja pregătit cu un alt card de pacient.</translation>
     </message>
     <message>
-        <location filename="wndmain.cpp" line="2707"/>
-        <location filename="wndmain.cpp" line="2765"/>
+        <location filename="wndmain.cpp" line="2710"/>
+        <location filename="wndmain.cpp" line="2768"/>
         <source>To start the device with other conditions, please
 reset the device first with pushing the ESC button.</source>
         <translation>Pentru a porni dispozitivul cu alte condiții, te rog
 să resetezi mai întâi dispozitivul prin apăsarea butonului ESC.</translation>
     </message>
     <message>
-        <location filename="wndmain.cpp" line="2764"/>
+        <location filename="wndmain.cpp" line="2767"/>
         <source>This device already prepared with a time period.</source>
         <translation>Acest dispozitiv a fost deja pregătit cu o perioadă de timp.</translation>
     </message>
     <message>
-        <location filename="wndmain.cpp" line="2899"/>
+        <location filename="wndmain.cpp" line="2902"/>
         <source>Using device: %1</source>
         <translation>Utilizare dispozitiv: %1</translation>
     </message>
     <message>
-        <location filename="wndmain.cpp" line="2944"/>
+        <location filename="wndmain.cpp" line="2947"/>
         <source>Selling product: %1</source>
         <translation>Vânzare produs: %1</translation>
     </message>
     <message>
-        <location filename="wndmain.cpp" line="3104"/>
+        <location filename="wndmain.cpp" line="3107"/>
         <source>Deleting data attached to DEMO licence key has been finished.</source>
         <translation>Șteregerea datelor atașata la cheia de licență DEMO a fost finalizată.</translation>
     </message>
     <message>
-        <location filename="wndmain.cpp" line="3166"/>
+        <location filename="wndmain.cpp" line="3169"/>
         <source>Please enter the new patientcard&apos;s barcode.</source>
         <translation>Te rog, introdu codul de bare al noului card de pacient.</translation>
     </message>
     <message>
-        <location filename="wndmain.cpp" line="3215"/>
+        <location filename="wndmain.cpp" line="3218"/>
         <source>This patientcard already in use.
 Please select a non-active patientcard.</source>
         <translation>Acest card de pacient este deja în uz.
 Te rog, selectează un card de pacient care nu este activ.</translation>
     </message>
     <message>
-        <location filename="wndmain.cpp" line="3255"/>
+        <location filename="wndmain.cpp" line="3258"/>
         <source>Replace patientcard [%1]-&gt;[%2]</source>
         <translation type="unfinished"></translation>
     </message>
@@ -7266,12 +7301,12 @@ Te rog, selectează un card de pacient care nu este activ.</translation>
         <translation type="obsolete">Înlocuiește cardul de pacient &lt;%1&gt;-&gt;&lt;%2&gt;</translation>
     </message>
     <message>
-        <location filename="wndmain.cpp" line="3296"/>
+        <location filename="wndmain.cpp" line="3299"/>
         <source>Lost and replaced with card: %1</source>
         <translation>Pierdut și înlocuit cu cardul: %1</translation>
     </message>
     <message>
-        <location filename="wndmain.cpp" line="3375"/>
+        <location filename="wndmain.cpp" line="3378"/>
         <source>Error occured when starting process:ReportViewer.exe
 
 Error code: %1
@@ -7292,18 +7327,18 @@ Cod eroare: %1
 5 &gt; A intervenit o eroare necunoscută.</translation>
     </message>
     <message>
-        <location filename="wndmain.cpp" line="3417"/>
+        <location filename="wndmain.cpp" line="3420"/>
         <source>About</source>
         <translation>Despre</translation>
     </message>
     <message>
-        <location filename="wndmain.cpp" line="3418"/>
+        <location filename="wndmain.cpp" line="3421"/>
         <source>&lt;h2&gt;Belenus Software Application System&lt;/h2&gt;&lt;p&gt;Application version : %1&lt;br&gt;Database version : %2&lt;p&gt;Copyright 2013 Tamas Bikfalvi. All rights reserved.&lt;p&gt;Application Licence : %3&lt;p&gt;The application and all of its related products&lt;br&gt;is the property of KiwiSun Franchise.&lt;br&gt;For more information visit the &lt;a href=&quot;%4&quot;&gt;KiwiSun website&lt;/a&gt;</source>
         <translation>&lt;h2&gt;Sistemul de aplicații software Belenus&lt;/h2&gt;&lt;p&gt;Versiunea aplicației : %1&lt;br&gt;Versiunea bazei de date : %2&lt;p&gt;Drept de autor 2013 Tamas Bikfalvi. Toate drepturile rezervate.&lt;p&gt;Licența aplicației : %3&lt;p&gt;Aplicația și toate produsele asociate&lt;br&gt;reprezintă proprietatea francizei KiwiSun.&lt;br&gt;Pentru mai multe informații, vizitează pagina web &lt;a href=&quot;%4&quot;&gt;KiwiSun&lt;/a&gt;</translation>
     </message>
     <message>
-        <location filename="wndmain.cpp" line="3717"/>
-        <location filename="wndmain.cpp" line="3749"/>
+        <location filename="wndmain.cpp" line="3720"/>
+        <location filename="wndmain.cpp" line="3752"/>
         <source>Error occured when starting process:Advertisement.exe
 
 Error code: %1
@@ -7324,31 +7359,31 @@ Cod eroare: %1
 5 &gt; A intervenit o eroare necunoscută.</translation>
     </message>
     <message>
-        <location filename="wndmain.cpp" line="3788"/>
-        <location filename="wndmain.cpp" line="3797"/>
+        <location filename="wndmain.cpp" line="3791"/>
+        <location filename="wndmain.cpp" line="3800"/>
         <source>Send custom e-mail</source>
         <translation>Trimite e-mail personalizat</translation>
     </message>
     <message>
-        <location filename="wndmain.cpp" line="3811"/>
-        <location filename="wndmain.cpp" line="3840"/>
+        <location filename="wndmain.cpp" line="3814"/>
+        <location filename="wndmain.cpp" line="3843"/>
         <source>Disable HW Debug</source>
         <translation>Dezactivează Depanare HW</translation>
     </message>
     <message>
-        <location filename="wndmain.cpp" line="3816"/>
-        <location filename="wndmain.cpp" line="3836"/>
+        <location filename="wndmain.cpp" line="3819"/>
+        <location filename="wndmain.cpp" line="3839"/>
         <source>Enable HW Debug</source>
         <translation>Activează Depanare HW</translation>
     </message>
     <message>
-        <location filename="wndmain.cpp" line="3820"/>
-        <location filename="wndmain.cpp" line="3831"/>
+        <location filename="wndmain.cpp" line="3823"/>
+        <location filename="wndmain.cpp" line="3834"/>
         <source>Reset communication</source>
         <translation>Resetează comunicarea</translation>
     </message>
     <message>
-        <location filename="wndmain.cpp" line="4031"/>
+        <location filename="wndmain.cpp" line="4034"/>
         <source>The version information stored in database is not match.
 
 Correct version numbers:
@@ -7373,7 +7408,7 @@ Numărul versiunii bazei de date: %4
 Se recomandă părăsirea aplicației și contactarea administratorului de sistem.</translation>
     </message>
     <message>
-        <location filename="wndmain.cpp" line="4056"/>
+        <location filename="wndmain.cpp" line="4059"/>
         <source>The validity of the application&apos;s licence
 will be expire in %1 days.
 
@@ -7386,7 +7421,7 @@ Te rog, contactează furnizorul tău de franciză
 și extinde timpul de valabilitate al licenței tale.</translation>
     </message>
     <message>
-        <location filename="wndmain.cpp" line="4065"/>
+        <location filename="wndmain.cpp" line="4068"/>
         <source>The application&apos;s licence is registered
 but not validated by your franchise provider.
 
@@ -7399,7 +7434,7 @@ Te rog, contactează furnizorul tău de franciză
 și validează licența aplicației tale</translation>
     </message>
     <message>
-        <location filename="wndmain.cpp" line="4080"/>
+        <location filename="wndmain.cpp" line="4083"/>
         <source>The http synchronization is enabled but the WebSync application is not running.
 
 Do you want to start this application now?</source>
@@ -7408,8 +7443,8 @@ Do you want to start this application now?</source>
 Vrei să pornești această aplicație acum?</translation>
     </message>
     <message>
-        <location filename="wndmain.cpp" line="4090"/>
-        <location filename="wndmain.cpp" line="4227"/>
+        <location filename="wndmain.cpp" line="4093"/>
+        <location filename="wndmain.cpp" line="4230"/>
         <source>Error occured when starting process:WebSync.exe
 
 Error code: %1
@@ -7430,7 +7465,7 @@ Cod eroare: %1
 5 &gt; A intervenit o eroare necunoscută.</translation>
     </message>
     <message>
-        <location filename="wndmain.cpp" line="4108"/>
+        <location filename="wndmain.cpp" line="4111"/>
         <source>The path of the application and the path of the archive directory is located on the same base directory.
 For safety point of view it is recommended to separate archive directory from the application environment.
 Please select a different directory path for &apos;archive&apos; and manually move the content of the archive directory to the newly selected directory!
@@ -7445,17 +7480,17 @@ Examplu pentru traseul aplicației: c:/Kiwisun/Belenus
 Examplu pentru traseul arhivei: c:/Arhivă/BelenusBD</translation>
     </message>
     <message>
-        <location filename="wndmain.cpp" line="4138"/>
+        <location filename="wndmain.cpp" line="4141"/>
         <source>Windows</source>
         <translation>Windows</translation>
     </message>
     <message>
-        <location filename="wndmain.cpp" line="4146"/>
+        <location filename="wndmain.cpp" line="4149"/>
         <source>Advertisements</source>
         <translation>Publicitate</translation>
     </message>
     <message>
-        <location filename="wndmain.cpp" line="4151"/>
+        <location filename="wndmain.cpp" line="4154"/>
         <source>WebSync application</source>
         <translation>Aplicația WebSync</translation>
     </message>
@@ -9284,8 +9319,8 @@ Vrei să le salvezi ca noi în baza de date?</translation>
     </message>
     <message>
         <location filename="dlgpaneluse.ui" line="47"/>
-        <location filename="dlgpaneluse.ui" line="300"/>
-        <location filename="dlgpaneluse.ui" line="329"/>
+        <location filename="dlgpaneluse.ui" line="339"/>
+        <location filename="dlgpaneluse.ui" line="368"/>
         <source>...</source>
         <translation>...</translation>
     </message>
@@ -9305,64 +9340,64 @@ Vrei să le salvezi ca noi în baza de date?</translation>
         <translation>Reîncărcare</translation>
     </message>
     <message>
-        <location filename="dlgpaneluse.ui" line="150"/>
+        <location filename="dlgpaneluse.ui" line="152"/>
         <source>Owner : </source>
         <translation>Proprietar : </translation>
     </message>
     <message>
-        <location filename="dlgpaneluse.ui" line="157"/>
+        <location filename="dlgpaneluse.ui" line="196"/>
         <source>Comment :
 </source>
         <translation>Observații :
 </translation>
     </message>
     <message>
-        <location filename="dlgpaneluse.ui" line="177"/>
+        <location filename="dlgpaneluse.ui" line="216"/>
         <source> Available units </source>
         <translation> Unități disponibile </translation>
     </message>
     <message>
-        <location filename="dlgpaneluse.ui" line="214"/>
+        <location filename="dlgpaneluse.ui" line="253"/>
         <source> Use with time intervall ... </source>
         <translation> Folosește cu intervalul de timp ... </translation>
     </message>
     <message>
-        <location filename="dlgpaneluse.ui" line="220"/>
+        <location filename="dlgpaneluse.ui" line="259"/>
         <source>Time intervall :</source>
         <translation>Interval de timp :</translation>
     </message>
     <message>
-        <location filename="dlgpaneluse.ui" line="259"/>
+        <location filename="dlgpaneluse.ui" line="298"/>
         <source> Usage summary </source>
         <translation> Rezumatul utilizării </translation>
     </message>
     <message>
-        <location filename="dlgpaneluse.ui" line="268"/>
+        <location filename="dlgpaneluse.ui" line="307"/>
         <source>Total time :</source>
         <translation>Timp total :</translation>
     </message>
     <message>
-        <location filename="dlgpaneluse.ui" line="279"/>
+        <location filename="dlgpaneluse.ui" line="318"/>
         <source>00:00:00</source>
         <translation>00:00:00</translation>
     </message>
     <message>
-        <location filename="dlgpaneluse.ui" line="289"/>
+        <location filename="dlgpaneluse.ui" line="328"/>
         <source>Total price :</source>
         <translation>Preț total :</translation>
     </message>
     <message>
-        <location filename="dlgpaneluse.ui" line="317"/>
+        <location filename="dlgpaneluse.ui" line="356"/>
         <source>  Discount:</source>
         <translation>  Reducere:</translation>
     </message>
     <message>
-        <location filename="dlgpaneluse.ui" line="361"/>
+        <location filename="dlgpaneluse.ui" line="400"/>
         <source>Ok</source>
         <translation>OK</translation>
     </message>
     <message>
-        <location filename="dlgpaneluse.ui" line="371"/>
+        <location filename="dlgpaneluse.ui" line="410"/>
         <source>Cancel</source>
         <translation>Anulează</translation>
     </message>
@@ -10386,293 +10421,323 @@ este diferit :</translation>
         <translation>Prețul alocării cardului de partener la cardul activat :</translation>
     </message>
     <message>
-        <location filename="dlgpreferences.ui" line="1671"/>
+        <location filename="dlgpreferences.ui" line="1657"/>
+        <source> When patientcard identified for usage ... </source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="dlgpreferences.ui" line="1665"/>
+        <source>Show owner&apos;s last visit information</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="dlgpreferences.ui" line="1675"/>
+        <source>on main window</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="dlgpreferences.ui" line="1688"/>
+        <source>on secondary window</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="dlgpreferences.ui" line="1712"/>
+        <source>and close the information window after</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="dlgpreferences.ui" line="1735"/>
+        <source>seconds (0 means the window remains opened)</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="dlgpreferences.ui" line="1774"/>
         <source>Cassa</source>
         <translation>Casă</translation>
     </message>
     <message>
-        <location filename="dlgpreferences.ui" line="1677"/>
+        <location filename="dlgpreferences.ui" line="1780"/>
         <source>Automatically close cassa when user log out</source>
         <translation>Închide automat casa la deautentificarea utilizatorului</translation>
     </message>
     <message>
-        <location filename="dlgpreferences.ui" line="1680"/>
+        <location filename="dlgpreferences.ui" line="1783"/>
         <source>Auto close cassa</source>
         <translation>Închidere automată a casei</translation>
     </message>
     <message>
-        <location filename="dlgpreferences.ui" line="1705"/>
+        <location filename="dlgpreferences.ui" line="1808"/>
         <source>Automatically add cash withdrawal</source>
         <translation>Adaugă automat retragere de numerar</translation>
     </message>
     <message>
-        <location filename="dlgpreferences.ui" line="1714"/>
+        <location filename="dlgpreferences.ui" line="1817"/>
         <source>Automatically create new cassa when date has been changed</source>
         <translation>Creează automat casă nouă la schimbarea datei</translation>
     </message>
     <message>
-        <location filename="dlgpreferences.ui" line="1744"/>
+        <location filename="dlgpreferences.ui" line="1847"/>
         <source>With the previous cassa balance</source>
         <translation>Cu balanța anterioară a casei</translation>
     </message>
     <message>
-        <location filename="dlgpreferences.ui" line="1754"/>
+        <location filename="dlgpreferences.ui" line="1857"/>
         <source>with empty cassa</source>
         <translation>cu casa goală</translation>
     </message>
     <message>
-        <location filename="dlgpreferences.ui" line="1765"/>
+        <location filename="dlgpreferences.ui" line="1868"/>
         <source> Currency settings </source>
         <translation> Setări valută </translation>
     </message>
     <message>
-        <location filename="dlgpreferences.ui" line="1771"/>
+        <location filename="dlgpreferences.ui" line="1874"/>
         <source>Full name :</source>
         <translation>Numele integral :</translation>
     </message>
     <message>
-        <location filename="dlgpreferences.ui" line="1798"/>
+        <location filename="dlgpreferences.ui" line="1901"/>
         <source>Short name :</source>
         <translation>Numele prescurtat :</translation>
     </message>
     <message>
-        <location filename="dlgpreferences.ui" line="1821"/>
+        <location filename="dlgpreferences.ui" line="1924"/>
         <source>Decimal symbol :</source>
         <translation>Separator zecimal :</translation>
     </message>
     <message>
-        <location filename="dlgpreferences.ui" line="1844"/>
+        <location filename="dlgpreferences.ui" line="1947"/>
         <source>Digit grouping symbol :</source>
         <translation>Separator pentru mii :</translation>
     </message>
     <message>
-        <location filename="dlgpreferences.ui" line="1884"/>
+        <location filename="dlgpreferences.ui" line="1987"/>
         <source>Notification</source>
         <translation>Notificare</translation>
     </message>
     <message>
-        <location filename="dlgpreferences.ui" line="1890"/>
+        <location filename="dlgpreferences.ui" line="1993"/>
         <source> Send automatic email when ... </source>
         <translation> Trimite e-mail automat când ... </translation>
     </message>
     <message>
-        <location filename="dlgpreferences.ui" line="1896"/>
+        <location filename="dlgpreferences.ui" line="1999"/>
         <source>patientcard sold to studio patient</source>
         <translation>cardul de pacient este vândut unui pacient al studioului</translation>
     </message>
     <message>
-        <location filename="dlgpreferences.ui" line="1903"/>
+        <location filename="dlgpreferences.ui" line="2006"/>
         <source>patientcard has been used</source>
         <translation>cardul de pacient a fost folosit</translation>
     </message>
     <message>
-        <location filename="dlgpreferences.ui" line="1912"/>
+        <location filename="dlgpreferences.ui" line="2015"/>
         <source>patientcard will be expire in </source>
         <translation>cardul de pacient va expira în </translation>
     </message>
     <message>
-        <location filename="dlgpreferences.ui" line="1935"/>
+        <location filename="dlgpreferences.ui" line="2038"/>
         <source>days</source>
         <translation>zile</translation>
     </message>
     <message>
-        <location filename="dlgpreferences.ui" line="1982"/>
+        <location filename="dlgpreferences.ui" line="2085"/>
         <source>Please note automatic mail only be sent to patients with registered e-mail address!</source>
         <translation>Te rog să ai în vedere faptul că e-mailul automat poate fi trimis numai pacienților cu adresa de e-mail înregistrată!</translation>
     </message>
     <message>
-        <location filename="dlgpreferences.ui" line="2009"/>
+        <location filename="dlgpreferences.ui" line="2112"/>
         <source>Server</source>
         <translation>Server</translation>
     </message>
     <message>
-        <location filename="dlgpreferences.ui" line="2018"/>
+        <location filename="dlgpreferences.ui" line="2121"/>
         <source> Http server settings </source>
         <translation> Setări server HTTP </translation>
     </message>
     <message>
-        <location filename="dlgpreferences.ui" line="2024"/>
+        <location filename="dlgpreferences.ui" line="2127"/>
         <source>Server address :</source>
         <translation>Adresa serverului :</translation>
     </message>
     <message>
-        <location filename="dlgpreferences.ui" line="2044"/>
+        <location filename="dlgpreferences.ui" line="2147"/>
         <source> Actions </source>
         <translation> Acțiuni </translation>
     </message>
     <message>
-        <location filename="dlgpreferences.ui" line="2055"/>
+        <location filename="dlgpreferences.ui" line="2158"/>
         <source>Enable synchronization</source>
         <translation>Permite sincronizarea</translation>
     </message>
     <message>
-        <location filename="dlgpreferences.ui" line="2078"/>
+        <location filename="dlgpreferences.ui" line="2181"/>
         <source>Test connection</source>
         <translation>Testează conexiunea</translation>
     </message>
     <message>
-        <location filename="dlgpreferences.ui" line="2095"/>
+        <location filename="dlgpreferences.ui" line="2198"/>
         <source>Auto start WebSync application</source>
         <translation>Pornește automat aplicația WebSync</translation>
     </message>
     <message>
-        <location filename="dlgpreferences.ui" line="2122"/>
+        <location filename="dlgpreferences.ui" line="2225"/>
         <source>Synchronization automatically starts after</source>
         <translation>Sincronizarea începe automat după</translation>
     </message>
     <message>
-        <location filename="dlgpreferences.ui" line="2145"/>
+        <location filename="dlgpreferences.ui" line="2248"/>
         <source>seconds if devices are not working</source>
         <translation>secunde, dacă dispozitivele nu funcționează</translation>
     </message>
     <message>
-        <location filename="dlgpreferences.ui" line="2169"/>
+        <location filename="dlgpreferences.ui" line="2272"/>
         <source>Length of Http message is visible in seconds :</source>
         <translation>Lungimea mesajului HTTP este afișată în secunde :</translation>
     </message>
     <message>
-        <location filename="dlgpreferences.ui" line="2218"/>
+        <location filename="dlgpreferences.ui" line="2321"/>
         <source>Hardware</source>
         <translation>Hardware</translation>
     </message>
     <message>
-        <location filename="dlgpreferences.ui" line="2224"/>
+        <location filename="dlgpreferences.ui" line="2327"/>
         <source> Communication </source>
         <translation> Comunicare </translation>
     </message>
     <message>
-        <location filename="dlgpreferences.ui" line="2230"/>
+        <location filename="dlgpreferences.ui" line="2333"/>
         <source>Through serial port</source>
         <translation>Prin portul serial</translation>
     </message>
     <message>
-        <location filename="dlgpreferences.ui" line="2242"/>
+        <location filename="dlgpreferences.ui" line="2345"/>
         <source>COM Port:</source>
         <translation>Port COM:</translation>
     </message>
     <message>
-        <location filename="dlgpreferences.ui" line="2249"/>
+        <location filename="dlgpreferences.ui" line="2352"/>
         <source>COM</source>
         <translation>COM</translation>
     </message>
     <message>
-        <location filename="dlgpreferences.ui" line="2280"/>
+        <location filename="dlgpreferences.ui" line="2383"/>
         <source> Force application to ... </source>
         <translation> Forțează aplicația să ... </translation>
     </message>
     <message>
-        <location filename="dlgpreferences.ui" line="2288"/>
+        <location filename="dlgpreferences.ui" line="2391"/>
         <source>send current time value to modul</source>
         <translation>trimite valoarea actuală de timp la modul</translation>
     </message>
     <message>
-        <location filename="dlgpreferences.ui" line="2327"/>
+        <location filename="dlgpreferences.ui" line="2430"/>
         <source>seconds from beginning of preparation time.</source>
         <translation>secunde de la începerea timpului de pregătire.</translation>
     </message>
     <message>
-        <location filename="dlgpreferences.ui" line="2349"/>
+        <location filename="dlgpreferences.ui" line="2452"/>
         <source>check modul buttons state</source>
         <translation>verifică starea butoanelor de modul</translation>
     </message>
     <message>
-        <location filename="dlgpreferences.ui" line="2373"/>
+        <location filename="dlgpreferences.ui" line="2476"/>
         <source>Database</source>
         <translation>Baza de date</translation>
     </message>
     <message>
-        <location filename="dlgpreferences.ui" line="2379"/>
+        <location filename="dlgpreferences.ui" line="2482"/>
         <source> Database server </source>
         <translation> Server-ul bazei de date </translation>
     </message>
     <message>
-        <location filename="dlgpreferences.ui" line="2387"/>
+        <location filename="dlgpreferences.ui" line="2490"/>
         <source>Location of binaries :</source>
         <translation>Locația binarelor :</translation>
     </message>
     <message>
-        <location filename="dlgpreferences.ui" line="2407"/>
-        <location filename="dlgpreferences.ui" line="2443"/>
+        <location filename="dlgpreferences.ui" line="2510"/>
+        <location filename="dlgpreferences.ui" line="2546"/>
         <source>...</source>
         <translation>...</translation>
     </message>
     <message>
-        <location filename="dlgpreferences.ui" line="2419"/>
+        <location filename="dlgpreferences.ui" line="2522"/>
         <source> Database backup </source>
         <translation> Copie de siguranță a bazei de date </translation>
     </message>
     <message>
-        <location filename="dlgpreferences.ui" line="2427"/>
+        <location filename="dlgpreferences.ui" line="2530"/>
         <source>Backup location :</source>
         <translation>Locația copiei de siguranță a bazei de date :</translation>
     </message>
     <message>
-        <location filename="dlgpreferences.ui" line="2452"/>
+        <location filename="dlgpreferences.ui" line="2555"/>
         <source>Force to backup database on exit (activated only once)</source>
         <translation>Forțează copierea de siguranță a bazei de date la ieșire (activat numai o singură dată)</translation>
     </message>
     <message>
-        <location filename="dlgpreferences.ui" line="2459"/>
+        <location filename="dlgpreferences.ui" line="2562"/>
         <source>Enable automatic database backup if confirmed</source>
         <translation>Permite copierea de siguranță automată a bazei de date dacă se confirmă</translation>
     </message>
     <message>
-        <location filename="dlgpreferences.ui" line="2486"/>
+        <location filename="dlgpreferences.ui" line="2589"/>
         <source>after every exit</source>
         <translation>după fiecare ieșire</translation>
     </message>
     <message>
-        <location filename="dlgpreferences.ui" line="2493"/>
+        <location filename="dlgpreferences.ui" line="2596"/>
         <source>after exit if cassa is closed</source>
         <translation>după ieșire, dacă casa este închisă</translation>
     </message>
     <message>
-        <location filename="dlgpreferences.ui" line="2500"/>
+        <location filename="dlgpreferences.ui" line="2603"/>
         <source>after exit on the last day of the week</source>
         <translation>după ieșire, în ultima zi a săptămânii</translation>
     </message>
     <message>
-        <location filename="dlgpreferences.ui" line="2507"/>
+        <location filename="dlgpreferences.ui" line="2610"/>
         <source>after exit on the last day of the month</source>
         <translation>după ieșire, în ultima zi a lunii</translation>
     </message>
     <message>
-        <location filename="dlgpreferences.ui" line="2514"/>
+        <location filename="dlgpreferences.ui" line="2617"/>
         <source>after exit on the selected day(s)</source>
         <translation>după ieșire, în ziua (zilele) selectată (selectate)</translation>
     </message>
     <message>
-        <location filename="dlgpreferences.ui" line="2523"/>
+        <location filename="dlgpreferences.ui" line="2626"/>
         <source>Monday</source>
         <translation>Luni</translation>
     </message>
     <message>
-        <location filename="dlgpreferences.ui" line="2533"/>
+        <location filename="dlgpreferences.ui" line="2636"/>
         <source>Tuesday</source>
         <translation>Marți</translation>
     </message>
     <message>
-        <location filename="dlgpreferences.ui" line="2540"/>
+        <location filename="dlgpreferences.ui" line="2643"/>
         <source>Wednesday</source>
         <translation>Miercuri</translation>
     </message>
     <message>
-        <location filename="dlgpreferences.ui" line="2547"/>
+        <location filename="dlgpreferences.ui" line="2650"/>
         <source>Thursday</source>
         <translation>Joi</translation>
     </message>
     <message>
-        <location filename="dlgpreferences.ui" line="2554"/>
+        <location filename="dlgpreferences.ui" line="2657"/>
         <source>Friday</source>
         <translation>Vineri</translation>
     </message>
     <message>
-        <location filename="dlgpreferences.ui" line="2578"/>
+        <location filename="dlgpreferences.ui" line="2681"/>
         <source>Saturday</source>
         <translation>Sâmbătă</translation>
     </message>
     <message>
-        <location filename="dlgpreferences.ui" line="2585"/>
+        <location filename="dlgpreferences.ui" line="2688"/>
         <source>Sunday</source>
         <translation>Duminică</translation>
     </message>
