@@ -42,13 +42,12 @@ cLanguage::~cLanguage()
     delete m_poQtTr;
 }
 //====================================================================================
-void cLanguage::init(QApplication *p_poApplication, const QString &p_qsAppPrefix, const QString &p_qsLangSeparator, const QString &p_qsLang)
+void cLanguage::init(QApplication *p_poApplication, const QString &p_qsAppPrefix, const QString &p_qsLangSeparator)
 //------------------------------------------------------------------------------------
 {
     m_poMainApplication     = p_poApplication;
     m_qsApplicationPrefix   = p_qsAppPrefix;
     m_qsLangSeparator       = p_qsLangSeparator;
-    m_qsLang                = p_qsLang;
 
     setApplicationLanguage( m_qsLang.left(2) );
 
@@ -104,10 +103,21 @@ QStringList cLanguage::getLanguages()
         qslRet << QString( "%1|%2" )
                          .arg( obLanguage.at(i).toElement().attribute("shortname") )
                          .arg( obLanguage.at(i).toElement().attribute("name") );
+
+        if( obLanguage.at(i).toElement().attribute("current","no").compare( "yes" ) == 0 )
+        {
+            m_qsLang = obLanguage.at(i).toElement().attribute("shortname");
+        }
     }
 
     m_nErrorCode = 0;
     return qslRet;
+}
+//====================================================================================
+void cLanguage::saveCurrentLanguage(QString p_qsLang)
+//------------------------------------------------------------------------------------
+{
+
 }
 //====================================================================================
 int cLanguage::setLanguageCombo(QComboBox *p_cmbLang)

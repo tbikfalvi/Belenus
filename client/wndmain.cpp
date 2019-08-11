@@ -530,7 +530,7 @@ void cWndMain::on_pbLogin_clicked()
         QByteArray  obPwdHash = QCryptographicHash::hash( ledPassword->text().toAscii(), QCryptographicHash::Sha1 );
         g_obUser.logIn( QString( obPwdHash.toHex() ) );
 
-        g_poPrefs->setLastUser( cmbName->currentText(), true );
+        g_poPrefs->setLastUser( cmbName->currentText() );
 
         enableElementsByLogin( true );
 
@@ -1664,7 +1664,7 @@ void cWndMain::on_action_Preferences_triggered()
 
     m_dlgProgress->showProgress();
 
-    g_poPrefs->loadConfFileSettings();
+    g_poPrefs->loadSettings();
 
     cDlgPreferences  obDlgPrefs( this );
 
@@ -1691,8 +1691,8 @@ void cWndMain::on_action_Preferences_triggered()
         }
         else if( !g_poPrefs->isSecondaryWindowVisible() )
         {
-            g_poPrefs->setSecondaryWindowPosition( QPoint( m_dlgSecondaryWindow->x(), m_dlgSecondaryWindow->y() ), true );
-            g_poPrefs->setSecondaryWindowSize( QSize( m_dlgSecondaryWindow->width(), m_dlgSecondaryWindow->height() ), true );
+            g_poPrefs->setSecondaryWindowPosition( QPoint( m_dlgSecondaryWindow->x(), m_dlgSecondaryWindow->y() ) );
+            g_poPrefs->setSecondaryWindowSize( QSize( m_dlgSecondaryWindow->width(), m_dlgSecondaryWindow->height() ) );
             m_dlgSecondaryWindow->hide();
         }
     }
@@ -4166,14 +4166,14 @@ void cWndMain::_setTrayIconMenu()
 
 void cWndMain::slotResetMainWindow()
 {
-    g_poPrefs->setMainWindowSizePos( 0, 0, 1024, 768, true );
+    g_poPrefs->setMainWindowSizePos( 0, 0, 1024, 768 );
     move( g_poPrefs->getMainWindowLeft(), g_poPrefs->getMainWindowTop() );
     resize( g_poPrefs->getMainWindowWidth(), g_poPrefs->getMainWindowHeight() );
 }
 
 void cWndMain::slotResetSecondaryWindow()
 {
-    g_poPrefs->setSecondaryWindowPosition( QPoint( 0, 0 ), true );
+    g_poPrefs->setSecondaryWindowPosition( QPoint( 0, 0 ) );
     g_poPrefs->setSecondaryWindowSize( QSize( 1024, 768 ) );
     m_dlgSecondaryWindow->move( g_poPrefs->secondaryWindowPosition() );
     m_dlgSecondaryWindow->resize( g_poPrefs->secondaryWindowSize() );
@@ -4189,7 +4189,7 @@ void cWndMain::slotResetAdvertisementWindows()
     while( poQuery->next() )
     {
         obPrefFile.setValue( QString::fromAscii( "Advertisement%1/Command" ).arg( poQuery->value(0).toInt() ), "EXIT" );
-        g_poPrefs->setAdvertisementSizeAndPos( poQuery->value(0).toUInt(), 0, 0, 200, 200, true );
+        g_poPrefs->setAdvertisementSizeAndPos( poQuery->value(0).toUInt(), 0, 0, 200, 200 );
     }
 
     m_bResetAdWindows = true;

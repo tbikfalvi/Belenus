@@ -273,13 +273,15 @@ void cLicenceManager::initialize()
             m_qsCod             = poQuery->value( 4 ).toString();
         }
         g_obLogger(cSeverity::INFO) << "Initialized with " << m_qsLicenceString
-                                    << " and " << m_nLicenceId
+                                    << " and Licence " << m_nLicenceId
                                     << ". Application is valid until " << m_qdLastValidated.toString("yyyy/MM/dd")
+                                    << " with code [" << m_qsCod << "]"
                                     << EOM;
 
-        // Check secret code and create if not exists
+        // Check secret code and create if not exists for non-demo licence id
         _checkCode();
 
+        // If licence id is not demo
         if( m_nLicenceId > 1 )
         {
             m_LicenceType = LTYPE_REGISTERED;
@@ -294,7 +296,7 @@ void cLicenceManager::initialize()
             m_qdLicenceLastValidated.month() == 1 &&
             m_qdLicenceLastValidated.day() == 1 )
         {
-            g_poPrefs->setLicenceLastValidated( QString( "%1 12:00:00" ).arg( m_qdLastValidated.toString("yyyy-MM-dd") ), true );
+            g_poPrefs->setLicenceLastValidated( QString( "%1 12:00:00" ).arg( m_qdLastValidated.toString("yyyy-MM-dd") ) );
         }
         g_obLogger(cSeverity::INFO) << "Initialization finished" << EOM;
     }
@@ -521,6 +523,7 @@ QString cLicenceManager::activationKey()
 
 void cLicenceManager::_checkCode()
 {
+    g_obLogger(cSeverity::DEBUG) << "Checking codes " << EOM;
     // Cod nem letezik, letre kell hozni
     if( m_nLicenceId > 1 && m_qsCod.length() < 1 )
     {
@@ -536,13 +539,13 @@ void cLicenceManager::_checkCode()
                                         .arg( nCode )
                                         .arg( m_nLicenceId ) );
         m_qsCod = QString::number( nCode );
-    }
 
-    m_qsCode = "";
+        m_qsCode = "";
 
-    for( int i=0; i<6; i++ )
-    {
-        m_qsCode += m_qslCode.at( i*10 + m_qsCod.at(i).digitValue() );
+        for( int i=0; i<6; i++ )
+        {
+            m_qsCode += m_qslCode.at( i*10 + m_qsCod.at(i).digitValue() );
+        }
     }
 }
 

@@ -41,13 +41,13 @@ public:
     cLanguage();
     ~cLanguage();
 
-    void             init(QApplication *p_poApplication,
-                          const QString &p_qsAppPrefix = "",
-                          const QString &p_qsLangSeparator = "",
-                          const QString &p_qsLang = "" );
+    void             init( QApplication *p_poApplication,
+                           const QString &p_qsAppPrefix = "",
+                           const QString &p_qsLangSeparator = "" );
     void             reloadLanguage( const QString &p_qsLang = "" );
     QStringList      getLanguages();
     int              setLanguageCombo( QComboBox *p_cmbLang );
+    void             saveCurrentLanguage( QString p_qsLang );
 
     int              errorCode()    { return m_nErrorCode; }
 

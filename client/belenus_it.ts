@@ -340,40 +340,41 @@
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="main.cpp" line="116"/>
-        <source>SystemID: </source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <location filename="main.cpp" line="147"/>
+        <location filename="main.cpp" line="141"/>
         <source>Connecting to database ...</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="main.cpp" line="156"/>
+        <location filename="main.cpp" line="148"/>
+        <location filename="main.cpp" line="159"/>
         <source> SUCCEEDED.
 </source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="main.cpp" line="162"/>
+        <location filename="main.cpp" line="151"/>
+        <source>Loading settings from database ...</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="main.cpp" line="165"/>
         <source>Another instance of application ... </source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="main.cpp" line="175"/>
+        <location filename="main.cpp" line="178"/>
         <source> NOT RUNNING.
 </source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="main.cpp" line="180"/>
+        <location filename="main.cpp" line="183"/>
         <source> ALREADY RUNNING.
 </source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="main.cpp" line="181"/>
+        <location filename="main.cpp" line="184"/>
         <source>
 
 Please use the currently running application.
@@ -381,39 +382,39 @@ Please use the currently running application.
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="main.cpp" line="193"/>
+        <location filename="main.cpp" line="196"/>
         <source>License is ... </source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="main.cpp" line="199"/>
+        <location filename="main.cpp" line="202"/>
         <source>NO_SERIAL_DETECTED</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="main.cpp" line="213"/>
+        <location filename="main.cpp" line="216"/>
         <source>DEMO</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="main.cpp" line="215"/>
+        <location filename="main.cpp" line="218"/>
         <source>OK</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="main.cpp" line="221"/>
+        <location filename="main.cpp" line="224"/>
         <source>Serial: %1
 </source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="main.cpp" line="228"/>
+        <location filename="main.cpp" line="231"/>
         <source>Days remains: %1
 </source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="main.cpp" line="233"/>
+        <location filename="main.cpp" line="236"/>
         <source>
 VALIDATE YOUR APPLICATION
 WITH YOUR FRANCHISE PROVIDER
@@ -422,7 +423,7 @@ WITH YOUR FRANCHISE PROVIDER
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="main.cpp" line="238"/>
+        <location filename="main.cpp" line="241"/>
         <source>The application validity has been expired.
 The application can be used only in DEMO mode.
 
@@ -430,101 +431,101 @@ The application can be used only in DEMO mode.
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="main.cpp" line="254"/>
+        <location filename="main.cpp" line="257"/>
         <source>Checking database consistency: </source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="main.cpp" line="271"/>
-        <location filename="main.cpp" line="318"/>
+        <location filename="main.cpp" line="274"/>
+        <location filename="main.cpp" line="321"/>
         <source>FINISHED
 </source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="main.cpp" line="286"/>
+        <location filename="main.cpp" line="289"/>
         <source>Checking hardware connection ...</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="main.cpp" line="297"/>
+        <location filename="main.cpp" line="300"/>
         <source>FAILED
 </source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="main.cpp" line="299"/>
-        <location filename="main.cpp" line="357"/>
+        <location filename="main.cpp" line="302"/>
+        <location filename="main.cpp" line="360"/>
         <source>Starting application in DEMO mode.
 </source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="main.cpp" line="309"/>
+        <location filename="main.cpp" line="312"/>
         <source>CONNECTED
 </source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="main.cpp" line="314"/>
+        <location filename="main.cpp" line="317"/>
         <source>Initializing hardware device ... </source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="main.cpp" line="323"/>
+        <location filename="main.cpp" line="326"/>
         <source>Caption stored in hardware: %1
 </source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="main.cpp" line="326"/>
+        <location filename="main.cpp" line="329"/>
         <source>Number of hardware panels: %1
 </source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="main.cpp" line="329"/>
+        <location filename="main.cpp" line="332"/>
         <source>Checking hardware panels:
 </source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="main.cpp" line="336"/>
+        <location filename="main.cpp" line="339"/>
         <source>     Checking hardware panel -%1- </source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="main.cpp" line="341"/>
+        <location filename="main.cpp" line="344"/>
         <source> SUCCEEDED
 </source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="main.cpp" line="346"/>
-        <location filename="main.cpp" line="401"/>
+        <location filename="main.cpp" line="349"/>
+        <location filename="main.cpp" line="404"/>
         <source> FAILED
 </source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="main.cpp" line="408"/>
+        <location filename="main.cpp" line="411"/>
         <source>Database server application is not running.
 Belenus application can not be started without active database server.
 Please start WampServer application then restart Belenus application.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="preferences.cpp" line="156"/>
+        <location filename="preferences.cpp" line="297"/>
         <source> NOT STERILE </source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="preferences.cpp" line="157"/>
+        <location filename="preferences.cpp" line="298"/>
         <source> TUBE REPLACEMENT NEEDED </source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="preferences.cpp" line="158"/>
+        <location filename="preferences.cpp" line="299"/>
         <source> TUBE CLEAN-UP NEEDED </source>
         <translation type="unfinished"></translation>
     </message>
@@ -3903,333 +3904,333 @@ refill the patientcard before use.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="dlg/dlgpreferences.cpp" line="133"/>
-        <location filename="dlg/dlgpreferences.cpp" line="618"/>
+        <location filename="dlg/dlgpreferences.cpp" line="102"/>
+        <location filename="dlg/dlgpreferences.cpp" line="587"/>
         <source>Visible</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="dlg/dlgpreferences.cpp" line="138"/>
-        <location filename="dlg/dlgpreferences.cpp" line="624"/>
+        <location filename="dlg/dlgpreferences.cpp" line="107"/>
+        <location filename="dlg/dlgpreferences.cpp" line="593"/>
         <source>Hidden</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="dlg/dlgpreferences.cpp" line="304"/>
+        <location filename="dlg/dlgpreferences.cpp" line="273"/>
         <source>Mon</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="dlg/dlgpreferences.cpp" line="305"/>
+        <location filename="dlg/dlgpreferences.cpp" line="274"/>
         <source>Tue</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="dlg/dlgpreferences.cpp" line="306"/>
+        <location filename="dlg/dlgpreferences.cpp" line="275"/>
         <source>Wed</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="dlg/dlgpreferences.cpp" line="307"/>
+        <location filename="dlg/dlgpreferences.cpp" line="276"/>
         <source>Thu</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="dlg/dlgpreferences.cpp" line="308"/>
+        <location filename="dlg/dlgpreferences.cpp" line="277"/>
         <source>Fri</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="dlg/dlgpreferences.cpp" line="309"/>
+        <location filename="dlg/dlgpreferences.cpp" line="278"/>
         <source>Sat</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="dlg/dlgpreferences.cpp" line="310"/>
+        <location filename="dlg/dlgpreferences.cpp" line="279"/>
         <source>Sun</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="dlg/dlgpreferences.cpp" line="403"/>
+        <location filename="dlg/dlgpreferences.cpp" line="372"/>
         <source>Attention</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="dlg/dlgpreferences.cpp" line="404"/>
+        <location filename="dlg/dlgpreferences.cpp" line="373"/>
         <source>Decimal symbol and Digit grouping symbol can not be the same.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="dlg/dlgpreferences.cpp" line="410"/>
-        <location filename="dlg/dlgpreferences.cpp" line="833"/>
+        <location filename="dlg/dlgpreferences.cpp" line="379"/>
+        <location filename="dlg/dlgpreferences.cpp" line="802"/>
         <source>Question</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="dlg/dlgpreferences.cpp" line="411"/>
+        <location filename="dlg/dlgpreferences.cpp" line="380"/>
         <source>Are you sure want to increase the length of the barcode of the patientcard?
 
 Please note that the barcodes will be supplemented with additional &apos;0&apos; characters at the beginning of the barcode for every patientcards, where the barcode is shorter than %1 characters.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="dlg/dlgpreferences.cpp" line="423"/>
+        <location filename="dlg/dlgpreferences.cpp" line="392"/>
         <source> Cut the beginning | Cut the end | Abort  </source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="dlg/dlgpreferences.cpp" line="424"/>
+        <location filename="dlg/dlgpreferences.cpp" line="393"/>
         <source>Are you sure you want to decrease the length of the barcode of the patientcard?
 
 Please note that all of the patientcards will be affectedwhere the length of the barcode is longer than %1 characters</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="dlg/dlgpreferences.cpp" line="428"/>
+        <location filename="dlg/dlgpreferences.cpp" line="397"/>
         <source>If you select &apos;Cut the beginning&apos; the first %1 characters will be removed from the beginning of the barcode
 If you select &apos;Cut the end&apos; the last %1 characters willbe removed at the end of the barcode</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="dlg/dlgpreferences.cpp" line="454"/>
-        <location filename="dlg/dlgpreferences.cpp" line="461"/>
-        <location filename="dlg/dlgpreferences.cpp" line="469"/>
-        <location filename="dlg/dlgpreferences.cpp" line="843"/>
-        <location filename="dlg/dlgpreferences.cpp" line="934"/>
-        <location filename="dlg/dlgpreferences.cpp" line="980"/>
-        <location filename="dlg/dlgpreferences.cpp" line="997"/>
+        <location filename="dlg/dlgpreferences.cpp" line="423"/>
+        <location filename="dlg/dlgpreferences.cpp" line="430"/>
+        <location filename="dlg/dlgpreferences.cpp" line="438"/>
+        <location filename="dlg/dlgpreferences.cpp" line="812"/>
+        <location filename="dlg/dlgpreferences.cpp" line="903"/>
+        <location filename="dlg/dlgpreferences.cpp" line="949"/>
+        <location filename="dlg/dlgpreferences.cpp" line="966"/>
         <source>Warning</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="dlg/dlgpreferences.cpp" line="455"/>
+        <location filename="dlg/dlgpreferences.cpp" line="424"/>
         <source>&apos;Not sterile&apos; text can not be empty.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="dlg/dlgpreferences.cpp" line="462"/>
+        <location filename="dlg/dlgpreferences.cpp" line="431"/>
         <source>&apos;Tube replacement needed&apos; text can not be empty.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="dlg/dlgpreferences.cpp" line="470"/>
+        <location filename="dlg/dlgpreferences.cpp" line="439"/>
         <source>&apos;Device clean needed&apos; text can not be empty.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="dlg/dlgpreferences.cpp" line="582"/>
+        <location filename="dlg/dlgpreferences.cpp" line="551"/>
         <source> Mon</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="dlg/dlgpreferences.cpp" line="583"/>
+        <location filename="dlg/dlgpreferences.cpp" line="552"/>
         <source> Tue</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="dlg/dlgpreferences.cpp" line="584"/>
+        <location filename="dlg/dlgpreferences.cpp" line="553"/>
         <source> Wed</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="dlg/dlgpreferences.cpp" line="585"/>
+        <location filename="dlg/dlgpreferences.cpp" line="554"/>
         <source> Thu</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="dlg/dlgpreferences.cpp" line="586"/>
+        <location filename="dlg/dlgpreferences.cpp" line="555"/>
         <source> Fri</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="dlg/dlgpreferences.cpp" line="587"/>
+        <location filename="dlg/dlgpreferences.cpp" line="556"/>
         <source> Sat</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="dlg/dlgpreferences.cpp" line="588"/>
+        <location filename="dlg/dlgpreferences.cpp" line="557"/>
         <source> Sun</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="dlg/dlgpreferences.cpp" line="608"/>
+        <location filename="dlg/dlgpreferences.cpp" line="577"/>
         <source>Information</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="dlg/dlgpreferences.cpp" line="609"/>
+        <location filename="dlg/dlgpreferences.cpp" line="578"/>
         <source>Some of the changes you made will only be applied after the application is restarted.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="dlg/dlgpreferences.cpp" line="644"/>
-        <location filename="dlg/dlgpreferences.cpp" line="651"/>
+        <location filename="dlg/dlgpreferences.cpp" line="613"/>
+        <location filename="dlg/dlgpreferences.cpp" line="620"/>
         <source>(%1 + %2 % VAT)</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="dlg/dlgpreferences.cpp" line="680"/>
-        <location filename="dlg/dlgpreferences.cpp" line="694"/>
+        <location filename="dlg/dlgpreferences.cpp" line="649"/>
+        <location filename="dlg/dlgpreferences.cpp" line="663"/>
         <source>Select Directory</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="dlg/dlgpreferences.cpp" line="707"/>
-        <location filename="dlg/dlgpreferences.cpp" line="711"/>
-        <location filename="dlg/dlgpreferences.cpp" line="715"/>
+        <location filename="dlg/dlgpreferences.cpp" line="676"/>
+        <location filename="dlg/dlgpreferences.cpp" line="680"/>
+        <location filename="dlg/dlgpreferences.cpp" line="684"/>
         <source>Not defined</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="dlg/dlgpreferences.cpp" line="708"/>
+        <location filename="dlg/dlgpreferences.cpp" line="677"/>
         <source>Younger than 18</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="dlg/dlgpreferences.cpp" line="709"/>
+        <location filename="dlg/dlgpreferences.cpp" line="678"/>
         <source>Above 60</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="dlg/dlgpreferences.cpp" line="712"/>
+        <location filename="dlg/dlgpreferences.cpp" line="681"/>
         <source>Male</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="dlg/dlgpreferences.cpp" line="713"/>
+        <location filename="dlg/dlgpreferences.cpp" line="682"/>
         <source>Female</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="dlg/dlgpreferences.cpp" line="717"/>
+        <location filename="dlg/dlgpreferences.cpp" line="686"/>
         <source>Service cards</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="dlg/dlgpreferences.cpp" line="719"/>
+        <location filename="dlg/dlgpreferences.cpp" line="688"/>
         <source>Service card, only for service usage.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="dlg/dlgpreferences.cpp" line="721"/>
+        <location filename="dlg/dlgpreferences.cpp" line="690"/>
         <source>&lt;No group associated&gt;</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="dlg/dlgpreferences.cpp" line="723"/>
+        <location filename="dlg/dlgpreferences.cpp" line="692"/>
         <source>Using solarium</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="dlg/dlgpreferences.cpp" line="724"/>
+        <location filename="dlg/dlgpreferences.cpp" line="693"/>
         <source>Selling patientcard</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="dlg/dlgpreferences.cpp" line="725"/>
+        <location filename="dlg/dlgpreferences.cpp" line="694"/>
         <source>Filling patientcard</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="dlg/dlgpreferences.cpp" line="726"/>
+        <location filename="dlg/dlgpreferences.cpp" line="695"/>
         <source>Selling product</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="dlg/dlgpreferences.cpp" line="727"/>
+        <location filename="dlg/dlgpreferences.cpp" line="696"/>
         <source>Replacing lost patientcard</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="dlg/dlgpreferences.cpp" line="728"/>
+        <location filename="dlg/dlgpreferences.cpp" line="697"/>
         <source>Assign patientcard</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="dlg/dlgpreferences.cpp" line="729"/>
-        <location filename="dlg/dlgpreferences.cpp" line="730"/>
+        <location filename="dlg/dlgpreferences.cpp" line="698"/>
+        <location filename="dlg/dlgpreferences.cpp" line="699"/>
         <source>Other</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="dlg/dlgpreferences.cpp" line="731"/>
+        <location filename="dlg/dlgpreferences.cpp" line="700"/>
         <source>Storage action</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="dlg/dlgpreferences.cpp" line="732"/>
+        <location filename="dlg/dlgpreferences.cpp" line="701"/>
         <source>Casssa expense</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="dlg/dlgpreferences.cpp" line="734"/>
+        <location filename="dlg/dlgpreferences.cpp" line="703"/>
         <source>Add product to storage</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="dlg/dlgpreferences.cpp" line="735"/>
+        <location filename="dlg/dlgpreferences.cpp" line="704"/>
         <source>Product disposal</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="dlg/dlgpreferences.cpp" line="736"/>
+        <location filename="dlg/dlgpreferences.cpp" line="705"/>
         <source>Product donate</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="dlg/dlgpreferences.cpp" line="738"/>
+        <location filename="dlg/dlgpreferences.cpp" line="707"/>
         <source>Cash</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="dlg/dlgpreferences.cpp" line="739"/>
+        <location filename="dlg/dlgpreferences.cpp" line="708"/>
         <source>Credit card</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="dlg/dlgpreferences.cpp" line="741"/>
+        <location filename="dlg/dlgpreferences.cpp" line="710"/>
         <source>Guest entered into database</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="dlg/dlgpreferences.cpp" line="742"/>
+        <location filename="dlg/dlgpreferences.cpp" line="711"/>
         <source>Purchase patientcard</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="dlg/dlgpreferences.cpp" line="743"/>
+        <location filename="dlg/dlgpreferences.cpp" line="712"/>
         <source>Refill patientcard</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="dlg/dlgpreferences.cpp" line="744"/>
+        <location filename="dlg/dlgpreferences.cpp" line="713"/>
         <source>Purchase product</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="dlg/dlgpreferences.cpp" line="745"/>
+        <location filename="dlg/dlgpreferences.cpp" line="714"/>
         <source>Using device with card</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="dlg/dlgpreferences.cpp" line="746"/>
+        <location filename="dlg/dlgpreferences.cpp" line="715"/>
         <source>Using device with cash</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="dlg/dlgpreferences.cpp" line="751"/>
+        <location filename="dlg/dlgpreferences.cpp" line="720"/>
         <source>(example %1)</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="dlg/dlgpreferences.cpp" line="834"/>
+        <location filename="dlg/dlgpreferences.cpp" line="803"/>
         <source>You just enabled the http synchronization but the WebSync application is not running.
 
 Do you want to start this application now?</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="dlg/dlgpreferences.cpp" line="844"/>
+        <location filename="dlg/dlgpreferences.cpp" line="813"/>
         <source>Error occured when starting process:WebSync.exe
 
 Error code: %1
@@ -4242,28 +4243,28 @@ Error code: %1
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="dlg/dlgpreferences.cpp" line="880"/>
+        <location filename="dlg/dlgpreferences.cpp" line="849"/>
         <source>Error</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="dlg/dlgpreferences.cpp" line="881"/>
+        <location filename="dlg/dlgpreferences.cpp" line="850"/>
         <source>Values of the Password and Retype Password fields are not the same</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="dlg/dlgpreferences.cpp" line="935"/>
+        <location filename="dlg/dlgpreferences.cpp" line="904"/>
         <source>The password you entered is not valid
 to modify device admin password.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="dlg/dlgpreferences.cpp" line="981"/>
+        <location filename="dlg/dlgpreferences.cpp" line="950"/>
         <source>You are not allowed to modify application expiration day.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="dlg/dlgpreferences.cpp" line="998"/>
+        <location filename="dlg/dlgpreferences.cpp" line="967"/>
         <source>The password you entered is not valid
 to modify application expiration day.</source>
         <translation type="unfinished"></translation>
