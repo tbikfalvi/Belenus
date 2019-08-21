@@ -261,7 +261,15 @@ void cDlgGuestEdit::on_pbSaveExit_clicked()
     }
     if( ledEmail->text().length() > 0 )
     {
+        // /^[a-z0-9!#$%&\'*+\=?^_`{|}~-]+(?:\.[a-z0-9!#$%&\'*+\=?^_`{|}~-]+)*@(?:[a-z0-9](?:[a-z0-9-]*[a-z0-9])?\.)+[a-z0-9](?:[a-z0-9-]*[a-z0-9])?/
+        QRegExp qreEmail( "/^[a-z0-9!#$%&\'*+\=?^_`{|}~-]+(?:\.[a-z0-9!#$%&\'*+\=?^_`{|}~-]+)*@(?:[a-z0-9](?:[a-z0-9-]*[a-z0-9])?\.)+[a-z0-9](?:[a-z0-9-]*[a-z0-9])?/" );
 
+        if( !qreEmail.exactMatch( ledEmail->text() ) )
+        {
+            boCanBeSaved = false;
+            if( qsErrorMessage.length() ) qsErrorMessage.append( "\n\n" );
+            qsErrorMessage.append( tr( "Email format is incorrect." ) );
+        }
     }
 
     if( boCanBeSaved )
