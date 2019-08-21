@@ -259,6 +259,10 @@ void cDlgGuestEdit::on_pbSaveExit_clicked()
         if( qsErrorMessage.length() ) qsErrorMessage.append( "\n\n" );
         qsErrorMessage.append( tr( "Gender of the guest must be set." ) );
     }
+    if( ledEmail->text().length() > 0 )
+    {
+
+    }
 
     if( boCanBeSaved )
     {
