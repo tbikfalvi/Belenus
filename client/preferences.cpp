@@ -349,6 +349,9 @@ unsigned int cPreferences::loadSettingU( QString p_Identifier, unsigned int p_De
         }
         else
         {
+            g_poDB->executeQTQuery( QString("INSERT INTO `settings` (`settingId`, `identifier`, `value`) VALUES (NULL, '%1', '%2') " )
+                                            .arg( p_Identifier )
+                                            .arg( p_Default ) );
             value = p_Default;
         }
         delete poQuery;
@@ -377,6 +380,9 @@ QString cPreferences::loadSettingS( QString p_Identifier, QString p_Default ) th
         }
         else
         {
+            g_poDB->executeQTQuery( QString("INSERT INTO `settings` (`settingId`, `identifier`, `value`) VALUES (NULL, '%1', '%2') " )
+                                            .arg( p_Identifier )
+                                            .arg( p_Default ) );
             value = p_Default;
         }
         delete poQuery;
@@ -405,6 +411,9 @@ bool cPreferences::loadSettingB( QString p_Identifier, bool p_Default ) throw (c
         }
         else
         {
+            g_poDB->executeQTQuery( QString("INSERT INTO `settings` (`settingId`, `identifier`, `value`) VALUES (NULL, '%1', '%2') " )
+                                            .arg( p_Identifier )
+                                            .arg( p_Default ) );
             value = p_Default;
         }
         delete poQuery;
@@ -433,6 +442,9 @@ int cPreferences::loadSettingI( QString p_Identifier, int p_Default ) throw (cSe
         }
         else
         {
+            g_poDB->executeQTQuery( QString("INSERT INTO `settings` (`settingId`, `identifier`, `value`) VALUES (NULL, '%1', '%2') " )
+                                            .arg( p_Identifier )
+                                            .arg( p_Default ) );
             value = p_Default;
         }
         delete poQuery;

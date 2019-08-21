@@ -30,6 +30,7 @@
 #define ERR_LANG_FILE_MISSING           1
 #define ERR_UNABLE_TO_READ_LANG_FILE    2
 #define ERR_PARSING_FILE_FAILED         3
+#define ERR_UNABLE_TO_WRITE_LANG_FILE   4
 
 //====================================================================================
 class cLanguage

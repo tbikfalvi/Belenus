@@ -117,7 +117,66 @@ QStringList cLanguage::getLanguages()
 void cLanguage::saveCurrentLanguage(QString p_qsLang)
 //------------------------------------------------------------------------------------
 {
+    QString         qsCurrentPath = QDir::currentPath().replace( "\\", "/" );
+    QFile           qfFile( QString( "%1/lang/languages.inf" ).arg( qsCurrentPath ) );
 
+    if( !qfFile.exists() )
+    {
+        m_nErrorCode = ERR_LANG_FILE_MISSING;
+        return;
+    }
+
+    if( !qfFile.open(QIODevice::ReadOnly) )
+    {
+        m_nErrorCode = ERR_UNABLE_TO_READ_LANG_FILE;
+        return;
+    }
+
+    QString      qsErrorMsg  = "";
+    int          inErrorLine = 0;
+
+    qfFile.seek( 0 );
+    if( !obProcessDoc->setContent( &qfFile, &qsErrorMsg, &inErrorLine ) )
+    {
+        m_nErrorCode = ERR_PARSING_FILE_FAILED;
+        qfFile.close();
+        return;
+    }
+    qfFile.close();
+
+    QDomElement     docRoot     = obProcessDoc->documentElement();
+    QDomNodeList    obLanguage  = docRoot.elementsByTagName( "language" );;
+
+    if( !qfFile.open(QIODevice::WriteOnly) )
+    {
+        m_nErrorCode = ERR_UNABLE_TO_WRITE_LANG_FILE;
+        return;
+    }
+
+    qfFile.write( "<languages>\n\r\t<!--\n\r\t<language name=\"\" shortname=\"\" current=\"no\" />\n\r\t-->\n\r\n\r\n\r" );
+
+    for( int i=0; i<obLanguage.count(); i++ )
+    {
+        QString qsName  = obLanguage.at(i).toElement().attribute("name");
+        QString qsShort = obLanguage.at(i).toElement().attribute("shortname");
+        QString qsCurr  = "no";
+
+        if( p_qsLang.compare( qsShort ) == 0 )
+        {
+            qsCurr = "yes";
+        }
+
+        qfFile.write( QString( "\t<language name=\"%1\" shortname=\"%2\" current=\"%3\" />\n\r" )
+                                .arg( qsName )
+                                .arg( qsShort )
+                                .arg( qsCurr )
+                                .toStdString().c_str() );
+    }
+    qfFile.write( "\n\r" );
+    qfFile.write( "</languages>\n\r" );
+    qfFile.close();
+
+    m_nErrorCode = 0;
 }
 //====================================================================================
 int cLanguage::setLanguageCombo(QComboBox *p_cmbLang)

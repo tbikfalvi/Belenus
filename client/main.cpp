@@ -13,8 +13,8 @@
 // Alkalmazas fo allomanya.
 //====================================================================================
 
-#define APPLICATION_VERSION_NUMBER  "1.7.2.0"
-#define DATABASE_VERSION_NUMBER     "1.7.8"
+#define APPLICATION_VERSION_NUMBER  "1.8.0.0"
+#define DATABASE_VERSION_NUMBER     "1.8.0"
 
 //====================================================================================
 
@@ -119,19 +119,7 @@ int main( int argc, char *argv[] )
     obSplash.setFont(obFont);
     obSplash.show();
     apMainApp->processEvents();
-/*
-    QString qsSystemID = QObject::tr( "SystemID: " );
 
-    if( g_poPrefs->isComponentSensoliteInstalled() ) qsSystemID.append( "S" );
-    if( g_poPrefs->isComponentKiwiSunInstalled() )   qsSystemID.append( "K" );
-    if( g_poPrefs->isComponentDatabaseInstalled() )  qsSystemID.append( "D" );
-    if( g_poPrefs->isComponentHardwareInstalled() )  qsSystemID.append( "H" );
-    if( g_poPrefs->isComponentInternetInstalled() )  qsSystemID.append( "I" );
-    if( g_poPrefs->isComponentClientInstalled() )    qsSystemID.append( "C" );
-    if( g_poPrefs->isComponentViewerInstalled() )    qsSystemID.append( "V" );
-    qsSystemID.append( "\n" );
-
-    qsSpalsh += qsSystemID;*/
     qsSpalsh += QString( "V: %1\n" ).arg( APPLICATION_VERSION_NUMBER );
     obSplash.showMessage(qsSpalsh,Qt::AlignLeft,QColor(59,44, 75));
 

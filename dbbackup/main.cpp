@@ -22,17 +22,9 @@ int main(int argc, char *argv[])
     QSettings   obPrefFile( QString( "%1/belenus.ini" ).arg( qsCurrentPath ), QSettings::IniFormat );
     QString     qsLang = obPrefFile.value( QString::fromAscii( "Lang" ), "en" ).toString();
 
-    g_obLanguage.init( apMainApp, "dbbackup", "_", qsLang );
+    g_obLanguage.getLanguages();
+    g_obLanguage.init( apMainApp, "dbbackup", "_" );
 
-/*    poTransBackup = new QTranslator();
-    poTransQT = new QTranslator();
-
-    poTransBackup->load( QString("%1\\lang\\dbbackup_%2.qm").arg(QDir::currentPath()).arg(qsLang) );
-    poTransQT->load( QString("%1\\lang\\qt_%2.qm").arg(QDir::currentPath()).arg(qsLang) );
-
-    apMainApp->installTranslator( poTransBackup );
-    apMainApp->installTranslator( poTransQT );
-*/
     MainWindow::teAction    teAction    = MainWindow::ACT_BACKUP;
     QString                 qsFileName  = "";
 
