@@ -320,15 +320,17 @@ void advertisementwindow::_refreshSettings()
 
 void advertisementwindow::_loadPosition()
 {
-    QSettings   obPrefFile( "belenus.ini", QSettings::IniFormat );
-
     QPoint  qpDlgPos;
     QPoint  qpDlgSize;
 
-    qpDlgPos.setX( obPrefFile.value( QString::fromAscii( "Dialogs/Ad%1_left" ).arg(m_uiDBId), 0 ).toInt() );
-    qpDlgPos.setY( obPrefFile.value( QString::fromAscii( "Dialogs/Ad%1_top" ).arg(m_uiDBId), 0 ).toInt() );
-    qpDlgSize.setX( obPrefFile.value( QString::fromAscii( "Dialogs/Ad%1_width" ).arg(m_uiDBId), 400 ).toInt() );
-    qpDlgSize.setY( obPrefFile.value( QString::fromAscii( "Dialogs/Ad%1_height" ).arg(m_uiDBId), 400 ).toInt() );
+    m_poDB->open();
+
+    qpDlgPos.setX( _loadSetting( QString("DLG_Ad%1_left").arg(m_uiDBId), 0 ) );
+    qpDlgPos.setY( _loadSetting( QString("DLG_Ad%1_top").arg(m_uiDBId), 0 ) );
+    qpDlgSize.setX( _loadSetting( QString("DLG_Ad%1_width").arg(m_uiDBId), 400 ) );
+    qpDlgSize.setY( _loadSetting( QString("DLG_Ad%1_height").arg(m_uiDBId), 400 ) );
+
+    m_poDB->close();
 
     resize( qpDlgSize.x(), qpDlgSize.y() );
     move( qpDlgPos );
@@ -336,12 +338,39 @@ void advertisementwindow::_loadPosition()
 
 void advertisementwindow::_savePosition()
 {
-    QSettings   obPrefFile( "belenus.ini", QSettings::IniFormat );
+    m_poDB->open();
 
-    obPrefFile.setValue( QString::fromAscii( "Dialogs/Ad%1_left" ).arg(m_uiDBId), x() );
-    obPrefFile.setValue( QString::fromAscii( "Dialogs/Ad%1_top" ).arg(m_uiDBId), y() );
-    obPrefFile.setValue( QString::fromAscii( "Dialogs/Ad%1_width" ).arg(m_uiDBId), width() );
-    obPrefFile.setValue( QString::fromAscii( "Dialogs/Ad%1_height" ).arg(m_uiDBId), height() );
+    _saveSetting( QString("DLG_Ad%1_left").arg(m_uiDBId), x() );
+    _saveSetting( QString("DLG_Ad%1_top").arg(m_uiDBId), y() );
+    _saveSetting( QString("DLG_Ad%1_width").arg(m_uiDBId), width() );
+    _saveSetting( QString("DLG_Ad%1_height").arg(m_uiDBId), height() );
+
+    m_poDB->close();
+}
+
+int advertisementwindow::_loadSetting( QString p_Identifier, int p_Default )
+{
+    int value = 0;
+
+    QSqlQuery poQuery = m_poDB->exec( QString( "SELECT value FROM settings WHERE identifier=\"%1\" " ).arg( p_Identifier ) );
+    if( poQuery.first() )
+    {
+        value = poQuery.value( 0 ).toInt();
+    }
+    else
+    {
+        m_poDB->exec( QString("INSERT INTO `settings` (`settingId`, `identifier`, `value`) VALUES (NULL, '%1', '%2') " )
+                             .arg( p_Identifier )
+                             .arg( p_Default ) );
+        value = p_Default;
+    }
+
+    return value;
+}
+
+void advertisementwindow::_saveSetting( QString p_Identifier, int p_Value )
+{
+    m_poDB->exec( QString( "UPDATE settings SET value='%1' WHERE identifier=\"%2\" " ).arg( p_Value ).arg( p_Identifier ) );
 }
 
 void advertisementwindow::_loadImages()

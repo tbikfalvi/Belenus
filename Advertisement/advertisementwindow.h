@@ -68,6 +68,8 @@ private:
     void                _showButtonPanel();
     void                _loadPosition();
     void                _savePosition();
+    int                 _loadSetting( QString p_Identifier, int p_Default );
+    void                _saveSetting( QString p_Identifier, int p_Value );
     void                _loadImages();
     void                _updateGui();
     void                _readCommandFile();

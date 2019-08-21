@@ -41,8 +41,8 @@ cDlgSecondaryWindow::~cDlgSecondaryWindow()
 {
     cTracer obTrace( "cDlgSecondaryWindow::~cDlgSecondaryWindow" );
 
-    g_poPrefs->setSecondaryWindowPosition( QPoint( x(), y() ), true );
-    g_poPrefs->setSecondaryWindowSize( QSize( width(), height() ), true );
+    g_poPrefs->setSecondaryWindowPosition( QPoint( x(), y() ) );
+    g_poPrefs->setSecondaryWindowSize( QSize( width(), height() ) );
 }
 
 void cDlgSecondaryWindow::initPanels()
