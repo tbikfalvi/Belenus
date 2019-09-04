@@ -493,24 +493,24 @@ Kérem indítsa el a WampServer alkalmazást, majd indítsa újra a Belenus alka
         <translation>Vas</translation>
     </message>
     <message>
-        <location filename="db/dbpatientcard.cpp" line="827"/>
-        <location filename="db/dbpatientcard.cpp" line="867"/>
+        <location filename="db/dbpatientcard.cpp" line="838"/>
+        <location filename="db/dbpatientcard.cpp" line="878"/>
         <source> units (</source>
         <translation> egység (</translation>
     </message>
     <message>
-        <location filename="db/dbpatientcard.cpp" line="829"/>
-        <location filename="db/dbpatientcard.cpp" line="869"/>
+        <location filename="db/dbpatientcard.cpp" line="840"/>
+        <location filename="db/dbpatientcard.cpp" line="880"/>
         <source> minutes) (</source>
         <translation> perc) (</translation>
     </message>
     <message>
-        <location filename="db/dbpatientcard.cpp" line="873"/>
+        <location filename="db/dbpatientcard.cpp" line="884"/>
         <source>&lt;i&gt; (prepared for usage)&lt;/i&gt;&lt;br&gt;</source>
         <translation>&lt;i&gt; (használatra előkészítve)&lt;/i&gt;&lt;br&gt;</translation>
     </message>
     <message>
-        <location filename="db/dbpatientcard.cpp" line="879"/>
+        <location filename="db/dbpatientcard.cpp" line="890"/>
         <source>&lt;i&gt;There is no valid, useable unit on this card.&lt;/i&gt;</source>
         <translation>&lt;i&gt;Nincs érvényes, felhasználható egység a bérleten.&lt;/i&gt;</translation>
     </message>
@@ -2752,56 +2752,61 @@ A már létező vonalkódok illetve a nem megfelelő hosszúságúak kimaradnak 
     </message>
     <message>
         <location filename="edit/dlgguestedit.cpp" line="254"/>
-        <location filename="edit/dlgguestedit.cpp" line="292"/>
+        <location filename="edit/dlgguestedit.cpp" line="304"/>
         <source>Guest name cannot be empty.</source>
         <translation>Vendég neve nem lehet üres.</translation>
     </message>
     <message>
         <location filename="edit/dlgguestedit.cpp" line="260"/>
-        <location filename="edit/dlgguestedit.cpp" line="298"/>
+        <location filename="edit/dlgguestedit.cpp" line="310"/>
         <source>Gender of the guest must be set.</source>
         <translation>A vendég nemét meg kell adni.</translation>
     </message>
     <message>
-        <location filename="edit/dlgguestedit.cpp" line="270"/>
-        <location filename="edit/dlgguestedit.cpp" line="307"/>
+        <location filename="edit/dlgguestedit.cpp" line="271"/>
+        <source>Email format is incorrect.</source>
+        <translation>Az email formátuma nem helyes.</translation>
+    </message>
+    <message>
+        <location filename="edit/dlgguestedit.cpp" line="282"/>
+        <location filename="edit/dlgguestedit.cpp" line="319"/>
         <source>Warning</source>
         <translation>Figyelmeztetés</translation>
     </message>
     <message>
-        <location filename="edit/dlgguestedit.cpp" line="368"/>
-        <location filename="edit/dlgguestedit.cpp" line="375"/>
+        <location filename="edit/dlgguestedit.cpp" line="380"/>
+        <location filename="edit/dlgguestedit.cpp" line="387"/>
         <source>Attention</source>
         <translation>Figyelmeztetés</translation>
     </message>
     <message>
-        <location filename="edit/dlgguestedit.cpp" line="369"/>
+        <location filename="edit/dlgguestedit.cpp" line="381"/>
         <source>This patientcard has been lost and replaced
 and can not be used or sold again.</source>
         <translation>Ez a bérlet elveszett és lecserélték másik bérletre
 ezért nem lehet használni vagy eladni újra.</translation>
     </message>
     <message>
-        <location filename="edit/dlgguestedit.cpp" line="376"/>
+        <location filename="edit/dlgguestedit.cpp" line="388"/>
         <source>This patientcard is in use. Active patientcard can not be sold again.</source>
         <oldsource>This patientcard is in use. Active patientcard can not be sold.
 Please refill the card if you want to add additional units.</oldsource>
         <translation>Ez a bérlet már használatban van. Aktív bérletet nem lehet eladni újra.</translation>
     </message>
     <message>
-        <location filename="edit/dlgguestedit.cpp" line="390"/>
+        <location filename="edit/dlgguestedit.cpp" line="402"/>
         <source>This barcode has not found in the database.
 Do you want to register it for a new patientcard?</source>
         <translation>Ez a vonalkód nincs elmentve az adatbázisban.
 Regisztrálni akarja a vonalkódot egy új bérlethez?</translation>
     </message>
     <message>
-        <location filename="edit/dlgguestedit.cpp" line="458"/>
+        <location filename="edit/dlgguestedit.cpp" line="470"/>
         <source>Are you sure you want to disjoin the selected card from patient?</source>
         <translation>Biztos benne, hogy leválasztja a kiválasztott bérletet a vendégről?</translation>
     </message>
     <message>
-        <location filename="edit/dlgguestedit.cpp" line="529"/>
+        <location filename="edit/dlgguestedit.cpp" line="541"/>
         <source>Assigned patientcards:
 Barcode	Patientcard type</source>
         <translation>Hozzárendelt bérletek:
@@ -2818,12 +2823,12 @@ Vonalkód	Bérlettípus</translation>
         <translation type="obsolete">El akarja menteni a változtatásokat és be akarja zárni a dialógus ablakot?</translation>
     </message>
     <message>
-        <location filename="edit/dlgguestedit.cpp" line="480"/>
+        <location filename="edit/dlgguestedit.cpp" line="492"/>
         <source>Information</source>
         <translation>Információ</translation>
     </message>
     <message>
-        <location filename="edit/dlgguestedit.cpp" line="480"/>
+        <location filename="edit/dlgguestedit.cpp" line="492"/>
         <source>Not implemented yet.</source>
         <translation>Nincs kész</translation>
     </message>
@@ -2832,14 +2837,14 @@ Vonalkód	Bérlettípus</translation>
         <translation type="obsolete">%1 Ft.</translation>
     </message>
     <message>
-        <location filename="edit/dlgguestedit.cpp" line="389"/>
-        <location filename="edit/dlgguestedit.cpp" line="430"/>
-        <location filename="edit/dlgguestedit.cpp" line="457"/>
+        <location filename="edit/dlgguestedit.cpp" line="401"/>
+        <location filename="edit/dlgguestedit.cpp" line="442"/>
+        <location filename="edit/dlgguestedit.cpp" line="469"/>
         <source>Question</source>
         <translation>Kérdés</translation>
     </message>
     <message>
-        <location filename="edit/dlgguestedit.cpp" line="431"/>
+        <location filename="edit/dlgguestedit.cpp" line="443"/>
         <source>Do you want to save changes then close the dialog?</source>
         <translation>El akarja menteni a változtatásokat és be akarja zárni a dialógus ablakot?</translation>
     </message>

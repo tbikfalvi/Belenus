@@ -494,7 +494,7 @@ void cBlnsHttp::_httpStartProcess()
 
             if( !qreEmail.exactMatch( m_qsMailRecipients ) )
             {
-                g_obLogger( cSeverity::ERROR ) << "HTTP: Invalid email address: [""
+                g_obLogger( cSeverity::ERROR ) << "HTTP: Invalid email address: ["
                                                << m_qsMailRecipients
                                                << "]"
                                                << EOM;

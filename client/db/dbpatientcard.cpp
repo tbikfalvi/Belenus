@@ -796,7 +796,7 @@ void cDBPatientCard::sendAutoMail( const int p_nMailType,
 
         if( !qreEmail.exactMatch( qsPatientEmail ) )
         {
-            g_obLogger( cSeverity::ERROR ) << "Invalid email address: [""
+            g_obLogger( cSeverity::ERROR ) << "Invalid email address: ["
                                            << qsPatientEmail
                                            << "]"
                                            << EOM;

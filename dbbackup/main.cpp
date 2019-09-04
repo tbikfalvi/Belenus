@@ -17,11 +17,6 @@ int main(int argc, char *argv[])
 {
     apMainApp = new QApplication(argc, argv);
 
-    QString qsCurrentPath = QDir::currentPath().replace( "\\", "/" );
-
-    QSettings   obPrefFile( QString( "%1/belenus.ini" ).arg( qsCurrentPath ), QSettings::IniFormat );
-    QString     qsLang = obPrefFile.value( QString::fromAscii( "Lang" ), "en" ).toString();
-
     g_obLanguage.getLanguages();
     g_obLanguage.init( apMainApp, "dbbackup", "_" );
 
