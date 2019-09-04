@@ -40,8 +40,8 @@ cBlnsHttp::cBlnsHttp()
     m_inTimeout                 = 0;
     m_inTimer                   = 0;
     m_qsToken                   = "";
-    m_inHttpProcessStep         = HTTP_STATUS_DEFAULT;
-    m_teBlnsHttpProcess         = cBlnsHttpAction::HA_DEFAULT;
+    m_inHttpProcessStep         = HTTP_STATUS_DEFAULT;          // -1
+    m_teBlnsHttpProcess         = cBlnsHttpAction::HA_DEFAULT;  //  0
 
     m_qsServerAddress           = "0.0.0.0";
     m_bIsHttpEnabled            = true;
@@ -490,6 +490,25 @@ void cBlnsHttp::_httpStartProcess()
             m_qsMailVarUnitCount= poQuery->value(10).toString();
             m_qsMailVarDateTime = poQuery->value(11).toString();
 
+            QRegExp qreEmail( "/^[a-z0-9!#$%&\'*+\=?^_`{|}~-]+(?:\.[a-z0-9!#$%&\'*+\=?^_`{|}~-]+)*@(?:[a-z0-9](?:[a-z0-9-]*[a-z0-9])?\.)+[a-z0-9](?:[a-z0-9-]*[a-z0-9])?/" );
+
+            if( !qreEmail.exactMatch( m_qsMailRecipients ) )
+            {
+                g_obLogger( cSeverity::ERROR ) << "HTTP: Invalid email address: ["
+                                               << m_qsMailRecipients
+                                               << "]"
+                                               << EOM;
+                qsQuery = "UPDATE httpsendmail SET ";
+                qsQuery += QString( "active = 0, " );
+                qsQuery += QString( "archive = \"SENT\" " );
+                qsQuery += QString( "WHERE httpSendMailId = \"%1\" " ).arg( m_uiRecordId );
+                g_poDB->executeQTQuery( qsQuery );
+
+                m_inHttpProcessStep = 2;
+                _httpExecuteProcess();
+                return;
+            }
+
             if( m_nMailTypeId > 0 )
             {
                 m_qsMailText = QString::number( m_nMailTypeId );
@@ -597,45 +616,45 @@ void cBlnsHttp::_httpExecuteProcess()
 
     switch( m_vrHttpActions.at( m_inHttpProcessStep ) )
     {
-        case cBlnsHttpAction::HA_AUTHENTICATE:
+        case cBlnsHttpAction::HA_AUTHENTICATE: // 1
         {
             g_obLogger(cSeverity::DEBUG) << "HTTP: Get token" << EOM;
             _httpGetToken();
             break;
         }
-        case cBlnsHttpAction::HA_PCSENDDATA:
+        case cBlnsHttpAction::HA_PCSENDDATA: // 2
             g_obLogger(cSeverity::DEBUG) << "HTTP: Send card data" << EOM;
             _httpSendCardData();
             break;
 
-        case cBlnsHttpAction::HA_PCUPDATERECORD:
+        case cBlnsHttpAction::HA_PCUPDATERECORD: // 3
             g_obLogger(cSeverity::DEBUG) << "HTTP: Update record" << EOM;
             _updateProcessedRecord();
             _httpProcessResponse();
             break;
 
-        case cBlnsHttpAction::HA_REQUESTDATA:
+        case cBlnsHttpAction::HA_REQUESTDATA: // 5
             g_obLogger(cSeverity::DEBUG) << "HTTP: Get online sold cards" << EOM;
             _httpGetOnlineRecords();
             break;
 
-        case cBlnsHttpAction::HA_SENDREQUESTSFINISHED:
+        case cBlnsHttpAction::HA_SENDREQUESTSFINISHED: // 6
             g_obLogger(cSeverity::DEBUG) << "HTTP: Confirm requested data arrived" << EOM;
             _httpConfirmRequestedData();
             break;
 
-        case cBlnsHttpAction::HA_SENDMAILTOSERVER:
+        case cBlnsHttpAction::HA_SENDMAILTOSERVER: // 7
             g_obLogger(cSeverity::DEBUG) << "HTTP: Send mail to server" << EOM;
             _httpSendMailToServer();
             break;
 
-        case cBlnsHttpAction::HA_UPDATEMAILRECORD:
+        case cBlnsHttpAction::HA_UPDATEMAILRECORD: // 9
             g_obLogger(cSeverity::DEBUG) << "HTTP: Update mail record" << EOM;
             _updateMailRecord();
             _httpProcessResponse();
             break;
 
-        case cBlnsHttpAction::HA_PROCESSFINISHED:
+        case cBlnsHttpAction::HA_PROCESSFINISHED: // 10
             g_obLogger(cSeverity::DEBUG) << "HTTP: Finish process" << EOM;
             _httpProcessResponse();
             break;
@@ -844,7 +863,7 @@ void cBlnsHttp::_httpConfirmRequestedData()
 void cBlnsHttp::_httpProcessResponse()
 //-------------------------------------------------------------------------------------------------
 {
-  cTracer obTrace( "cBlnsHttp::_httpProcessResponse" );
+    cTracer obTrace( "cBlnsHttp::_httpProcessResponse" );
 
     g_obLogger(cSeverity::DEBUG) << "HTTP: Process response for step ["
                                  << m_inHttpProcessStep
@@ -875,7 +894,7 @@ void cBlnsHttp::_httpProcessResponse()
         case cBlnsHttpAction::HA_PCSENDDATA:
             g_obLogger(cSeverity::DEBUG) << "HTTP: Read response from save.php" << EOM;
             _readPCResponseFromFile();
-            if( m_inHttpProcessStep > 0 )
+            if( m_inHttpProcessStep > 0 ) // csak akkor lep tovabb, ha volt authentikacio
             {
                 m_inHttpProcessStep++;
                 _httpExecuteProcess();

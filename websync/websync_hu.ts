@@ -8,22 +8,22 @@
         <translation type="obsolete">Tálca</translation>
     </message>
     <message>
-        <location filename="main.cpp" line="68"/>
+        <location filename="main.cpp" line="59"/>
         <source>websync</source>
         <translation>WebSync</translation>
     </message>
     <message>
-        <location filename="main.cpp" line="69"/>
+        <location filename="main.cpp" line="60"/>
         <source>I couldn&apos;t detect any system tray on this system.</source>
         <translation>Nem találtam &apos;tálcát&apos; az operációs rendszeren.</translation>
     </message>
     <message>
-        <location filename="http.cpp" line="537"/>
+        <location filename="http.cpp" line="556"/>
         <source> units (</source>
         <translation> egység (</translation>
     </message>
     <message>
-        <location filename="http.cpp" line="539"/>
+        <location filename="http.cpp" line="558"/>
         <source> minutes) (</source>
         <translation> perc) (</translation>
     </message>
@@ -48,200 +48,200 @@
         <translation>HTTP időtúllépés.</translation>
     </message>
     <message>
-        <location filename="http.cpp" line="980"/>
+        <location filename="http.cpp" line="999"/>
         <source>Unable to save HTTP communication file.</source>
         <translation>Nem sikerült elmenteni a HTTP kommunikációs állományt.</translation>
     </message>
     <message>
-        <location filename="http.cpp" line="1262"/>
+        <location filename="http.cpp" line="1281"/>
         <source>Token already used before</source>
         <translation>A token már korábban használatban volt</translation>
     </message>
     <message>
-        <location filename="http.cpp" line="1269"/>
+        <location filename="http.cpp" line="1288"/>
         <source>Token expired</source>
         <translation>A token érvényessége lejárt</translation>
     </message>
     <message>
-        <location filename="http.cpp" line="1290"/>
+        <location filename="http.cpp" line="1309"/>
         <source>HTTP Missing sha1 code</source>
         <translation>HTTP Hiányzó sha1 kód</translation>
     </message>
     <message>
-        <location filename="http.cpp" line="1297"/>
+        <location filename="http.cpp" line="1316"/>
         <source>HTTP Missing Studio identifier</source>
         <translation>HTTP Hiányzó Stúdió azonosító</translation>
     </message>
     <message>
-        <location filename="http.cpp" line="1304"/>
+        <location filename="http.cpp" line="1323"/>
         <source>HTTP Missing mail recipient</source>
         <translation>HTTP Hiányzó email címzett</translation>
     </message>
     <message>
-        <location filename="http.cpp" line="1311"/>
+        <location filename="http.cpp" line="1330"/>
         <source>HTTP Missing mail subject</source>
         <translation>HTTP Hiányzó email tárgy</translation>
     </message>
     <message>
-        <location filename="http.cpp" line="1318"/>
+        <location filename="http.cpp" line="1337"/>
         <source>HTTP Missing mail body</source>
         <translation>HTTP Hiányzó email tartalom</translation>
     </message>
     <message>
-        <location filename="http.cpp" line="1325"/>
+        <location filename="http.cpp" line="1344"/>
         <source>HTTP Missing mail variable NAME</source>
         <translation>HTTP Hiányzó email változó NAME</translation>
     </message>
     <message>
-        <location filename="http.cpp" line="1332"/>
+        <location filename="http.cpp" line="1351"/>
         <source>HTTP Missing mail variable BARCODE</source>
         <translation>HTTP Hiányzó email változó BARCODE</translation>
     </message>
     <message>
-        <location filename="http.cpp" line="1339"/>
+        <location filename="http.cpp" line="1358"/>
         <source>HTTP Missing mail variable CARDINFO</source>
         <translation>HTTP Hiányzó email változó CARDINFO</translation>
     </message>
     <message>
-        <location filename="http.cpp" line="1346"/>
+        <location filename="http.cpp" line="1365"/>
         <source>HTTP Missing mail variable UNITCOUNT</source>
         <translation>HTTP Hiányzó email változó UNITCOUNT</translation>
     </message>
     <message>
-        <location filename="http.cpp" line="1353"/>
+        <location filename="http.cpp" line="1372"/>
         <source>HTTP Missing mail variable DATETIME</source>
         <translation>HTTP Hiányzó email változó DATETIME</translation>
     </message>
     <message>
-        <location filename="http.cpp" line="1360"/>
+        <location filename="http.cpp" line="1379"/>
         <source>HTTP Invalid e-mail address</source>
         <translation>HTTP Nem megfelelő e-mail cím</translation>
     </message>
     <message>
-        <location filename="http.cpp" line="1409"/>
-        <location filename="http.cpp" line="1857"/>
+        <location filename="http.cpp" line="1428"/>
+        <location filename="http.cpp" line="1876"/>
         <source>Server did not received token</source>
         <translation>A webszerver nem kapta meg az elküldött token-t</translation>
     </message>
     <message>
-        <location filename="http.cpp" line="1416"/>
-        <location filename="http.cpp" line="1864"/>
+        <location filename="http.cpp" line="1435"/>
+        <location filename="http.cpp" line="1883"/>
         <source>Server did not received Sha1 hash</source>
         <translation>A webszerver nem kapta meg az elküldött Sha1 kulcsot</translation>
     </message>
     <message>
-        <location filename="http.cpp" line="1423"/>
-        <location filename="http.cpp" line="1871"/>
+        <location filename="http.cpp" line="1442"/>
+        <location filename="http.cpp" line="1890"/>
         <source>Server did not received Studio Id</source>
         <translation>A webszerver nem kapta meg az elküldött stúdió azonosítót</translation>
     </message>
     <message>
-        <location filename="http.cpp" line="1430"/>
-        <location filename="http.cpp" line="1878"/>
+        <location filename="http.cpp" line="1449"/>
+        <location filename="http.cpp" line="1897"/>
         <source>Server did not received last successfull request Id</source>
         <translation>A webszerver nem kapta meg az elküldött kommunikációs azonosítót</translation>
     </message>
     <message>
-        <location filename="http.cpp" line="1437"/>
-        <location filename="http.cpp" line="1885"/>
+        <location filename="http.cpp" line="1456"/>
+        <location filename="http.cpp" line="1904"/>
         <source>Token sent to server is invalid</source>
         <translation>A webszervernek elküldött token hibás</translation>
     </message>
     <message>
-        <location filename="http.cpp" line="1444"/>
+        <location filename="http.cpp" line="1463"/>
         <source>SQL error occured on server side</source>
         <translation>Adatbázis hiba következett be a szerver oldalon</translation>
     </message>
     <message>
-        <location filename="http.cpp" line="1451"/>
+        <location filename="http.cpp" line="1470"/>
         <source>Token sent to server is already sent</source>
         <translation>A webszervernek elküldött token már egyszer el lett küldve</translation>
     </message>
     <message>
-        <location filename="http.cpp" line="1458"/>
+        <location filename="http.cpp" line="1477"/>
         <source>Token sent to server is obsolete</source>
         <translation>A webszervernek elküldött token érvényessége lejárt</translation>
     </message>
     <message>
-        <location filename="http.cpp" line="1465"/>
-        <location filename="http.cpp" line="1892"/>
+        <location filename="http.cpp" line="1484"/>
+        <location filename="http.cpp" line="1911"/>
         <source>Sha1 code sent to server is invalid</source>
         <translation>A webszervernek elküldött Sha1 kulcs hibás</translation>
     </message>
     <message>
-        <location filename="http.cpp" line="1557"/>
+        <location filename="http.cpp" line="1576"/>
         <source>Patientcard record for &apos;%1&apos; updated
 %2</source>
         <translation>A &apos;%1&apos; bérlet adatai frissítve
 %2</translation>
     </message>
     <message>
-        <location filename="http.cpp" line="1595"/>
+        <location filename="http.cpp" line="1614"/>
         <source>Data updated for guest:
 %1</source>
         <translation>Vendég adatai frissítve:
 %1</translation>
     </message>
     <message>
-        <location filename="http.cpp" line="1628"/>
+        <location filename="http.cpp" line="1647"/>
         <source>New guest data record created:
 %1</source>
         <translation>Új vendég adatok létrehozva:
 %1</translation>
     </message>
     <message>
-        <location filename="http.cpp" line="1963"/>
+        <location filename="http.cpp" line="1982"/>
         <source>Http error occured: %1</source>
         <translation>Http hiba következett be: %1</translation>
     </message>
     <message>
-        <location filename="http.cpp" line="1398"/>
+        <location filename="http.cpp" line="1417"/>
         <source>SHA1 code mismatch in comm response</source>
         <translation>Az Sha1 kód nem megfelelő a comm válaszban</translation>
     </message>
     <message>
         <location filename="http.cpp" line="197"/>
         <location filename="http.cpp" line="451"/>
-        <location filename="http.cpp" line="580"/>
-        <location filename="http.cpp" line="756"/>
-        <location filename="http.cpp" line="772"/>
-        <location filename="http.cpp" line="1133"/>
-        <location filename="http.cpp" line="1217"/>
-        <location filename="http.cpp" line="1243"/>
-        <location filename="http.cpp" line="1635"/>
-        <location filename="http.cpp" line="1702"/>
-        <location filename="http.cpp" line="1777"/>
-        <location filename="http.cpp" line="1815"/>
+        <location filename="http.cpp" line="599"/>
+        <location filename="http.cpp" line="775"/>
+        <location filename="http.cpp" line="791"/>
+        <location filename="http.cpp" line="1152"/>
+        <location filename="http.cpp" line="1236"/>
+        <location filename="http.cpp" line="1262"/>
+        <location filename="http.cpp" line="1654"/>
+        <location filename="http.cpp" line="1721"/>
+        <location filename="http.cpp" line="1796"/>
+        <location filename="http.cpp" line="1834"/>
         <source>Error occured during executing database command</source>
         <translation>Hiba következett be adabázis parancs végrehajtása közben</translation>
     </message>
     <message>
-        <location filename="http.cpp" line="1670"/>
+        <location filename="http.cpp" line="1689"/>
         <source>Patientcard refilled online</source>
         <translation>Online bérlet feltöltés</translation>
     </message>
     <message>
-        <location filename="http.cpp" line="1693"/>
+        <location filename="http.cpp" line="1712"/>
         <source>Patientcard sold online</source>
         <translation>Online bérlet eladás</translation>
     </message>
     <message>
-        <location filename="http.cpp" line="1899"/>
+        <location filename="http.cpp" line="1918"/>
         <source>Result not sent to server</source>
         <translation>Visszaigazolás nem érkezett meg a szerverhez</translation>
     </message>
     <message>
-        <location filename="http.cpp" line="1943"/>
+        <location filename="http.cpp" line="1962"/>
         <source>Http request aborted</source>
         <translation>Http lekérdezés megszakítva</translation>
     </message>
     <message>
-        <location filename="http.cpp" line="1954"/>
+        <location filename="http.cpp" line="1973"/>
         <source>Error occured during downloading HTTP file.</source>
         <translation>Hiba következett be a HTTP állomány letöltésekor.</translation>
     </message>
     <message>
-        <location filename="http.cpp" line="861"/>
+        <location filename="http.cpp" line="880"/>
         <source>Invalid token received: </source>
         <translation>Hibás token érkezett: </translation>
     </message>
@@ -271,31 +271,31 @@
         <translation>Id: %1</translation>
     </message>
     <message>
-        <location filename="http.cpp" line="1138"/>
-        <location filename="http.cpp" line="1248"/>
+        <location filename="http.cpp" line="1157"/>
+        <location filename="http.cpp" line="1267"/>
         <source>Unknown error occured on server side.</source>
         <translation>Ismeretlen hiba következett be a szerver oldalon.</translation>
     </message>
     <message>
-        <location filename="http.cpp" line="1145"/>
-        <location filename="http.cpp" line="1276"/>
+        <location filename="http.cpp" line="1164"/>
+        <location filename="http.cpp" line="1295"/>
         <source>HTTP Session expired</source>
         <translation>HTTP Session lejárt</translation>
     </message>
     <message>
-        <location filename="http.cpp" line="1152"/>
-        <location filename="http.cpp" line="1283"/>
+        <location filename="http.cpp" line="1171"/>
+        <location filename="http.cpp" line="1302"/>
         <source>HTTP security check failed</source>
         <translation>HTTP biztonsági ellenőrzés sikertelen</translation>
     </message>
     <message>
-        <location filename="http.cpp" line="1159"/>
+        <location filename="http.cpp" line="1178"/>
         <source>Unknown studio Id</source>
         <translation>Ismeretlen szalon azonosító</translation>
     </message>
     <message>
-        <location filename="http.cpp" line="1166"/>
-        <location filename="http.cpp" line="1255"/>
+        <location filename="http.cpp" line="1185"/>
+        <location filename="http.cpp" line="1274"/>
         <source>Database error occured on server side</source>
         <translation>Adatbázis hiba következett be a szerver oldalon.</translation>
     </message>

@@ -50,23 +50,8 @@ int main( int argc, char *argv[] )
 
         QString qsCurrentPath = QDir::currentPath().replace( "\\", "/" );
 
-        QSettings   obPrefFile( QString( "%1/belenus.ini" ).arg( qsCurrentPath ), QSettings::IniFormat );
-        QString     qsLang = obPrefFile.value( QString::fromAscii( "Lang" ), "en" ).toString();
-
-        g_obLanguage.init( &apMainApp, "brv", "_", qsLang );
-/*        QString     qsLangBl = QString("lang/brv_%1.qm").arg( qsLang );
-        QString     qsLangQT = QString("lang/qt_%1.qm").arg( qsLang );
-
-        g_obLogger(cSeverity::INFO) << "Language file: " << qsLangBl << EOM;
-
-        QTranslator     obBlTr;
-        QTranslator     obQtTr;
-
-        obBlTr.load( qsLangBl );
-        obQtTr.load( qsLangQT );
-
-        apMainApp.installTranslator( &obBlTr );
-        apMainApp.installTranslator( &obQtTr );*/
+        g_obLanguage.getLanguages();
+        g_obLanguage.init( &apMainApp, "brv", "_" );
 
         cWndMain  obMainWindow;
         obMainWindow.show();

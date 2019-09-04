@@ -1,0 +1,97 @@
+
+
+------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
+
+	checkHttpServerAvailability
+
+------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
+	
+		HA_AUTHENTICATE
+		HA_PROCESSFINISHED
+		
+		m_teBlnsHttpProcess = cBlnsHttpAction::HA_AUTHENTICATE;
+		
+		m_inHttpProcessStep = 0;
+		m_vrHttpActions		= HA_AUTHENTICATE
+
+	_httpStartProcess -> _httpExecuteProcess -> _httpGetToken -> _downloadFile( "http://www.kiwisun.hu/kiwi_ticket/token.php" ) -> _httpProcessResponse -> _readTokenFromFile 
+	
+		m_inHttpProcessStep = 1;
+		m_vrHttpActions		= HA_PROCESSFINISHED
+	
+	_httpExecuteProcess -> _httpProcessResponse -> _sendProcessFinished -> signalActionProcessed( "HTTPMSG_01 Authentication with server succeeded" ) -> END
+	
+------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
+
+	sendPatientCardData
+
+------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
+
+		HA_AUTHENTICATE
+		HA_PCSENDDATA
+		HA_PCUPDATERECORD
+		HA_PROCESSFINISHED
+
+		m_teBlnsHttpProcess = cBlnsHttpAction::HA_PCSENDDATA;
+
+		m_inHttpProcessStep = 0;
+		m_vrHttpActions		= HA_AUTHENTICATE
+		
+	_httpStartProcess -> _httpExecuteProcess -> _httpGetToken -> _downloadFile( "http://www.kiwisun.hu/kiwi_ticket/token.php" ) -> _httpProcessResponse -> _readTokenFromFile 
+		|
+		-> _updateProcessedRecord -> END
+		
+		m_inHttpProcessStep = 1;
+		m_vrHttpActions		= HA_PCSENDDATA
+	
+	-> _httpExecuteProcess -> _httpSendCardData -> _downloadFile( "http://www.kiwisun.hu/kiwi_ticket/save.php" ) -> _httpProcessResponse -> _readPCResponseFromFile
+
+		m_inHttpProcessStep = 2;
+		m_vrHttpActions		= HA_PCUPDATERECORD
+	
+	-> _httpExecuteProcess -> _updateProcessedRecord -> _httpProcessResponse
+	
+		m_inHttpProcessStep = 3;
+		m_vrHttpActions		= HA_PROCESSFINISHED
+		
+	-> _httpExecuteProcess -> _httpProcessResponse -> _sendProcessFinished -> signalActionProcessed( "HTTPMSG_02 Send patientcard data to server" ) -> END
+	
+------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
+
+	processWaitingMails
+	
+------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
+
+    HA_AUTHENTICATE
+    HA_SENDMAILTOSERVER
+    HA_UPDATEMAILRECORD
+    HA_PROCESSFINISHED
+
+		m_teBlnsHttpProcess = cBlnsHttpAction::HA_MAILPROCESSQUEUE;
+
+		m_inHttpProcessStep = 0;
+		m_vrHttpActions		= HA_AUTHENTICATE;
+
+	_httpStartProcess -> _httpExecuteProcess -> _httpGetToken -> _downloadFile( "http://www.kiwisun.hu/kiwi_ticket/token.php" ) -> _httpProcessResponse -> _readTokenFromFile 
+		|
+		| m_inHttpProcessStep = 2;
+		| m_vrHttpActions	  = HA_UPDATEMAILRECORD
+		|
+		-> _httpExecuteProcess *
+		
+		m_inHttpProcessStep = 1;
+		m_vrHttpActions		= HA_SENDMAILTOSERVER
+		
+	-> _httpExecuteProcess -> _httpSendMailToServer -> _downloadFile( "http://www.kiwisun.hu/kiwi_ticket/belenusLetter.php" ) -> _httpProcessResponse -> _readMailResponseFromFile
+	
+		m_inHttpProcessStep = 2;
+		m_vrHttpActions	    = HA_UPDATEMAILRECORD
+	
+	-> _httpExecuteProcess -> _updateMailRecord -> _httpProcessResponse
+	
+		m_inHttpProcessStep = 3;
+		m_vrHttpActions	    = HA_PROCESSFINISHED
+	
+	-> _httpExecuteProcess -> _httpProcessResponse -> _sendProcessFinished -> signalActionProcessed( "HTTPMSG_07 Send waiting mail to server" ) -> END
+
+

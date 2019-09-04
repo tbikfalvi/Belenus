@@ -53,6 +53,7 @@ using namespace std;
 #define HTTP_ERROR_MISSING_MAIL_VAR_UNITCOUNT       -21
 #define HTTP_ERROR_MISSING_MAIL_VAR_DATETIME        -22
 #define HTTP_ERROR_INVALID_EMAIL_ADDRESS            -23
+
 #define HTTP_ERROR_UNKNOWN                          -99
 
 //====================================================================================
@@ -62,16 +63,16 @@ public:
     enum teBlnsHttpAction
     {
         HA_DEFAULT = 0,
-        HA_AUTHENTICATE,
-        HA_PCSENDDATA,
-        HA_PCUPDATERECORD,
-        HA_PCPROCESSQUEUE,
-        HA_REQUESTDATA,
-        HA_SENDREQUESTSFINISHED,
-        HA_SENDMAILTOSERVER,
-        HA_MAILPROCESSQUEUE,
-        HA_UPDATEMAILRECORD,
-        HA_PROCESSFINISHED
+        HA_AUTHENTICATE,            //  1
+        HA_PCSENDDATA,              //  2
+        HA_PCUPDATERECORD,          //  3
+        HA_PCPROCESSQUEUE,          //  4
+        HA_REQUESTDATA,             //  5
+        HA_SENDREQUESTSFINISHED,    //  6
+        HA_SENDMAILTOSERVER,        //  7
+        HA_MAILPROCESSQUEUE,        //  8
+        HA_UPDATEMAILRECORD,        //  9
+        HA_PROCESSFINISHED          // 10
     };
 
     static const char *toStr( teBlnsHttpAction p_enGA )
