@@ -50,43 +50,10 @@ lblAutoSync->setVisible( false );
     poBtnSave->setIcon( QIcon("./resources/40x40_ok.png") );
     poBtnCancel->setIcon( QIcon("./resources/40x40_cancel.png") );
 
-    unsigned int  uiConLevel, uiDBLevel, uiGUILevel, uiFileLevel;
-    g_poPrefs->getLogLevels( &uiConLevel, &uiDBLevel, &uiGUILevel, &uiFileLevel );
-    sliConsoleLogLevel->setValue( 1/*uiConLevel*/ );
-    sliDBLogLevel->setValue( 1/*uiDBLevel*/ );
-    sliGUILogLevel->setValue( 2/*uiGUILevel*/ );
-    sliFileLogLevel->setValue( uiFileLevel );
-
-//    QStringList qslLanguages = g_obLanguage.getLanguages();
-//    QStringList obLangCodes;
-
-//    for(int nLang=0;nLang<qslLanguages.count();nLang++)
-//    {
-//        obLangCodes << QString( "%1 (%2)" ).arg( qslLanguages.at(nLang).split("|").at(0) )
-//                                           .arg( qslLanguages.at(nLang).split("|").at(1) );
-//        if( qslLanguages.at(nLang).split("|").at(0).compare( g_poPrefs->getLang() ) == 0 )
-//        {
-//            m_inLangIdx = nLang;
-//        }
-//    }
-
-/*
-    QStringList obFilters( g_poPrefs->getLangFilePrefix() + "*.qm" );
-    QDir        obLangDir( "lang" );
-    QStringList obLangFiles = obLangDir.entryList( obFilters, QDir::Files | QDir::Readable, QDir::Name );
-    QRegExp     obLangCodeRegExp( "^" + g_poPrefs->getLangFilePrefix() + "(\\w*)\\.qm$" );
-    QStringList obLangCodes;
-    for( int i = 0; i < obLangFiles.size(); i++ )
-    {
-        int inPos = obLangCodeRegExp.indexIn( obLangFiles[i] );
-        if( inPos != -1 ) obLangCodes << obLangCodeRegExp.cap( 1 );
-    }
-    obLangCodes << "en";
-    obLangCodes.sort();
-*/
-//    cmbAppLang->addItems( obLangCodes );
-//    m_inLangIdx = cmbAppLang->findText( g_poPrefs->getLang() );
-//    cmbAppLang->setCurrentIndex( m_inLangIdx );
+    sliConsoleLogLevel->setValue( 1 );
+    sliDBLogLevel->setValue( 1 );
+    sliGUILogLevel->setValue( 2 );
+    sliFileLogLevel->setValue( g_poPrefs->getLogLevel() );
 
     m_inLangIdx = g_obLanguage.setLanguageCombo( cmbAppLang );
     g_obLogger(cSeverity::DEBUG) << QString( "Lang: %1 Id: %2" ).arg(g_poPrefs->getLang()).arg(m_inLangIdx) << EOM;
@@ -414,7 +381,7 @@ void cDlgPreferences::accept()
                                       "where the barcode is shorter than %1 characters.").arg( spbBarcodeLen->value() ),
                                    QMessageBox::Yes | QMessageBox::No, QMessageBox::No ) == QMessageBox::Yes )
         {
-            g_poPrefs->setBarcodeLength( spbBarcodeLen->value(), true );
+            g_poPrefs->setBarcodeLength( spbBarcodeLen->value() );
             _increasePatientCardBarcodes();
         }
         else if( spbBarcodeLen->value() < g_poPrefs->getBarcodeLength() )
@@ -433,13 +400,13 @@ void cDlgPreferences::accept()
             {
                 case 1:
                 {
-                    g_poPrefs->setBarcodeLength( spbBarcodeLen->value(), true );
+                    g_poPrefs->setBarcodeLength( spbBarcodeLen->value() );
                     _decreasePatientCardBarcodes( true );
                     break;
                 }
                 case 2:
                 {
-                    g_poPrefs->setBarcodeLength( spbBarcodeLen->value(), true );
+                    g_poPrefs->setBarcodeLength( spbBarcodeLen->value() );
                     _decreasePatientCardBarcodes( false );
                     break;
                 }
@@ -472,10 +439,7 @@ void cDlgPreferences::accept()
     }
     g_poPrefs->setTextTubeCleanupVisible( chkVisibleSecTubeCleanup->isChecked() );
 
-    g_poPrefs->setLogLevels( sliConsoleLogLevel->value(),
-                             sliDBLogLevel->value(),
-                             sliGUILogLevel->value(),
-                             sliFileLogLevel->value() );
+    g_poPrefs->setLogLevel( sliFileLogLevel->value() );
 
     g_poPrefs->setLang( cmbAppLang->currentText().left(2) );
     if( m_inLangIdx != cmbAppLang->currentIndex() )
@@ -517,9 +481,9 @@ void cDlgPreferences::accept()
     g_poPrefs->setForceModuleCheckButton( chkForceButtonRead->isChecked() );
 
     g_poPrefs->setDeviceUseVAT( ledVatPercent->text().toInt() );
-    g_poPrefs->setDACanModifyWorktime( chkDAResetClock->isChecked(), true );
-    g_poPrefs->setDACanModifyExpDate( chkDASetExpireDate->isChecked(), true );
-    g_poPrefs->setLicenceLastValidated( dteLicenceExpiration->dateTime().toString( "yyyy-MM-dd hh:mm:ss" ), true );
+    g_poPrefs->setDACanModifyWorktime( chkDAResetClock->isChecked() );
+    g_poPrefs->setDACanModifyExpDate( chkDASetExpireDate->isChecked() );
+    g_poPrefs->setLicenceLastValidated( dteLicenceExpiration->dateTime().toString( "yyyy-MM-dd hh:mm:ss" ) );
     g_poPrefs->setPanelTextSteril( ledPanelTextSterile->text() );
     g_poPrefs->setPanelTextTubeReplace( ledPanelTextTubeReplacement->text() );
     g_poPrefs->setPanelTextTubeCleanup( ledPanelTextTubeCleanup->text() );
@@ -588,12 +552,12 @@ void cDlgPreferences::accept()
     if( chkSunday->isChecked() )    qsBackupDays.append( tr(" Sun") );
 
     g_poPrefs->setBackupDatabaseDays( qsBackupDays );
-
     g_poPrefs->setDateFormat( cmbDateFormat->currentText() );
-
     g_poPrefs->setFapados( chkFapad->isChecked() );
 
-    g_poPrefs->save();
+    m_dlgProgress->showProgress();
+        g_poPrefs->saveSettings();
+    m_dlgProgress->hideProgress();
 
     QDialog::accept();
 }

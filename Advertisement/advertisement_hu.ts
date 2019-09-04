@@ -4,12 +4,12 @@
 <context>
     <name>QObject</name>
     <message>
-        <location filename="main.cpp" line="63"/>
+        <location filename="main.cpp" line="50"/>
         <source>Warning</source>
         <translation>Figyelmeztetés</translation>
     </message>
     <message>
-        <location filename="main.cpp" line="64"/>
+        <location filename="main.cpp" line="51"/>
         <source>Error occured when starting process:Advertisement.exe
 
 Error code: %1

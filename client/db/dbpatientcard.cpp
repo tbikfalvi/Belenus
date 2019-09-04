@@ -792,6 +792,17 @@ void cDBPatientCard::sendAutoMail( const int p_nMailType,
         qsPatientName   = obDBGuest.name();
         qsPatientEmail  = obDBGuest.email().trimmed();
 
+        QRegExp qreEmail( "/^[a-z0-9!#$%&\'*+\=?^_`{|}~-]+(?:\.[a-z0-9!#$%&\'*+\=?^_`{|}~-]+)*@(?:[a-z0-9](?:[a-z0-9-]*[a-z0-9])?\.)+[a-z0-9](?:[a-z0-9-]*[a-z0-9])?/" );
+
+        if( !qreEmail.exactMatch( qsPatientEmail ) )
+        {
+            g_obLogger( cSeverity::ERROR ) << "Invalid email address: ["
+                                           << qsPatientEmail
+                                           << "]"
+                                           << EOM;
+            return;
+        }
+
         QSqlQuery  *poQuery = NULL;
         QString     qsQuery = QString( "SELECT patientCardUnitId, "
                                         "patientCardTypeId, "

@@ -13,8 +13,8 @@
 // Alkalmazas fo allomanya.
 //====================================================================================
 
-#define APPLICATION_VERSION_NUMBER  "1.7.2.0"
-#define DATABASE_VERSION_NUMBER     "1.7.8"
+#define APPLICATION_VERSION_NUMBER  "1.8.0.0"
+#define DATABASE_VERSION_NUMBER     "1.8.0"
 
 //====================================================================================
 
@@ -83,24 +83,31 @@ int main( int argc, char *argv[] )
 
     apMainApp->setWindowIcon( QIcon(":/icons/Belenus.ico") );
 
-//    g_obLogger.attachWriter("gui", &g_obLogGUIWriter);
-//    g_obLogger.attachWriter("db", &g_obLogDBWriter);
-//    g_obLogger.attachWriter("console", &g_obLogConsoleWriter);
     g_obLogger.attachWriter("file", &g_obLogFileWriter);
-
     g_obLogger.setMinimumSeverity("file", cSeverity::DEBUG);
+    g_obLogger(cSeverity::INFO) << "Belenus Version " << APPLICATION_VERSION_NUMBER << " started." << EOM;
 
     g_poDB     = new cQTMySQLConnection;
 
-    g_poPrefs  = new cPreferences( QString( "%1/belenus.ini" ).arg( qsCurrentPath ) );
+    g_poPrefs  = new cPreferences();
     g_poPrefs->setVersion( APPLICATION_VERSION_NUMBER );
     g_poPrefs->setVersionDb( DATABASE_VERSION_NUMBER );
     g_poPrefs->setLangFilePrefix( "belenus_" );
     g_poPrefs->setDBAccess( "localhost", "belenus", "belenus", "belenus" );
     g_poPrefs->setApplicationPath( qsCurrentPath );
 
-//    g_obGen.setApplicationLanguage( g_poPrefs->getLang() );
-    g_obLanguage.init( apMainApp, "belenus", "_", g_poPrefs->getLang() );
+    g_obLogger(cSeverity::INFO) << "Get languages from 'language.inf'" << EOM;
+    QStringList qslLanguages = g_obLanguage.getLanguages();
+    g_obLogger(cSeverity::INFO) << "Available languages:" << EOM;
+    for(int nLang=0;nLang<qslLanguages.count();nLang++)
+    {
+        g_obLogger(cSeverity::INFO) << qslLanguages.at(nLang).split("|").at(0)
+                                    << " ("
+                                    << qslLanguages.at(nLang).split("|").at(1)
+                                    << ")"
+                                    << EOM;
+    }
+    g_obLanguage.init( apMainApp, "belenus", "_" );
 
     QPixmap          obPixmap("resources/splash.png");
     QSplashScreen    obSplash( obPixmap );
@@ -113,43 +120,27 @@ int main( int argc, char *argv[] )
     obSplash.show();
     apMainApp->processEvents();
 
-    QString qsSystemID = QObject::tr( "SystemID: " );
-
-    if( g_poPrefs->isComponentSensoliteInstalled() ) qsSystemID.append( "S" );
-    if( g_poPrefs->isComponentKiwiSunInstalled() )   qsSystemID.append( "K" );
-    if( g_poPrefs->isComponentDatabaseInstalled() )  qsSystemID.append( "D" );
-    if( g_poPrefs->isComponentHardwareInstalled() )  qsSystemID.append( "H" );
-    if( g_poPrefs->isComponentInternetInstalled() )  qsSystemID.append( "I" );
-    if( g_poPrefs->isComponentClientInstalled() )    qsSystemID.append( "C" );
-    if( g_poPrefs->isComponentViewerInstalled() )    qsSystemID.append( "V" );
-    qsSystemID.append( "\n" );
-
-    qsSpalsh += qsSystemID;
+    qsSpalsh += QString( "V: %1\n" ).arg( APPLICATION_VERSION_NUMBER );
     obSplash.showMessage(qsSpalsh,Qt::AlignLeft,QColor(59,44, 75));
 
     int r = 1;
     try
     {
-        g_obLogger(cSeverity::INFO) << "Belenus Version " << g_poPrefs->getVersion() << " started." << EOM;
-
-        g_obLogger(cSeverity::INFO) << "Get languages from 'language.inf'" << EOM;
-        QStringList qslLanguages = g_obLanguage.getLanguages();
-        g_obLogger(cSeverity::INFO) << "Available languages:" << EOM;
-        for(int nLang=0;nLang<qslLanguages.count();nLang++)
-        {
-            g_obLogger(cSeverity::INFO) << qslLanguages.at(nLang).split("|").at(0)
-                                        << " ("
-                                        << qslLanguages.at(nLang).split("|").at(1)
-                                        << ")"
-                                        << EOM;
-        }
-
         qsSpalsh += QObject::tr("Connecting to database ...");
         g_obLogger(cSeverity::INFO) << "Connecting to database ..." << EOM;
         obSplash.showMessage(qsSpalsh,Qt::AlignLeft,QColor(59,44, 75));
 
         g_poDB->open();
-//        g_obLogDBWriter.setDBConnection(g_poDB);
+
+        g_obLogger(cSeverity::INFO) << "SUCCEEDED" << EOM;
+        qsSpalsh += QObject::tr(" SUCCEEDED.\n");
+        obSplash.showMessage(qsSpalsh,Qt::AlignLeft,QColor(59,44, 75));
+
+        qsSpalsh += QObject::tr("Loading settings from database ...");
+        g_obLogger(cSeverity::INFO) << "Loading settings from database ..." << EOM;
+        obSplash.showMessage(qsSpalsh,Qt::AlignLeft,QColor(59,44, 75));
+
+        g_poPrefs->loadSettings();
         g_poPrefs->loadDBSettings();
 
         g_obLogger(cSeverity::INFO) << "SUCCEEDED" << EOM;
@@ -393,8 +384,7 @@ int main( int argc, char *argv[] )
         g_poPrefs->setMainWindowSizePos( obMainWindow.x(),
                                          obMainWindow.y(),
                                          obMainWindow.width(),
-                                         obMainWindow.height(),
-                                         true );
+                                         obMainWindow.height() );
     }
     catch( cSevException &e )
     {

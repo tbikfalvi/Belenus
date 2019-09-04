@@ -30,6 +30,7 @@
 #define ERR_LANG_FILE_MISSING           1
 #define ERR_UNABLE_TO_READ_LANG_FILE    2
 #define ERR_PARSING_FILE_FAILED         3
+#define ERR_UNABLE_TO_WRITE_LANG_FILE   4
 
 //====================================================================================
 class cLanguage
@@ -41,13 +42,13 @@ public:
     cLanguage();
     ~cLanguage();
 
-    void             init(QApplication *p_poApplication,
-                          const QString &p_qsAppPrefix = "",
-                          const QString &p_qsLangSeparator = "",
-                          const QString &p_qsLang = "" );
+    void             init( QApplication *p_poApplication,
+                           const QString &p_qsAppPrefix = "",
+                           const QString &p_qsLangSeparator = "" );
     void             reloadLanguage( const QString &p_qsLang = "" );
     QStringList      getLanguages();
     int              setLanguageCombo( QComboBox *p_cmbLang );
+    void             saveCurrentLanguage( QString p_qsLang );
 
     int              errorCode()    { return m_nErrorCode; }
 

@@ -10,7 +10,7 @@ QTranslator     *poTransApp;
 QTranslator     *poTransQT;
 QApplication    *apMainApp;
 
-#define APPLICATION_VERSION_NUMBER  "1.7.1.1"
+#define APPLICATION_VERSION_NUMBER  "1.8.0.0"
 
 #include "../framework/qtlogger.h"
 #include "../framework/qtframework.h"
@@ -48,18 +48,9 @@ int main(int argc, char *argv[])
                                  << EOM;
 
     QSettings   obPref( QString( "%1/websync.inf" ).arg( QDir::currentPath() ), QSettings::IniFormat );
-    QString     qsLang = obPref.value( "Lang", "en" ).toString();
 
-    g_obLanguage.init( apMainApp, "websync", "_", qsLang );
-/*
-    poTransApp = new QTranslator();
-    poTransQT = new QTranslator();
-
-    poTransApp->load( QString("%1\\lang\\websync_%2.qm").arg( QDir::currentPath() ).arg(qsLang) );
-    poTransQT->load( QString("%1\\lang\\qt_%2.qm").arg( QDir::currentPath() ).arg(qsLang) );
-
-    apMainApp->installTranslator( poTransApp );
-    apMainApp->installTranslator( poTransQT );*/
+    g_obLanguage.getLanguages();
+    g_obLanguage.init( apMainApp, "websync", "_" );
 
     g_obLogger.setMinimumSeverity("file", (cSeverity::teSeverity)obPref.value( "LogLevel", cSeverity::DEBUG ).toUInt() );
 
