@@ -644,7 +644,7 @@ void cDlgPreferences::on_pbChangeBinaryLocation_clicked()
                                                        tr("Select Directory"),
                                                        ledBinaryLocation->text(),
                                                        QFileDialog::ShowDirsOnly | QFileDialog::DontResolveSymlinks);
-    qsDir.replace( '/', '\\' );
+    qsDir.replace( '\\', '/' );
 
     if( qsDir.length() > 0 )
     {
@@ -658,7 +658,7 @@ void cDlgPreferences::on_pbBackupLocation_clicked()
                                                        tr("Select Directory"),
                                                        ledBackupLocation->text(),
                                                        QFileDialog::ShowDirsOnly | QFileDialog::DontResolveSymlinks);
-    qsDir.replace( '/', '\\' );
+    qsDir.replace( '\\', '/' );
 
     if( qsDir.length() > 0 )
     {
