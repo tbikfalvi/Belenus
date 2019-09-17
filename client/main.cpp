@@ -259,6 +259,12 @@ int main( int argc, char *argv[] )
                                                    "prepared=1 AND "
                                                    "active=1 ") );
 
+        g_poDB->executeQTQuery( QString( "DELETE FROM httpsendmail WHERE "
+                                         "dateOfSending<\"" + QDate::currentDate().addDays( -4 ).toString( "yyyy-MM-dd" ) + "\" AND "
+                                         "( mailTypeId = 1 OR mailTypeId = 2 )" ) );
+
+        g_poDB->executeQTQuery( QString( "DELETE FROM httpsendmail WHERE recipients = \"\" " ) );
+
         qsSpalsh += QObject::tr("FINISHED\n");
         obSplash.showMessage(qsSpalsh,Qt::AlignLeft,QColor(59,44,75));
 
