@@ -201,7 +201,7 @@ void MainWindow::processExecute()
     QString     qsCommand       = QString( "cmd /c %1 %2" ).arg( qsProcess ).arg( qsExecute );
 
     //-------------------------------------------------------------------------------------
-    // Create temporary file 'dbrecreate.sql' for inserting preferences to database
+    // Create temporary file 'initodb.sql' for inserting preferences to database
     QFile qfIniToDB( "initodb.sql" );
 
     if( qfIniToDB.open( QIODevice::WriteOnly ) )
@@ -278,6 +278,10 @@ void MainWindow::processExecute()
         qfIniToDB.write( saveSettingB( "HW_ForceModuleCheckButton", obPrefFile.value( QString::fromAscii( "Hardware/ForceModuleCheckButton") ).toBool() ).toStdString().c_str() );
         qfIniToDB.write( saveSettingB( "HW_ForceTimeSendCounter", obPrefFile.value( QString::fromAscii( "Hardware/ForceTimeSendCounter") ).toInt() ).toStdString().c_str() );
 
+        qfIniToDB.write( saveSettingS( "UI_MainWindowLeft", obPrefFile.value( QString::fromAscii( "UserInterface/MainWindowLeft" ), "#000000"  ).toString() ).toStdString().c_str() );
+        qfIniToDB.write( saveSettingS( "UI_MainWindowTop", obPrefFile.value( QString::fromAscii( "UserInterface/MainWindowTop" ), "#000000"  ).toString() ).toStdString().c_str() );
+        qfIniToDB.write( saveSettingS( "UI_MainWindowWidth", obPrefFile.value( QString::fromAscii( "UserInterface/MainWindowWidth" ), "#000000"  ).toString() ).toStdString().c_str() );
+        qfIniToDB.write( saveSettingS( "UI_MainWindowHeight", obPrefFile.value( QString::fromAscii( "UserInterface/MainWindowHeight" ), "#000000"  ).toString() ).toStdString().c_str() );
         qfIniToDB.write( saveSettingS( "UI_MainBackground", obPrefFile.value( QString::fromAscii( "UserInterface/MainBackground" ), "#000000"  ).toString() ).toStdString().c_str() );
 
         qfIniToDB.write( saveSettingS( "CURR_Short", obPrefFile.value( QString::fromAscii( "Currency/Short" ), "Ft." ).toString() ).toStdString().c_str() );
@@ -291,8 +295,8 @@ void MainWindow::processExecute()
         qfIniToDB.write( saveSettingB( "SYNC_Enabled", obPrefFile.value( QString::fromAscii( "BlnsHttp/Enabled" ) ).toBool() ).toStdString().c_str() );
         qfIniToDB.write( saveSettingB( "SYNC_WebSyncAutoStart", obPrefFile.value( QString::fromAscii( "BlnsHttp/WebSyncAutoStart" ) ).toBool() ).toStdString().c_str() );
 
-        qfIniToDB.write( saveSettingS( "BACKUP_DirDbBinaries", obPrefFile.value( QString::fromAscii( "DbBackup/DirDbBinaries" ) ).toString() ).toStdString().c_str() );
-        qfIniToDB.write( saveSettingS( "BACKUP_DirDbBackup", obPrefFile.value( QString::fromAscii( "DbBackup/DirDbBackup" ) ).toString() ).toStdString().c_str() );
+        qfIniToDB.write( saveSettingS( "BACKUP_DirDbBinaries", obPrefFile.value( QString::fromAscii( "DbBackup/DirDbBinaries" ) ).toString().replace( "\\", "/" ) ).toStdString().c_str() );
+        qfIniToDB.write( saveSettingS( "BACKUP_DirDbBackup", obPrefFile.value( QString::fromAscii( "DbBackup/DirDbBackup" ) ).toString().replace( "\\", "/" ) ).toStdString().c_str() );
         qfIniToDB.write( saveSettingB( "BACKUP_BackupDb", obPrefFile.value( QString::fromAscii( "DbBackup/BackupDb" ) ).toBool() ).toStdString().c_str() );
         qfIniToDB.write( saveSettingI( "BACKUP_DbBackupType", obPrefFile.value( QString::fromAscii( "DbBackup/DbBackupType" ) ).toInt() ).toStdString().c_str() );
         qfIniToDB.write( saveSettingS( "BACKUP_DbBackupDays", obPrefFile.value( QString::fromAscii( "DbBackup/DbBackupDays" ) ).toString() ).toStdString().c_str() );
@@ -300,7 +304,7 @@ void MainWindow::processExecute()
         qfIniToDB.write( saveSettingS( "GEN_DateFormat", obPrefFile.value( QString::fromAscii( "DateFormat" ), "yyyy-MM-dd" ).toString() ).toStdString().c_str() );
         qfIniToDB.write( saveSettingB( "GEN_Component", obPrefFile.value( QString::fromAscii( "Component" ), false ).toBool() ).toStdString().c_str() );
 
-        bool bFapados = obPrefFile.value( QString::fromAscii( "Component" ), false ).toBool();
+/*        bool bFapados = obPrefFile.value( QString::fromAscii( "Component" ), false ).toBool();
         if( bFapados )
         {
             qfIniToDB.write( saveSettingI( "COMPONENT_ID", 66 ).toStdString().c_str() );
@@ -308,7 +312,7 @@ void MainWindow::processExecute()
         else
         {
             qfIniToDB.write( saveSettingI( "COMPONENT_ID", 42 ).toStdString().c_str() );
-        }
+        }*/
 
         qfIniToDB.write( saveSettingB( "PANEL_UsageVisibleOnMain", obPrefFile.value( QString::fromAscii( "PanelSettings/UsageVisibleOnMain"), true ).toBool() ).toStdString().c_str() );
 
@@ -330,7 +334,7 @@ void MainWindow::processExecute()
         setControlsEnabled( true );
         return;
     }
-
+/*
     QProcess *qpExecute = new QProcess();
 
     if( qpExecute->execute( qsCommand ) )
@@ -344,7 +348,7 @@ void MainWindow::processExecute()
     }
 
     delete qpExecute;
-
+*/
     m_teAction = ACT_FINISHED;
     m_nTimer = startTimer( 500 );
 }

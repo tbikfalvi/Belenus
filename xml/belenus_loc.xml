@@ -622,9 +622,6 @@
         <uncompress>
             <file path="%DOWNLOAD_DIR%" name="Update_1_8_0_0.zip" />
         </uncompress>
-        <execute>
-            <application home="%INSTALL_DIR%" name="DBBackup.exe" params='' />
-        </execute>
     </version>    
 
     <version current="1.8.0.backup" next="1.8.0_update">
@@ -638,9 +635,12 @@
         <update>
             <file src="%DOWNLOAD_DIR%/lang/initodb_hu.qm" dst="%INSTALL_DIR%/lang/initodb_hu.qm" />
             <file src="%DOWNLOAD_DIR%/IniToDB.exe" dst="%INSTALL_DIR%/IniToDB.exe" />
+            <file src="%DOWNLOAD_DIR%/DBBackup.exe" dst="%INSTALL_DIR%/DBBackup.exe" />
+            <file src="%DOWNLOAD_DIR%/DBBackup.exe" dst="%CURRENT_DIR%/DBBackup.exe" />
         </update>
         <execute>
             <application home="%INSTALL_DIR%" name="IniToDB.exe" params='' />
+            <application home="%INSTALL_DIR%" name="DBBackup.exe" params='-execute "%INSTALL_DIR%/initodb.sql"' />
         </execute>
     </version>    
 
