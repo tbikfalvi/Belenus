@@ -123,3 +123,9 @@ Version 1.8.0.0
 ===============
 - A beallitasokat adatbazisba menti ini file helyett es onnan tolt mindegyik alkalmazas
 - Ellenorzi az email cimet a vendegnel es mielott a websync kikuldi a levelet
+
+Version 1.8.0.1
+===============
+- Email regex rosszul volt megadva, javitva
+- Vendeg adat mentes volt akkor is, ha rossz volt az email cim, javitva
+
