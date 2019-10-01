@@ -490,7 +490,8 @@ void cBlnsHttp::_httpStartProcess()
             m_qsMailVarUnitCount= poQuery->value(10).toString();
             m_qsMailVarDateTime = poQuery->value(11).toString();
 
-            QRegExp qreEmail( "/^[a-z0-9!#$%&\'*+\=?^_`{|}~-]+(?:\.[a-z0-9!#$%&\'*+\=?^_`{|}~-]+)*@(?:[a-z0-9](?:[a-z0-9-]*[a-z0-9])?\.)+[a-z0-9](?:[a-z0-9-]*[a-z0-9])?/" );
+            // ^[a-z0-9!#$%&\'*+\=?^_`{|}~-]+(?:\.[a-z0-9!#$%&\'*+\=?^_`{|}~-]+)*@(?:[a-z0-9](?:[a-z0-9-]*[a-z0-9])?\.)+[a-z0-9](?:[a-z0-9-]*[a-z0-9])?
+            QRegExp qreEmail( "^[a-z0-9!#$%&\\'*+\\=?^_`{|}~-]+(?:\\.[a-z0-9!#$%&\\'*+\\=?^_`{|}~-]+)*@(?:[a-z0-9](?:[a-z0-9-]*[a-z0-9])?\\.)+[a-z0-9](?:[a-z0-9-]*[a-z0-9])?" );
 
             if( !qreEmail.exactMatch( m_qsMailRecipients ) )
             {
