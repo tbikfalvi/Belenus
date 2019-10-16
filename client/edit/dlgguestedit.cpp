@@ -165,6 +165,7 @@ cDlgGuestEdit::cDlgGuestEdit( QWidget *p_poParent, cDBGuest *p_poGuest, cDBPostp
             if( QString(e.what()).compare("Discount id not found") != 0 )
             {
                 g_obLogger(e.severity()) << e.what() << EOM;
+                g_obGen.showTrayError( e.what() );
             }
             else
             {
@@ -258,6 +259,18 @@ void cDlgGuestEdit::on_pbSaveExit_clicked()
         if( qsErrorMessage.length() ) qsErrorMessage.append( "\n\n" );
         qsErrorMessage.append( tr( "Gender of the guest must be set." ) );
     }
+    if( ledEmail->text().length() > 0 )
+    {
+        // ^[a-z0-9!#$%&\'*+\=?^_`{|}~-]+(?:\.[a-z0-9!#$%&\'*+\=?^_`{|}~-]+)*@(?:[a-z0-9](?:[a-z0-9-]*[a-z0-9])?\.)+[a-z0-9](?:[a-z0-9-]*[a-z0-9])?
+        QRegExp qreEmail( "^[a-z0-9!#$%&\\'*+\\=?^_`{|}~-]+(?:\\.[a-z0-9!#$%&\\'*+\\=?^_`{|}~-]+)*@(?:[a-z0-9](?:[a-z0-9-]*[a-z0-9])?\\.)+[a-z0-9](?:[a-z0-9-]*[a-z0-9])?" );
+
+        if( !qreEmail.exactMatch( ledEmail->text() ) )
+        {
+            boCanBeSaved = false;
+            if( qsErrorMessage.length() ) qsErrorMessage.append( "\n\n" );
+            qsErrorMessage.append( tr( "Email format is incorrect." ) );
+        }
+    }
 
     if( boCanBeSaved )
     {
@@ -295,6 +308,18 @@ void cDlgGuestEdit::on_pbSave_clicked()
         boCanBeSaved = false;
         if( qsErrorMessage.length() ) qsErrorMessage.append( "\n\n" );
         qsErrorMessage.append( tr( "Gender of the guest must be set." ) );
+    }
+    if( ledEmail->text().length() > 0 )
+    {
+        // ^[a-z0-9!#$%&\'*+\=?^_`{|}~-]+(?:\.[a-z0-9!#$%&\'*+\=?^_`{|}~-]+)*@(?:[a-z0-9](?:[a-z0-9-]*[a-z0-9])?\.)+[a-z0-9](?:[a-z0-9-]*[a-z0-9])?
+        QRegExp qreEmail( "^[a-z0-9!#$%&\\'*+\\=?^_`{|}~-]+(?:\\.[a-z0-9!#$%&\\'*+\\=?^_`{|}~-]+)*@(?:[a-z0-9](?:[a-z0-9-]*[a-z0-9])?\\.)+[a-z0-9](?:[a-z0-9-]*[a-z0-9])?" );
+
+        if( !qreEmail.exactMatch( ledEmail->text() ) )
+        {
+            boCanBeSaved = false;
+            if( qsErrorMessage.length() ) qsErrorMessage.append( "\n\n" );
+            qsErrorMessage.append( tr( "Email format is incorrect." ) );
+        }
     }
 
     if( boCanBeSaved )
@@ -381,6 +406,7 @@ void cDlgGuestEdit::on_pbSellCard_clicked()
             if( QString(e.what()).compare("Patientcard barcode not found") != 0 )
             {
                 g_obLogger(e.severity()) << e.what() << EOM;
+                g_obGen.showTrayError( e.what() );
             }
             else
             {
@@ -574,6 +600,7 @@ void cDlgGuestEdit::_fillPatientCardData()
         if( QString(e.what()).compare("Patient id not found") != 0 )
         {
             g_obLogger(e.severity()) << e.what() << EOM;
+        g_obGen.showTrayError( e.what() );
         }
         else
         {
@@ -598,6 +625,7 @@ void cDlgGuestEdit::_fillPatientCardData()
                 if( QString(e.what()).compare("Patientcard id not found") != 0 )
                 {
                     g_obLogger(e.severity()) << e.what() << EOM;
+        g_obGen.showTrayError( e.what() );
                 }
             }
         }
@@ -646,6 +674,7 @@ bool cDlgGuestEdit::_saveGuestData()
     catch( cSevException &e )
     {
         g_obLogger(e.severity()) << e.what() << EOM;
+        g_obGen.showTrayError( e.what() );
     }
 
     return bRet;

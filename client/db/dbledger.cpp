@@ -275,6 +275,7 @@ void cDBLedger::revoke() throw( cSevException )
         catch( cSevException &e )
         {
             g_obLogger(e.severity()) << e.what() << EOM;
+            g_obGen.showTrayError( e.what() );
         }
     }
     else if( ledgerTypeId() == LT_PROD_SELL )
@@ -290,6 +291,7 @@ void cDBLedger::revoke() throw( cSevException )
         catch( cSevException &e )
         {
             g_obLogger(e.severity()) << e.what() << EOM;
+            g_obGen.showTrayError( e.what() );
         }
     }
     else if( ledgerTypeId() == LT_DEVICE_USAGE )

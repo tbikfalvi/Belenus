@@ -196,6 +196,7 @@ void cDlgPatientCardType::editClicked( bool )
     {
         if( poPatientCardType ) delete poPatientCardType;
         g_obLogger(e.severity()) << e.what() << EOM;
+        g_obGen.showTrayError( e.what() );
     }
 }
 
@@ -214,7 +215,7 @@ void cDlgPatientCardType::deleteClicked( bool )
             {
                 QMessageBox::warning( this, tr("Attention"),
                                       tr("Unfortunatelly delete of this card type is not possible.\n"
-                                         "There are patientcards attached to this card type.") );
+                                         "There are active patientcard units attached to this card type.") );
                 return;
             }
 
@@ -229,6 +230,7 @@ void cDlgPatientCardType::deleteClicked( bool )
             cDBValidTimePeriod  obDBValidTimePeriod;
 
             obDBValidTimePeriod.removePatienCardTypes( m_uiSelectedId );
+
             poPatientCardType->remove();
             m_uiSelectedId = 0;
             refreshTable();
@@ -238,6 +240,7 @@ void cDlgPatientCardType::deleteClicked( bool )
         {
             if( poPatientCardType ) delete poPatientCardType;
             g_obLogger(e.severity()) << e.what() << EOM;
+            g_obGen.showTrayError( e.what() );
         }
     }
 }

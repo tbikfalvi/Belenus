@@ -21,24 +21,16 @@ cPreferences::cPreferences()
     init();
 }
 
-cPreferences::cPreferences( const QString &p_qsFileName )
-{
-    init();
-    setFileName( p_qsFileName );
-    loadConfFileSettings();
-    processComponentID();
-}
-
 cPreferences::~cPreferences()
 {
 }
 
 void cPreferences::init()
 {
-    m_qsFileName            = "";
     m_qsVersion             = "";
+    m_qsVersionDb           = "";
+    m_qsApplicationPath     = "";
     m_qsLangFilePrefix      = "";
-    m_qsLang                = "";
     m_qsLastUser            = "";
     m_uiPanelsPerRow        = 0;
     m_uiPanelCount          = 0;
@@ -85,15 +77,11 @@ void cPreferences::init()
     m_bEnableHWDebug                = false;
 
     m_bBlnsHttpEnabled              = false;
-//    m_nBlnsHttpWaitTime             = 3;
-//    m_bBlnsHttpSuspended            = false;
     m_bWebSyncAutoStart             = false;
 
     m_bIsTextSterilVisible          = false;
     m_bIsTextTubeReplaceVisible     = false;
     m_bIsTextTubeCleanupVisible     = false;
-
-//    m_nStartHttpSyncAutoSeconds     = 15;
 
     m_bBarcodeHidden                = false;
 
@@ -101,55 +89,112 @@ void cPreferences::init()
 
     m_bRFIDEnabled                  = false;
     m_inRFIDCommunicationPort       = 2;
+
+    m_bAutoMailOnPCSell             = false;
+    m_bAutoMailOnPCUse              = false;
+    m_bAutoMailOnPCExpiration       = false;
+
+    m_bShowPatientInfoOnStart       = false;
+    m_nShowInfoOnWindow             = 1;
+    m_nCloseInfoWindowAfterSecs     = 5;
 }
 
-void cPreferences::loadConfFileSettings()
+void cPreferences::loadSettings() throw (cSevException)
 {
-    QSettings obPrefFile( m_qsFileName, QSettings::IniFormat );
+    QSqlQuery *poQuery = NULL;
 
-    if( obPrefFile.status() != QSettings::NoError )
+    try
     {
-        g_obLogger(cSeverity::WARNING) << "Failed to load preferences from file: " << m_qsFileName << EOM;
-    }
-    else
-    {
-        m_qsLang                        = obPrefFile.value( QString::fromAscii( "Lang" ), "en" ).toString();
-        m_qsLastUser                    = obPrefFile.value( QString::fromAscii( "LastUser" ), "" ).toString();
-        m_uiPanelsPerRow                = obPrefFile.value( QString::fromAscii( "PanelsPerRow" ), 1 ).toUInt();
-        m_inBarcodeLength               = obPrefFile.value( QString::fromAscii( "BarcodeLength" ), "1" ).toInt();
-        m_qsBarcodePrefix               = obPrefFile.value( QString::fromAscii( "BarcodePrefix" ), "" ).toString();
-        m_bBarcodeLengthDifferent       = obPrefFile.value( QString::fromAscii( "CardProductBarcodeLengthDifferent" ), true ).toBool();
-        m_bCassaAutoClose               = obPrefFile.value( QString::fromAscii( "CassaAutoClose" ), false ).toBool();
-        m_bCassaAutoWithdrawal          = obPrefFile.value( QString::fromAscii( "CassaAutoWithdrawal" ), false ).toBool();
-        m_bCassaAutoCreateNew           = obPrefFile.value( QString::fromAscii( "CassaAutoCreate" ), false ).toBool();
-        m_inCassaCreateType             = obPrefFile.value( QString::fromAscii( "CassaCreateType" ), 4 ).toInt();
-        m_qsDefaultCountry              = obPrefFile.value( QString::fromAscii( "DefaultCountry" ), "" ).toString();
-        m_inZipLength                   = obPrefFile.value( QString::fromAscii( "ZipLength" ), 4 ).toInt();
-        m_bDBAutoArchive                = obPrefFile.value( QString::fromAscii( "DBAutoSynchronization" ), false ).toBool();
-        m_bDBGlobalAutoSynchronize      = obPrefFile.value( QString::fromAscii( "DBGlobalAutoSynchronization" ), false ).toBool();
-        m_uiComponent                   = obPrefFile.value( QString::fromAscii( "PanelSystemID" ), 0 ).toUInt();
-        m_bIsSecondaryWindowVisible     = obPrefFile.value( QString::fromAscii( "IsSecondaryWindowVisible" ), false ).toBool();
-        int nLeft                       = obPrefFile.value( QString::fromAscii( "SecondaryWindow/Left" ), "10" ).toInt();
-        int nTop                        = obPrefFile.value( QString::fromAscii( "SecondaryWindow/Top" ), "10" ).toInt();
-        int nWidth                      = obPrefFile.value( QString::fromAscii( "SecondaryWindow/Width" ), "600" ).toInt();
-        int nHeight                     = obPrefFile.value( QString::fromAscii( "SecondaryWindow/Height" ), "400" ).toInt();
-        m_qsSecondaryBackground         = obPrefFile.value( QString::fromAscii( "SecondaryWindow/Background" ), "#000000"  ).toString();
-        m_qsSecondaryFrame              = obPrefFile.value( QString::fromAscii( "SecondaryWindow/FrameColor" ), "#555555" ).toString();
-        m_bIsSecondaryCaptionVisible    = obPrefFile.value( QString::fromAscii( "SecondaryWindow/IsSecondaryCaptionVisible"), true ).toBool();
-        m_bIsTextTubeReplaceVisible     = obPrefFile.value( QString::fromAscii( "SecondaryWindow/IsTextTubeReplaceVisible"), false ).toBool();
-        m_bIsTextSterilVisible          = obPrefFile.value( QString::fromAscii( "SecondaryWindow/IsTextSterilVisible"), false ).toBool();
-        m_bIsTextTubeCleanupVisible     = obPrefFile.value( QString::fromAscii( "SecondaryWindow/IsTextTubeCleanupVisible"), false ).toBool();
+        m_qsLastUser                    = loadSettingS( "GEN_LastUser", "" );
+        m_uiPanelsPerRow                = loadSettingU( "GEN_PanelsPerRow", 3 );
+        m_inBarcodeLength               = loadSettingI( "GEN_BarcodeLength", 8 );
+        m_qsBarcodePrefix               = loadSettingS( "GEN_BarcodePrefix", "" );
+        m_bBarcodeLengthDifferent       = loadSettingB( "GEN_CardProductBarcodeLengthDifferent", true );
+        m_bCassaAutoClose               = loadSettingB( "GEN_CassaAutoClose", true );
+        m_bCassaAutoWithdrawal          = loadSettingB( "GEN_CassaAutoWithdrawal", true );
+        m_bCassaAutoCreateNew           = loadSettingB( "GEN_CassaAutoCreate", true );
+        m_inCassaCreateType             = loadSettingI( "GEN_CassaCreateType", 4 );
+        m_qsDefaultCountry              = loadSettingS( "GEN_DefaultCountry", "" );
+        m_inZipLength                   = loadSettingI( "GEN_ZipLength", 4 );
+        m_bDBAutoArchive                = loadSettingB( "GEN_DBAutoSynchronization", false );
+        m_bDBGlobalAutoSynchronize      = loadSettingB( "GEN_DBGlobalAutoSynchronization", false );
+        m_uiComponent                   = loadSettingU( "GEN_PanelSystemID", 0 );
+        m_bIsSecondaryWindowVisible     = loadSettingB( "GEN_IsSecondaryWindowVisible", false );
+        m_nSecondsWaitOnSlpashScreen    = loadSettingI( "GEN_SecondsWaitOnSlpashScreen", 3 );
+        int nLeft                       = loadSettingI( "EXTWIN_Left", 10 );
+        int nTop                        = loadSettingI( "EXTWIN_Top", 10 );
+        int nWidth                      = loadSettingI( "EXTWIN_Width", 600 );
+        int nHeight                     = loadSettingI( "EXTWIN_Height", 400 );
+        m_qsSecondaryBackground         = loadSettingS( "EXTWIN_Background", "#000000" );
+        m_qsSecondaryFrame              = loadSettingS( "EXTWIN_FrameColor", "#555555" );
+        m_bIsSecondaryCaptionVisible    = loadSettingB( "EXTWIN_IsSecondaryCaptionVisible", true );
+        m_bIsTextTubeReplaceVisible     = loadSettingB( "EXTWIN_IsTextTubeReplaceVisible", true );
+        m_bIsTextSterilVisible          = loadSettingB( "EXTWIN_IsTextSterilVisible", true );
+        m_bIsTextTubeCleanupVisible     = loadSettingB( "EXTWIN_IsTextTubeCleanupVisible", false );
 
-        m_qsActiveCaptionBackground     = obPrefFile.value( QString::fromAscii( "Panels/ActiveCaptionBackground" ), "#000099" ).toString();
-        m_qsActiveCaptionColor          = obPrefFile.value( QString::fromAscii( "Panels/ActiveCaptionColor" ), "#FFFFFF" ).toString();
-        m_qsInactiveCaptionBackground   = obPrefFile.value( QString::fromAscii( "Panels/InactiveCaptionBackground" ), "#000022" ).toString();
-        m_qsInactiveCaptionColor        = obPrefFile.value( QString::fromAscii( "Panels/InactiveCaptionColor" ), "#FFFFFF" ).toString();
-        m_qsSecondaryCaptionBackground  = obPrefFile.value( QString::fromAscii( "Panels/SecondaryCaptionBackground" ), "#000099" ).toString();
-        m_qsSecondaryCaptionColor       = obPrefFile.value( QString::fromAscii( "Panels/SecondaryCaptionColor" ), "#FFFFFF" ).toString();
-        m_bIsStopInLine                 = obPrefFile.value( QString::fromAscii( "Panels/IsStopInLine"), true ).toBool();
-        m_qsPanelTextSteril             = obPrefFile.value( QString::fromAscii( "Panels/TextSterile"), QObject::tr( " NOT STERILE " ) ).toString();
-        m_qsPanelTextTubeReplace        = obPrefFile.value( QString::fromAscii( "Panels/TextTubeReplace"), QObject::tr( " TUBE REPLACEMENT NEEDED " ) ).toString();
-        m_qsPanelTextTubeCleanup        = obPrefFile.value( QString::fromAscii( "Panels/TextTubeCleanup"), QObject::tr( " TUBE CLEAN-UP NEEDED " ) ).toString();
+        m_qsActiveCaptionBackground     = loadSettingS( "PANEL_ActiveCaptionBackground", "#000099" );
+        m_qsActiveCaptionColor          = loadSettingS( "PANEL_ActiveCaptionColor", "#FFFFFF" );
+        m_qsInactiveCaptionBackground   = loadSettingS( "PANEL_InactiveCaptionBackground", "#000022" );
+        m_qsInactiveCaptionColor        = loadSettingS( "PANEL_InactiveCaptionColor", "#FFFFFF" );
+        m_qsSecondaryCaptionBackground  = loadSettingS( "PANEL_SecondaryCaptionBackground", "#000099" );
+        m_qsSecondaryCaptionColor       = loadSettingS( "PANEL_SecondaryCaptionColor", "#FFFFFF" );
+        m_bIsStopInLine                 = loadSettingB( "PANEL_IsStopInLine", true );
+        m_qsPanelTextSteril             = loadSettingS( "PANEL_TextSterile", QObject::tr( " NOT STERILE " ) );
+        m_qsPanelTextTubeReplace        = loadSettingS( "PANEL_TextTubeReplace", QObject::tr( " TUBE REPLACEMENT NEEDED " ) );
+        m_qsPanelTextTubeCleanup        = loadSettingS( "PANEL_TextTubeCleanup", QObject::tr( " TUBE CLEAN-UP NEEDED " ) );
+
+        m_uiMainWindowLeft              = loadSettingU( "UI_MainWindowLeft", 0 );
+        m_uiMainWindowTop               = loadSettingU( "UI_MainWindowTop", 0 );
+        m_uiMainWindowWidth             = loadSettingU( "UI_MainWindowWidth", 1024 );
+        m_uiMainWindowHeight            = loadSettingU( "UI_MainWindowHeight" , 768 );
+        m_qsMainBackground              = loadSettingS( "UI_MainBackground", "#000000" );
+
+        m_qsServerAddress               = loadSettingS( "SERVER_Address", "http://www.kiwisun.hu" );
+        m_qsServerPort                  = loadSettingS( "SERVER_Port", "1000" );
+
+        m_inCommunicationPort           = loadSettingI( "HW_ComPort", 1 );
+        m_bForceModuleSendTime          = loadSettingB( "HW_ForceModuleSendTime", false );
+        m_bForceModuleCheckButton       = loadSettingB( "HW_ForceModuleCheckButton", false );
+        m_nForceTimeSendCounter         = loadSettingB( "HW_ForceTimeSendCounter", 0);
+
+        m_qsCurrencyShort               = loadSettingS( "CURR_Short", "Ft." );
+        m_qsCurrencyLong                = loadSettingS( "CURR_Long", "Forint" );
+        m_qsCurrencySeparator           = loadSettingS( "CURR_Separator", "," );
+        m_qsCurrencyDecimalSeparator    = loadSettingS( "CURR_Decimal", "." );
+
+        m_uiMaxTreatLength              = loadSettingU( "DEVICE_MaxTreatLength", 100 );
+        m_inDeviceUseVAT                = loadSettingI( "DEVICE_VAT", 25 );
+
+        m_nPatientCardLostPrice         = loadSettingI( "CARD_PriceLost", 500 );
+        m_nPatientCardLostPriceVat      = loadSettingI( "CARD_PriceLostVat", 0 );
+        m_nPatientCardPartnerPrice      = loadSettingI( "CARD_PricePartner", 0 );
+        m_nPatientCardPartnerPriceVat   = loadSettingI( "CARD_PricePartnerVat", 0 );
+        m_bBarcodeHidden                = loadSettingB( "CARD_Hidden", false );
+        m_bShowPatientInfoOnStart       = loadSettingB( "CARD_ShowPatientLastVisitInfo", false );
+        m_nShowInfoOnWindow             = loadSettingI( "CARD_ShowInfoOnWindow", 1 );
+        m_nCloseInfoWindowAfterSecs     = loadSettingI( "CARD_CloseInfoWindowAfterSecs", 5 );
+
+        unsigned int uiFileLevel        = loadSettingU( "LOG_FileLogLevel", cSeverity::WARNING );
+
+        m_bBlnsHttpEnabled              = loadSettingB( "SYNC_Enabled", false );
+        m_bWebSyncAutoStart             = loadSettingB( "SYNC_WebSyncAutoStart", false );
+
+        m_qsDirDbBinaries               = loadSettingS( "BACKUP_DirDbBinaries", "C:/wamp/bin/mysql/mysql5.5.24/bin" );
+        m_qsDirDbBackup                 = loadSettingS( "BACKUP_DirDbBackup", "" );
+        m_bBackupDatabase               = loadSettingB( "BACKUP_BackupDb", false );
+        m_nBackupDatabaseType           = loadSettingI( "BACKUP_DbBackupType", 0 );
+        m_qsBackupDatabaseDays          = loadSettingS( "BACKUP_DbBackupDays", "" );
+
+        m_qsDateFormat                  = loadSettingS( "GEN_DateFormat", "yyyy-MM-dd" );
+
+        m_bFapados                      = loadSettingB( "GEN_Component", false );
+
+        m_bUsageVisibleOnMain           = loadSettingB( "PANEL_UsageVisibleOnMain", true );
+
+        m_bAutoMailOnPCSell             = loadSettingB( "AUTOMAIL_OnSell", false );
+        m_bAutoMailOnPCUse              = loadSettingB( "AUTOMAIL_OnUse", false );
+        m_bAutoMailOnPCExpiration       = loadSettingB( "AUTOMAIL_OnExpiration", false );
+        m_nPCExpirationDays             = loadSettingI( "AUTOMAIL_ExpirationDays", 7 );
 
         m_qpSecondaryPosition = QPoint( nLeft, nTop );
         m_qsSecondarySize = QSize( nWidth, nHeight );
@@ -159,90 +204,315 @@ void cPreferences::loadConfFileSettings()
         if( !boIsANumber ) m_qsBarcodePrefix = "";
         m_qsBarcodePrefix.truncate( m_inBarcodeLength - 1 );  //Make sure there is at least one free character to be filled in a Barcode
 
-        m_uiMainWindowLeft              = obPrefFile.value( QString::fromAscii( "UserInterface/MainWindowLeft" ),   0    ).toUInt();
-        m_uiMainWindowTop               = obPrefFile.value( QString::fromAscii( "UserInterface/MainWindowTop" ),    0    ).toUInt();
-        m_uiMainWindowWidth             = obPrefFile.value( QString::fromAscii( "UserInterface/MainWindowWidth" ),  1024 ).toUInt();
-        m_uiMainWindowHeight            = obPrefFile.value( QString::fromAscii( "UserInterface/MainWindowHeight" ), 768  ).toUInt();
-        m_qsMainBackground              = obPrefFile.value( QString::fromAscii( "UserInterface/MainBackground" ), "#000000"  ).toString();
-
-        m_qsServerAddress               = obPrefFile.value( QString::fromAscii( "Server/Address" ), "0.0.0.0" ).toString();
-        m_qsServerPort                  = obPrefFile.value( QString::fromAscii( "Server/Port" ), "1000" ).toString();
-
-        m_inCommunicationPort           = obPrefFile.value( QString::fromAscii( "Hardware/ComPort" ), "1" ).toInt();
-        m_bForceModuleSendTime          = obPrefFile.value( QString::fromAscii( "Hardware/ForceModuleSendTime") ).toBool();
-        m_bForceModuleCheckButton       = obPrefFile.value( QString::fromAscii( "Hardware/ForceModuleCheckButton") ).toBool();
-        m_nForceTimeSendCounter         = obPrefFile.value( QString::fromAscii( "Hardware/ForceTimeSendCounter") ).toInt();
-        m_bRFIDEnabled                  = obPrefFile.value( QString::fromAscii( "Hardware/RFIDEnabled"), false ).toBool();
-        m_inRFIDCommunicationPort       = obPrefFile.value( QString::fromAscii( "Hardware/RFIDComPort" ), 2 ).toInt();
-
-        m_qsCurrencyShort               = obPrefFile.value( QString::fromAscii( "Currency/Short" ), "Ft." ).toString();
-        m_qsCurrencyLong                = obPrefFile.value( QString::fromAscii( "Currency/Long" ), "Forint" ).toString();
-        m_qsCurrencySeparator           = obPrefFile.value( QString::fromAscii( "Currency/Separator" ), "," ).toString();
-        m_qsCurrencyDecimalSeparator    = obPrefFile.value( QString::fromAscii( "Currency/Decimal" ), "." ).toString();
-
-        m_uiMaxTreatLength              = obPrefFile.value( QString::fromAscii( "Device/MaxTreatLength" ), 100 ).toUInt();
-        m_inDeviceUseVAT                = obPrefFile.value( QString::fromAscii( "Device/VAT" ), 25 ).toInt();
-
-        m_nPatientCardLostPrice         = obPrefFile.value( QString::fromAscii( "PatientCard/PriceLost" ), 0 ).toUInt();
-        m_nPatientCardLostPriceVat      = obPrefFile.value( QString::fromAscii( "PatientCard/PriceLostVat" ), 0 ).toUInt();
-        m_nPatientCardPartnerPrice      = obPrefFile.value( QString::fromAscii( "PatientCard/PricePartner" ), 0 ).toUInt();
-        m_nPatientCardPartnerPriceVat   = obPrefFile.value( QString::fromAscii( "PatientCard/PricePartnerVat" ), 0 ).toUInt();
-        m_bBarcodeHidden               = obPrefFile.value( QString::fromAscii( "PatientCard/Hidden"), false ).toBool();
-
-        unsigned int uiConsoleLevel = obPrefFile.value( QString::fromAscii( "LogLevels/ConsoleLogLevel" ), cSeverity::WARNING ).toUInt();
-        if( (uiConsoleLevel >= cSeverity::MAX) ||
-            (uiConsoleLevel <= cSeverity::MIN) )
-        {
-            uiConsoleLevel = cSeverity::DEBUG;
-            g_obLogger(cSeverity::WARNING) << "Invalid ConsoleLogLevel in preferences file: " << m_qsFileName << EOM;
-        }
-
-        unsigned int uiDBLevel = obPrefFile.value( QString::fromAscii( "LogLevels/DBLogLevel" ), cSeverity::INFO ).toUInt();
-        if( (uiDBLevel >= cSeverity::MAX) &&
-            (uiDBLevel <= cSeverity::MIN) )
-        {
-            uiDBLevel = cSeverity::DEBUG;
-
-            g_obLogger(cSeverity::WARNING) << "Invalid DBLogLevel in preferences file: " << m_qsFileName << EOM;
-        }
-
-        unsigned int uiGUILevel = obPrefFile.value( QString::fromAscii( "LogLevels/GUILogLevel" ), cSeverity::WARNING ).toUInt();
-        if( (uiGUILevel >= cSeverity::MAX) &&
-            (uiGUILevel <= cSeverity::MIN) )
-        {
-            uiGUILevel = cSeverity::DEBUG;
-
-            g_obLogger(cSeverity::WARNING) << "Invalid GUILogLevel in preferences file: " << m_qsFileName << EOM;
-        }
-
-        unsigned int uiFileLevel = obPrefFile.value( QString::fromAscii( "LogLevels/FileLogLevel" ), cSeverity::WARNING ).toUInt();
         if( (uiFileLevel >= cSeverity::MAX) &&
             (uiFileLevel <= cSeverity::MIN) )
         {
             uiFileLevel = cSeverity::DEBUG;
 
-            g_obLogger(cSeverity::WARNING) << "Invalid FileLogLevel in preferences file: " << m_qsFileName << EOM;
+            g_obLogger(cSeverity::WARNING) << "Invalid FileLogLevel in setting" << EOM;
+        }
+        setLogLevel( uiFileLevel );
+
+        delete poQuery;
+    }
+    catch( cSevException &e )
+    {
+        if( poQuery ) delete poQuery;
+        g_obLogger(e.severity()) << e.what() << EOM;
+        g_obGen.showTrayError( e.what() );
+    }
+}
+
+void cPreferences::saveSettings() throw (cSevException)
+{
+    QSqlQuery *poQuery = NULL;
+
+    try
+    {
+        if( m_qsLang != "" )        g_obLanguage.saveCurrentLanguage( m_qsLang );
+        if( m_qsLastUser != "" )    saveSettingS( "GEN_LastUser", m_qsLastUser );
+
+        saveSettingU( "GEN_PanelsPerRow", m_uiPanelsPerRow );
+        saveSettingI( "GEN_BarcodeLength", m_inBarcodeLength );
+        saveSettingS( "GEN_BarcodePrefix", m_qsBarcodePrefix );
+        saveSettingB( "GEN_CardProductBarcodeLengthDifferent", m_bBarcodeLengthDifferent );
+        saveSettingB( "GEN_CassaAutoClose", m_bCassaAutoClose );
+        saveSettingB( "GEN_CassaAutoWithdrawal", m_bCassaAutoWithdrawal );
+        saveSettingB( "GEN_CassaAutoCreate", m_bCassaAutoCreateNew );
+        saveSettingI( "GEN_CassaCreateType", m_inCassaCreateType );
+        saveSettingS( "GEN_DefaultCountry", m_qsDefaultCountry );
+        saveSettingI( "GEN_ZipLength", m_inZipLength );
+        saveSettingB( "GEN_DBAutoSynchronization", m_bDBAutoArchive );
+        saveSettingB( "GEN_DBGlobalAutoSynchronization", m_bDBGlobalAutoSynchronize );
+        saveSettingB( "GEN_IsSecondaryWindowVisible", m_bIsSecondaryWindowVisible );
+        saveSettingI( "GEN_SecondsWaitOnSlpashScreen", m_nSecondsWaitOnSlpashScreen );
+
+        saveSettingI( "EXTWIN_Left", m_qpSecondaryPosition.x() );
+        saveSettingI( "EXTWIN_Top", m_qpSecondaryPosition.y() );
+        saveSettingI( "EXTWIN_Width", m_qsSecondarySize.width() );
+        saveSettingI( "EXTWIN_Height", m_qsSecondarySize.height() );
+        saveSettingS( "EXTWIN_Background", m_qsSecondaryBackground );
+        saveSettingB( "EXTWIN_IsTextTubeReplaceVisible", m_bIsTextTubeReplaceVisible );
+        saveSettingB( "EXTWIN_IsTextSterilVisible", m_bIsTextSterilVisible );
+        saveSettingB( "EXTWIN_IsTextTubeCleanupVisible", m_bIsTextTubeCleanupVisible );
+
+        saveSettingS( "PANEL_ActiveCaptionBackground", m_qsActiveCaptionBackground );
+        saveSettingS( "PANEL_ActiveCaptionColor", m_qsActiveCaptionColor );
+        saveSettingS( "PANEL_InactiveCaptionBackground", m_qsInactiveCaptionBackground );
+        saveSettingS( "PANEL_InactiveCaptionColor", m_qsInactiveCaptionColor );
+        saveSettingS( "PANEL_SecondaryCaptionBackground", m_qsSecondaryCaptionBackground );
+        saveSettingS( "PANEL_SecondaryCaptionColor", m_qsSecondaryCaptionColor );
+        saveSettingB( "PANEL_IsStopInLine", m_bIsStopInLine );
+        saveSettingS( "PANEL_TextSterile", m_qsPanelTextSteril );
+        saveSettingS( "PANEL_TextTubeReplace", m_qsPanelTextTubeReplace );
+        saveSettingS( "PANEL_TextTubeCleanup", m_qsPanelTextTubeCleanup );
+
+        saveSettingS( "EXTWIN_FrameColor", m_qsSecondaryFrame );
+        saveSettingB( "EXTWIN_IsSecondaryCaptionVisible", m_bIsSecondaryCaptionVisible );
+
+        saveSettingI( "CARD_PriceLost", m_nPatientCardLostPrice );
+        saveSettingI( "CARD_PriceLostVat", m_nPatientCardLostPriceVat );
+        saveSettingI( "CARD_PricePartner", m_nPatientCardPartnerPrice );
+        saveSettingI( "CARD_PricePartnerVat", m_nPatientCardPartnerPriceVat );
+        saveSettingB( "CARD_Hidden", m_bBarcodeHidden );
+        saveSettingB( "CARD_ShowPatientLastVisitInfo", m_bShowPatientInfoOnStart );
+        saveSettingI( "CARD_ShowInfoOnWindow", m_nShowInfoOnWindow );
+        saveSettingI( "CARD_CloseInfoWindowAfterSecs", m_nCloseInfoWindowAfterSecs );
+
+        saveSettingU( "LOG_FileLogLevel", getLogLevel() );
+
+        saveSettingS( "SERVER_Address", m_qsServerAddress );
+        saveSettingS( "SERVER_Port", m_qsServerPort );
+
+        saveSettingI( "HW_ComPort", m_inCommunicationPort );
+        saveSettingB( "HW_ForceModuleSendTime", m_bForceModuleSendTime );
+        saveSettingB( "HW_ForceModuleCheckButton", m_bForceModuleCheckButton );
+        saveSettingB( "HW_ForceTimeSendCounter", m_nForceTimeSendCounter );
+        saveSettingB( "HW_RFIDEnabled", m_bRFIDEnabled );
+        saveSettingI( "HW_RFIDComPort", m_inRFIDCommunicationPort );
+
+        saveSettingS( "UI_MainBackground", m_qsMainBackground );
+
+        saveSettingS( "CURR_Short", m_qsCurrencyShort );
+        saveSettingS( "CURR_Long", m_qsCurrencyLong );
+        saveSettingS( "CURR_Separator", m_qsCurrencySeparator );
+        saveSettingS( "CURR_Decimal", m_qsCurrencyDecimalSeparator );
+
+        saveSettingU( "DEVICE_MaxTreatLength", m_uiMaxTreatLength );
+        saveSettingI( "DEVICE_VAT", m_inDeviceUseVAT );
+
+        saveSettingB( "SYNC_Enabled", m_bBlnsHttpEnabled );
+        saveSettingB( "SYNC_WebSyncAutoStart", m_bWebSyncAutoStart );
+
+        saveSettingS( "BACKUP_DirDbBinaries", m_qsDirDbBinaries );
+        saveSettingS( "BACKUP_DirDbBackup", m_qsDirDbBackup );
+        saveSettingB( "BACKUP_BackupDb", m_bBackupDatabase );
+        saveSettingI( "BACKUP_DbBackupType", m_nBackupDatabaseType );
+        saveSettingS( "BACKUP_DbBackupDays", m_qsBackupDatabaseDays );
+
+        saveSettingS( "GEN_DateFormat", m_qsDateFormat );
+
+        saveSettingB( "GEN_Component", m_bFapados );
+
+        saveSettingB( "PANEL_UsageVisibleOnMain", m_bUsageVisibleOnMain );
+
+        if( m_bFapados )
+        {
+            saveSettingI( "COMPONENT_ID", 66 );
+        }
+        else
+        {
+            saveSettingI( "COMPONENT_ID", 42 );
         }
 
-        setLogLevels( uiConsoleLevel, uiDBLevel, uiGUILevel, uiFileLevel );
+        saveSettingB( "AUTOMAIL_OnSell", m_bAutoMailOnPCSell );
+        saveSettingB( "AUTOMAIL_OnUse", m_bAutoMailOnPCUse );
+        saveSettingB( "AUTOMAIL_OnExpiration", m_bAutoMailOnPCExpiration );
+        saveSettingI( "AUTOMAIL_ExpirationDays", m_nPCExpirationDays );
 
-        m_bBlnsHttpEnabled          = obPrefFile.value( QString::fromAscii( "BlnsHttp/Enabled" ) ).toBool();
-        m_bWebSyncAutoStart         = obPrefFile.value( QString::fromAscii( "BlnsHttp/WebSyncAutoStart" ) ).toBool();
-//        m_nBlnsHttpWaitTime         = obPrefFile.value( QString::fromAscii( "BlnsHttp/MessageWaitTime" ), 12 ).toInt();
-//        m_bIsStartHttpSyncAuto      = obPrefFile.value( QString::fromAscii( "BlnsHttp/IsAutoStartSync"), false ).toBool();
-//        m_nStartHttpSyncAutoSeconds = obPrefFile.value( QString::fromAscii( "BlnsHttp/AutoStartSyncSeconds"), 15 ).toInt();
+        delete poQuery;
+    }
+    catch( cSevException &e )
+    {
+        if( poQuery ) delete poQuery;
+        g_obLogger(e.severity()) << e.what() << EOM;
+        g_obGen.showTrayError( e.what() );
+    }
+}
 
-        m_qsDirDbBinaries           = obPrefFile.value( QString::fromAscii( "DbBackup/DirDbBinaries" ) ).toString();
-        m_qsDirDbBackup             = obPrefFile.value( QString::fromAscii( "DbBackup/DirDbBackup" ) ).toString();
-        m_bBackupDatabase           = obPrefFile.value( QString::fromAscii( "DbBackup/BackupDb" ) ).toBool();
-        m_nBackupDatabaseType       = obPrefFile.value( QString::fromAscii( "DbBackup/DbBackupType" ) ).toInt();
-        m_qsBackupDatabaseDays      = obPrefFile.value( QString::fromAscii( "DbBackup/DbBackupDays" ) ).toString();
+unsigned int cPreferences::loadSettingU( QString p_Identifier, unsigned int p_Default ) throw (cSevException)
+{
+    unsigned int value = 0;
+    QSqlQuery *poQuery = NULL;
 
-        m_qsDateFormat              = obPrefFile.value( QString::fromAscii( "DateFormat" ), "yyyy-MM-dd" ).toString();
+    try
+    {
+        poQuery = g_poDB->executeQTQuery( QString( "SELECT value FROM settings WHERE identifier=\"%1\" " ).arg( p_Identifier ) );
+        if( poQuery->first() )
+        {
+            value = poQuery->value( 0 ).toUInt();
+        }
+        else
+        {
+            g_poDB->executeQTQuery( QString("INSERT INTO `settings` (`settingId`, `identifier`, `value`) VALUES (NULL, '%1', '%2') " )
+                                            .arg( p_Identifier )
+                                            .arg( p_Default ) );
+            value = p_Default;
+        }
+        delete poQuery;
+    }
+    catch( cSevException &e )
+    {
+        if( poQuery ) delete poQuery;
+        g_obLogger(e.severity()) << e.what() << EOM;
+        g_obGen.showTrayError( e.what() );
+    }
 
-        m_bFapados                  = obPrefFile.value( QString::fromAscii( "Component" ), false ).toBool();
+    return value;
+}
 
-        m_bUsageVisibleOnMain       = obPrefFile.value( QString::fromAscii( "PanelSettings/UsageVisibleOnMain"), true ).toBool();
+QString cPreferences::loadSettingS( QString p_Identifier, QString p_Default ) throw (cSevException)
+{
+    QString value = "";
+    QSqlQuery *poQuery = NULL;
+
+    try
+    {
+        poQuery = g_poDB->executeQTQuery( QString( "SELECT value FROM settings WHERE identifier=\"%1\" " ).arg( p_Identifier ) );
+        if( poQuery->first() )
+        {
+            value = poQuery->value( 0 ).toString();
+        }
+        else
+        {
+            g_poDB->executeQTQuery( QString("INSERT INTO `settings` (`settingId`, `identifier`, `value`) VALUES (NULL, '%1', '%2') " )
+                                            .arg( p_Identifier )
+                                            .arg( p_Default ) );
+            value = p_Default;
+        }
+        delete poQuery;
+    }
+    catch( cSevException &e )
+    {
+        if( poQuery ) delete poQuery;
+        g_obLogger(e.severity()) << e.what() << EOM;
+        g_obGen.showTrayError( e.what() );
+    }
+
+    return value;
+}
+
+bool cPreferences::loadSettingB( QString p_Identifier, bool p_Default ) throw (cSevException)
+{
+    bool value = 0;
+    QSqlQuery *poQuery = NULL;
+
+    try
+    {
+        poQuery = g_poDB->executeQTQuery( QString( "SELECT value FROM settings WHERE identifier=\"%1\" " ).arg( p_Identifier ) );
+        if( poQuery->first() )
+        {
+            value = poQuery->value( 0 ).toBool();
+        }
+        else
+        {
+            g_poDB->executeQTQuery( QString("INSERT INTO `settings` (`settingId`, `identifier`, `value`) VALUES (NULL, '%1', '%2') " )
+                                            .arg( p_Identifier )
+                                            .arg( p_Default ) );
+            value = p_Default;
+        }
+        delete poQuery;
+    }
+    catch( cSevException &e )
+    {
+        if( poQuery ) delete poQuery;
+        g_obLogger(e.severity()) << e.what() << EOM;
+        g_obGen.showTrayError( e.what() );
+    }
+
+    return value;
+}
+
+int cPreferences::loadSettingI( QString p_Identifier, int p_Default ) throw (cSevException)
+{
+    int value = 0;
+    QSqlQuery *poQuery = NULL;
+
+    try
+    {
+        poQuery = g_poDB->executeQTQuery( QString( "SELECT value FROM settings WHERE identifier=\"%1\" " ).arg( p_Identifier ) );
+        if( poQuery->first() )
+        {
+            value = poQuery->value( 0 ).toInt();
+        }
+        else
+        {
+            g_poDB->executeQTQuery( QString("INSERT INTO `settings` (`settingId`, `identifier`, `value`) VALUES (NULL, '%1', '%2') " )
+                                            .arg( p_Identifier )
+                                            .arg( p_Default ) );
+            value = p_Default;
+        }
+        delete poQuery;
+    }
+    catch( cSevException &e )
+    {
+        if( poQuery ) delete poQuery;
+        g_obLogger(e.severity()) << e.what() << EOM;
+        g_obGen.showTrayError( e.what() );
+    }
+
+    return value;
+}
+
+void cPreferences::saveSettingU( QString p_Identifier, unsigned int p_Value ) throw (cSevException)
+{
+    try
+    {
+        g_poDB->executeQTQuery( QString( "UPDATE settings SET value='%1' WHERE identifier=\"%2\" " ).arg( p_Value ).arg( p_Identifier ) );
+    }
+    catch( cSevException &e )
+    {
+        g_obLogger(e.severity()) << e.what() << EOM;
+        g_obGen.showTrayError( e.what() );
+    }
+}
+
+void cPreferences::saveSettingS( QString p_Identifier, QString p_Value ) throw (cSevException)
+{
+    try
+    {
+        g_poDB->executeQTQuery( QString( "UPDATE settings SET value=\"%1\" WHERE identifier=\"%2\" " ).arg( p_Value ).arg( p_Identifier ) );
+    }
+    catch( cSevException &e )
+    {
+        g_obLogger(e.severity()) << e.what() << EOM;
+        g_obGen.showTrayError( e.what() );
+    }
+}
+
+void cPreferences::saveSettingB( QString p_Identifier, bool p_Value ) throw (cSevException)
+{
+    try
+    {
+        g_poDB->executeQTQuery( QString( "UPDATE settings SET value='%1' WHERE identifier=\"%2\" " ).arg( p_Value ).arg( p_Identifier ) );
+    }
+    catch( cSevException &e )
+    {
+        g_obLogger(e.severity()) << e.what() << EOM;
+        g_obGen.showTrayError( e.what() );
+    }
+}
+
+void cPreferences::saveSettingI( QString p_Identifier, int p_Value ) throw (cSevException)
+{
+    try
+    {
+        g_poDB->executeQTQuery( QString( "UPDATE settings SET value='%1' WHERE identifier=\"%2\" " ).arg( p_Value ).arg( p_Identifier ) );
+    }
+    catch( cSevException &e )
+    {
+        g_obLogger(e.severity()) << e.what() << EOM;
+        g_obGen.showTrayError( e.what() );
     }
 }
 
@@ -321,133 +591,24 @@ void cPreferences::loadDBSettings() throw (cSevException)
     {
         if( poQuery ) delete poQuery;
         g_obLogger(e.severity()) << e.what() << EOM;
+        g_obGen.showTrayError( e.what() );
     }
 
 }
 
-void cPreferences::save() const throw (cSevException)
+void cPreferences::setApplicationPath( const QString &p_qsPath )
 {
-    QSettings  obPrefFile( m_qsFileName, QSettings::IniFormat );
-
-    if( m_qsLang != "" )     obPrefFile.setValue( QString::fromAscii( "Lang" ), m_qsLang );
-    if( m_qsLastUser != "" ) obPrefFile.setValue( QString::fromAscii( "LastUser" ), m_qsLastUser );
-    obPrefFile.setValue( QString::fromAscii( "PanelsPerRow" ), m_uiPanelsPerRow );
-    obPrefFile.setValue( QString::fromAscii( "BarcodeLength" ), m_inBarcodeLength );
-    obPrefFile.setValue( QString::fromAscii( "BarcodePrefix" ), m_qsBarcodePrefix );
-    obPrefFile.setValue( QString::fromAscii( "CardProductBarcodeLengthDifferent" ), m_bBarcodeLengthDifferent );
-    obPrefFile.setValue( QString::fromAscii( "CassaAutoClose" ), m_bCassaAutoClose );
-    obPrefFile.setValue( QString::fromAscii( "CassaAutoWithdrawal" ), m_bCassaAutoWithdrawal );
-    obPrefFile.setValue( QString::fromAscii( "CassaAutoCreate" ), m_bCassaAutoCreateNew );
-    obPrefFile.setValue( QString::fromAscii( "CassaCreateType" ), m_inCassaCreateType );
-    obPrefFile.setValue( QString::fromAscii( "DefaultCountry" ), m_qsDefaultCountry );
-    obPrefFile.setValue( QString::fromAscii( "ZipLength" ), m_inZipLength );
-    obPrefFile.setValue( QString::fromAscii( "DBAutoSynchronization" ), m_bDBAutoArchive );
-    obPrefFile.setValue( QString::fromAscii( "DBGlobalAutoSynchronization" ), m_bDBGlobalAutoSynchronize );
-    obPrefFile.setValue( QString::fromAscii( "IsSecondaryWindowVisible" ), m_bIsSecondaryWindowVisible );
-
-    obPrefFile.setValue( QString::fromAscii( "SecondaryWindow/Left" ), m_qpSecondaryPosition.x() );
-    obPrefFile.setValue( QString::fromAscii( "SecondaryWindow/Top" ), m_qpSecondaryPosition.y() );
-    obPrefFile.setValue( QString::fromAscii( "SecondaryWindow/Width" ), m_qsSecondarySize.width() );
-    obPrefFile.setValue( QString::fromAscii( "SecondaryWindow/Height" ), m_qsSecondarySize.height() );
-    obPrefFile.setValue( QString::fromAscii( "SecondaryWindow/Background" ), m_qsSecondaryBackground );
-    obPrefFile.setValue( QString::fromAscii( "SecondaryWindow/IsTextTubeReplaceVisible"), m_bIsTextTubeReplaceVisible );
-    obPrefFile.setValue( QString::fromAscii( "SecondaryWindow/IsTextSterilVisible"), m_bIsTextSterilVisible );
-    obPrefFile.setValue( QString::fromAscii( "SecondaryWindow/IsTextTubeCleanupVisible"), m_bIsTextTubeCleanupVisible );
-
-    obPrefFile.setValue( QString::fromAscii( "Panels/ActiveCaptionBackground" ), m_qsActiveCaptionBackground );
-    obPrefFile.setValue( QString::fromAscii( "Panels/ActiveCaptionColor" ), m_qsActiveCaptionColor );
-    obPrefFile.setValue( QString::fromAscii( "Panels/InactiveCaptionBackground" ), m_qsInactiveCaptionBackground );
-    obPrefFile.setValue( QString::fromAscii( "Panels/InactiveCaptionColor" ), m_qsInactiveCaptionColor );
-    obPrefFile.setValue( QString::fromAscii( "Panels/SecondaryCaptionBackground" ), m_qsSecondaryCaptionBackground );
-    obPrefFile.setValue( QString::fromAscii( "Panels/SecondaryCaptionColor" ), m_qsSecondaryCaptionColor );
-    obPrefFile.setValue( QString::fromAscii( "Panels/IsStopInLine"), m_bIsStopInLine );
-    obPrefFile.setValue( QString::fromAscii( "Panels/TextSterile"), m_qsPanelTextSteril );
-    obPrefFile.setValue( QString::fromAscii( "Panels/TextTubeReplace"), m_qsPanelTextTubeReplace );
-    obPrefFile.setValue( QString::fromAscii( "Panels/TextTubeCleanup"), m_qsPanelTextTubeCleanup );
-
-    obPrefFile.setValue( QString::fromAscii( "SecondaryWindow/FrameColor" ), m_qsSecondaryFrame );
-    obPrefFile.setValue( QString::fromAscii( "SecondaryWindow/IsSecondaryCaptionVisible" ), m_bIsSecondaryCaptionVisible );
-
-    obPrefFile.setValue( QString::fromAscii( "PatientCard/PriceLost" ), m_nPatientCardLostPrice );
-    obPrefFile.setValue( QString::fromAscii( "PatientCard/PriceLostVat" ), m_nPatientCardLostPriceVat );
-    obPrefFile.setValue( QString::fromAscii( "PatientCard/PricePartner" ), m_nPatientCardPartnerPrice );
-    obPrefFile.setValue( QString::fromAscii( "PatientCard/PricePartnerVat" ), m_nPatientCardPartnerPriceVat );
-    obPrefFile.setValue( QString::fromAscii( "PatientCard/Hidden"), m_bBarcodeHidden );
-
-    unsigned int  uiConLevel, uiDBLevel, uiGUILevel, uiFileLevel;
-    getLogLevels( &uiConLevel, &uiDBLevel, &uiGUILevel, &uiFileLevel );
-    obPrefFile.setValue( QString::fromAscii( "LogLevels/ConsoleLogLevel" ), uiConLevel );
-    obPrefFile.setValue( QString::fromAscii( "LogLevels/DBLogLevel" ), uiDBLevel );
-    obPrefFile.setValue( QString::fromAscii( "LogLevels/GUILogLevel" ), uiGUILevel );
-    obPrefFile.setValue( QString::fromAscii( "LogLevels/FileLogLevel" ), uiFileLevel );
-
-    obPrefFile.setValue( QString::fromAscii( "Server/Address" ), m_qsServerAddress );
-    obPrefFile.setValue( QString::fromAscii( "Server/Port" ), m_qsServerPort );
-
-    obPrefFile.setValue( QString::fromAscii( "Hardware/ComPort" ), m_inCommunicationPort );
-    obPrefFile.setValue( QString::fromAscii( "Hardware/ForceModuleSendTime"), m_bForceModuleSendTime );
-    obPrefFile.setValue( QString::fromAscii( "Hardware/ForceModuleCheckButton"), m_bForceModuleCheckButton );
-    obPrefFile.setValue( QString::fromAscii( "Hardware/ForceTimeSendCounter"), m_nForceTimeSendCounter );
-    obPrefFile.setValue( QString::fromAscii( "Hardware/RFIDEnabled"), m_bRFIDEnabled );
-    obPrefFile.setValue( QString::fromAscii( "Hardware/RFIDComPort" ), m_inRFIDCommunicationPort );
-
-    obPrefFile.setValue( QString::fromAscii( "UserInterface/MainBackground" ), m_qsMainBackground );
-
-    obPrefFile.setValue( QString::fromAscii( "Currency/Short" ), m_qsCurrencyShort );
-    obPrefFile.setValue( QString::fromAscii( "Currency/Long" ), m_qsCurrencyLong );
-    obPrefFile.setValue( QString::fromAscii( "Currency/Separator" ), m_qsCurrencySeparator );
-    obPrefFile.setValue( QString::fromAscii( "Currency/Decimal" ), m_qsCurrencyDecimalSeparator );
-
-    obPrefFile.setValue( QString::fromAscii( "Device/MaxTreatLength" ), m_uiMaxTreatLength );
-    obPrefFile.setValue( QString::fromAscii( "Device/VAT" ), m_inDeviceUseVAT );
-
-    obPrefFile.setValue( QString::fromAscii( "BlnsHttp/Enabled" ), m_bBlnsHttpEnabled );
-    obPrefFile.setValue( QString::fromAscii( "BlnsHttp/WebSyncAutoStart" ), m_bWebSyncAutoStart );
-//    obPrefFile.setValue( QString::fromAscii( "BlnsHttp/MessageWaitTime" ), m_nBlnsHttpWaitTime );
-//    obPrefFile.setValue( QString::fromAscii( "BlnsHttp/IsAutoStartSync"), m_bIsStartHttpSyncAuto );
-//    obPrefFile.setValue( QString::fromAscii( "BlnsHttp/AutoStartSyncSeconds"), m_nStartHttpSyncAutoSeconds );
-
-    obPrefFile.setValue( QString::fromAscii( "DbBackup/DirDbBinaries" ), m_qsDirDbBinaries );
-    obPrefFile.setValue( QString::fromAscii( "DbBackup/DirDbBackup" ), m_qsDirDbBackup );
-    obPrefFile.setValue( QString::fromAscii( "DbBackup/BackupDb" ), m_bBackupDatabase );
-    obPrefFile.setValue( QString::fromAscii( "DbBackup/DbBackupType" ), m_nBackupDatabaseType );
-    obPrefFile.setValue( QString::fromAscii( "DbBackup/DbBackupDays" ), m_qsBackupDatabaseDays );
-
-    obPrefFile.setValue( QString::fromAscii( "DateFormat" ), m_qsDateFormat );
-
-    obPrefFile.setValue( QString::fromAscii( "Component" ), m_bFapados );
-
-    obPrefFile.setValue( QString::fromAscii( "PanelSettings/UsageVisibleOnMain"), m_bUsageVisibleOnMain );
-
-    if( m_bFapados )
-    {
-        g_poDB->executeQTQuery( QString( "UPDATE settings SET value='66' WHERE identifier=\"COMPONENT_ID\" " ) );
-    }
-    else
-    {
-        g_poDB->executeQTQuery( QString( "UPDATE settings SET value='42' WHERE identifier=\"COMPONENT_ID\" " ) );
-    }
+    m_qsApplicationPath = p_qsPath;
 }
 
-void cPreferences::setFileName( const QString &p_qsFileName )
+QString cPreferences::getApplicationPath() const
 {
-    m_qsFileName = p_qsFileName;
+    return m_qsApplicationPath;
 }
 
-QString cPreferences::getFileName() const
-{
-    return m_qsFileName;
-}
-
-void cPreferences::setVersion( const QString &p_qsVersion, bool p_boSaveNow )
+void cPreferences::setVersion( const QString &p_qsVersion )
 {
     m_qsVersion = p_qsVersion;
-
-    if( p_boSaveNow )
-    {
-        QSettings  obPrefFile( m_qsFileName, QSettings::IniFormat );
-        obPrefFile.setValue( QString::fromAscii( "Version" ), m_qsVersion );
-    }
 }
 
 QString cPreferences::getVersion() const
@@ -465,15 +626,9 @@ QString cPreferences::getVersionDb() const
     return m_qsVersionDb;
 }
 
-void cPreferences::setComponents( const unsigned int p_uiComponent, bool p_boSaveNow )
+void cPreferences::setComponents( const unsigned int p_uiComponent )
 {
     m_uiComponent = p_uiComponent;
-
-    if( p_boSaveNow )
-    {
-        QSettings  obPrefFile( m_qsFileName, QSettings::IniFormat );
-        obPrefFile.setValue( QString::fromAscii( "PanelSystemID" ), m_uiComponent );
-    }
 }
 
 unsigned int cPreferences::getComponents() const
@@ -537,15 +692,9 @@ QString cPreferences::getLangFilePrefix() const
     return m_qsLangFilePrefix;
 }
 
-void cPreferences::setLang( const QString &p_qsLang, bool p_boSaveNow )
+void cPreferences::setLang( const QString &p_qsLang )
 {
     m_qsLang = p_qsLang;
-
-    if( p_boSaveNow )
-    {
-        QSettings  obPrefFile( m_qsFileName, QSettings::IniFormat );
-        obPrefFile.setValue( QString::fromAscii( "Lang" ), m_qsLang );
-    }
 }
 
 QString cPreferences::getLang() const
@@ -553,15 +702,10 @@ QString cPreferences::getLang() const
     return m_qsLang;
 }
 
-void cPreferences::setLastUser( const QString &p_qsLastUser, bool p_boSaveNow )
+void cPreferences::setLastUser( const QString &p_qsLastUser )
 {
     m_qsLastUser = p_qsLastUser;
-
-    if( p_boSaveNow )
-    {
-        QSettings  obPrefFile( m_qsFileName, QSettings::IniFormat );
-        obPrefFile.setValue( QString::fromAscii( "LastUser" ), m_qsLastUser );
-    }
+    saveSettingS( "GEN_LastUser", m_qsLastUser );
 }
 
 QString cPreferences::getLastUser() const
@@ -569,16 +713,9 @@ QString cPreferences::getLastUser() const
     return m_qsLastUser;
 }
 
-void cPreferences::setPanelsPerRow( const unsigned int p_uiPanelsPerRow,
-                                    bool p_boSaveNow )
+void cPreferences::setPanelsPerRow( const unsigned int p_uiPanelsPerRow )
 {
     m_uiPanelsPerRow = p_uiPanelsPerRow;
-
-    if( p_boSaveNow )
-    {
-        QSettings  obPrefFile( m_qsFileName, QSettings::IniFormat );
-        obPrefFile.setValue( QString::fromAscii( "PanelsPerRow" ), m_uiPanelsPerRow );
-    }
 }
 
 unsigned int cPreferences::getPanelsPerRow() const
@@ -602,22 +739,17 @@ unsigned int cPreferences::getPanelId(int p_nPanelIterator)
 void cPreferences::setMainWindowSizePos( const unsigned int p_uiMainWindowLeft,
                                          const unsigned int p_uiMainWindowTop,
                                          const unsigned int p_uiMainWindowWidth,
-                                         const unsigned int p_uiMainWindowHeight,
-                                         bool p_boSaveNow )
+                                         const unsigned int p_uiMainWindowHeight )
 {
     m_uiMainWindowLeft   = p_uiMainWindowLeft;
     m_uiMainWindowTop    = p_uiMainWindowTop;
     m_uiMainWindowWidth  = p_uiMainWindowWidth;
     m_uiMainWindowHeight = p_uiMainWindowHeight;
 
-    if( p_boSaveNow )
-    {
-        QSettings  obPrefFile( m_qsFileName, QSettings::IniFormat );
-        obPrefFile.setValue( QString::fromAscii( "UserInterface/MainWindowLeft" ), m_uiMainWindowLeft );
-        obPrefFile.setValue( QString::fromAscii( "UserInterface/MainWindowTop" ), m_uiMainWindowTop );
-        obPrefFile.setValue( QString::fromAscii( "UserInterface/MainWindowWidth" ), m_uiMainWindowWidth );
-        obPrefFile.setValue( QString::fromAscii( "UserInterface/MainWindowHeight" ), m_uiMainWindowHeight );
-    }
+    saveSettingU( "UI_MainWindowLeft", m_uiMainWindowLeft );
+    saveSettingU( "UI_MainWindowTop", m_uiMainWindowTop );
+    saveSettingU( "UI_MainWindowWidth", m_uiMainWindowWidth );
+    saveSettingU( "UI_MainWindowHeight", m_uiMainWindowHeight );
 }
 
 unsigned int cPreferences::getMainWindowLeft() const
@@ -640,15 +772,9 @@ unsigned int cPreferences::getMainWindowHeight() const
     return m_uiMainWindowHeight;
 }
 
-void cPreferences::setMainBackground( const QString &p_qsColor, bool p_boSaveNow )
+void cPreferences::setMainBackground( const QString &p_qsColor )
 {
     m_qsMainBackground = p_qsColor;
-
-    if( p_boSaveNow )
-    {
-        QSettings  obPrefFile( m_qsFileName, QSettings::IniFormat );
-        obPrefFile.setValue( QString::fromAscii( "UserInterface/MainBackground" ), m_qsMainBackground );
-    }
 }
 
 QString cPreferences::getMainBackground() const
@@ -666,15 +792,9 @@ void cPreferences::setLicenceId( const int licenceId )
     m_uiLicenceId = licenceId;
 }
 
-void cPreferences::setServerAddress( const QString &p_qsServerAddress, bool p_boSaveNow )
+void cPreferences::setServerAddress( const QString &p_qsServerAddress )
 {
     m_qsServerAddress = p_qsServerAddress;
-
-    if( p_boSaveNow )
-    {
-        QSettings  obPrefFile( m_qsFileName, QSettings::IniFormat );
-        obPrefFile.setValue( QString::fromAscii( "Server/Address" ), m_qsServerAddress );
-    }
 }
 
 QString cPreferences::getServerAddress() const
@@ -682,15 +802,9 @@ QString cPreferences::getServerAddress() const
     return m_qsServerAddress;
 }
 
-void cPreferences::setServerPort( const QString &p_qsServerPort, bool p_boSaveNow )
+void cPreferences::setServerPort( const QString &p_qsServerPort )
 {
     m_qsServerPort = p_qsServerPort;
-
-    if( p_boSaveNow )
-    {
-        QSettings  obPrefFile( m_qsFileName, QSettings::IniFormat );
-        obPrefFile.setValue( QString::fromAscii( "Server/Port" ), m_qsServerPort );
-    }
 }
 
 QString cPreferences::getServerPort() const
@@ -698,15 +812,9 @@ QString cPreferences::getServerPort() const
     return m_qsServerPort;
 }
 
-void cPreferences::setCommunicationPort( const int p_inPortNumber, bool p_boSaveNow )
+void cPreferences::setCommunicationPort( const int p_inPortNumber )
 {
     m_inCommunicationPort = p_inPortNumber;
-
-    if( p_boSaveNow )
-    {
-        QSettings  obPrefFile( m_qsFileName, QSettings::IniFormat );
-        obPrefFile.setValue( QString::fromAscii( "Hardware/ComPort" ), m_inCommunicationPort );
-    }
 }
 
 int cPreferences::getCommunicationPort() const
@@ -714,15 +822,10 @@ int cPreferences::getCommunicationPort() const
     return m_inCommunicationPort;
 }
 
-void cPreferences::setBarcodeLength( const int p_inBarcodeLength, bool p_boSaveNow )
+void cPreferences::setBarcodeLength( const int p_inBarcodeLength )
 {
     m_inBarcodeLength = p_inBarcodeLength;
-
-    if( p_boSaveNow )
-    {
-        QSettings  obPrefFile( m_qsFileName, QSettings::IniFormat );
-        obPrefFile.setValue( QString::fromAscii( "BarcodeLength" ), m_inBarcodeLength );
-    }
+    saveSettingI( "GEN_BarcodeLength", m_inBarcodeLength );
 }
 
 int cPreferences::getBarcodeLength() const
@@ -730,16 +833,10 @@ int cPreferences::getBarcodeLength() const
     return m_inBarcodeLength;
 }
 
-void cPreferences::setBarcodePrefix( const QString &p_qsPrefix, bool p_boSaveNow )
+void cPreferences::setBarcodePrefix( const QString &p_qsPrefix )
 {
     m_qsBarcodePrefix = p_qsPrefix;
     m_qsBarcodePrefix.truncate( m_inBarcodeLength - 1 );
-
-    if( p_boSaveNow )
-    {
-        QSettings  obPrefFile( m_qsFileName, QSettings::IniFormat );
-        obPrefFile.setValue( QString::fromAscii( "BarcodePrefix" ), m_qsBarcodePrefix );
-    }
 }
 
 QString cPreferences::getBarcodePrefix() const
@@ -747,15 +844,9 @@ QString cPreferences::getBarcodePrefix() const
     return m_qsBarcodePrefix;
 }
 
-void cPreferences::setBarcodeLengthDifferent( const bool p_bBarcodeLengthDifferent, bool p_boSaveNow )
+void cPreferences::setBarcodeLengthDifferent( const bool p_bBarcodeLengthDifferent )
 {
     m_bBarcodeLengthDifferent = p_bBarcodeLengthDifferent;
-
-    if( p_boSaveNow )
-    {
-        QSettings  obPrefFile( m_qsFileName, QSettings::IniFormat );
-        obPrefFile.setValue( QString::fromAscii( "CardProductBarcodeLengthDifferent" ), m_bBarcodeLengthDifferent );
-    }
 }
 
 bool cPreferences::isBarcodeLengthDifferent() const
@@ -763,15 +854,9 @@ bool cPreferences::isBarcodeLengthDifferent() const
     return m_bBarcodeLengthDifferent;
 }
 
-void cPreferences::setCurrencyShort( const QString &p_qsCurrencyShort, bool p_boSaveNow )
+void cPreferences::setCurrencyShort( const QString &p_qsCurrencyShort )
 {
     m_qsCurrencyShort = p_qsCurrencyShort;
-
-    if( p_boSaveNow )
-    {
-        QSettings  obPrefFile( m_qsFileName, QSettings::IniFormat );
-        obPrefFile.setValue( QString::fromAscii( "Currency/Short" ), m_qsCurrencyShort );
-    }
 }
 
 QString cPreferences::getCurrencyShort() const
@@ -779,15 +864,9 @@ QString cPreferences::getCurrencyShort() const
     return m_qsCurrencyShort;
 }
 
-void cPreferences::setCurrencyLong( const QString &p_qsCurrencyLong, bool p_boSaveNow )
+void cPreferences::setCurrencyLong( const QString &p_qsCurrencyLong )
 {
     m_qsCurrencyLong = p_qsCurrencyLong;
-
-    if( p_boSaveNow )
-    {
-        QSettings  obPrefFile( m_qsFileName, QSettings::IniFormat );
-        obPrefFile.setValue( QString::fromAscii( "Currency/Long" ), m_qsCurrencyLong );
-    }
 }
 
 QString cPreferences::getCurrencyLong() const
@@ -795,15 +874,9 @@ QString cPreferences::getCurrencyLong() const
     return m_qsCurrencyLong;
 }
 
-void cPreferences::setCurrencySeparator( const QString &p_qsCurrencySeparator, bool p_boSaveNow )
+void cPreferences::setCurrencySeparator( const QString &p_qsCurrencySeparator )
 {
     m_qsCurrencySeparator = p_qsCurrencySeparator;
-
-    if( p_boSaveNow )
-    {
-        QSettings  obPrefFile( m_qsFileName, QSettings::IniFormat );
-        obPrefFile.setValue( QString::fromAscii( "Currency/Separator" ), m_qsCurrencySeparator );
-    }
 }
 
 QString cPreferences::getCurrencySeparator() const
@@ -811,15 +884,9 @@ QString cPreferences::getCurrencySeparator() const
     return m_qsCurrencySeparator;
 }
 
-void cPreferences::setCurrencyDecimalSeparator( const QString &p_qsCurrencyDecimalSeparator, bool p_boSaveNow )
+void cPreferences::setCurrencyDecimalSeparator( const QString &p_qsCurrencyDecimalSeparator )
 {
     m_qsCurrencyDecimalSeparator = p_qsCurrencyDecimalSeparator;
-
-    if( p_boSaveNow )
-    {
-        QSettings  obPrefFile( m_qsFileName, QSettings::IniFormat );
-        obPrefFile.setValue( QString::fromAscii( "Currency/Decimal" ), m_qsCurrencyDecimalSeparator );
-    }
 }
 
 QString cPreferences::getCurrencyDecimalSeparator() const
@@ -827,15 +894,9 @@ QString cPreferences::getCurrencyDecimalSeparator() const
     return m_qsCurrencyDecimalSeparator;
 }
 
-void cPreferences::setMaxTreatLength( const unsigned int p_uiMaxTreatLength, bool p_boSaveNow )
+void cPreferences::setMaxTreatLength( const unsigned int p_uiMaxTreatLength )
 {
     m_uiMaxTreatLength = p_uiMaxTreatLength;
-
-    if( p_boSaveNow )
-    {
-        QSettings  obPrefFile( m_qsFileName, QSettings::IniFormat );
-        obPrefFile.setValue( QString::fromAscii( "Device/MaxTreatLength" ), m_uiMaxTreatLength );
-    }
 }
 
 unsigned int cPreferences::getMaxTreatLength() const
@@ -843,15 +904,9 @@ unsigned int cPreferences::getMaxTreatLength() const
     return m_uiMaxTreatLength;
 }
 
-void cPreferences::setDeviceUseVAT( const int p_inVAT, bool p_boSaveNow )
+void cPreferences::setDeviceUseVAT( const int p_inVAT )
 {
     m_inDeviceUseVAT = p_inVAT;
-
-    if( p_boSaveNow )
-    {
-        QSettings  obPrefFile( m_qsFileName, QSettings::IniFormat );
-        obPrefFile.setValue( QString::fromAscii( "Device/VAT" ), m_inDeviceUseVAT );
-    }
 }
 
 int cPreferences::getDeviceUseVAT() const
@@ -859,15 +914,9 @@ int cPreferences::getDeviceUseVAT() const
     return m_inDeviceUseVAT;
 }
 
-void cPreferences::setZipLength( const int p_inZip, bool p_boSaveNow )
+void cPreferences::setZipLength( const int p_inZip )
 {
     m_inZipLength = p_inZip;
-
-    if( p_boSaveNow )
-    {
-        QSettings  obPrefFile( m_qsFileName, QSettings::IniFormat );
-        obPrefFile.setValue( QString::fromAscii( "ZipLength" ), m_inZipLength );
-    }
 }
 
 int cPreferences::getZipLength() const
@@ -875,15 +924,9 @@ int cPreferences::getZipLength() const
     return m_inZipLength;
 }
 
-void cPreferences::setCassaAutoClose( const bool p_bCassaAutoClose, bool p_boSaveNow )
+void cPreferences::setCassaAutoClose( const bool p_bCassaAutoClose )
 {
     m_bCassaAutoClose = p_bCassaAutoClose;
-
-    if( p_boSaveNow )
-    {
-        QSettings  obPrefFile( m_qsFileName, QSettings::IniFormat );
-        obPrefFile.setValue( QString::fromAscii( "CassaAutoClose" ), m_bCassaAutoClose );
-    }
 }
 
 bool cPreferences::getCassaAutoClose() const
@@ -891,15 +934,9 @@ bool cPreferences::getCassaAutoClose() const
     return m_bCassaAutoClose;
 }
 
-void cPreferences::setCassaAutoWithdrawal( const bool p_bCassaAutoWithdrawal, bool p_boSaveNow )
+void cPreferences::setCassaAutoWithdrawal( const bool p_bCassaAutoWithdrawal )
 {
     m_bCassaAutoWithdrawal = p_bCassaAutoWithdrawal;
-
-    if( p_boSaveNow )
-    {
-        QSettings  obPrefFile( m_qsFileName, QSettings::IniFormat );
-        obPrefFile.setValue( QString::fromAscii( "CassaAutoWithdrawal" ), m_bCassaAutoWithdrawal );
-    }
 }
 
 bool cPreferences::getCassaAutoWithdrawal() const
@@ -907,15 +944,9 @@ bool cPreferences::getCassaAutoWithdrawal() const
     return m_bCassaAutoWithdrawal;
 }
 
-void cPreferences::setCassaAutoCreate( const bool p_bCassaAutoCreate, bool p_boSaveNow )
+void cPreferences::setCassaAutoCreate( const bool p_bCassaAutoCreate )
 {
     m_bCassaAutoCreateNew = p_bCassaAutoCreate;
-
-    if( p_boSaveNow )
-    {
-        QSettings  obPrefFile( m_qsFileName, QSettings::IniFormat );
-        obPrefFile.setValue( QString::fromAscii( "CassaAutoCreate" ), m_bCassaAutoCreateNew );
-    }
 }
 
 bool cPreferences::getCassaAutoCreate() const
@@ -923,15 +954,9 @@ bool cPreferences::getCassaAutoCreate() const
     return m_bCassaAutoCreateNew;
 }
 
-void cPreferences::setCassaCreateType( const int p_inCassaCreateType, bool p_boSaveNow )
+void cPreferences::setCassaCreateType( const int p_inCassaCreateType )
 {
     m_inCassaCreateType = p_inCassaCreateType;
-
-    if( p_boSaveNow )
-    {
-        QSettings  obPrefFile( m_qsFileName, QSettings::IniFormat );
-        obPrefFile.setValue( QString::fromAscii( "CassaCreateType" ), m_inCassaCreateType );
-    }
 }
 
 int cPreferences::getCassaCreateType() const
@@ -939,15 +964,9 @@ int cPreferences::getCassaCreateType() const
     return m_inCassaCreateType;
 }
 
-void cPreferences::setDefaultCountry( const QString &p_qsDefaultCountry, bool p_boSaveNow )
+void cPreferences::setDefaultCountry( const QString &p_qsDefaultCountry )
 {
     m_qsDefaultCountry = p_qsDefaultCountry;
-
-    if( p_boSaveNow )
-    {
-        QSettings  obPrefFile( m_qsFileName, QSettings::IniFormat );
-        obPrefFile.setValue( QString::fromAscii( "DefaultCountry" ), m_qsDefaultCountry );
-    }
 }
 
 QString cPreferences::getDefaultCountry() const
@@ -955,30 +974,18 @@ QString cPreferences::getDefaultCountry() const
     return m_qsDefaultCountry;
 }
 
-void cPreferences::setDBAutoArchive( const bool p_bDBAutoArchive, bool p_boSaveNow )
+void cPreferences::setDBAutoArchive( const bool p_bDBAutoArchive )
 {
     m_bDBAutoArchive = p_bDBAutoArchive;
-
-    if( p_boSaveNow )
-    {
-        QSettings  obPrefFile( m_qsFileName, QSettings::IniFormat );
-        obPrefFile.setValue( QString::fromAscii( "DBAutoSynchronization" ), m_bDBAutoArchive );
-    }
 }
 
 bool cPreferences::getDBAutoArchive() const
 {
     return m_bDBAutoArchive;
 }
-void cPreferences::setDBGlobalAutoSynchronize( const bool p_bDBGlobalAutoSynchronize, bool p_boSaveNow )
+void cPreferences::setDBGlobalAutoSynchronize( const bool p_bDBGlobalAutoSynchronize )
 {
     m_bDBGlobalAutoSynchronize = p_bDBGlobalAutoSynchronize;
-
-    if( p_boSaveNow )
-    {
-        QSettings  obPrefFile( m_qsFileName, QSettings::IniFormat );
-        obPrefFile.setValue( QString::fromAscii( "DBGlobalAutoSynchronization" ), m_bDBGlobalAutoSynchronize );
-    }
 }
 
 bool cPreferences::getDBGlobalAutoSynchronize() const
@@ -986,15 +993,9 @@ bool cPreferences::getDBGlobalAutoSynchronize() const
     return m_bDBGlobalAutoSynchronize;
 }
 
-void cPreferences::setSecondaryWindowVisibility( const bool p_bIsSecondaryWindowVisible, bool p_boSaveNow )
+void cPreferences::setSecondaryWindowVisibility( const bool p_bIsSecondaryWindowVisible )
 {
     m_bIsSecondaryWindowVisible = p_bIsSecondaryWindowVisible;
-
-    if( p_boSaveNow )
-    {
-        QSettings  obPrefFile( m_qsFileName, QSettings::IniFormat );
-        obPrefFile.setValue( QString::fromAscii( "IsSecondaryWindowVisible" ), m_bIsSecondaryWindowVisible );
-    }
 }
 
 bool cPreferences::isSecondaryWindowVisible() const
@@ -1002,16 +1003,11 @@ bool cPreferences::isSecondaryWindowVisible() const
     return m_bIsSecondaryWindowVisible;
 }
 
-void cPreferences::setSecondaryWindowPosition( const QPoint &p_qpPosition, bool p_boSaveNow )
+void cPreferences::setSecondaryWindowPosition( const QPoint &p_qpPosition )
 {
     m_qpSecondaryPosition = p_qpPosition;
-
-    if( p_boSaveNow )
-    {
-        QSettings  obPrefFile( m_qsFileName, QSettings::IniFormat );
-        obPrefFile.setValue( QString::fromAscii( "SecondaryWindow/Left" ), m_qpSecondaryPosition.x() );
-        obPrefFile.setValue( QString::fromAscii( "SecondaryWindow/Top" ), m_qpSecondaryPosition.y() );
-    }
+    saveSettingI( "EXTWIN_Left", m_qpSecondaryPosition.x() );
+    saveSettingI( "EXTWIN_Top", m_qpSecondaryPosition.y() );
 }
 
 QPoint cPreferences::secondaryWindowPosition() const
@@ -1019,16 +1015,11 @@ QPoint cPreferences::secondaryWindowPosition() const
     return m_qpSecondaryPosition;
 }
 
-void cPreferences::setSecondaryWindowSize( const QSize &p_qsSize, bool p_boSaveNow )
+void cPreferences::setSecondaryWindowSize( const QSize &p_qsSize )
 {
     m_qsSecondarySize = p_qsSize;
-
-    if( p_boSaveNow )
-    {
-        QSettings  obPrefFile( m_qsFileName, QSettings::IniFormat );
-        obPrefFile.setValue( QString::fromAscii( "SecondaryWindow/Width" ), m_qsSecondarySize.width() );
-        obPrefFile.setValue( QString::fromAscii( "SecondaryWindow/Height" ), m_qsSecondarySize.height() );
-    }
+    saveSettingI( "EXTWIN_Width", m_qsSecondarySize.width() );
+    saveSettingI( "EXTWIN_Height", m_qsSecondarySize.height() );
 }
 
 QSize cPreferences::secondaryWindowSize() const
@@ -1036,15 +1027,9 @@ QSize cPreferences::secondaryWindowSize() const
     return m_qsSecondarySize;
 }
 
-void cPreferences::setSecondaryBackground( const QString &p_qsColor, bool p_boSaveNow )
+void cPreferences::setSecondaryBackground( const QString &p_qsColor )
 {
     m_qsSecondaryBackground = p_qsColor;
-
-    if( p_boSaveNow )
-    {
-        QSettings  obPrefFile( m_qsFileName, QSettings::IniFormat );
-        obPrefFile.setValue( QString::fromAscii( "SecondaryWindow/Background" ), m_qsSecondaryBackground );
-    }
 }
 
 QString cPreferences::getSecondaryBackground() const
@@ -1052,15 +1037,9 @@ QString cPreferences::getSecondaryBackground() const
     return m_qsSecondaryBackground;
 }
 
-void cPreferences::setSecondaryFrame( const QString &p_qsColor, bool p_boSaveNow )
+void cPreferences::setSecondaryFrame( const QString &p_qsColor )
 {
     m_qsSecondaryFrame = p_qsColor;
-
-    if( p_boSaveNow )
-    {
-        QSettings  obPrefFile( m_qsFileName, QSettings::IniFormat );
-        obPrefFile.setValue( QString::fromAscii( "SecondaryWindow/FrameColor" ), m_qsSecondaryFrame );
-    }
 }
 
 QString cPreferences::getSecondaryFrame() const
@@ -1068,15 +1047,9 @@ QString cPreferences::getSecondaryFrame() const
     return m_qsSecondaryFrame;
 }
 
-void cPreferences::setSecondaryCaptionVisibility( const bool p_bIsSecondaryCaptionVisible, bool p_boSaveNow )
+void cPreferences::setSecondaryCaptionVisibility( const bool p_bIsSecondaryCaptionVisible )
 {
     m_bIsSecondaryCaptionVisible = p_bIsSecondaryCaptionVisible;
-
-    if( p_boSaveNow )
-    {
-        QSettings  obPrefFile( m_qsFileName, QSettings::IniFormat );
-        obPrefFile.setValue( QString::fromAscii( "SecondaryWindow/IsSecondaryCaptionVisible" ), m_bIsSecondaryCaptionVisible );
-    }
 }
 
 bool cPreferences::isSecondaryCaptionVisible() const
@@ -1084,15 +1057,9 @@ bool cPreferences::isSecondaryCaptionVisible() const
     return m_bIsSecondaryCaptionVisible;
 }
 
-void cPreferences::setActiveCaptionBackground( const QString &p_qsColor, bool p_boSaveNow )
+void cPreferences::setActiveCaptionBackground( const QString &p_qsColor )
 {
     m_qsActiveCaptionBackground = p_qsColor;
-
-    if( p_boSaveNow )
-    {
-        QSettings  obPrefFile( m_qsFileName, QSettings::IniFormat );
-        obPrefFile.setValue( QString::fromAscii( "Panels/ActiveCaptionBackground" ), m_qsActiveCaptionBackground );
-    }
 }
 
 QString cPreferences::getActiveCaptionBackground() const
@@ -1100,15 +1067,9 @@ QString cPreferences::getActiveCaptionBackground() const
     return m_qsActiveCaptionBackground;
 }
 
-void cPreferences::setActiveCaptionColor( const QString &p_qsColor, bool p_boSaveNow )
+void cPreferences::setActiveCaptionColor( const QString &p_qsColor )
 {
     m_qsActiveCaptionColor = p_qsColor;
-
-    if( p_boSaveNow )
-    {
-        QSettings  obPrefFile( m_qsFileName, QSettings::IniFormat );
-        obPrefFile.setValue( QString::fromAscii( "Panels/ActiveCaptionColor" ), m_qsActiveCaptionColor );
-    }
 }
 
 QString cPreferences::getActiveCaptionColor() const
@@ -1116,15 +1077,9 @@ QString cPreferences::getActiveCaptionColor() const
     return m_qsActiveCaptionColor;
 }
 
-void cPreferences::setInactiveCaptionBackground( const QString &p_qsColor, bool p_boSaveNow )
+void cPreferences::setInactiveCaptionBackground( const QString &p_qsColor )
 {
     m_qsInactiveCaptionBackground = p_qsColor;
-
-    if( p_boSaveNow )
-    {
-        QSettings  obPrefFile( m_qsFileName, QSettings::IniFormat );
-        obPrefFile.setValue( QString::fromAscii( "Panels/InactiveCaptionBackground" ), m_qsInactiveCaptionBackground );
-    }
 }
 
 QString cPreferences::getInactiveCaptionBackground() const
@@ -1132,15 +1087,9 @@ QString cPreferences::getInactiveCaptionBackground() const
     return m_qsInactiveCaptionBackground;
 }
 
-void cPreferences::setInactiveCaptionColor( const QString &p_qsColor, bool p_boSaveNow )
+void cPreferences::setInactiveCaptionColor( const QString &p_qsColor )
 {
     m_qsInactiveCaptionColor = p_qsColor;
-
-    if( p_boSaveNow )
-    {
-        QSettings  obPrefFile( m_qsFileName, QSettings::IniFormat );
-        obPrefFile.setValue( QString::fromAscii( "Panels/InactiveCaptionColor" ), m_qsInactiveCaptionColor );
-    }
 }
 
 QString cPreferences::getInactiveCaptionColor() const
@@ -1148,15 +1097,9 @@ QString cPreferences::getInactiveCaptionColor() const
     return m_qsInactiveCaptionColor;
 }
 
-void cPreferences::setSecondaryCaptionBackground( const QString &p_qsColor, bool p_boSaveNow )
+void cPreferences::setSecondaryCaptionBackground( const QString &p_qsColor )
 {
     m_qsSecondaryCaptionBackground = p_qsColor;
-
-    if( p_boSaveNow )
-    {
-        QSettings  obPrefFile( m_qsFileName, QSettings::IniFormat );
-        obPrefFile.setValue( QString::fromAscii( "Panels/SecondaryCaptionBackground" ), m_qsSecondaryCaptionBackground );
-    }
 }
 
 QString cPreferences::getSecondaryCaptionBackground() const
@@ -1164,15 +1107,9 @@ QString cPreferences::getSecondaryCaptionBackground() const
     return m_qsSecondaryCaptionBackground;
 }
 
-void cPreferences::setSecondaryCaptionColor( const QString &p_qsColor, bool p_boSaveNow )
+void cPreferences::setSecondaryCaptionColor( const QString &p_qsColor )
 {
     m_qsSecondaryCaptionColor = p_qsColor;
-
-    if( p_boSaveNow )
-    {
-        QSettings  obPrefFile( m_qsFileName, QSettings::IniFormat );
-        obPrefFile.setValue( QString::fromAscii( "Panels/SecondaryCaptionColor" ), m_qsSecondaryCaptionColor );
-    }
 }
 
 QString cPreferences::getSecondaryCaptionColor() const
@@ -1220,15 +1157,9 @@ int cPreferences::getPatientCardPartnerPriceVat() const
     return m_nPatientCardPartnerPriceVat;
 }
 
-void cPreferences::setBlnsHttpEnabled( bool p_bEnable, bool p_boSaveNow )
+void cPreferences::setBlnsHttpEnabled( bool p_bEnable )
 {
     m_bBlnsHttpEnabled = p_bEnable;
-
-    if( p_boSaveNow )
-    {
-        QSettings  obPrefFile( m_qsFileName, QSettings::IniFormat );
-        obPrefFile.setValue( QString::fromAscii( "BlnsHttp/Enabled" ), m_bBlnsHttpEnabled );
-    }
 }
 
 bool cPreferences::isBlnsHttpEnabled()
@@ -1236,15 +1167,9 @@ bool cPreferences::isBlnsHttpEnabled()
     return m_bBlnsHttpEnabled;
 }
 
-void cPreferences::setWebSyncAutoStart( bool p_bWebSyncAutoStart, bool p_boSaveNow )
+void cPreferences::setWebSyncAutoStart( bool p_bWebSyncAutoStart )
 {
     m_bWebSyncAutoStart = p_bWebSyncAutoStart;
-
-    if( p_boSaveNow )
-    {
-        QSettings  obPrefFile( m_qsFileName, QSettings::IniFormat );
-        obPrefFile.setValue( QString::fromAscii( "BlnsHttp/WebSyncAutoStart" ), m_bWebSyncAutoStart );
-    }
 }
 
 bool cPreferences::isWebSyncAutoStart()
@@ -1252,60 +1177,15 @@ bool cPreferences::isWebSyncAutoStart()
     return m_bWebSyncAutoStart;
 }
 
-/*
-void cPreferences::setBlnsHttpMessageWaitTime(const int p_inWaitTime)
+void cPreferences::setLogLevel( const unsigned int p_uiFileLevel )
 {
-    m_nBlnsHttpWaitTime = p_inWaitTime;
-
-    QSettings  obPrefFile( m_qsFileName, QSettings::IniFormat );
-    obPrefFile.setValue( QString::fromAscii( "BlnsHttp/MessageWaitTime" ), m_nBlnsHttpWaitTime );
-}
-
-bool cPreferences::isBlnsHttpSuspended()
-{
-    return m_bBlnsHttpSuspended;
-}
-
-void cPreferences::setBlnsHttpSuspended(bool p_bEnable)
-{
-    m_bBlnsHttpSuspended = p_bEnable;
-}
-
-int cPreferences::getBlnsHttpMessageWaitTime() const
-{
-    return m_nBlnsHttpWaitTime;
-}
-*/
-void cPreferences::setLogLevels( const unsigned int p_uiConLevel,
-                                 const unsigned int p_uiDBLevel,
-                                 const unsigned int p_uiGUILevel,
-                                 const unsigned int p_uiFileLevel,
-                                 bool p_boSaveNow )
-{
-    g_obLogger.setMinimumSeverity("console", (cSeverity::teSeverity)p_uiConLevel );
-    g_obLogger.setMinimumSeverity("db", (cSeverity::teSeverity)p_uiDBLevel );
-    g_obLogger.setMinimumSeverity("gui", (cSeverity::teSeverity)p_uiGUILevel );
     g_obLogger.setMinimumSeverity("file", (cSeverity::teSeverity)p_uiFileLevel );
-
-    if( p_boSaveNow )
-    {
-        QSettings  obPrefFile( m_qsFileName, QSettings::IniFormat );
-        obPrefFile.setValue( QString::fromAscii( "LogLevels/ConsoleLogLevel" ), p_uiConLevel );
-        obPrefFile.setValue( QString::fromAscii( "LogLevels/DBLogLevel" ), p_uiDBLevel );
-        obPrefFile.setValue( QString::fromAscii( "LogLevels/GUILogLevel" ), p_uiGUILevel );
-        obPrefFile.setValue( QString::fromAscii( "LogLevels/FileLogLevel" ), p_uiFileLevel );
-    }
+    saveSettingU( "LOG_FileLogLevel", p_uiFileLevel );
 }
 
-void cPreferences::getLogLevels( unsigned int *p_poConLevel,
-                                 unsigned int *p_poDBLevel,
-                                 unsigned int *p_poGUILevel,
-                                 unsigned int *p_poFileLevel) const
-{    
-    if( p_poConLevel )  *p_poConLevel   = g_obLogger.getMinimumSeverity( "console" );
-    if( p_poDBLevel )   *p_poDBLevel    = g_obLogger.getMinimumSeverity( "db" );
-    if( p_poGUILevel )  *p_poGUILevel   = g_obLogger.getMinimumSeverity( "gui" );
-    if( p_poFileLevel ) *p_poFileLevel  = g_obLogger.getMinimumSeverity( "file" );
+unsigned int cPreferences::getLogLevel()
+{
+    return g_obLogger.getMinimumSeverity( "file" );
 }
 
 void cPreferences::setDBAccess( const QString &p_qsHost, const QString &p_qsDB,
@@ -1348,58 +1228,39 @@ void cPreferences::setPostponedAttendances( const unsigned int p_uiPostponedAtte
 
 void cPreferences::setDialogSize( const QString &p_qsDialogName, const QPoint &p_qpDlgSize )
 {
-    QSettings  obPrefFile( m_qsFileName, QSettings::IniFormat );
-
-    obPrefFile.setValue( QString::fromAscii( "Dialogs/%1_width" ).arg(p_qsDialogName), p_qpDlgSize.x() );
-    obPrefFile.setValue( QString::fromAscii( "Dialogs/%1_height" ).arg(p_qsDialogName), p_qpDlgSize.y() );
+    saveSettingI( QString( "DLG_%1_width"  ).arg(p_qsDialogName), p_qpDlgSize.x() );
+    saveSettingI( QString( "DLG_%1_height" ).arg(p_qsDialogName), p_qpDlgSize.y() );
 }
 
-QPoint cPreferences::getDialogSize( const QString &p_qsDialogName, const QPoint &p_qpDlgSizeDefault ) const
+QPoint cPreferences::getDialogSize( const QString &p_qsDialogName, const QPoint &p_qpDlgSizeDefault )
 {
-    QSettings   obPrefFile( m_qsFileName, QSettings::IniFormat );
     QPoint      qpDlgSize = p_qpDlgSizeDefault;
 
-    if( obPrefFile.status() != QSettings::NoError )
-    {
-        g_obLogger(cSeverity::WARNING) << "Failed to load preferences from file: " << m_qsFileName << EOM;
-    }
-    else
-    {
-        qpDlgSize.setX( obPrefFile.value( QString::fromAscii( "Dialogs/%1_width" ).arg(p_qsDialogName), QString::number(p_qpDlgSizeDefault.x()) ).toInt() );
-        qpDlgSize.setY( obPrefFile.value( QString::fromAscii( "Dialogs/%1_height" ).arg(p_qsDialogName), QString::number(p_qpDlgSizeDefault.y()) ).toInt() );
-    }
+    qpDlgSize.setX( loadSettingI( QString( "DLG_%1_width"  ).arg(p_qsDialogName), p_qpDlgSizeDefault.x() ) );
+    qpDlgSize.setY( loadSettingI( QString( "DLG_%1_height" ).arg(p_qsDialogName), p_qpDlgSizeDefault.y() ) );
 
     return qpDlgSize;
 }
 
 void cPreferences::setDialogPosition(const QString &p_qsDialogName, const QPoint &p_qpPosition)
 {
-    QSettings  obPrefFile( m_qsFileName, QSettings::IniFormat );
-
-    obPrefFile.setValue( QString::fromAscii( "Dialogs/%1_left" ).arg(p_qsDialogName), p_qpPosition.x() );
-    obPrefFile.setValue( QString::fromAscii( "Dialogs/%1_top" ).arg(p_qsDialogName), p_qpPosition.y() );
+    saveSettingI( QString( "DLG_%1_left" ).arg(p_qsDialogName), p_qpPosition.x() );
+    saveSettingI( QString( "DLG_%1_top"  ).arg(p_qsDialogName), p_qpPosition.y() );
 }
 
-QPoint cPreferences::dialogPosition(const QString &p_qsDialogName) const
+QPoint cPreferences::dialogPosition(const QString &p_qsDialogName)
 {
-    QSettings   obPrefFile( m_qsFileName, QSettings::IniFormat );
     QPoint      qpDlgPos = QPoint(0,0);
 
-    qpDlgPos.setX( obPrefFile.value( QString::fromAscii( "Dialogs/%1_left" ).arg(p_qsDialogName), 0 ).toInt() );
-    qpDlgPos.setY( obPrefFile.value( QString::fromAscii( "Dialogs/%1_top" ).arg(p_qsDialogName), 0 ).toInt() );
+    qpDlgPos.setX( loadSettingI( QString( "DLG_%1_left" ).arg(p_qsDialogName), 0 ) );
+    qpDlgPos.setY( loadSettingI( QString( "DLG_%1_top"  ).arg(p_qsDialogName), 0 ) );
 
     return qpDlgPos;
 }
 
-void cPreferences::setDirDbBinaries( const QString &p_qsDirDbBinaries, bool p_boSaveNow )
+void cPreferences::setDirDbBinaries( const QString &p_qsDirDbBinaries )
 {
     m_qsDirDbBinaries = p_qsDirDbBinaries;
-
-    if( p_boSaveNow )
-    {
-        QSettings  obPrefFile( m_qsFileName, QSettings::IniFormat );
-        obPrefFile.setValue( QString::fromAscii( "DbBackup/DirDbBinaries" ), m_qsDirDbBinaries );
-    }
 }
 
 QString cPreferences::getDirDbBinaries() const
@@ -1407,15 +1268,9 @@ QString cPreferences::getDirDbBinaries() const
     return m_qsDirDbBinaries;
 }
 
-void cPreferences::setDirDbBackup( const QString &p_qsDirDbBackup, bool p_boSaveNow )
+void cPreferences::setDirDbBackup( const QString &p_qsDirDbBackup )
 {
     m_qsDirDbBackup = p_qsDirDbBackup;
-
-    if( p_boSaveNow )
-    {
-        QSettings  obPrefFile( m_qsFileName, QSettings::IniFormat );
-        obPrefFile.setValue( QString::fromAscii( "DbBackup/DirDbBackup" ), m_qsDirDbBackup );
-    }
 }
 
 QString cPreferences::getDirDbBackup() const
@@ -1433,15 +1288,9 @@ bool cPreferences::isForceBackupDatabase()
     return m_bForceBackupDatabase;
 }
 
-void cPreferences::setBackupDatabase( bool p_bBackupDatabase, bool p_boSaveNow )
+void cPreferences::setBackupDatabase( bool p_bBackupDatabase )
 {
     m_bBackupDatabase = p_bBackupDatabase;
-
-    if( p_boSaveNow )
-    {
-        QSettings  obPrefFile( m_qsFileName, QSettings::IniFormat );
-        obPrefFile.setValue( QString::fromAscii( "DbBackup/BackupDb" ), m_bBackupDatabase );
-    }
 }
 
 bool cPreferences::isBackupDatabase()
@@ -1449,15 +1298,9 @@ bool cPreferences::isBackupDatabase()
     return m_bBackupDatabase;
 }
 
-void cPreferences::setBackupDatabaseType( const int p_nBackupDatabaseType, bool p_boSaveNow )
+void cPreferences::setBackupDatabaseType( const int p_nBackupDatabaseType )
 {
     m_nBackupDatabaseType = p_nBackupDatabaseType;
-
-    if( p_boSaveNow )
-    {
-        QSettings  obPrefFile( m_qsFileName, QSettings::IniFormat );
-        obPrefFile.setValue( QString::fromAscii( "DbBackup/DbBackupType" ), m_nBackupDatabaseType );
-    }
 }
 
 int cPreferences::getBackupDatabaseType() const
@@ -1465,15 +1308,9 @@ int cPreferences::getBackupDatabaseType() const
     return m_nBackupDatabaseType;
 }
 
-void cPreferences::setBackupDatabaseDays( const QString &p_qsBackupDatabaseDays, bool p_boSaveNow )
+void cPreferences::setBackupDatabaseDays( const QString &p_qsBackupDatabaseDays )
 {
     m_qsBackupDatabaseDays = p_qsBackupDatabaseDays;
-
-    if( p_boSaveNow )
-    {
-        QSettings  obPrefFile( m_qsFileName, QSettings::IniFormat );
-        obPrefFile.setValue( QString::fromAscii( "DbBackup/DbBackupDays" ), m_qsBackupDatabaseDays );
-    }
 }
 
 QString cPreferences::getBackupDatabaseDays() const
@@ -1481,15 +1318,9 @@ QString cPreferences::getBackupDatabaseDays() const
     return m_qsBackupDatabaseDays;
 }
 
-void cPreferences::setDateFormat( const QString &p_qsDateFormat, bool p_boSaveNow )
+void cPreferences::setDateFormat( const QString &p_qsDateFormat )
 {
     m_qsDateFormat = p_qsDateFormat;
-
-    if( p_boSaveNow )
-    {
-        QSettings  obPrefFile( m_qsFileName, QSettings::IniFormat );
-        obPrefFile.setValue( QString::fromAscii( "DateFormat" ), m_qsDateFormat );
-    }
 }
 
 QString cPreferences::getDateFormat() const
@@ -1497,23 +1328,17 @@ QString cPreferences::getDateFormat() const
     return m_qsDateFormat;
 }
 
-void cPreferences::setFapados( bool p_bFapados, bool p_boSaveNow )
+void cPreferences::setFapados( bool p_bFapados )
 {
     m_bFapados = p_bFapados;
 
-    if( p_boSaveNow )
+    if( m_bFapados )
     {
-        QSettings  obPrefFile( m_qsFileName, QSettings::IniFormat );
-        obPrefFile.setValue( QString::fromAscii( "Component" ), m_bFapados );
-
-        if( m_bFapados )
-        {
-            g_poDB->executeQTQuery( QString( "UPDATE settings SET value='66' WHERE identifier=\"COMPONENT_ID\" " ) );
-        }
-        else
-        {
-            g_poDB->executeQTQuery( QString( "UPDATE settings SET value='42' WHERE identifier=\"COMPONENT_ID\" " ) );
-        }
+        saveSettingI( "COMPONENT_ID", 66 );
+    }
+    else
+    {
+        saveSettingI( "COMPONENT_ID", 42 );
     }
 }
 
@@ -1524,16 +1349,12 @@ bool cPreferences::isFapados()
 
 void cPreferences::setPanelSterile(int p_nPanelId, bool p_bSterile)
 {
-    QSettings  obPrefFile( m_qsFileName, QSettings::IniFormat );
-
-    obPrefFile.setValue( QString("PanelSettings/Panel%1_Sterile").arg( p_nPanelId ), p_bSterile );
+    saveSettingB( QString("PANEL_Panel%1_Sterile").arg( p_nPanelId ), p_bSterile );
 }
 
 bool cPreferences::isPanelSterile(int p_nPanelId)
 {
-    QSettings  obPrefFile( m_qsFileName, QSettings::IniFormat );
-
-    return obPrefFile.value( QString("PanelSettings/Panel%1_Sterile").arg( p_nPanelId ), true ).toBool();
+    return loadSettingB( QString("PANEL_Panel%1_Sterile").arg( p_nPanelId ), true );
 }
 
 void cPreferences::createExtendedAdminPassword( const QString &p_qsExtendedAdminPassword )
@@ -1572,15 +1393,9 @@ bool cPreferences::checkExtendedAdminPassword(const QString &p_qsExtendedAdminPa
     return bRet;
 }
 
-void cPreferences::setStopInLine( bool p_bStopInLine, bool p_boSaveNow )
+void cPreferences::setStopInLine( bool p_bStopInLine )
 {
     m_bIsStopInLine = p_bStopInLine;
-
-    if( p_boSaveNow )
-    {
-        QSettings  obPrefFile( m_qsFileName, QSettings::IniFormat );
-        obPrefFile.setValue( QString::fromAscii( "Panels/IsStopInLine"), m_bIsStopInLine );
-    }
 }
 
 bool cPreferences::isStopInLine()
@@ -1588,15 +1403,9 @@ bool cPreferences::isStopInLine()
     return m_bIsStopInLine;
 }
 
-void cPreferences::setPanelTextSteril( const QString &p_qsPanelTextSteril, bool p_boSaveNow )
+void cPreferences::setPanelTextSteril( const QString &p_qsPanelTextSteril )
 {
     m_qsPanelTextSteril = p_qsPanelTextSteril;
-
-    if( p_boSaveNow )
-    {
-        QSettings  obPrefFile( m_qsFileName, QSettings::IniFormat );
-        obPrefFile.setValue( QString::fromAscii( "Panels/TextSterile"), m_qsPanelTextSteril );
-    }
 }
 
 QString cPreferences::getPanelTextSteril() const
@@ -1604,15 +1413,9 @@ QString cPreferences::getPanelTextSteril() const
     return m_qsPanelTextSteril;
 }
 
-void cPreferences::setPanelTextTubeReplace( const QString &p_qsPanelTextTubeReplace, bool p_boSaveNow )
+void cPreferences::setPanelTextTubeReplace( const QString &p_qsPanelTextTubeReplace )
 {
     m_qsPanelTextTubeReplace = p_qsPanelTextTubeReplace;
-
-    if( p_boSaveNow )
-    {
-        QSettings  obPrefFile( m_qsFileName, QSettings::IniFormat );
-        obPrefFile.setValue( QString::fromAscii( "Panels/TextTubeReplace"), m_qsPanelTextTubeReplace );
-    }
 }
 
 QString cPreferences::getPanelTextTubeReplace() const
@@ -1620,15 +1423,9 @@ QString cPreferences::getPanelTextTubeReplace() const
     return m_qsPanelTextTubeReplace;
 }
 
-void cPreferences::setPanelTextTubeCleanup( const QString &p_qsPanelTextTubeCleanup, bool p_boSaveNow )
+void cPreferences::setPanelTextTubeCleanup( const QString &p_qsPanelTextTubeCleanup )
 {
     m_qsPanelTextTubeCleanup = p_qsPanelTextTubeCleanup;
-
-    if( p_boSaveNow )
-    {
-        QSettings  obPrefFile( m_qsFileName, QSettings::IniFormat );
-        obPrefFile.setValue( QString::fromAscii( "Panels/TextTubeCleanup"), m_qsPanelTextTubeCleanup );
-    }
 }
 
 QString cPreferences::getPanelTextTubeCleanup() const
@@ -1646,15 +1443,9 @@ bool cPreferences::isHWDebugEnabled()
     return m_bEnableHWDebug;
 }
 
-void cPreferences::setForceModuleSendTime( bool p_bForceModuleSendTime, bool p_boSaveNow )
+void cPreferences::setForceModuleSendTime( bool p_bForceModuleSendTime )
 {
     m_bForceModuleSendTime = p_bForceModuleSendTime;
-
-    if( p_boSaveNow )
-    {
-        QSettings  obPrefFile( m_qsFileName, QSettings::IniFormat );
-        obPrefFile.setValue( QString::fromAscii( "Hardware/ForceModuleSendTime"), m_bForceModuleSendTime );
-    }
 }
 
 bool cPreferences::isForceModuleSendTime()
@@ -1662,15 +1453,9 @@ bool cPreferences::isForceModuleSendTime()
     return m_bForceModuleSendTime;
 }
 
-void cPreferences::setForceModuleCheckButton( bool p_bForceModuleCheckButton, bool p_boSaveNow )
+void cPreferences::setForceModuleCheckButton( bool p_bForceModuleCheckButton )
 {
     m_bForceModuleCheckButton = p_bForceModuleCheckButton;
-
-    if( p_boSaveNow )
-    {
-        QSettings  obPrefFile( m_qsFileName, QSettings::IniFormat );
-        obPrefFile.setValue( QString::fromAscii( "Hardware/ForceModuleCheckButton"), m_bForceModuleCheckButton );
-    }
 }
 
 bool cPreferences::isForceModuleCheckButton()
@@ -1688,15 +1473,9 @@ int cPreferences::getForceTimeSendCounter() const
     return m_nForceTimeSendCounter;
 }
 
-void cPreferences::setTextTubeReplaceVisible( bool p_bTextTubeReplaceVisible, bool p_boSaveNow )
+void cPreferences::setTextTubeReplaceVisible( bool p_bTextTubeReplaceVisible )
 {
     m_bIsTextTubeReplaceVisible = p_bTextTubeReplaceVisible;
-
-    if( p_boSaveNow )
-    {
-        QSettings  obPrefFile( m_qsFileName, QSettings::IniFormat );
-        obPrefFile.setValue( QString::fromAscii( "SecondaryWindow/IsTextTubeReplaceVisible"), m_bIsTextTubeReplaceVisible );
-    }
 }
 
 bool cPreferences::isTextTubeReplaceVisible()
@@ -1704,15 +1483,9 @@ bool cPreferences::isTextTubeReplaceVisible()
     return m_bIsTextTubeReplaceVisible;
 }
 
-void cPreferences::setTextTubeCleanupVisible( bool p_bTextTubeCleanupVisible, bool p_boSaveNow )
+void cPreferences::setTextTubeCleanupVisible( bool p_bTextTubeCleanupVisible )
 {
     m_bIsTextTubeCleanupVisible = p_bTextTubeCleanupVisible;
-
-    if( p_boSaveNow )
-    {
-        QSettings  obPrefFile( m_qsFileName, QSettings::IniFormat );
-        obPrefFile.setValue( QString::fromAscii( "SecondaryWindow/IsTextTubeCleanupVisible"), m_bIsTextTubeCleanupVisible );
-    }
 }
 
 bool cPreferences::isTextTubeCleanupVisible()
@@ -1720,56 +1493,18 @@ bool cPreferences::isTextTubeCleanupVisible()
     return m_bIsTextTubeCleanupVisible;
 }
 
-void cPreferences::setTextSterilVisible( bool p_bTextSterilVisible, bool p_boSaveNow )
+void cPreferences::setTextSterilVisible( bool p_bTextSterilVisible )
 {
     m_bIsTextSterilVisible = p_bTextSterilVisible;
-
-    if( p_boSaveNow )
-    {
-        QSettings  obPrefFile( m_qsFileName, QSettings::IniFormat );
-        obPrefFile.setValue( QString::fromAscii( "SecondaryWindow/IsTextSterilVisible"), m_bIsTextSterilVisible );
-    }
 }
 bool cPreferences::isTextSterilVisible()
 {
     return m_bIsTextSterilVisible;
 }
-/*
-void cPreferences::setStartHttpSyncAuto( bool p_bStartHttpSyncAuto, bool p_boSaveNow )
-{
-    m_bIsStartHttpSyncAuto = p_bStartHttpSyncAuto;
 
-    if( p_boSaveNow )
-    {
-        QSettings  obPrefFile( m_qsFileName, QSettings::IniFormat );
-        obPrefFile.setValue( QString::fromAscii( "BlnsHttp/IsAutoStartSync"), m_bIsStartHttpSyncAuto );
-    }
-}
-
-bool cPreferences::isStartHttpSyncAuto()
-{
-    return m_bIsStartHttpSyncAuto;
-}
-
-void cPreferences::setStartHttpSyncAutoSeconds( const int p_nStartHttpSyncAutoSeconds )
-{
-    m_nStartHttpSyncAutoSeconds = p_nStartHttpSyncAutoSeconds;
-}
-
-int cPreferences::getStartHttpSyncAutoSeconds() const
-{
-    return m_nStartHttpSyncAutoSeconds;
-}
-*/
-void cPreferences::setBarcodeHidden( bool p_bBarcodeHidden, bool p_boSaveNow )
+void cPreferences::setBarcodeHidden( bool p_bBarcodeHidden )
 {
     m_bBarcodeHidden = p_bBarcodeHidden;
-
-    if( p_boSaveNow )
-    {
-        QSettings  obPrefFile( m_qsFileName, QSettings::IniFormat );
-        obPrefFile.setValue( QString::fromAscii( "PatientCard/Hidden"), m_bBarcodeHidden );
-    }
 }
 
 bool cPreferences::isBarcodeHidden()
@@ -1777,15 +1512,38 @@ bool cPreferences::isBarcodeHidden()
     return m_bBarcodeHidden;
 }
 
-void cPreferences::setUsageVisibleOnMain( bool p_bUsageVisibleOnMain, bool p_boSaveNow )
+void cPreferences::setShowPatientInfoOnStart( bool p_bShowPatientInfoOnStart )
+{
+    m_bShowPatientInfoOnStart = p_bShowPatientInfoOnStart;
+}
+
+bool cPreferences::isShowPatientInfoOnStart()
+{
+    return m_bShowPatientInfoOnStart;
+}
+
+void cPreferences::setShowInfoOnWindow( const int p_nShowInfoOnWindow )
+{
+    m_nShowInfoOnWindow = p_nShowInfoOnWindow;
+}
+
+int cPreferences::getShowInfoOnWindow() const
+{
+    return m_nShowInfoOnWindow;
+}
+
+void cPreferences::setCloseInfoWindowAfterSecs( const int p_nCloseInfoWindowAfterSecs )
+{
+    m_nCloseInfoWindowAfterSecs = p_nCloseInfoWindowAfterSecs;
+}
+int cPreferences::getCloseInfoWindowAfterSecs() const
+{
+    return m_nCloseInfoWindowAfterSecs;
+}
+
+void cPreferences::setUsageVisibleOnMain( bool p_bUsageVisibleOnMain )
 {
     m_bUsageVisibleOnMain = p_bUsageVisibleOnMain;
-
-    if( p_boSaveNow )
-    {
-        QSettings  obPrefFile( m_qsFileName, QSettings::IniFormat );
-        obPrefFile.setValue( QString::fromAscii( "PanelSettings/UsageVisibleOnMain"), m_bUsageVisibleOnMain );
-    }
 }
 
 bool cPreferences::isUsageVisibleOnMain()
@@ -1793,15 +1551,9 @@ bool cPreferences::isUsageVisibleOnMain()
     return m_bUsageVisibleOnMain;
 }
 
-void cPreferences::setRFIDEnabled( bool p_bRFIDEnabled, bool p_boSaveNow )
+void cPreferences::setRFIDEnabled( bool p_bRFIDEnabled )
 {
     m_bRFIDEnabled = p_bRFIDEnabled;
-
-    if( p_boSaveNow )
-    {
-        QSettings  obPrefFile( m_qsFileName, QSettings::IniFormat );
-        obPrefFile.setValue( QString::fromAscii( "Hardware/RFIDEnabled"), m_bRFIDEnabled );
-    }
 }
 
 bool cPreferences::isRFIDEnabled()
@@ -1809,15 +1561,9 @@ bool cPreferences::isRFIDEnabled()
     return m_bRFIDEnabled;
 }
 
-void cPreferences::setRFIDComPort( const int p_nRFIDComPort, bool p_boSaveNow )
+void cPreferences::setRFIDComPort( const int p_nRFIDComPort )
 {
     m_inRFIDCommunicationPort = p_nRFIDComPort;
-
-    if( p_boSaveNow )
-    {
-        QSettings  obPrefFile( m_qsFileName, QSettings::IniFormat );
-        obPrefFile.setValue( QString::fromAscii( "Hardware/RFIDComPort" ), m_inRFIDCommunicationPort );
-    }
 }
 
 int cPreferences::getRFIDComPort() const
@@ -1825,19 +1571,10 @@ int cPreferences::getRFIDComPort() const
     return m_inRFIDCommunicationPort;
 }
 
-void cPreferences::setLicenceLastValidated( const QString &p_qsLicenceLastValidated, bool p_boSaveNow )
+void cPreferences::setLicenceLastValidated( const QString &p_qsLicenceLastValidated )
 {
     m_qsLicenceLastValidated = p_qsLicenceLastValidated;
-
-    if( p_boSaveNow )
-    {
-        QSqlQuery *poQuery = NULL;
-
-        g_poDB->executeQTQuery( QString( "UPDATE settings SET value='%1' "
-                                         "WHERE identifier=\"LICENCE_LAST_VALIDATED\" " )
-                                .arg( m_qsLicenceLastValidated ) );
-        delete poQuery;
-    }
+    saveSettingS( "LICENCE_LAST_VALIDATED", m_qsLicenceLastValidated );
 }
 
 QString cPreferences::getLicenceLastValidated() const
@@ -1845,19 +1582,10 @@ QString cPreferences::getLicenceLastValidated() const
     return m_qsLicenceLastValidated;
 }
 
-void cPreferences::setDACanModifyWorktime( bool p_bDACanModifyWorktime, bool p_boSaveNow )
+void cPreferences::setDACanModifyWorktime( bool p_bDACanModifyWorktime )
 {
     m_bDACanModifyWorktime = p_bDACanModifyWorktime;
-
-    if( p_boSaveNow )
-    {
-        QSqlQuery *poQuery = NULL;
-
-        g_poDB->executeQTQuery( QString( "UPDATE settings SET value='%1' "
-                                         "WHERE identifier=\"DA_WORKTIME\" " )
-                                .arg( m_bDACanModifyWorktime ) );
-        delete poQuery;
-    }
+    saveSettingB( "DA_WORKTIME", m_bDACanModifyWorktime );
 }
 
 bool cPreferences::isDACanModifyWorktime()
@@ -1865,23 +1593,124 @@ bool cPreferences::isDACanModifyWorktime()
     return m_bDACanModifyWorktime;
 }
 
-void cPreferences::setDACanModifyExpDate( bool p_bDACanModifyExpDate, bool p_boSaveNow )
+void cPreferences::setDACanModifyExpDate( bool p_bDACanModifyExpDate )
 {
     m_bDACanModifyExpDate = p_bDACanModifyExpDate;
-
-    if( p_boSaveNow )
-    {
-        QSqlQuery *poQuery = NULL;
-
-        g_poDB->executeQTQuery( QString( "UPDATE settings SET value='%1' "
-                                         "WHERE identifier=\"DA_EXPDATE\" " )
-                                .arg( m_bDACanModifyExpDate ) );
-        delete poQuery;
-    }
+    saveSettingB( "DA_EXPDATE", m_bDACanModifyExpDate );
 }
 
 bool cPreferences::isDACanModifyExpDate()
 {
     return m_bDACanModifyExpDate;
+}
+
+void cPreferences::setAutoMailOnPCSell( bool p_bAutoMailOnPCSell )
+{
+    m_bAutoMailOnPCSell = p_bAutoMailOnPCSell;
+}
+
+bool cPreferences::isAutoMailOnPCSell()
+{
+    return m_bAutoMailOnPCSell;
+}
+
+void cPreferences::setAutoMailOnPCUse( bool p_bAutoMailOnPCUse )
+{
+    m_bAutoMailOnPCUse = p_bAutoMailOnPCUse;
+}
+
+bool cPreferences::isAutoMailOnPCUse()
+{
+    return m_bAutoMailOnPCUse;
+}
+
+void cPreferences::setAutoMailOnPCExpiration( bool p_bAutoMailOnPCExpiration )
+{
+    m_bAutoMailOnPCExpiration = p_bAutoMailOnPCExpiration;
+}
+
+bool cPreferences::isAutoMailOnPCExpiration()
+{
+    return m_bAutoMailOnPCExpiration;
+}
+
+void cPreferences::setPCExpirationDays( const int p_nPCExpirationDays )
+{
+    m_nPCExpirationDays = p_nPCExpirationDays;
+}
+
+int cPreferences::getPCExpirationDays() const
+{
+    return m_nPCExpirationDays;
+}
+
+void cPreferences::setAdvertisementSizeAndPos( const unsigned int p_uiId,
+                                               const unsigned int p_uiLeft,
+                                               const unsigned int p_uiTop,
+                                               const unsigned int p_uiWidth,
+                                               const unsigned int p_uiHeight )
+{
+    saveSettingU( QString( "DLG_Ad%1_left" ).arg(p_uiId), p_uiLeft );
+    saveSettingU( QString( "DLG_Ad%1_top" ).arg(p_uiId), p_uiTop );
+    saveSettingU( QString( "DLG_Ad%1_width" ).arg(p_uiId), p_uiWidth );
+    saveSettingU( QString( "DLG_Ad%1_height" ).arg(p_uiId), p_uiHeight );
+}
+
+void cPreferences::setSecondsWaitOnSlpashScreen( const int p_nSecondsWaitOnSlpashScreen )
+{
+    m_nSecondsWaitOnSlpashScreen = p_nSecondsWaitOnSlpashScreen;
+}
+
+int cPreferences::getSecondsWaitOnSlpashScreen() const
+{
+    return m_nSecondsWaitOnSlpashScreen;
+}
+
+void cPreferences::setValue( const QString &p_qsKey, const QString &p_qsValue )
+{
+    saveSettingS( p_qsKey, p_qsValue );
+}
+
+QString cPreferences::getValue( const QString &p_qsKey )
+{
+    return loadSettingS( p_qsKey, "" );
+}
+
+void cPreferences::setWindowMain( QWidget *p_wHandle )
+{
+    m_wWindowMain = p_wHandle;
+}
+
+void cPreferences::setWindowSecondary(QWidget *p_wHandle )
+{
+    m_wWindowSecondary = p_wHandle;
+}
+
+void cPreferences::moveWindowMain( int posX, int posY )
+{
+    m_wWindowMain->move( posX, posY );
+
+    setMainWindowSizePos( posX, posY, m_uiMainWindowWidth, m_uiMainWindowHeight );
+}
+
+void cPreferences::resizeWindowMain( int width, int height )
+{
+    m_wWindowMain->resize( width, height );
+
+    setMainWindowSizePos( m_uiMainWindowLeft, m_uiMainWindowTop, width, height );
+}
+
+void cPreferences::moveWindowSecondary( int posX, int posY )
+{
+    m_wWindowSecondary->move( posX, posY );
+
+    setSecondaryWindowPosition( QPoint( posX, posY ) );
+}
+
+void cPreferences::resizeWindowSecondary( int width, int height )
+{
+    m_wWindowSecondary->resize( width, height );
+
+    setSecondaryWindowSize( QSize( width, height ) );
 }
 

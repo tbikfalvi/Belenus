@@ -106,6 +106,7 @@ cPanelPCUnitUse::cPanelPCUnitUse(QWidget *p_poParent, QStringList *p_qslParamete
     catch( cSevException &e )
     {
         g_obLogger(e.severity()) << e.what() << EOM;
+        g_obGen.showTrayError( e.what() );
     }
 }
 //----------------------------------------------------------------------------------------------
@@ -169,11 +170,13 @@ void cPanelPCUnitUse::setOrderNum(unsigned int p_uiOrderNum)
     m_uiOrderNum = p_uiOrderNum;
     pbUseUnitType->setText( QString("&%1. %2").arg(p_uiOrderNum).arg(pbUseUnitType->text()) );
 }
-//==============================================================================================
+//=====================================================================================================================
+//=====================================================================================================================
 //
 //
 //
-//==============================================================================================
+//=====================================================================================================================
+//=====================================================================================================================
 cDlgPanelUse::cDlgPanelUse( QWidget *p_poParent, unsigned int p_uiPanelId ) : QDialog( p_poParent )
 {
     m_bInit = true;
@@ -185,10 +188,12 @@ cDlgPanelUse::cDlgPanelUse( QWidget *p_poParent, unsigned int p_uiPanelId ) : QD
     pbReloadPC->setIcon( QIcon("./resources/40x40_refresh.png") );
     pbOk->setIcon( QIcon("./resources/40x40_ok.png") );
     pbCancel->setIcon( QIcon("./resources/40x40_cancel.png") );
+    pbInformation->setIcon( QIcon("resources/40x40_information.png") );
+    pbOwnerLastVisitInformation->setIcon( QIcon("resources/40x40_information.png") );
 
     pbOk->setText( tr("Start") );
-    pbInformation->setIcon( QIcon("resources/40x40_information.png") );
     pbInformation->setEnabled( false );
+    pbOwnerLastVisitInformation->setEnabled( false );
 
 //    lblCardType->setText( tr("Card type : ") );
     lblCardOwner->setText( tr("Owner : ") );
@@ -282,7 +287,10 @@ void cDlgPanelUse::setPanelUsePatientCard(QString p_qsPatientCardBarcode)
 //----------------------------------------------------------------------------------------------
 void cDlgPanelUse::setPanelUsePatientCard(unsigned int p_uiPatientCardId)
 {
-    QString     qsValidPeriods = "";
+    QString         qsValidPeriods  = "";
+    unsigned int    uiPatientId   = 0;
+
+    pbOwnerLastVisitInformation->setEnabled( false );
 
     try
     {
@@ -374,6 +382,7 @@ void cDlgPanelUse::setPanelUsePatientCard(unsigned int p_uiPatientCardId)
     catch( cSevException &e )
     {
         g_obLogger(e.severity()) << e.what() << EOM;
+        g_obGen.showTrayError( e.what() );
     }
 
     if( qvPanelUseUnits.count() == 1 )
@@ -384,7 +393,7 @@ void cDlgPanelUse::setPanelUsePatientCard(unsigned int p_uiPatientCardId)
 
     if( m_obDBPatientCard.id() > 0 )
     {
-        QSqlQuery *poQuery = g_poDB->executeQTQuery( QString("SELECT patients.name AS owner, patientcards.comment "
+        QSqlQuery *poQuery = g_poDB->executeQTQuery( QString("SELECT patients.name AS owner, patientcards.comment, patients.patientId "
                                                              "FROM patientcards, patients "
                                                              "WHERE patientcards.patientId=patients.patientId "
                                                              "AND patientcards.patientCardId=%1").arg(m_obDBPatientCard.id()) );
@@ -394,6 +403,17 @@ void cDlgPanelUse::setPanelUsePatientCard(unsigned int p_uiPatientCardId)
         pbInformation->setEnabled( true );
         lblCardOwner->setText( tr("Owner : %1").arg( poQuery->value(0).toString() ) );
         lblComment->setText( tr("Comment :\n%1").arg( poQuery->value(1).toString() ) );
+        uiPatientId = poQuery->value(2).toUInt();
+
+        if( uiPatientId > 0 )
+        {
+            pbOwnerLastVisitInformation->setEnabled( true );
+        }
+
+        if( g_poPrefs->isShowPatientInfoOnStart() && uiPatientId > 0 )
+        {
+            on_pbOwnerLastVisitInformation_clicked();
+        }
     }
 
     int nUnitHeight = (qvPanelUseUnits.count()-1)*50;
@@ -477,6 +497,7 @@ void cDlgPanelUse::setPanelUsePrice()
     catch( cSevException &e )
     {
 //        g_obLogger(e.severity()) << e.what() << EOM;
+//        g_obGen.showTrayError( e.what() );
     }
 
     cCurrency   cPrice( m_uiPanelUsePrice-nTimezoneDiscount );
@@ -710,6 +731,7 @@ void cDlgPanelUse::on_pbReloadPC_clicked()
         if( QString(e.what()).compare("Patientcard barcode not found") != 0 )
         {
             g_obLogger(e.severity()) << e.what() << EOM;
+            g_obGen.showTrayError( e.what() );
         }
         else
         {
@@ -758,4 +780,9 @@ void cDlgPanelUse::on_ledPatientCardBarcode_textEdited(const QString &/*arg1*/)
 void cDlgPanelUse::on_pbInformation_clicked()
 {
     g_obGen.showPatientCardInformation( ledPatientCardBarcode->text() );
+}
+
+void cDlgPanelUse::on_pbOwnerLastVisitInformation_clicked()
+{
+    g_obGen.showPatientLastVisitInformation( ledPatientCardBarcode->text(), g_poPrefs->getCloseInfoWindowAfterSecs() );
 }

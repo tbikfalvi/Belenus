@@ -55,6 +55,7 @@ cDlgAdvertisementWindow::cDlgAdvertisementWindow(QWidget *parent, unsigned int i
         catch( cSevException &e )
         {
             g_obLogger(e.severity()) << e.what() << EOM;
+            g_obGen.showTrayError( e.what() );
         }
     }
 

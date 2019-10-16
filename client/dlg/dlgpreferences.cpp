@@ -50,29 +50,13 @@ lblAutoSync->setVisible( false );
     poBtnSave->setIcon( QIcon("./resources/40x40_ok.png") );
     poBtnCancel->setIcon( QIcon("./resources/40x40_cancel.png") );
 
-    unsigned int  uiConLevel, uiDBLevel, uiGUILevel, uiFileLevel;
-    g_poPrefs->getLogLevels( &uiConLevel, &uiDBLevel, &uiGUILevel, &uiFileLevel );
-    sliConsoleLogLevel->setValue( 1/*uiConLevel*/ );
-    sliDBLogLevel->setValue( 1/*uiDBLevel*/ );
-    sliGUILogLevel->setValue( uiGUILevel );
-    sliFileLogLevel->setValue( uiFileLevel );
+    sliConsoleLogLevel->setValue( 1 );
+    sliDBLogLevel->setValue( 1 );
+    sliGUILogLevel->setValue( 2 );
+    sliFileLogLevel->setValue( g_poPrefs->getLogLevel() );
 
-    QStringList obFilters( g_poPrefs->getLangFilePrefix() + "*.qm" );
-    QDir        obLangDir( "lang" );
-    QStringList obLangFiles = obLangDir.entryList( obFilters, QDir::Files | QDir::Readable, QDir::Name );
-    QRegExp     obLangCodeRegExp( "^" + g_poPrefs->getLangFilePrefix() + "(\\w*)\\.qm$" );
-    QStringList obLangCodes;
-    for( int i = 0; i < obLangFiles.size(); i++ )
-    {
-        int inPos = obLangCodeRegExp.indexIn( obLangFiles[i] );
-        if( inPos != -1 ) obLangCodes << obLangCodeRegExp.cap( 1 );
-    }
-    obLangCodes << "en";
-    obLangCodes.sort();
-    cmbAppLang->addItems( obLangCodes );
-    m_inLangIdx = cmbAppLang->findText( g_poPrefs->getLang() );
-    //if( m_inLangIdx == -1 ) m_inLangIdx = cmbAppLang->findText( "uk" );
-    cmbAppLang->setCurrentIndex( m_inLangIdx );
+    m_inLangIdx = g_obLanguage.setLanguageCombo( cmbAppLang );
+    g_obLogger(cSeverity::DEBUG) << QString( "Lang: %1 Id: %2" ).arg(g_poPrefs->getLang()).arg(m_inLangIdx) << EOM;
 
     cmbDateFormat->setCurrentIndex(-1);
     int nDateFormatIndex = cmbDateFormat->findText( g_poPrefs->getDateFormat() );
@@ -83,6 +67,7 @@ lblAutoSync->setVisible( false );
     poQuery->first();
     ledAboutLink->setText( poQuery->value(0).toString() );
     ledAboutLink->setEnabled( g_obUser.isInGroup( cAccessGroup::SYSTEM ) );
+    ledWaitSecondsOnSplashScreen->setText( QString::number( g_poPrefs->getSecondsWaitOnSlpashScreen() ) );
 
     ledBarcodePrefix->setValidator( new QIntValidator( ledBarcodePrefix ) );
     spbBarcodeLen->setValue( g_poPrefs->getBarcodeLength() );
@@ -90,6 +75,20 @@ lblAutoSync->setVisible( false );
     chkCardProductBarcodeLength->setChecked( g_poPrefs->isBarcodeLengthDifferent() );
     chkBarcodeHidden->setChecked( g_poPrefs->isBarcodeHidden() );
     chkBarcodeHidden->setEnabled( g_obUser.isInGroup( cAccessGroup::ADMIN ) );
+    chkShowPatientInfoOnStart->setChecked( g_poPrefs->isShowPatientInfoOnStart() );
+    chkShowPatientInfoOnStart->setEnabled( g_obUser.isInGroup( cAccessGroup::ADMIN ) );
+    if( g_poPrefs->getShowInfoOnWindow() == 1 )
+    {
+        rbShowInfoOnMain->setChecked( true );
+    }
+    else
+    {
+        rbShowInfoOnSecondary->setChecked( true );
+    }
+    rbShowInfoOnMain->setEnabled( g_obUser.isInGroup( cAccessGroup::ADMIN ) && chkShowPatientInfoOnStart->isEnabled() );
+    rbShowInfoOnSecondary->setEnabled( g_obUser.isInGroup( cAccessGroup::ADMIN ) && chkShowPatientInfoOnStart->isEnabled() && g_poPrefs->isSecondaryWindowVisible() );
+    ledCloseInfoWindowSecs->setText( QString::number( g_poPrefs->getCloseInfoWindowAfterSecs() ) );
+    ledCloseInfoWindowSecs->setEnabled( chkShowPatientInfoOnStart->isChecked() );
 
     spbPanels->setMaximum( g_poPrefs->getPanelCount() );
     spbPanels->setValue( g_poPrefs->getPanelsPerRow() );
@@ -158,13 +157,17 @@ lblAutoSync->setVisible( false );
     pbCancelModifyPsw->setIcon( QIcon("./resources/40x40_cancel.png") );
     pbCancelModifyPsw->setVisible( false );
     ledPanelTextSterile->setText( g_poPrefs->getPanelTextSteril() );
+    ledPanelTextSterile->setEnabled( g_obUser.isInGroup( cAccessGroup::SYSTEM ) );
     ledPanelTextTubeReplacement->setText( g_poPrefs->getPanelTextTubeReplace() );
     ledPanelTextTubeReplacement->setEnabled( g_obUser.isInGroup( cAccessGroup::SYSTEM ) );
     ledPanelTextTubeCleanup->setText( g_poPrefs->getPanelTextTubeCleanup() );
     ledPanelTextTubeCleanup->setEnabled( g_obUser.isInGroup( cAccessGroup::SYSTEM ) );
     chkVisibleSecSteril->setChecked( g_poPrefs->isTextSterilVisible() );
+    chkVisibleSecSteril->setEnabled( g_obUser.isInGroup( cAccessGroup::SYSTEM ) );
     chkVisibleSecTubeReplace->setChecked( g_poPrefs->isTextTubeReplaceVisible() );
+    chkVisibleSecTubeReplace->setEnabled( g_obUser.isInGroup( cAccessGroup::SYSTEM ) );
     chkVisibleSecTubeCleanup->setChecked( g_poPrefs->isTextTubeCleanupVisible() );
+    chkVisibleSecTubeCleanup->setEnabled( g_obUser.isInGroup( cAccessGroup::SYSTEM ) );
     chkDAResetClock->setChecked( g_poPrefs->isDACanModifyWorktime() );
     chkDAResetClock->setEnabled( g_obUser.isInGroup( cAccessGroup::SYSTEM ) );
     chkDASetExpireDate->setChecked( g_poPrefs->isDACanModifyExpDate() );
@@ -213,6 +216,11 @@ lblAutoSync->setVisible( false );
     ledPCPartnerVatpercent->setText( QString::number(g_poPrefs->getPatientCardPartnerPriceVat()) );
 
     pbPanelSettings->setIcon( QIcon("./resources/40x40_settings.png") );
+
+    chkAutoMailPCSell->setChecked( g_poPrefs->isAutoMailOnPCSell() );
+    chkAutoMailPCUse->setChecked( g_poPrefs->isAutoMailOnPCUse() );
+    chkAutoMailPCExpire->setChecked( g_poPrefs->isAutoMailOnPCExpiration() );
+    ledAutoMailPCExpireDays->setText( QString::number(g_poPrefs->getPCExpirationDays()) );
 
     chkEnableHttp->setChecked( g_poPrefs->isBlnsHttpEnabled() );
     chkWebSyncAutoStart->setChecked( g_poPrefs->isWebSyncAutoStart() );
@@ -280,6 +288,19 @@ lblAutoSync->setVisible( false );
 
         tbwPreferences->setTabEnabled( 5, g_obUser.isInGroup( cAccessGroup::SYSTEM ) );
     }
+
+    lblConsoleLogLevel->setVisible( false );
+    lblConsoleLogLevelValue->setVisible( false );
+    sliConsoleLogLevel->setVisible( false );
+
+    lblDBLogLevel->setVisible( false );
+    lblDBLogLevelValue->setVisible( false );
+    sliDBLogLevel->setVisible( false );
+
+    lblGUILogLevel->setVisible( false );
+    lblGUILogLevelValue->setVisible( false );
+    sliGUILogLevel->setVisible( false );
+
 }
 
 cDlgPreferences::~cDlgPreferences()
@@ -363,7 +384,7 @@ void cDlgPreferences::accept()
                                       "where the barcode is shorter than %1 characters.").arg( spbBarcodeLen->value() ),
                                    QMessageBox::Yes | QMessageBox::No, QMessageBox::No ) == QMessageBox::Yes )
         {
-            g_poPrefs->setBarcodeLength( spbBarcodeLen->value(), true );
+            g_poPrefs->setBarcodeLength( spbBarcodeLen->value() );
             _increasePatientCardBarcodes();
         }
         else if( spbBarcodeLen->value() < g_poPrefs->getBarcodeLength() )
@@ -382,13 +403,13 @@ void cDlgPreferences::accept()
             {
                 case 1:
                 {
-                    g_poPrefs->setBarcodeLength( spbBarcodeLen->value(), true );
+                    g_poPrefs->setBarcodeLength( spbBarcodeLen->value() );
                     _decreasePatientCardBarcodes( true );
                     break;
                 }
                 case 2:
                 {
-                    g_poPrefs->setBarcodeLength( spbBarcodeLen->value(), true );
+                    g_poPrefs->setBarcodeLength( spbBarcodeLen->value() );
                     _decreasePatientCardBarcodes( false );
                     break;
                 }
@@ -421,20 +442,18 @@ void cDlgPreferences::accept()
     }
     g_poPrefs->setTextTubeCleanupVisible( chkVisibleSecTubeCleanup->isChecked() );
 
-    g_poPrefs->setLogLevels( sliConsoleLogLevel->value(),
-                             sliDBLogLevel->value(),
-                             sliGUILogLevel->value(),
-                             sliFileLogLevel->value() );
+    g_poPrefs->setLogLevel( sliFileLogLevel->value() );
 
-    g_poPrefs->setLang( cmbAppLang->currentText() );
+    g_poPrefs->setLang( cmbAppLang->currentText().left(2) );
     if( m_inLangIdx != cmbAppLang->currentIndex() )
     {
-        g_obGen.setApplicationLanguage( cmbAppLang->currentText() );
+        g_obLanguage.reloadLanguage( cmbAppLang->currentText().left(2) );
+//        g_obGen.setApplicationLanguage( cmbAppLang->currentText() );
         _updateDatabaseLanguage();
 //        QMessageBox::information( this, tr( "Information" ),
 //                                  tr( "Some of the changes you made will only be applied after the application is restarted." ) );
     }
-
+    g_poPrefs->setSecondsWaitOnSlpashScreen( ledWaitSecondsOnSplashScreen->text().toInt() );
 
     g_poPrefs->setPanelsPerRow( spbPanels->value() );
     g_poPrefs->setUsageVisibleOnMain( chkUsageVisibleOnMain->isChecked() );
@@ -442,6 +461,16 @@ void cDlgPreferences::accept()
     g_poPrefs->setBarcodePrefix( ledBarcodePrefix->text() );
     g_poPrefs->setBarcodeLengthDifferent( chkCardProductBarcodeLength->isChecked() );
     g_poPrefs->setBarcodeHidden( chkBarcodeHidden->isChecked() );
+    g_poPrefs->setShowPatientInfoOnStart( chkShowPatientInfoOnStart->isChecked() );
+    if( rbShowInfoOnSecondary->isChecked() && pbSecondaryWindow->isChecked() )
+    {
+        g_poPrefs->setShowInfoOnWindow( 2 );
+    }
+    else
+    {
+        g_poPrefs->setShowInfoOnWindow( 1 );
+    }
+    g_poPrefs->setCloseInfoWindowAfterSecs( ledCloseInfoWindowSecs->text().toInt() );
 
     g_poPrefs->setStopInLine( rbStopInLine->isChecked() );
 
@@ -457,9 +486,9 @@ void cDlgPreferences::accept()
     g_poPrefs->setRFIDComPort( spbCOMRFID->value() );
 
     g_poPrefs->setDeviceUseVAT( ledVatPercent->text().toInt() );
-    g_poPrefs->setDACanModifyWorktime( chkDAResetClock->isChecked(), true );
-    g_poPrefs->setDACanModifyExpDate( chkDASetExpireDate->isChecked(), true );
-    g_poPrefs->setLicenceLastValidated( dteLicenceExpiration->dateTime().toString( "yyyy-MM-dd hh:mm:ss" ), true );
+    g_poPrefs->setDACanModifyWorktime( chkDAResetClock->isChecked() );
+    g_poPrefs->setDACanModifyExpDate( chkDASetExpireDate->isChecked() );
+    g_poPrefs->setLicenceLastValidated( dteLicenceExpiration->dateTime().toString( "yyyy-MM-dd hh:mm:ss" ) );
     g_poPrefs->setPanelTextSteril( ledPanelTextSterile->text() );
     g_poPrefs->setPanelTextTubeReplace( ledPanelTextTubeReplacement->text() );
     g_poPrefs->setPanelTextTubeCleanup( ledPanelTextTubeCleanup->text() );
@@ -492,6 +521,11 @@ void cDlgPreferences::accept()
     g_poPrefs->setPatientCardPartnerPrice( cPricePartner.currencyValue().toInt() );
     g_poPrefs->setPatientCardPartnerPriceVat( ledPCPartnerVatpercent->text().toInt() );
 
+    g_poPrefs->setAutoMailOnPCSell( chkAutoMailPCSell->isChecked() );
+    g_poPrefs->setAutoMailOnPCUse( chkAutoMailPCUse->isChecked() );
+    g_poPrefs->setAutoMailOnPCExpiration( chkAutoMailPCExpire->isChecked() );
+    g_poPrefs->setPCExpirationDays( ledAutoMailPCExpireDays->text().toInt() );
+
     g_poPrefs->setBlnsHttpEnabled( chkEnableHttp->isChecked() );
     g_poPrefs->setWebSyncAutoStart( chkWebSyncAutoStart->isChecked() );
 //    g_poPrefs->setBlnsHttpMessageWaitTime( sbHttpWaitTime->value() );
@@ -523,12 +557,12 @@ void cDlgPreferences::accept()
     if( chkSunday->isChecked() )    qsBackupDays.append( tr(" Sun") );
 
     g_poPrefs->setBackupDatabaseDays( qsBackupDays );
-
     g_poPrefs->setDateFormat( cmbDateFormat->currentText() );
-
     g_poPrefs->setFapados( chkFapad->isChecked() );
 
-    g_poPrefs->save();
+    m_dlgProgress->showProgress();
+        g_poPrefs->saveSettings();
+    m_dlgProgress->hideProgress();
 
     QDialog::accept();
 }
@@ -551,11 +585,14 @@ void cDlgPreferences::on_pbSecondaryWindow_toggled(bool checked)
     {
         pbSecondaryWindow->setIcon( QIcon("./resources/40x40_secondary_on.png") );
         lblSecondaryWindow->setText( tr("Visible") );
+        rbShowInfoOnSecondary->setEnabled( g_obUser.isInGroup( cAccessGroup::ADMIN ) && chkShowPatientInfoOnStart->isEnabled() );
     }
     else
     {
         pbSecondaryWindow->setIcon( QIcon("./resources/40x40_secondary_off.png") );
         lblSecondaryWindow->setText( tr("Hidden") );
+        rbShowInfoOnMain->setChecked( true );
+        rbShowInfoOnSecondary->setEnabled( false );
     }
 }
 
@@ -612,7 +649,7 @@ void cDlgPreferences::on_pbChangeBinaryLocation_clicked()
                                                        tr("Select Directory"),
                                                        ledBinaryLocation->text(),
                                                        QFileDialog::ShowDirsOnly | QFileDialog::DontResolveSymlinks);
-    qsDir.replace( '/', '\\' );
+    qsDir.replace( '\\', '/' );
 
     if( qsDir.length() > 0 )
     {
@@ -626,7 +663,7 @@ void cDlgPreferences::on_pbBackupLocation_clicked()
                                                        tr("Select Directory"),
                                                        ledBackupLocation->text(),
                                                        QFileDialog::ShowDirsOnly | QFileDialog::DontResolveSymlinks);
-    qsDir.replace( '/', '\\' );
+    qsDir.replace( '\\', '/' );
 
     if( qsDir.length() > 0 )
     {
@@ -934,5 +971,21 @@ void cDlgPreferences::on_pbModifyExpDate_clicked()
         QMessageBox::warning( this, tr("Warning"),
                               tr("The password you entered is not valid\n"
                                  "to modify application expiration day.") );
+    }
+}
+
+void cDlgPreferences::on_chkShowPatientInfoOnStart_toggled(bool checked)
+{
+    if( checked )
+    {
+        rbShowInfoOnMain->setEnabled( g_obUser.isInGroup( cAccessGroup::ADMIN ) );
+        rbShowInfoOnSecondary->setEnabled( g_obUser.isInGroup( cAccessGroup::ADMIN ) && chkShowPatientInfoOnStart->isEnabled() && g_poPrefs->isSecondaryWindowVisible() );
+        ledCloseInfoWindowSecs->setEnabled( g_obUser.isInGroup( cAccessGroup::ADMIN ) );
+    }
+    else
+    {
+        rbShowInfoOnMain->setEnabled( false );
+        rbShowInfoOnSecondary->setEnabled( false );
+        ledCloseInfoWindowSecs->setEnabled( false );
     }
 }

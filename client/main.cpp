@@ -13,8 +13,8 @@
 // Alkalmazas fo allomanya.
 //====================================================================================
 
-#define APPLICATION_VERSION_NUMBER  "1.6.0.0"
-#define DATABASE_VERSION_NUMBER     "1.7.5"
+#define APPLICATION_VERSION_NUMBER  "1.8.0.1"
+#define DATABASE_VERSION_NUMBER     "1.8.0.1"
 
 //====================================================================================
 
@@ -31,6 +31,7 @@
 #include "../framework/logger/ConsoleWriter.h"
 #include "../framework/logger/FileWriter.h"
 #include "../framework/qtmysqlconnection.h"
+#include "../language/language.h"
 #include "db/dbuser.h"
 #include "db/dbguest.h"
 #include "preferences.h"
@@ -44,16 +45,15 @@
 #ifdef __WIN32__
     #include "communication_serial.h"
 #endif
-#include "communication_rfid.h"
 #include "wndmain.h"
 
 //====================================================================================
 
 QApplication            *apMainApp;
 cQTLogger                g_obLogger;
-DatabaseWriter           g_obLogDBWriter;
-GUIWriter                g_obLogGUIWriter;
-ConsoleWriter            g_obLogConsoleWriter;
+//DatabaseWriter           g_obLogDBWriter;
+//GUIWriter                g_obLogGUIWriter;
+//ConsoleWriter            g_obLogConsoleWriter;
 //FileWriter               g_obLogFileWriter("client_%1_%2.log");
 FileWriter               g_obLogFileWriter("belenus_%1.log");
 cQTMySQLConnection      *g_poDB;
@@ -65,8 +65,7 @@ cCassa                   g_obCassa;
 cGeneral                 g_obGen;
 cDBGuest                 g_obGuest;
 cLicenceManager          g_obLicenceManager;
-cCommRFID               *g_poCommRFID;
-//cBlnsHttp               *g_poBlnsHttp;
+cLanguage                g_obLanguage;
 
 // 'TO BE SOLVED' felirat, ahol még valamit meg kell oldani
 // g_obLogger(cSeverity::DEBUG) << QString("") << EOM;
@@ -78,25 +77,37 @@ int main( int argc, char *argv[] )
     apMainApp = new QApplication(argc, argv);
 
     g_obGen.setApplication( apMainApp );
+    g_obGen.initSysTrayIcon();
+
+    QString qsCurrentPath = QDir::currentPath().replace( "\\", "/" );
 
     apMainApp->setWindowIcon( QIcon(":/icons/Belenus.ico") );
 
-    g_obLogger.attachWriter("gui", &g_obLogGUIWriter);
-    g_obLogger.attachWriter("db", &g_obLogDBWriter);
-//    g_obLogger.attachWriter("console", &g_obLogConsoleWriter);
     g_obLogger.attachWriter("file", &g_obLogFileWriter);
-
     g_obLogger.setMinimumSeverity("file", cSeverity::DEBUG);
+    g_obLogger(cSeverity::INFO) << "Belenus Version " << APPLICATION_VERSION_NUMBER << " started." << EOM;
 
     g_poDB     = new cQTMySQLConnection;
 
-    g_poPrefs  = new cPreferences( QString::fromAscii( "./belenus.ini" ) );
+    g_poPrefs  = new cPreferences();
     g_poPrefs->setVersion( APPLICATION_VERSION_NUMBER );
     g_poPrefs->setVersionDb( DATABASE_VERSION_NUMBER );
     g_poPrefs->setLangFilePrefix( "belenus_" );
     g_poPrefs->setDBAccess( "localhost", "belenus", "belenus", "belenus" );
+    g_poPrefs->setApplicationPath( qsCurrentPath );
 
-    g_obGen.setApplicationLanguage( g_poPrefs->getLang() );
+    g_obLogger(cSeverity::INFO) << "Get languages from 'language.inf'" << EOM;
+    QStringList qslLanguages = g_obLanguage.getLanguages();
+    g_obLogger(cSeverity::INFO) << "Available languages:" << EOM;
+    for(int nLang=0;nLang<qslLanguages.count();nLang++)
+    {
+        g_obLogger(cSeverity::INFO) << qslLanguages.at(nLang).split("|").at(0)
+                                    << " ("
+                                    << qslLanguages.at(nLang).split("|").at(1)
+                                    << ")"
+                                    << EOM;
+    }
+    g_obLanguage.init( apMainApp, "belenus", "_" );
 
     QPixmap          obPixmap("resources/splash.png");
     QSplashScreen    obSplash( obPixmap );
@@ -109,31 +120,27 @@ int main( int argc, char *argv[] )
     obSplash.show();
     apMainApp->processEvents();
 
-    QString qsSystemID = QObject::tr( "SystemID: " );
-
-    if( g_poPrefs->isComponentSensoliteInstalled() ) qsSystemID.append( "S" );
-    if( g_poPrefs->isComponentKiwiSunInstalled() )   qsSystemID.append( "K" );
-    if( g_poPrefs->isComponentDatabaseInstalled() )  qsSystemID.append( "D" );
-    if( g_poPrefs->isComponentHardwareInstalled() )  qsSystemID.append( "H" );
-    if( g_poPrefs->isComponentInternetInstalled() )  qsSystemID.append( "I" );
-    if( g_poPrefs->isComponentClientInstalled() )    qsSystemID.append( "C" );
-    if( g_poPrefs->isComponentViewerInstalled() )    qsSystemID.append( "V" );
-    qsSystemID.append( "\n" );
-
-    qsSpalsh += qsSystemID;
+    qsSpalsh += QString( "V: %1\n" ).arg( APPLICATION_VERSION_NUMBER );
     obSplash.showMessage(qsSpalsh,Qt::AlignLeft,QColor(59,44, 75));
 
     int r = 1;
     try
     {
-        g_obLogger(cSeverity::INFO) << "Belenus Version " << g_poPrefs->getVersion() << " started." << EOM;
-
         qsSpalsh += QObject::tr("Connecting to database ...");
         g_obLogger(cSeverity::INFO) << "Connecting to database ..." << EOM;
         obSplash.showMessage(qsSpalsh,Qt::AlignLeft,QColor(59,44, 75));
 
         g_poDB->open();
-        g_obLogDBWriter.setDBConnection(g_poDB);
+
+        g_obLogger(cSeverity::INFO) << "SUCCEEDED" << EOM;
+        qsSpalsh += QObject::tr(" SUCCEEDED.\n");
+        obSplash.showMessage(qsSpalsh,Qt::AlignLeft,QColor(59,44, 75));
+
+        qsSpalsh += QObject::tr("Loading settings from database ...");
+        g_obLogger(cSeverity::INFO) << "Loading settings from database ..." << EOM;
+        obSplash.showMessage(qsSpalsh,Qt::AlignLeft,QColor(59,44, 75));
+
+        g_poPrefs->loadSettings();
         g_poPrefs->loadDBSettings();
 
         g_obLogger(cSeverity::INFO) << "SUCCEEDED" << EOM;
@@ -151,11 +158,8 @@ int main( int argc, char *argv[] )
         fileCheck.open( QIODevice::WriteOnly );
         fileCheck.write( "CURRENTLY NOT RUNNING" );
         fileCheck.close();
-#ifdef __WIN32__
-            Sleep(3000);
-#else
-            sleep( 3 );
-#endif
+
+        Sleep( g_poPrefs->getSecondsWaitOnSlpashScreen()*1000 );
 
         if( fileCheck.size() > 0 )
         {
@@ -167,11 +171,8 @@ int main( int argc, char *argv[] )
             qsSpalsh += QObject::tr(" ALREADY RUNNING.\n");
             qsSpalsh += QObject::tr("\n\nPlease use the currently running application.\n");
             obSplash.showMessage(qsSpalsh,Qt::AlignLeft,QColor(59,44, 75));
-#ifdef __WIN32__
-            Sleep(5000);
-#else
-            sleep( 3 );
-#endif
+
+            Sleep( g_poPrefs->getSecondsWaitOnSlpashScreen()*1000 );
             return 0;
         }
 
@@ -182,6 +183,8 @@ int main( int argc, char *argv[] )
 
         qsSpalsh += QObject::tr("License is ... ");
         obSplash.showMessage(qsSpalsh,Qt::AlignLeft,QColor(59,44, 75));
+
+        Sleep(1000);
 
         int         nId = 0;
         QString     qsSerial = QObject::tr("NO_SERIAL_DETECTED");
@@ -204,6 +207,8 @@ int main( int argc, char *argv[] )
         qsSpalsh += "\n";
         obSplash.showMessage(qsSpalsh,Qt::AlignLeft,QColor(59,44, 75));
 
+        Sleep( g_poPrefs->getSecondsWaitOnSlpashScreen()*1000 );
+
         qsSpalsh += QObject::tr("Serial: %1\n").arg(qsSerial);
         obSplash.showMessage(qsSpalsh,Qt::AlignLeft,QColor(59,44,75));
 
@@ -225,13 +230,10 @@ int main( int argc, char *argv[] )
                                         "The application can be used only in DEMO mode.\n\n");
                 obSplash.showMessage(qsSpalsh,Qt::AlignLeft,QColor(59,44,75));
             }
-
-#ifdef __WIN32__
-            Sleep(3000);
-#else
-            sleep( 3 );
-#endif
         }
+
+
+        Sleep( g_poPrefs->getSecondsWaitOnSlpashScreen()*1000 );
 
         //-------------------------------------------------------------------------------
         // End of process connection initialization
@@ -257,38 +259,19 @@ int main( int argc, char *argv[] )
                                                    "prepared=1 AND "
                                                    "active=1 ") );
 
+        g_poDB->executeQTQuery( QString( "DELETE FROM httpsendmail WHERE "
+                                         "dateOfSending<\"" + QDate::currentDate().addDays( -4 ).toString( "yyyy-MM-dd" ) + "\" AND "
+                                         "( mailTypeId = 1 OR mailTypeId = 2 )" ) );
+
+        g_poDB->executeQTQuery( QString( "DELETE FROM httpsendmail WHERE recipients = \"\" " ) );
+
         qsSpalsh += QObject::tr("FINISHED\n");
         obSplash.showMessage(qsSpalsh,Qt::AlignLeft,QColor(59,44,75));
 
         qsSpalsh += "-----------------------------------------------------\n";
         obSplash.showMessage(qsSpalsh,Qt::AlignLeft,QColor(59,44, 75));
 
-#ifdef __WIN32__
-
-        //-------------------------------------------------------------------------------
-        // Initialize and set RFID communication if enabled
-        //-------------------------------------------------------------------------------
-
-        g_poCommRFID = NULL;
-
-        if( g_poPrefs->isRFIDEnabled() )
-        {
-            qsSpalsh += QObject::tr("RFID communication enabled\n Checking RFID connection ...");
-            g_poCommRFID = new cCommRFID();
-            g_poCommRFID->init( g_poPrefs->getRFIDComPort() );
-            if( g_poCommRFID->isRFIDConnected() )
-            {
-                qsSpalsh += QObject::tr("CONNECTED\n");
-            }
-            else
-            {
-                qsSpalsh += QObject::tr("FAILED\n");
-            }
-        }
-        else
-        {
-            qsSpalsh += QObject::tr("RFID communication disabled\n");
-        }
+        Sleep( g_poPrefs->getSecondsWaitOnSlpashScreen()*1000 );
 
         //-------------------------------------------------------------------------------
         // If Hardware component active, process hardware initialization
@@ -299,6 +282,8 @@ int main( int argc, char *argv[] )
         {
             qsSpalsh += QObject::tr("Checking hardware connection ...");
             obSplash.showMessage(qsSpalsh,Qt::AlignLeft,QColor(59,44, 75));
+
+            Sleep( g_poPrefs->getSecondsWaitOnSlpashScreen()*1000 );
 
             g_poHardware = new CS_Communication_Serial();
             g_obLogger(cSeverity::DEBUG) << QString("COM: %1").arg(g_poPrefs->getCommunicationPort()) << EOM;
@@ -313,11 +298,15 @@ int main( int argc, char *argv[] )
 
                 delete g_poHardware;
                 g_poHardware = new CS_Communication_Demo();
+
+                Sleep( g_poPrefs->getSecondsWaitOnSlpashScreen()*1000 );
             }
             else
             {
                 qsSpalsh += QObject::tr("CONNECTED\n");
                 obSplash.showMessage(qsSpalsh,Qt::AlignLeft,QColor(59,44, 75));
+
+                Sleep( g_poPrefs->getSecondsWaitOnSlpashScreen()*1000 );
 
                 qsSpalsh += QObject::tr("Initializing hardware device ... ");
                 obSplash.showMessage(qsSpalsh,Qt::AlignLeft,QColor(59,44, 75));
@@ -325,6 +314,8 @@ int main( int argc, char *argv[] )
 
                 qsSpalsh += QObject::tr("FINISHED\n");
                 obSplash.showMessage(qsSpalsh,Qt::AlignLeft,QColor(59,44, 75));
+
+                Sleep( g_poPrefs->getSecondsWaitOnSlpashScreen()*1000 );
 
                 qsSpalsh += QObject::tr("Caption stored in hardware: %1\n").arg( QString::fromStdString(g_poHardware->getCustomCaption()) );
                 obSplash.showMessage(qsSpalsh,Qt::AlignLeft,QColor(59,44, 75));
@@ -334,6 +325,8 @@ int main( int argc, char *argv[] )
 
                 qsSpalsh += QObject::tr("Checking hardware panels:\n");
                 obSplash.showMessage(qsSpalsh,Qt::AlignLeft,QColor(59,44, 75));
+
+                Sleep( g_poPrefs->getSecondsWaitOnSlpashScreen()*1000 );
 
                 for( int i=0; i<g_poHardware->getPanelCount(); i++ )
                 {
@@ -350,6 +343,9 @@ int main( int argc, char *argv[] )
                         qsSpalsh += QObject::tr(" FAILED\n");
                         obSplash.showMessage(qsSpalsh,Qt::AlignLeft,QColor(59,44, 75));
                     }
+
+                    Sleep( g_poPrefs->getSecondsWaitOnSlpashScreen()*1000 );
+
                 }
             }
         }
@@ -360,25 +356,16 @@ int main( int argc, char *argv[] )
 
             g_poHardware = new CS_Communication_Demo();
         }
-#else
 
-        qsSpalsh += QObject::tr("Starting application in DEMO mode.\n");
-        obSplash.showMessage(qsSpalsh,Qt::AlignLeft,QColor(59,44, 75));
 
-        g_poHardware = new CS_Communication_Demo();
-
-#endif
+        Sleep( g_poPrefs->getSecondsWaitOnSlpashScreen()*1000 );
 
         cWndMain  obMainWindow;
 
         obMainWindow.move( g_poPrefs->getMainWindowLeft(), g_poPrefs->getMainWindowTop() );
         obMainWindow.resize( g_poPrefs->getMainWindowWidth(), g_poPrefs->getMainWindowHeight() );
 
-#ifdef __WIN32__
-        Sleep(2000);
-#else
-        sleep( 2 );
-#endif
+        Sleep( g_poPrefs->getSecondsWaitOnSlpashScreen()*1000 );
 
         obMainWindow.setCommunicationEnabled( g_poHardware->isHardwareConnected() );
 
@@ -403,8 +390,7 @@ int main( int argc, char *argv[] )
         g_poPrefs->setMainWindowSizePos( obMainWindow.x(),
                                          obMainWindow.y(),
                                          obMainWindow.width(),
-                                         obMainWindow.height(),
-                                         true );
+                                         obMainWindow.height() );
     }
     catch( cSevException &e )
     {
@@ -420,6 +406,7 @@ int main( int argc, char *argv[] )
                                    "Please start WampServer application then restart Belenus application." );
         }
         g_obLogger(e.severity()) << qsError << EOM;
+        g_obGen.showTrayError( qsError );
     }
 
 //    g_poServer->quit();

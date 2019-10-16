@@ -56,6 +56,7 @@ private slots:
     void on_pbTextColorActive_clicked();
     void on_chkRFIDEnabled_clicked();
     void on_pbModifyExpDate_clicked();
+    void on_chkShowPatientInfoOnStart_toggled(bool checked);
 };
 
 #endif

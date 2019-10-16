@@ -2,8 +2,8 @@
 -- Belenus Szoftver Rendszer (c) Pagony Multimedia Studio Bt - 2013
 -- -----------------------------------------------------------------------------------
 -- Filename    : db_fill_en.sql
--- AppVersion  : 1.6.0.0
--- DbVersion   : 1.7.5
+-- AppVersion  : 1.8.0.1
+-- DbVersion   : 1.8.0.1
 -- Author      : Bikfalvi Tamas
 -- -----------------------------------------------------------------------------------
 -- Adatbazist default adatokkal feltolto SQL script
@@ -13,10 +13,10 @@ USE `belenus`;
 
 -- -----------------------------------------------------------------------------------
 
-INSERT INTO `licences` (`licenceId`, `serial`, `country`, `region`, `city`, `zip`, `address`, `studio`, `contact`, `lastValidated`, `active`, `archive`) VALUES
- ( 0, 'BLNS_SERIAL_GLOBAL', 'Hungary', 'Budapest', 'Budapest', '', '', 'KiwiSun Franchise', NULL, '2013-10-01', 1, 'ARC');
-INSERT INTO `licences` (`licenceId`, `serial`, `country`, `region`, `city`, `zip`, `address`, `studio`, `contact`, `lastValidated`, `active`, `archive`) VALUES
- ( 1, 'BLNS_SERIAL_DEMO', 'Hungary', 'Budapest', 'Budapest', '', '', 'KiwiSun Franchise', NULL, '2013-10-01', 1, 'ARC');
+INSERT INTO `licences` (`licenceId`, `serial`, `country`, `region`, `city`, `zip`, `address`, `studio`, `contact`, `lastValidated`, `Act`, `Cod`, `active`, `archive`) VALUES
+ ( 0, 'BLNS_SERIAL_GLOBAL', 'Hungary', 'Budapest', 'Budapest', '', '', 'KiwiSun Franchise', NULL, '2013-10-01', '', '', 1, 'ARC');
+INSERT INTO `licences` (`licenceId`, `serial`, `country`, `region`, `city`, `zip`, `address`, `studio`, `contact`, `lastValidated`, `Act`, `Cod`, `active`, `archive`) VALUES
+ ( 1, 'BLNS_SERIAL_DEMO', 'Hungary', 'Budapest', 'Budapest', '', '', 'KiwiSun Franchise', NULL, '2013-10-01', '', '', 1, 'ARC');
 
 -- -----------------------------------------------------------------------------------
 
@@ -147,16 +147,16 @@ INSERT INTO `panelStatuses` ( `licenceId`, `panelTypeId`, `seqNumber`, `name`, `
 -- -----------------------------------------------------------------------------------
 
 INSERT INTO `panelstatussettings` (`panelStatusSettingId`, `licenceId`, `panelStatusId`, `backgroundColor`, `statusFontName`, `statusFontSize`, `statusFontColor`, `timerFontName`, `timerFontSize`, `timerFontColor`, `nextFontName`, `nextFontSize`, `nextFontColor`, `infoFontName`, `infoFontSize`, `infoFontColor`, `modified`, `active`, `archive`) VALUES
- (1, 1, 1, '#00ff00', 'Arial', 18, '#000000', 'Book Antiqua', 30, '#000000', 'Arial', 18, '#000000', 'Arial', 10, '#000000', '2013-01-01 12:00:00', 1, 'NEW'),
- (2, 1, 2, '#ffff00', 'Arial', 18, '#000000', 'Book Antiqua', 30, '#000000', 'Arial', 18, '#000000', 'Arial', 10, '#000000', '2013-01-01 12:00:00', 1, 'NEW'),
- (3, 1, 3, '#ff0000', 'Arial', 18, '#000000', 'Book Antiqua', 30, '#000000', 'Arial', 18, '#000000', 'Arial', 10, '#000000', '2013-01-01 12:00:00', 1, 'NEW'),
- (4, 1, 4, '#ffff7f', 'Arial', 18, '#000000', 'Book Antiqua', 30, '#000000', 'Arial', 18, '#000000', 'Arial', 10, '#000000', '2013-01-01 12:00:00', 1, 'NEW'),
- (5, 1, 5, '#00aa00', 'Arial', 18, '#000000', 'Book Antiqua', 30, '#000000', 'Arial', 18, '#000000', 'Arial', 10, '#000000', '2013-01-01 12:00:00', 1, 'NEW'),
- (6, 1, 6, '#ffff00', 'Arial', 18, '#000000', 'Book Antiqua', 30, '#000000', 'Arial', 18, '#000000', 'Arial', 10, '#000000', '2013-01-01 12:00:00', 1, 'NEW'),
- (7, 1, 7, '#aa0000', 'Arial', 18, '#000000', 'Book Antiqua', 30, '#000000', 'Arial', 18, '#000000', 'Arial', 10, '#000000', '2013-01-01 12:00:00', 1, 'NEW'),
- (8, 1, 8, '#ffff00', 'Arial', 18, '#000000', 'Book Antiqua', 30, '#000000', 'Arial', 18, '#000000', 'Arial', 10, '#000000', '2013-01-01 12:00:00', 1, 'NEW'),
- (9, 1, 9, '#ff0000', 'Arial', 18, '#000000', 'Book Antiqua', 30, '#000000', 'Arial', 18, '#000000', 'Arial', 10, '#000000', '2013-01-01 12:00:00', 1, 'NEW'),
- (10, 1, 10, '#ffff7f', 'Arial', 18, '#000000', 'Book Antiqua', 30, '#000000', 'Arial', 18, '#000000', 'Arial', 10, '#000000', '2013-01-01 12:00:00', 1, 'NEW');
+ (1, 1, 1, '#00ff00', 'Arial', 50, '#000000', 'Book Antiqua', 60, '#000000', 'Arial', 30, '#000000', 'Arial', 20, '#000000', '2013-01-01 12:00:00', 1, 'NEW'),
+ (2, 1, 2, '#ffff00', 'Arial', 50, '#000000', 'Book Antiqua', 60, '#000000', 'Arial', 30, '#000000', 'Arial', 20, '#000000', '2013-01-01 12:00:00', 1, 'NEW'),
+ (3, 1, 3, '#ff0000', 'Arial', 50, '#000000', 'Book Antiqua', 60, '#000000', 'Arial', 30, '#000000', 'Arial', 20, '#000000', '2013-01-01 12:00:00', 1, 'NEW'),
+ (4, 1, 4, '#ffff7f', 'Arial', 50, '#000000', 'Book Antiqua', 60, '#000000', 'Arial', 30, '#000000', 'Arial', 20, '#000000', '2013-01-01 12:00:00', 1, 'NEW'),
+ (5, 1, 5, '#00aa00', 'Arial', 50, '#000000', 'Book Antiqua', 60, '#000000', 'Arial', 30, '#000000', 'Arial', 20, '#000000', '2013-01-01 12:00:00', 1, 'NEW'),
+ (6, 1, 6, '#ffff00', 'Arial', 50, '#000000', 'Book Antiqua', 60, '#000000', 'Arial', 30, '#000000', 'Arial', 20, '#000000', '2013-01-01 12:00:00', 1, 'NEW'),
+ (7, 1, 7, '#aa0000', 'Arial', 50, '#000000', 'Book Antiqua', 60, '#000000', 'Arial', 30, '#000000', 'Arial', 20, '#000000', '2013-01-01 12:00:00', 1, 'NEW'),
+ (8, 1, 8, '#ffff00', 'Arial', 50, '#000000', 'Book Antiqua', 60, '#000000', 'Arial', 30, '#000000', 'Arial', 20, '#000000', '2013-01-01 12:00:00', 1, 'NEW'),
+ (9, 1, 9, '#ff0000', 'Arial', 50, '#000000', 'Book Antiqua', 60, '#000000', 'Arial', 30, '#000000', 'Arial', 20, '#000000', '2013-01-01 12:00:00', 1, 'NEW'),
+ (10, 1, 10, '#ffff7f', 'Arial', 50, '#000000', 'Book Antiqua', 60, '#000000', 'Arial', 30, '#000000', 'Arial', 20, '#000000', '2013-01-01 12:00:00', 1, 'NEW');
 
 -- -----------------------------------------------------------------------------------
 
@@ -317,11 +317,87 @@ ALTER TABLE `shoppingcartitems` auto_increment=1;
 -- -----------------------------------------------------------------------------------
 
 INSERT INTO `settings` (`settingId`, `identifier`, `value`) VALUES
- (NULL, 'GLOBAL_DATA_UPDATED', '2015-01-01 08:00:00'),
+ (NULL, 'GLOBAL_DATA_UPDATED', '2019-09-01 12:00:00'),
  (NULL, 'LICENCE_LAST_VALIDATED', '2000-01-01 12:00:00'),
  (NULL, 'ABOUT_INFO_LINK', 'http://www.kiwisun.eu/elerhetosegeink.html'),
  (NULL, 'CURRENT_CASSA_ID', '0'),
- (NULL, 'APPLICATION_VERSION', '1_6_0_0'),
- (NULL, 'DATABASE_VERSION', '1_7_5');
+ (NULL, 'APPLICATION_VERSION', '1_8_0_0'),
+ (NULL, 'DATABASE_VERSION', '1_8_0'),
+ (NULL, "GEN_LastUser", "" ),
+ (NULL, "GEN_PanelsPerRow", 3 ),
+ (NULL, "GEN_BarcodeLength", 8 ),
+ (NULL, "GEN_BarcodePrefix", "" ),
+ (NULL, "GEN_CardProductBarcodeLengthDifferent", 1 ),
+ (NULL, "GEN_CassaAutoClose", 1 ),
+ (NULL, "GEN_CassaAutoWithdrawal", 1 ),
+ (NULL, "GEN_CassaAutoCreate", 1 ),
+ (NULL, "GEN_CassaCreateType", 2 ),
+ (NULL, "GEN_DefaultCountry", "" ),
+ (NULL, "GEN_ZipLength", 4 ),
+ (NULL, "GEN_DBAutoSynchronization", 0 ),
+ (NULL, "GEN_DBGlobalAutoSynchronization", 0 ),
+ (NULL, "GEN_PanelSystemID", 0 ),
+ (NULL, "GEN_IsSecondaryWindowVisible", 0 ),
+ (NULL, "GEN_SecondsWaitOnSlpashScreen", 3 ),
+ (NULL, "GEN_DateFormat", "yyyy-MM-dd" ),
+ (NULL, "GEN_Component", 0 ),
+ (NULL, "EXTWIN_Left", 0 ),
+ (NULL, "EXTWIN_Top", 0 ),
+ (NULL, "EXTWIN_Width", 547 ),
+ (NULL, "EXTWIN_Height", 352 ),
+ (NULL, "EXTWIN_Background", "#000000" ),
+ (NULL, "EXTWIN_FrameColor", "#555555" ),
+ (NULL, "EXTWIN_IsSecondaryCaptionVisible", 1 ),
+ (NULL, "EXTWIN_IsTextTubeReplaceVisible", 1 ),
+ (NULL, "EXTWIN_IsTextSterilVisible", 1 ),
+ (NULL, "EXTWIN_IsTextTubeCleanupVisible", 0 ),
+ (NULL, "PANEL_ActiveCaptionBackground", "#000099" ),
+ (NULL, "PANEL_ActiveCaptionColor", "#FFFFFF" ),
+ (NULL, "PANEL_InactiveCaptionBackground", "#000022" ),
+ (NULL, "PANEL_InactiveCaptionColor", "#FFFFFF" ),
+ (NULL, "PANEL_SecondaryCaptionBackground", "#000099" ),
+ (NULL, "PANEL_SecondaryCaptionColor", "#FFFFFF" ),
+ (NULL, "PANEL_IsStopInLine", 1 ),
+ (NULL, "PANEL_TextSterile", " NOT STERILE " ),
+ (NULL, "PANEL_TextTubeReplace", " TUBE REPLACEMENT NEEDED " ),
+ (NULL, "PANEL_TextTubeCleanup", " TUBE CLEAN-UP NEEDED " ),
+ (NULL, "UI_MainWindowLeft", 0 ),
+ (NULL, "UI_MainWindowTop", 0 ),
+ (NULL, "UI_MainWindowWidth", 1024 ),
+ (NULL, "UI_MainWindowHeight", 768 ),
+ (NULL, "UI_MainBackground", "#000000" ),
+ (NULL, "SERVER_Address", "http://www.kiwisun.hu" ),
+ (NULL, "SERVER_Port", 1000 ),
+ (NULL, "HW_ComPort", 1 ),
+ (NULL, "HW_ForceModuleSendTime", 0 ),
+ (NULL, "HW_ForceModuleCheckButton", 0 ),
+ (NULL, "HW_ForceTimeSendCounter", 0 ),
+ (NULL, "CURR_Short", "Ft." ),
+ (NULL, "CURR_Long", "Forint" ),
+ (NULL, "CURR_Separator", "," ),
+ (NULL, "CURR_Decimal", "." ),
+ (NULL, "DEVICE_MaxTreatLength", 100 ),
+ (NULL, "DEVICE_VAT", 25 ),
+ (NULL, "CARD_PriceLost", 500 ),
+ (NULL, "CARD_PriceLostVat", 0 ),
+ (NULL, "CARD_PricePartner", 0 ),
+ (NULL, "CARD_PricePartnerVat", 0 ),
+ (NULL, "CARD_Hidden", 0 ),
+ (NULL, "CARD_ShowPatientLastVisitInfo", 0 ),
+ (NULL, "CARD_ShowInfoOnWindow", 1 ),
+ (NULL, "CARD_CloseInfoWindowAfterSecs", 5 ),
+ (NULL, "LOG_FileLogLevel", 5 ),
+ (NULL, "SYNC_Enabled", 0 ),
+ (NULL, "SYNC_WebSyncAutoStart", 0 ),
+ (NULL, "BACKUP_DirDbBinaries", "C:/wamp/bin/mysql/mysql5.5.24/bin" ),
+ (NULL, "BACKUP_DirDbBackup", "" ),
+ (NULL, "BACKUP_BackupDb", 0 ),
+ (NULL, "BACKUP_DbBackupType", 0 ),
+ (NULL, "BACKUP_DbBackupDays", "" ),
+ (NULL, "PANEL_UsageVisibleOnMain", 1 ),
+ (NULL, "AUTOMAIL_OnSell", 0 ),
+ (NULL, "AUTOMAIL_OnUse", 0 ),
+ (NULL, "AUTOMAIL_OnExpiration", 0 ),
+ (NULL, "AUTOMAIL_ExpirationDays", 7 );
 
 -- -----------------------------------------------------------------------------------

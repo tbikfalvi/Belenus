@@ -42,6 +42,7 @@ cDlgAddress::cDlgAddress( QWidget *p_poParent )
     catch( cSevException &e )
     {
         g_obLogger(e.severity()) << e.what() << EOM;
+        g_obGen.showTrayError( e.what() );
     }
     if( poQuery ) delete poQuery;
 
@@ -187,6 +188,7 @@ void cDlgAddress::editClicked( bool )
     {
         if( poAddress ) delete poAddress;
         g_obLogger(e.severity()) << e.what() << EOM;
+        g_obGen.showTrayError( e.what() );
     }
 }
 
@@ -211,6 +213,7 @@ void cDlgAddress::deleteClicked( bool )
         {
             if( poAddress ) delete poAddress;
             g_obLogger(e.severity()) << e.what() << EOM;
+            g_obGen.showTrayError( e.what() );
         }
     }
 }

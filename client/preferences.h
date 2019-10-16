@@ -26,16 +26,15 @@ class cPreferences
 {
 public:
     cPreferences();
-    cPreferences( const QString &p_qsFileName );
     ~cPreferences();
 
-    void            setFileName( const QString &p_qsFileName );
-    QString         getFileName() const;
-    void            setVersion( const QString &p_qsVersion, bool p_boSaveNow = false );
+    void            setApplicationPath( const QString &p_qsPath );
+    QString         getApplicationPath() const;
+    void            setVersion( const QString &p_qsVersion );
     QString         getVersion() const;
     void            setVersionDb(const QString &p_qsVersion);
     QString         getVersionDb() const;
-    void            setComponents( const unsigned int p_uiComponent, bool p_boSaveNow = false );
+    void            setComponents( const unsigned int p_uiComponent );
     unsigned int    getComponents() const;
     void            processComponentID();
     bool            isComponentSensoliteInstalled();
@@ -47,89 +46,88 @@ public:
     bool            isComponentViewerInstalled();
     void            setLangFilePrefix( const QString &p_qsPrefix );
     QString         getLangFilePrefix() const;
-    void            setLang( const QString &p_qsLang, bool p_boSaveNow = false );
+    void            setLang( const QString &p_qsLang );
     QString         getLang() const;
-    void            setLastUser( const QString &p_qsLastUser, bool p_boSaveNow = false );
+    void            setLastUser( const QString &p_qsLastUser );
     QString         getLastUser() const;
-    void            setPanelsPerRow( const unsigned int p_uiPanelsPerRow, bool p_boSaveNow = false );
+    void            setPanelsPerRow( const unsigned int p_uiPanelsPerRow );
     unsigned int    getPanelsPerRow() const;
     unsigned int    getPanelCount() const;
-    void            setMainWindowSizePos( const unsigned int p_uiMainWindowLeft,
+    void            setMainWindowSizePos(const unsigned int p_uiMainWindowLeft,
                                           const unsigned int p_uiMainWindowTop,
                                           const unsigned int p_uiMainWindowWidth,
-                                          const unsigned int p_uiMainWindowHeight,
-                                          bool p_boSaveNow = false );
+                                          const unsigned int p_uiMainWindowHeight);
     unsigned int    getMainWindowLeft() const;
     unsigned int    getMainWindowTop() const;
     unsigned int    getMainWindowWidth() const;
     unsigned int    getMainWindowHeight() const;
-    void            setMainBackground( const QString &p_qsColor, bool p_boSaveNow = false );
+    void            setMainBackground( const QString &p_qsColor );
     QString         getMainBackground() const;
     unsigned int    getLicenceId() const;
     void            setLicenceId( const int licenceId );
-    void            setServerAddress( const QString &p_qsServerAddress, bool p_boSaveNow = false );
+    void            setServerAddress( const QString &p_qsServerAddress );
     QString         getServerAddress() const;
-    void            setServerPort( const QString &p_qsServerPort, bool p_boSaveNow = false );
+    void            setServerPort( const QString &p_qsServerPort );
     QString         getServerPort() const;
-    void            setCommunicationPort( const int p_inPortNumber, bool p_boSaveNow = false );
+    void            setCommunicationPort( const int p_inPortNumber );
     int             getCommunicationPort() const;
-    void            setBarcodeLength( const int p_inBarcodeLength, bool p_boSaveNow = false );
+    void            setBarcodeLength( const int p_inBarcodeLength );
     int             getBarcodeLength() const;
-    void            setBarcodePrefix( const QString &p_qsPrefix, bool p_boSaveNow = false );
+    void            setBarcodePrefix( const QString &p_qsPrefix );
     QString         getBarcodePrefix() const;
-    void            setBarcodeLengthDifferent( const bool p_bBarcodeLengthDifferent, bool p_boSaveNow = false );
+    void            setBarcodeLengthDifferent( const bool p_bBarcodeLengthDifferent );
     bool            isBarcodeLengthDifferent() const;
-    void            setCurrencyShort( const QString &p_qsCurrencyShort, bool p_boSaveNow = false );
+    void            setCurrencyShort( const QString &p_qsCurrencyShort );
     QString         getCurrencyShort() const;
-    void            setCurrencyLong( const QString &p_qsCurrencyLong, bool p_boSaveNow = false );
+    void            setCurrencyLong( const QString &p_qsCurrencyLong );
     QString         getCurrencyLong() const;
-    void            setCurrencySeparator( const QString &p_qsCurrencySeparator, bool p_boSaveNow = false );
+    void            setCurrencySeparator( const QString &p_qsCurrencySeparator );
     QString         getCurrencySeparator() const;
-    void            setCurrencyDecimalSeparator( const QString &p_qsCurrencyDecimalSeparator, bool p_boSaveNow = false );
+    void            setCurrencyDecimalSeparator( const QString &p_qsCurrencyDecimalSeparator );
     QString         getCurrencyDecimalSeparator() const;
-    void            setMaxTreatLength( const unsigned int p_uiMaxTreatLength, bool p_boSaveNow = false );
+    void            setMaxTreatLength( const unsigned int p_uiMaxTreatLength );
     unsigned int    getMaxTreatLength() const;
-    void            setDeviceUseVAT( const int p_inVAT, bool p_boSaveNow = false );
+    void            setDeviceUseVAT( const int p_inVAT );
     int             getDeviceUseVAT() const;
-    void            setCassaAutoClose( const bool p_bCassaAutoClose, bool p_boSaveNow = false );
+    void            setCassaAutoClose( const bool p_bCassaAutoClose );
     bool            getCassaAutoClose() const;
-    void            setCassaAutoWithdrawal( const bool p_bCassaAutoWithdrawal, bool p_boSaveNow = false );
+    void            setCassaAutoWithdrawal( const bool p_bCassaAutoWithdrawal );
     bool            getCassaAutoWithdrawal() const;
-    void            setCassaAutoCreate( const bool p_bCassaAutoCreate, bool p_boSaveNow = false );
+    void            setCassaAutoCreate( const bool p_bCassaAutoCreate );
     bool            getCassaAutoCreate() const;
-    void            setCassaCreateType( const int p_inCassaCreateType, bool p_boSaveNow = false );
+    void            setCassaCreateType( const int p_inCassaCreateType );
     int             getCassaCreateType() const;
-    void            setDefaultCountry( const QString &p_qsDefaultCountry, bool p_boSaveNow = false );
+    void            setDefaultCountry( const QString &p_qsDefaultCountry );
     QString         getDefaultCountry() const;
-    void            setZipLength( const int p_inZip, bool p_boSaveNow = false );
+    void            setZipLength( const int p_inZip );
     int             getZipLength() const;
-    void            setDBAutoArchive( const bool p_bDBAutoArchive, bool p_boSaveNow = false );
+    void            setDBAutoArchive( const bool p_bDBAutoArchive );
     bool            getDBAutoArchive() const;
-    void            setDBGlobalAutoSynchronize( const bool p_bDBGlobalAutoSynchronize, bool p_boSaveNow = false );
+    void            setDBGlobalAutoSynchronize( const bool p_bDBGlobalAutoSynchronize );
     bool            getDBGlobalAutoSynchronize() const;
-    void            setSecondaryWindowVisibility( const bool p_bIsSecondaryWindowVisible, bool p_boSaveNow = false );
+    void            setSecondaryWindowVisibility( const bool p_bIsSecondaryWindowVisible );
     bool            isSecondaryWindowVisible() const;
-    void            setSecondaryWindowPosition( const QPoint &p_qpPosition, bool p_boSaveNow = false );
+    void            setSecondaryWindowPosition( const QPoint &p_qpPosition );
     QPoint          secondaryWindowPosition() const;
-    void            setSecondaryWindowSize( const QSize &p_qsSize, bool p_boSaveNow = false );
+    void            setSecondaryWindowSize( const QSize &p_qsSize );
     QSize           secondaryWindowSize() const;
-    void            setSecondaryBackground( const QString &p_qsColor, bool p_boSaveNow = false );
+    void            setSecondaryBackground( const QString &p_qsColor );
     QString         getSecondaryBackground() const;
-    void            setSecondaryFrame( const QString &p_qsColor, bool p_boSaveNow = false );
+    void            setSecondaryFrame( const QString &p_qsColor );
     QString         getSecondaryFrame() const;
-    void            setSecondaryCaptionVisibility( const bool p_bIsSecondaryCaptionVisible, bool p_boSaveNow = false );
+    void            setSecondaryCaptionVisibility( const bool p_bIsSecondaryCaptionVisible );
     bool            isSecondaryCaptionVisible() const;
-    void            setActiveCaptionBackground( const QString &p_qsColor, bool p_boSaveNow = false );
+    void            setActiveCaptionBackground( const QString &p_qsColor );
     QString         getActiveCaptionBackground() const;
-    void            setActiveCaptionColor( const QString &p_qsColor, bool p_boSaveNow = false );
+    void            setActiveCaptionColor( const QString &p_qsColor );
     QString         getActiveCaptionColor() const;
-    void            setInactiveCaptionBackground( const QString &p_qsColor, bool p_boSaveNow = false );
+    void            setInactiveCaptionBackground( const QString &p_qsColor );
     QString         getInactiveCaptionBackground() const;
-    void            setInactiveCaptionColor( const QString &p_qsColor, bool p_boSaveNow = false );
+    void            setInactiveCaptionColor( const QString &p_qsColor );
     QString         getInactiveCaptionColor() const;
-    void            setSecondaryCaptionBackground( const QString &p_qsColor, bool p_boSaveNow = false );
+    void            setSecondaryCaptionBackground( const QString &p_qsColor );
     QString         getSecondaryCaptionBackground() const;
-    void            setSecondaryCaptionColor( const QString &p_qsColor, bool p_boSaveNow = false );
+    void            setSecondaryCaptionColor( const QString &p_qsColor );
     QString         getSecondaryCaptionColor() const;
     void            setPatientCardLostPrice( const int p_inPrice );
     int             getPatientCardLostPrice() const;
@@ -139,116 +137,145 @@ public:
     int             getPatientCardPartnerPrice() const;
     void            setPatientCardPartnerPriceVat(const int p_inVat );
     int             getPatientCardPartnerPriceVat() const;
-    void            setBlnsHttpEnabled( bool p_bEnable, bool p_boSaveNow = false );
+    void            setBlnsHttpEnabled( bool p_bEnable );
     bool            isBlnsHttpEnabled();
-//    int             getBlnsHttpMessageWaitTime() const;
-//    void            setBlnsHttpMessageWaitTime(const int p_inWaitTime );
-//    bool            isBlnsHttpSuspended();
-//    void            setBlnsHttpSuspended( bool p_bEnable );
 
     unsigned int    getPanelId( int p_nPanelIterator );
 
-    void            setLogLevels( const unsigned int p_uiConLevel,
-                                  const unsigned int p_uiDBLevel,
-                                  const unsigned int p_uiGUILevel,
-                                  const unsigned int p_uiFileLevel,
-                                  bool p_boSaveNow = false );
-    void            getLogLevels( unsigned int *p_poConLevel = NULL,
-                                  unsigned int *p_poDBLevel = NULL,
-                                  unsigned int *p_poGUILevel = NULL,
-                                  unsigned int *p_uiFileLevel = NULL ) const;
+    void            setLogLevel(const unsigned int p_uiFileLevel);
+    unsigned int    getLogLevel();
     void            setDBAccess( const QString &p_qsHost, const QString &p_qsDB,
                                  const QString &p_qsUser, const QString &p_qsPwd );
     void            getDBAccess( QString *p_poHost = NULL, QString *p_poDB = NULL,
                                  QString *p_poUser = NULL, QString *p_poPwd = NULL) const;
 
 
-    void            loadConfFileSettings();
+    unsigned int    loadSettingU( QString p_Identifier, unsigned int p_Default ) throw (cSevException);
+    QString         loadSettingS( QString p_Identifier, QString p_Default ) throw (cSevException);
+    bool            loadSettingB( QString p_Identifier, bool p_Default ) throw (cSevException);
+    int             loadSettingI( QString p_Identifier, int p_Default ) throw (cSevException);
+
+    void            saveSettingU( QString p_Identifier, unsigned int p_Value ) throw (cSevException);
+    void            saveSettingS( QString p_Identifier, QString p_Value ) throw (cSevException);
+    void            saveSettingB( QString p_Identifier, bool p_Value ) throw (cSevException);
+    void            saveSettingI( QString p_Identifier, int p_Value ) throw (cSevException);
+
+    void            loadSettings() throw (cSevException);
+    void            saveSettings() throw (cSevException);
     void            loadDBSettings() throw (cSevException);
-    void            save() const throw (cSevException);
 
     unsigned int    postponedPatients() const;
     void            setPostponedPatients( const unsigned int p_uiPostponedPatients );
     unsigned int    postponedAttendances() const;
     void            setPostponedAttendances( const unsigned int p_uiPostponedAttendances );
     void            setDialogSize( const QString &p_qsDialogName, const QPoint &p_qpDlgSize );
-    QPoint          getDialogSize( const QString &p_qsDialogName, const QPoint &p_qpDlgSizeDefault ) const;
+    QPoint          getDialogSize( const QString &p_qsDialogName, const QPoint &p_qpDlgSizeDefault );
     void            setDialogPosition(const QString &p_qsDialogName, const QPoint &p_qpPosition );
-    QPoint          dialogPosition(const QString &p_qsDialogName) const;
+    QPoint          dialogPosition(const QString &p_qsDialogName);
 
-    void            setDirDbBinaries( const QString &p_qsDirDbBinaries, bool p_boSaveNow = false );
+    void            setDirDbBinaries( const QString &p_qsDirDbBinaries );
     QString         getDirDbBinaries() const;
-    void            setDirDbBackup( const QString &p_qsDirDbBackup, bool p_boSaveNow = false );
+    void            setDirDbBackup( const QString &p_qsDirDbBackup );
     QString         getDirDbBackup() const;
     void            setForceBackupDatabase( bool p_bForceBackupDatabase );
     bool            isForceBackupDatabase();
-    void            setBackupDatabase( bool p_bBackupDatabase, bool p_boSaveNow = false );
+    void            setBackupDatabase( bool p_bBackupDatabase );
     bool            isBackupDatabase();
-    void            setBackupDatabaseType( const int p_nBackupDatabaseType, bool p_boSaveNow = false );
+    void            setBackupDatabaseType( const int p_nBackupDatabaseType );
     int             getBackupDatabaseType() const;
-    void            setBackupDatabaseDays( const QString &p_qsBackupDatabaseDays, bool p_boSaveNow = false );
+    void            setBackupDatabaseDays( const QString &p_qsBackupDatabaseDays );
     QString         getBackupDatabaseDays() const;
-    void            setDateFormat( const QString &p_qsDateFormat, bool p_boSaveNow = false );
+    void            setDateFormat( const QString &p_qsDateFormat );
     QString         getDateFormat() const;
-    void            setFapados( bool p_bFapados, bool p_boSaveNow = false );
+    void            setFapados( bool p_bFapados );
     bool            isFapados();
     void            setPanelSterile( int p_nPanelId, bool p_bSterile );
     bool            isPanelSterile( int p_nPanelId );
     void            createExtendedAdminPassword( const QString &p_qsExtendedAdminPassword );
     void            setExtendedAdminPassword( const QString &p_qsExtendedAdminPassword );
     bool            checkExtendedAdminPassword( const QString &p_qsExtendedAdminPassword ) const;
-    void            setStopInLine( bool p_bStopInLine, bool p_boSaveNow = false );
+    void            setStopInLine( bool p_bStopInLine );
     bool            isStopInLine();
-    void            setPanelTextSteril( const QString &p_qsPanelTextSteril, bool p_boSaveNow = false );
+    void            setPanelTextSteril( const QString &p_qsPanelTextSteril );
     QString         getPanelTextSteril() const;
-    void            setPanelTextTubeReplace( const QString &p_qsPanelTextTubeReplace, bool p_boSaveNow = false );
+    void            setPanelTextTubeReplace( const QString &p_qsPanelTextTubeReplace );
     QString         getPanelTextTubeReplace() const;
-    void            setPanelTextTubeCleanup( const QString &p_qsPanelTextTubeCleanup, bool p_boSaveNow = false );
+    void            setPanelTextTubeCleanup( const QString &p_qsPanelTextTubeCleanup );
     QString         getPanelTextTubeCleanup() const;
     void            setHWDebug( bool p_bHWDebug );
     bool            isHWDebugEnabled();
-    void            setForceModuleSendTime( bool p_bForceModuleSendTime, bool p_boSaveNow = false );
+    void            setForceModuleSendTime( bool p_bForceModuleSendTime );
     bool            isForceModuleSendTime();
-    void            setForceModuleCheckButton( bool p_bForceModuleCheckButton, bool p_boSaveNow = false );
+    void            setForceModuleCheckButton( bool p_bForceModuleCheckButton );
     bool            isForceModuleCheckButton();
     void            setForceTimeSendCounter( const int p_nForceTimeSendCounter );
     int             getForceTimeSendCounter() const;
-    void            setTextTubeReplaceVisible( bool p_bTextTubeReplaceVisible, bool p_boSaveNow = false );
+    void            setTextTubeReplaceVisible( bool p_bTextTubeReplaceVisible );
     bool            isTextTubeReplaceVisible();
-    void            setTextTubeCleanupVisible( bool p_bTextTubeCleanupVisible, bool p_boSaveNow = false );
+    void            setTextTubeCleanupVisible( bool p_bTextTubeCleanupVisible );
     bool            isTextTubeCleanupVisible();
-    void            setTextSterilVisible( bool p_bTextSterilVisible, bool p_boSaveNow = false );
+    void            setTextSterilVisible( bool p_bTextSterilVisible );
     bool            isTextSterilVisible();
-//    void            setStartHttpSyncAuto( bool p_bStartHttpSyncAuto, bool p_boSaveNow = false );
-//    bool            isStartHttpSyncAuto();
-//    void            setStartHttpSyncAutoSeconds( const int p_nStartHttpSyncAutoSeconds );
-//    int             getStartHttpSyncAutoSeconds() const;
-    void            setBarcodeHidden( bool p_bBarcodeHidden, bool p_boSaveNow = false );
+    void            setBarcodeHidden( bool p_bBarcodeHidden );
     bool            isBarcodeHidden();
-    void            setUsageVisibleOnMain( bool p_bUsageVisibleOnMain, bool p_boSaveNow = false );
+    void            setUsageVisibleOnMain( bool p_bUsageVisibleOnMain );
     bool            isUsageVisibleOnMain();
-    void            setRFIDEnabled( bool p_bRFIDEnabled, bool p_boSaveNow = false );
+    void            setRFIDEnabled( bool p_bRFIDEnabled );
     bool            isRFIDEnabled();
-    void            setRFIDComPort( const int p_nRFIDComPort, bool p_boSaveNow = false );
+    void            setRFIDComPort( const int p_nRFIDComPort );
     int             getRFIDComPort() const;
-    void            setLicenceLastValidated( const QString &p_qsLicenceLastValidated, bool p_boSaveNow = false );
+    void            setLicenceLastValidated( const QString &p_qsLicenceLastValidated );
     QString         getLicenceLastValidated() const;
-    void            setDACanModifyWorktime( bool p_bDACanModifyWorktime, bool p_boSaveNow = false );
+    void            setDACanModifyWorktime( bool p_bDACanModifyWorktime );
     bool            isDACanModifyWorktime();
-    void            setDACanModifyExpDate( bool p_bDACanModifyExpDate, bool p_boSaveNow = false );
+    void            setDACanModifyExpDate( bool p_bDACanModifyExpDate );
     bool            isDACanModifyExpDate();
-    void            setWebSyncAutoStart( bool p_bWebSyncAutoStart, bool p_boSaveNow = false );
+    void            setWebSyncAutoStart( bool p_bWebSyncAutoStart );
     bool            isWebSyncAutoStart();
+    void            setAutoMailOnPCSell( bool p_bAutoMailOnPCSell );
+    bool            isAutoMailOnPCSell();
+    void            setAutoMailOnPCUse( bool p_bAutoMailOnPCUse );
+    bool            isAutoMailOnPCUse();
+    void            setAutoMailOnPCExpiration( bool p_bAutoMailOnPCExpiration );
+    bool            isAutoMailOnPCExpiration();
+    void            setPCExpirationDays( const int p_nPCExpirationDays  );
+    int             getPCExpirationDays() const;
+    void            setAdvertisementSizeAndPos(const unsigned int p_uiId,
+                                                const unsigned int p_uiLeft,
+                                                const unsigned int p_uiTop,
+                                                const unsigned int p_uiWidth,
+                                                const unsigned int p_uiHeight);
+    void            setSecondsWaitOnSlpashScreen( const int p_nSecondsWaitOnSlpashScreen );
+    int             getSecondsWaitOnSlpashScreen() const;
 
-//void            setXXX( const QString &p_qsXXX, bool p_boSaveNow = false );
+    void            setValue(const QString &p_qsKey, const QString &p_qsValue);
+    QString         getValue( const QString &p_qsKey );
+
+    void            setWindowMain( QWidget *p_wHandle );
+    void            setWindowSecondary( QWidget *p_wHandle );
+    void            moveWindowMain( int posX, int posY );
+    void            resizeWindowMain( int width, int height );
+    void            moveWindowSecondary( int posX, int posY );
+    void            resizeWindowSecondary( int width, int height );
+
+    void            setShowPatientInfoOnStart( bool p_bShowPatientInfoOnStart );
+    bool            isShowPatientInfoOnStart();
+    void            setShowInfoOnWindow( const int p_nShowInfoOnWindow );
+    int             getShowInfoOnWindow() const;
+    void            setCloseInfoWindowAfterSecs( const int p_nCloseInfoWindowAfterSecs );
+    int             getCloseInfoWindowAfterSecs() const;
+
+//void            setXXX( const QString &p_qsXXX );
 //QString         getXXX() const;
 //void            setXXX( const int p_nXXX );
 //int             getXXX() const;
-//void            setXXX( bool p_bXXX, bool p_boSaveNow = false );
+//void            setXXX( bool p_bXXX );
 //bool            isXXX();
 
 private:
-    QString         m_qsFileName;
+    QWidget        *m_wWindowMain;
+    QWidget        *m_wWindowSecondary;
+    QString         m_qsApplicationPath;
     QString         m_qsVersion;
     QString         m_qsVersionDb;
     unsigned int    m_uiComponent;
@@ -304,8 +331,6 @@ private:
     int             m_nPatientCardPartnerPriceVat;
     QStringList     m_qslPanelIds;
     bool            m_bBlnsHttpEnabled;
-//    int             m_nBlnsHttpWaitTime;
-//    bool            m_bBlnsHttpSuspended;
     QString         m_qsDirDbBinaries;
     QString         m_qsDirDbBackup;
     bool            m_bForceBackupDatabase;
@@ -332,8 +357,6 @@ private:
     bool            m_bIsTextTubeReplaceVisible;
     bool            m_bIsTextTubeCleanupVisible;
     bool            m_bIsTextSterilVisible;
-//    bool            m_bIsStartHttpSyncAuto;
-//    int             m_nStartHttpSyncAutoSeconds;
     bool            m_bBarcodeHidden;
     bool            m_bUsageVisibleOnMain;
     bool            m_bRFIDEnabled;
@@ -342,6 +365,14 @@ private:
     bool            m_bDACanModifyWorktime;
     bool            m_bDACanModifyExpDate;
     bool            m_bWebSyncAutoStart;
+    bool            m_bAutoMailOnPCSell;
+    bool            m_bAutoMailOnPCUse;
+    bool            m_bAutoMailOnPCExpiration;
+    int             m_nPCExpirationDays;
+    int             m_nSecondsWaitOnSlpashScreen;
+    bool            m_bShowPatientInfoOnStart;
+    int             m_nShowInfoOnWindow;
+    int             m_nCloseInfoWindowAfterSecs;
 
     void init();
 };

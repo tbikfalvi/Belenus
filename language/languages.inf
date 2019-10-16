@@ -1,0 +1,12 @@
+<languages>
+
+    <!-- 
+	<language name="" shortname="" current="no" />
+    -->
+	<language name="English" shortname="en" current="no" />
+	<language name="Magyar" shortname="hu" current="no" />
+	<language name="Deutsch" shortname="de" current="no" />
+	<language name="Italiano" shortname="it" current="no" />
+	<language name="Românesc" shortname="ro" current="no" />
+
+</languages>

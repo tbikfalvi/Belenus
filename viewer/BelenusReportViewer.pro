@@ -7,14 +7,16 @@
 greaterThan(QT_MAJOR_VERSION, 4): QT += widgets
 win32:DEFINES -= UNICODE
 
-QT          += core gui network sql
+QT          += core gui network sql xml
 CONFIG      += qt
 TARGET       = ReportViewer
 TEMPLATE     = app
 DESTDIR      = ..
 RESOURCES   += reportviewer.qrc
 TRANSLATIONS = brv_hu.ts \
-               brv_de.ts
+               brv_de.ts \
+               brv_it.ts \
+               brv_ro.ts
 RC_FILE      = reportviewer.rc
 
 SOURCES      = ../framework/dbconnection.cpp \
@@ -23,6 +25,7 @@ SOURCES      = ../framework/dbconnection.cpp \
                ../framework/qtlogger.cpp \
                ../framework/logger/FileWriter.cpp \
                ../framework/tracer.cpp \
+               ../language/language.cpp \
                main.cpp \
                wndmain.cpp \
                currency.cpp \
@@ -51,6 +54,7 @@ HEADERS      = ../framework/dbconnection.h \
                ../framework/qtlogger.h \
                ../framework/logger/FileWriter.h \
                ../framework/tracer.h \
+               ../language/language.h \
                wndmain.h \
                currency.h \
                creport.h \

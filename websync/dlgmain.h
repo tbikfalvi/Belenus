@@ -13,15 +13,15 @@
 #include <QPushButton>
 
 #include "../framework/qtframework.h"
+#include "../language/language.h"
 #include "http.h"
 
-extern QTranslator          *poTransApp;
-extern QTranslator          *poTransQT;
-extern QApplication         *apMainApp;
-extern cQTMySQLConnection   *g_poDB;
-extern cBlnsHttp            *g_poBlnsHttp;
-
-#define app_version "1.0.0"
+extern QTranslator              *poTransApp;
+extern QTranslator              *poTransQT;
+extern QApplication             *apMainApp;
+extern cQTMySQLConnection       *g_poDB;
+extern cBlnsHttp                *g_poBlnsHttp;
+extern cLanguage                 g_obLanguage;
 
 namespace Ui { class dlgMain; }
 
@@ -63,7 +63,7 @@ class dlgMain : public QDialog
     };
 
 public:
-    explicit dlgMain(QWidget *parent = 0);
+    explicit dlgMain(QWidget *parent = 0, QString p_qsAppVersion = "1.0.0.0");
     ~dlgMain();
     bool checkTimeValues();
 
@@ -98,6 +98,7 @@ private slots:
     void on_pbSyncAllPatientCard_clicked();
     void on_ledTimerPCStatusSync_textEdited(const QString &arg1);
     void on_ledTimerPCOnlineSync_textEdited(const QString &arg1);
+    void on_ledTimerMailSendCheck_textEdited(const QString &arg1);
     void on_pbClearPCData_clicked();
     void on_pbAuthenticate_clicked();
     void on_pbSyncOnlinePC_clicked();
@@ -113,6 +114,7 @@ private slots:
     void on_pbClearAllPatientCard_clicked();
     void on_PatientCardUpdated( unsigned int p_uiPatientCardId, QString p_qsBarcode );
     void slotShowModuleNotification( QString p_qsMessage );
+    void on_pbSaveSettings_clicked();
 
 private:
     Ui::dlgMain         *ui;
@@ -152,11 +154,14 @@ private:
     bool                 m_bReloadLanguage;
     bool                 m_bSyncPCToServer;
     bool                 m_bSyncPCFromServer;
+    bool                 m_bSendMailToServer;
     int                  m_nTimerPCStatusSync;
     int                  m_nTimerPCOnlineSync;
+    int                  m_nTimerSendMailCheck;
     int                  m_nIndexUser;
     int                  m_nIndexPCStatusSync;
     int                  m_nIndexPCOnlineSync;
+    int                  m_nIndexSendMailSync;
     int                  m_enGroup;
     QString              m_qsRPSW;
     int                  m_nIndexUpdateSyncDataCount;
@@ -194,6 +199,7 @@ private:
     void                _disableHttpBySetting();
     QString             _bytearrayToString( QString p_qsString );
     bool                _isAppicationRunning( QString p_qsAppName );
+    void                _saveSettings();
 };
 
 #endif // DLGMAIN_H

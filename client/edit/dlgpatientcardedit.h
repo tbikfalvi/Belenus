@@ -40,7 +40,8 @@ private:
 //    bool                 m_bIsCardActivated;
     cDBPatientCard      *m_poPatientCard;
     bool                 m_bIsCardDeactivated;
-    bool                 m_bIsValidationChanged;
+//    bool                 m_bIsValidationChanged;
+    QString              m_qsUnitCondition;
 
     bool                _checkCardJustForSave( QString *p_qsErrorMessage );
 

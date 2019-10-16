@@ -6,7 +6,7 @@
    <rect>
     <x>0</x>
     <y>0</y>
-    <width>890</width>
+    <width>897</width>
     <height>723</height>
    </rect>
   </property>
@@ -515,16 +515,6 @@
                <property name="toolTip">
                 <string>Language of the application GUI</string>
                </property>
-               <item>
-                <property name="text">
-                 <string>en (English)</string>
-                </property>
-               </item>
-               <item>
-                <property name="text">
-                 <string>hu (Magyar)</string>
-                </property>
-               </item>
               </widget>
              </item>
              <item>
@@ -553,6 +543,17 @@
                 </size>
                </property>
               </spacer>
+             </item>
+             <item>
+              <widget class="QPushButton" name="pbSaveSettings">
+               <property name="text">
+                <string/>
+               </property>
+               <property name="icon">
+                <iconset resource="websync.qrc">
+                 <normaloff>:/save.png</normaloff>:/save.png</iconset>
+               </property>
+              </widget>
              </item>
             </layout>
            </item>
@@ -684,6 +685,57 @@
              </item>
              <item>
               <widget class="QLabel" name="lblIndexPCOnline">
+               <property name="text">
+                <string>0</string>
+               </property>
+              </widget>
+             </item>
+            </layout>
+           </item>
+           <item>
+            <layout class="QHBoxLayout" name="horizontalLayout_15">
+             <item>
+              <widget class="QLabel" name="lblTimerMailSendCheck">
+               <property name="text">
+                <string>Check mails to be sent every</string>
+               </property>
+              </widget>
+             </item>
+             <item>
+              <widget class="QLineEdit" name="ledTimerMailSendCheck">
+               <property name="enabled">
+                <bool>false</bool>
+               </property>
+               <property name="maximumSize">
+                <size>
+                 <width>35</width>
+                 <height>16777215</height>
+                </size>
+               </property>
+              </widget>
+             </item>
+             <item>
+              <widget class="QLabel" name="lblSeconds3">
+               <property name="text">
+                <string>seconds</string>
+               </property>
+              </widget>
+             </item>
+             <item>
+              <spacer name="horizontalSpacer_11">
+               <property name="orientation">
+                <enum>Qt::Horizontal</enum>
+               </property>
+               <property name="sizeHint" stdset="0">
+                <size>
+                 <width>40</width>
+                 <height>20</height>
+                </size>
+               </property>
+              </spacer>
+             </item>
+             <item>
+              <widget class="QLabel" name="lblIndexMailSendCheck">
                <property name="text">
                 <string>0</string>
                </property>

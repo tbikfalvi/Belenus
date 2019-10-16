@@ -19,6 +19,7 @@
 //====================================================================================
 
 #include "../framework/qtframework.h"
+#include "../language/language.h"
 #include "db/dbuser.h"
 #include "db/dbguest.h"
 #include "preferences.h"
@@ -47,6 +48,11 @@
 
 //====================================================================================
 
+#define AUTO_MAIL_ON_PCSELL             1
+#define AUTO_MAIL_ON_PCUSE              2
+#define AUTO_MAIL_ON_EXPIRE             3
+
+//====================================================================================
 extern QApplication            *apMainApp;
 extern cDBUser                  g_obUser;
 extern cPreferences            *g_poPrefs;
@@ -54,7 +60,7 @@ extern CS_Communication        *g_poHardware;
 extern cCassa                   g_obCassa;
 extern cGeneral                 g_obGen;
 extern cDBGuest                 g_obGuest;
-//extern cBlnsHttp               *g_poBlnsHttp;
+extern cLanguage                g_obLanguage;
 
 //====================================================================================
 

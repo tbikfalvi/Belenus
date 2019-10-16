@@ -4,9 +4,32 @@
 
 #include "dlgchangepcvalidity.h"
 
-cDlgChangePCValidity::cDlgChangePCValidity( QWidget *p_poParent ) : QDialog( p_poParent )
+//====================================================================================
+cPCUnit::cPCUnit(QWidget */*p_poParent*/, QString p_qsText)
 {
-    m_selValidity   = SV_NONE;
+    m_qsCondition   = "";
+
+    QStringList qslText = p_qsText.split( "#" );
+    QStringList qslCond = qslText.at(1).split( "|" );
+
+    setText( qslText.at(0) );
+
+    m_qsCondition.append( QString( "(unitTime='%1' AND " ).arg( qslCond.at(0) ) );
+    m_qsCondition.append( QString( "validDateTo=\"%1\" AND " ).arg( qslCond.at(1) ) );
+    m_qsCondition.append( QString( "patientCardTypeId='%1') " ).arg( qslCond.at(2) ) );
+
+    setToolTip( m_qsCondition );
+}
+
+//====================================================================================
+//
+//
+//
+//====================================================================================
+cDlgChangePCValidity::cDlgChangePCValidity(QWidget *p_poParent , unsigned int p_uiCardId) : QDialog( p_poParent )
+{
+    m_selValidity       = SV_NONE;
+    m_qsUnitCondition   = "";
 
     setupUi( this );
 
@@ -25,6 +48,24 @@ cDlgChangePCValidity::cDlgChangePCValidity( QWidget *p_poParent ) : QDialog( p_p
     connect( rbCustom, SIGNAL(toggled(bool)), this, SLOT(selectionChanged()) );
 
     deCustom->setDate( QDate::currentDate() );
+
+    try
+    {
+        QStringList qslUnits = g_obGen.getPatientCardUnusedUnits( p_uiCardId );
+
+        for( int i=0;i<qslUnits.count();i++)
+        {
+            cPCUnit *pPCUnit = new cPCUnit( this, qslUnits.at(i) );
+            vlUnits->insertWidget( qvPCUnits.count(), pPCUnit );
+            qvPCUnits.append( pPCUnit );
+        }
+    }
+    catch( cSevException &e )
+    {
+        g_obLogger(e.severity()) << e.what() << EOM;
+        g_obGen.showTrayError( e.what() );
+    }
+
 }
 
 cDlgChangePCValidity::selValidity cDlgChangePCValidity::selectionValidity(QDate *p_qdDate)
@@ -57,11 +98,24 @@ void cDlgChangePCValidity::selectionChanged()
         deCustom->setEnabled( true );
         m_selValidity = SV_CUSTOM;
     }
-    pbOk->setEnabled( true );
 }
 
 void cDlgChangePCValidity::on_pbOk_clicked()
 {
+    if( m_selValidity == SV_NONE )
+    {
+        QMessageBox::warning( this, tr( "Warning" ),
+                              tr( "You must select a date or time intervall." ) );
+        return;
+    }
+
+    if( isUnitsNotSelected() )
+    {
+        QMessageBox::warning( this, tr( "Warning" ),
+                              tr( "You must select at least on type of patientcard units." ) );
+        return;
+    }
+
     if( m_selValidity == SV_CUSTOM && deCustom->date() < QDate::currentDate() )
     {
         QMessageBox::warning( this, tr( "Warning" ),
@@ -70,5 +124,31 @@ void cDlgChangePCValidity::on_pbOk_clicked()
         return;
     }
 
+    m_qsUnitCondition = "";
+
+    for( int i=0; i<qvPCUnits.size(); i++ )
+    {
+        if( qvPCUnits.at(i)->isChecked() )
+        {
+            if( m_qsUnitCondition.length() > 0 )    m_qsUnitCondition.append( " OR " );
+
+            m_qsUnitCondition.append( qvPCUnits.at(i)->unitCondition() );
+        }
+    }
+
     QDialog::accept();
 }
+
+bool cDlgChangePCValidity::isUnitsNotSelected()
+{
+    for( int i=0; i<qvPCUnits.size(); i++ )
+    {
+        if( qvPCUnits.at(i)->isChecked() )
+        {
+            return false;
+        }
+    }
+
+    return true;
+}
+

@@ -157,6 +157,7 @@ void cDlgStorno::enableButtons()
         catch( cSevException &e )
         {
             g_obLogger(e.severity()) << e.what() << EOM;
+            g_obGen.showTrayError( e.what() );
         }
     }
 
@@ -181,6 +182,7 @@ void cDlgStorno::on_pbStorno_clicked()
     catch( cSevException &e )
     {
         g_obLogger(e.severity()) << e.what() << EOM;
+        g_obGen.showTrayError( e.what() );
     }
 
     refreshTable();

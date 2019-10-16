@@ -17,12 +17,10 @@ public:
     
 private slots:
     void on_pbCalculate_clicked();
-
     void on_pbImageClick_clicked();
-
     void on_pbCreateLicenceCodes_clicked();
-
     void on_pbGenerateMd5Hash_clicked();
+    void on_pbBerletHaszn_clicked();
 
 private:
     Ui::cDlgTest *ui;

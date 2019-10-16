@@ -136,6 +136,7 @@ void cDlgProductType::editClicked( bool )
     {
         if( poProductType ) delete poProductType;
         g_obLogger(e.severity()) << e.what() << EOM;
+        g_obGen.showTrayError( e.what() );
     }
 }
 
@@ -173,6 +174,7 @@ void cDlgProductType::deleteClicked( bool )
         {
             if( poProductType ) delete poProductType;
             g_obLogger(e.severity()) << e.what() << EOM;
+            g_obGen.showTrayError( e.what() );
         }
     }
 }

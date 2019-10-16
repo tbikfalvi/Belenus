@@ -21,6 +21,7 @@
 #include <QApplication>
 #include <QTranslator>
 #include <QString>
+#include <QSystemTrayIcon>
 
 //====================================================================================
 class cGeneral
@@ -50,14 +51,29 @@ public:
     bool             isExtendedAdmin();
     bool             isExtendedOrSystemAdmin();
     void             showPatientCardInformation( QString p_qsBarcode );
+    void             showPatientLastVisitInformation(QString p_qsBarcode, int p_nCloseSeconds = 0 );
+    QString          getPatientCardInformationString( QString p_qsBarcode );
+    QStringList      getPatientCardUnusedUnits( unsigned int p_uiCardId );
     bool             isShoppingCartHasItems();
     bool             isAppicationRunning( QString p_qsAppName );
+    void             initSysTrayIcon();
+    void             setSysTrayIconParent( QObject *parent = 0 );
+    void             showTrayInfo( QString p_qsMessage );
+    void             showTrayWarning( QString p_qsMessage );
+    void             showTrayError( QString p_qsMessage );
+    bool             isArchiveOnDifferentPath();
+    void             setWindowMainWidget( QWidget *poWindow );
+    void             setWindowSecondaryWidget( QWidget *poWindow );
+
+    QSystemTrayIcon *m_stIcon;
 
 private:
     QApplication    *m_poMainApplication;
     QTranslator     *m_poBlTr;
     QTranslator     *m_poQtTr;
     bool             m_bIsLanguageLoaded;
+    QWidget         *m_poWindowMain;
+    QWidget         *m_poWindowSecondary;
 };
 //====================================================================================
 class cCurrency

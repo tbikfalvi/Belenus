@@ -13,6 +13,7 @@ public:
 
     void            load( const unsigned int p_uiId )                               throw( cSevException );
     void            load( const QString &p_qsName )                                 throw( cSevException );
+    void            load( const QString &p_qsName, const QString &p_qsEmail )       throw( cSevException );
     unsigned int    getGuestCount( const QString &p_qsName )                        throw( cSevException );
     int             getDiscountedPrice( const int p_inPriceTotal )                  throw( cSevException );
     void            save()                                                          throw( cSevException );

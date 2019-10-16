@@ -93,7 +93,9 @@ void MainWindow::timerEvent(QTimerEvent *)
 void MainWindow::processBackup()
 //-------------------------------------------------------------------------------------------------
 {
-    QSettings   obPrefFile( "belenus.ini", QSettings::IniFormat );
+    QString qsCurrentPath = QDir::currentPath().replace( "\\", "/" );
+
+    QSettings   obPrefFile( QString( "%1/belenus.ini" ).arg( qsCurrentPath ), QSettings::IniFormat );
     QString     qsMysqlPath     = obPrefFile.value( QString::fromAscii( "DbBackup/DirDbBinaries" ), "" ).toString();
     QString     qsBackupPath    = obPrefFile.value( QString::fromAscii( "DbBackup/DirDbBackup" ), "" ).toString();
     QString     qsProcess       = QString( "\"%1/mysqldump.exe\"" ).arg(qsMysqlPath);
@@ -134,14 +136,17 @@ void MainWindow::processBackup()
 void MainWindow::processRestore()
 //-------------------------------------------------------------------------------------------------
 {
-    QSettings   obPrefFile( "belenus.ini", QSettings::IniFormat );
+    QString qsCurrentPath = QDir::currentPath().replace( "\\", "/" );
+
+    QSettings   obPrefFile( QString( "%1/belenus.ini" ).arg( qsCurrentPath ), QSettings::IniFormat );
     QString     qsMysqlPath     = obPrefFile.value( QString::fromAscii( "DbBackup/DirDbBinaries" ), "" ).toString();
     QString     qsProcess       = QString( "\"%1/mysql.exe\" -u belenus -pbelenus belenus < " ).arg(qsMysqlPath);
     QString     qsCommand;
-    QString     qsDBRecreate    = QString( "dbrecreate.sql" );
     QString     qsImport        = QString( " \"%1\" ").arg(ui->ledDatabase->toolTip());
 
-    QFile qfRecreate(qsDBRecreate );
+    //-------------------------------------------------------------------------------------
+    // Recreate belenus database with temporary file 'dbrecreate.sql'
+    QFile qfRecreate( "dbrecreate.sql" );
 
     if( qfRecreate.open( QIODevice::WriteOnly ) )
     {
@@ -158,7 +163,7 @@ void MainWindow::processRestore()
 
     QProcess *qpRestore = new QProcess();
 
-    qsCommand = QString( "cmd /c %1 %2" ).arg( qsProcess ).arg( qsDBRecreate );
+    qsCommand = QString( "cmd /c %1 dbrecreate.sql " ).arg( qsProcess );
 
     if( qpRestore->execute( qsCommand ) )
     {
@@ -171,6 +176,8 @@ void MainWindow::processRestore()
     }
     qfRecreate.remove();
 
+    //-------------------------------------------------------------------------------------
+    // Execute database import
     qsCommand = QString( "cmd /c %1 %2" ).arg( qsProcess ).arg( qsImport );
 
     if( qpRestore->execute( qsCommand ) )
@@ -183,6 +190,36 @@ void MainWindow::processRestore()
         return;
     }
 
+    //-------------------------------------------------------------------------------------
+    // Clear activation random code with temporary file 'dbreactivate.sql'
+    QFile qfReactivate( "dbreactivate.sql" );
+
+    if( qfReactivate.open( QIODevice::WriteOnly ) )
+    {
+        qfReactivate.write( "UPDATE licences SET Cod=\"\";\n" );
+        qfReactivate.close();
+    }
+    else
+    {
+        QMessageBox::warning( this, tr("Error"),
+                              tr("Unable to create temporary file: dbreactivate.sql") );
+        setControlsEnabled( true );
+        return;
+    }
+
+    qsCommand = QString( "cmd /c %1 dbreactivate.sql " ).arg( qsProcess );
+
+    if( qpRestore->execute( qsCommand ) )
+    {
+        QMessageBox::warning( this, tr("Error"),
+                              tr("Unable to execute the following command:\n"
+                                 "%1").arg(qsCommand) );
+        delete qpRestore;
+        setControlsEnabled( true );
+        return;
+    }
+    qfReactivate.remove();
+
     delete qpRestore;
 
     m_teAction = ACT_FINISHED;
@@ -192,7 +229,9 @@ void MainWindow::processRestore()
 void MainWindow::processExecute()
 //-------------------------------------------------------------------------------------------------
 {
-    QSettings   obPrefFile( "belenus.ini", QSettings::IniFormat );
+    QString qsCurrentPath = QDir::currentPath().replace( "\\", "/" );
+
+    QSettings   obPrefFile( QString( "%1/belenus.ini" ).arg( qsCurrentPath ), QSettings::IniFormat );
     QString     qsMysqlPath     = obPrefFile.value( QString::fromAscii( "DbBackup/DirDbBinaries" ), "" ).toString();
     QString     qsProcess       = QString( "\"%1/mysql.exe\" -u belenus -pbelenus belenus < " ).arg(qsMysqlPath);
     QString     qsExecute       = QString( " \"%1\" ").arg(m_qsFileName);
@@ -223,7 +262,9 @@ void MainWindow::on_pbExit_clicked()
 
 void MainWindow::on_pbSelect_clicked()
 {
-    QSettings   obPrefFile( "belenus.ini", QSettings::IniFormat );
+    QString qsCurrentPath = QDir::currentPath().replace( "\\", "/" );
+
+    QSettings   obPrefFile( QString( "%1/belenus.ini" ).arg( qsCurrentPath ), QSettings::IniFormat );
     QString     qsBackupPath = obPrefFile.value( QString::fromAscii( "DbBackup/DirDbBackup" ), "" ).toString();
     QString     qsFile = "";
 

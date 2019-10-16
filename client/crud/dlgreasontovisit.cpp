@@ -114,6 +114,7 @@ void cDlgReasonToVisit::editClicked( bool )
     {
         if( poReasonToVisit ) delete poReasonToVisit;
         g_obLogger(e.severity()) << e.what() << EOM;
+        g_obGen.showTrayError( e.what() );
     }
 }
 
@@ -144,6 +145,7 @@ void cDlgReasonToVisit::deleteClicked( bool )
         {
             if( poReasonToVisit ) delete poReasonToVisit;
             g_obLogger(e.severity()) << e.what() << EOM;
+            g_obGen.showTrayError( e.what() );
         }
     }
 }
