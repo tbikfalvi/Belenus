@@ -3701,6 +3701,8 @@ INSERT INTO `settings` (`settingId`, `identifier`, `value`) VALUES
  (NULL, "HW_ForceModuleSendTime", 0 ),
  (NULL, "HW_ForceModuleCheckButton", 0 ),
  (NULL, "HW_ForceTimeSendCounter", 0 ),
+ (NULL, "HW_RFIDEnabled", 0 ),
+ (NULL, "HW_RFIDComPort", 1 ),
  (NULL, "CURR_Short", "Ft." ),
  (NULL, "CURR_Long", "Forint" ),
  (NULL, "CURR_Separator", "," ),

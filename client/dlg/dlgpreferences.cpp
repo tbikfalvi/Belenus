@@ -26,18 +26,6 @@ cDlgPreferences::cDlgPreferences( QWidget *p_poParent )
     setWindowTitle( tr( "Preferences" ) );
     setWindowIcon( QIcon("./resources/40x40_settings.png") );
 
-// Hide obsolete old http connection settings
-//    pbTestHttpConnection->setIcon( QIcon("./resources/40x40_check_connection.png") );
-pbTestHttpConnection->setEnabled( false );
-pbTestHttpConnection->setVisible( false );
-lblHttpWaitTime->setVisible( false );
-sbHttpWaitTime->setVisible( false );
-chkHttpEnableAutoSync->setEnabled( false );
-chkHttpEnableAutoSync->setVisible( false );
-ledAutoSyncSeconds->setEnabled( false );
-ledAutoSyncSeconds->setVisible( false );
-lblAutoSync->setVisible( false );
-
     QPoint  qpDlgSize = g_poPrefs->getDialogSize( "EditPreferences", QPoint(460,410) );
     resize( qpDlgSize.x(), qpDlgSize.y() );
 
@@ -49,6 +37,10 @@ lblAutoSync->setVisible( false );
     btbButtons->addButton( poBtnCancel, QDialogButtonBox::RejectRole );
     poBtnSave->setIcon( QIcon("./resources/40x40_ok.png") );
     poBtnCancel->setIcon( QIcon("./resources/40x40_cancel.png") );
+
+    //---------------------------------------------------------------------------------------------------------------------------------------------------
+    // General page
+    //---------------------------------------------------------------------------------------------------------------------------------------------------
 
     sliConsoleLogLevel->setValue( 1 );
     sliDBLogLevel->setValue( 1 );
@@ -63,36 +55,28 @@ lblAutoSync->setVisible( false );
     if( nDateFormatIndex < 1 ) nDateFormatIndex = 0;
     cmbDateFormat->setCurrentIndex( nDateFormatIndex );
 
+    ledDefaultCountry->setText( g_poPrefs->getDefaultCountry() );
+
     QSqlQuery *poQuery = g_poDB->executeQTQuery( QString( "SELECT value FROM settings WHERE identifier=\"ABOUT_INFO_LINK\" " ) );
     poQuery->first();
     ledAboutLink->setText( poQuery->value(0).toString() );
     ledAboutLink->setEnabled( g_obUser.isInGroup( cAccessGroup::SYSTEM ) );
+
     ledWaitSecondsOnSplashScreen->setText( QString::number( g_poPrefs->getSecondsWaitOnSlpashScreen() ) );
 
-    ledBarcodePrefix->setValidator( new QIntValidator( ledBarcodePrefix ) );
-    spbBarcodeLen->setValue( g_poPrefs->getBarcodeLength() );
-    ledBarcodePrefix->setText( g_poPrefs->getBarcodePrefix() );
-    chkCardProductBarcodeLength->setChecked( g_poPrefs->isBarcodeLengthDifferent() );
-    chkBarcodeHidden->setChecked( g_poPrefs->isBarcodeHidden() );
-    chkBarcodeHidden->setEnabled( g_obUser.isInGroup( cAccessGroup::ADMIN ) );
-    chkShowPatientInfoOnStart->setChecked( g_poPrefs->isShowPatientInfoOnStart() );
-    chkShowPatientInfoOnStart->setEnabled( g_obUser.isInGroup( cAccessGroup::ADMIN ) );
-    if( g_poPrefs->getShowInfoOnWindow() == 1 )
-    {
-        rbShowInfoOnMain->setChecked( true );
-    }
-    else
-    {
-        rbShowInfoOnSecondary->setChecked( true );
-    }
-    rbShowInfoOnMain->setEnabled( g_obUser.isInGroup( cAccessGroup::ADMIN ) && chkShowPatientInfoOnStart->isEnabled() );
-    rbShowInfoOnSecondary->setEnabled( g_obUser.isInGroup( cAccessGroup::ADMIN ) && chkShowPatientInfoOnStart->isEnabled() && g_poPrefs->isSecondaryWindowVisible() );
-    ledCloseInfoWindowSecs->setText( QString::number( g_poPrefs->getCloseInfoWindowAfterSecs() ) );
-    ledCloseInfoWindowSecs->setEnabled( chkShowPatientInfoOnStart->isChecked() );
+    chkFapad->setEnabled( g_obUser.isInGroup( cAccessGroup::SYSTEM ) );
+    chkFapad->setChecked( g_poPrefs->isFapados() );
 
-    spbPanels->setMaximum( g_poPrefs->getPanelCount() );
-    spbPanels->setValue( g_poPrefs->getPanelsPerRow() );
-    chkUsageVisibleOnMain->setChecked( g_poPrefs->isUsageVisibleOnMain() );
+    //---------------------------------------------------------------------------------------------------------------------------------------------------
+    // Appereance page
+    //---------------------------------------------------------------------------------------------------------------------------------------------------
+
+    QPixmap obColorIcon( 24, 24 );
+    QColor  colorFill;
+
+    obColorIcon.fill( QColor( g_poPrefs->getMainBackground() ) );
+    btnMainBackground->setIcon( QIcon( obColorIcon ) );
+
     pbSecondaryWindow->setChecked( g_poPrefs->isSecondaryWindowVisible() );
     if( g_poPrefs->isSecondaryWindowVisible() )
     {
@@ -105,8 +89,7 @@ lblAutoSync->setVisible( false );
         lblSecondaryWindow->setText( tr("Hidden") );
     }
 
-    QPixmap obColorIcon( 24, 24 );
-    QColor  colorFill;
+    chkSecondaryCaption->setChecked( g_poPrefs->isSecondaryCaptionVisible() );
 
     colorFill = QColor( g_poPrefs->getSecondaryCaptionBackground() );
     obColorIcon.fill( colorFill );
@@ -115,6 +98,18 @@ lblAutoSync->setVisible( false );
     colorFill = QColor( g_poPrefs->getSecondaryCaptionColor() );
     obColorIcon.fill( colorFill );
     pbTextColorActive->setIcon( QIcon( obColorIcon ) );
+
+    obColorIcon.fill( QColor( g_poPrefs->getSecondaryBackground() ) );
+    btnSecondaryBackground->setIcon( QIcon( obColorIcon ) );
+
+    obColorIcon.fill( QColor( g_poPrefs->getSecondaryFrame() ) );
+    btnSecondaryFrame->setIcon( QIcon( obColorIcon ) );
+
+    spbPanels->setMaximum( g_poPrefs->getPanelCount() );
+    spbPanels->setValue( g_poPrefs->getPanelsPerRow() );
+    chkUsageVisibleOnMain->setChecked( g_poPrefs->isUsageVisibleOnMain() );
+
+    pbPanelSettings->setIcon( QIcon("./resources/40x40_settings.png") );
 
     if( g_poPrefs->isStopInLine() )
     {
@@ -125,61 +120,108 @@ lblAutoSync->setVisible( false );
         rbStopInNewLine->setChecked( true );
     }
 
-    ledServerHost->setText( g_poPrefs->getServerAddress() );
-//    chkHttpEnableAutoSync->setChecked( g_poPrefs->isStartHttpSyncAuto() );
-//    ledAutoSyncSeconds->setText( QString::number( g_poPrefs->getStartHttpSyncAutoSeconds() ) );
-
-    spbCOM->setValue( g_poPrefs->getCommunicationPort() );
-    chkForceSendTime->setChecked( g_poPrefs->isForceModuleSendTime() );
-    ledForceTimeSendTime->setText( QString::number( g_poPrefs->getForceTimeSendCounter() ) );
-    chkForceButtonRead->setChecked( g_poPrefs->isForceModuleCheckButton() );
-
-    obColorIcon.fill( QColor( g_poPrefs->getMainBackground() ) );
-    btnMainBackground->setIcon( QIcon( obColorIcon ) );
-
-    obColorIcon.fill( QColor( g_poPrefs->getSecondaryBackground() ) );
-    btnSecondaryBackground->setIcon( QIcon( obColorIcon ) );
-
-    obColorIcon.fill( QColor( g_poPrefs->getSecondaryFrame() ) );
-    btnSecondaryFrame->setIcon( QIcon( obColorIcon ) );
-
-    chkSecondaryCaption->setChecked( g_poPrefs->isSecondaryCaptionVisible() );
+    //---------------------------------------------------------------------------------------------------------------------------------------------------
+    // Device page
+    //---------------------------------------------------------------------------------------------------------------------------------------------------
 
     ledVatPercent->setText( QString::number( g_poPrefs->getDeviceUseVAT() ) );
+
     ledDeviceAdminPassword->setText( "123456789" );
-    ledDeviceAdminPasswordCheck->setText( "123456789" );
     ledDeviceAdminPassword->setEnabled( false );
+
+    ledDeviceAdminPasswordCheck->setText( "123456789" );
     ledDeviceAdminPasswordCheck->setEnabled( false );
+
     pbModifyDevAdminPsw->setIcon( QIcon("./resources/40x40_key.png") );
     pbCancelModifyPsw->setIcon( QIcon("./resources/40x40_cancel.png") );
     pbCancelModifyPsw->setVisible( false );
-    ledPanelTextSterile->setText( g_poPrefs->getPanelTextSteril() );
-    ledPanelTextSterile->setEnabled( g_obUser.isInGroup( cAccessGroup::SYSTEM ) );
-    ledPanelTextTubeReplacement->setText( g_poPrefs->getPanelTextTubeReplace() );
-    ledPanelTextTubeReplacement->setEnabled( g_obUser.isInGroup( cAccessGroup::SYSTEM ) );
-    ledPanelTextTubeCleanup->setText( g_poPrefs->getPanelTextTubeCleanup() );
-    ledPanelTextTubeCleanup->setEnabled( g_obUser.isInGroup( cAccessGroup::SYSTEM ) );
-    chkVisibleSecSteril->setChecked( g_poPrefs->isTextSterilVisible() );
-    chkVisibleSecSteril->setEnabled( g_obUser.isInGroup( cAccessGroup::SYSTEM ) );
-    chkVisibleSecTubeReplace->setChecked( g_poPrefs->isTextTubeReplaceVisible() );
-    chkVisibleSecTubeReplace->setEnabled( g_obUser.isInGroup( cAccessGroup::SYSTEM ) );
-    chkVisibleSecTubeCleanup->setChecked( g_poPrefs->isTextTubeCleanupVisible() );
-    chkVisibleSecTubeCleanup->setEnabled( g_obUser.isInGroup( cAccessGroup::SYSTEM ) );
+
     chkDAResetClock->setChecked( g_poPrefs->isDACanModifyWorktime() );
     chkDAResetClock->setEnabled( g_obUser.isInGroup( cAccessGroup::SYSTEM ) );
+
     chkDASetExpireDate->setChecked( g_poPrefs->isDACanModifyExpDate() );
     chkDASetExpireDate->setEnabled( g_obUser.isInGroup( cAccessGroup::SYSTEM ) );
+
     dteLicenceExpiration->setDateTime( QDateTime::fromString( g_poPrefs->getLicenceLastValidated(), "yyyy-MM-dd hh:mm:ss" ) );
+
     pbModifyExpDate->setIcon( QIcon("./resources/40x40_key.png") );
 
+    ledPanelTextSterile->setText( g_poPrefs->getPanelTextSteril() );
+    ledPanelTextSterile->setEnabled( g_obUser.isInGroup( cAccessGroup::SYSTEM ) );
+
+    chkVisibleSecSteril->setChecked( g_poPrefs->isTextSterilVisible() );
+    chkVisibleSecSteril->setEnabled( g_obUser.isInGroup( cAccessGroup::SYSTEM ) );
+
+    ledPanelTextTubeReplacement->setText( g_poPrefs->getPanelTextTubeReplace() );
+    ledPanelTextTubeReplacement->setEnabled( g_obUser.isInGroup( cAccessGroup::SYSTEM ) );
+
+    chkVisibleSecTubeReplace->setChecked( g_poPrefs->isTextTubeReplaceVisible() );
+    chkVisibleSecTubeReplace->setEnabled( g_obUser.isInGroup( cAccessGroup::SYSTEM ) );
+
+    ledPanelTextTubeCleanup->setText( g_poPrefs->getPanelTextTubeCleanup() );
+    ledPanelTextTubeCleanup->setEnabled( g_obUser.isInGroup( cAccessGroup::SYSTEM ) );
+
+    chkVisibleSecTubeCleanup->setChecked( g_poPrefs->isTextTubeCleanupVisible() );
+    chkVisibleSecTubeCleanup->setEnabled( g_obUser.isInGroup( cAccessGroup::SYSTEM ) );
+
+    //---------------------------------------------------------------------------------------------------------------------------------------------------
+    // Patientcard page
+    //---------------------------------------------------------------------------------------------------------------------------------------------------
+
+    spbBarcodeLen->setValue( g_poPrefs->getBarcodeLength() );
+
+    ledBarcodePrefix->setValidator( new QIntValidator( ledBarcodePrefix ) );
+    ledBarcodePrefix->setText( g_poPrefs->getBarcodePrefix() );
+
+    chkCardProductBarcodeLength->setChecked( g_poPrefs->isBarcodeLengthDifferent() );
+
+    chkBarcodeHidden->setChecked( g_poPrefs->isBarcodeHidden() );
+    chkBarcodeHidden->setEnabled( g_obUser.isInGroup( cAccessGroup::ADMIN ) );
+
+    cCurrency   cPrice( g_poPrefs->getPatientCardLostPrice(), cCurrency::CURR_GROSS, g_poPrefs->getPatientCardLostPriceVat() );
+    ledPCLostPrice->setText( cPrice.currencyString() );
+
+    ledPCLostVatpercent->setText( QString::number(g_poPrefs->getPatientCardLostPriceVat()) );
+    connect( ledPCLostVatpercent, SIGNAL(textChanged(QString)), this, SLOT(on_ledPCLostPrice_textChanged(QString)) );
+
+    cCurrency   cPricePartner( g_poPrefs->getPatientCardPartnerPrice(), cCurrency::CURR_GROSS, g_poPrefs->getPatientCardPartnerPriceVat() );
+    ledPCPartnerPrice->setText( cPricePartner.currencyString() );
+
+    ledPCPartnerVatpercent->setText( QString::number(g_poPrefs->getPatientCardPartnerPriceVat()) );
+    connect( ledPCPartnerVatpercent, SIGNAL(textChanged(QString)), this, SLOT(on_ledPCPartnerPrice_textChanged(QString)) );
+
+    chkShowPatientInfoOnStart->setChecked( g_poPrefs->isShowPatientInfoOnStart() );
+    chkShowPatientInfoOnStart->setEnabled( g_obUser.isInGroup( cAccessGroup::ADMIN ) );
+
+    if( g_poPrefs->getShowInfoOnWindow() == 1 )
+    {
+        rbShowInfoOnMain->setChecked( true );
+    }
+    else
+    {
+        rbShowInfoOnSecondary->setChecked( true );
+    }
+    rbShowInfoOnMain->setEnabled( g_obUser.isInGroup( cAccessGroup::ADMIN ) && chkShowPatientInfoOnStart->isEnabled() );
+    rbShowInfoOnSecondary->setEnabled( g_obUser.isInGroup( cAccessGroup::ADMIN ) && chkShowPatientInfoOnStart->isEnabled() && g_poPrefs->isSecondaryWindowVisible() );
+
+    ledCloseInfoWindowSecs->setText( QString::number( g_poPrefs->getCloseInfoWindowAfterSecs() ) );
+    ledCloseInfoWindowSecs->setEnabled( chkShowPatientInfoOnStart->isChecked() );
+
+    //---------------------------------------------------------------------------------------------------------------------------------------------------
+    // Cassa page
+    //---------------------------------------------------------------------------------------------------------------------------------------------------
+
     chkAutoCloseCassa->setChecked( g_poPrefs->getCassaAutoClose() );
+
     chkCassaAutoWithdrawal->setChecked( g_poPrefs->getCassaAutoWithdrawal() );
     if( !chkAutoCloseCassa->isChecked() )
     {
         chkCassaAutoWithdrawal->setChecked( false );
         chkCassaAutoWithdrawal->setEnabled( false );
     }
+
     chkAutoOpenNewCassa->setChecked( g_poPrefs->getCassaAutoCreate() );
+
     rbCassaContinueWithBalance->setEnabled( g_poPrefs->getCassaAutoCreate() );
     rbCassaContinueWithoutBalance->setEnabled( g_poPrefs->getCassaAutoCreate() );
     switch( g_poPrefs->getCassaCreateType() )
@@ -193,42 +235,65 @@ lblAutoSync->setVisible( false );
     }
 
     ledCurrencyFullName->setText( g_poPrefs->getCurrencyLong() );
+
     ledCurrencyShortName->setText( g_poPrefs->getCurrencyShort() );
+
     ledSeparatorDecimal->setText( g_poPrefs->getCurrencyDecimalSeparator() );
+
     ledSeparatorThousand->setText( g_poPrefs->getCurrencySeparator() );
 
-    ledDefaultCountry->setText( g_poPrefs->getDefaultCountry() );
-
-    connect( ledPCLostVatpercent, SIGNAL(textChanged(QString)), this, SLOT(on_ledPCLostPrice_textChanged(QString)) );
-    connect( ledPCPartnerVatpercent, SIGNAL(textChanged(QString)), this, SLOT(on_ledPCPartnerPrice_textChanged(QString)) );
-
-    cCurrency   cPrice( g_poPrefs->getPatientCardLostPrice(), cCurrency::CURR_GROSS, g_poPrefs->getPatientCardLostPriceVat() );
-
-    ledPCLostPrice->setText( cPrice.currencyString() );
-    ledPCLostVatpercent->setText( QString::number(g_poPrefs->getPatientCardLostPriceVat()) );
-
-    cCurrency   cPricePartner( g_poPrefs->getPatientCardPartnerPrice(), cCurrency::CURR_GROSS, g_poPrefs->getPatientCardPartnerPriceVat() );
-
-    ledPCPartnerPrice->setText( cPricePartner.currencyString() );
-    ledPCPartnerVatpercent->setText( QString::number(g_poPrefs->getPatientCardPartnerPriceVat()) );
-
-    pbPanelSettings->setIcon( QIcon("./resources/40x40_settings.png") );
+    //---------------------------------------------------------------------------------------------------------------------------------------------------
+    // Notification page
+    //---------------------------------------------------------------------------------------------------------------------------------------------------
 
     chkAutoMailPCSell->setChecked( g_poPrefs->isAutoMailOnPCSell() );
+
     chkAutoMailPCUse->setChecked( g_poPrefs->isAutoMailOnPCUse() );
+
     chkAutoMailPCExpire->setChecked( g_poPrefs->isAutoMailOnPCExpiration() );
+
     ledAutoMailPCExpireDays->setText( QString::number(g_poPrefs->getPCExpirationDays()) );
 
+    //---------------------------------------------------------------------------------------------------------------------------------------------------
+    // Server page
+    //---------------------------------------------------------------------------------------------------------------------------------------------------
+
+    ledServerHost->setText( g_poPrefs->getServerAddress() );
+
     chkEnableHttp->setChecked( g_poPrefs->isBlnsHttpEnabled() );
+
     chkWebSyncAutoStart->setChecked( g_poPrefs->isWebSyncAutoStart() );
     chkWebSyncAutoStart->setEnabled( g_poPrefs->isBlnsHttpEnabled() );
-//    pbTestHttpConnection->setEnabled( g_poPrefs->isBlnsHttpEnabled() );
-//    sbHttpWaitTime->setEnabled( g_poPrefs->isBlnsHttpEnabled() );
-//    sbHttpWaitTime->setValue( g_poPrefs->getBlnsHttpMessageWaitTime() );
+
+    //---------------------------------------------------------------------------------------------------------------------------------------------------
+    // Hardware page
+    //---------------------------------------------------------------------------------------------------------------------------------------------------
+
+    spbCOM->setValue( g_poPrefs->getCommunicationPort() );
+
+    chkForceSendTime->setChecked( g_poPrefs->isForceModuleSendTime() );
+
+    ledForceTimeSendTime->setText( QString::number( g_poPrefs->getForceTimeSendCounter() ) );
+
+    chkForceButtonRead->setChecked( g_poPrefs->isForceModuleCheckButton() );
+
+    chkRFIDEnabled->setChecked( g_poPrefs->isRFIDEnabled() );
+
+    if( chkRFIDEnabled )
+    {
+        spbRFIDCOM->setValue( g_poPrefs->getRFIDComPort() );
+    }
+
+    //---------------------------------------------------------------------------------------------------------------------------------------------------
+    // Hardware page
+    //---------------------------------------------------------------------------------------------------------------------------------------------------
 
     ledBinaryLocation->setText( g_poPrefs->getDirDbBinaries() );
+
     ledBackupLocation->setText( g_poPrefs->getDirDbBackup() );
+
     chkBackupDatabase->setChecked( g_poPrefs->isForceBackupDatabase() );
+
     chkEnableDatabaseBackup->setChecked( g_poPrefs->isBackupDatabase() );
 
     chkMonday->setEnabled( false );
@@ -276,8 +341,9 @@ lblAutoSync->setVisible( false );
     chkSaturday->setChecked( qsBackupDays.contains(tr("Sat"), Qt::CaseInsensitive) );
     chkSunday->setChecked( qsBackupDays.contains(tr("Sun"), Qt::CaseInsensitive) );
 
-    chkFapad->setEnabled( g_obUser.isInGroup( cAccessGroup::SYSTEM ) );
-    chkFapad->setChecked( g_poPrefs->isFapados() );
+    //---------------------------------------------------------------------------------------------------------------------------------------------------
+    // Oldalak beallitasait feluliro modositasok
+    //---------------------------------------------------------------------------------------------------------------------------------------------------
 
     if( g_poPrefs->isFapados() )
     {
@@ -559,6 +625,9 @@ void cDlgPreferences::accept()
         g_poPrefs->saveSettings();
     m_dlgProgress->hideProgress();
 
+    g_poPrefs->setRFIDEnabled( chkRFIDEnabled->isChecked() );
+    g_poPrefs->setRFIDComPort( spbRFIDCOM->value() );
+
     QDialog::accept();
 }
 
@@ -778,15 +847,7 @@ void cDlgPreferences::_decreasePatientCardBarcodes(bool p_bCutBegin)
     }
     m_dlgProgress->hideProgress();
 }
-/*
-void cDlgPreferences::on_pbTestHttpConnection_clicked()
-{
-    g_poBlnsHttp->checkHttpServerAvailability();
-    setCursor( Qt::WaitCursor);
 
-    m_nTimer = startTimer( 5000 );
-}
-*/
 void cDlgPreferences::on_chkEnableHttp_clicked(bool checked)
 {
     if( checked )
@@ -820,8 +881,6 @@ void cDlgPreferences::on_chkEnableHttp_clicked(bool checked)
     {
         chkWebSyncAutoStart->setEnabled( false );
     }
-//    pbTestHttpConnection->setEnabled( checked );
-//    sbHttpWaitTime->setEnabled( checked );
 }
 
 void cDlgPreferences::on_btnSecondaryFrame_clicked()

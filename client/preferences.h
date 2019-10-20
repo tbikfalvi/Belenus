@@ -261,6 +261,11 @@ public:
     void            setCloseInfoWindowAfterSecs( const int p_nCloseInfoWindowAfterSecs );
     int             getCloseInfoWindowAfterSecs() const;
 
+    void            setRFIDEnabled( bool p_bIsRFIDEnabled );
+    bool            isRFIDEnabled();
+    void            setRFIDComPort( const int p_nRFIDComPort );
+    int             getRFIDComPort() const;
+
 //void            setXXX( const QString &p_qsXXX );
 //QString         getXXX() const;
 //void            setXXX( const int p_nXXX );
@@ -367,6 +372,8 @@ private:
     bool            m_bShowPatientInfoOnStart;
     int             m_nShowInfoOnWindow;
     int             m_nCloseInfoWindowAfterSecs;
+    bool            m_bIsRFIDEnabled;
+    int             m_nRFIDComPort;
 
     void init();
 };

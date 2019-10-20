@@ -212,6 +212,7 @@ HEADERS = belenus.h \
     bs_connection.h \
     communication.h \
     communication_demo.h \
+    communication_rfid.h \
     frmpanel.h \
     mdipanels.h \
     preferences.h \
@@ -368,6 +369,7 @@ SOURCES = main.cpp \
     report/dlgpreview.cpp \
     bs_connection.cpp \
     communication_demo.cpp \
+    communication_rfid.cpp \
     frmpanel.cpp \
     mdipanels.cpp \
     preferences.cpp \

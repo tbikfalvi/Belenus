@@ -45,6 +45,7 @@
 #ifdef __WIN32__
     #include "communication_serial.h"
 #endif
+#include "communication_rfid.h"
 #include "wndmain.h"
 
 //====================================================================================
@@ -66,6 +67,7 @@ cGeneral                 g_obGen;
 cDBGuest                 g_obGuest;
 cLicenceManager          g_obLicenceManager;
 cLanguage                g_obLanguage;
+cCommRFID               *g_poCommRFID;
 
 // 'TO BE SOLVED' felirat, ahol még valamit meg kell oldani
 // g_obLogger(cSeverity::DEBUG) << QString("") << EOM;
@@ -270,6 +272,34 @@ int main( int argc, char *argv[] )
 
         qsSpalsh += "-----------------------------------------------------\n";
         obSplash.showMessage(qsSpalsh,Qt::AlignLeft,QColor(59,44, 75));
+
+        Sleep( g_poPrefs->getSecondsWaitOnSlpashScreen()*1000 );
+
+        //-------------------------------------------------------------------------------
+        // Initialize and set RFID communication if enabled
+        //-------------------------------------------------------------------------------
+
+        g_poCommRFID = NULL;
+
+        if( g_poPrefs->isRFIDEnabled() )
+        {
+            qsSpalsh += QObject::tr("\nRFID communication enabled\nChecking RFID connection ...");
+            g_poCommRFID = new cCommRFID();
+            g_poCommRFID->init( g_poPrefs->getRFIDComPort() );
+
+            if( g_poCommRFID->isRFIDConnected() )
+            {
+                qsSpalsh += QObject::tr("CONNECTED\n");
+            }
+            else
+            {
+                qsSpalsh += QObject::tr("FAILED\n");
+            }
+        }
+        else
+        {
+            qsSpalsh += QObject::tr("\nRFID communication disabled\n");
+        }
 
         Sleep( g_poPrefs->getSecondsWaitOnSlpashScreen()*1000 );
 

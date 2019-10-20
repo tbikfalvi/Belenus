@@ -24,6 +24,7 @@
 #include "cdlgtest.h"
 #include "belenus.h"
 #include "licenceManager.h"
+#include "communication_rfid.h"
 
 //====================================================================================
 
@@ -107,6 +108,7 @@
 
 //extern DatabaseWriter   g_obLogDBWriter;
 extern cLicenceManager  g_obLicenceManager;
+extern cCommRFID       *g_poCommRFID;
 
 //====================================================================================
 cWndMain::cWndMain( QWidget *parent ) : QMainWindow( parent )
@@ -1578,6 +1580,16 @@ void cWndMain::timerEvent(QTimerEvent *)
     else
     {
         mdiPanels->itemRemovedFromShoppingCart();
+    }
+
+    if( g_poCommRFID != NULL && g_poCommRFID->isRFIDConnected() )
+    {
+        QString qsRFID = g_poCommRFID->readRFID();
+
+        if( qsRFID.length() > 0 )
+        {
+            g_obGen.m_stIcon->showMessage( "RFID read", QString( "RFID: %1" ).arg(qsRFID), QSystemTrayIcon::Information, 5000 );
+        }
     }
 
     updateTitle();
