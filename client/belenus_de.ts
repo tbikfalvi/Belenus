@@ -450,7 +450,11 @@ RFID communication enabled
         <location filename="main.cpp" line="301"/>
         <source>
 RFID communication disabled
+
 </source>
+        <oldsource>
+RFID communication disabled
+</oldsource>
         <translation type="unfinished"></translation>
     </message>
     <message>
@@ -535,19 +539,19 @@ Please start WampServer application then restart Belenus application.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="preferences.cpp" line="142"/>
+        <location filename="preferences.cpp" line="144"/>
         <source> NOT STERILE </source>
         <oldsource>NOT STERILE</oldsource>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="preferences.cpp" line="143"/>
+        <location filename="preferences.cpp" line="145"/>
         <source> TUBE REPLACEMENT NEEDED </source>
         <oldsource>TUBE REPLACEMENT NEEDED</oldsource>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="preferences.cpp" line="144"/>
+        <location filename="preferences.cpp" line="146"/>
         <source> TUBE CLEAN-UP NEEDED </source>
         <translation type="unfinished"></translation>
     </message>

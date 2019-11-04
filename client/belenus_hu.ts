@@ -299,9 +299,15 @@ RFID kapcsolat ellenőrzés ...</translation>
         <location filename="main.cpp" line="301"/>
         <source>
 RFID communication disabled
+
 </source>
+        <oldsource>
+RFID communication disabled
+</oldsource>
         <translation>
-RFID eszköz letiltva</translation>
+RFID eszköz letiltva
+
+</translation>
     </message>
     <message>
         <location filename="main.cpp" line="326"/>
@@ -729,19 +735,19 @@ Kérem indítsa el a WampServer alkalmazást, majd indítsa újra a Belenus alka
         <translation type="obsolete">&lt;br&gt;&lt;b&gt;%1 egység (%2 perc) (%3) érvényes &lt;/b&gt;%4 | %5 - %6</translation>
     </message>
     <message>
-        <location filename="preferences.cpp" line="142"/>
+        <location filename="preferences.cpp" line="144"/>
         <source> NOT STERILE </source>
         <oldsource>NOT STERILE</oldsource>
         <translation>NEM STERIL</translation>
     </message>
     <message>
-        <location filename="preferences.cpp" line="143"/>
+        <location filename="preferences.cpp" line="145"/>
         <source> TUBE REPLACEMENT NEEDED </source>
         <oldsource>TUBE REPLACEMENT NEEDED</oldsource>
         <translation>CSŐCSERE SZÜKSÉGES</translation>
     </message>
     <message>
-        <location filename="preferences.cpp" line="144"/>
+        <location filename="preferences.cpp" line="146"/>
         <source> TUBE CLEAN-UP NEEDED </source>
         <translation> CSŐ TAKARÍTÁS SZÜKSÉGES </translation>
     </message>

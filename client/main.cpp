@@ -298,7 +298,7 @@ int main( int argc, char *argv[] )
         }
         else
         {
-            qsSpalsh += QObject::tr("\nRFID communication disabled\n");
+            qsSpalsh += QObject::tr("\nRFID communication disabled\n\n");
         }
 
         Sleep( g_poPrefs->getSecondsWaitOnSlpashScreen()*1000 );

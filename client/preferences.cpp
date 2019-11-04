@@ -13,6 +13,8 @@
 // Alkalmazas beallitasok allomanya.
 //====================================================================================
 
+#include <QMessageBox>
+
 #include "preferences.h"
 #include "belenus.h"
 
@@ -285,6 +287,9 @@ void cPreferences::saveSettings() throw (cSevException)
 
         saveSettingS( "SERVER_Address", m_qsServerAddress );
         saveSettingS( "SERVER_Port", m_qsServerPort );
+
+QMessageBox::information( 0, "", QString( "rfid Enabled: %1" ).arg( m_bIsRFIDEnabled ) );
+QMessageBox::information( 0, "", QString( "rfid Com: %1" ).arg( m_nRFIDComPort ) );
 
         saveSettingI( "HW_ComPort", m_inCommunicationPort );
         saveSettingB( "HW_ForceModuleSendTime", m_bForceModuleSendTime );
