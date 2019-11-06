@@ -3,7 +3,11 @@
 
 #include <QMainWindow>
 
+#include "../framework/qtframework.h"
+
 namespace Ui { class MainWindow; }
+
+extern cQTMySQLConnection       *g_poDB;
 
 class MainWindow : public QMainWindow
 {
@@ -19,7 +23,7 @@ public:
         ACT_FINISHED
     };
 
-    explicit MainWindow(QWidget *parent = 0, teAction p_teAction = ACT_BACKUP, QString p_qsFileName = "" );
+    explicit MainWindow(QWidget *parent = 0, QString p_qsVersion = "", teAction p_teAction = ACT_BACKUP, QString p_qsFileName = "" );
     ~MainWindow();
 
 protected:
@@ -33,6 +37,7 @@ private slots:
     void    processBackup();
     void    processRestore();
     void    processExecute();
+    QString         loadSetting( QString p_Identifier, QString p_Default ) throw (cSevException);
 
 private:
 
@@ -40,6 +45,8 @@ private:
     int              m_nTimer;
     teAction         m_teAction;
     QString          m_qsFileName;
+    QString          m_qsDirDbBinaries;
+    QString          m_qsDirDbBackup;
 };
 
 #endif // MAINWINDOW_H

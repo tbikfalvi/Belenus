@@ -4,7 +4,7 @@
 #
 #-------------------------------------------------
 
-QT          += core gui xml
+QT          += core gui sql xml
 TARGET       = DBBackup
 DESTDIR      = ..
 TEMPLATE     = app
@@ -15,11 +15,23 @@ TRANSLATIONS = dbbackup_hu.ts \
                dbbackup_it.ts \
                dbbackup_ro.ts
 
-SOURCES     += ../language/language.cpp \
+SOURCES     += ../framework/dbconnection.cpp \
+               ../framework/qtmysqlconnection.cpp \
+               ../framework/qtmysqlquerymodel.cpp \
+               ../framework/qtlogger.cpp \
+               ../framework/logger/FileWriter.cpp \
+               ../framework/tracer.cpp \
+               ../language/language.cpp \
                main.cpp \
                mainwindow.cpp
 
-HEADERS     += ../language/language.h \
+HEADERS     += ../framework/dbconnection.h \
+               ../framework/qtmysqlconnection.h \
+               ../framework/qtmysqlquerymodel.h \
+               ../framework/qtlogger.h \
+               ../framework/logger/FileWriter.h \
+               ../framework/tracer.h \
+               ../language/language.h \
                mainwindow.h
 
 FORMS       += mainwindow.ui

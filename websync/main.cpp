@@ -10,7 +10,7 @@ QTranslator     *poTransApp;
 QTranslator     *poTransQT;
 QApplication    *apMainApp;
 
-#define APPLICATION_VERSION_NUMBER  "1.8.0.0"
+#define APPLICATION_VERSION_NUMBER  "1.8.0.2"
 
 #include "../framework/qtlogger.h"
 #include "../framework/qtframework.h"
