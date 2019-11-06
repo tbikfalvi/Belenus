@@ -41,7 +41,7 @@ MainWindow::MainWindow(QWidget *parent, QString p_qsVersion, teAction p_teAction
         case ACT_EXECUTE:
         {
             ui->lblCaption->setText( tr("Update database") );
-            if( p_qsFileName.length() == 0 )
+            if( m_qsFileName.length() == 0 )
             {
                 ui->lblInfo->setText( tr("Please select desired database and click on Start") );
                 setControlsEnabled( true );
@@ -118,11 +118,8 @@ void MainWindow::processBackup()
 {
     QString qsCurrentPath = QDir::currentPath().replace( "\\", "/" );
 
-//    QSettings   obPrefFile( QString( "%1/belenus.ini" ).arg( qsCurrentPath ), QSettings::IniFormat );
-//    QString     m_qsDirDbBinaries     = obPrefFile.value( QString::fromAscii( "DbBackup/DirDbBinaries" ), "" ).toString();
-//    QString     m_qsDirDbBackup    = obPrefFile.value( QString::fromAscii( "DbBackup/DirDbBackup" ), "" ).toString();
     QString     qsProcess       = QString( "\"%1/mysqldump.exe\"" ).arg(m_qsDirDbBinaries);
-    QString     qsParameters    = QString( "-u belenus -pbelenus belenus > \"%1\\belenus_backup_%2.sql\" ").arg(m_qsDirDbBackup).arg( QDateTime::currentDateTime().toString("yyyyMMddhhmmss") );
+    QString     qsParameters    = QString( "-u belenus -pbelenus belenus > \"%1/belenus_backup_%2.sql\" ").arg(m_qsDirDbBackup).arg( QDateTime::currentDateTime().toString("yyyyMMddhhmmss") );
     QString     qsCommand       = QString( "cmd /c %1 %2" ).arg( qsProcess ).arg( qsParameters );
 
     QDir    qdBackup( m_qsDirDbBackup );
@@ -161,8 +158,6 @@ void MainWindow::processRestore()
 {
     QString qsCurrentPath = QDir::currentPath().replace( "\\", "/" );
 
-//    QSettings   obPrefFile( QString( "%1/belenus.ini" ).arg( qsCurrentPath ), QSettings::IniFormat );
-//    QString     m_qsDirDbBinaries     = obPrefFile.value( QString::fromAscii( "DbBackup/DirDbBinaries" ), "" ).toString();
     QString     qsProcess       = QString( "\"%1/mysql.exe\" -u belenus -pbelenus belenus < " ).arg(m_qsDirDbBinaries);
     QString     qsCommand;
     QString     qsImport        = QString( " \"%1\" ").arg(ui->ledDatabase->toolTip());
@@ -254,8 +249,6 @@ void MainWindow::processExecute()
 {
     QString qsCurrentPath = QDir::currentPath().replace( "\\", "/" );
 
-//    QSettings   obPrefFile( QString( "%1/belenus.ini" ).arg( qsCurrentPath ), QSettings::IniFormat );
-//    QString     m_qsDirDbBinaries     = obPrefFile.value( QString::fromAscii( "DbBackup/DirDbBinaries" ), "" ).toString();
     QString     qsProcess       = QString( "\"%1/mysql.exe\" -u belenus -pbelenus belenus < " ).arg(m_qsDirDbBinaries);
     QString     qsExecute       = QString( " \"%1\" ").arg(m_qsFileName);
     QString     qsCommand       = QString( "cmd /c %1 %2" ).arg( qsProcess ).arg( qsExecute );
@@ -286,10 +279,7 @@ void MainWindow::on_pbExit_clicked()
 void MainWindow::on_pbSelect_clicked()
 {
     QString qsCurrentPath = QDir::currentPath().replace( "\\", "/" );
-
-//    QSettings   obPrefFile( QString( "%1/belenus.ini" ).arg( qsCurrentPath ), QSettings::IniFormat );
-//    QString     m_qsDirDbBackup = obPrefFile.value( QString::fromAscii( "DbBackup/DirDbBackup" ), "" ).toString();
-    QString     qsFile = "";
+    QString qsFile = "";
 
     if( m_qsDirDbBackup.length() == 0 )    m_qsDirDbBackup = QDir::currentPath();
 
@@ -303,15 +293,15 @@ void MainWindow::on_pbSelect_clicked()
     if( dlgFileOpen.exec() )
     {
         QString qsDir  = dlgFileOpen.directory().absolutePath();
-        qsDir.replace( '/', '\\' );
-        if( qsDir.right(1).compare("\\") == 0 )
+        qsDir.replace( '\\', '/' );
+        if( qsDir.right(1).compare("/") == 0 )
         {
             qsDir = qsDir.left(qsDir.length()-1);
         }
         qsFile = dlgFileOpen.selectedFiles().at(0).right( dlgFileOpen.selectedFiles().at(0).length()-qsDir.length()-1 );
 
         ui->ledDatabase->setText( qsFile );
-        ui->ledDatabase->setToolTip( QString("%1\\%2").arg( qsDir ).arg( qsFile ) );
+        ui->ledDatabase->setToolTip( QString("%1/%2").arg( qsDir ).arg( qsFile ) );
     }
 }
 

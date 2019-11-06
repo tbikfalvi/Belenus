@@ -1,4 +1,4 @@
-ï»¿-- -----------------------------------------------------------------------------------
+-- -----------------------------------------------------------------------------------
 -- Belenus Szoftver Rendszer (c) Pagony Multimedia Studio Bt - 2014
 -- -----------------------------------------------------------------------------------
 -- Filename    : correct_barcode.sql
@@ -8,7 +8,7 @@ USE `belenus`;
 
 -- -----------------------------------------------------------------------------------
 
-UPDATE `patientcards` SET barcode = REPLACE( barcode, 'Ã¶', '0' );
-UPDATE `products` SET barcode = REPLACE( barcode, 'Ã¶', '0' );
+UPDATE `patientcards` SET barcode = REPLACE( barcode, '”', '0' );
+UPDATE `products` SET barcode = REPLACE( barcode, '”', '0' );
 
 -- -----------------------------------------------------------------------------------
