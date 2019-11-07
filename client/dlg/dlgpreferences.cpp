@@ -621,12 +621,14 @@ void cDlgPreferences::accept()
     g_poPrefs->setDateFormat( cmbDateFormat->currentText() );
     g_poPrefs->setFapados( chkFapad->isChecked() );
 
+    g_poPrefs->setRFIDEnabled( chkRFIDEnabled->isChecked() );
+    g_poPrefs->setRFIDComPort( spbRFIDCOM->value() );
+
+
+
     m_dlgProgress->showProgress();
         g_poPrefs->saveSettings();
     m_dlgProgress->hideProgress();
-
-    g_poPrefs->setRFIDEnabled( chkRFIDEnabled->isChecked() );
-    g_poPrefs->setRFIDComPort( spbRFIDCOM->value() );
 
     QDialog::accept();
 }

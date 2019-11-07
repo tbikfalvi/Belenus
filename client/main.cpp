@@ -289,11 +289,11 @@ int main( int argc, char *argv[] )
 
             if( g_poCommRFID->isRFIDConnected() )
             {
-                qsSpalsh += QObject::tr("CONNECTED\n");
+                qsSpalsh += QObject::tr("CONNECTED\n\n");
             }
             else
             {
-                qsSpalsh += QObject::tr("FAILED\n");
+                qsSpalsh += QObject::tr("FAILED\n\n");
             }
         }
         else
@@ -395,7 +395,7 @@ int main( int argc, char *argv[] )
         obMainWindow.move( g_poPrefs->getMainWindowLeft(), g_poPrefs->getMainWindowTop() );
         obMainWindow.resize( g_poPrefs->getMainWindowWidth(), g_poPrefs->getMainWindowHeight() );
 
-        Sleep( g_poPrefs->getSecondsWaitOnSlpashScreen()*1000 );
+        Sleep( 5000 );
 
         obMainWindow.setCommunicationEnabled( g_poHardware->isHardwareConnected() );
 
