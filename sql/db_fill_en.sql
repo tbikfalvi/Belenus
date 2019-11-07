@@ -2,8 +2,8 @@
 -- Belenus Szoftver Rendszer (c) Pagony Multimedia Studio Bt - 2013
 -- -----------------------------------------------------------------------------------
 -- Filename    : db_fill_en.sql
--- AppVersion  : 1.8.0.1
--- DbVersion   : 1.8.0.1
+-- AppVersion  : 1.8.0.2
+-- DbVersion   : 1.8.0.2
 -- Author      : Bikfalvi Tamas
 -- -----------------------------------------------------------------------------------
 -- Adatbazist default adatokkal feltolto SQL script
@@ -317,12 +317,12 @@ ALTER TABLE `shoppingcartitems` auto_increment=1;
 -- -----------------------------------------------------------------------------------
 
 INSERT INTO `settings` (`settingId`, `identifier`, `value`) VALUES
- (NULL, 'GLOBAL_DATA_UPDATED', '2019-09-01 12:00:00'),
+ (NULL, 'GLOBAL_DATA_UPDATED', '2019-11-07 12:00:00'),
  (NULL, 'LICENCE_LAST_VALIDATED', '2000-01-01 12:00:00'),
  (NULL, 'ABOUT_INFO_LINK', 'http://www.kiwisun.eu/elerhetosegeink.html'),
  (NULL, 'CURRENT_CASSA_ID', '0'),
- (NULL, 'APPLICATION_VERSION', '1_8_0_0'),
- (NULL, 'DATABASE_VERSION', '1_8_0'),
+ (NULL, 'APPLICATION_VERSION', '1_8_0_2'),
+ (NULL, 'DATABASE_VERSION', '1_8_0_2'),
  (NULL, "GEN_LastUser", "" ),
  (NULL, "GEN_PanelsPerRow", 3 ),
  (NULL, "GEN_BarcodeLength", 8 ),

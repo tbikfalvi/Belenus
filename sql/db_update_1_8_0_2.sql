@@ -10,11 +10,6 @@ USE `belenus`;
 
 -- -----------------------------------------------------------------------------------
 
-ALTER TABLE `patientcards` ADD `rfId` varchar(30) NOT NULL AFTER `barcode`;
-
-INSERT INTO `settings` (`settingId`, `identifier`, `value`) VALUES
- (NULL, "HW_RFIDEnabled", 0 ),
- (NULL, "HW_RFIDComPort", 1 );
 
 -- -----------------------------------------------------------------------------------
 

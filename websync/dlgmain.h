@@ -184,6 +184,8 @@ private:
     bool                 m_FlagNoPaymentMethod;
     bool                 m_FlagNoPCType;
 
+    QString              m_qsServerAddress;
+
     void                _setActions();
     void                _setMenu();
     void                _sendPCData( unsigned int p_uiId, QString p_qsBarcode );
