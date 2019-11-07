@@ -1,18 +1,14 @@
-ï»¿-- -----------------------------------------------------------------------------------
+-- -----------------------------------------------------------------------------------
 -- Belenus Szoftver Rendszer (c) Pagony Multimedia Studio Bt - 2014
 -- -----------------------------------------------------------------------------------
--- Filename    : db_update_1_8_0_2.sql
--- AppVersion  : 1.8.0.2
--- DbVersion   : 1.8.0.2
+-- Filename    : correct_barcode.sql
 -- -----------------------------------------------------------------------------------
 
 USE `belenus`;
 
 -- -----------------------------------------------------------------------------------
 
+UPDATE `patientcards` SET barcode = REPLACE( barcode, '”', '0' );
+UPDATE `products` SET barcode = REPLACE( barcode, '”', '0' );
 
 -- -----------------------------------------------------------------------------------
-
-UPDATE settings SET value=NOW() WHERE identifier="GLOBAL_DATA_UPDATED";
-UPDATE settings SET value='1_8_0_2' WHERE identifier='APPLICATION_VERSION';
-UPDATE settings SET value='1_8_0_2' WHERE identifier='DATABASE_VERSION';

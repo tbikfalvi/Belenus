@@ -73,7 +73,6 @@ dlgMain::dlgMain(QWidget *parent, QString p_qsAppVersion) : QDialog(parent), ui(
     g_obLogger(cSeverity::DEBUG) << "Load settings from different files" << EOM;
 
     QSettings   obPref( QString( "%1/websync.inf" ).arg( QDir::currentPath() ), QSettings::IniFormat );
-    QSettings   obBelenus( QString( "%1/belenus.ini" ).arg( QDir::currentPath() ), QSettings::IniFormat );
 
     m_bShowMainWindowOnStart    = obPref.value( "ShowMainWindowOnStart", false ).toBool();
     m_nTimerPCStatusSync        = obPref.value( "TimerPCStatusSync", 2 ).toInt();
@@ -82,7 +81,6 @@ dlgMain::dlgMain(QWidget *parent, QString p_qsAppVersion) : QDialog(parent), ui(
     m_uiPatientCardTypeId       = obPref.value( "OnlinePatientCardType", 0 ).toUInt();
     m_uiPaymentMethodId         = obPref.value( "OnlinePaymentMethod", 0 ).toUInt();
     m_nLogLevel                 = obPref.value( "LogLevel", cSeverity::DEBUG ).toInt();
-    m_bHttpEnabledByUser        = obBelenus.value( "BlnsHttp/Enabled", false ).toBool();
 
     g_obLogger.setMinimumSeverity("file", (cSeverity::teSeverity)m_nLogLevel);
 
@@ -115,6 +113,8 @@ dlgMain::dlgMain(QWidget *parent, QString p_qsAppVersion) : QDialog(parent), ui(
     // Connecting to SQL Server; Set status icon
     g_obLogger(cSeverity::DEBUG) << "Connecting to SQL Server" << EOM;
 
+    m_qsServerAddress = "0.0.0.0";
+
     try
     {
         g_poDB->setHostName( "localhost" );
@@ -128,7 +128,20 @@ dlgMain::dlgMain(QWidget *parent, QString p_qsAppVersion) : QDialog(parent), ui(
         actionStatusSQL->setIcon( QIcon( ":/status_green.png" ) );
         ui->lblDBServerStatusText->setToolTip( tr("SQL Connection established") );
 
-        QSqlQuery *poQuery = g_poDB->executeQTQuery( QString( "SELECT licenceId, serial FROM licences ORDER BY licenceId DESC LIMIT 1" ) );
+        QSqlQuery *poQuery = NULL;
+
+        poQuery = g_poDB->executeQTQuery( QString( "SELECT value FROM settings WHERE identifier=\"SYNC_Enabled\" " ) );
+        if( poQuery->first() )
+        {
+            m_bHttpEnabledByUser = poQuery->value( 0 ).toBool();
+        }
+        poQuery = g_poDB->executeQTQuery( QString( "SELECT value FROM settings WHERE identifier=\"SERVER_Address\" " ) );
+        if( poQuery->first() )
+        {
+            m_qsServerAddress = poQuery->value( 0 ).toString();
+        }
+
+        poQuery = g_poDB->executeQTQuery( QString( "SELECT licenceId, serial FROM licences ORDER BY licenceId DESC LIMIT 1" ) );
         if( poQuery->first() )
         {
             g_poBlnsHttp->setStudioLicence( poQuery->value( 0 ).toUInt(), poQuery->value( 1 ).toString() );
@@ -184,8 +197,8 @@ dlgMain::dlgMain(QWidget *parent, QString p_qsAppVersion) : QDialog(parent), ui(
 
     ui->lblStatusIconWebServer->setPixmap( QPixmap( ":/status_yellow.png" ) );
     ui->chkHttpCommunicationEnabled->setChecked( m_bHttpEnabledByUser );
-    g_poBlnsHttp->setServerAddress( obBelenus.value( "Server/Address", "0.0.0.0" ).toString() );
-    g_poBlnsHttp->setTimeout( obBelenus.value( QString::fromAscii( "BlnsHttp/MessageWaitTime" ), 12 ).toInt() * 1000 );
+    g_poBlnsHttp->setServerAddress( m_qsServerAddress );
+    g_poBlnsHttp->setTimeout( 12000 );
     ui->pbStartStopHTTP->setIcon( QIcon(":/pause.png") );
     m_bHttpEnabledBySetting = m_bHttpEnabledByUser;
 
@@ -203,7 +216,7 @@ dlgMain::dlgMain(QWidget *parent, QString p_qsAppVersion) : QDialog(parent), ui(
     // Web Connection settings
     g_obLogger(cSeverity::DEBUG) << "Web Connection settings" << EOM;
 
-    ui->ledWebServerAddress->setText( obBelenus.value( "Server/Address", "" ).toString() );
+    ui->ledWebServerAddress->setText( m_qsServerAddress );
 
     //---------------------------------------------------------------------------------------------
     // Application settings
@@ -1260,8 +1273,20 @@ void dlgMain::_displayUserNotification(userInfo p_tUserInfo, QString p_qsInfoTex
 //=================================================================================================
 void dlgMain::_checkIfHttpDisabledByUser()
 {
-    QSettings   obBelenus( QString( "%1/belenus.ini" ).arg( QDir::currentPath() ), QSettings::IniFormat );
-    bool bHttpEnabled = obBelenus.value( "BlnsHttp/Enabled", false ).toBool();
+    bool bHttpEnabled = m_bHttpEnabledByUser;
+
+    try
+    {
+        QSqlQuery *poQuery = g_poDB->executeQTQuery( QString( "SELECT value FROM settings WHERE identifier=\"SYNC_Enabled\" " ) );
+        if( poQuery->first() )
+        {
+            bHttpEnabled = poQuery->value( 0 ).toBool();
+        }
+    }
+    catch( cSevException &e )
+    {
+        g_obLogger(e.severity()) << e.what() << EOM;
+    }
 
     if( m_bHttpEnabledByUser != bHttpEnabled )
     {
@@ -1306,9 +1331,7 @@ void dlgMain::on_ledWebServerAddress_textEdited(const QString &/*arg1*/)
 {
     ui->lblServerAddress->setStyleSheet( "QLabel {font: normal;}" );
 
-    QSettings   obBelenus( QString( "%1/belenus.ini" ).arg( QDir::currentPath() ), QSettings::IniFormat );
-
-    obBelenus.setValue( "Server/Address", ui->ledWebServerAddress->text() );
+    g_poDB->executeQTQuery( QString( "UPDATE settings SET value=\"%1\" WHERE identifier=\"SERVER_Address\" " ).arg( ui->ledWebServerAddress->text().replace("\\\\","/") ) );
 
     if( ui->ledWebServerAddress->text().length() == 0 )
     {
@@ -1324,9 +1347,7 @@ void dlgMain::on_ledWebServerAddress_textEdited(const QString &/*arg1*/)
 void dlgMain::on_chkHttpCommunicationEnabled_clicked()
 //-------------------------------------------------------------------------------------------------
 {
-    QSettings   obBelenus( QString( "%1/belenus.ini" ).arg( QDir::currentPath() ), QSettings::IniFormat );
-
-    obBelenus.setValue( "BlnsHttp/Enabled", ui->chkHttpCommunicationEnabled->isChecked() );
+    g_poDB->executeQTQuery( QString( "UPDATE settings SET value=\"%1\" WHERE identifier=\"SYNC_Enabled\" " ).arg( ui->chkHttpCommunicationEnabled->isChecked() ) );
 }
 
 //=================================================================================================
@@ -1469,7 +1490,5 @@ void dlgMain::_saveSettings()
     obPref.setValue( "OnlinePaymentMethod", m_uiPaymentMethodId );
     obPref.setValue( "LogLevel", m_nLogLevel );
 
-    QSettings   obBelenus( QString( "%1/belenus.ini" ).arg( QDir::currentPath() ), QSettings::IniFormat );
-
-    obBelenus.setValue( "Server/Address", ui->ledWebServerAddress->text() );
+    g_poDB->executeQTQuery( QString( "UPDATE settings SET value=\"%1\" WHERE identifier=\"SERVER_Address\" " ).arg( ui->ledWebServerAddress->text().replace("\\\\","/") ) );
 }
