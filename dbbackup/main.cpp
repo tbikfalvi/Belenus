@@ -6,12 +6,18 @@
 #include <QMessageBox>
 
 #include "mainwindow.h"
+#include "../framework/qtlogger.h"
+#include "../framework/qtframework.h"
+#include "../framework/logger/FileWriter.h"
 #include "../language/language.h"
 
+#define APPLICATION_VERSION_NUMBER  "1.8.0.2"
+
 QApplication            *apMainApp;
+cQTLogger                g_obLogger;
+FileWriter               g_obLogFileWriter("dbbackup_%1.log");
+cQTMySQLConnection      *g_poDB;
 cLanguage                g_obLanguage;
-//QTranslator     *poTransBackup;
-//QTranslator     *poTransQT;
 
 int main(int argc, char *argv[])
 {
@@ -33,7 +39,7 @@ int main(int argc, char *argv[])
         qsFileName = QString( argv[2] );
     }
 
-    MainWindow *wndMain = new MainWindow( 0, teAction, qsFileName );
+    MainWindow *wndMain = new MainWindow( 0, APPLICATION_VERSION_NUMBER, teAction, qsFileName );
 
     wndMain->show();
 

@@ -129,3 +129,6 @@ Version 1.8.0.1
 - Email regex rosszul volt megadva, javitva
 - Vendeg adat mentes volt akkor is, ha rossz volt az email cim, javitva
 
+Version 1.8.0.2
+===============
+- DBBackup es WebSync meg mindig a belenus.ini-t hasznalta, javitva

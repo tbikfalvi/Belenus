@@ -152,12 +152,12 @@ Probléma van az internet kapcsolattal?
         <translation type="obsolete"> (liszensz a szerver által elutasítva)</translation>
     </message>
     <message>
-        <location filename="main.cpp" line="277"/>
+        <location filename="main.cpp" line="283"/>
         <source>Checking hardware connection ...</source>
         <translation>Hardver kapcsolat ellenőrzése ...</translation>
     </message>
     <message>
-        <location filename="main.cpp" line="288"/>
+        <location filename="main.cpp" line="294"/>
         <source>FAILED
 </source>
         <translation>SIKERTELEN
@@ -283,28 +283,28 @@ Az alkalmazás csak DEMÓ módban használható.
         <translation>Adatbázis ellenőrzése: </translation>
     </message>
     <message>
-        <location filename="main.cpp" line="290"/>
-        <location filename="main.cpp" line="348"/>
+        <location filename="main.cpp" line="296"/>
+        <location filename="main.cpp" line="354"/>
         <source>Starting application in DEMO mode.
 </source>
         <translation>Alkalmazás indítása DEMÓ módban.
 </translation>
     </message>
     <message>
-        <location filename="main.cpp" line="300"/>
+        <location filename="main.cpp" line="306"/>
         <source>CONNECTED
 </source>
         <translation>KAPCSOLÓDVA
 </translation>
     </message>
     <message>
-        <location filename="main.cpp" line="305"/>
+        <location filename="main.cpp" line="311"/>
         <source>Initializing hardware device ... </source>
         <translation>Hardver eszköz beállítása ...</translation>
     </message>
     <message>
-        <location filename="main.cpp" line="262"/>
-        <location filename="main.cpp" line="309"/>
+        <location filename="main.cpp" line="268"/>
+        <location filename="main.cpp" line="315"/>
         <source>FINISHED
 </source>
         <translation>BEFEJEZŐDÖTT
@@ -316,48 +316,48 @@ Az alkalmazás csak DEMÓ módban használható.
         <translation>Beállítások betöltése az adatbázisból ...</translation>
     </message>
     <message>
-        <location filename="main.cpp" line="314"/>
+        <location filename="main.cpp" line="320"/>
         <source>Caption stored in hardware: %1
 </source>
         <translation>Hardver eszközben tárolt fejléc szöveg: %1
 </translation>
     </message>
     <message>
-        <location filename="main.cpp" line="317"/>
+        <location filename="main.cpp" line="323"/>
         <source>Number of hardware panels: %1
 </source>
         <translation>Hardver panelok száma: %1
 </translation>
     </message>
     <message>
-        <location filename="main.cpp" line="320"/>
+        <location filename="main.cpp" line="326"/>
         <source>Checking hardware panels:
 </source>
         <translation>Hardver panelok ellenőrzése:
 </translation>
     </message>
     <message>
-        <location filename="main.cpp" line="327"/>
+        <location filename="main.cpp" line="333"/>
         <source>     Checking hardware panel -%1- </source>
         <translation>     Hardver panel ellenőrzése -%1-</translation>
     </message>
     <message>
-        <location filename="main.cpp" line="332"/>
+        <location filename="main.cpp" line="338"/>
         <source> SUCCEEDED
 </source>
         <translation>SIKERES
 </translation>
     </message>
     <message>
-        <location filename="main.cpp" line="337"/>
-        <location filename="main.cpp" line="391"/>
+        <location filename="main.cpp" line="343"/>
+        <location filename="main.cpp" line="397"/>
         <source> FAILED
 </source>
         <translation>SIKERTELEN
 </translation>
     </message>
     <message>
-        <location filename="main.cpp" line="398"/>
+        <location filename="main.cpp" line="404"/>
         <source>Database server application is not running.
 Belenus application can not be started without active database server.
 Please start WampServer application then restart Belenus application.</source>
@@ -2764,49 +2764,50 @@ A már létező vonalkódok illetve a nem megfelelő hosszúságúak kimaradnak 
     </message>
     <message>
         <location filename="edit/dlgguestedit.cpp" line="271"/>
+        <location filename="edit/dlgguestedit.cpp" line="321"/>
         <source>Email format is incorrect.</source>
         <translation>Az email formátuma nem helyes.</translation>
     </message>
     <message>
         <location filename="edit/dlgguestedit.cpp" line="282"/>
-        <location filename="edit/dlgguestedit.cpp" line="319"/>
+        <location filename="edit/dlgguestedit.cpp" line="331"/>
         <source>Warning</source>
         <translation>Figyelmeztetés</translation>
     </message>
     <message>
-        <location filename="edit/dlgguestedit.cpp" line="380"/>
-        <location filename="edit/dlgguestedit.cpp" line="387"/>
+        <location filename="edit/dlgguestedit.cpp" line="392"/>
+        <location filename="edit/dlgguestedit.cpp" line="399"/>
         <source>Attention</source>
         <translation>Figyelmeztetés</translation>
     </message>
     <message>
-        <location filename="edit/dlgguestedit.cpp" line="381"/>
+        <location filename="edit/dlgguestedit.cpp" line="393"/>
         <source>This patientcard has been lost and replaced
 and can not be used or sold again.</source>
         <translation>Ez a bérlet elveszett és lecserélték másik bérletre
 ezért nem lehet használni vagy eladni újra.</translation>
     </message>
     <message>
-        <location filename="edit/dlgguestedit.cpp" line="388"/>
+        <location filename="edit/dlgguestedit.cpp" line="400"/>
         <source>This patientcard is in use. Active patientcard can not be sold again.</source>
         <oldsource>This patientcard is in use. Active patientcard can not be sold.
 Please refill the card if you want to add additional units.</oldsource>
         <translation>Ez a bérlet már használatban van. Aktív bérletet nem lehet eladni újra.</translation>
     </message>
     <message>
-        <location filename="edit/dlgguestedit.cpp" line="402"/>
+        <location filename="edit/dlgguestedit.cpp" line="414"/>
         <source>This barcode has not found in the database.
 Do you want to register it for a new patientcard?</source>
         <translation>Ez a vonalkód nincs elmentve az adatbázisban.
 Regisztrálni akarja a vonalkódot egy új bérlethez?</translation>
     </message>
     <message>
-        <location filename="edit/dlgguestedit.cpp" line="470"/>
+        <location filename="edit/dlgguestedit.cpp" line="482"/>
         <source>Are you sure you want to disjoin the selected card from patient?</source>
         <translation>Biztos benne, hogy leválasztja a kiválasztott bérletet a vendégről?</translation>
     </message>
     <message>
-        <location filename="edit/dlgguestedit.cpp" line="541"/>
+        <location filename="edit/dlgguestedit.cpp" line="553"/>
         <source>Assigned patientcards:
 Barcode	Patientcard type</source>
         <translation>Hozzárendelt bérletek:
@@ -2823,12 +2824,12 @@ Vonalkód	Bérlettípus</translation>
         <translation type="obsolete">El akarja menteni a változtatásokat és be akarja zárni a dialógus ablakot?</translation>
     </message>
     <message>
-        <location filename="edit/dlgguestedit.cpp" line="492"/>
+        <location filename="edit/dlgguestedit.cpp" line="504"/>
         <source>Information</source>
         <translation>Információ</translation>
     </message>
     <message>
-        <location filename="edit/dlgguestedit.cpp" line="492"/>
+        <location filename="edit/dlgguestedit.cpp" line="504"/>
         <source>Not implemented yet.</source>
         <translation>Nincs kész</translation>
     </message>
@@ -2837,14 +2838,14 @@ Vonalkód	Bérlettípus</translation>
         <translation type="obsolete">%1 Ft.</translation>
     </message>
     <message>
-        <location filename="edit/dlgguestedit.cpp" line="401"/>
-        <location filename="edit/dlgguestedit.cpp" line="442"/>
-        <location filename="edit/dlgguestedit.cpp" line="469"/>
+        <location filename="edit/dlgguestedit.cpp" line="413"/>
+        <location filename="edit/dlgguestedit.cpp" line="454"/>
+        <location filename="edit/dlgguestedit.cpp" line="481"/>
         <source>Question</source>
         <translation>Kérdés</translation>
     </message>
     <message>
-        <location filename="edit/dlgguestedit.cpp" line="443"/>
+        <location filename="edit/dlgguestedit.cpp" line="455"/>
         <source>Do you want to save changes then close the dialog?</source>
         <translation>El akarja menteni a változtatásokat és be akarja zárni a dialógus ablakot?</translation>
     </message>

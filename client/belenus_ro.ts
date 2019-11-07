@@ -453,88 +453,88 @@ Aplicația poate fi folosită numai în modul DEMO.
         <translation>Verificarea consistenței bazei de date: </translation>
     </message>
     <message>
-        <location filename="main.cpp" line="262"/>
-        <location filename="main.cpp" line="309"/>
+        <location filename="main.cpp" line="268"/>
+        <location filename="main.cpp" line="315"/>
         <source>FINISHED
 </source>
         <translation>FINALIZAT
 </translation>
     </message>
     <message>
-        <location filename="main.cpp" line="277"/>
+        <location filename="main.cpp" line="283"/>
         <source>Checking hardware connection ...</source>
         <translation>Verificarea conexiunii hardware ...</translation>
     </message>
     <message>
-        <location filename="main.cpp" line="288"/>
+        <location filename="main.cpp" line="294"/>
         <source>FAILED
 </source>
         <translation>EȘUAT
 </translation>
     </message>
     <message>
-        <location filename="main.cpp" line="290"/>
-        <location filename="main.cpp" line="348"/>
+        <location filename="main.cpp" line="296"/>
+        <location filename="main.cpp" line="354"/>
         <source>Starting application in DEMO mode.
 </source>
         <translation>Pornirea aplicației în modul DEMO.
 </translation>
     </message>
     <message>
-        <location filename="main.cpp" line="300"/>
+        <location filename="main.cpp" line="306"/>
         <source>CONNECTED
 </source>
         <translation>CONECTAT
 </translation>
     </message>
     <message>
-        <location filename="main.cpp" line="305"/>
+        <location filename="main.cpp" line="311"/>
         <source>Initializing hardware device ... </source>
         <translation>Inițializare dispozitiv hardware ... </translation>
     </message>
     <message>
-        <location filename="main.cpp" line="314"/>
+        <location filename="main.cpp" line="320"/>
         <source>Caption stored in hardware: %1
 </source>
         <translation>Antet stocat în hardware: %1
 </translation>
     </message>
     <message>
-        <location filename="main.cpp" line="317"/>
+        <location filename="main.cpp" line="323"/>
         <source>Number of hardware panels: %1
 </source>
         <translation>Numărul de panouri hardware: %1
 </translation>
     </message>
     <message>
-        <location filename="main.cpp" line="320"/>
+        <location filename="main.cpp" line="326"/>
         <source>Checking hardware panels:
 </source>
         <translation>Verificare panouri hardware:
 </translation>
     </message>
     <message>
-        <location filename="main.cpp" line="327"/>
+        <location filename="main.cpp" line="333"/>
         <source>     Checking hardware panel -%1- </source>
         <translation>     Verificare panou hardware -%1- </translation>
     </message>
     <message>
-        <location filename="main.cpp" line="332"/>
+        <location filename="main.cpp" line="338"/>
         <source> SUCCEEDED
 </source>
         <translation> REUȘIT
 </translation>
     </message>
     <message>
-        <location filename="main.cpp" line="337"/>
-        <location filename="main.cpp" line="391"/>
+        <location filename="main.cpp" line="343"/>
+        <location filename="main.cpp" line="397"/>
         <source> FAILED
 </source>
         <translation> EȘUAT
 </translation>
     </message>
     <message>
-        <location filename="main.cpp" line="398"/>
+        <location filename="main.cpp" line="404"/>
         <source>Database server application is not running.
 Belenus application can not be started without active database server.
 Please start WampServer application then restart Belenus application.</source>
@@ -1904,69 +1904,70 @@ Tipuri de piele importate:</translation>
     </message>
     <message>
         <location filename="edit/dlgguestedit.cpp" line="271"/>
+        <location filename="edit/dlgguestedit.cpp" line="321"/>
         <source>Email format is incorrect.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
         <location filename="edit/dlgguestedit.cpp" line="282"/>
-        <location filename="edit/dlgguestedit.cpp" line="319"/>
+        <location filename="edit/dlgguestedit.cpp" line="331"/>
         <source>Warning</source>
         <translation>Avertisment</translation>
     </message>
     <message>
-        <location filename="edit/dlgguestedit.cpp" line="380"/>
-        <location filename="edit/dlgguestedit.cpp" line="387"/>
+        <location filename="edit/dlgguestedit.cpp" line="392"/>
+        <location filename="edit/dlgguestedit.cpp" line="399"/>
         <source>Attention</source>
         <translation>Atenție</translation>
     </message>
     <message>
-        <location filename="edit/dlgguestedit.cpp" line="381"/>
+        <location filename="edit/dlgguestedit.cpp" line="393"/>
         <source>This patientcard has been lost and replaced
 and can not be used or sold again.</source>
         <translation>Acest card pacient a fost pierdut și înlocuit
 și nu poate fi folosit sau vândut din nou.</translation>
     </message>
     <message>
-        <location filename="edit/dlgguestedit.cpp" line="388"/>
+        <location filename="edit/dlgguestedit.cpp" line="400"/>
         <source>This patientcard is in use. Active patientcard can not be sold again.</source>
         <translation>Acest card de pacient este în uz. Cardul de pacient activ nu poate fi vândut din nou.</translation>
     </message>
     <message>
-        <location filename="edit/dlgguestedit.cpp" line="401"/>
-        <location filename="edit/dlgguestedit.cpp" line="442"/>
-        <location filename="edit/dlgguestedit.cpp" line="469"/>
+        <location filename="edit/dlgguestedit.cpp" line="413"/>
+        <location filename="edit/dlgguestedit.cpp" line="454"/>
+        <location filename="edit/dlgguestedit.cpp" line="481"/>
         <source>Question</source>
         <translation>Întrebare</translation>
     </message>
     <message>
-        <location filename="edit/dlgguestedit.cpp" line="402"/>
+        <location filename="edit/dlgguestedit.cpp" line="414"/>
         <source>This barcode has not found in the database.
 Do you want to register it for a new patientcard?</source>
         <translation>Acest cod de bare nu a fost găsit în baza de date.
 Vrei să-l înregistrezi pentru un nou card de pacient?</translation>
     </message>
     <message>
-        <location filename="edit/dlgguestedit.cpp" line="443"/>
+        <location filename="edit/dlgguestedit.cpp" line="455"/>
         <source>Do you want to save changes then close the dialog?</source>
         <translation>Vrei să salvezi modificările și să închizi dialogul?</translation>
     </message>
     <message>
-        <location filename="edit/dlgguestedit.cpp" line="470"/>
+        <location filename="edit/dlgguestedit.cpp" line="482"/>
         <source>Are you sure you want to disjoin the selected card from patient?</source>
         <translation>Sigur vrei să disociezi cardul selectat de pacient?</translation>
     </message>
     <message>
-        <location filename="edit/dlgguestedit.cpp" line="492"/>
+        <location filename="edit/dlgguestedit.cpp" line="504"/>
         <source>Information</source>
         <translation>Informații</translation>
     </message>
     <message>
-        <location filename="edit/dlgguestedit.cpp" line="492"/>
+        <location filename="edit/dlgguestedit.cpp" line="504"/>
         <source>Not implemented yet.</source>
         <translation>Încă nu a fost implementat.</translation>
     </message>
     <message>
-        <location filename="edit/dlgguestedit.cpp" line="541"/>
+        <location filename="edit/dlgguestedit.cpp" line="553"/>
         <source>Assigned patientcards:
 Barcode	Patientcard type</source>
         <translation>Carduri de pacient alocate:
