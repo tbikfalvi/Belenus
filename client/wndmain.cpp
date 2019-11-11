@@ -1571,6 +1571,10 @@ void cWndMain::timerEvent(QTimerEvent *)
             g_obGen.m_stIcon->showMessage( "RFID read", QString( "RFID: %1" ).arg(qsRFID), QSystemTrayIcon::Information, 5000 );
         }
     }
+    else if( m_bMainWindowActive && g_poCommRFID != NULL && !g_poCommRFID->isRFIDConnected() )
+    {
+        g_poCommRFID->openRFIDConnection();
+    }
 
     updateTitle();
 

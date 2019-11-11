@@ -90,6 +90,10 @@ QString cCommRFID::readRFID()
             qsRet = "";
         }
     }
+    else
+    {
+        closeRFIDConnection();
+    }
 
     return qsRet;
 }
