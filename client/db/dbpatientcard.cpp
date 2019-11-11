@@ -30,12 +30,13 @@ cDBPatientCard::~cDBPatientCard()
 {
 }
 
-void cDBPatientCard::init( const unsigned int p_uiId,
+void cDBPatientCard::init(const unsigned int p_uiId,
                            const unsigned int p_uiLicenceId,
                            const unsigned int p_uiPatientCardTypeId,
                            const unsigned int p_uiParentId,
                            const unsigned int p_uiPatientId,
                            const QString p_qsBarcode,
+                           const QString p_qsRFID,
                            const QString p_qsComment,
                            const int p_nUnits,
                            const int p_nAmount,
@@ -53,6 +54,7 @@ void cDBPatientCard::init( const unsigned int p_uiId,
     m_uiParentId            = p_uiParentId;
     m_uiPatientId           = p_uiPatientId;
     m_qsBarcode             = p_qsBarcode;
+    m_qsRFID                = p_qsRFID;
     m_qsComment             = p_qsComment;
     m_nUnits                = p_nUnits;
     m_nAmount               = p_nAmount;
@@ -76,6 +78,7 @@ void cDBPatientCard::init( const QSqlRecord &p_obRecord ) throw()
     int inParendIdIdx           = p_obRecord.indexOf( "parentCardId" );
     int inPatientIdIdx          = p_obRecord.indexOf( "patientId" );
     int inBarcodeIdx            = p_obRecord.indexOf( "barcode" );
+    int inRFIDIdx               = p_obRecord.indexOf( "rfid" );
     int inCommentIdx            = p_obRecord.indexOf( "comment" );
     int inUnitsIdx              = p_obRecord.indexOf( "units" );
     int inAmountIdx             = p_obRecord.indexOf( "amount" );
@@ -93,6 +96,7 @@ void cDBPatientCard::init( const QSqlRecord &p_obRecord ) throw()
           p_obRecord.value( inParendIdIdx ).toUInt(),
           p_obRecord.value( inPatientIdIdx ).toUInt(),
           p_obRecord.value( inBarcodeIdx ).toString(),
+          p_obRecord.value( inRFIDIdx ).toString(),
           p_obRecord.value( inCommentIdx ).toString(),
           p_obRecord.value( inUnitsIdx ).toInt(),
           p_obRecord.value( inAmountIdx ).toInt(),
@@ -126,6 +130,19 @@ void cDBPatientCard::load( const QString &p_qsBarcode ) throw( cSevException )
 
     if( poQuery->size() != 1 )
         throw cSevException( cSeverity::ERROR, "Patientcard barcode not found" );
+
+    poQuery->first();
+    init( poQuery->record() );
+}
+
+void cDBPatientCard::loadRFID(const QString &p_qsRFID) throw( cSevException )
+{
+    cTracer obTrace( "cDBPatientCard::loadRFID", QString("rfid: \"%1\"").arg(p_qsRFID) );
+
+    QSqlQuery *poQuery = g_poDB->executeQTQuery( "SELECT * FROM patientCards WHERE rfid = \"" + p_qsRFID + "\"" );
+
+    if( poQuery->size() != 1 )
+        throw cSevException( cSeverity::ERROR, "Patientcard rfid not found" );
 
     poQuery->first();
     init( poQuery->record() );
@@ -172,6 +189,7 @@ void cDBPatientCard::save() throw( cSevException )
     qsQuery += QString( "parentCardId = \"%1\", " ).arg( m_uiParentId );
     qsQuery += QString( "patientId = \"%1\", " ).arg( m_uiPatientId );
     qsQuery += QString( "barcode = \"%1\", " ).arg( m_qsBarcode );
+    qsQuery += QString( "rfid = \"%1\", " ).arg( m_qsRFID );
     qsQuery += QString( "comment = \"%1\", " ).arg( m_qsComment );
     qsQuery += QString( "units = \"%1\", " ).arg( m_nUnits );
     qsQuery += QString( "amount = \"%1\", " ).arg( m_nAmount );
@@ -329,6 +347,14 @@ bool cDBPatientCard::isAssignedCardExists() throw()
 
     QSqlQuery *poQuery = g_poDB->executeQTQuery( QString( "SELECT * FROM patientCards WHERE parentCardId = %1" ).arg( m_uiId ) );
     if( poQuery->size() > 0 )
+        return true;
+
+    return false;
+}
+
+bool cDBPatientCard::isRFIDCard() throw()
+{
+    if( m_qsRFID.length() > 0 )
         return true;
 
     return false;
@@ -534,6 +560,16 @@ QString cDBPatientCard::barcode() const throw()
 void cDBPatientCard::setBarcode( const QString &p_qsBarcode ) throw()
 {
     m_qsBarcode = p_qsBarcode;
+}
+
+QString cDBPatientCard::RFID() const throw()
+{
+    return m_qsRFID;
+}
+
+void cDBPatientCard::setRFID(const QString &p_qsRFID ) throw()
+{
+    m_qsRFID= p_qsRFID;
 }
 
 QString cDBPatientCard::comment() const throw()

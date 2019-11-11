@@ -105,6 +105,7 @@ private slots:
     void on_ledPatientCardBarcode_textEdited(const QString &arg1);
     void on_pbInformation_clicked();
     void on_pbOwnerLastVisitInformation_clicked();
+    void on_pbReadRFID_clicked();
 };
 //====================================================================================
 

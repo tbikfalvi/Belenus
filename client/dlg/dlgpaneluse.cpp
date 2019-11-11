@@ -186,6 +186,7 @@ cDlgPanelUse::cDlgPanelUse( QWidget *p_poParent, unsigned int p_uiPanelId ) : QD
     setWindowIcon( QIcon("./resources/40x40_device.png") );
 
     pbReloadPC->setIcon( QIcon("./resources/40x40_refresh.png") );
+    pbReadRFID->setIcon( QIcon("./resources/40x40_patientcard_rfid.png") );
     pbOk->setIcon( QIcon("./resources/40x40_ok.png") );
     pbCancel->setIcon( QIcon("./resources/40x40_cancel.png") );
     pbInformation->setIcon( QIcon("resources/40x40_information.png") );
@@ -785,4 +786,9 @@ void cDlgPanelUse::on_pbInformation_clicked()
 void cDlgPanelUse::on_pbOwnerLastVisitInformation_clicked()
 {
     g_obGen.showPatientLastVisitInformation( ledPatientCardBarcode->text(), g_poPrefs->getCloseInfoWindowAfterSecs() );
+}
+
+void cDlgPanelUse::on_pbReadRFID_clicked()
+{
+
 }

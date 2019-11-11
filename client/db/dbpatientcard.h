@@ -14,6 +14,7 @@ public:
 
     void            load( const unsigned int p_uiId )                           throw( cSevException );
     void            load( const QString &p_qsBarcode )                          throw( cSevException );
+    void            loadRFID( const QString &p_qsRFID )                         throw( cSevException );
     void            loadPatient( const unsigned int p_uiId )                    throw( cSevException );
     void            save()                                                      throw( cSevException );
     void            remove()                                                    throw( cSevException );
@@ -24,6 +25,7 @@ public:
     bool            isPatientCardCanBeParent()                                  throw();
     bool            isPatientCardCanBeUsed(unsigned int p_uiPatientCardTypeId, QString *p_qsValid)                  throw();
     bool            isAssignedCardExists()                                      throw();
+    bool            isRFIDCard()                                                throw();
     bool            isLedgerConnected()                                         throw();
     void            synchronizeUnits()                                          throw();
     void            synchronizeTime()                                           throw();
@@ -41,9 +43,11 @@ public:
     void            setParentId( const unsigned int p_uiParentId )              throw();
     QString         barcode() const                                             throw();
     void            setBarcode( const QString &p_qsBarcode )                    throw();
+    QString         RFID() const                                                throw();
+    void            setRFID( const QString &p_qsRFID )                          throw();
     QString         comment() const                                             throw();
     void            setComment( const QString &p_qsComment )                    throw();
-    int             units()                                               throw();
+    int             units()                                                     throw();
     void            setUnits( const int p_nUnits )                              throw();
     int             amount() const                                              throw();
     void            setAmount( const int p_nAmount )                            throw();
@@ -75,6 +79,7 @@ private:
     unsigned int    m_uiParentId;
     unsigned int    m_uiPatientId;
     QString         m_qsBarcode;
+    QString         m_qsRFID;
     QString         m_qsComment;
     int             m_nUnits;
     int             m_nAmount;
@@ -92,6 +97,7 @@ private:
                const unsigned int p_uiParentId = 0,
                const unsigned int p_uiPatientId = 0,
                const QString p_qsBarcode = "",
+               const QString p_qsRFID = "",
                const QString p_qsComment = "",
                const int p_nUnits = 0,
                const int p_nAmount = 0,

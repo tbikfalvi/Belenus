@@ -408,6 +408,14 @@ cWndMain::cWndMain( QWidget *parent ) : QMainWindow( parent )
 
     m_pbStatusKeyboard.setEnabled( false );
 
+    m_pbStatusRFID.setIcon( QIcon( "./resources/40x40_rfid.png" ) );
+    m_pbStatusRFID.setFlat( true );
+    m_pbStatusRFID.setText( "" );
+    m_pbStatusRFID.setIconSize( QSize(20,20) );
+    m_pbStatusRFID.setFixedSize( 22, 22 );
+
+    m_pbStatusRFID.setEnabled( false );
+
     /*if( !g_poPrefs->isFapados() )
     {
         m_pbStatusHttp.setIcon( QIcon( "./resources/40x40_http_disabled.png" ) );
@@ -430,6 +438,7 @@ cWndMain::cWndMain( QWidget *parent ) : QMainWindow( parent )
     statusbar->addPermanentWidget( &m_lblStatusLeft, 3 );
 //    statusbar->addPermanentWidget( &m_pbStatusCommunication, 0 );
     statusbar->addPermanentWidget( &m_pbStatusKeyboard, 0 );
+    statusbar->addPermanentWidget( &m_pbStatusRFID, 0 );
     /*if( !g_poPrefs->isFapados() )
     {
         statusbar->addPermanentWidget( &m_pbStatusHttp, 0 );
@@ -1405,6 +1414,9 @@ action_Logs->setVisible( false );
     {
         m_pbStatusKeyboard.setIcon( QIcon( "./resources/40x40_keyboard.png" ) );
     }
+
+    m_pbStatusRFID.setEnabled( g_poCommRFID->isRFIDConnected() );
+
 //    m_pbStatusHttp.setEnabled( bIsUserLoggedIn );
 //    m_pbStatusCommunicationSuspended.setEnabled( bIsUserLoggedIn );
 
@@ -1436,38 +1448,6 @@ void cWndMain::timerEvent(QTimerEvent *)
             m_nCommResetStep = 0;
             break;
     }
-
-    // Suspend patientcard synchronization if panels are in use
-/*
-    bool bIsPanelWorking    = mdiPanels->isPanelWorking();
-    int  nCountHttpRecord   = m_lblHttpCount.text().toInt();
-    int  nHttpSyncAutoSecs  = g_poPrefs->getStartHttpSyncAutoSeconds()*4+2;
-
-    if( bIsPanelWorking || !m_bMainWindowActive )
-    {
-        m_nHttpCommCounter = 0;
-        g_poPrefs->setBlnsHttpSuspended( true );
-        m_pbStatusCommunicationSuspended.setIcon( QIcon( "./resources/40x40_minus.png" ) );
-        setCursor( Qt::ArrowCursor);
-    }
-    else
-    {
-        m_nHttpCommCounter++;
-    }
-
-    // 15 masodpercenkent 250 tizedmasodperces timer -> 4 * 15 + 2 = 60
-    // 15 -> ini file-bol jon
-    if( g_poPrefs->isStartHttpSyncAuto() &&
-        m_nHttpCommCounter == nHttpSyncAutoSecs )
-    {
-        g_poPrefs->setBlnsHttpSuspended( false );
-        m_pbStatusCommunicationSuspended.setIcon( QIcon( "./resources/40x40_ok.png" ) );
-        if( nCountHttpRecord > 0 )
-        {
-            _processHttpActions();
-        }
-    }
-*/
 
     QFile   fileCheck( "belenus.chk" );
 
@@ -1582,7 +1562,7 @@ void cWndMain::timerEvent(QTimerEvent *)
         mdiPanels->itemRemovedFromShoppingCart();
     }
 
-    if( g_poCommRFID != NULL && g_poCommRFID->isRFIDConnected() )
+    if( m_bMainWindowActive && g_poCommRFID != NULL && g_poCommRFID->isRFIDConnected() )
     {
         QString qsRFID = g_poCommRFID->readRFID();
 
