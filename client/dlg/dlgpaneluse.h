@@ -71,6 +71,9 @@ public:
     QStringList                  panelUnitIds();
     unsigned int                 panelTypeId();
 
+protected:
+    void timerEvent( QTimerEvent *p_poEvent );
+
 private:
 
     QWidget                     *m_poParent;
@@ -92,6 +95,8 @@ private:
     QStringList                  m_qslPanelUseTimes;
     unsigned int                 m_uiIndexOfTime;
     unsigned int                 m_uiPanelTypeId;
+    int                          m_nTimer;
+    int                          m_nTimerCounter;
 
     void                        _enablePanelUseTypes();
 

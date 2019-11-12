@@ -7,6 +7,9 @@
 #include "edit/dlgpatientcardsell.h"
 #include "edit/dlgpatientcardrefill.h"
 #include "db/dbdiscount.h"
+#include "communication_rfid.h"
+
+extern cCommRFID       *g_poCommRFID;
 
 //==============================================================================================
 //
@@ -186,7 +189,7 @@ cDlgPanelUse::cDlgPanelUse( QWidget *p_poParent, unsigned int p_uiPanelId ) : QD
     setWindowIcon( QIcon("./resources/40x40_device.png") );
 
     pbReloadPC->setIcon( QIcon("./resources/40x40_refresh.png") );
-    pbReadRFID->setIcon( QIcon("./resources/40x40_patientcard_rfid.png") );
+    pbReadRFID->setIcon( QIcon("./resources/40x40_rfid.png") );
     pbOk->setIcon( QIcon("./resources/40x40_ok.png") );
     pbCancel->setIcon( QIcon("./resources/40x40_cancel.png") );
     pbInformation->setIcon( QIcon("resources/40x40_information.png") );
@@ -260,6 +263,26 @@ cDlgPanelUse::cDlgPanelUse( QWidget *p_poParent, unsigned int p_uiPanelId ) : QD
 cDlgPanelUse::~cDlgPanelUse()
 {
     g_poPrefs->setDialogSize( "PanelUse", QPoint( width(), height() ) );
+}
+//----------------------------------------------------------------------------------------------
+void cDlgPanelUse::timerEvent(QTimerEvent *)
+{
+    m_nTimerCounter++;
+
+    if( m_nTimerCounter > 40 )
+    {
+        killTimer( m_nTimer );
+    }
+
+    if( g_poCommRFID != NULL && g_poCommRFID->isRFIDConnected() )
+    {
+        QString qsRFID = g_poCommRFID->readRFID();
+
+        if( qsRFID.length() > 0 )
+        {
+            g_obGen.m_stIcon->showMessage( "RFID read", QString( "RFID: %1" ).arg(qsRFID), QSystemTrayIcon::Information, 5000 );
+        }
+    }
 }
 //----------------------------------------------------------------------------------------------
 void cDlgPanelUse::enableCardUsage(bool p_bEnabled)
@@ -790,5 +813,6 @@ void cDlgPanelUse::on_pbOwnerLastVisitInformation_clicked()
 
 void cDlgPanelUse::on_pbReadRFID_clicked()
 {
-
+    m_nTimerCounter = 0;
+    m_nTimer = startTimer( 250 );
 }
