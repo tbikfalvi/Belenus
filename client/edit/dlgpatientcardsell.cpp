@@ -28,6 +28,9 @@
 #include "../db/dbdiscount.h"
 #include "../crud/dlgpatientselect.h"
 #include "../edit/dlgguestedit.h"
+#include "../communication_rfid.h"
+
+extern cCommRFID       *g_poCommRFID;
 
 //===========================================================================================================
 //
@@ -46,15 +49,26 @@ cDlgPatientCardSell::cDlgPatientCardSell( QWidget *p_poParent, cDBPatientCard *p
     pbCancel->setIcon( QIcon("./resources/40x40_cancel.png") );
     pbSelectPatient->setIcon( QIcon("./resources/40x40_search.png") );
     pbCreatePatient->setIcon( QIcon("./resources/40x40_patient_new.png") );
+    pbRFID->setIcon( QIcon("./resources/40x40_rfid.png") );
+
+    pbRFID->setEnabled( false );
 
     deValidDateFrom->setDisplayFormat( g_poPrefs->getDateFormat().replace("-",".") );
     deValidDateTo->setDisplayFormat( g_poPrefs->getDateFormat().replace("-",".") );
+
+    m_dlgProgress = new cDlgProgress( this );
 
     if( m_poPatientCard )
     {
         QSqlQuery *poQuery;
 
         ledBarcode->setText( m_poPatientCard->barcode() );
+        ledRFID->setText( m_poPatientCard->RFID() );
+        if( m_poPatientCard->RFID().length() > 0 )
+        {
+            chkRFID->setChecked( true );
+            pbRFID->setEnabled( true );
+        }
 
         cmbCardType->addItem( tr("<Not selected>"), 0 );
         poQuery = g_poDB->executeQTQuery( QString( "SELECT patientCardTypeId, name FROM patientCardTypes WHERE active=1 AND archive<>\"DEL\" ORDER BY name " ) );
@@ -120,6 +134,47 @@ cDlgPatientCardSell::~cDlgPatientCardSell()
 }
 //===========================================================================================================
 //
+//----------------------------------------------------------------------------------------------
+void cDlgPatientCardSell::timerEvent(QTimerEvent *)
+{
+    m_nTimerCounter++;
+
+    if( m_nTimerCounter > 40 )
+    {
+        killTimer( m_nTimer );
+        m_dlgProgress->hideProgress();
+    }
+
+    if( g_poCommRFID != NULL && g_poCommRFID->isRFIDConnected() )
+    {
+        QString qsRFID = g_poCommRFID->readRFID();
+
+        if( qsRFID.length() > 0 )
+        {
+            try
+            {
+                // remove \n\r from the end
+                qsRFID = qsRFID.left( qsRFID.length()-2 );
+
+                ledRFID->setText( qsRFID );
+
+                killTimer( m_nTimer );
+                m_dlgProgress->hideProgress();
+                cmbCardType->setFocus();
+            }
+            catch( cSevException &e )
+            {
+                g_obLogger(cSeverity::INFO) << "RFID [" << qsRFID << "] not found in database" << EOM;
+                g_obGen.showTrayError( tr( "Reading card data failed or this card is not registered in database." ) );
+            }
+
+            g_obLogger(cSeverity::INFO) << "RFID read [" << qsRFID << "] " << EOM;
+            slotRefreshWarningColors();
+        }
+    }
+}
+//===========================================================================================================
+//
 //-----------------------------------------------------------------------------------------------------------
 void cDlgPatientCardSell::setPatientCardOwner( const unsigned int p_uiPatientId )
 {
@@ -142,6 +197,7 @@ void cDlgPatientCardSell::slotRefreshWarningColors()
     lblPatient->setStyleSheet( "QLabel {font: normal;}" );
     lblUnits->setStyleSheet( "QLabel {font: normal;}" );
     lblValidDate->setStyleSheet( "QLabel {font: normal;}" );
+    chkRFID->setStyleSheet( "QCheckBox {font: normal;}" );
 
     lblPatient->setStyleSheet( "QLabel {font: normal;}" );
     if( cmbPatient->currentIndex() == 0 )
@@ -151,6 +207,10 @@ void cDlgPatientCardSell::slotRefreshWarningColors()
     if( ledBarcode->text().length() != g_poPrefs->getBarcodeLength() )
     {
         lblBarcode->setStyleSheet( "QLabel {font: bold; color: red;}" );
+    }
+    if( chkRFID->isChecked() && ledRFID->text().length() < 1 )
+    {
+        chkRFID->setStyleSheet( "QCheckBox {font: bold; color: red;}" );
     }
     if( cmbCardType->currentIndex() == 0 )
     {
@@ -275,7 +335,6 @@ void cDlgPatientCardSell::on_pbSell_clicked()
         boCanBeSaved = false;
         qsErrorMessage.append( tr( "Barcode cannot be empty." ) );
         lblBarcode->setStyleSheet( "QLabel {font: bold; color: red;}" );
-        //ledBarcode->setEnabled( true );
     }
     else if( ledBarcode->text().length() != g_poPrefs->getBarcodeLength() )
     {
@@ -283,7 +342,6 @@ void cDlgPatientCardSell::on_pbSell_clicked()
         if( qsErrorMessage.length() ) qsErrorMessage.append( "\n\n" );
         qsErrorMessage.append( tr( "Invalid barcode. Barcode should be %1 character length." ).arg(g_poPrefs->getBarcodeLength()) );
         lblBarcode->setStyleSheet( "QLabel {font: bold; color: red;}" );
-        //ledBarcode->setEnabled( true );
     }
     else
     {
@@ -296,8 +354,15 @@ void cDlgPatientCardSell::on_pbSell_clicked()
             if( qsErrorMessage.length() ) qsErrorMessage.append( "\n\n" );
             qsErrorMessage.append( tr( "Invalid barcode. This barcode already saved into database."  ) );
             lblBarcode->setStyleSheet( "QLabel {font: bold; color: red;}" );
-            //ledBarcode->setEnabled( true );
         }
+    }
+
+    if( chkRFID->isChecked() && ledRFID->text().length() < 1 )
+    {
+        boCanBeSaved = false;
+        if( qsErrorMessage.length() ) qsErrorMessage.append( "\n\n" );
+        qsErrorMessage.append( tr( "RFID must be set." ) );
+        chkRFID->setStyleSheet( "QCheckBox {font: bold; color: red;}" );
     }
 
     if( cmbCardType->currentIndex() == 0 )
@@ -339,6 +404,7 @@ void cDlgPatientCardSell::on_pbSell_clicked()
         {
             m_poPatientCard->setLicenceId( g_poPrefs->getLicenceId() );
             m_poPatientCard->setBarcode( ledBarcode->text() );
+            m_poPatientCard->setRFID( ledRFID->text() );
             m_poPatientCard->setPatientId( cmbPatient->itemData( cmbPatient->currentIndex() ).toUInt() );
             m_poPatientCard->setValidDateFrom( deValidDateFrom->date().toString("yyyy-MM-dd") );
             m_poPatientCard->setValidDateTo( deValidDateTo->date().toString("yyyy-MM-dd") );
@@ -400,7 +466,7 @@ void cDlgPatientCardSell::on_pbSell_clicked()
                 int             inPayType       = 0;
                 QString         qsComment       = tr("Sell patientcard [%1]").arg(m_poPatientCard->barcode());
                 unsigned int    uiCouponId = 0;
-                cDBDiscount     obDBDiscount;
+                //cDBDiscount     obDBDiscount;
 
                 obDlgCassaAction.cassaResult( &inPayType, &bShoppingCart, &uiCouponId );
 
@@ -540,4 +606,21 @@ void cDlgPatientCardSell::on_pbCreatePatient_clicked()
     }
 
     delete poGuest;
+}
+
+void cDlgPatientCardSell::on_chkRFID_clicked()
+{
+    pbRFID->setEnabled( chkRFID->isChecked() );
+    if( !chkRFID->isChecked() )
+    {
+        ledRFID->setText( "" );
+    }
+    slotRefreshWarningColors();
+}
+
+void cDlgPatientCardSell::on_pbRFID_clicked()
+{
+    m_nTimerCounter = 0;
+    m_nTimer = startTimer( 250 );
+    m_dlgProgress->showInformation( tr( "Please read your RFID card!" ) );
 }

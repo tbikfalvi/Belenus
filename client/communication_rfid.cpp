@@ -80,7 +80,7 @@ QString cCommRFID::readRFID()
 
     if( _readMessage( chSerialIn, &nHossz ) )
     {
-        g_obLogger(cSeverity::DEBUG) << "[RFID] Read: '" << chSerialIn << "' length: " << nHossz << EOM;
+        //g_obLogger(cSeverity::DEBUG) << "[RFID] Read: '" << chSerialIn << "' length: " << nHossz << EOM;
 
         qsRet = QString( chSerialIn );
 

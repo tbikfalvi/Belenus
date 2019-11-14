@@ -7,6 +7,7 @@
 #include "../belenus.h"
 #include "db/dbpatientcard.h"
 #include "ui_dlgpaneluse.h"
+#include "dlg/dlgprogress.h"
 
 //====================================================================================
 class cPanelPCUnitUse : public QFrame
@@ -56,7 +57,7 @@ public:
 
     void                         enableCardUsage( bool p_bEnabled );
     void                         enableCashUsage( bool p_bEnabled );
-    void                         setPanelUsePatientCard( QString p_qsPatientCardBarcode );
+    void                         setPanelUsePatientCard( QString p_qsPatientCardBarcode, QString p_qsPatientCardRFID = "" );
     void                         setPanelUsePatientCard( unsigned int p_uiPatientCardId );
     void                         setPanelUseTimeCash( unsigned int p_uiSeconds );
     void                         setPanelUseTime( unsigned int p_uiSeconds );
@@ -76,6 +77,7 @@ protected:
 
 private:
 
+    cDlgProgress                *m_dlgProgress;
     QWidget                     *m_poParent;
     QWidget                     *m_poMsg;
     bool                         m_bInit;
@@ -97,6 +99,7 @@ private:
     unsigned int                 m_uiPanelTypeId;
     int                          m_nTimer;
     int                          m_nTimerCounter;
+    bool                         m_bIsCardReadByRFIDReader;
 
     void                        _enablePanelUseTypes();
 

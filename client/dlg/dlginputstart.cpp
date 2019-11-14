@@ -4,6 +4,10 @@
 #include "dlginputstart.h"
 #include "../crud/dlgpatientselect.h"
 #include "../db/dbpatientcard.h"
+#include "communication_rfid.h"
+
+extern cCommRFID       *g_poCommRFID;
+
 
 cDlgInputStart::cDlgInputStart( QWidget *p_poParent )
     : QDialog( p_poParent )
@@ -74,7 +78,48 @@ void cDlgInputStart::init( const QString &p_qsText )
     if( p_qsText.length() > 0 )
         setInitialText( p_qsText );
 
+    if( m_bCard )
+    {
+        m_nTimer = startTimer( 250 );
+    }
+
     m_bInitCalled = false;
+}
+
+//----------------------------------------------------------------------------------------------
+void cDlgInputStart::timerEvent(QTimerEvent *)
+{
+    if( g_poCommRFID != NULL && g_poCommRFID->isRFIDConnected() )
+    {
+        QString qsRFID = g_poCommRFID->readRFID();
+
+        if( qsRFID.length() > 0 )
+        {
+            try
+            {
+                cDBPatientCard  obDBPatientCard;
+
+                // remove \n\r from the end
+                qsRFID = qsRFID.left( qsRFID.length()-2 );
+
+                obDBPatientCard.loadRFID( qsRFID );
+                ledInputStart->setText( obDBPatientCard.barcode() );
+                killTimer( m_nTimer );
+                m_bPat = false;
+                m_bCard = true;
+                m_bProd = false;
+                m_bTime = false;
+                QDialog::accept();
+            }
+            catch( cSevException &e )
+            {
+                g_obLogger(cSeverity::INFO) << "RFID [" << qsRFID << "] not found in database" << EOM;
+                g_obGen.showTrayError( tr( "Reading card data failed or this card is not registered in database." ) );
+            }
+
+            g_obLogger(cSeverity::INFO) << "RFID read [" << qsRFID << "] " << EOM;
+        }
+    }
 }
 
 void cDlgInputStart::setInitialText( const QString &p_stText )

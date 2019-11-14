@@ -56,10 +56,17 @@ cDlgPatientCardEdit::cDlgPatientCardEdit( QWidget *p_poParent, cDBPatientCard *p
 
     m_poPatientCard     = p_poPatientCard;
 
+    chkIsRFID->setChecked( false );
+
     // Fill controls with values
     if( m_poPatientCard )
     {
         ledBarcode->setText( m_poPatientCard->barcode() );
+        if( m_poPatientCard->RFID().length() > 0 )
+        {
+            chkIsRFID->setChecked( true );
+        }
+        ledRFID->setText( m_poPatientCard->RFID() );
 //        cmbCardType->addItem( tr("<Not selected>"), 0 );
         cmbPatient->addItem( tr("<Not selected>"), 0 );
 

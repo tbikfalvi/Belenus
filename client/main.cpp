@@ -283,7 +283,7 @@ int main( int argc, char *argv[] )
 
         if( g_poPrefs->isRFIDEnabled() )
         {
-            qsSpalsh += QObject::tr("\nRFID communication enabled\nChecking RFID connection ...");
+            qsSpalsh += QObject::tr("\nRFID communication enabled\nChecking RFID connection ... ");
             g_poCommRFID = new cCommRFID();
             g_poCommRFID->init( g_poPrefs->getRFIDComPort() );
 
@@ -310,7 +310,7 @@ int main( int argc, char *argv[] )
             nDaysRemain > 0 &&
             g_obLicenceManager.ltLicenceType() != cLicenceManager::LTYPE_REGISTERED )
         {
-            qsSpalsh += QObject::tr("Checking hardware connection ...");
+            qsSpalsh += QObject::tr("Checking hardware connection ... ");
             obSplash.showMessage(qsSpalsh,Qt::AlignLeft,QColor(59,44, 75));
 
             Sleep( g_poPrefs->getSecondsWaitOnSlpashScreen()*1000 );

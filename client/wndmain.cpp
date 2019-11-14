@@ -127,6 +127,7 @@ cWndMain::cWndMain( QWidget *parent ) : QMainWindow( parent )
     m_nEnterAction                  = 0;
     m_inPanelStartMinute            = 0;
     m_qsPanelStartBarcode           = "";
+    m_qsPanelStartRFID              = "";
     m_inCommunicationCounter        = 0;
     m_bActionProcessing             = false;
     m_bProgressErrorVisible         = false;
@@ -446,25 +447,6 @@ cWndMain::cWndMain( QWidget *parent ) : QMainWindow( parent )
         statusbar->addPermanentWidget( &m_lblHttpCount );
     }*/
     statusbar->addPermanentWidget( &m_lblStatusRight, 1 );
-/*
-    g_poBlnsHttp = new cBlnsHttp();
-
-    if( !g_poPrefs->isFapados() )
-    {
-        connect( g_poBlnsHttp, SIGNAL(signalErrorOccured()),            this, SLOT(on_BlnsHttpErrorOccured()) );
-        connect( g_poBlnsHttp, SIGNAL(signalActionProcessed(QString)),  this, SLOT(on_BlnsHttpActionFinished(QString)) );
-        connect( g_poBlnsHttp, SIGNAL(signalStepProgress()),            this, SLOT(on_BlnsHttpStepProgress()) );
-        connect( g_poBlnsHttp, SIGNAL(signalHideProgress()),            this, SLOT(on_BlnsHttpHideProgress()) );
-        connect( g_poBlnsHttp, SIGNAL(signalHttpProcessDisabled()),     this, SLOT(on_BlnsHttpProcessStopped()) );
-        connect( g_poBlnsHttp, SIGNAL(signalHttpProcessSuspended()),    this, SLOT(on_BlnsHttpProcessStopped()) );
-
-        g_poBlnsHttp->setTimeout( g_poPrefs->getBlnsHttpMessageWaitTime()*1000 );
-
-        m_lblHttpCount.setText( QString::number( g_poBlnsHttp->getNumberOfWaitingRecords() ) );
-        m_pbStatusHttp.setToolTip( tr("Number of records to process: %1")
-                                   .arg( m_lblHttpCount.text() ) );
-    }
-*/
 
     g_poPrefs->setWindowMain( this );
     g_poPrefs->setWindowSecondary( m_dlgSecondaryWindow );
@@ -560,10 +542,6 @@ void cWndMain::on_pbLogin_clicked()
 
         updateTitle();
         loginUser();
-        /*if( g_poPrefs->isBlnsHttpEnabled() )
-        {
-            g_poBlnsHttp->checkHttpServerAvailability();
-        }*/
     }
     catch( cSevException &e )
     {
@@ -1568,7 +1546,26 @@ void cWndMain::timerEvent(QTimerEvent *)
 
         if( qsRFID.length() > 0 )
         {
-            g_obGen.m_stIcon->showMessage( "RFID read", QString( "RFID: %1" ).arg(qsRFID), QSystemTrayIcon::Information, 5000 );
+            try
+            {
+                cDBPatientCard  obDBPatientCard;
+
+                // remove \n\r from the end
+                qsRFID = qsRFID.left( qsRFID.length()-2 );
+
+                obDBPatientCard.loadRFID( qsRFID );
+
+                on_KeyboardDisabled();
+                processInputPatientCard( obDBPatientCard.barcode(), qsRFID );
+            }
+            catch( cSevException &e )
+            {
+                g_obLogger(cSeverity::INFO) << "RFID [" << qsRFID << "] not found in database" << EOM;
+                g_obGen.showTrayError( tr( "Reading card data failed or this card is not registered in database." ) );
+            }
+
+            g_obLogger(cSeverity::INFO) << "RFID read [" << qsRFID << "] " << EOM;
+//            g_obGen.m_stIcon->showMessage( "RFID read", QString( "RFID: %1" ).arg(qsRFID), QSystemTrayIcon::Information, 5000 );
         }
     }
     else if( m_bMainWindowActive && g_poCommRFID != NULL && !g_poCommRFID->isRFIDConnected() )
@@ -2027,8 +2024,9 @@ void cWndMain::on_action_UseDevice_triggered()
     }
     if( m_qsPanelStartBarcode.length() > 0 )
     {
-        obDlgPanelUse.setPanelUsePatientCard( m_qsPanelStartBarcode );
-        m_qsPanelStartBarcode = "";
+        obDlgPanelUse.setPanelUsePatientCard( m_qsPanelStartBarcode, m_qsPanelStartRFID );
+        m_qsPanelStartBarcode   = "";
+        m_qsPanelStartRFID      = "";
     }
 
     m_dlgProgress->hideProgress();
@@ -2109,6 +2107,13 @@ void cWndMain::on_action_UseDeviceLater_triggered()
     m_dlgProgress->showProgress();
     cDlgPanelUse obDlgPanelUse( this, mdiPanels->activePanelId() );
     m_dlgProgress->hideProgress();
+
+    if( m_qsPanelStartBarcode.length() > 0 )
+    {
+        obDlgPanelUse.setPanelUsePatientCard( m_qsPanelStartBarcode, m_qsPanelStartRFID );
+        m_qsPanelStartBarcode   = "";
+        m_qsPanelStartRFID      = "";
+    }
 
     if( obDlgPanelUse.exec() == QDialog::Accepted )
     {
@@ -2694,7 +2699,7 @@ void cWndMain::on_action_ReplaceLostCard_triggered()
     slotMainWindowActivated();
 }
 //====================================================================================
-void cWndMain::processInputPatientCard( QString p_stBarcode )
+void cWndMain::processInputPatientCard(QString p_stBarcode , QString p_qsRFID)
 {
     cTracer obTrace( "cWndMain::processInputPatientCard" );
 
@@ -2719,7 +2724,8 @@ void cWndMain::processInputPatientCard( QString p_stBarcode )
                 }
                 break;
             case 2:
-                m_qsPanelStartBarcode = p_stBarcode;
+                m_qsPanelStartBarcode   = p_stBarcode;
+                m_qsPanelStartRFID      = p_qsRFID;
                 on_action_UseDeviceLater_triggered();
                 on_KeyboardEnabled();
                 return;
@@ -2731,7 +2737,8 @@ void cWndMain::processInputPatientCard( QString p_stBarcode )
         }
     }
 
-    m_qsPanelStartBarcode = p_stBarcode;
+    m_qsPanelStartBarcode   = p_stBarcode;
+    m_qsPanelStartRFID      = p_qsRFID;
     if( mdiPanels->isPanelWorking( mdiPanels->activePanel() ) )
     {
         on_action_UseDeviceLater_triggered();

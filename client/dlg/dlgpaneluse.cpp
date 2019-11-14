@@ -203,6 +203,10 @@ cDlgPanelUse::cDlgPanelUse( QWidget *p_poParent, unsigned int p_uiPanelId ) : QD
     lblCardOwner->setText( tr("Owner : ") );
     lblComment->setText( tr("Comment :\n") );
 
+    ledPatientCardRFID->setVisible( false );
+
+    m_dlgProgress = new cDlgProgress( this );
+
     m_poParent                  = p_poParent;
     m_poMsg                     = p_poParent;
     m_uiPanelId                 = p_uiPanelId;
@@ -216,6 +220,7 @@ cDlgPanelUse::cDlgPanelUse( QWidget *p_poParent, unsigned int p_uiPanelId ) : QD
     m_qslPanelUseTimes          = QStringList();
     m_uiIndexOfTime             = 0;
     m_uiPanelTypeId             = 0;
+    m_bIsCardReadByRFIDReader   = false;
 
     m_obDBPatientCard.createNew();
 
@@ -262,6 +267,8 @@ cDlgPanelUse::cDlgPanelUse( QWidget *p_poParent, unsigned int p_uiPanelId ) : QD
 //----------------------------------------------------------------------------------------------
 cDlgPanelUse::~cDlgPanelUse()
 {
+    delete m_dlgProgress;
+
     g_poPrefs->setDialogSize( "PanelUse", QPoint( width(), height() ) );
 }
 //----------------------------------------------------------------------------------------------
@@ -272,6 +279,7 @@ void cDlgPanelUse::timerEvent(QTimerEvent *)
     if( m_nTimerCounter > 40 )
     {
         killTimer( m_nTimer );
+        m_dlgProgress->hideProgress();
     }
 
     if( g_poCommRFID != NULL && g_poCommRFID->isRFIDConnected() )
@@ -280,7 +288,28 @@ void cDlgPanelUse::timerEvent(QTimerEvent *)
 
         if( qsRFID.length() > 0 )
         {
-            g_obGen.m_stIcon->showMessage( "RFID read", QString( "RFID: %1" ).arg(qsRFID), QSystemTrayIcon::Information, 5000 );
+            try
+            {
+                cDBPatientCard  obDBPatientCard;
+
+                // remove \n\r from the end
+                qsRFID = qsRFID.left( qsRFID.length()-2 );
+
+                obDBPatientCard.loadRFID( qsRFID );
+                ledPatientCardBarcode->setText( obDBPatientCard.barcode() );
+                ledPatientCardRFID->setText( qsRFID );
+                killTimer( m_nTimer );
+                m_dlgProgress->hideProgress();
+                m_bIsCardReadByRFIDReader = true;
+                on_pbReloadPC_clicked();
+            }
+            catch( cSevException &e )
+            {
+                g_obLogger(cSeverity::INFO) << "RFID [" << qsRFID << "] not found in database" << EOM;
+                g_obGen.showTrayError( tr( "Reading card data failed or this card is not registered in database." ) );
+            }
+
+            g_obLogger(cSeverity::INFO) << "RFID read [" << qsRFID << "] " << EOM;
         }
     }
 }
@@ -299,9 +328,15 @@ void cDlgPanelUse::enableCashUsage(bool p_bEnabled)
     _enablePanelUseTypes();
 }
 //----------------------------------------------------------------------------------------------
-void cDlgPanelUse::setPanelUsePatientCard(QString p_qsPatientCardBarcode)
+void cDlgPanelUse::setPanelUsePatientCard(QString p_qsPatientCardBarcode, QString p_qsPatientCardRFID)
 {
+    m_bIsCardReadByRFIDReader = false;
     ledPatientCardBarcode->setText( p_qsPatientCardBarcode );
+    ledPatientCardRFID->setText( p_qsPatientCardRFID );
+    if( p_qsPatientCardRFID.length() > 0 )
+    {
+        m_bIsCardReadByRFIDReader = true;
+    }
     m_bIsEnterAccepted = false;
     pbOk->setEnabled( false );
     m_poMsg = m_poParent;
@@ -323,6 +358,7 @@ void cDlgPanelUse::setPanelUsePatientCard(unsigned int p_uiPatientCardId)
             m_uiPanelUsePatientCardId = p_uiPatientCardId;
             m_obDBPatientCard.load( m_uiPanelUsePatientCardId );
             ledPatientCardBarcode->setText( m_obDBPatientCard.barcode() );
+            ledPatientCardRFID->setText( m_obDBPatientCard.RFID() );
         }
 
         for( int i=0;i<qvPanelUseUnits.count(); i++ )
@@ -334,6 +370,13 @@ void cDlgPanelUse::setPanelUsePatientCard(unsigned int p_uiPatientCardId)
 
         if( m_uiPanelUsePatientCardId > 0 )
         {
+            if( m_obDBPatientCard.RFID().length() > 0 && !m_bIsCardReadByRFIDReader )
+            {
+                QMessageBox::warning( m_poMsg, tr("Attention"),
+                                      tr("You are not allowed to use RFID card with barcode.\nPlease use the RFID reader if you want to use this card.") );
+                return;
+            }
+
             if( m_obDBPatientCard.parentId() > 1 )
             {
                 m_obDBPatientCard.load( m_obDBPatientCard.parentId() );
@@ -791,6 +834,7 @@ void cDlgPanelUse::on_ledPatientCardBarcode_textEdited(const QString &/*arg1*/)
 {
     if( m_obDBPatientCard.id() > 0 )
     {
+        m_bIsCardReadByRFIDReader = false;
         m_obDBPatientCard.createNew();
         setPanelUsePatientCard( m_obDBPatientCard.id() );
         slotPatientCardUseUpdated();
@@ -805,14 +849,16 @@ void cDlgPanelUse::on_pbInformation_clicked()
 {
     g_obGen.showPatientCardInformation( ledPatientCardBarcode->text() );
 }
-
+//----------------------------------------------------------------------------------------------
 void cDlgPanelUse::on_pbOwnerLastVisitInformation_clicked()
 {
     g_obGen.showPatientLastVisitInformation( ledPatientCardBarcode->text(), g_poPrefs->getCloseInfoWindowAfterSecs() );
 }
-
+//----------------------------------------------------------------------------------------------
 void cDlgPanelUse::on_pbReadRFID_clicked()
 {
     m_nTimerCounter = 0;
     m_nTimer = startTimer( 250 );
+    m_dlgProgress->showInformation( tr( "Please read your RFID card!" ) );
 }
+//----------------------------------------------------------------------------------------------
