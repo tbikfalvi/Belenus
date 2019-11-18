@@ -500,7 +500,17 @@ void cGeneral::showPatientCardInformation(QString p_qsBarcode)
         qsText.append( QString("<tr><td>%1</td></tr>").arg( qsComment ) );
         qsText.append( QString("</table>") );
         qsText.append( "<p>" );
-        qsText.append( getPatientCardInformationString( p_qsBarcode ) );
+        if( obDBPatientCard.parentId() > 0 )
+        {
+            cDBPatientCard  obDBParentCard;
+
+            obDBParentCard.load( obDBPatientCard.parentId() );
+            qsText.append( getPatientCardInformationString( obDBParentCard.barcode() ) );
+        }
+        else
+        {
+            qsText.append( getPatientCardInformationString( p_qsBarcode ) );
+        }
 
         if( g_poPrefs->isBarcodeHidden() && !g_obUser.isInGroup( cAccessGroup::ADMIN ) )
         {

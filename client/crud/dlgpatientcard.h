@@ -16,8 +16,6 @@ public:
     virtual ~cDlgPatientCard();
 
     QHBoxLayout     *horizontalLayout;
-//    QLabel          *lblPatientCardType;
-//    QComboBox       *cmbPatientCardType;
     QLabel          *lblBarcode;
     QLineEdit       *ledBarcode;
     QLabel          *lblOwner;
@@ -47,7 +45,6 @@ protected slots:
     virtual void     newClicked( bool );
     virtual void     deleteClicked( bool );
     virtual void     editClicked( bool );
-//    virtual void     _slotPatientCardTypes();
     virtual void     _slotAddUnits();
     virtual void     _slotRemoveUnits();
     virtual void     _slotPatientCardReplace();

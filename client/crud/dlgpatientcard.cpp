@@ -49,32 +49,6 @@ cDlgPatientCard::cDlgPatientCard( QWidget *p_poParent ) : cDlgCrud( p_poParent )
     horizontalLayout->addItem( horizontalSpacer1 );
     verticalLayout->insertLayout( 0, horizontalLayout );
 
-/*    QSqlQuery   *poQuery;
-    QString      qsQuery;
-
-    cmbPatientCardType->addItem( tr("<All patientcard types>"), -1 );
-    if( g_obUser.isInGroup( cAccessGroup::ROOT ) )
-    {
-        qsQuery = QString( "SELECT patientCardTypeId, name FROM patientCardTypes WHERE archive<>\"DEL\"" );
-    }
-    else
-    {
-        qsQuery = QString( "SELECT patientCardTypeId, name FROM patientCardTypes WHERE ((patientCardTypeId>0 AND licenceId!=0) OR (patientCardTypeId=0 AND licenceId=0)) AND active=1 AND archive<>\"DEL\"" );
-    }
-
-    poQuery = g_poDB->executeQTQuery( qsQuery );
-    while( poQuery->next() )
-    {
-        cmbPatientCardType->addItem( poQuery->value( 1 ).toString(), poQuery->value( 0 ) );
-    }*/
-/*
-    pbPatientCardType = new QPushButton( tr( "Patientcard types" ), this );
-    pbPatientCardType->setObjectName( QString::fromUtf8( "pbPatientCardType" ) );
-    pbPatientCardType->setIconSize( QSize(20, 20) );
-    pbPatientCardType->setIcon( QIcon("./resources/40x40_patientcardtype.png") );
-    btbButtonsSide->addButton( pbPatientCardType, QDialogButtonBox::RejectRole );
-    connect( pbPatientCardType, SIGNAL(clicked()), this, SLOT(_slotPatientCardTypes()) );
-*/
     pbAddUnits = new QPushButton( tr( "Add units" ), this );
     pbAddUnits->setObjectName( QString::fromUtf8( "pbAddUnits" ) );
     pbAddUnits->setIconSize( QSize(20, 20) );
@@ -108,7 +82,6 @@ cDlgPatientCard::cDlgPatientCard( QWidget *p_poParent ) : cDlgCrud( p_poParent )
 
     setupTableView();
 
-//    connect( cmbPatientCardType, SIGNAL(currentIndexChanged(int)), this, SLOT(refreshTable()) );
     connect( ledBarcode, SIGNAL(textChanged(QString)), this, SLOT(refreshTable()) );
     connect( ledOwner, SIGNAL(textChanged(QString)), this, SLOT(refreshTable()) );
 
@@ -185,12 +158,6 @@ void cDlgPatientCard::refreshTable( QString p_qsCondition )
         m_qsQuery = "SELECT patientCards.patientCardId AS id, patientCards.barcode, patients.name, patientCards.validDateFrom, patientCards.validDateTo, patientCards.comment, patientCards.active FROM patientCards, patientCardTypes, patients WHERE patientCards.patientCardTypeId=patientCardTypes.patientCardTypeId AND patientCards.patientId=patients.patientId AND patientCards.patientCardId>0";
     }
 
-    /*int uiPatientCardTypeId = cmbPatientCardType->itemData( cmbPatientCardType->currentIndex() ).toInt();
-    if( uiPatientCardTypeId > -1 )
-    {
-        m_qsQuery += " AND ";
-        m_qsQuery += QString( "patientCards.patientCardTypeId=%1" ).arg( uiPatientCardTypeId );
-    }*/
     QString stTemp;
 
     stTemp = ledBarcode->text();
@@ -253,8 +220,8 @@ void cDlgPatientCard::enableButtons()
     m_poBtnEdit->setEnabled( bUserCanModify );
     m_poBtnDelete->setEnabled( bUserCanModify && m_uiSelectedId > 1 );
     m_poBtnSave->setEnabled( false );
-    pbAddUnits->setEnabled( g_obUser.isInGroup( cAccessGroup::ADMIN ) && m_uiSelectedId > 1 );
-    pbRemoveUnits->setEnabled( g_obUser.isInGroup( cAccessGroup::ADMIN ) && m_uiSelectedId > 1 );
+    pbAddUnits->setEnabled( bUserCanModify && g_obUser.isInGroup( cAccessGroup::ADMIN ) && m_uiSelectedId > 1 );
+    pbRemoveUnits->setEnabled( bUserCanModify && g_obUser.isInGroup( cAccessGroup::ADMIN ) && m_uiSelectedId > 1 );
     pbPatientCardReplace->setEnabled( bCanBeReplaced );
     pbPartnerCardAssign->setEnabled( bCanBeParent );
 
@@ -360,15 +327,7 @@ bool cDlgPatientCard::_isPatientCardNotForService()
 
     return bRet;
 }
-/*
-void cDlgPatientCard::_slotPatientCardTypes()
-{
-    cDlgPatientCardType   obDlgPatientCardType( m_poParent );
 
-    QDialog::accept();
-    obDlgPatientCardType.exec();
-}
-*/
 void cDlgPatientCard::_slotAddUnits()
 {
     cDBPatientCard  *poPatientCard = new cDBPatientCard;

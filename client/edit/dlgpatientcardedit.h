@@ -39,6 +39,10 @@ private slots:
 
     void on_chkIsRFID_clicked();
 
+    void on_pbAddUnits_clicked();
+
+    void on_pbRemoveUnits_clicked();
+
 private:
     cDlgProgress                *m_dlgProgress;
     int                          m_nTimer;

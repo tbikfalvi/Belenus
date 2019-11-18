@@ -1572,6 +1572,16 @@ void cWndMain::timerEvent(QTimerEvent *)
     {
         g_poCommRFID->openRFIDConnection();
     }
+    else if( !m_bMainWindowActive && frmLogin->isEnabled() && g_poCommRFID != NULL && g_poCommRFID->isRFIDConnected() )
+    {
+        QString qsRFID = g_poCommRFID->readRFID();
+
+        if( qsRFID.length() > 0 )
+        {
+            ledPassword->setText( qsRFID );
+            on_pbLogin_clicked();
+        }
+    }
 
     updateTitle();
 
@@ -2024,7 +2034,7 @@ void cWndMain::on_action_UseDevice_triggered()
     }
     if( m_qsPanelStartBarcode.length() > 0 )
     {
-        obDlgPanelUse.setPanelUsePatientCard( m_qsPanelStartBarcode, m_qsPanelStartRFID );
+        obDlgPanelUse.initPanelUseWithPatientCard( m_qsPanelStartBarcode, m_qsPanelStartRFID );
         m_qsPanelStartBarcode   = "";
         m_qsPanelStartRFID      = "";
     }
@@ -2110,7 +2120,7 @@ void cWndMain::on_action_UseDeviceLater_triggered()
 
     if( m_qsPanelStartBarcode.length() > 0 )
     {
-        obDlgPanelUse.setPanelUsePatientCard( m_qsPanelStartBarcode, m_qsPanelStartRFID );
+        obDlgPanelUse.initPanelUseWithPatientCard( m_qsPanelStartBarcode, m_qsPanelStartRFID );
         m_qsPanelStartBarcode   = "";
         m_qsPanelStartRFID      = "";
     }

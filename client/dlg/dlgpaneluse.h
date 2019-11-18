@@ -57,12 +57,12 @@ public:
 
     void                         enableCardUsage( bool p_bEnabled );
     void                         enableCashUsage( bool p_bEnabled );
-    void                         setPanelUsePatientCard( QString p_qsPatientCardBarcode, QString p_qsPatientCardRFID = "" );
-    void                         setPanelUsePatientCard( unsigned int p_uiPatientCardId );
+    void                         initPanelUseWithPatientCard( QString p_qsPatientCardBarcode, QString p_qsPatientCardRFID = "" );
+    void                         setPanelUsePatientCard();
     void                         setPanelUseTimeCash( unsigned int p_uiSeconds );
     void                         setPanelUseTime( unsigned int p_uiSeconds );
-    void                         setPanelUseTime();
-    void                         setPanelUsePrice();
+    void                         calculateTotalTimeValue();
+    void                         calculateTotalPriceValue();
     unsigned int                 panelUseSecondsCard();
     unsigned int                 panelUseSecondsCash();
     unsigned int                 panelUsePrice();
@@ -100,8 +100,15 @@ private:
     int                          m_nTimer;
     int                          m_nTimerCounter;
     bool                         m_bIsCardReadByRFIDReader;
+    bool                         m_bParentLoaded;
+
+    void                        _initUiItems();
+    void                        _fillUiItems();
 
     void                        _enablePanelUseTypes();
+    void                        _removeUnitsFromDialog();
+    void                        _resizeDialogOnUnits();
+    void                        _newCardReading();
 
 private slots:
     void                         slotPatientCardUseUpdated();

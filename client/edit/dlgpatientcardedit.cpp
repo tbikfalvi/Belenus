@@ -29,6 +29,8 @@
 //#include "../db/dbshoppingcart.h"
 //#include "../db/dbdiscount.h"
 #include "../communication_rfid.h"
+#include "../edit/dlgaddunits.h"
+#include "../edit/dlgremoveunits.h"
 
 extern cCommRFID       *g_poCommRFID;
 
@@ -56,6 +58,8 @@ cDlgPatientCardEdit::cDlgPatientCardEdit( QWidget *p_poParent, cDBPatientCard *p
     pbSell->setIcon( QIcon("./resources/40x40_cassa.png") );
     pbRefill->setIcon( QIcon("./resources/40x40_cassa.png") );
     pbRFID->setIcon( QIcon("./resources/40x40_rfid.png") );
+    pbAddUnits->setIcon( QIcon("./resources/40x40_patientcard.png") );
+    pbRemoveUnits->setIcon( QIcon("./resources/40x40_patientcard.png") );
 
     deValidDateFrom->setDisplayFormat( g_poPrefs->getDateFormat().replace("-",".") );
     deValidDateTo->setDisplayFormat( g_poPrefs->getDateFormat().replace("-",".") );
@@ -68,6 +72,7 @@ cDlgPatientCardEdit::cDlgPatientCardEdit( QWidget *p_poParent, cDBPatientCard *p
     if( m_poPatientCard )
     {
         ledBarcode->setText( m_poPatientCard->barcode() );
+        chkService->setChecked( m_poPatientCard->servicecard() );
         if( m_poPatientCard->RFID().length() > 0 )
         {
             chkIsRFID->setChecked( true );
@@ -121,6 +126,8 @@ cmbCardType->setVisible( false );
     pbDeactivate->setEnabled( m_poPatientCard->active() );
     pbSell->setEnabled( !m_poPatientCard->active() );
     pbRefill->setEnabled( m_poPatientCard->active() );
+    pbAddUnits->setEnabled( m_poPatientCard->active() );
+    pbRemoveUnits->setEnabled( m_poPatientCard->active() );
 
     // If this is a service card, do not deactivate or modify sensitive data
     if( m_poPatientCard->patientCardTypeId() == 1 )
@@ -133,15 +140,21 @@ cmbCardType->setVisible( false );
         pbDeactivate->setEnabled( g_obUser.isInGroup( cAccessGroup::SYSTEM ) );
         pbSell->setEnabled( false );
         pbRefill->setEnabled( false );
+        pbAddUnits->setEnabled( false );
+        pbRemoveUnits->setEnabled( false );
     }
 
     // If this is a partner card, do not modify it
     if( m_poPatientCard->parentId() > 0 )
     {
+        ledBarcode->setEnabled( false );
+        pbCheckBarcode->setEnabled( false );
 //        cmbCardType->setEnabled( false );
         pbChangeValidity->setEnabled( false );
         pbSell->setEnabled( false );
         pbRefill->setEnabled( false );
+        pbAddUnits->setEnabled( false );
+        pbRemoveUnits->setEnabled( false );
     }
 
     slotRefreshWarningColors();
@@ -519,4 +532,25 @@ void cDlgPatientCardEdit::on_chkIsRFID_clicked()
     }
 }
 //-----------------------------------------------------------------------------------------------------------
+void cDlgPatientCardEdit::on_pbAddUnits_clicked()
+//-----------------------------------------------------------------------------------------------------------
+{
+    cDlgAddUnits    obDlgAddUnits( this, m_poPatientCard );
 
+    obDlgAddUnits.exec();
+
+    m_poPatientCard->synchronizeUnits();
+    lblUnitInfo->setText( g_obGen.getPatientCardInformationString( m_poPatientCard->barcode() ) );
+}
+//-----------------------------------------------------------------------------------------------------------
+void cDlgPatientCardEdit::on_pbRemoveUnits_clicked()
+//-----------------------------------------------------------------------------------------------------------
+{
+    cDlgRemoveUnits    obDlgRemoveUnits( this, m_poPatientCard );
+
+    obDlgRemoveUnits.exec();
+
+    m_poPatientCard->synchronizeUnits();
+    lblUnitInfo->setText( g_obGen.getPatientCardInformationString( m_poPatientCard->barcode() ) );
+}
+//-----------------------------------------------------------------------------------------------------------

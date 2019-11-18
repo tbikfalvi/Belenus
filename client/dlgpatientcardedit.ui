@@ -7,7 +7,7 @@
     <x>0</x>
     <y>0</y>
     <width>471</width>
-    <height>350</height>
+    <height>327</height>
    </rect>
   </property>
   <property name="windowTitle">
@@ -57,6 +57,16 @@
            <widget class="QPushButton" name="pbCheckBarcode">
             <property name="text">
              <string/>
+            </property>
+           </widget>
+          </item>
+          <item>
+           <widget class="QCheckBox" name="chkService">
+            <property name="enabled">
+             <bool>false</bool>
+            </property>
+            <property name="text">
+             <string>Service card</string>
             </property>
            </widget>
           </item>
@@ -365,7 +375,7 @@
        <property name="sizeHint" stdset="0">
         <size>
          <width>20</width>
-         <height>20</height>
+         <height>10</height>
         </size>
        </property>
       </spacer>
@@ -397,6 +407,36 @@
       </widget>
      </item>
      <item>
+      <spacer name="verticalSpacer_4">
+       <property name="orientation">
+        <enum>Qt::Vertical</enum>
+       </property>
+       <property name="sizeType">
+        <enum>QSizePolicy::Fixed</enum>
+       </property>
+       <property name="sizeHint" stdset="0">
+        <size>
+         <width>20</width>
+         <height>10</height>
+        </size>
+       </property>
+      </spacer>
+     </item>
+     <item>
+      <widget class="QPushButton" name="pbAddUnits">
+       <property name="text">
+        <string>Add units</string>
+       </property>
+      </widget>
+     </item>
+     <item>
+      <widget class="QPushButton" name="pbRemoveUnits">
+       <property name="text">
+        <string>Remove units</string>
+       </property>
+      </widget>
+     </item>
+     <item>
       <spacer name="verticalSpacer">
        <property name="orientation">
         <enum>Qt::Vertical</enum>
@@ -416,6 +456,9 @@
  <tabstops>
   <tabstop>ledBarcode</tabstop>
   <tabstop>pbCheckBarcode</tabstop>
+  <tabstop>chkIsRFID</tabstop>
+  <tabstop>ledRFID</tabstop>
+  <tabstop>pbRFID</tabstop>
   <tabstop>cmbCardType</tabstop>
   <tabstop>cmbPatient</tabstop>
   <tabstop>deValidDateFrom</tabstop>
@@ -427,6 +470,8 @@
   <tabstop>pbDeactivate</tabstop>
   <tabstop>pbSell</tabstop>
   <tabstop>pbRefill</tabstop>
+  <tabstop>pbAddUnits</tabstop>
+  <tabstop>pbRemoveUnits</tabstop>
  </tabstops>
  <resources/>
  <connections/>

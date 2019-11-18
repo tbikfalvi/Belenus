@@ -182,6 +182,46 @@ void cPanelPCUnitUse::setOrderNum(unsigned int p_uiOrderNum)
 //=====================================================================================================================
 cDlgPanelUse::cDlgPanelUse( QWidget *p_poParent, unsigned int p_uiPanelId ) : QDialog( p_poParent )
 {
+    _initUiItems();
+
+    m_dlgProgress               = new cDlgProgress( this );
+    m_poParent                  = p_poParent;
+    m_poMsg                     = p_poParent;
+    m_uiPanelId                 = p_uiPanelId;
+    m_uiPanelUsePatientCardId   = 0;
+    m_uiPanelBaseTimeCard       = 0;
+    m_uiPanelBaseTimeCash       = 0;
+    m_uiPanelUseTimeCard        = 0;
+    m_uiPanelUseTimeCash        = 0;
+    m_uiPanelUsePrice           = 0;
+    m_bIsEnterAccepted          = true;
+    m_qslPanelUseTimes          = QStringList();
+    m_uiIndexOfTime             = 0;
+    m_uiPanelTypeId             = 0;
+    m_bIsCardReadByRFIDReader   = false;
+    m_bParentLoaded             = false;
+
+    m_obDBPatientCard.createNew();
+
+    _fillUiItems();
+
+    m_bInit = false;
+
+    QPoint  qpDlgSize = g_poPrefs->getDialogSize( "PanelUse", QPoint(500,360) );
+    resize( qpDlgSize.x(), qpDlgSize.y() );
+}
+//----------------------------------------------------------------------------------------------
+cDlgPanelUse::~cDlgPanelUse()
+//----------------------------------------------------------------------------------------------
+{
+    delete m_dlgProgress;
+
+    g_poPrefs->setDialogSize( "PanelUse", QPoint( width(), height() ) );
+}
+//----------------------------------------------------------------------------------------------
+void cDlgPanelUse::_initUiItems()
+//----------------------------------------------------------------------------------------------
+{
     m_bInit = true;
 
     setupUi( this );
@@ -199,31 +239,25 @@ cDlgPanelUse::cDlgPanelUse( QWidget *p_poParent, unsigned int p_uiPanelId ) : QD
     pbInformation->setEnabled( false );
     pbOwnerLastVisitInformation->setEnabled( false );
 
-//    lblCardType->setText( tr("Card type : ") );
     lblCardOwner->setText( tr("Owner : ") );
     lblComment->setText( tr("Comment :\n") );
 
     ledPatientCardRFID->setVisible( false );
 
-    m_dlgProgress = new cDlgProgress( this );
+    if( g_poPrefs->isBarcodeHidden() && !g_obUser.isInGroup( cAccessGroup::ADMIN ) )
+    {
+        ledPatientCardBarcode->setEchoMode( QLineEdit::Password );
+    }
+    else
+    {
+        ledPatientCardBarcode->setEchoMode( QLineEdit::Normal );
+    }
 
-    m_poParent                  = p_poParent;
-    m_poMsg                     = p_poParent;
-    m_uiPanelId                 = p_uiPanelId;
-    m_uiPanelUsePatientCardId   = 0;
-    m_uiPanelBaseTimeCard       = 0;
-    m_uiPanelBaseTimeCash       = 0;
-    m_uiPanelUseTimeCard        = 0;
-    m_uiPanelUseTimeCash        = 0;
-    m_uiPanelUsePrice           = 0;
-    m_bIsEnterAccepted          = true;
-    m_qslPanelUseTimes          = QStringList();
-    m_uiIndexOfTime             = 0;
-    m_uiPanelTypeId             = 0;
-    m_bIsCardReadByRFIDReader   = false;
-
-    m_obDBPatientCard.createNew();
-
+}
+//----------------------------------------------------------------------------------------------
+void cDlgPanelUse::_fillUiItems()
+//----------------------------------------------------------------------------------------------
+{
     QString qsQuery = "";
     QSqlQuery *poQuery = NULL;
 
@@ -247,32 +281,12 @@ cDlgPanelUse::cDlgPanelUse( QWidget *p_poParent, unsigned int p_uiPanelId ) : QD
         m_qslPanelUseTimes.append( QString("%1|%2").arg( poQuery->value(4).toInt()*60 ).arg( poQuery->value(5).toInt() ) );
     }
 
-    m_bInit = false;
-
-    setPanelUseTime();
-    setPanelUsePrice();
-
-    if( g_poPrefs->isBarcodeHidden() && !g_obUser.isInGroup( cAccessGroup::ADMIN ) )
-    {
-        ledPatientCardBarcode->setEchoMode( QLineEdit::Password );
-    }
-    else
-    {
-        ledPatientCardBarcode->setEchoMode( QLineEdit::Normal );
-    }
-
-    QPoint  qpDlgSize = g_poPrefs->getDialogSize( "PanelUse", QPoint(500,360) );
-    resize( qpDlgSize.x(), qpDlgSize.y() );
-}
-//----------------------------------------------------------------------------------------------
-cDlgPanelUse::~cDlgPanelUse()
-{
-    delete m_dlgProgress;
-
-    g_poPrefs->setDialogSize( "PanelUse", QPoint( width(), height() ) );
+    calculateTotalTimeValue();
+    calculateTotalPriceValue();
 }
 //----------------------------------------------------------------------------------------------
 void cDlgPanelUse::timerEvent(QTimerEvent *)
+//----------------------------------------------------------------------------------------------
 {
     m_nTimerCounter++;
 
@@ -301,6 +315,7 @@ void cDlgPanelUse::timerEvent(QTimerEvent *)
                 killTimer( m_nTimer );
                 m_dlgProgress->hideProgress();
                 m_bIsCardReadByRFIDReader = true;
+                _newCardReading();
                 on_pbReloadPC_clicked();
             }
             catch( cSevException &e )
@@ -315,6 +330,7 @@ void cDlgPanelUse::timerEvent(QTimerEvent *)
 }
 //----------------------------------------------------------------------------------------------
 void cDlgPanelUse::enableCardUsage(bool p_bEnabled)
+//----------------------------------------------------------------------------------------------
 {
     m_bIsCardCanBeUsed = p_bEnabled;
 
@@ -322,13 +338,21 @@ void cDlgPanelUse::enableCardUsage(bool p_bEnabled)
 }
 //----------------------------------------------------------------------------------------------
 void cDlgPanelUse::enableCashUsage(bool p_bEnabled)
+//----------------------------------------------------------------------------------------------
 {
     m_bIsCashCanBeUsed = p_bEnabled;
 
     _enablePanelUseTypes();
 }
 //----------------------------------------------------------------------------------------------
-void cDlgPanelUse::setPanelUsePatientCard(QString p_qsPatientCardBarcode, QString p_qsPatientCardRFID)
+void cDlgPanelUse::_enablePanelUseTypes()
+//----------------------------------------------------------------------------------------------
+{
+    gbPatientCard->setEnabled( m_bIsCardCanBeUsed );
+    gbTime->setEnabled( m_bIsCashCanBeUsed );
+}
+//----------------------------------------------------------------------------------------------
+void cDlgPanelUse::initPanelUseWithPatientCard(QString p_qsPatientCardBarcode, QString p_qsPatientCardRFID)
 {
     m_bIsCardReadByRFIDReader = false;
     ledPatientCardBarcode->setText( p_qsPatientCardBarcode );
@@ -344,7 +368,7 @@ void cDlgPanelUse::setPanelUsePatientCard(QString p_qsPatientCardBarcode, QStrin
     m_poMsg = this;
 }
 //----------------------------------------------------------------------------------------------
-void cDlgPanelUse::setPanelUsePatientCard(unsigned int p_uiPatientCardId)
+void cDlgPanelUse::setPanelUsePatientCard(/*unsigned int p_uiPatientCardId*/)
 {
     QString         qsValidPeriods  = "";
     unsigned int    uiPatientId   = 0;
@@ -353,33 +377,27 @@ void cDlgPanelUse::setPanelUsePatientCard(unsigned int p_uiPatientCardId)
 
     try
     {
-        if( m_uiPanelUsePatientCardId != p_uiPatientCardId && p_uiPatientCardId > 0)
-        {
-            m_uiPanelUsePatientCardId = p_uiPatientCardId;
-            m_obDBPatientCard.load( m_uiPanelUsePatientCardId );
-            ledPatientCardBarcode->setText( m_obDBPatientCard.barcode() );
-            ledPatientCardRFID->setText( m_obDBPatientCard.RFID() );
-        }
+        _removeUnitsFromDialog();
 
-        for( int i=0;i<qvPanelUseUnits.count(); i++ )
+        if( m_obDBPatientCard.id() > 0 )
         {
-            vlUnits->removeWidget( qvPanelUseUnits.at(i) );
-            delete qvPanelUseUnits.at(i);
-        }
-        qvPanelUseUnits.clear();
+            QSqlQuery *poQuery = g_poDB->executeQTQuery( QString("SELECT patients.name AS owner, patientcards.comment, patients.patientId "
+                                                                 "FROM patientcards, patients "
+                                                                 "WHERE patientcards.patientId=patients.patientId "
+                                                                 "AND patientcards.patientCardId=%1").arg(m_obDBPatientCard.id()) );
+            poQuery->first();
 
-        if( m_uiPanelUsePatientCardId > 0 )
-        {
-            if( m_obDBPatientCard.RFID().length() > 0 && !m_bIsCardReadByRFIDReader && !(g_obUser.isInGroup( cAccessGroup::SYSTEM ) && m_obDBPatientCard.isServiceCard()) )
-            {
-                QMessageBox::warning( m_poMsg, tr("Attention"),
-                                      tr("You are not allowed to use RFID card with barcode.\nPlease use the RFID reader if you want to use this card.") );
-                return;
-            }
+            pbInformation->setEnabled( true );
+            lblCardOwner->setText( tr("Owner : %1").arg( poQuery->value(0).toString() ) );
+            lblComment->setText( tr("Comment :\n%1").arg( poQuery->value(1).toString() ) );
+            uiPatientId = poQuery->value(2).toUInt();
 
+            m_bParentLoaded = false;
             if( m_obDBPatientCard.parentId() > 1 )
             {
                 m_obDBPatientCard.load( m_obDBPatientCard.parentId() );
+                m_bParentLoaded = true;
+                //ledPatientCardBarcode->setText( m_obDBPatientCard.barcode() );
             }
 
             QString qsQuery = QString( "SELECT "
@@ -405,7 +423,7 @@ void cDlgPanelUse::setPanelUsePatientCard(unsigned int p_uiPatientCardId)
                                        "ORDER BY "
                                             "patientcardunits.validDateTo, "
                                             "patientcardunits.patientCardUnitId" ).arg( m_obDBPatientCard.id() );
-            QSqlQuery  *poQuery = g_poDB->executeQTQuery( qsQuery );
+            poQuery = g_poDB->executeQTQuery( qsQuery );
 
             while( poQuery->next() )
             {
@@ -444,6 +462,7 @@ void cDlgPanelUse::setPanelUsePatientCard(unsigned int p_uiPatientCardId)
             {
                 qvPanelUseUnits.at(0)->setFocus();
             }
+            qsValidPeriods.replace("\n","<br>");
         }
     }
     catch( cSevException &e )
@@ -458,44 +477,24 @@ void cDlgPanelUse::setPanelUsePatientCard(unsigned int p_uiPatientCardId)
         slotPatientCardUseUpdated();
     }
 
-    if( m_obDBPatientCard.id() > 0 )
+    _resizeDialogOnUnits();
+
+    if( uiPatientId > 0 )
     {
-        QSqlQuery *poQuery = g_poDB->executeQTQuery( QString("SELECT patients.name AS owner, patientcards.comment, patients.patientId "
-                                                             "FROM patientcards, patients "
-                                                             "WHERE patientcards.patientId=patients.patientId "
-                                                             "AND patientcards.patientCardId=%1").arg(m_obDBPatientCard.id()) );
-        poQuery->first();
-
-        qsValidPeriods.replace("\n","<br>");
-        pbInformation->setEnabled( true );
-        lblCardOwner->setText( tr("Owner : %1").arg( poQuery->value(0).toString() ) );
-        lblComment->setText( tr("Comment :\n%1").arg( poQuery->value(1).toString() ) );
-        uiPatientId = poQuery->value(2).toUInt();
-
-        if( uiPatientId > 0 )
-        {
-            pbOwnerLastVisitInformation->setEnabled( true );
-        }
-
-        if( g_poPrefs->isShowPatientInfoOnStart() && uiPatientId > 0 )
-        {
-            on_pbOwnerLastVisitInformation_clicked();
-        }
+        pbOwnerLastVisitInformation->setEnabled( true );
     }
 
-    int nUnitHeight = (qvPanelUseUnits.count()-1)*50;
-
-    if( nUnitHeight < 0 ) nUnitHeight = 0;
-
-    if( height() < 340 + nUnitHeight )
-        resize( width(), 340 + nUnitHeight );
+    if( g_poPrefs->isShowPatientInfoOnStart() && uiPatientId > 0 )
+    {
+        on_pbOwnerLastVisitInformation_clicked();
+    }
 }
 //----------------------------------------------------------------------------------------------
 void cDlgPanelUse::setPanelUseTimeCash(unsigned int p_uiSeconds)
 {
     m_uiPanelUseTimeCash = p_uiSeconds;
     m_poMsg = m_poParent;
-    setPanelUseTime();
+    calculateTotalTimeValue();
     m_poMsg = this;
 }
 //----------------------------------------------------------------------------------------------
@@ -504,10 +503,10 @@ void cDlgPanelUse::setPanelUseTime(unsigned int p_uiSeconds)
     if( !m_bIsCashCanBeUsed )  m_uiPanelBaseTimeCash = p_uiSeconds;
     else                       m_uiPanelBaseTimeCard = p_uiSeconds;
 
-    setPanelUseTime();
+    calculateTotalTimeValue();
 }
 //----------------------------------------------------------------------------------------------
-void cDlgPanelUse::setPanelUseTime()
+void cDlgPanelUse::calculateTotalTimeValue()
 {
     if( m_uiPanelUseTimeCash > 0 )
     {
@@ -550,7 +549,7 @@ void cDlgPanelUse::setPanelUseTime()
     }
 }
 //----------------------------------------------------------------------------------------------
-void cDlgPanelUse::setPanelUsePrice()
+void cDlgPanelUse::calculateTotalPriceValue()
 {
     int nTimezoneDiscount   = 0;
 
@@ -647,7 +646,7 @@ void cDlgPanelUse::slotPatientCardUseUpdated()
         m_uiPanelUseTimeCard += qvPanelUseUnits.at(i)->lengthSeconds();
         m_qslUnitIds << qvPanelUseUnits.at(i)->usedUnitIds();
     }
-    setPanelUseTime();
+    calculateTotalTimeValue();
 
     g_obLogger(cSeverity::DEBUG) << "Units to use: " << m_qslUnitIds.join("|") << EOM;
 }
@@ -680,8 +679,8 @@ void cDlgPanelUse::on_cmbTimeIntervall_currentIndexChanged(int index)
     m_uiPanelUseTimeCash = qslTimePrice.at(0).toInt();
     m_uiPanelUsePrice    = qslTimePrice.at(1).toInt();
 
-    setPanelUseTime();
-    setPanelUsePrice();
+    calculateTotalTimeValue();
+    calculateTotalPriceValue();
 }
 //----------------------------------------------------------------------------------------------
 void cDlgPanelUse::on_ledPatientCardBarcode_returnPressed()
@@ -720,6 +719,13 @@ void cDlgPanelUse::on_pbReloadPC_clicked()
                                       tr("You are not allowed to use system administrator card.\nPlease log in as a system administrator if you want to use this card.") );
                 return;
             }
+        }
+
+        if( m_obDBPatientCard.RFID().length() > 0 && !m_bIsCardReadByRFIDReader && !(g_obUser.isInGroup( cAccessGroup::SYSTEM ) && m_obDBPatientCard.isServiceCard()) )
+        {
+            QMessageBox::warning( m_poMsg, tr("Attention"),
+                                  tr("You are not allowed to use RFID card with barcode.\nPlease use the RFID reader if you want to use this card.") );
+            return;
         }
 
         if( m_obDBPatientCard.pincode().compare("LOST") == 0 )
@@ -819,29 +825,20 @@ void cDlgPanelUse::on_pbReloadPC_clicked()
         }
     }
 
-    setPanelUsePatientCard( m_obDBPatientCard.id() );
+    setPanelUsePatientCard( /*m_obDBPatientCard.id()*/ );
     slotPatientCardUseUpdated();
 }
 //----------------------------------------------------------------------------------------------
-void cDlgPanelUse::_enablePanelUseTypes()
-{
-    gbPatientCard->setEnabled( m_bIsCardCanBeUsed );
-
-    gbTime->setEnabled( m_bIsCashCanBeUsed );
-}
-//----------------------------------------------------------------------------------------------
 void cDlgPanelUse::on_ledPatientCardBarcode_textEdited(const QString &/*arg1*/)
+//----------------------------------------------------------------------------------------------
 {
     if( m_obDBPatientCard.id() > 0 )
     {
+        g_obGen.showTrayInfo( "on_ledPatientCardBarcode_textEdited" );
         m_bIsCardReadByRFIDReader = false;
         m_obDBPatientCard.createNew();
-        setPanelUsePatientCard( m_obDBPatientCard.id() );
-        slotPatientCardUseUpdated();
-        pbInformation->setEnabled( false );
-//        lblCardType->setText( "" );
-        lblCardOwner->setText( "" );
-        lblComment->setText( tr("Comment :\n") );
+        setPanelUsePatientCard( /*m_obDBPatientCard.id()*/ );
+        _newCardReading();
     }
 }
 //----------------------------------------------------------------------------------------------
@@ -860,5 +857,41 @@ void cDlgPanelUse::on_pbReadRFID_clicked()
     m_nTimerCounter = 0;
     m_nTimer = startTimer( 500 );
     m_dlgProgress->showInformation( tr( "Please read your RFID card!" ) );
+}
+//----------------------------------------------------------------------------------------------
+void cDlgPanelUse::_removeUnitsFromDialog()
+//----------------------------------------------------------------------------------------------
+{
+    for( int i=0;i<qvPanelUseUnits.count(); i++ )
+    {
+        vlUnits->removeWidget( qvPanelUseUnits.at(i) );
+        delete qvPanelUseUnits.at(i);
+    }
+    qvPanelUseUnits.clear();
+
+}
+//----------------------------------------------------------------------------------------------
+void cDlgPanelUse::_resizeDialogOnUnits()
+//----------------------------------------------------------------------------------------------
+{
+    resize( width(), 340 );
+
+    int nUnitHeight = (qvPanelUseUnits.count()-1)*50;
+
+    if( nUnitHeight < 0 ) nUnitHeight = 0;
+
+    if( height() < 340 + nUnitHeight )
+        resize( width(), 340 + nUnitHeight );
+}
+//----------------------------------------------------------------------------------------------
+void cDlgPanelUse::_newCardReading()
+//----------------------------------------------------------------------------------------------
+{
+    slotPatientCardUseUpdated();
+    pbInformation->setEnabled( false );
+    lblCardOwner->setText( "" );
+    lblComment->setText( tr("Comment :\n") );
+    _removeUnitsFromDialog();
+    _resizeDialogOnUnits();
 }
 //----------------------------------------------------------------------------------------------
