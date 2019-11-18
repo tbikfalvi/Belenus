@@ -80,7 +80,7 @@ void cDlgInputStart::init( const QString &p_qsText )
 
     if( m_bCard )
     {
-        m_nTimer = startTimer( 250 );
+        m_nTimer = startTimer( 500 );
     }
 
     m_bInitCalled = false;
@@ -114,7 +114,7 @@ void cDlgInputStart::timerEvent(QTimerEvent *)
             catch( cSevException &e )
             {
                 g_obLogger(cSeverity::INFO) << "RFID [" << qsRFID << "] not found in database" << EOM;
-                g_obGen.showTrayError( tr( "Reading card data failed or this card is not registered in database." ) );
+                g_obGen.showTrayWarning( tr( "Reading card data failed or this card is not registered in database." ) );
             }
 
             g_obLogger(cSeverity::INFO) << "RFID read [" << qsRFID << "] " << EOM;

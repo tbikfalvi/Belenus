@@ -306,7 +306,7 @@ void cDlgPanelUse::timerEvent(QTimerEvent *)
             catch( cSevException &e )
             {
                 g_obLogger(cSeverity::INFO) << "RFID [" << qsRFID << "] not found in database" << EOM;
-                g_obGen.showTrayError( tr( "Reading card data failed or this card is not registered in database." ) );
+                g_obGen.showTrayWarning( tr( "Reading card data failed or this card is not registered in database." ) );
             }
 
             g_obLogger(cSeverity::INFO) << "RFID read [" << qsRFID << "] " << EOM;
@@ -370,7 +370,7 @@ void cDlgPanelUse::setPanelUsePatientCard(unsigned int p_uiPatientCardId)
 
         if( m_uiPanelUsePatientCardId > 0 )
         {
-            if( m_obDBPatientCard.RFID().length() > 0 && !m_bIsCardReadByRFIDReader )
+            if( m_obDBPatientCard.RFID().length() > 0 && !m_bIsCardReadByRFIDReader && !(g_obUser.isInGroup( cAccessGroup::SYSTEM ) && m_obDBPatientCard.isServiceCard()) )
             {
                 QMessageBox::warning( m_poMsg, tr("Attention"),
                                       tr("You are not allowed to use RFID card with barcode.\nPlease use the RFID reader if you want to use this card.") );
@@ -858,7 +858,7 @@ void cDlgPanelUse::on_pbOwnerLastVisitInformation_clicked()
 void cDlgPanelUse::on_pbReadRFID_clicked()
 {
     m_nTimerCounter = 0;
-    m_nTimer = startTimer( 250 );
+    m_nTimer = startTimer( 500 );
     m_dlgProgress->showInformation( tr( "Please read your RFID card!" ) );
 }
 //----------------------------------------------------------------------------------------------

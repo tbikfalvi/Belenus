@@ -165,7 +165,7 @@ void cDlgPatientCardSell::timerEvent(QTimerEvent *)
             catch( cSevException &e )
             {
                 g_obLogger(cSeverity::INFO) << "RFID [" << qsRFID << "] not found in database" << EOM;
-                g_obGen.showTrayError( tr( "Reading card data failed or this card is not registered in database." ) );
+                g_obGen.showTrayWarning( tr( "Reading card data failed or this card is not registered in database." ) );
             }
 
             g_obLogger(cSeverity::INFO) << "RFID read [" << qsRFID << "] " << EOM;

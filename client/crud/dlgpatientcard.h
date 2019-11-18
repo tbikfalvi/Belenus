@@ -26,6 +26,7 @@ public:
     QPushButton     *pbPatientCardReplace;
     QPushButton     *pbPartnerCardAssign;
     QPushButton     *pbAddUnits;
+    QPushButton     *pbRemoveUnits;
 
 protected:
     virtual void     setupTableView();
@@ -48,6 +49,7 @@ protected slots:
     virtual void     editClicked( bool );
 //    virtual void     _slotPatientCardTypes();
     virtual void     _slotAddUnits();
+    virtual void     _slotRemoveUnits();
     virtual void     _slotPatientCardReplace();
     virtual void     _slotPartnerCardAssign();
 };

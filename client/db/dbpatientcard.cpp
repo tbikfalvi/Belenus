@@ -35,6 +35,7 @@ void cDBPatientCard::init(const unsigned int p_uiId,
                            const unsigned int p_uiPatientCardTypeId,
                            const unsigned int p_uiParentId,
                            const unsigned int p_uiPatientId,
+                           const bool p_bServiceCard,
                            const QString p_qsBarcode,
                            const QString p_qsRFID,
                            const QString p_qsComment,
@@ -53,6 +54,7 @@ void cDBPatientCard::init(const unsigned int p_uiId,
     m_uiPatientCardTypeId   = p_uiPatientCardTypeId;
     m_uiParentId            = p_uiParentId;
     m_uiPatientId           = p_uiPatientId;
+    m_bServiceCard          = p_bServiceCard;
     m_qsBarcode             = p_qsBarcode;
     m_qsRFID                = p_qsRFID;
     m_qsComment             = p_qsComment;
@@ -77,6 +79,7 @@ void cDBPatientCard::init( const QSqlRecord &p_obRecord ) throw()
     int inPatientCardTypeIdIdx  = p_obRecord.indexOf( "patientCardTypeId" );
     int inParendIdIdx           = p_obRecord.indexOf( "parentCardId" );
     int inPatientIdIdx          = p_obRecord.indexOf( "patientId" );
+    int inServiceCardIdIdx      = p_obRecord.indexOf( "servicecard" );
     int inBarcodeIdx            = p_obRecord.indexOf( "barcode" );
     int inRFIDIdx               = p_obRecord.indexOf( "rfid" );
     int inCommentIdx            = p_obRecord.indexOf( "comment" );
@@ -95,6 +98,7 @@ void cDBPatientCard::init( const QSqlRecord &p_obRecord ) throw()
           p_obRecord.value( inPatientCardTypeIdIdx ).toUInt(),
           p_obRecord.value( inParendIdIdx ).toUInt(),
           p_obRecord.value( inPatientIdIdx ).toUInt(),
+          p_obRecord.value( inServiceCardIdIdx ).toBool(),
           p_obRecord.value( inBarcodeIdx ).toString(),
           p_obRecord.value( inRFIDIdx ).toString(),
           p_obRecord.value( inCommentIdx ).toString(),
@@ -188,6 +192,7 @@ void cDBPatientCard::save() throw( cSevException )
     qsQuery += QString( "patientCardTypeId = \"%1\", " ).arg( m_uiPatientCardTypeId );
     qsQuery += QString( "parentCardId = \"%1\", " ).arg( m_uiParentId );
     qsQuery += QString( "patientId = \"%1\", " ).arg( m_uiPatientId );
+    qsQuery += QString( "servicecard = \"%1\", " ).arg( m_bServiceCard );
     qsQuery += QString( "barcode = \"%1\", " ).arg( m_qsBarcode );
     qsQuery += QString( "rfid = \"%1\", " ).arg( m_qsRFID );
     qsQuery += QString( "comment = \"%1\", " ).arg( m_qsComment );
@@ -278,7 +283,7 @@ void cDBPatientCard::deactivate() throw( cSevException )
 
 bool cDBPatientCard::isServiceCard() throw()
 {
-    int     nBarcodeValue = barcode().toInt();
+//    int     nBarcodeValue = barcode().toInt();
 /*
     QSqlQuery       *poQuery;
     unsigned int     uiCount = 0;
@@ -289,10 +294,12 @@ bool cDBPatientCard::isServiceCard() throw()
 
     if( uiCount > 0 )
 */
-    if( nBarcodeValue == 0 )
+/*    if( nBarcodeValue == 0 )
         return true;
     else
         return false;
+*/
+    return servicecard();
 }
 
 bool cDBPatientCard::isPatientCardTypeLinked( const unsigned int p_PCTId ) throw()
@@ -550,6 +557,16 @@ unsigned int cDBPatientCard::patientId() const throw()
 void cDBPatientCard::setPatientId( const unsigned int p_uiPatientId ) throw()
 {
     m_uiPatientId = p_uiPatientId;
+}
+
+bool cDBPatientCard::servicecard() const throw()
+{
+    return m_bServiceCard;
+}
+
+void cDBPatientCard::setServiceCard( const bool p_bServiceCard ) throw()
+{
+    m_bServiceCard = p_bServiceCard;
 }
 
 QString cDBPatientCard::barcode() const throw()

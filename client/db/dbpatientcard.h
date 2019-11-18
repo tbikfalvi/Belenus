@@ -39,6 +39,8 @@ public:
     void            setPatientCardTypeId( const unsigned int p_uiPCardTypeId )  throw();
     unsigned int    patientId() const                                           throw();
     void            setPatientId( const unsigned int p_uiPatientId )            throw();
+    bool            servicecard() const                                         throw();
+    void            setServiceCard( const bool p_bServiceCard )                 throw();
     unsigned int    parentId() const                                            throw();
     void            setParentId( const unsigned int p_uiParentId )              throw();
     QString         barcode() const                                             throw();
@@ -78,6 +80,7 @@ private:
     unsigned int    m_uiPatientCardTypeId;
     unsigned int    m_uiParentId;
     unsigned int    m_uiPatientId;
+    bool            m_bServiceCard;
     QString         m_qsBarcode;
     QString         m_qsRFID;
     QString         m_qsComment;
@@ -96,6 +99,7 @@ private:
                const unsigned int p_uiPatientCardTypeId = 0,
                const unsigned int p_uiParentId = 0,
                const unsigned int p_uiPatientId = 0,
+               const bool p_bServiceCard = false,
                const QString p_qsBarcode = "",
                const QString p_qsRFID = "",
                const QString p_qsComment = "",

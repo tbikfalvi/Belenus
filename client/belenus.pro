@@ -71,7 +71,8 @@ FORMS = ../framework/dlgcrud.ui \
     dlgWindowPosition.ui \
     dlgInformation.ui \
     dlgemailsedit.ui \
-    dlgaddunits.ui
+    dlgaddunits.ui \
+    dlgremoveunits.ui
 
 HEADERS = belenus.h \
     ../framework/dbconnection.h \
@@ -206,6 +207,7 @@ HEADERS = belenus.h \
     edit/dlgdistlistedit.h \
     edit/dlgemailsedit.h \
     edit/dlgaddunits.h \
+    edit/dlgremoveunits.h \
     report/dlgpreview.h \
     report/reppatientcards.h \
     report/reppatientcardsobs.h \
@@ -364,6 +366,7 @@ SOURCES = main.cpp \
     edit/dlgdistlistedit.cpp \
     edit/dlgemailsedit.cpp \
     edit/dlgaddunits.cpp \
+    edit/dlgremoveunits.cpp \
     report/reppatientcards.cpp \
     report/reppatientcardsobs.cpp \
     report/dlgpreview.cpp \
