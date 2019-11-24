@@ -284,6 +284,9 @@ int main( int argc, char *argv[] )
         if( g_poPrefs->isRFIDEnabled() )
         {
             qsSpalsh += QObject::tr("\nRFID communication enabled\nChecking RFID connection ... ");
+
+            Sleep( g_poPrefs->getSecondsWaitOnSlpashScreen()*1000 );
+
             g_poCommRFID = new cCommRFID();
             g_poCommRFID->init( g_poPrefs->getRFIDComPort() );
 

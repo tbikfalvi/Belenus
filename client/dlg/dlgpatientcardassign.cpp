@@ -23,6 +23,9 @@
 #include "dlgcassaaction.h"
 #include "../db/dbpatientcardunits.h"
 #include "../db/dbledger.h"
+#include "communication_rfid.h"
+
+extern cCommRFID       *g_poCommRFID;
 
 //===========================================================================================================
 cDlgPatientCardAssign::cDlgPatientCardAssign( QWidget *p_poParent, QString p_qsMainBarcode ) : QDialog( p_poParent )
@@ -41,6 +44,9 @@ cDlgPatientCardAssign::cDlgPatientCardAssign( QWidget *p_poParent, QString p_qsM
     pbAssign->setIcon( QIcon("./resources/40x40_patientcards.png") );
     pbCancel->setIcon( QIcon("./resources/40x40_exit.png") );
 
+    chkMainRFID->setVisible( false );
+    chkAssignRFID->setVisible( false );
+
     ledMainBarcode->setText( p_qsMainBarcode );
 
     connect( rbActAssign,       SIGNAL(clicked()), this, SLOT(slotRadioClicked()) );
@@ -57,6 +63,8 @@ cDlgPatientCardAssign::cDlgPatientCardAssign( QWidget *p_poParent, QString p_qsM
 
     m_dlgProgress = new cDlgProgress( this );
 
+    m_nTimer = startTimer( 1000 );
+
     QPoint  qpDlgSize = g_poPrefs->getDialogSize( "CardAssign", QPoint(525,365) );
     resize( qpDlgSize.x(), qpDlgSize.y() );
 }
@@ -65,6 +73,49 @@ cDlgPatientCardAssign::~cDlgPatientCardAssign()
 //-----------------------------------------------------------------------------------------------------------
 {
     g_poPrefs->setDialogSize( "CardAssign", QPoint( width(), height() ) );
+}
+//===========================================================================================================
+void cDlgPatientCardAssign::timerEvent(QTimerEvent *)
+//----------------------------------------------------------------------------------------------
+{
+    if( g_poCommRFID != NULL && g_poCommRFID->isRFIDConnected() )
+    {
+        QString qsRFID = g_poCommRFID->readRFID();
+
+        if( qsRFID.length() > 0 )
+        {
+            try
+            {
+                cDBPatientCard  obDBPatientCard;
+
+                // remove \n\r from the end
+                qsRFID = qsRFID.left( qsRFID.length()-2 );
+
+                obDBPatientCard.loadRFID( qsRFID );
+
+                if( ledMainBarcode->hasFocus() )
+                {
+                    ledMainBarcode->setText( obDBPatientCard.barcode() );
+                    chkMainRFID->setChecked( true );
+                    ledAssignBarcode->setFocus();
+                }
+                else if( ledAssignBarcode->hasFocus() )
+                {
+                    ledAssignBarcode->setText( obDBPatientCard.barcode() );
+                    chkAssignRFID->setChecked( true );
+                    pbCheckCards->setFocus();
+                }
+                on_pbCheckCards_clicked();
+            }
+            catch( cSevException &e )
+            {
+                g_obLogger(cSeverity::INFO) << "RFID [" << qsRFID << "] not found in database" << EOM;
+                g_obGen.showTrayWarning( tr( "Reading card data failed or this card is not registered in database." ) );
+            }
+
+            g_obLogger(cSeverity::INFO) << "RFID read [" << qsRFID << "] " << EOM;
+        }
+    }
 }
 //===========================================================================================================
 void cDlgPatientCardAssign::getCardsBarcode(QString *p_qsBarcodeMain, QString *p_qsBarcodeAssign)
@@ -84,6 +135,12 @@ void cDlgPatientCardAssign::on_ledMainBarcode_textChanged(const QString &/*arg1*
     }
     m_bMainCardOk = false;
     _disableControls();
+}
+//===========================================================================================================
+void cDlgPatientCardAssign::on_ledMainBarcode_textEdited(const QString &/*arg1*/)
+//-----------------------------------------------------------------------------------------------------------
+{
+    chkMainRFID->setChecked( false );
 }
 //===========================================================================================================
 void cDlgPatientCardAssign::on_ledMainBarcode_returnPressed()
@@ -107,6 +164,12 @@ void cDlgPatientCardAssign::on_ledAssignBarcode_textChanged(const QString &/*arg
     }
     m_bAssignCardOk = false;
     _disableControls();
+}
+//===========================================================================================================
+void cDlgPatientCardAssign::on_ledAssignBarcode_textEdited(const QString &/*arg1*/)
+//-----------------------------------------------------------------------------------------------------------
+{
+    chkAssignRFID->setChecked( false );
 }
 //===========================================================================================================
 void cDlgPatientCardAssign::on_ledAssignBarcode_returnPressed()
@@ -145,7 +208,7 @@ void cDlgPatientCardAssign::on_pbCheckCards_clicked()
         ledAssignBarcode->setFocus();
         return;
     }
-    else if( !_checkIfExists( ledMainBarcode->text() ) )
+    else if( !_checkIfExists( ledMainBarcode->text(), chkMainRFID ) )
     {
         return;
     }
@@ -166,7 +229,7 @@ void cDlgPatientCardAssign::on_pbCheckCards_clicked()
         ledAssignBarcode->setFocus();
         return;
     }
-    else if( !_checkIfExists( ledAssignBarcode->text() ) )
+    else if( !_checkIfExists( ledAssignBarcode->text(), chkAssignRFID ) )
     {
         return;
     }
@@ -234,6 +297,13 @@ void cDlgPatientCardAssign::on_pbCheckCards_clicked()
             rbActAssignOld->setEnabled( true );
         }
     }
+
+    if( chkMainRFID->isChecked() != chkAssignRFID->isChecked() )
+    {
+        rbActAssign->setEnabled( false );
+        rbActAssignOld->setEnabled( false );
+    }
+
     pbCheckCards->setIcon( QIcon("./resources/40x40_ok.png") );
 }
 //===========================================================================================================
@@ -424,9 +494,11 @@ void cDlgPatientCardAssign::_disableControls()
     rbDefault->setVisible( false );
     rbDefault->setChecked( true );
     lblInfo->setText( "" );
+    chkMainRFID->setChecked( false );
+    chkAssignRFID->setChecked( false );
 }
 //===========================================================================================================
-bool cDlgPatientCardAssign::_checkIfExists(QString p_qsBarcode)
+bool cDlgPatientCardAssign::_checkIfExists(QString p_qsBarcode, QCheckBox *p_poCheck)
 //-----------------------------------------------------------------------------------------------------------
 {
     cDBPatientCard  obDBPatientCard;
@@ -435,6 +507,10 @@ bool cDlgPatientCardAssign::_checkIfExists(QString p_qsBarcode)
     try
     {
         obDBPatientCard.load( p_qsBarcode );
+        if( p_poCheck != NULL )
+        {
+            p_poCheck->setChecked( obDBPatientCard.isRFIDCard() );
+        }
     }
     catch( cSevException &e )
     {
@@ -766,4 +842,6 @@ void cDlgPatientCardAssign::_processRemoveAndDeactivate()
         g_obGen.showTrayError( e.what() );
     }
 }
+
+
 

@@ -34,13 +34,9 @@ private slots:
 //    void on_ledBarcode_lostFocus();
 //    void on_cmbPatient_currentIndexChanged(int index);
 //    void on_cmbCardType_currentIndexChanged(int index);
-
     void on_pbRFID_clicked();
-
     void on_chkIsRFID_clicked();
-
     void on_pbAddUnits_clicked();
-
     void on_pbRemoveUnits_clicked();
 
 private:

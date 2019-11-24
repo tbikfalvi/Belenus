@@ -117,10 +117,10 @@ private slots:
     void                         on_cmbTimeIntervall_currentIndexChanged(int index);
     void                         on_ledPatientCardBarcode_returnPressed();
     void                         on_pbReloadPC_clicked();
-    void on_ledPatientCardBarcode_textEdited(const QString &arg1);
-    void on_pbInformation_clicked();
-    void on_pbOwnerLastVisitInformation_clicked();
-    void on_pbReadRFID_clicked();
+    void                         on_ledPatientCardBarcode_textEdited(const QString &arg1);
+    void                         on_pbInformation_clicked();
+    void                         on_pbOwnerLastVisitInformation_clicked();
+    void                         on_pbReadRFID_clicked();
 };
 //====================================================================================
 

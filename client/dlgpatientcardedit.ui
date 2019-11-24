@@ -6,8 +6,8 @@
    <rect>
     <x>0</x>
     <y>0</y>
-    <width>471</width>
-    <height>327</height>
+    <width>640</width>
+    <height>431</height>
    </rect>
   </property>
   <property name="windowTitle">
@@ -28,6 +28,9 @@
         <string> Identification </string>
        </property>
        <layout class="QFormLayout" name="formLayout">
+        <property name="fieldGrowthPolicy">
+         <enum>QFormLayout::AllNonFixedFieldsGrow</enum>
+        </property>
         <item row="0" column="0">
          <widget class="QLabel" name="lblBarcode">
           <property name="text">
@@ -71,23 +74,6 @@
            </widget>
           </item>
           <item>
-           <spacer name="horizontalSpacer_5">
-            <property name="orientation">
-             <enum>Qt::Horizontal</enum>
-            </property>
-            <property name="sizeHint" stdset="0">
-             <size>
-              <width>40</width>
-              <height>20</height>
-             </size>
-            </property>
-           </spacer>
-          </item>
-         </layout>
-        </item>
-        <item row="1" column="1">
-         <layout class="QHBoxLayout" name="horizontalLayout_7">
-          <item>
            <widget class="QCheckBox" name="chkIsRFID">
             <property name="enabled">
              <bool>false</bool>
@@ -115,7 +101,7 @@
            </widget>
           </item>
           <item>
-           <spacer name="horizontalSpacer_2">
+           <spacer name="horizontalSpacer_5">
             <property name="orientation">
              <enum>Qt::Horizontal</enum>
             </property>
@@ -129,14 +115,14 @@
           </item>
          </layout>
         </item>
-        <item row="2" column="0">
+        <item row="1" column="0">
          <widget class="QLabel" name="lblCardType">
           <property name="text">
            <string>Cardtype :</string>
           </property>
          </widget>
         </item>
-        <item row="2" column="1">
+        <item row="1" column="1">
          <layout class="QHBoxLayout" name="horizontalLayout_3">
           <item>
            <widget class="QComboBox" name="cmbCardType">
@@ -147,14 +133,14 @@
           </item>
          </layout>
         </item>
-        <item row="3" column="0">
+        <item row="2" column="0">
          <widget class="QLabel" name="lblPatient">
           <property name="text">
            <string>Owner :</string>
           </property>
          </widget>
         </item>
-        <item row="3" column="1">
+        <item row="2" column="1">
          <layout class="QHBoxLayout" name="horizontalLayout">
           <item>
            <widget class="QComboBox" name="cmbPatient"/>
@@ -456,9 +442,6 @@
  <tabstops>
   <tabstop>ledBarcode</tabstop>
   <tabstop>pbCheckBarcode</tabstop>
-  <tabstop>chkIsRFID</tabstop>
-  <tabstop>ledRFID</tabstop>
-  <tabstop>pbRFID</tabstop>
   <tabstop>cmbCardType</tabstop>
   <tabstop>cmbPatient</tabstop>
   <tabstop>deValidDateFrom</tabstop>

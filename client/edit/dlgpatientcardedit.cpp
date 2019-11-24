@@ -115,6 +115,7 @@ cDlgPatientCardEdit::cDlgPatientCardEdit( QWidget *p_poParent, cDBPatientCard *p
         pteComment->setPlainText( m_poPatientCard->comment() );
     }
 
+    ledRFID->setVisible( false );
 lblCardType->setVisible( false );
 cmbCardType->setEnabled( false/*m_poPatientCard->active()*/ );
 cmbCardType->setVisible( false );
