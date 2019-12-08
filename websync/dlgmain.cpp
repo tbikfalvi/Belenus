@@ -36,8 +36,8 @@ dlgMain::dlgMain(QWidget *parent, QString p_qsAppVersion) : QDialog(parent), ui(
     m_FlagHttpEnabled           = false;
     m_FlagHttpSuspended         = false;
     m_FlagHttpContinued         = false;
-    m_FlagNoPaymentMethod       = false;
-    m_FlagNoPCType              = false;
+//    m_FlagNoPaymentMethod       = false;
+//    m_FlagNoPCType              = false;
 
     m_bStartTimerOnStart        = false;
     m_nTimer                    = 0;
@@ -104,6 +104,13 @@ dlgMain::dlgMain(QWidget *parent, QString p_qsAppVersion) : QDialog(parent), ui(
     ui->lblIndexPCOnline->setVisible( false );
     ui->lblIndexMailSendCheck->setVisible( false );
 
+    // hide obsolete items
+    ui->lblOnlinePatientCardType->setVisible( false );
+    ui->cmbOnlinePatientCardType->setVisible( false );
+    ui->lblOnlinePaymentMethod->setVisible( false );
+    ui->cmbOnlinePaymentMethod->setVisible( false );
+
+    // resize dialog
     resize( obPref.value( "WindowPosition/Mainwindow_width", 900 ).toInt(),
             obPref.value( "WindowPosition/Mainwindow_height", 600 ).toInt() );
     move( obPref.value( "WindowPosition/Mainwindow_left", 100).toInt(),
@@ -150,7 +157,7 @@ dlgMain::dlgMain(QWidget *parent, QString p_qsAppVersion) : QDialog(parent), ui(
         cQTMySQLQueryModel *m_poModel = new cQTMySQLQueryModel( this );
         m_poModel->setQuery( "SELECT CONCAT(name,\" (\",realName,\")\") AS n FROM users WHERE active = 1 ORDER BY name" );
         ui->cmbName->setModel( m_poModel );
-
+/*
         ui->cmbOnlinePatientCardType->addItem( tr("<Not selected>"), 0 );
         poQuery = g_poDB->executeQTQuery( QString( "SELECT patientCardTypeId, name FROM patientCardTypes WHERE active=1 AND archive<>\"DEL\" ORDER BY name " ) );
         while( poQuery->next() )
@@ -172,6 +179,7 @@ dlgMain::dlgMain(QWidget *parent, QString p_qsAppVersion) : QDialog(parent), ui(
                 ui->cmbOnlinePaymentMethod->setCurrentIndex( ui->cmbOnlinePaymentMethod->count()-1 );
         }
         g_poBlnsHttp->setOnlinePaymentMethod( m_uiPaymentMethodId );
+*/
     }
     catch( cSevException &e )
     {
@@ -405,7 +413,7 @@ void dlgMain::timerEvent(QTimerEvent *)
             return;
         }
         // Check if PatientCardType is selected
-        if( m_uiPatientCardTypeId == 0 )
+        /*if( m_uiPatientCardTypeId == 0 )
         {
             _disableHttpBySetting();
             _displayUserNotification( INFO_NoPCType );
@@ -419,7 +427,7 @@ void dlgMain::timerEvent(QTimerEvent *)
             _displayUserNotification( INFO_NoPaymentMethod );
             ui->lblOnlinePaymentMethod->setStyleSheet( "QLabel {font: bold; color: red;}" );
             return;
-        }
+        }*/
     }
 
     //---------------------------------------------------------------------------------------------
@@ -810,8 +818,8 @@ void dlgMain::_setGUIEnabled(bool p_bEnabled)
     ui->pbClearAllPatientCard->setEnabled( p_bEnabled && _isInGroup( GROUP_SYSTEM ) && m_bHttpEnabledBySetting && m_bHttpEnabledByUser );
     actionClearAllPatientCard->setEnabled( p_bEnabled && _isInGroup( GROUP_SYSTEM ) && m_bHttpEnabledBySetting && m_bHttpEnabledByUser );
 
-    ui->cmbOnlinePatientCardType->setEnabled( p_bEnabled && _isInGroup( GROUP_USER ) );
-    ui->cmbOnlinePaymentMethod->setEnabled( p_bEnabled && _isInGroup( GROUP_USER ) );
+    ui->cmbOnlinePatientCardType->setEnabled( false /*p_bEnabled && _isInGroup( GROUP_USER )*/ );
+    ui->cmbOnlinePaymentMethod->setEnabled( false /*p_bEnabled && _isInGroup( GROUP_USER )*/ );
 
     ui->pbExit->setEnabled( p_bEnabled && _isInGroup( GROUP_USER ) );
     actionExit->setEnabled( p_bEnabled && _isInGroup( GROUP_USER ) );
@@ -1113,8 +1121,8 @@ void dlgMain::on_pbStartStopHTTP_clicked()
 }
 
 //=================================================================================================
-void dlgMain::on_cmbOnlinePatientCardType_currentIndexChanged(int index)
-{
+void dlgMain::on_cmbOnlinePatientCardType_currentIndexChanged(int /*index*/)
+{/*
     if( m_bStartFinished )
     {
         m_uiPatientCardTypeId = ui->cmbOnlinePatientCardType->itemData( index ).toUInt();
@@ -1129,7 +1137,7 @@ void dlgMain::on_cmbOnlinePatientCardType_currentIndexChanged(int index)
             ui->lblOnlinePatientCardType->setStyleSheet( "QLabel {font: bold; color: red;}" );
         }
     }
-}
+*/}
 
 //=================================================================================================
 void dlgMain::_setPCTypeForHttp()
@@ -1148,8 +1156,8 @@ void dlgMain::_setPCTypeForHttp()
 }
 
 //=================================================================================================
-void dlgMain::on_cmbOnlinePaymentMethod_currentIndexChanged(int index)
-{
+void dlgMain::on_cmbOnlinePaymentMethod_currentIndexChanged(int /*index*/)
+{/*
     if( m_bStartFinished )
     {
         m_uiPaymentMethodId = ui->cmbOnlinePaymentMethod->itemData( index ).toUInt();
@@ -1164,7 +1172,7 @@ void dlgMain::on_cmbOnlinePaymentMethod_currentIndexChanged(int index)
             ui->lblOnlinePaymentMethod->setStyleSheet( "QLabel {font: bold; color: red;}" );
         }
     }
-}
+*/}
 
 //=================================================================================================
 void dlgMain::on_sliFileLogLevel_valueChanged(int value)
@@ -1239,7 +1247,7 @@ void dlgMain::_displayUserNotification(userInfo p_tUserInfo, QString p_qsInfoTex
                                        QSystemTrayIcon::Information, 2000 );
             }
             break;
-
+/*
         case INFO_NoPaymentMethod:
             if( !m_FlagNoPaymentMethod )
             {
@@ -1261,7 +1269,7 @@ void dlgMain::_displayUserNotification(userInfo p_tUserInfo, QString p_qsInfoTex
                                        QSystemTrayIcon::Critical, 2000 );
             }
             break;
-
+*/
         default:
             if( p_qsInfoText.length() > 0 )
             {
@@ -1471,8 +1479,8 @@ void dlgMain::slotShowModuleNotification(QString p_qsMessage)
 void dlgMain::_saveSettings()
 //------------------------------------------------------------------------------------
 {
-    m_uiPatientCardTypeId = ui->cmbOnlinePatientCardType->itemData( ui->cmbOnlinePatientCardType->currentIndex() ).toUInt();
-    m_uiPaymentMethodId   = ui->cmbOnlinePaymentMethod->itemData( ui->cmbOnlinePaymentMethod->currentIndex() ).toUInt();
+//    m_uiPatientCardTypeId = ui->cmbOnlinePatientCardType->itemData( ui->cmbOnlinePatientCardType->currentIndex() ).toUInt();
+//    m_uiPaymentMethodId   = ui->cmbOnlinePaymentMethod->itemData( ui->cmbOnlinePaymentMethod->currentIndex() ).toUInt();
 
     QSettings   obPref( QString( "%1/websync.inf" ).arg( QDir::currentPath() ), QSettings::IniFormat );
 
@@ -1486,8 +1494,8 @@ void dlgMain::_saveSettings()
     obPref.setValue( "TimerPCStatusSync", m_nTimerPCStatusSync );
     obPref.setValue( "TimerPCOnlineSync", m_nTimerPCOnlineSync );
     obPref.setValue( "TimerSendMailCheck", m_nTimerSendMailCheck );
-    obPref.setValue( "OnlinePatientCardType", m_uiPatientCardTypeId );
-    obPref.setValue( "OnlinePaymentMethod", m_uiPaymentMethodId );
+//    obPref.setValue( "OnlinePatientCardType", m_uiPatientCardTypeId );
+//    obPref.setValue( "OnlinePaymentMethod", m_uiPaymentMethodId );
     obPref.setValue( "LogLevel", m_nLogLevel );
 
     g_poDB->executeQTQuery( QString( "UPDATE settings SET value=\"%1\" WHERE identifier=\"SERVER_Address\" " ).arg( ui->ledWebServerAddress->text().replace("\\\\","/") ) );

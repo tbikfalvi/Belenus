@@ -20,7 +20,7 @@
     </message>
     <message>
         <location filename="mainwindow.ui" line="161"/>
-        <location filename="mainwindow.cpp" line="315"/>
+        <location filename="mainwindow.cpp" line="325"/>
         <source>Please wait until the process finish.</source>
         <translation>Kérem várjon amíg a folyamat befejeződik.</translation>
     </message>
@@ -35,68 +35,68 @@
         <translation>Indítás</translation>
     </message>
     <message>
-        <location filename="mainwindow.cpp" line="36"/>
+        <location filename="mainwindow.cpp" line="46"/>
         <source>Restore database</source>
         <translation>Adatbázis helyreállítás</translation>
     </message>
     <message>
-        <location filename="mainwindow.cpp" line="37"/>
-        <location filename="mainwindow.cpp" line="46"/>
+        <location filename="mainwindow.cpp" line="47"/>
+        <location filename="mainwindow.cpp" line="56"/>
         <source>Please select desired database and click on Start</source>
         <translation>Kérem válassza ki a kívánt adatbázis állományt és kattintson az Indítás gombra</translation>
     </message>
     <message>
-        <location filename="mainwindow.cpp" line="43"/>
+        <location filename="mainwindow.cpp" line="53"/>
         <source>Update database</source>
         <translation>Adatbázis frissítés</translation>
     </message>
     <message>
-        <location filename="mainwindow.cpp" line="138"/>
-        <location filename="mainwindow.cpp" line="176"/>
-        <location filename="mainwindow.cpp" line="188"/>
-        <location filename="mainwindow.cpp" line="203"/>
-        <location filename="mainwindow.cpp" line="222"/>
+        <location filename="mainwindow.cpp" line="148"/>
+        <location filename="mainwindow.cpp" line="186"/>
+        <location filename="mainwindow.cpp" line="198"/>
+        <location filename="mainwindow.cpp" line="213"/>
         <location filename="mainwindow.cpp" line="232"/>
-        <location filename="mainwindow.cpp" line="260"/>
-        <location filename="mainwindow.cpp" line="320"/>
+        <location filename="mainwindow.cpp" line="242"/>
+        <location filename="mainwindow.cpp" line="270"/>
+        <location filename="mainwindow.cpp" line="330"/>
         <source>Error</source>
         <translation>Hiba</translation>
     </message>
     <message>
-        <location filename="mainwindow.cpp" line="139"/>
-        <location filename="mainwindow.cpp" line="189"/>
-        <location filename="mainwindow.cpp" line="204"/>
-        <location filename="mainwindow.cpp" line="233"/>
-        <location filename="mainwindow.cpp" line="261"/>
+        <location filename="mainwindow.cpp" line="149"/>
+        <location filename="mainwindow.cpp" line="199"/>
+        <location filename="mainwindow.cpp" line="214"/>
+        <location filename="mainwindow.cpp" line="243"/>
+        <location filename="mainwindow.cpp" line="271"/>
         <source>Unable to execute the following command:
 %1</source>
         <translation>Nem sikerült végrehajtani a következő folyamatot:
 %1</translation>
     </message>
     <message>
-        <location filename="mainwindow.cpp" line="147"/>
+        <location filename="mainwindow.cpp" line="157"/>
         <source>Warning</source>
         <translation>Figyelmeztetés</translation>
     </message>
     <message>
-        <location filename="mainwindow.cpp" line="148"/>
+        <location filename="mainwindow.cpp" line="158"/>
         <source>Location of the MySQL archive application is not set.
 Please check your settings.</source>
         <translation>A MySQL archiváló alkalmazás elérési útvonala nincs megadva.
 Kérem ellenőrizze a beállításokat.</translation>
     </message>
     <message>
-        <location filename="mainwindow.cpp" line="177"/>
+        <location filename="mainwindow.cpp" line="187"/>
         <source>Unable to create temporary file: dbrecreate.sql</source>
         <translation>Nem sikerült létrehozni a dbrecreate.sql ideiglenes állományt</translation>
     </message>
     <message>
-        <location filename="mainwindow.cpp" line="223"/>
+        <location filename="mainwindow.cpp" line="233"/>
         <source>Unable to create temporary file: dbreactivate.sql</source>
         <translation>Nem sikerült létrehozni a dbreactivate.sql ideiglenes állományt</translation>
     </message>
     <message>
-        <location filename="mainwindow.cpp" line="321"/>
+        <location filename="mainwindow.cpp" line="331"/>
         <source>The selected file not exists or not readable
 
 %1</source>

@@ -507,37 +507,31 @@ data from web server</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="dlgmain.cpp" line="127"/>
-        <location filename="dlgmain.cpp" line="129"/>
+        <location filename="dlgmain.cpp" line="134"/>
+        <location filename="dlgmain.cpp" line="136"/>
         <source>SQL Connection established</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="dlgmain.cpp" line="154"/>
-        <location filename="dlgmain.cpp" line="166"/>
-        <source>&lt;Not selected&gt;</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <location filename="dlgmain.cpp" line="182"/>
-        <location filename="dlgmain.cpp" line="184"/>
+        <location filename="dlgmain.cpp" line="190"/>
+        <location filename="dlgmain.cpp" line="192"/>
         <source>Error in connection: %1</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="dlgmain.cpp" line="350"/>
+        <location filename="dlgmain.cpp" line="358"/>
         <source>User &apos;%1&apos; logged in</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="dlgmain.cpp" line="537"/>
+        <location filename="dlgmain.cpp" line="545"/>
         <source>Are you sure you want to close this application?
 
 With closing the application the data of the patientcards will not be synchronized with the KiwiSun server.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="dlgmain.cpp" line="613"/>
+        <location filename="dlgmain.cpp" line="621"/>
         <source>Are you sure you want send all patientcard data to KiwiSun Web server?
 
 Sending all patientcard data could take long time.
@@ -545,138 +539,126 @@ Please consider if you have enough time to wait process to finish.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="dlgmain.cpp" line="661"/>
+        <location filename="dlgmain.cpp" line="669"/>
         <source>Enter barcode of the patientcard:</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="dlgmain.cpp" line="673"/>
+        <location filename="dlgmain.cpp" line="681"/>
         <source>The defined barcode not found in the database.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="dlgmain.cpp" line="756"/>
-        <location filename="dlgmain.cpp" line="768"/>
+        <location filename="dlgmain.cpp" line="764"/>
+        <location filename="dlgmain.cpp" line="776"/>
         <source>HTTP Connection established</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="dlgmain.cpp" line="828"/>
+        <location filename="dlgmain.cpp" line="836"/>
         <source>Database connection</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="dlgmain.cpp" line="831"/>
+        <location filename="dlgmain.cpp" line="839"/>
         <source>Http connection</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="dlgmain.cpp" line="838"/>
+        <location filename="dlgmain.cpp" line="846"/>
         <source>Send all patientcard</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="dlgmain.cpp" line="842"/>
+        <location filename="dlgmain.cpp" line="850"/>
         <source>Clear waiting queue</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="dlgmain.cpp" line="846"/>
+        <location filename="dlgmain.cpp" line="854"/>
         <source>Get online sold patientcards</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="dlgmain.cpp" line="850"/>
+        <location filename="dlgmain.cpp" line="858"/>
         <source>Clear patientcard</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="dlgmain.cpp" line="854"/>
+        <location filename="dlgmain.cpp" line="862"/>
         <source>Clear all inactive patientcards</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="dlgmain.cpp" line="858"/>
+        <location filename="dlgmain.cpp" line="866"/>
         <source>&amp;Exit application</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="dlgmain.cpp" line="870"/>
+        <location filename="dlgmain.cpp" line="878"/>
         <source>User actions</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="dlgmain.cpp" line="1061"/>
+        <location filename="dlgmain.cpp" line="1069"/>
         <source>Need authentication ...</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="dlgmain.cpp" line="1065"/>
+        <location filename="dlgmain.cpp" line="1073"/>
         <source>User successfully authenticated.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="dlgmain.cpp" line="1075"/>
+        <location filename="dlgmain.cpp" line="1083"/>
         <source>The username entered not found in the Belenus database</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="dlgmain.cpp" line="1077"/>
+        <location filename="dlgmain.cpp" line="1085"/>
         <source>The password entered is incorrect</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="dlgmain.cpp" line="1079"/>
+        <location filename="dlgmain.cpp" line="1087"/>
         <source>Connection to Belenus database failed</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="dlgmain.cpp" line="1081"/>
+        <location filename="dlgmain.cpp" line="1089"/>
         <source>Authentication failed. Please retry later ...</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="dlgmain.cpp" line="1187"/>
+        <location filename="dlgmain.cpp" line="1195"/>
         <source>Http server address is not defined!
 Http connection is going to be disabled.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="dlgmain.cpp" line="1198"/>
+        <location filename="dlgmain.cpp" line="1206"/>
         <source>Http error occured!
 %1</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="dlgmain.cpp" line="1208"/>
+        <location filename="dlgmain.cpp" line="1216"/>
         <source>Http communication disabled.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="dlgmain.cpp" line="1218"/>
+        <location filename="dlgmain.cpp" line="1226"/>
         <source>Http communication enabled.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="dlgmain.cpp" line="1228"/>
+        <location filename="dlgmain.cpp" line="1236"/>
         <source>Http communication suspended.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="dlgmain.cpp" line="1238"/>
+        <location filename="dlgmain.cpp" line="1246"/>
         <source>Http communication continued.</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <location filename="dlgmain.cpp" line="1248"/>
-        <source>No payment method set for online transactions.
-Http connection is going to be disabled.</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <location filename="dlgmain.cpp" line="1259"/>
-        <source>No patientcard type set for onlince transactions.
-Http connection is going to be disabled.</source>
         <translation type="unfinished"></translation>
     </message>
 </context>

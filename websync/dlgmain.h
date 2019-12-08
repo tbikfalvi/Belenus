@@ -181,8 +181,8 @@ private:
     bool                 m_FlagHttpEnabled;
     bool                 m_FlagHttpSuspended;
     bool                 m_FlagHttpContinued;
-    bool                 m_FlagNoPaymentMethod;
-    bool                 m_FlagNoPCType;
+//    bool                 m_FlagNoPaymentMethod;
+//    bool                 m_FlagNoPCType;
 
     QString              m_qsServerAddress;
 
