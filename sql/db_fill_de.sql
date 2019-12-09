@@ -111,13 +111,13 @@ INSERT INTO `patientCardTypes` (`patientCardTypeId`, `licenceId`, `name`, `price
 
 -- -----------------------------------------------------------------------------------
 
-INSERT INTO `patientCards` (`patientCardId`, `licenceId`, `patientCardTypeId`, `patientId`, `barcode`, `rfId`, `comment`, `units`, `timeLeft`, `validDateFrom`, `validDateTo`, `pincode`, `active`, `archive`) VALUES
- (0, 0, 0, 0, '', '', NULL, 0, 0, '0000-00-00', '0000-00-00', NULL, 0, 'ARC');
+INSERT INTO `patientCards` (`patientCardId`, `licenceId`, `patientCardTypeId`, `patientId`, `servicecard`, `barcode` , `rfId`, `comment`, `units`, `timeLeft`, `validDateFrom`, `validDateTo`, `pincode`, `active`, `archive`) VALUES
+ (0, 0, 0, 0, 0, '', '', NULL, 0, 0, '0000-00-00', '0000-00-00', NULL, 0, 'ARC');
 UPDATE `patientCards` SET `patientCardId`=0 WHERE `patientCardId`=1;
 ALTER TABLE `patientCards` auto_increment=1;
 
-INSERT INTO `patientCards` (`patientCardId`, `licenceId`, `patientCardTypeId`, `patientId`, `barcode`, `rfId`, `comment`, `units`, `timeLeft`, `validDateFrom`, `validDateTo`, `pincode`, `active`, `archive`) VALUES
- (1, 0, 1, 0, '000000', '', 'Szerviz kártya. Csak szerviz használatra', 999, 43200, '2012-01-01', '2100-12-31', NULL, 1, 'ARC');
+INSERT INTO `patientCards` (`patientCardId`, `licenceId`, `patientCardTypeId`, `patientId`, `servicecard`, `barcode` , `rfId`, `comment`, `units`, `timeLeft`, `validDateFrom`, `validDateTo`, `pincode`, `active`, `archive`) VALUES
+ (1, 0, 1, 0, 0, '000000', '', 'Szerviz kártya. Csak szerviz használatra', 999, 43200, '2012-01-01', '2100-12-31', NULL, 1, 'ARC');
 
 -- -----------------------------------------------------------------------------------
 
@@ -321,8 +321,8 @@ INSERT INTO `settings` (`settingId`, `identifier`, `value`) VALUES
  (NULL, 'LICENCE_LAST_VALIDATED', '2000-01-01 12:00:00'),
  (NULL, 'ABOUT_INFO_LINK', 'http://www.kiwisun.eu/elerhetosegeink.html'),
  (NULL, 'CURRENT_CASSA_ID', '0'),
- (NULL, 'APPLICATION_VERSION', '1_8_0_2'),
- (NULL, 'DATABASE_VERSION', '1_8_0_2'),
+ (NULL, 'APPLICATION_VERSION', '1_9_0_0'),
+ (NULL, 'DATABASE_VERSION', '1_9_0_0'),
  (NULL, "GEN_LastUser", "" ),
  (NULL, "GEN_PanelsPerRow", 3 ),
  (NULL, "GEN_BarcodeLength", 8 ),

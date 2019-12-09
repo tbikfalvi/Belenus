@@ -23,5 +23,5 @@ INSERT INTO `settings` (`settingId`, `identifier`, `value`) VALUES
 -- -----------------------------------------------------------------------------------
 
 UPDATE settings SET value=NOW() WHERE identifier="GLOBAL_DATA_UPDATED";
-UPDATE settings SET value='1_9_0_0' WHERE identifier='APPLICATION_VERSION';
-UPDATE settings SET value='1_9_0_0' WHERE identifier='DATABASE_VERSION';
+UPDATE settings SET value='1_9_0_0_beta' WHERE identifier='APPLICATION_VERSION';
+UPDATE settings SET value='1_9_0_0_beta' WHERE identifier='DATABASE_VERSION';

@@ -780,12 +780,12 @@
         </execute>
     </version>    
 	
-    <version current="1.8.0.2" next="1.9.0.0">
+    <version current="1.8.0.2" next="1.9.0.0.beta">
         <download>
-            <file path="http://download.bikfalvi.hu/belenus/official/Update_1_9_0_0.zip" />
+            <file path="http://download.bikfalvi.hu/belenus/official/Update_1_9_0_0_beta.zip" />
         </download>
         <uncompress>
-            <file path="%DOWNLOAD_DIR%" name="Update_1_9_0_0.zip" />
+            <file path="%DOWNLOAD_DIR%" name="Update_1_9_0_0_beta.zip" />
         </uncompress>
         <backup>
             <file path="%INSTALL_DIR%" directory="" name="belenus.exe" move="yes" />
@@ -802,7 +802,7 @@
             <file src="%DOWNLOAD_DIR%/DBBackup.exe" dst="%CURRENT_DIR%/DBBackup.exe" />
         </update>
         <execute>
-            <application home="%CURRENT_DIR%" name="DBBackup.exe" params='-execute "%DOWNLOAD_DIR%/sql/db_update_1_9_0_0.sql"' />
+            <application home="%CURRENT_DIR%" name="DBBackup.exe" params='-execute "%DOWNLOAD_DIR%/sql/db_update_1_9_0_0_beta.sql"' />
         </execute>
     </version>    
 	

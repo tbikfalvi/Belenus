@@ -236,6 +236,7 @@ CREATE TABLE `patientCards` (
   `patientCardTypeId`       int(10) unsigned        NOT NULL,
   `parentCardId`            int(10) unsigned        DEFAULT 0,
   `patientId`               int(10) unsigned        NOT NULL,
+  `servicecard`             BOOLEAN                 NOT NULL DEFAULT FALSE,
   `barcode`                 varchar(20)             NOT NULL,
   `rfId`                    varchar(30)             NOT NULL,
   `comment`                 varchar(50)             DEFAULT NULL,

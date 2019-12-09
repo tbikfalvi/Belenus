@@ -16,8 +16,6 @@ ALTER TABLE `patientcards` ADD `servicecard` BOOLEAN NOT NULL DEFAULT FALSE AFTE
 UPDATE `patientcards` SET `servicecard` = '1' WHERE `patientCardId` = 1;
 UPDATE `patientcardtypes` SET `units` = '9' WHERE `patientCardTypeId` = 1;
 
--- -----------------------------------------------------------------------------------
-
 INSERT INTO `settings` (`settingId`, `identifier`, `value`) VALUES
  (NULL, "HW_RFIDEnabled", 0 ),
  (NULL, "HW_RFIDComPort", 1 );
@@ -25,5 +23,5 @@ INSERT INTO `settings` (`settingId`, `identifier`, `value`) VALUES
 -- -----------------------------------------------------------------------------------
 
 UPDATE settings SET value=NOW() WHERE identifier="GLOBAL_DATA_UPDATED";
-UPDATE settings SET value='1_9_0_0' WHERE identifier='APPLICATION_VERSION';
-UPDATE settings SET value='1_9_0_0' WHERE identifier='DATABASE_VERSION';
+UPDATE settings SET value='1_9_0_0_beta' WHERE identifier='APPLICATION_VERSION';
+UPDATE settings SET value='1_9_0_0_beta' WHERE identifier='DATABASE_VERSION';
