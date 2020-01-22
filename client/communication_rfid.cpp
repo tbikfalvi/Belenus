@@ -76,23 +76,26 @@ QString cCommRFID::readRFID()
     char    chSerialIn[2048];
     int     nHossz = 0;
 
-    memset( chSerialIn, 0, sizeof(chSerialIn) );
-
-    if( _readMessage( chSerialIn, &nHossz ) )
+    if( !isRFIDConnected() )
     {
-        //g_obLogger(cSeverity::DEBUG) << "[RFID] Read: '" << chSerialIn << "' length: " << nHossz << EOM;
+        memset( chSerialIn, 0, sizeof(chSerialIn) );
 
-        qsRet = QString( chSerialIn );
-
-        if( qsRet.length() != nHossz )
+        if( _readMessage( chSerialIn, &nHossz ) )
         {
-            // No ending zero in chSerialIn
-            qsRet = "";
+            //g_obLogger(cSeverity::DEBUG) << "[RFID] Read: '" << chSerialIn << "' length: " << nHossz << EOM;
+
+            qsRet = QString( chSerialIn );
+
+            if( qsRet.length() != nHossz )
+            {
+                // No ending zero in chSerialIn
+                qsRet = "";
+            }
         }
-    }
-    else
-    {
-        closeRFIDConnection();
+        else
+        {
+            closeRFIDConnection();
+        }
     }
 
     return qsRet;

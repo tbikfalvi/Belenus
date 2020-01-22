@@ -280,6 +280,7 @@ int main( int argc, char *argv[] )
         //-------------------------------------------------------------------------------
 
         g_poCommRFID = NULL;
+        g_poCommRFID = new cCommRFID();
 
         if( g_poPrefs->isRFIDEnabled() )
         {
@@ -287,7 +288,6 @@ int main( int argc, char *argv[] )
 
             Sleep( g_poPrefs->getSecondsWaitOnSlpashScreen()*1000 );
 
-            g_poCommRFID = new cCommRFID();
             g_poCommRFID->init( g_poPrefs->getRFIDComPort() );
 
             if( g_poCommRFID->isRFIDConnected() )

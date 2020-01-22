@@ -39,6 +39,7 @@ void cMdiPanels::initPanels()
     QMdiSubWindow *poPanel;
     for( int i = 0; i < inPanelCount; i++ )
     {
+        g_obLogger(cSeverity::DEBUG) << "Panel count: [" << i << "] of [" << inPanelCount << "]." << EOM;
         poFrame = new cFrmPanel( i + 1 );
         poFrame->setFrameShape( QFrame::Panel);
         poFrame->setFrameShadow( QFrame::Sunken );
@@ -64,10 +65,19 @@ void cMdiPanels::initPanels()
         m_obPanels.at( i )->show();
     }
 
+    g_obLogger(cSeverity::DEBUG) << "placeSubWindows" << EOM;
+
     placeSubWindows();
+
+    g_obLogger(cSeverity::DEBUG) << "activatePanel" << EOM;
+
     activatePanel( 0 );
 
+    g_obLogger(cSeverity::DEBUG) << "slotSelectedFromWaitingQueue" << EOM;
+
     slotSelectedFromWaitingQueue();
+
+    g_obLogger(cSeverity::DEBUG) << "isHardwareConnected" << EOM;
 
     if( g_poHardware->isHardwareConnected() )
     {
@@ -266,12 +276,15 @@ bool cMdiPanels::isStatusCanBeReseted()
 
 void cMdiPanels::activatePanel( unsigned int p_uiPanel )
 {
+    g_obLogger(cSeverity::DEBUG) << "activatePanel [" << m_uiActivePanel << "]" << EOM;
+
     m_obPanels.at( m_uiActivePanel )->inactivate();
     m_obPanels.at( p_uiPanel )->activate();
 
     m_uiActivePanel = p_uiPanel;
 
 //    emit activePanelChanged( m_obPanels.at( m_uiActivePanel )->isWorking() );
+    g_obLogger(cSeverity::DEBUG) << "emit activePanelChanged" << EOM;
     emit activePanelChanged();
 }
 
