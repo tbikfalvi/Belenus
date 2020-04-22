@@ -417,10 +417,9 @@ Te rog, folosește aplicația care rulează deja.
 </translation>
     </message>
     <message>
-        <location filename="main.cpp" line="221"/>
         <source>Days remains: %1
 </source>
-        <translation>Zile rămase: %1
+        <translation type="obsolete">Zile rămase: %1
 </translation>
     </message>
     <message>
@@ -461,7 +460,7 @@ Aplicația poate fi folosită numai în modul DEMO.
 </translation>
     </message>
     <message>
-        <location filename="main.cpp" line="286"/>
+        <location filename="main.cpp" line="287"/>
         <source>
 RFID communication enabled
 Checking RFID connection ... </source>
@@ -7075,7 +7074,7 @@ Dă click pe &apos;Pornește casă npuă&apos; dacă nu vrei să folosești casa
         <location filename="wndmain.cpp" line="2619"/>
         <location filename="wndmain.cpp" line="2642"/>
         <location filename="wndmain.cpp" line="3216"/>
-        <location filename="wndmain.cpp" line="4095"/>
+        <location filename="wndmain.cpp" line="4100"/>
         <source>Question</source>
         <translation>Întrebare</translation>
     </message>
@@ -7189,10 +7188,10 @@ Vrei să actualizezi utilizatorii aplicației și să îi atașezi de cheia de l
         <location filename="wndmain.cpp" line="3764"/>
         <location filename="wndmain.cpp" line="4046"/>
         <location filename="wndmain.cpp" line="4071"/>
-        <location filename="wndmain.cpp" line="4080"/>
-        <location filename="wndmain.cpp" line="4105"/>
-        <location filename="wndmain.cpp" line="4123"/>
-        <location filename="wndmain.cpp" line="4243"/>
+        <location filename="wndmain.cpp" line="4085"/>
+        <location filename="wndmain.cpp" line="4110"/>
+        <location filename="wndmain.cpp" line="4128"/>
+        <location filename="wndmain.cpp" line="4248"/>
         <source>Warning</source>
         <translation>Avertisment</translation>
     </message>
@@ -7568,18 +7567,23 @@ Se recomandă părăsirea aplicației și contactarea administratorului de siste
     <message>
         <location filename="wndmain.cpp" line="4072"/>
         <source>The validity of the application&apos;s licence
-will be expire in %1 days.
+will be expire soon.
 
 Please contact your franchise provider
 and extend your licence valid time period.</source>
-        <translation>Valabilitatea licenței aplicației
+        <oldsource>The validity of the application&apos;s licence
+will be expire in %1 days.
+
+Please contact your franchise provider
+and extend your licence valid time period.</oldsource>
+        <translation type="unfinished">Valabilitatea licenței aplicației
 va expira în %1 zile.
 
 Te rog, contactează furnizorul tău de franciză
 și extinde timpul de valabilitate al licenței tale.</translation>
     </message>
     <message>
-        <location filename="wndmain.cpp" line="4081"/>
+        <location filename="wndmain.cpp" line="4086"/>
         <source>The application&apos;s licence is registered
 but not validated by your franchise provider.
 
@@ -7592,7 +7596,7 @@ Te rog, contactează furnizorul tău de franciză
 și validează licența aplicației tale</translation>
     </message>
     <message>
-        <location filename="wndmain.cpp" line="4096"/>
+        <location filename="wndmain.cpp" line="4101"/>
         <source>The http synchronization is enabled but the WebSync application is not running.
 
 Do you want to start this application now?</source>
@@ -7601,8 +7605,8 @@ Do you want to start this application now?</source>
 Vrei să pornești această aplicație acum?</translation>
     </message>
     <message>
-        <location filename="wndmain.cpp" line="4106"/>
-        <location filename="wndmain.cpp" line="4244"/>
+        <location filename="wndmain.cpp" line="4111"/>
+        <location filename="wndmain.cpp" line="4249"/>
         <source>Error occured when starting process:WebSync.exe
 
 Error code: %1
@@ -7623,7 +7627,7 @@ Cod eroare: %1
 5 &gt; A intervenit o eroare necunoscută.</translation>
     </message>
     <message>
-        <location filename="wndmain.cpp" line="4124"/>
+        <location filename="wndmain.cpp" line="4129"/>
         <source>The path of the application and the path of the archive directory is located on the same base directory.
 For safety point of view it is recommended to separate archive directory from the application environment.
 Please select a different directory path for &apos;archive&apos; and manually move the content of the archive directory to the newly selected directory!
@@ -7638,17 +7642,17 @@ Examplu pentru traseul aplicației: c:/Kiwisun/Belenus
 Examplu pentru traseul arhivei: c:/Arhivă/BelenusBD</translation>
     </message>
     <message>
-        <location filename="wndmain.cpp" line="4155"/>
+        <location filename="wndmain.cpp" line="4160"/>
         <source>Windows</source>
         <translation>Windows</translation>
     </message>
     <message>
-        <location filename="wndmain.cpp" line="4163"/>
+        <location filename="wndmain.cpp" line="4168"/>
         <source>Advertisements</source>
         <translation>Publicitate</translation>
     </message>
     <message>
-        <location filename="wndmain.cpp" line="4168"/>
+        <location filename="wndmain.cpp" line="4173"/>
         <source>WebSync application</source>
         <translation>Aplicația WebSync</translation>
     </message>

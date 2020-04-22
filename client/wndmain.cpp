@@ -4070,10 +4070,15 @@ void cWndMain::_checkIsActivationNeeded()
     {
         QMessageBox::warning( this, tr("Warning"),
                               tr( "The validity of the application's licence\n"
+                                  "will be expire soon.\n\n"
+                                  "Please contact your franchise provider\n"
+                                  "and extend your licence valid time period.") );
+        /*QMessageBox::warning( this, tr("Warning"),
+                              tr( "The validity of the application's licence\n"
                                   "will be expire in %1 days.\n\n"
                                   "Please contact your franchise provider\n"
                                   "and extend your licence valid time period.")
-                              .arg( nDaysRemain ) );
+                              .arg( nDaysRemain ) );*/
     }
     if( g_obLicenceManager.ltLicenceType() == cLicenceManager::LTYPE_REGISTERED )
     {

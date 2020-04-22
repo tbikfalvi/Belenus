@@ -248,10 +248,9 @@ Kérem használja a korábban elindított alkalmazást.</translation>
 </translation>
     </message>
     <message>
-        <location filename="main.cpp" line="221"/>
         <source>Days remains: %1
 </source>
-        <translation>Hátralévő napok: %1
+        <translation type="obsolete">Hátralévő napok: %1
 </translation>
     </message>
     <message>
@@ -284,7 +283,7 @@ Az alkalmazás csak DEMÓ módban használható.
         <translation>Adatbázis ellenőrzése: </translation>
     </message>
     <message>
-        <location filename="main.cpp" line="286"/>
+        <location filename="main.cpp" line="287"/>
         <source>
 RFID communication enabled
 Checking RFID connection ... </source>
@@ -9623,7 +9622,7 @@ Figyelem: a regisztrációhoz élő internet kapcsolatra van szükség.</transla
         <location filename="wndmain.cpp" line="2619"/>
         <location filename="wndmain.cpp" line="2642"/>
         <location filename="wndmain.cpp" line="3216"/>
-        <location filename="wndmain.cpp" line="4095"/>
+        <location filename="wndmain.cpp" line="4100"/>
         <source>Question</source>
         <translation>Kérdés</translation>
     </message>
@@ -9641,10 +9640,10 @@ Figyelem: a regisztrációhoz élő internet kapcsolatra van szükség.</transla
         <location filename="wndmain.cpp" line="3764"/>
         <location filename="wndmain.cpp" line="4046"/>
         <location filename="wndmain.cpp" line="4071"/>
-        <location filename="wndmain.cpp" line="4080"/>
-        <location filename="wndmain.cpp" line="4105"/>
-        <location filename="wndmain.cpp" line="4123"/>
-        <location filename="wndmain.cpp" line="4243"/>
+        <location filename="wndmain.cpp" line="4085"/>
+        <location filename="wndmain.cpp" line="4110"/>
+        <location filename="wndmain.cpp" line="4128"/>
+        <location filename="wndmain.cpp" line="4248"/>
         <source>Warning</source>
         <translation>Figyelmeztetés</translation>
     </message>
@@ -9953,7 +9952,7 @@ Biztos, hogy fel akarja tölteni?</translation>
         <translation>Egyedi e-mail küldés</translation>
     </message>
     <message>
-        <location filename="wndmain.cpp" line="4096"/>
+        <location filename="wndmain.cpp" line="4101"/>
         <source>The http synchronization is enabled but the WebSync application is not running.
 
 Do you want to start this application now?</source>
@@ -9962,8 +9961,8 @@ Do you want to start this application now?</source>
 El akarja indítani az alkalmazást most?</translation>
     </message>
     <message>
-        <location filename="wndmain.cpp" line="4106"/>
-        <location filename="wndmain.cpp" line="4244"/>
+        <location filename="wndmain.cpp" line="4111"/>
+        <location filename="wndmain.cpp" line="4249"/>
         <source>Error occured when starting process:WebSync.exe
 
 Error code: %1
@@ -9984,7 +9983,7 @@ Hibakód: %1
 5 &gt; Ismeretlen hiba következett be.</translation>
     </message>
     <message>
-        <location filename="wndmain.cpp" line="4124"/>
+        <location filename="wndmain.cpp" line="4129"/>
         <source>The path of the application and the path of the archive directory is located on the same base directory.
 For safety point of view it is recommended to separate archive directory from the application environment.
 Please select a different directory path for &apos;archive&apos; and manually move the content of the archive directory to the newly selected directory!
@@ -10002,12 +10001,12 @@ Példa az alkalmazás elérési útvonalára: c:/Kiwisun/Belenus
 Példa az archív könyvtár elérési útvonalára: c:/Archive/BelenusDB</translation>
     </message>
     <message>
-        <location filename="wndmain.cpp" line="4155"/>
+        <location filename="wndmain.cpp" line="4160"/>
         <source>Windows</source>
         <translation>Ablakok</translation>
     </message>
     <message>
-        <location filename="wndmain.cpp" line="4163"/>
+        <location filename="wndmain.cpp" line="4168"/>
         <source>Advertisements</source>
         <translation>Hírdetések</translation>
     </message>
@@ -10020,7 +10019,7 @@ Példa az archív könyvtár elérési útvonalára: c:/Archive/BelenusDB</trans
         <translation type="obsolete">Hírdetés ablakok</translation>
     </message>
     <message>
-        <location filename="wndmain.cpp" line="4168"/>
+        <location filename="wndmain.cpp" line="4173"/>
         <source>WebSync application</source>
         <translation>WebSync alkalmazás</translation>
     </message>
@@ -10093,18 +10092,23 @@ Ajánlott kilépni az alkalmazásból és kapcsolatba lépni a rendszer adminisz
     <message>
         <location filename="wndmain.cpp" line="4072"/>
         <source>The validity of the application&apos;s licence
-will be expire in %1 days.
+will be expire soon.
 
 Please contact your franchise provider
 and extend your licence valid time period.</source>
+        <oldsource>The validity of the application&apos;s licence
+will be expire in %1 days.
+
+Please contact your franchise provider
+and extend your licence valid time period.</oldsource>
         <translation>Az alkalmazás liszenszének érvényessége
-%1 nap múlva le fog járni.
+hamarosan le fog járni.
 
 Kérem lépjen kapcsolatba a franchise szolgáltatójával
 és növelje meg az érvényességi időintervallumot.</translation>
     </message>
     <message>
-        <location filename="wndmain.cpp" line="4081"/>
+        <location filename="wndmain.cpp" line="4086"/>
         <source>The application&apos;s licence is registered
 but not validated by your franchise provider.
 

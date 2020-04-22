@@ -409,12 +409,6 @@ Please use the currently running application.
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="main.cpp" line="221"/>
-        <source>Days remains: %1
-</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
         <location filename="main.cpp" line="226"/>
         <source>
 VALIDATE YOUR APPLICATION
@@ -437,7 +431,7 @@ The application can be used only in DEMO mode.
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="main.cpp" line="286"/>
+        <location filename="main.cpp" line="287"/>
         <source>
 RFID communication enabled
 Checking RFID connection ... </source>
@@ -6723,7 +6717,7 @@ Click the &apos;Start new cassa&apos; if you don&apos;t want to use the previous
         <location filename="wndmain.cpp" line="2619"/>
         <location filename="wndmain.cpp" line="2642"/>
         <location filename="wndmain.cpp" line="3216"/>
-        <location filename="wndmain.cpp" line="4095"/>
+        <location filename="wndmain.cpp" line="4100"/>
         <source>Question</source>
         <translation type="unfinished"></translation>
     </message>
@@ -6824,10 +6818,10 @@ Do you want to update application users and attach them to the newly registered 
         <location filename="wndmain.cpp" line="3764"/>
         <location filename="wndmain.cpp" line="4046"/>
         <location filename="wndmain.cpp" line="4071"/>
-        <location filename="wndmain.cpp" line="4080"/>
-        <location filename="wndmain.cpp" line="4105"/>
-        <location filename="wndmain.cpp" line="4123"/>
-        <location filename="wndmain.cpp" line="4243"/>
+        <location filename="wndmain.cpp" line="4085"/>
+        <location filename="wndmain.cpp" line="4110"/>
+        <location filename="wndmain.cpp" line="4128"/>
+        <location filename="wndmain.cpp" line="4248"/>
         <source>Warning</source>
         <translation type="unfinished"></translation>
     </message>
@@ -6962,15 +6956,15 @@ Please relogin to enable cassa.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="wndmain.cpp" line="4096"/>
+        <location filename="wndmain.cpp" line="4101"/>
         <source>The http synchronization is enabled but the WebSync application is not running.
 
 Do you want to start this application now?</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="wndmain.cpp" line="4106"/>
-        <location filename="wndmain.cpp" line="4244"/>
+        <location filename="wndmain.cpp" line="4111"/>
+        <location filename="wndmain.cpp" line="4249"/>
         <source>Error occured when starting process:WebSync.exe
 
 Error code: %1
@@ -6983,7 +6977,7 @@ Error code: %1
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="wndmain.cpp" line="4124"/>
+        <location filename="wndmain.cpp" line="4129"/>
         <source>The path of the application and the path of the archive directory is located on the same base directory.
 For safety point of view it is recommended to separate archive directory from the application environment.
 Please select a different directory path for &apos;archive&apos; and manually move the content of the archive directory to the newly selected directory!
@@ -6996,17 +6990,17 @@ Please select a different directory path for &apos;archive&apos; and manually mo
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="wndmain.cpp" line="4155"/>
+        <location filename="wndmain.cpp" line="4160"/>
         <source>Windows</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="wndmain.cpp" line="4163"/>
+        <location filename="wndmain.cpp" line="4168"/>
         <source>Advertisements</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="wndmain.cpp" line="4168"/>
+        <location filename="wndmain.cpp" line="4173"/>
         <source>WebSync application</source>
         <translation type="unfinished"></translation>
     </message>
@@ -7028,14 +7022,19 @@ It is recommended to exit application and to contact system administrator.</sour
     <message>
         <location filename="wndmain.cpp" line="4072"/>
         <source>The validity of the application&apos;s licence
-will be expire in %1 days.
+will be expire soon.
 
 Please contact your franchise provider
 and extend your licence valid time period.</source>
+        <oldsource>The validity of the application&apos;s licence
+will be expire in %1 days.
+
+Please contact your franchise provider
+and extend your licence valid time period.</oldsource>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="wndmain.cpp" line="4081"/>
+        <location filename="wndmain.cpp" line="4086"/>
         <source>The application&apos;s licence is registered
 but not validated by your franchise provider.
 

@@ -218,8 +218,8 @@ int main( int argc, char *argv[] )
 
         int     nDaysRemain = g_obLicenceManager.daysRemain();
 
-        qsSpalsh += QObject::tr("Days remains: %1\n").arg( nDaysRemain );
-        obSplash.showMessage(qsSpalsh,Qt::AlignLeft,QColor(59,44,75));
+//        qsSpalsh += QObject::tr("Days remains: %1\n").arg( nDaysRemain );
+//        obSplash.showMessage(qsSpalsh,Qt::AlignLeft,QColor(59,44,75));
 
         if( nDaysRemain < cLicenceManager::EXPIRE_MAX_DAYS || g_obLicenceManager.ltLicenceType() == cLicenceManager::LTYPE_REGISTERED )
         {

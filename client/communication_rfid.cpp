@@ -76,7 +76,7 @@ QString cCommRFID::readRFID()
     char    chSerialIn[2048];
     int     nHossz = 0;
 
-    if( !isRFIDConnected() )
+    if( isRFIDConnected() )
     {
         memset( chSerialIn, 0, sizeof(chSerialIn) );
 
