@@ -10,6 +10,10 @@ USE `belenus`;
 
 -- -----------------------------------------------------------------------------------
 
+UPDATE `settings` SET value = DATE_ADD( NOW(), INTERVAL 60 DAY) WHERE identifier = "LICENCE_LAST_VALIDATED";
+
+-- -----------------------------------------------------------------------------------
+
 ALTER TABLE `patientcards` ADD `rfId` varchar(30) NOT NULL AFTER `barcode`;
 ALTER TABLE `patientcards` ADD `servicecard` BOOLEAN NOT NULL DEFAULT FALSE AFTER `patientId`;
 
