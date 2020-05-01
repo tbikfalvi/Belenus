@@ -29,8 +29,7 @@ UPDATE `licences` SET `lastValidated` = DATE_ADD( NOW( ) , INTERVAL 60 DAY ) WHE
 INSERT INTO `users` (`userId`, `licenceId`, `name`, `realName`, `password`, `accGroup`, `comment`, `modified`, `active`, `archive`) VALUES 
  (NULL, '0', 'kiwiadmin', 'Kiwisun Adminisztrátor', '1180796965429c0903c2ef9194121493a5127e44', '2', 'Szolárium stúdió alapértelmezett felhasználója normál rendszergazdai jogosultságokkal.', '0000-00-00 00:00:00', '1', 'ARC');
 
--- -----------------------------------------------------------------------------------
+ -- -----------------------------------------------------------------------------------
 
-UPDATE settings SET value=NOW() WHERE identifier="GLOBAL_DATA_UPDATED";
 UPDATE settings SET value='1_9_0_0' WHERE identifier='APPLICATION_VERSION';
 UPDATE settings SET value='1_9_0_0' WHERE identifier='DATABASE_VERSION';
