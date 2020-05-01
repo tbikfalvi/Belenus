@@ -24,7 +24,8 @@ cDlgInformation::cDlgInformation( QWidget *p_poParent ) : QDialog( p_poParent )
     setWindowIcon( QIcon("./resources/40x40_information.png") );
     setWindowFlags( Qt::Dialog | Qt::FramelessWindowHint );
 
-    m_poParent = p_poParent;
+    m_poParent          = p_poParent;
+    m_nTimerCountdown   = 0;
 }
 //====================================================================================
 cDlgInformation::~cDlgInformation()
@@ -35,10 +36,17 @@ cDlgInformation::~cDlgInformation()
 void cDlgInformation::timerEvent(QTimerEvent *)
 //------------------------------------------------------------------------------------
 {
-    killTimer( m_nTimer );
-    m_nTimer = 0;
+    m_nTimerCountdown--;
 
-    close();
+    pbOk->setText( tr( "Ok (%1)" ).arg( m_nTimerCountdown ) );
+
+    if( m_nTimerCountdown < 1)
+    {
+        killTimer( m_nTimer );
+        m_nTimer = 0;
+
+        close();
+    }
 }
 //====================================================================================
 void cDlgInformation::setInformationTitle(QString p_qsTitle)
@@ -64,7 +72,13 @@ void cDlgInformation::setTimer(int p_nSeconds)
     if( p_nSeconds == 0 )
         return;
 
-    m_nTimer = startTimer( p_nSeconds * 1000 );
+    m_nTimerCountdown = p_nSeconds;
+
+    if( m_nTimerCountdown > 0)
+    {
+        pbOk->setText( tr( "Ok (%1)" ).arg( m_nTimerCountdown ) );
+        m_nTimer = startTimer( 1000 );
+    }
 }
 //====================================================================================
 void cDlgInformation::on_pbOk_clicked()
