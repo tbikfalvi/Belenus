@@ -151,6 +151,7 @@
         <file src="%CURRENT_DIR%/resources/40x40_patient_wait.png" dst="%INSTALL_DIR%/resources/40x40_patient_wait.png" />
         <file src="%CURRENT_DIR%/resources/40x40_send.png" dst="%INSTALL_DIR%/resources/40x40_send.png" />
         <file src="%CURRENT_DIR%/resources/40x40_websync.png" dst="%INSTALL_DIR%/resources/40x40_websync.png" />
+        <file src="%CURRENT_DIR%/resources/40x40_rfid.png" dst="%INSTALL_DIR%/resources/40x40_rfid.png" />
         
         <file src="%CURRENT_DIR%/sqldrivers/qsqlmysql4.dll" dst="%INSTALL_DIR%/sqldrivers/qsqlmysql4.dll" />
 
