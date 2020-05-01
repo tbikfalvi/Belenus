@@ -465,7 +465,7 @@ QStringList cGeneral::getPatientCardUnusedUnits(unsigned int p_uiCardId)
     return qslValidUnits;
 }
 //====================================================================================
-void cGeneral::showPatientCardInformation(QString p_qsBarcode)
+void cGeneral::showPatientCardInformation(QString p_qsBarcode, int p_nCloseSeconds)
 //------------------------------------------------------------------------------------
 {
     try
@@ -527,6 +527,7 @@ void cGeneral::showPatientCardInformation(QString p_qsBarcode)
         }
         obDlgInformation.setInformationTitle( qsTitle );
         obDlgInformation.setInformationText( qsText );
+        obDlgInformation.setTimer( p_nCloseSeconds );
         obDlgInformation.exec();
     }
     catch( cSevException &e )

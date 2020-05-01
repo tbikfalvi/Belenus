@@ -22,6 +22,7 @@ protected:
 private:
     QWidget *m_poParent;
     int      m_nTimer;
+    int      m_nTimerCountdown;
 
 private slots:
     void on_pbOk_clicked();
