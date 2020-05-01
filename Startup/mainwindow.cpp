@@ -421,19 +421,7 @@ void MainWindow::on_pbStart_clicked()
             {
                 ui->progressBar->setMaximum( 100 );
                 ui->progressBar->setValue( 1 );
-/*                _deleteRegistryKey( "HKEY_LOCAL_MACHINE\\SOFTWARE\\Microsoft\\Windows\\CurrentVersion\\Uninstall\\Belenus" );
-                _deleteRegistryKey( "HKEY_LOCAL_MACHINE\\System\\CurrentControlSet\\Control\\Session Manager\\Environment",
-                                    "BelenusStartup" );
-                _deleteRegistryKey( "HKEY_LOCAL_MACHINE\\System\\CurrentControlSet\\Control\\Session Manager\\Environment",
-                                    "BelenusTarget" );
-                _deleteRegistryKey( "HKEY_LOCAL_MACHINE\\System\\CurrentControlSet\\Control\\Session Manager\\Environment",
-                                    "BelenusResource" );
-                _deleteRegistryKey( "HKEY_LOCAL_MACHINE\\System\\CurrentControlSet\\Control\\Session Manager\\Environment",
-                                    "BelenusBackup" );
                 _progressStep();
-
-                SendMessage( HWND_BROADCAST, WM_SETTINGCHANGE, 0, (LPARAM)L"Environment" );
-*/                _progressStep();
 
                 _removeShortcuts();
                 _progressStep();

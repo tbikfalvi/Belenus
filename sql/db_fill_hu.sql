@@ -26,7 +26,9 @@ UPDATE `users` SET `userId`=0 WHERE `userId`=1;
 ALTER TABLE `users` auto_increment=1;
 
 INSERT INTO `users` (`licenceId`, `name`, `realName`, `password`, `accgroup`, `active`, `comment`, `archive`) VALUES
- ( 1, 'system', 'KiwiSun Adminisztrátor', 'a382329cfe97ae74677649d1f7fc03986b27cf3f', 3, 1, 'Szolárium stúdió alapértelmezett felhasználója bővített rendszergazdai jogosultságokkal.', 'ARC' );
+ ( 1, 'system', 'KiwiSun Rendszer Adminisztrátor', 'a382329cfe97ae74677649d1f7fc03986b27cf3f', 3, 1, 'Szolárium stúdió alapértelmezett felhasználója bővített rendszergazdai jogosultságokkal.', 'ARC' );
+INSERT INTO `users` (`licenceId`, `name`, `realName`, `password`, `accgroup`, `active`, `comment`, `archive`) VALUES
+ ( 1, 'system', 'KiwiSun Adminisztrátor', '1180796965429c0903c2ef9194121493a5127e44', 2, 1, 'Szolárium stúdió alapértelmezett felhasználója normál rendszergazdai jogosultságokkal.', 'ARC' );
 INSERT INTO `users` (`licenceId`, `name`, `realName`, `password`, `accgroup`, `active`, `comment`, `archive`) VALUES
  ( 1, 'admin', 'Adminisztrátor', 'd033e22ae348aeb5660fc2140aec35850c4da997', 2, 1, 'Szolárium stúdió alapértelmezett felhasználója rendszergazdai jogosultságokkal.', 'ARC' );
 INSERT INTO `users` (`licenceId`, `name`, `realName`, `password`, `accgroup`, `active`, `comment`, `archive`) VALUES

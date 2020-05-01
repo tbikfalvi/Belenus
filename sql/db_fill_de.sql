@@ -28,6 +28,8 @@ ALTER TABLE `users` auto_increment=1;
 INSERT INTO `users` (`licenceId`, `name`, `realName`, `password`, `accgroup`, `active`, `comment`, `archive`) VALUES
  ( 1, 'system', 'System Administrator', 'a382329cfe97ae74677649d1f7fc03986b27cf3f', 3, 1, 'Default system administrator with extended administrator rights.', 'ARC' );
 INSERT INTO `users` (`licenceId`, `name`, `realName`, `password`, `accgroup`, `active`, `comment`, `archive`) VALUES
+ ( 1, 'system', 'KiwiSun Administrator', '1180796965429c0903c2ef9194121493a5127e44', 2, 1, 'Default kiwisun administrator with regular administrator rights.', 'ARC' );
+INSERT INTO `users` (`licenceId`, `name`, `realName`, `password`, `accgroup`, `active`, `comment`, `archive`) VALUES
  ( 1, 'admin', 'Administrator', 'd033e22ae348aeb5660fc2140aec35850c4da997', 2, 1, 'Default administrator with basic administrator rights.', 'ARC' );
 INSERT INTO `users` (`licenceId`, `name`, `realName`, `password`, `accgroup`, `active`, `comment`, `archive`) VALUES
  ( 1, 'operator', 'Operator', 'e47c3168137789e3e0df75d23452cabcc9a890f5', 1, 1, 'Default user with operator rights.', 'ARC' );

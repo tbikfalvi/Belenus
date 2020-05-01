@@ -51,73 +51,73 @@
         <translation>Revocare acțiune: %1</translation>
     </message>
     <message>
-        <location filename="db/dbpatientcard.cpp" line="466"/>
+        <location filename="db/dbpatientcard.cpp" line="467"/>
         <location filename="db/dbvalidtimeperiods.cpp" line="164"/>
         <location filename="general.cpp" line="142"/>
         <source>Mon</source>
         <translation>Luni</translation>
     </message>
     <message>
-        <location filename="db/dbpatientcard.cpp" line="466"/>
+        <location filename="db/dbpatientcard.cpp" line="467"/>
         <location filename="db/dbvalidtimeperiods.cpp" line="165"/>
         <location filename="general.cpp" line="143"/>
         <source>Tue</source>
         <translation>Marți</translation>
     </message>
     <message>
-        <location filename="db/dbpatientcard.cpp" line="466"/>
+        <location filename="db/dbpatientcard.cpp" line="467"/>
         <location filename="db/dbvalidtimeperiods.cpp" line="166"/>
         <location filename="general.cpp" line="144"/>
         <source>Wed</source>
         <translation>Miercuri</translation>
     </message>
     <message>
-        <location filename="db/dbpatientcard.cpp" line="466"/>
+        <location filename="db/dbpatientcard.cpp" line="467"/>
         <location filename="db/dbvalidtimeperiods.cpp" line="167"/>
         <location filename="general.cpp" line="145"/>
         <source>Thu</source>
         <translation>Joi</translation>
     </message>
     <message>
-        <location filename="db/dbpatientcard.cpp" line="466"/>
+        <location filename="db/dbpatientcard.cpp" line="467"/>
         <location filename="db/dbvalidtimeperiods.cpp" line="168"/>
         <location filename="general.cpp" line="146"/>
         <source>Fri</source>
         <translation>Vineri</translation>
     </message>
     <message>
-        <location filename="db/dbpatientcard.cpp" line="466"/>
+        <location filename="db/dbpatientcard.cpp" line="467"/>
         <location filename="db/dbvalidtimeperiods.cpp" line="169"/>
         <location filename="general.cpp" line="147"/>
         <source>Sat</source>
         <translation>Sâmbătă</translation>
     </message>
     <message>
-        <location filename="db/dbpatientcard.cpp" line="466"/>
+        <location filename="db/dbpatientcard.cpp" line="467"/>
         <location filename="db/dbvalidtimeperiods.cpp" line="170"/>
         <location filename="general.cpp" line="148"/>
         <source>Sun</source>
         <translation>Duminică</translation>
     </message>
     <message>
-        <location filename="db/dbpatientcard.cpp" line="891"/>
-        <location filename="db/dbpatientcard.cpp" line="931"/>
+        <location filename="db/dbpatientcard.cpp" line="892"/>
+        <location filename="db/dbpatientcard.cpp" line="932"/>
         <source> units (</source>
         <translation> unități (</translation>
     </message>
     <message>
-        <location filename="db/dbpatientcard.cpp" line="893"/>
-        <location filename="db/dbpatientcard.cpp" line="933"/>
+        <location filename="db/dbpatientcard.cpp" line="894"/>
+        <location filename="db/dbpatientcard.cpp" line="934"/>
         <source> minutes) (</source>
         <translation> minute) (</translation>
     </message>
     <message>
-        <location filename="db/dbpatientcard.cpp" line="937"/>
+        <location filename="db/dbpatientcard.cpp" line="938"/>
         <source>&lt;i&gt; (prepared for usage)&lt;/i&gt;&lt;br&gt;</source>
         <translation>&lt;i&gt; (pregătit pentru folosire)&lt;/i&gt;&lt;br&gt;</translation>
     </message>
     <message>
-        <location filename="db/dbpatientcard.cpp" line="943"/>
+        <location filename="db/dbpatientcard.cpp" line="944"/>
         <source>&lt;i&gt;There is no valid, useable unit on this card.&lt;/i&gt;</source>
         <translation>&lt;i&gt;Pe acest card nu există unități valabile, care ar putea fi folosite.&lt;/i&gt;</translation>
     </message>
@@ -3445,51 +3445,56 @@ Toate cardurile selectate vor fi dezactivate.</translation>
     </message>
     <message>
         <location filename="edit/dlgpatientcardedit.cpp" line="321"/>
-        <location filename="edit/dlgpatientcardedit.cpp" line="411"/>
+        <location filename="edit/dlgpatientcardedit.cpp" line="409"/>
         <source>Attention</source>
         <translation>Atenție</translation>
     </message>
     <message>
         <location filename="edit/dlgpatientcardedit.cpp" line="322"/>
-        <source>Are you sure you want to change the validity date
-from:  %1  to:  %2  
+        <source>Are you sure you want to change the validity date to
+ %1 
 for the selected patientcard units?
 
 Please note this change cannot be undone!</source>
-        <translation>Sigur vrei să modifici data de valabilitate
+        <oldsource>Are you sure you want to change the validity date
+from:  %1  to:  %2  
+for the selected patientcard units?
+
+Please note this change cannot be undone!</oldsource>
+        <translation type="unfinished">Sigur vrei să modifici data de valabilitate
 de la:  %1  până la:  %2  
 pentru unitățile de card pacient selectate?
 
 Te rog, ia în considerare faptul că acestă modificare este ireversibilă!</translation>
     </message>
     <message>
-        <location filename="edit/dlgpatientcardedit.cpp" line="403"/>
-        <location filename="edit/dlgpatientcardedit.cpp" line="458"/>
+        <location filename="edit/dlgpatientcardedit.cpp" line="401"/>
+        <location filename="edit/dlgpatientcardedit.cpp" line="456"/>
         <source>Warning</source>
         <translation>Avertisment</translation>
     </message>
     <message>
-        <location filename="edit/dlgpatientcardedit.cpp" line="412"/>
+        <location filename="edit/dlgpatientcardedit.cpp" line="410"/>
         <source>Are you sure you want to deactivate this patientcard?</source>
         <translation>Sigur vrei să dezactivezi acest card de pacient?</translation>
     </message>
     <message>
-        <location filename="edit/dlgpatientcardedit.cpp" line="491"/>
+        <location filename="edit/dlgpatientcardedit.cpp" line="489"/>
         <source>Barcode cannot be empty.</source>
         <translation>Codul de bare nu poate fi gol.</translation>
     </message>
     <message>
-        <location filename="edit/dlgpatientcardedit.cpp" line="498"/>
+        <location filename="edit/dlgpatientcardedit.cpp" line="496"/>
         <source>Invalid barcode. Barcode should be %1 character length.</source>
         <translation>Cod de bare incorect. Codul de bare ar trebui să aibă lungimea de %1 caractere.</translation>
     </message>
     <message>
-        <location filename="edit/dlgpatientcardedit.cpp" line="510"/>
+        <location filename="edit/dlgpatientcardedit.cpp" line="508"/>
         <source>Invalid barcode. This barcode already saved into database.</source>
         <translation>Cod de bare incorect. Acest cod de bare a fost deja salvat în baza de date.</translation>
     </message>
     <message>
-        <location filename="edit/dlgpatientcardedit.cpp" line="523"/>
+        <location filename="edit/dlgpatientcardedit.cpp" line="521"/>
         <source>Please read your RFID card!</source>
         <translation type="unfinished"></translation>
     </message>

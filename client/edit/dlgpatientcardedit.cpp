@@ -319,21 +319,19 @@ void cDlgPatientCardEdit::on_pbChangeValidity_clicked()
         if( dateSelection != cDlgChangePCValidity::SV_NONE )
         {
             if( QMessageBox::question( this, tr("Attention"),
-                                       tr("Are you sure you want to change the validity date\n"
-                                          "from:  %1  to:  %2  "
-                                          "\nfor the selected patientcard units?\n\n"
+                                       tr("Are you sure you want to change the validity date to\n"
+                                          " %1 \n"
+                                          "for the selected patientcard units?\n\n"
                                           "Please note this change cannot be undone!")
-                                       .arg( deValidDateTo->date().toString(g_poPrefs->getDateFormat().replace("-",".")) )
                                        .arg( qdNewDate.toString(g_poPrefs->getDateFormat().replace("-",".")) ),
                                        QMessageBox::Yes | QMessageBox::No, QMessageBox::Yes ) == QMessageBox::Yes )
             {
-                deValidDateTo->setDate( qdNewDate );
+                if( qdNewDate > deValidDateTo->date() )
+                {
+                    deValidDateTo->setDate( qdNewDate );
+                }
                 m_qsUnitCondition = obDlgChangePCValidity.unitCondition();
-//                m_bIsValidationChanged = true;
-//                if( m_bIsValidationChanged )
-//                {
-                    m_poPatientCard->updateActiveUnits( deValidDateTo->date(), m_qsUnitCondition );
-//                }
+                m_poPatientCard->updateActiveUnits( qdNewDate, m_qsUnitCondition );
                 m_poPatientCard->synchronizeUnits();
             }
         }

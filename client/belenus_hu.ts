@@ -488,73 +488,73 @@ Kérem indítsa el a WampServer alkalmazást, majd indítsa újra a Belenus alka
         <translation> Vas</translation>
     </message>
     <message>
-        <location filename="db/dbpatientcard.cpp" line="466"/>
+        <location filename="db/dbpatientcard.cpp" line="467"/>
         <location filename="db/dbvalidtimeperiods.cpp" line="164"/>
         <location filename="general.cpp" line="142"/>
         <source>Mon</source>
         <translation>Hé</translation>
     </message>
     <message>
-        <location filename="db/dbpatientcard.cpp" line="466"/>
+        <location filename="db/dbpatientcard.cpp" line="467"/>
         <location filename="db/dbvalidtimeperiods.cpp" line="165"/>
         <location filename="general.cpp" line="143"/>
         <source>Tue</source>
         <translation>Ke</translation>
     </message>
     <message>
-        <location filename="db/dbpatientcard.cpp" line="466"/>
+        <location filename="db/dbpatientcard.cpp" line="467"/>
         <location filename="db/dbvalidtimeperiods.cpp" line="166"/>
         <location filename="general.cpp" line="144"/>
         <source>Wed</source>
         <translation>Sze</translation>
     </message>
     <message>
-        <location filename="db/dbpatientcard.cpp" line="466"/>
+        <location filename="db/dbpatientcard.cpp" line="467"/>
         <location filename="db/dbvalidtimeperiods.cpp" line="167"/>
         <location filename="general.cpp" line="145"/>
         <source>Thu</source>
         <translation>Csü</translation>
     </message>
     <message>
-        <location filename="db/dbpatientcard.cpp" line="466"/>
+        <location filename="db/dbpatientcard.cpp" line="467"/>
         <location filename="db/dbvalidtimeperiods.cpp" line="168"/>
         <location filename="general.cpp" line="146"/>
         <source>Fri</source>
         <translation>Pé</translation>
     </message>
     <message>
-        <location filename="db/dbpatientcard.cpp" line="466"/>
+        <location filename="db/dbpatientcard.cpp" line="467"/>
         <location filename="db/dbvalidtimeperiods.cpp" line="169"/>
         <location filename="general.cpp" line="147"/>
         <source>Sat</source>
         <translation>Szo</translation>
     </message>
     <message>
-        <location filename="db/dbpatientcard.cpp" line="466"/>
+        <location filename="db/dbpatientcard.cpp" line="467"/>
         <location filename="db/dbvalidtimeperiods.cpp" line="170"/>
         <location filename="general.cpp" line="148"/>
         <source>Sun</source>
         <translation>Vas</translation>
     </message>
     <message>
-        <location filename="db/dbpatientcard.cpp" line="891"/>
-        <location filename="db/dbpatientcard.cpp" line="931"/>
+        <location filename="db/dbpatientcard.cpp" line="892"/>
+        <location filename="db/dbpatientcard.cpp" line="932"/>
         <source> units (</source>
         <translation> egység (</translation>
     </message>
     <message>
-        <location filename="db/dbpatientcard.cpp" line="893"/>
-        <location filename="db/dbpatientcard.cpp" line="933"/>
+        <location filename="db/dbpatientcard.cpp" line="894"/>
+        <location filename="db/dbpatientcard.cpp" line="934"/>
         <source> minutes) (</source>
         <translation> perc) (</translation>
     </message>
     <message>
-        <location filename="db/dbpatientcard.cpp" line="937"/>
+        <location filename="db/dbpatientcard.cpp" line="938"/>
         <source>&lt;i&gt; (prepared for usage)&lt;/i&gt;&lt;br&gt;</source>
         <translation>&lt;i&gt; (használatra előkészítve)&lt;/i&gt;&lt;br&gt;</translation>
     </message>
     <message>
-        <location filename="db/dbpatientcard.cpp" line="943"/>
+        <location filename="db/dbpatientcard.cpp" line="944"/>
         <source>&lt;i&gt;There is no valid, useable unit on this card.&lt;/i&gt;</source>
         <translation>&lt;i&gt;Nincs érvényes, felhasználható egység a bérleten.&lt;/i&gt;</translation>
     </message>
@@ -5016,37 +5016,39 @@ Regisztrálni akarja a vonalkódot egy új bérlethez?</translation>
     </message>
     <message>
         <location filename="edit/dlgpatientcardedit.cpp" line="322"/>
-        <source>Are you sure you want to change the validity date
-from:  %1  to:  %2  
+        <source>Are you sure you want to change the validity date to
+ %1 
 for the selected patientcard units?
 
 Please note this change cannot be undone!</source>
         <oldsource>Are you sure you want to change the validity date
 from:  %1  to:  %2  
-for the selected patientcard units?</oldsource>
-        <translation>Biztos benne, hogy megváltoztatja az érvényesség végét
-erről: %1  erre:  %2  
-a kiválasztott bérletegységekre?
+for the selected patientcard units?
+
+Please note this change cannot be undone!</oldsource>
+        <translation>Biztos benne, hogy megváltoztatja az érvényesség végét erre a dátumra 
+ %1 
+a kiválasztott bérletegységeknél?
 
 Kérem vegye figyelembe, hogy ez a beavatkozás nem vonható vissza!</translation>
     </message>
     <message>
-        <location filename="edit/dlgpatientcardedit.cpp" line="491"/>
+        <location filename="edit/dlgpatientcardedit.cpp" line="489"/>
         <source>Barcode cannot be empty.</source>
         <translation>A vonalkód megadása kötelező.</translation>
     </message>
     <message>
-        <location filename="edit/dlgpatientcardedit.cpp" line="498"/>
+        <location filename="edit/dlgpatientcardedit.cpp" line="496"/>
         <source>Invalid barcode. Barcode should be %1 character length.</source>
         <translation>Nem megfelelő vonalkód. A vonalkódnak %1 karakter hosszúnak kell lennie.</translation>
     </message>
     <message>
-        <location filename="edit/dlgpatientcardedit.cpp" line="510"/>
+        <location filename="edit/dlgpatientcardedit.cpp" line="508"/>
         <source>Invalid barcode. This barcode already saved into database.</source>
         <translation>Hibás vonalkód. Ez a vonalkód már regisztrálva van az adatbázisban.</translation>
     </message>
     <message>
-        <location filename="edit/dlgpatientcardedit.cpp" line="523"/>
+        <location filename="edit/dlgpatientcardedit.cpp" line="521"/>
         <source>Please read your RFID card!</source>
         <translation>Kérem olvassa be az RFID kártyát!</translation>
     </message>
@@ -5086,7 +5088,7 @@ Ha érvénytelenné akarja tenni a kártyát,
 deaktiválja a bérletet az Aktivál szöveg melletti pipa eltüntetésével.</translation>
     </message>
     <message>
-        <location filename="edit/dlgpatientcardedit.cpp" line="412"/>
+        <location filename="edit/dlgpatientcardedit.cpp" line="410"/>
         <source>Are you sure you want to deactivate this patientcard?</source>
         <translation>Biztos benne, hogy deaktiválni akarja ezt a bérletet?</translation>
     </message>
@@ -5182,7 +5184,7 @@ Kattintson az Ignore gombra, ha nem akar további hibaüzenetet kapni.</translat
     </message>
     <message>
         <location filename="edit/dlgpatientcardedit.cpp" line="321"/>
-        <location filename="edit/dlgpatientcardedit.cpp" line="411"/>
+        <location filename="edit/dlgpatientcardedit.cpp" line="409"/>
         <source>Attention</source>
         <translation>Figyelmeztetés</translation>
     </message>
@@ -5195,8 +5197,8 @@ Please relogin to enable cassa.</source>
 Kérem jelentkezzen ki és vissza a pénztárműveletek engedélyezéséhez.</translation>
     </message>
     <message>
-        <location filename="edit/dlgpatientcardedit.cpp" line="403"/>
-        <location filename="edit/dlgpatientcardedit.cpp" line="458"/>
+        <location filename="edit/dlgpatientcardedit.cpp" line="401"/>
+        <location filename="edit/dlgpatientcardedit.cpp" line="456"/>
         <source>Warning</source>
         <translation>Figyelmeztetés</translation>
     </message>

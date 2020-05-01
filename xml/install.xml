@@ -170,6 +170,8 @@
         <file src="%CURRENT_DIR%/DBBackup.exe" dst="%INSTALL_DIR%/DBBackup.exe" />
         <file src="%CURRENT_DIR%/ReportViewer.exe" dst="%INSTALL_DIR%/ReportViewer.exe" />
         <file src="%CURRENT_DIR%/websync.exe" dst="%INSTALL_DIR%/websync.exe" />
+		
+		<file src="%CURRENT_DIR%/mysql/my-huge.ini" dst="C:/wamp/bin/mysql/mysql5.5.24/my.ini" />
 
     </files>
 

@@ -450,8 +450,9 @@ void cDBPatientCard::updateActiveUnits(QDate p_qdNew, QString p_qsCondition) thr
                              .arg( m_uiId );
     if( p_qsCondition.length() > 0 )
     {
-        qsQuery.append( " AND " );
+        qsQuery.append( " AND ( " );
         qsQuery.append( p_qsCondition );
+        qsQuery.append( " ) " );
 
         g_poDB->executeQTQuery( qsQuery );
     }
