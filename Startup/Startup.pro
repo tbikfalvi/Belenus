@@ -1,7 +1,7 @@
 
 greaterThan(QT_MAJOR_VERSION, 4): QT += widgets
 
-QT          += core gui xml
+QT          += core gui sql xml
 CONFIG      += qt
 RESOURCES   += startup.qrc
 RC_FILE      = startup.rc
@@ -13,9 +13,11 @@ TRANSLATIONS = startup_hu.ts \
                startup_sk.ts \
                startup_it.ts
 
-HEADERS     += mainwindow.h
+HEADERS     += mainwindow.h \
+               cregistry.h
 
 SOURCES     += main.cpp\
-               mainwindow.cpp
+               mainwindow.cpp \
+               cregistry.cpp
 
 FORMS       += mainwindow.ui
