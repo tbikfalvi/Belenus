@@ -804,6 +804,7 @@
             <file src="%DOWNLOAD_DIR%/websync.exe" dst="%INSTALL_DIR%/websync.exe" />
             <file src="%DOWNLOAD_DIR%/DBBackup.exe" dst="%CURRENT_DIR%/DBBackup.exe" />
             <file src="%DOWNLOAD_DIR%/mysql/my-huge.ini" dst="C:/wamp/bin/mysql/mysql5.5.24/my.ini" />
+            <file src="%DOWNLOAD_DIR%/mysql/config.inc.php" dst="c:/wamp/apps/phpmyadmin3.5.1/config.inc.php" />
         </update>
         <execute>
             <application home="%CURRENT_DIR%" name="DBBackup.exe" params='-execute "%DOWNLOAD_DIR%/sql/db_update_1_9_0_0.sql"' />
