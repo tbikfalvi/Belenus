@@ -3,6 +3,7 @@
 
 #include <QMainWindow>
 #include <QTranslator>
+#include <QDomDocument>
 #include <QFile>
 #include <QtSql>
 
@@ -49,6 +50,7 @@ private:
 
     QSqlDatabase            *m_poDB;
     QFile                   *m_obFile;
+    QDomDocument            *obProcessDoc;
 
     QString                  m_qsPathWampServer;
     QString                  m_qsUninstallWampExec;
@@ -67,7 +69,7 @@ private:
     bool _createPaths();
     bool _createPath( QString p_qsPath );
     bool _createSettingsFile();
-    bool _updateSettingsFile();
+//    bool _updateSettingsFile();
     void _progressStep();
     bool _copyUpdaterFiles();
     bool _copyXmlFile();
@@ -98,6 +100,7 @@ private:
     bool                    _copyInstallFiles( QString p_qsFileName, bool p_bInstall = true );
     bool                    _createFolderShortcut();
     bool                    _createTargetDirectory( QString p_qsPath );
+    bool                    _createClientLanguageSelectFile();
 };
 
 #endif // MAINWINDOW_H

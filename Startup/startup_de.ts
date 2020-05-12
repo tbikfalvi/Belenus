@@ -9,43 +9,48 @@
         <translation>Belenus Software System Start</translation>
     </message>
     <message>
-        <location filename="mainwindow.ui" line="315"/>
+        <location filename="mainwindow.ui" line="322"/>
         <source>Select language for the application</source>
         <translation>Bitte wählen Sie die Sprache aus</translation>
     </message>
     <message>
-        <location filename="mainwindow.ui" line="226"/>
+        <location filename="mainwindow.ui" line="233"/>
         <source>Welcome to the startup application of the Belenus Application System</source>
         <translation>Herzlich Willkommen bei Belenus Software System Setup</translation>
     </message>
     <message>
-        <location filename="mainwindow.ui" line="342"/>
+        <location filename="mainwindow.ui" line="53"/>
+        <source>v.1.9.0.0</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="mainwindow.ui" line="349"/>
         <source>Select application type : </source>
         <translation>Wählen Sie Anwendungstyp : </translation>
     </message>
     <message>
-        <location filename="mainwindow.ui" line="349"/>
+        <location filename="mainwindow.ui" line="356"/>
         <source>Official</source>
         <translation>Offiziell</translation>
     </message>
     <message>
-        <location filename="mainwindow.ui" line="362"/>
+        <location filename="mainwindow.ui" line="369"/>
         <source>Demo</source>
         <translation>Demo</translation>
     </message>
     <message>
-        <location filename="mainwindow.ui" line="389"/>
+        <location filename="mainwindow.ui" line="396"/>
         <source>Process will use resources from ...</source>
         <oldsource>Process will use ...</oldsource>
         <translation>Der Verlauf der Ressourcen …</translation>
     </message>
     <message>
-        <location filename="mainwindow.ui" line="396"/>
+        <location filename="mainwindow.ui" line="403"/>
         <source>local directory</source>
         <translation>Ordner Dokumente</translation>
     </message>
     <message>
-        <location filename="mainwindow.ui" line="406"/>
+        <location filename="mainwindow.ui" line="413"/>
         <source>web address</source>
         <translation>Download vom Server</translation>
     </message>
@@ -54,7 +59,7 @@
         <translation type="obsolete">Bitte geben Sie den Speicherort für Download/Update an</translation>
     </message>
     <message>
-        <location filename="mainwindow.ui" line="693"/>
+        <location filename="mainwindow.ui" line="700"/>
         <source>Restore to default</source>
         <translation>Zurücksetzen</translation>
     </message>
@@ -63,7 +68,7 @@
         <translation type="obsolete"> Speicherort </translation>
     </message>
     <message>
-        <location filename="mainwindow.ui" line="650"/>
+        <location filename="mainwindow.ui" line="657"/>
         <source>Startup :</source>
         <translation>Anfang :</translation>
     </message>
@@ -72,7 +77,7 @@
         <translation type="obsolete">c:/BelenusUpdate</translation>
     </message>
     <message>
-        <location filename="mainwindow.ui" line="600"/>
+        <location filename="mainwindow.ui" line="607"/>
         <source>Target :</source>
         <translation>Ziel :</translation>
     </message>
@@ -81,7 +86,7 @@
         <translation type="obsolete">c:/Program Files/Belenus</translation>
     </message>
     <message>
-        <location filename="mainwindow.ui" line="557"/>
+        <location filename="mainwindow.ui" line="564"/>
         <source>Resource :</source>
         <translation>Quelle :</translation>
     </message>
@@ -90,7 +95,7 @@
         <translation type="obsolete">Download</translation>
     </message>
     <message>
-        <location filename="mainwindow.ui" line="630"/>
+        <location filename="mainwindow.ui" line="637"/>
         <source>Backup :</source>
         <translation>Archiv :</translation>
     </message>
@@ -99,98 +104,107 @@
         <translation type="obsolete">Backup</translation>
     </message>
     <message>
-        <location filename="mainwindow.ui" line="238"/>
+        <location filename="mainwindow.ui" line="245"/>
         <source>Select process to be started :</source>
         <translation>Bitte wählen Sie den gewünschten Verlauf aus:</translation>
     </message>
     <message>
-        <location filename="mainwindow.ui" line="262"/>
+        <location filename="mainwindow.ui" line="269"/>
         <source>Installation</source>
         <translation>Installation</translation>
     </message>
     <message>
-        <location filename="mainwindow.ui" line="285"/>
+        <location filename="mainwindow.ui" line="292"/>
         <source>Uninstall</source>
         <translation>De-Installieren</translation>
     </message>
     <message>
-        <location filename="mainwindow.ui" line="275"/>
+        <location filename="mainwindow.ui" line="282"/>
         <source>Update</source>
         <translation>Update</translation>
     </message>
     <message>
-        <location filename="mainwindow.ui" line="433"/>
+        <location filename="mainwindow.ui" line="440"/>
         <source>Number of panels :</source>
         <translation>Anzahl der Geräte : </translation>
     </message>
     <message>
-        <location filename="mainwindow.ui" line="459"/>
+        <location filename="mainwindow.ui" line="466"/>
         <source>Com port :</source>
         <translation>Com port : </translation>
     </message>
     <message>
-        <location filename="mainwindow.ui" line="466"/>
+        <location filename="mainwindow.ui" line="473"/>
         <source>COM</source>
         <translation>COM</translation>
     </message>
     <message>
-        <location filename="mainwindow.ui" line="497"/>
+        <location filename="mainwindow.ui" line="504"/>
         <source> Set directories for the installation / update process </source>
         <translation> Bitte geben Sie den Speicherort für Download/Update an </translation>
     </message>
     <message>
-        <location filename="mainwindow.ui" line="752"/>
+        <location filename="mainwindow.ui" line="759"/>
         <source>Start process</source>
         <translation>Prozess Starten</translation>
     </message>
     <message>
-        <location filename="mainwindow.cpp" line="248"/>
-        <location filename="mainwindow.cpp" line="265"/>
-        <location filename="mainwindow.cpp" line="306"/>
-        <location filename="mainwindow.cpp" line="348"/>
+        <location filename="mainwindow.cpp" line="278"/>
+        <location filename="mainwindow.cpp" line="295"/>
+        <location filename="mainwindow.cpp" line="336"/>
+        <location filename="mainwindow.cpp" line="378"/>
         <source>Select Directory</source>
         <translation>Bitte wählen Sie den Speicherot aus</translation>
     </message>
     <message>
-        <location filename="mainwindow.cpp" line="372"/>
+        <location filename="mainwindow.cpp" line="410"/>
         <source>installation</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="mainwindow.cpp" line="404"/>
+        <location filename="mainwindow.cpp" line="469"/>
         <source>uninstall</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="mainwindow.cpp" line="406"/>
+        <location filename="mainwindow.cpp" line="471"/>
         <source>Question</source>
         <translation>Anfrage</translation>
     </message>
     <message>
-        <location filename="mainwindow.cpp" line="407"/>
+        <location filename="mainwindow.cpp" line="472"/>
         <source>Are you sure you want to uninstall Belenus Application System and all of it&apos;s components?
 All of the data will be deleted from the computer.</source>
         <translation>Sind Sie sicher, dass Sie Belenus Application System und alle seine Komponenten deinstallieren?
 Sämtliche Daten werden vom Computer gelöscht.</translation>
     </message>
     <message>
-        <location filename="mainwindow.cpp" line="468"/>
+        <location filename="mainwindow.cpp" line="535"/>
         <source>Information</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="mainwindow.cpp" line="469"/>
+        <location filename="mainwindow.cpp" line="536"/>
         <source>The %1 process finished.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="mainwindow.cpp" line="1073"/>
-        <location filename="mainwindow.cpp" line="1086"/>
+        <location filename="mainwindow.cpp" line="541"/>
+        <source>Error occured during installing Belenus Application System.
+Please contact Belenus software support.
+
+Error code: %1</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="mainwindow.cpp" line="1135"/>
+        <location filename="mainwindow.cpp" line="1149"/>
+        <location filename="mainwindow.cpp" line="1753"/>
         <source>Attention</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="mainwindow.cpp" line="1074"/>
+        <location filename="mainwindow.cpp" line="1136"/>
         <source>Please make sure the WampServer icon appeared on taskbar
 and it&apos;s color is green.
 This grants that the database server is up and running
@@ -200,7 +214,7 @@ Click OK button to continue.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="mainwindow.cpp" line="1087"/>
+        <location filename="mainwindow.cpp" line="1150"/>
         <source>Error occured during installation.
 
 %1
@@ -210,35 +224,66 @@ contact Belenus software support.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <source>Error</source>
-        <translation type="obsolete">Fehler</translation>
+        <location filename="mainwindow.cpp" line="1725"/>
+        <source>KiwiSun device</source>
+        <translation type="unfinished"></translation>
     </message>
     <message>
+        <location filename="mainwindow.cpp" line="1754"/>
+        <source>Unable to empty the specified directory.
+%1
+Please manually delete the directory if copying new files fails.</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="mainwindow.cpp" line="1892"/>
+        <source>Belenus Application System</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="mainwindow.cpp" line="1908"/>
+        <source>System error</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="mainwindow.cpp" line="1909"/>
+        <source>Unable to create directory:
+
+%1</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="mainwindow.cpp" line="51"/>
+        <source>Error</source>
+        <translation type="unfinished">Fehler</translation>
+    </message>
+    <message>
+        <location filename="mainwindow.cpp" line="52"/>
         <source>Error occured during initialization.
 Please contact system administrator.
 Error code: ErrLogCreateFail
 [%1]</source>
-        <translation type="obsolete">Fehler bei der Initialisierung. 
+        <translation type="unfinished">Fehler bei der Initialisierung. 
 Bitte wenden Sie sich an den Systemadministrator. 
 Fehlercode: ErrLogCreateFail
 [%1]</translation>
     </message>
     <message>
-        <location filename="mainwindow.cpp" line="485"/>
-        <location filename="mainwindow.cpp" line="501"/>
-        <location filename="mainwindow.cpp" line="517"/>
-        <location filename="mainwindow.cpp" line="533"/>
-        <location filename="mainwindow.cpp" line="605"/>
-        <location filename="mainwindow.cpp" line="762"/>
-        <location filename="mainwindow.cpp" line="796"/>
-        <location filename="mainwindow.cpp" line="823"/>
-        <location filename="mainwindow.cpp" line="883"/>
-        <location filename="mainwindow.cpp" line="909"/>
+        <location filename="mainwindow.cpp" line="562"/>
+        <location filename="mainwindow.cpp" line="578"/>
+        <location filename="mainwindow.cpp" line="594"/>
+        <location filename="mainwindow.cpp" line="610"/>
+        <location filename="mainwindow.cpp" line="665"/>
+        <location filename="mainwindow.cpp" line="820"/>
+        <location filename="mainwindow.cpp" line="854"/>
+        <location filename="mainwindow.cpp" line="881"/>
+        <location filename="mainwindow.cpp" line="941"/>
+        <location filename="mainwindow.cpp" line="967"/>
         <source>Warning</source>
         <translation>Belehrung</translation>
     </message>
     <message>
-        <location filename="mainwindow.cpp" line="606"/>
+        <location filename="mainwindow.cpp" line="666"/>
         <source>The following directory can not be created:
 
 %1
@@ -251,7 +296,8 @@ Please create the directory manually and restart process.</source>
 Bitte erstellen Sie das Verzeichnis manuell und den Prozess neu zu starten.</translation>
     </message>
     <message>
-        <location filename="mainwindow.cpp" line="757"/>
+        <location filename="mainwindow.cpp" line="815"/>
+        <location filename="mainwindow.cpp" line="1798"/>
         <source>Error occured during parsing file:
 &apos;%1&apos;
 
@@ -262,8 +308,8 @@ Error in line %2: %3</source>
 Fehler in Folge %2: %3</translation>
     </message>
     <message>
-        <location filename="mainwindow.cpp" line="763"/>
-        <location filename="mainwindow.cpp" line="797"/>
+        <location filename="mainwindow.cpp" line="821"/>
+        <location filename="mainwindow.cpp" line="855"/>
         <source>Unable to copy updater files.
 Please check the error report file:
 
@@ -275,7 +321,7 @@ Bitte überprüfen Sie das Fehlerberichtsdatei.
 </translation>
     </message>
     <message>
-        <location filename="mainwindow.cpp" line="824"/>
+        <location filename="mainwindow.cpp" line="882"/>
         <source>Unable to copy updater file.
 Please check the error report file:
 
@@ -287,12 +333,12 @@ Bitte überprüfen Sie das Fehlerberichtsdatei.
 </translation>
     </message>
     <message>
-        <location filename="mainwindow.cpp" line="486"/>
-        <location filename="mainwindow.cpp" line="502"/>
-        <location filename="mainwindow.cpp" line="518"/>
-        <location filename="mainwindow.cpp" line="534"/>
-        <location filename="mainwindow.cpp" line="884"/>
-        <location filename="mainwindow.cpp" line="910"/>
+        <location filename="mainwindow.cpp" line="563"/>
+        <location filename="mainwindow.cpp" line="579"/>
+        <location filename="mainwindow.cpp" line="595"/>
+        <location filename="mainwindow.cpp" line="611"/>
+        <location filename="mainwindow.cpp" line="942"/>
+        <location filename="mainwindow.cpp" line="968"/>
         <source>Error occured when starting process:
 
 %1

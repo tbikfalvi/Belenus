@@ -45,6 +45,8 @@ MainWindow::MainWindow(QWidget *parent) : QMainWindow(parent), ui(new Ui::MainWi
     m_qsLanguage                    = "";
     m_qsClientInstallDir            = "";
 
+    obProcessDoc = new QDomDocument( "LanguageProcess" );
+
     m_obLog = new QFile( m_qsErrorReportFile );
     if( m_obLog == NULL )
     {
@@ -117,6 +119,7 @@ MainWindow::MainWindow(QWidget *parent) : QMainWindow(parent), ui(new Ui::MainWi
 //-------------------------------------------------------------------------------------------------
 MainWindow::~MainWindow()
 {
+    delete obProcessDoc;
     delete ui;
 }
 //=================================================================================================
@@ -738,7 +741,7 @@ bool MainWindow::_createSettingsFile()
 //=================================================================================================
 // _updateSettingsFile
 //-------------------------------------------------------------------------------------------------
-bool MainWindow::_updateSettingsFile()
+/*bool MainWindow::_updateSettingsFile()
 {
     QString qsSettings  = QString( "%1/settings.ini" ).arg( ui->ledDirectoryStartup->text() );
     QString qsAddress   = "";
@@ -785,14 +788,8 @@ bool MainWindow::_updateSettingsFile()
     obPrefFile.setValue( QString::fromAscii( "PreProcess/InstallDir" ), ui->ledDirectoryTarget->text() );
     obPrefFile.setValue( QString::fromAscii( "PreProcess/DownloadDir" ), ui->ledDirectoryResource->toolTip() );
     obPrefFile.setValue( QString::fromAscii( "PreProcess/BackupDir" ), ui->ledDirectoryBackup->toolTip() );
-/*
-    QMessageBox::warning( this, tr("Warning"),
-                          tr("Unable to update settings.ini on the following directory:\n\n%1\n\n"
-                             "Please check your user rights on the directory and file.")
-                          .arg( ui->ledDirectoryStartup->text() ) );
-*/
     return true;
-}
+}*/
 //=================================================================================================
 // _copyUpdaterFiles
 //-------------------------------------------------------------------------------------------------
@@ -1767,11 +1764,16 @@ bool MainWindow::_processClientInstall()
         _logProcess( QString("FAILED") );
     }
 
-    _logProcess( QString("Creating folders, shortcuts ..."), false );
+    _logProcess( QString("Creating shortcuts ..."), false );
     if( (bRet = _createFolderShortcut()) )
         _logProcess( QString("OK") );
     else
         _logProcess( QString("FAIL") );
+    _progressStep();
+
+    _logProcess( QString("Update client language select file ..."), false );
+    if( (bRet = _createClientLanguageSelectFile()) )
+        _logProcess( QString("OK") );
     _progressStep();
 
     _logProcess( QString("Client install successfully finished") );
@@ -1909,6 +1911,74 @@ bool MainWindow::_createTargetDirectory( QString p_qsPath )
                                tr("Unable to create directory:\n\n%1").arg(p_qsPath));
         return false;
     }
+
+    return true;
+}
+
+bool MainWindow::_createClientLanguageSelectFile()
+{
+    QString     qsFile = QString( "%1\\lang\\languages.inf" ).arg( m_qsClientInstallDir );
+    QFile       qfFile( qsFile );
+
+    if( !qfFile.exists() )
+    {
+        _logProcess( QString("FAIL") );
+        _logProcess( QString("Language file [%1] missing").arg( qsFile ) );
+        return false;
+    }
+
+    if( !qfFile.open(QIODevice::ReadOnly) )
+    {
+        _logProcess( QString("FAIL") );
+        _logProcess( QString("Unable to read [%1] file").arg( qsFile ) );
+        return false;
+    }
+
+    QString      qsErrorMsg  = "";
+    int          inErrorLine = 0;
+
+    qfFile.seek( 0 );
+    if( !obProcessDoc->setContent( &qfFile, &qsErrorMsg, &inErrorLine ) )
+    {
+        _logProcess( QString("FAIL") );
+        _logProcess( QString("Parsing file [%1] failed").arg( qsFile ) );
+        qfFile.close();
+        return false;
+    }
+    qfFile.close();
+
+    QDomElement     docRoot     = obProcessDoc->documentElement();
+    QDomNodeList    obLanguage  = docRoot.elementsByTagName( "language" );;
+
+    if( !qfFile.open(QIODevice::WriteOnly) )
+    {
+        _logProcess( QString("FAIL") );
+        _logProcess( QString("Unable to write [%1] file").arg( qsFile ) );
+        return false;
+    }
+
+    qfFile.write( "<languages>\n\r\t<!--\n\r\t<language name=\"\" shortname=\"\" current=\"no\" />\n\r\t-->\n\r\n\r\n\r" );
+
+    for( int i=0; i<obLanguage.count(); i++ )
+    {
+        QString qsName  = obLanguage.at(i).toElement().attribute("name");
+        QString qsShort = obLanguage.at(i).toElement().attribute("shortname");
+        QString qsCurr  = "no";
+
+        if( m_qsLanguage.compare( qsShort ) == 0 )
+        {
+            qsCurr = "yes";
+        }
+
+        qfFile.write( QString( "\t<language name=\"%1\" shortname=\"%2\" current=\"%3\" />\n\r" )
+                                .arg( qsName )
+                                .arg( qsShort )
+                                .arg( qsCurr )
+                                .toStdString().c_str() );
+    }
+    qfFile.write( "\n\r" );
+    qfFile.write( "</languages>\n\r" );
+    qfFile.close();
 
     return true;
 }
