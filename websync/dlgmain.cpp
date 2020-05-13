@@ -63,6 +63,8 @@ dlgMain::dlgMain(QWidget *parent, QString p_qsAppVersion) : QDialog(parent), ui(
 
     m_enGroup                   = GROUP_MIN;
 
+    m_bServerAddressChanged     = false;
+
     g_poDB                      = new cQTMySQLConnection;
     g_poBlnsHttp                = new cBlnsHttp();
 
@@ -235,11 +237,8 @@ dlgMain::dlgMain(QWidget *parent, QString p_qsAppVersion) : QDialog(parent), ui(
     // Application settings
     g_obLogger(cSeverity::DEBUG) << "Application settings" << EOM;
 
-    g_obLanguage.setLanguageCombo( ui->cmbLang );
-    m_qsLang            = obPref.value( "Lang", "en" ).toString();
-/*    int nCurrentIndex   = ui->cmbLang->findText( QString("%1 (").arg(m_qsLang), Qt::MatchContains );
-
-    ui->cmbLang->setCurrentIndex( nCurrentIndex );*/
+    int lngindex = g_obLanguage.setLanguageCombo( ui->cmbLang );
+    g_obLogger(cSeverity::INFO) << "Language index: [" << lngindex << "]" << EOM;
 
     ui->chkShowWindowOnStart->setChecked( m_bShowMainWindowOnStart );
     ui->ledTimerPCStatusSync->setText( QString::number( m_nTimerPCStatusSync ) );
@@ -401,13 +400,15 @@ void dlgMain::timerEvent(QTimerEvent *)
 
     //---------------------------------------------------------------------------------------------
     // Check if application settings are ok for http processes
-    if( m_nIndexCheckEnablers > 2 )
+    if( m_nIndexCheckEnablers > 10 )
     {
         m_bHttpEnabledBySetting = true;
         m_nIndexCheckEnablers   = 0;
 
         // Read enabler from belenus.ini
         _checkIfHttpDisabledByUser();
+        _checkIfHttpChangedByUser();
+        _setGUIEnabled();
 
         // Check web server address
         if( ui->ledWebServerAddress->text().length() == 0 )
@@ -1325,7 +1326,32 @@ void dlgMain::_checkIfHttpDisabledByUser()
             m_FlagHttpEnabled = false;
         }
     }
-    _setGUIEnabled();
+}
+
+//=================================================================================================
+void dlgMain::_checkIfHttpChangedByUser()
+{
+    QString qsAddress = "";
+
+    try
+    {
+        QSqlQuery *poQuery = g_poDB->executeQTQuery( QString( "SELECT value FROM settings WHERE identifier=\"SERVER_Address\" " ) );
+        if( poQuery->first() )
+        {
+            qsAddress = poQuery->value( 0 ).toString();
+        }
+    }
+    catch( cSevException &e )
+    {
+        g_obLogger(e.severity()) << e.what() << EOM;
+    }
+
+    if( qsAddress.compare( ui->ledWebServerAddress->text() ) )
+    {
+        m_bServerAddressChanged = true;
+        ui->ledWebServerAddress->setText( qsAddress );
+        ui->lblServerAddress->setStyleSheet( "QLabel {font: normal;}" );
+    }
 }
 
 //=================================================================================================
@@ -1344,7 +1370,14 @@ void dlgMain::on_ledWebServerAddress_textEdited(const QString &/*arg1*/)
 {
     ui->lblServerAddress->setStyleSheet( "QLabel {font: normal;}" );
 
-    g_poDB->executeQTQuery( QString( "UPDATE settings SET value=\"%1\" WHERE identifier=\"SERVER_Address\" " ).arg( ui->ledWebServerAddress->text().replace("\\\\","/") ) );
+    if( !m_bServerAddressChanged )
+    {
+        g_poDB->executeQTQuery( QString( "UPDATE settings SET value=\"%1\" WHERE identifier=\"SERVER_Address\" " ).arg( ui->ledWebServerAddress->text().replace("\\\\","/") ) );
+    }
+    else
+    {
+        m_bServerAddressChanged = false;
+    }
 
     if( ui->ledWebServerAddress->text().length() == 0 )
     {

@@ -10,12 +10,17 @@
 #include <QSettings>
 
 #include "wndmain.h"
+
 //====================================================================================
 
 #include "../framework/qtlogger.h"
 #include "../framework/qtframework.h"
 #include "../framework/logger/FileWriter.h"
 #include "../language/language.h"
+
+//====================================================================================
+
+#define APPLICATION_VERSION_NUMBER  "1.9.0.0"
 
 //====================================================================================
 
@@ -53,14 +58,14 @@ int main( int argc, char *argv[] )
         g_obLanguage.getLanguages();
         g_obLanguage.init( &apMainApp, "brv", "_" );
 
-        cWndMain  obMainWindow;
-        obMainWindow.show();
+        cWndMain  *obMainWindow = new cWndMain( 0, APPLICATION_VERSION_NUMBER );
+        obMainWindow->show();
         if( argc > 2 )
         {
             QString qsName = QString( argv[1] );
             QString qsPass = QString( argv[2] );
 
-            obMainWindow.setLoginData( qsName, qsPass );
+            obMainWindow->setLoginData( qsName, qsPass );
         }
         nRet = apMainApp.exec();
     }

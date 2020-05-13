@@ -185,6 +185,7 @@ private:
 //    bool                 m_FlagNoPCType;
 
     QString              m_qsServerAddress;
+    bool                 m_bServerAddressChanged;
 
     void                _setActions();
     void                _setMenu();
@@ -198,6 +199,7 @@ private:
     void                _setPCTypeForHttp();
     void                _displayUserNotification( userInfo p_tUserInfo, QString p_qsInfoText = "", QSystemTrayIcon::MessageIcon icon = QSystemTrayIcon::Information );
     void                _checkIfHttpDisabledByUser();
+    void                _checkIfHttpChangedByUser();
     void                _disableHttpBySetting();
     QString             _bytearrayToString( QString p_qsString );
     bool                _isAppicationRunning( QString p_qsAppName );

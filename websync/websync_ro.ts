@@ -391,119 +391,131 @@
         <translation>Încarcă traducerile limbi selectate</translation>
     </message>
     <message>
-        <location filename="dlgmain.ui" line="574"/>
+        <location filename="dlgmain.ui" line="550"/>
+        <source>Save application settings into websync.inf file</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="dlgmain.ui" line="577"/>
         <source>Show main window when application starts</source>
         <translation>Arată fereastra principală la pornirea aplicației</translation>
     </message>
     <message>
-        <location filename="dlgmain.ui" line="598"/>
+        <location filename="dlgmain.ui" line="601"/>
         <source>Synchronize patientcard data every </source>
         <translation>Sincronizează cardul pacientului la fiecare </translation>
     </message>
     <message>
-        <location filename="dlgmain.ui" line="618"/>
-        <location filename="dlgmain.ui" line="669"/>
-        <location filename="dlgmain.ui" line="720"/>
+        <location filename="dlgmain.ui" line="621"/>
+        <location filename="dlgmain.ui" line="672"/>
+        <location filename="dlgmain.ui" line="710"/>
         <source>seconds</source>
         <translation>secunde</translation>
     </message>
     <message>
-        <location filename="dlgmain.ui" line="638"/>
-        <location filename="dlgmain.ui" line="689"/>
-        <location filename="dlgmain.ui" line="740"/>
+        <location filename="dlgmain.ui" line="641"/>
+        <location filename="dlgmain.ui" line="679"/>
+        <location filename="dlgmain.ui" line="730"/>
         <source>0</source>
         <translation>0</translation>
     </message>
     <message>
-        <location filename="dlgmain.ui" line="649"/>
+        <location filename="dlgmain.ui" line="652"/>
         <source>Check online sold patientcards every</source>
         <translation>Verifică cardurile de pacient vândute online la fiecare</translation>
     </message>
     <message>
-        <location filename="dlgmain.ui" line="700"/>
+        <location filename="dlgmain.ui" line="690"/>
         <source>Check mails to be sent every</source>
         <translation>Verifică e-mailurile care urmează să fie trimise la fiecare</translation>
     </message>
     <message>
-        <location filename="dlgmain.ui" line="763"/>
+        <location filename="dlgmain.ui" line="753"/>
         <source>Log Level:</source>
         <translation>Nivel jurnal:</translation>
     </message>
     <message>
-        <location filename="dlgmain.ui" line="829"/>
+        <location filename="dlgmain.ui" line="819"/>
+        <location filename="dlgmain.ui" line="828"/>
+        <location filename="dlgmain.ui" line="853"/>
+        <source>Connection settings has been automatically saved upon change.</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="dlgmain.ui" line="822"/>
         <source> Web connection settings </source>
         <translation> Setări conexiune web </translation>
     </message>
     <message>
-        <location filename="dlgmain.ui" line="835"/>
+        <location filename="dlgmain.ui" line="831"/>
         <source>Http communication enabled</source>
         <translation>Comunicare HTTP activată</translation>
     </message>
     <message>
-        <location filename="dlgmain.ui" line="844"/>
+        <location filename="dlgmain.ui" line="843"/>
         <source>Web server address:</source>
         <translation>Adresa serverului web:</translation>
     </message>
     <message>
-        <location filename="dlgmain.ui" line="854"/>
+        <location filename="dlgmain.ui" line="840"/>
         <source>Address of KiwiSun Web Server</source>
         <translation>Adresa serverului web KiwiSun</translation>
     </message>
     <message>
-        <location filename="dlgmain.ui" line="879"/>
+        <location filename="dlgmain.ui" line="878"/>
         <source> Patientcard status synchronization </source>
         <translation> Sincronizarea stării cadrului de pacient </translation>
     </message>
     <message>
-        <location filename="dlgmain.ui" line="887"/>
+        <location filename="dlgmain.ui" line="886"/>
         <source>Number of patientcards waiting for synchronization:</source>
         <translation>Numărul de carduri de pacient care așteaptă sincronizarea:</translation>
     </message>
     <message>
-        <location filename="dlgmain.ui" line="936"/>
+        <location filename="dlgmain.ui" line="935"/>
         <source>Type of online sold patientcards:</source>
         <translation>Tipul cardurilor de pacient vândute online:</translation>
     </message>
     <message>
-        <location filename="dlgmain.ui" line="954"/>
+        <location filename="dlgmain.ui" line="953"/>
         <source>Payment method of online sold patientcards:</source>
         <translation>Modalitatea de plată pentru cardurile de pacient vândute online:</translation>
     </message>
     <message>
-        <location filename="dlgmain.ui" line="991"/>
+        <location filename="dlgmain.ui" line="990"/>
         <source> User actions </source>
         <translation> Acțiuni utilizator </translation>
     </message>
     <message>
-        <location filename="dlgmain.ui" line="1000"/>
+        <location filename="dlgmain.ui" line="999"/>
         <source>Clear patientcard data
 to be synchronized</source>
         <translation>Șterge datele cardului de pacient
 așteaptă sincronizarea</translation>
     </message>
     <message>
-        <location filename="dlgmain.ui" line="1037"/>
+        <location filename="dlgmain.ui" line="1036"/>
         <source>Send all patientcard
 data to web server</source>
         <translation>Trimite toate date cardului de pacient
 la server-ul web</translation>
     </message>
     <message>
-        <location filename="dlgmain.ui" line="1061"/>
+        <location filename="dlgmain.ui" line="1060"/>
         <source>Retrieve patientcards
 sold online</source>
         <translation>Recuperează cardurile de pacient
 vândute online</translation>
     </message>
     <message>
-        <location filename="dlgmain.ui" line="1105"/>
+        <location filename="dlgmain.ui" line="1104"/>
         <source>Delete patientcard
 data from web server</source>
         <translation>Șterge datele cardului de pacient
 de pe server-ul web</translation>
     </message>
     <message>
-        <location filename="dlgmain.ui" line="1129"/>
+        <location filename="dlgmain.ui" line="1128"/>
         <source>Delete all inactive patientcard
 data from web server</source>
         <translation>Șterge datele tuturor cardurilor de pacient inactive
@@ -515,8 +527,8 @@ de pe server-ul web</translation>
         <translation>Belenus WebSync</translation>
     </message>
     <message>
-        <location filename="dlgmain.cpp" line="134"/>
-        <location filename="dlgmain.cpp" line="136"/>
+        <location filename="dlgmain.cpp" line="139"/>
+        <location filename="dlgmain.cpp" line="141"/>
         <source>SQL Connection established</source>
         <translation>Conexiune SQL stabilită</translation>
     </message>
@@ -525,18 +537,18 @@ de pe server-ul web</translation>
         <translation type="obsolete">&lt;Nu a fost selectat&gt;</translation>
     </message>
     <message>
-        <location filename="dlgmain.cpp" line="190"/>
-        <location filename="dlgmain.cpp" line="192"/>
+        <location filename="dlgmain.cpp" line="195"/>
+        <location filename="dlgmain.cpp" line="197"/>
         <source>Error in connection: %1</source>
         <translation>Eroare în conexiunea: %1</translation>
     </message>
     <message>
-        <location filename="dlgmain.cpp" line="358"/>
+        <location filename="dlgmain.cpp" line="363"/>
         <source>User &apos;%1&apos; logged in</source>
         <translation>Utilizatorul &apos;%1&apos; nu este logat</translation>
     </message>
     <message>
-        <location filename="dlgmain.cpp" line="545"/>
+        <location filename="dlgmain.cpp" line="550"/>
         <source>Are you sure you want to close this application?
 
 With closing the application the data of the patientcards will not be synchronized with the KiwiSun server.</source>
@@ -545,7 +557,7 @@ With closing the application the data of the patientcards will not be synchroniz
 Odată cu închiderea aplicației, datele cardurilor de pacient nu vor mai fi sincronizate cu serverul KiwiSun.</translation>
     </message>
     <message>
-        <location filename="dlgmain.cpp" line="621"/>
+        <location filename="dlgmain.cpp" line="626"/>
         <source>Are you sure you want send all patientcard data to KiwiSun Web server?
 
 Sending all patientcard data could take long time.
@@ -556,127 +568,126 @@ Trimiterea datelor tuturor cardurilor de pacient poate dura mult.
 Te rog, ia în considerare dacă ai suficient timp la dispoziție pentru a aștepta încheierea procesului.</translation>
     </message>
     <message>
-        <location filename="dlgmain.cpp" line="669"/>
+        <location filename="dlgmain.cpp" line="674"/>
         <source>Enter barcode of the patientcard:</source>
         <translation>Introdu codul de bare a cardului de pacient:</translation>
     </message>
     <message>
-        <location filename="dlgmain.cpp" line="681"/>
+        <location filename="dlgmain.cpp" line="686"/>
         <source>The defined barcode not found in the database.</source>
         <translation>Codul de bare definit nu a fost găsit în baza de date.</translation>
     </message>
     <message>
-        <location filename="dlgmain.cpp" line="764"/>
-        <location filename="dlgmain.cpp" line="776"/>
+        <location filename="dlgmain.cpp" line="769"/>
+        <location filename="dlgmain.cpp" line="781"/>
         <source>HTTP Connection established</source>
         <translation>Conexiune SQL stabilită</translation>
     </message>
     <message>
-        <location filename="dlgmain.cpp" line="836"/>
+        <location filename="dlgmain.cpp" line="841"/>
         <source>Database connection</source>
         <translation>Conexiune bază de date</translation>
     </message>
     <message>
-        <location filename="dlgmain.cpp" line="839"/>
+        <location filename="dlgmain.cpp" line="844"/>
         <source>Http connection</source>
         <translation>Conexiune HTTP</translation>
     </message>
     <message>
-        <location filename="dlgmain.cpp" line="846"/>
+        <location filename="dlgmain.cpp" line="851"/>
         <source>Send all patientcard</source>
         <translation>Trimite toate cardurile de pacient</translation>
     </message>
     <message>
-        <location filename="dlgmain.cpp" line="850"/>
+        <location filename="dlgmain.cpp" line="855"/>
         <source>Clear waiting queue</source>
         <translation>Curăță coada de așteptare</translation>
     </message>
     <message>
-        <location filename="dlgmain.cpp" line="854"/>
         <source>Get online sold patientcards</source>
-        <translation>Obține cardurile de pacient vândute online</translation>
+        <translation type="obsolete">Obține cardurile de pacient vândute online</translation>
     </message>
     <message>
-        <location filename="dlgmain.cpp" line="858"/>
+        <location filename="dlgmain.cpp" line="863"/>
         <source>Clear patientcard</source>
         <translation>Curăță cardul de pacient</translation>
     </message>
     <message>
-        <location filename="dlgmain.cpp" line="862"/>
+        <location filename="dlgmain.cpp" line="867"/>
         <source>Clear all inactive patientcards</source>
         <translation>Șterge toate cardurile de pacient inactive</translation>
     </message>
     <message>
-        <location filename="dlgmain.cpp" line="866"/>
+        <location filename="dlgmain.cpp" line="871"/>
         <source>&amp;Exit application</source>
         <translation>&amp;Părăsirea aplicatiei</translation>
     </message>
     <message>
-        <location filename="dlgmain.cpp" line="878"/>
+        <location filename="dlgmain.cpp" line="883"/>
         <source>User actions</source>
         <translation>Acțiuni utilizator</translation>
     </message>
     <message>
-        <location filename="dlgmain.cpp" line="1069"/>
+        <location filename="dlgmain.cpp" line="1074"/>
         <source>Need authentication ...</source>
         <translation>Este nevoie de autentificare ...</translation>
     </message>
     <message>
-        <location filename="dlgmain.cpp" line="1073"/>
+        <location filename="dlgmain.cpp" line="1078"/>
         <source>User successfully authenticated.</source>
         <translation>Utilizatorul a fost autentificat cu succes.</translation>
     </message>
     <message>
-        <location filename="dlgmain.cpp" line="1083"/>
+        <location filename="dlgmain.cpp" line="1088"/>
         <source>The username entered not found in the Belenus database</source>
         <translation>Numele de utilizator introdus nu a fost găsit în baza de date Belenus</translation>
     </message>
     <message>
-        <location filename="dlgmain.cpp" line="1085"/>
+        <location filename="dlgmain.cpp" line="1090"/>
         <source>The password entered is incorrect</source>
         <translation>Parola introdusă este incorectă</translation>
     </message>
     <message>
-        <location filename="dlgmain.cpp" line="1087"/>
+        <location filename="dlgmain.cpp" line="1092"/>
         <source>Connection to Belenus database failed</source>
         <translation>Conexiunea la baza de date Belenus a eșuat</translation>
     </message>
     <message>
-        <location filename="dlgmain.cpp" line="1089"/>
+        <location filename="dlgmain.cpp" line="1094"/>
         <source>Authentication failed. Please retry later ...</source>
         <translation>Autentificarea a eșuat. Te rog, reîncearcă mai târziu ...</translation>
     </message>
     <message>
-        <location filename="dlgmain.cpp" line="1195"/>
+        <location filename="dlgmain.cpp" line="1200"/>
         <source>Http server address is not defined!
 Http connection is going to be disabled.</source>
         <translation>Adresa serverului HTTP nu a fost definită!
 Conexiunea HTTP va fi dezactivată.</translation>
     </message>
     <message>
-        <location filename="dlgmain.cpp" line="1206"/>
+        <location filename="dlgmain.cpp" line="1211"/>
         <source>Http error occured!
 %1</source>
         <translation>Eroare HTTP!
 %1</translation>
     </message>
     <message>
-        <location filename="dlgmain.cpp" line="1216"/>
+        <location filename="dlgmain.cpp" line="1221"/>
         <source>Http communication disabled.</source>
         <translation>Comunicare HTTP dezactivată.</translation>
     </message>
     <message>
-        <location filename="dlgmain.cpp" line="1226"/>
+        <location filename="dlgmain.cpp" line="1231"/>
         <source>Http communication enabled.</source>
         <translation>Comunicare HTTP activată.</translation>
     </message>
     <message>
-        <location filename="dlgmain.cpp" line="1236"/>
+        <location filename="dlgmain.cpp" line="1241"/>
         <source>Http communication suspended.</source>
         <translation>Comunicare HTTP suspendată.</translation>
     </message>
     <message>
-        <location filename="dlgmain.cpp" line="1246"/>
+        <location filename="dlgmain.cpp" line="1251"/>
         <source>Http communication continued.</source>
         <translation>Comunicare HTTP reluată.</translation>
     </message>

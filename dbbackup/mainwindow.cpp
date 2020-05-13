@@ -312,6 +312,7 @@ void MainWindow::on_pbSelect_clicked()
 
         ui->ledDatabase->setText( qsFile );
         ui->ledDatabase->setToolTip( QString("%1/%2").arg( qsDir ).arg( qsFile ) );
+        m_qsFileName = ui->ledDatabase->toolTip();
     }
 }
 

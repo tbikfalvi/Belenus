@@ -65,6 +65,8 @@ private:
     QString                  m_qsLanguage;
     QString                  m_qsClientInstallDir;
 
+    void _setProgressText( QString qsMessage );
+
     void _updateEnvironmentVariables();
     bool _createPaths();
     bool _createPath( QString p_qsPath );

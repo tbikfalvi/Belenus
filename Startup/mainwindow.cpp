@@ -75,6 +75,7 @@ MainWindow::MainWindow(QWidget *parent) : QMainWindow(parent), ui(new Ui::MainWi
 
     ui->pbStart->setEnabled( false );
     ui->progressBar->setVisible( false );
+    ui->lblProgress->setVisible( false );
 
     QProcessEnvironment qpeInfo = QProcessEnvironment::systemEnvironment();
 
@@ -399,6 +400,7 @@ void MainWindow::on_pbStart_clicked()
 
     ui->pbStart->setVisible( false );
     ui->progressBar->setVisible( true );
+    ui->lblProgress->setVisible( true );
 
     m_qsLanguage = ui->cmbLanguage->itemText( ui->cmbLanguage->currentIndex() ).right(3).left(2);
 
@@ -414,16 +416,23 @@ void MainWindow::on_pbStart_clicked()
 
             _logProcess( "Installation started" );
 
+            _setProgressText( tr("Checking components") );
             _checkInstallComponents();
             _progressStep();
+            Sleep( 1000 );
 
+            _setProgressText( tr("Update system environment variables") );
             _updateEnvironmentVariables();
             _progressStep();
+            Sleep( 1000 );
 
+            _setProgressText( tr("Create directories") );
             _logProcess( "Create directories for updater and for Belenus if not exists" );
             if( !_createPaths() ) { return; }
             _progressStep();
+            Sleep( 1000 );
 
+            _setProgressText( tr("Create and copy files for Belenus Update application") );
             _logProcess( "Create the settings file for the updater" );
             if( !_createSettingsFile() ) { return; }
             _progressStep();
@@ -431,6 +440,7 @@ void MainWindow::on_pbStart_clicked()
             _logProcess( "Copy the updater files" );
             if( !_copyUpdaterFiles() ) { return; }
             _progressStep();
+            Sleep( 1000 );
 
             // Copy the belenus_loc.xml file if needed
             if( ui->rbLocationLocal->isChecked() )
@@ -439,6 +449,7 @@ void MainWindow::on_pbStart_clicked()
                 _progressStep();
             }
 
+            _setProgressText( tr("Install database server ... please wait") );
             // Install Wamp server if needed
             if( bProcessSucceeded )
             {
@@ -448,6 +459,7 @@ void MainWindow::on_pbStart_clicked()
                 _logProcess( bProcessSucceeded?"OK":"FAILED" );
             }
 
+            _setProgressText( tr("Install database") );
             // Install database
             if( bProcessSucceeded )
             {
@@ -455,7 +467,9 @@ void MainWindow::on_pbStart_clicked()
                 _logProcess( "Process database install ... ", false );
                 _logProcess( bProcessSucceeded?"OK":"FAILED" );
             }
+            Sleep( 1000 );
 
+            _setProgressText( tr("Install client") );
             // Install client files
             if( bProcessSucceeded )
             {
@@ -470,6 +484,8 @@ void MainWindow::on_pbStart_clicked()
         case PROCESS_REMOVE:
         {
             qsProcessName = tr( "uninstall" );
+
+            _setProgressText( tr( "Uninstall Belenus Application System." ) );
 
             if( QMessageBox::question( this, tr("Question"),
                                        tr("Are you sure you want to uninstall Belenus Application System and all of it's components?\n"
@@ -532,6 +548,8 @@ void MainWindow::on_pbStart_clicked()
         default:
             return;
     }
+
+    _setProgressText( tr( "The %1 process finished." ).arg( qsProcessName ) );
 
     if( bProcessSucceeded )
     {
@@ -1007,8 +1025,10 @@ bool MainWindow::_copyFile( QString p_qsSrc, QString p_qsDst )
 void MainWindow::_progressStep()
 //-------------------------------------------------------------------------------------------------
 {
-    if( ui->progressBar->value() == ui->progressBar->maximum() )
-        return;
+    if( ui->progressBar->value() > ui->progressBar->maximum()-5 )
+    {
+        ui->progressBar->setMaximum( ui->progressBar->maximum() + 10 );
+    }
 
     ui->progressBar->setValue( ui->progressBar->value()+1 );
 }
@@ -1302,6 +1322,7 @@ int MainWindow::_checkWampServer()
 
 bool MainWindow::_processDatabaseInstall()
 {
+    _setProgressText( tr("Create database users") );
     if( !m_bRootUserExists )
     {
         _logProcess( QString("Creating root user ..."), false );
@@ -1318,6 +1339,7 @@ bool MainWindow::_processDatabaseInstall()
     }
     _progressStep();
 
+    _setProgressText( tr("Create database") );
     _logProcess( QString("Creating database ..."), false );
     if( _processDatabaseCreate() )
     {
@@ -1331,6 +1353,7 @@ bool MainWindow::_processDatabaseInstall()
     }
     _progressStep();
 
+    _setProgressText( tr("Create Belenus database user") );
     _logProcess( QString("Creating Belenus user ..."), false );
     if( _processBelenusUserCreate() )
     {
@@ -1359,6 +1382,7 @@ bool MainWindow::_processDatabaseInstall()
 
     m_bBelenusUserExists = true;
 
+    _setProgressText( tr("Create database structure") );
     _logProcess( QString("Creating tables in database ..."), false );
     if( _processBelenusTablesCreate() )
     {
@@ -1372,6 +1396,7 @@ bool MainWindow::_processDatabaseInstall()
     }
     _progressStep();
 
+    _setProgressText( tr("Fill database with default data") );
     _logProcess( QString("Adding default data to tables ..."), false );
     if( _processBelenusTablesFill() )
     {
@@ -1385,6 +1410,7 @@ bool MainWindow::_processDatabaseInstall()
     }
     _progressStep();
 
+    _setProgressText( tr("Create devices in database") );
     _logProcess( QString("Add %1 panel to database ...").arg( ui->ledPanelCount->text().toInt() ), false );
     if( _processBelenusDeviceFill() )
     {
@@ -1741,6 +1767,7 @@ bool MainWindow::_processClientInstall()
 
     QDir    qdInstallDir( m_qsClientInstallDir );
 
+    _setProgressText( tr("Copy client files") );
     _logProcess( QString("Start Client install") );
     if( qdInstallDir.exists() )
     {
@@ -1764,6 +1791,7 @@ bool MainWindow::_processClientInstall()
         _logProcess( QString("FAILED") );
     }
 
+    _setProgressText( tr("Create shortcuts and language file") );
     _logProcess( QString("Creating shortcuts ..."), false );
     if( (bRet = _createFolderShortcut()) )
         _logProcess( QString("OK") );
@@ -1981,4 +2009,9 @@ bool MainWindow::_createClientLanguageSelectFile()
     qfFile.close();
 
     return true;
+}
+
+void MainWindow::_setProgressText(QString qsMessage)
+{
+    ui->lblProgress->setText( qsMessage );
 }

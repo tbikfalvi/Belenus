@@ -143,6 +143,7 @@ cDlgPreferences::cDlgPreferences( QWidget *p_poParent )
     chkDASetExpireDate->setEnabled( g_obUser.isInGroup( cAccessGroup::SYSTEM ) );
 
     dteLicenceExpiration->setDateTime( QDateTime::fromString( g_poPrefs->getLicenceLastValidated(), "yyyy-MM-dd hh:mm:ss" ) );
+    dteLicenceExpiration->setEnabled( g_obUser.isInGroup( cAccessGroup::SYSTEM ) );
 
     pbModifyExpDate->setIcon( QIcon("./resources/40x40_key.png") );
 

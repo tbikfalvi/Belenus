@@ -21,6 +21,7 @@
 #include "creportmonthclose.h"
 #include "creportguests.h"
 #include "creportdeviceusages.h"
+#include "creportdeviceminuteusages.h"
 
 extern cQTMySQLConnection  *g_poDB;
 
@@ -49,7 +50,7 @@ class cWndMain : public QMainWindow, private Ui::wndMain
     };
 
 public:
-    cWndMain( QWidget *parent = 0 );
+    cWndMain( QWidget *parent = 0, QString p_qsAppVersion = "" );
     ~cWndMain();
 
     void                    setLoginData(QString p_qsName = "", QString p_qsPassword = "" );
@@ -70,6 +71,7 @@ signals: // <_NEW_REPORT_>  report signal-ja
     void                    setCheckedReportMonthClose( bool p_bChecked );
     void                    setCheckedReportGuests( bool p_bChecked );
     void                    setCheckedReportDeviceUsages( bool p_bChecked );
+    void                    setCheckedReportDeviceMinuteUsages( bool p_bChecked );
 
 public slots: // <_NEW_REPORT_> report slot-ja
     void                    slotCheckReportDaily( bool p_bChecked );
@@ -87,50 +89,52 @@ public slots: // <_NEW_REPORT_> report slot-ja
     void                    slotCheckReportMonthClose( bool p_bChecked );
     void                    slotCheckReportGuests( bool p_bChecked );
     void                    slotCheckReportDeviceUsages( bool p_bChecked );
+    void                    slotCheckReportDeviceMinuteUsages( bool p_bChecked );
 
 private:
 
     QString                  m_qsRPSW;
 
     // <_NEW_REPORT_> report osztaly objektum pointer-e
-    cReportDaily            *m_repDaily;
-    cReportLedger           *m_repLedger;
-    cReportCassaHistory     *m_repCassaHistory;
-    cReportPatientCardType  *m_repCardType;
-    cReportCardInactive     *m_repCardInactive;
-    cReportCardDetails      *m_repCardDetails;
-    cReportPCUsages         *m_repCardUsages;
-    cReportPatientcardSell  *m_repCardSells;
-    cReportProducts         *m_repProducts;
-    cReportPatientcardDebts *m_repCardDebts;
-    cReportProductStatus    *m_repProdStatus;
-    cReportProductHistory   *m_repProdHistory;
-    cReportMonthClose       *m_repMonthClose;
-    cReportGuests           *m_repGuests;
-    cReportDeviceUsages     *m_repDeviceUsages;
+    cReportDaily                    *m_repDaily;
+    cReportLedger                   *m_repLedger;
+    cReportCassaHistory             *m_repCassaHistory;
+    cReportPatientCardType          *m_repCardType;
+    cReportCardInactive             *m_repCardInactive;
+    cReportCardDetails              *m_repCardDetails;
+    cReportPCUsages                 *m_repCardUsages;
+    cReportPatientcardSell          *m_repCardSells;
+    cReportProducts                 *m_repProducts;
+    cReportPatientcardDebts         *m_repCardDebts;
+    cReportProductStatus            *m_repProdStatus;
+    cReportProductHistory           *m_repProdHistory;
+    cReportMonthClose               *m_repMonthClose;
+    cReportGuests                   *m_repGuests;
+    cReportDeviceUsages             *m_repDeviceUsages;
+    cReportDeviceMinuteUsages       *m_repDeviceMinuteUsages;
 
-    QVector<cReport*>        m_qvReports;
+    QVector<cReport*>                m_qvReports;
 
-    bool                     m_bReportTabSwitching;
+    bool                             m_bReportTabSwitching;
 
-    int                      m_enGroup;
-    unsigned int             m_uiUserId;
+    int                              m_enGroup;
+    unsigned int                     m_uiUserId;
 
-    bool                    _isInGroup( groupUser p_enGroup );
-    void                    _initActions();
-    void                    _initToolbar();
-    void                    _initFilterbar();
-    void                    _initTabInformation();
+    bool                            _isInGroup( groupUser p_enGroup );
+    void                            _initActions();
+    void                            _initToolbar();
+    void                            _initFilterbar();
+    void                            _initTabInformation();
 
-    void                    _setAuthInfoType( authType p_tAuthType );
+    void                            _setAuthInfoType( authType p_tAuthType );
 
-    authType                _authenticateUser();
-    void                    _setReportsEnabled( bool p_bEnable = true );
-    void                    _setFiltersEnabled( bool p_bEnable );
-    void                    _setFiltersEnabledReport( cReport *obReport );
+    authType                        _authenticateUser();
+    void                            _setReportsEnabled( bool p_bEnable = true );
+    void                            _setFiltersEnabled( bool p_bEnable );
+    void                            _setFiltersEnabledReport( cReport *obReport );
 
-    void                    _updateReportIndexes();
-    void                    _updateReportButtons( bool p_bEnable );
+    void                            _updateReportIndexes();
+    void                            _updateReportButtons( bool p_bEnable );
 
 private slots:
     void on_tabReports_tabCloseRequested(int index);
