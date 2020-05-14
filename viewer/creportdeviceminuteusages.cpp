@@ -44,98 +44,84 @@ void cReportDeviceMinuteUsages::refreshReport()
 
     m_dlgProgress.increaseProgressValue();
 
-    QStringList qslFilterPanelType = filterType().split("|");
+    QStringList  qslFilterPanelType = filterType().split("|");
+    QStringList  qslMinutes;
+    QStringList  qslPanelIds;
+    QString      qsDeviceTitle = "";
 
-	// SELECT panelId, COUNT(timeReal) as uses, timeReal FROM `ledgerdevice` WHERE timeLeft = 0 AND ledgerDeviceId > 0 GROUP BY panelId, timeReal
-	
-    QString qsQuery = QString( "SELECT title, SUM(timeReal), SUM(timeLeft), SUM(timeCard), SUM(timeCash), SUM(units) FROM panels, ledgerdevice WHERE "
-                               "panels.panelId=ledgerdevice.panelId AND "
-                               "panels.panelId>0 AND "
-                               "DATE(ledgerTime)>=\"%1\" AND "
-                               "DATE(ledgerTime)<=\"%2\" " ).arg(filterDateStart().toString( "yyyy-MM-dd" )).arg(filterDateStop().toString( "yyyy-MM-dd" ));
+    QSqlQuery   *poQueryResult;
+    QString      qsQuery;
+    int          i;
+
+    qsQuery = "SELECT panelId FROM panels WHERE panels.panelId > 0";
 
     if( qslFilterPanelType.at(0).toInt() > 0 )
     {
-        qsQuery.append( QString(" AND panels.panelTypeId=%1 ").arg( qslFilterPanelType.at(0).toInt() ) );
+        qsQuery.append( QString(" AND panelTypeId=%1 ").arg( qslFilterPanelType.at(0).toInt() ) );
     }
 
-    qsQuery.append( " GROUP BY ledgerdevice.panelId " );
+    poQueryResult   = g_poDB->executeQTQuery( qsQuery );
 
-    QSqlQuery *poQueryResult = g_poDB->executeQTQuery( qsQuery );
+    while( poQueryResult->next() )
+    {
+        qslPanelIds << poQueryResult->value(0).toString();
+    }
 
-    m_dlgProgress.setProgressValue( 90 );
-
+	// SELECT panelId, COUNT(timeReal) as uses, timeReal FROM `ledgerdevice` WHERE timeLeft = 0 AND ledgerDeviceId > 0 GROUP BY panelId, timeReal
+	
     startReport();
 
     addTitle( m_qsReportName );
     addHorizontalLine();
 
-    m_dlgProgress.setProgressMax( poQueryResult->size()+1 );
-    m_dlgProgress.setProgressValue( 0 );
+//    m_dlgProgress.setProgressMax( poQueryResult->size()+1 );
+//    m_dlgProgress.setProgressValue( 0 );
 
     startSection();
     addTable();
 
     addTableRow();
     addTableCell( tr("Device"), "bold" );
-    addTableCell( tr("Planned time"), "center bold" );
-    addTableCell( tr("Real time"), "center bold" );
-    addTableCell( tr("Aborted time"), "center bold" );
-    addTableCell( tr("Payed by cash"), "center bold" );
-    addTableCell( tr("Used by card"), "center bold" );
-    addTableCell( tr("No. units used"), "center bold" );
 
-    while( poQueryResult->next() )
+    poQueryResult   = g_poDB->executeQTQuery( "SELECT timeReal FROM ledgerdevice WHERE timeLeft = 0 AND ledgerDeviceId > 0 GROUP BY timeReal" );
+    int nColums     = poQueryResult->size();
+
+    for( i=0; i<nColums; i++ )
     {
-        unsigned int hour       = 0;
-        unsigned int minute     = 0;
-        unsigned int second     = 0;
+        poQueryResult->next();
+        addTableCell( tr( "%1 minutes" ).arg( poQueryResult->value(0).toInt()/60 ), "center bold" );
+        qslMinutes << QString::number( poQueryResult->value(0).toInt() );
+    }
 
-        int timeReal    = poQueryResult->value(1).toInt();
-        int timeLeft    = poQueryResult->value(2).toInt();
-        int timeCard    = poQueryResult->value(3).toInt();
-        int timeCash    = poQueryResult->value(4).toInt();;
-        int timeSum     = timeCard + timeCash;
-        int countUnits  = poQueryResult->value(5).toInt();
+    for( i=0; i<qslPanelIds.size(); i++ )
+    {
+        qsQuery = QString( "SELECT title, COUNT(timeReal) as uses, timeReal "
+                           "FROM panels, ledgerdevice WHERE "
+                           "timeLeft = 0 AND "
+                           "ledgerDeviceId > 0 AND "
+                           "panels.panelId=ledgerdevice.panelId AND "
+                           "ledgerdevice.panelId = %1 AND "
+                           "DATE(ledgerTime)>=\"%2\" AND "
+                           "DATE(ledgerTime)<=\"%3\" "
+                           "GROUP BY timeReal" ).arg( qslPanelIds.at(i) ).arg(filterDateStart().toString( "yyyy-MM-dd" )).arg(filterDateStop().toString( "yyyy-MM-dd" ));
 
-        if( timeLeft < 0 ) timeLeft = 0;
-
+        poQueryResult = g_poDB->executeQTQuery( qsQuery );
+        poQueryResult->first();
         addTableRow();
         addTableCell( poQueryResult->value(0).toString() );
 
-        hour       = timeSum/3600;
-        minute     = (timeSum-(hour*3600))/60;
-        second     = (timeSum-(hour*3600))%60;
-
-        addTableCell( QString( "%1%2" ).arg( hour ).arg( QTime(0,minute,second).toString(":mm:ss") ), "center" );
-
-        hour       = timeReal/3600;
-        minute     = (timeReal-(hour*3600))/60;
-        second     = (timeReal-(hour*3600))%60;
-
-        addTableCell( QString( "%1%2" ).arg( hour ).arg( QTime(0,minute,second).toString(":mm:ss") ), "center" );
-
-        hour       = timeLeft/3600;
-        minute     = (timeLeft-(hour*3600))/60;
-        second     = (timeLeft-(hour*3600))%60;
-
-        addTableCell( QString( "%1%2" ).arg( hour ).arg( QTime(0,minute,second).toString(":mm:ss") ), "center" );
-
-        hour       = timeCash/3600;
-        minute     = (timeCash-(hour*3600))/60;
-        second     = (timeCash-(hour*3600))%60;
-
-        addTableCell( QString( "%1%2" ).arg( hour ).arg( QTime(0,minute,second).toString(":mm:ss") ), "center" );
-
-        hour       = timeCard/3600;
-        minute     = (timeCard-(hour*3600))/60;
-        second     = (timeCard-(hour*3600))%60;
-
-        addTableCell( QString( "%1%2" ).arg( hour ).arg( QTime(0,minute,second).toString(":mm:ss") ), "center" );
-
-        addTableCell( QString::number( countUnits ), "center" );
-
-        m_dlgProgress.increaseProgressValue();
+        for( int j=0; j<nColums; j++ )
+        {
+            if( poQueryResult->value(2).toString().compare( qslMinutes.at(j) ) == 0 )
+            {
+                addTableCell( poQueryResult->value(1).toString(), "center" );
+                poQueryResult->next();
+            }
+            else
+            {
+                addTableCell( "0", "center" );
+            }
+        }
     }
 
     finishTable();

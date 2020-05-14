@@ -974,17 +974,11 @@
      <addaction name="action_DeviceUsages"/>
      <addaction name="action_DeviceMinuteUsages"/>
     </widget>
-    <widget class="QMenu" name="menuType_Here">
-     <property name="title">
-      <string>Type Here</string>
-     </property>
-    </widget>
     <addaction name="menu_Bookkeeping"/>
     <addaction name="menuPatientcards"/>
     <addaction name="menuProducts_2"/>
     <addaction name="menuGuests_2"/>
     <addaction name="menuDevices_2"/>
-    <addaction name="menuType_Here"/>
    </widget>
    <addaction name="menu_File"/>
    <addaction name="menu_View"/>
