@@ -74,9 +74,6 @@ void cReportDeviceMinuteUsages::refreshReport()
     addTitle( m_qsReportName );
     addHorizontalLine();
 
-//    m_dlgProgress.setProgressMax( poQueryResult->size()+1 );
-//    m_dlgProgress.setProgressValue( 0 );
-
     startSection();
     addTable();
 
@@ -92,6 +89,9 @@ void cReportDeviceMinuteUsages::refreshReport()
         addTableCell( tr( "%1 minutes" ).arg( poQueryResult->value(0).toInt()/60 ), "center bold" );
         qslMinutes << QString::number( poQueryResult->value(0).toInt() );
     }
+
+    m_dlgProgress.setProgressMax( qslPanelIds.size()+1 );
+    m_dlgProgress.setProgressValue( 0 );
 
     for( i=0; i<qslPanelIds.size(); i++ )
     {
@@ -122,6 +122,7 @@ void cReportDeviceMinuteUsages::refreshReport()
                 addTableCell( "0", "center" );
             }
         }
+        m_dlgProgress.increaseProgressValue();
     }
 
     finishTable();

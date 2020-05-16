@@ -645,12 +645,12 @@
         <translation>Kimutatás összeállítása ...</translation>
     </message>
     <message>
-        <location filename="creportdeviceminuteusages.cpp" line="84"/>
+        <location filename="creportdeviceminuteusages.cpp" line="81"/>
         <source>Device</source>
         <translation>Gép</translation>
     </message>
     <message>
-        <location filename="creportdeviceminuteusages.cpp" line="92"/>
+        <location filename="creportdeviceminuteusages.cpp" line="89"/>
         <source>%1 minutes</source>
         <translation>%1 perc</translation>
     </message>
@@ -1784,26 +1784,26 @@
     </message>
     <message>
         <location filename="wndmain.ui" line="130"/>
-        <location filename="wndmain.ui" line="1155"/>
+        <location filename="wndmain.ui" line="1149"/>
         <source>Additional information for monthly closure</source>
         <translation>Kiegészítő információk havi záráshoz</translation>
     </message>
     <message>
         <location filename="wndmain.ui" line="149"/>
-        <location filename="wndmain.ui" line="1078"/>
+        <location filename="wndmain.ui" line="1072"/>
         <source>History of cassa events and actions</source>
         <translation>Pénztár események és beavatkozások története</translation>
     </message>
     <message>
         <location filename="wndmain.ui" line="175"/>
-        <location filename="wndmain.ui" line="1048"/>
+        <location filename="wndmain.ui" line="1042"/>
         <source>Active patientcard types</source>
         <translation>Aktív bérlettípusok</translation>
     </message>
     <message>
         <location filename="wndmain.ui" line="194"/>
-        <location filename="wndmain.ui" line="1064"/>
-        <location filename="wndmain.ui" line="1067"/>
+        <location filename="wndmain.ui" line="1058"/>
+        <location filename="wndmain.ui" line="1061"/>
         <source>Patientcard details</source>
         <translation>Bérlet adatok</translation>
     </message>
@@ -1820,51 +1820,51 @@
     </message>
     <message>
         <location filename="wndmain.ui" line="251"/>
-        <location filename="wndmain.ui" line="1089"/>
+        <location filename="wndmain.ui" line="1083"/>
         <source>History of patientcard cassa actions</source>
         <translation>Bérletekkel kapcsolatos pénztár események</translation>
     </message>
     <message>
         <location filename="wndmain.ui" line="270"/>
-        <location filename="wndmain.ui" line="1111"/>
+        <location filename="wndmain.ui" line="1105"/>
         <source>Summary of valid patientcards and the price of its units available</source>
         <translation>Érvényes bérletek és a hozzá tartozó egységek értékének összesítése</translation>
     </message>
     <message>
         <location filename="wndmain.ui" line="296"/>
-        <location filename="wndmain.ui" line="1100"/>
+        <location filename="wndmain.ui" line="1094"/>
         <source>Products registered in database</source>
         <translation>Adatbázisban szereplő termékek</translation>
     </message>
     <message>
         <location filename="wndmain.ui" line="315"/>
-        <location filename="wndmain.ui" line="1122"/>
+        <location filename="wndmain.ui" line="1116"/>
         <source>Product status on the selected date</source>
         <translation>Termék készlet egy kiválasztott napon</translation>
     </message>
     <message>
         <location filename="wndmain.ui" line="334"/>
-        <location filename="wndmain.ui" line="1133"/>
+        <location filename="wndmain.ui" line="1127"/>
         <source>History of the selected product</source>
         <translation>A kiválasztott termék története</translation>
     </message>
     <message>
         <location filename="wndmain.ui" line="360"/>
-        <location filename="wndmain.ui" line="1166"/>
+        <location filename="wndmain.ui" line="1160"/>
         <source>Summarized information about registered guests</source>
         <translation>Regisztrált vendégek összesített adatai</translation>
     </message>
     <message>
         <location filename="wndmain.ui" line="386"/>
-        <location filename="wndmain.ui" line="1177"/>
+        <location filename="wndmain.ui" line="1171"/>
         <source>Summary of device usages</source>
         <translation>Géphasználatok összesítése</translation>
     </message>
     <message>
         <location filename="wndmain.ui" line="405"/>
-        <location filename="wndmain.ui" line="1188"/>
+        <location filename="wndmain.ui" line="1182"/>
         <source>Summary of device minute usages</source>
-        <translation>A perc alapú géphasználatok összesítése</translation>
+        <translation>Perc alapú géphasználatok</translation>
     </message>
     <message>
         <location filename="wndmain.ui" line="437"/>
@@ -2019,13 +2019,13 @@
     </message>
     <message>
         <location filename="wndmain.ui" line="958"/>
-        <location filename="wndmain.ui" line="1097"/>
+        <location filename="wndmain.ui" line="1091"/>
         <source>Products</source>
         <translation>Termékek</translation>
     </message>
     <message>
         <location filename="wndmain.ui" line="966"/>
-        <location filename="wndmain.ui" line="1163"/>
+        <location filename="wndmain.ui" line="1157"/>
         <source>Guests</source>
         <translation>Vendégek</translation>
     </message>
@@ -2035,97 +2035,92 @@
         <translation>Gépek</translation>
     </message>
     <message>
-        <location filename="wndmain.ui" line="979"/>
-        <source>Type Here</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <location filename="wndmain.ui" line="996"/>
+        <location filename="wndmain.ui" line="990"/>
         <source>E&amp;xit</source>
         <translation>&amp;Kilépés</translation>
     </message>
     <message>
-        <location filename="wndmain.ui" line="1007"/>
+        <location filename="wndmain.ui" line="1001"/>
         <source>&amp;Toolbar</source>
         <translation>&amp;Eszköztár</translation>
     </message>
     <message>
-        <location filename="wndmain.ui" line="1018"/>
+        <location filename="wndmain.ui" line="1012"/>
         <source>&amp;Filter bar</source>
         <translation>&amp;Szűrő panel</translation>
     </message>
     <message>
-        <location filename="wndmain.ui" line="1026"/>
+        <location filename="wndmain.ui" line="1020"/>
         <source>&amp;Daily</source>
         <translation>&amp;Napi</translation>
     </message>
     <message>
-        <location filename="wndmain.ui" line="1029"/>
+        <location filename="wndmain.ui" line="1023"/>
         <source>Daily bookkeeping</source>
         <translation>Napi könyv</translation>
     </message>
     <message>
-        <location filename="wndmain.ui" line="1037"/>
+        <location filename="wndmain.ui" line="1031"/>
         <source>&amp;Ledger</source>
         <translation>&amp;Könyvelés</translation>
     </message>
     <message>
-        <location filename="wndmain.ui" line="1045"/>
+        <location filename="wndmain.ui" line="1039"/>
         <source>&amp;Active patientcard types</source>
         <translation>&amp;Aktív bérlettípusok</translation>
     </message>
     <message>
-        <location filename="wndmain.ui" line="1056"/>
+        <location filename="wndmain.ui" line="1050"/>
         <source>Inactive patientcards</source>
         <translation>Érvénytelen bérletek</translation>
     </message>
     <message>
-        <location filename="wndmain.ui" line="1075"/>
+        <location filename="wndmain.ui" line="1069"/>
         <source>&amp;Cassa history</source>
         <translation>&amp;Pénztárkönyv</translation>
     </message>
     <message>
-        <location filename="wndmain.ui" line="1086"/>
+        <location filename="wndmain.ui" line="1080"/>
         <source>Patientcard sells</source>
         <translation>Bérlet eladások</translation>
     </message>
     <message>
-        <location filename="wndmain.ui" line="1108"/>
+        <location filename="wndmain.ui" line="1102"/>
         <source>Patientcard debts</source>
         <translation>Bérlet érték</translation>
     </message>
     <message>
-        <location filename="wndmain.ui" line="1119"/>
+        <location filename="wndmain.ui" line="1113"/>
         <source>Product status</source>
         <translation>Termék készlet</translation>
     </message>
     <message>
-        <location filename="wndmain.ui" line="1130"/>
+        <location filename="wndmain.ui" line="1124"/>
         <source>Product history</source>
         <translation>Termék történet</translation>
     </message>
     <message>
-        <location filename="wndmain.ui" line="1141"/>
+        <location filename="wndmain.ui" line="1135"/>
         <source>Patient card usages</source>
         <translation>Bérlet használatok</translation>
     </message>
     <message>
-        <location filename="wndmain.ui" line="1144"/>
+        <location filename="wndmain.ui" line="1138"/>
         <source>Patientcard usages on a defined date intervall</source>
         <translation>Megadott időintervallum bérlethasználatai</translation>
     </message>
     <message>
-        <location filename="wndmain.ui" line="1152"/>
+        <location filename="wndmain.ui" line="1146"/>
         <source>Monthly</source>
         <translation>Havi zárás</translation>
     </message>
     <message>
-        <location filename="wndmain.ui" line="1174"/>
+        <location filename="wndmain.ui" line="1168"/>
         <source>Device usages</source>
         <translation>Géphasználatok</translation>
     </message>
     <message>
-        <location filename="wndmain.ui" line="1185"/>
+        <location filename="wndmain.ui" line="1179"/>
         <source>Device Minute Usages</source>
         <translation>Gép perc alapú használata</translation>
     </message>

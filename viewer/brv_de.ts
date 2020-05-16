@@ -579,12 +579,12 @@
         <translation type="unfinished">Demonstration anzeigen…</translation>
     </message>
     <message>
-        <location filename="creportdeviceminuteusages.cpp" line="84"/>
+        <location filename="creportdeviceminuteusages.cpp" line="81"/>
         <source>Device</source>
         <translation type="unfinished">Gerät</translation>
     </message>
     <message>
-        <location filename="creportdeviceminuteusages.cpp" line="92"/>
+        <location filename="creportdeviceminuteusages.cpp" line="89"/>
         <source>%1 minutes</source>
         <translation type="unfinished"></translation>
     </message>
@@ -1672,26 +1672,26 @@
     </message>
     <message>
         <location filename="wndmain.ui" line="130"/>
-        <location filename="wndmain.ui" line="1155"/>
+        <location filename="wndmain.ui" line="1149"/>
         <source>Additional information for monthly closure</source>
         <translation>Informationen zum Monats Abschluss</translation>
     </message>
     <message>
         <location filename="wndmain.ui" line="149"/>
-        <location filename="wndmain.ui" line="1078"/>
+        <location filename="wndmain.ui" line="1072"/>
         <source>History of cassa events and actions</source>
         <translation>Kassen Ereignisse und Eingriffe</translation>
     </message>
     <message>
         <location filename="wndmain.ui" line="175"/>
-        <location filename="wndmain.ui" line="1048"/>
+        <location filename="wndmain.ui" line="1042"/>
         <source>Active patientcard types</source>
         <translation>Aktive Club-Karten</translation>
     </message>
     <message>
         <location filename="wndmain.ui" line="194"/>
-        <location filename="wndmain.ui" line="1064"/>
-        <location filename="wndmain.ui" line="1067"/>
+        <location filename="wndmain.ui" line="1058"/>
+        <location filename="wndmain.ui" line="1061"/>
         <source>Patientcard details</source>
         <translation>Daten aller Club Karten</translation>
     </message>
@@ -1708,49 +1708,49 @@
     </message>
     <message>
         <location filename="wndmain.ui" line="251"/>
-        <location filename="wndmain.ui" line="1089"/>
+        <location filename="wndmain.ui" line="1083"/>
         <source>History of patientcard cassa actions</source>
         <translation>Kassen Ereignisse und Eingriffe</translation>
     </message>
     <message>
         <location filename="wndmain.ui" line="270"/>
-        <location filename="wndmain.ui" line="1111"/>
+        <location filename="wndmain.ui" line="1105"/>
         <source>Summary of valid patientcards and the price of its units available</source>
         <translation>Gültige Club-Karten und die dazugehörige Anzahl der Einheiten.</translation>
     </message>
     <message>
         <location filename="wndmain.ui" line="296"/>
-        <location filename="wndmain.ui" line="1100"/>
+        <location filename="wndmain.ui" line="1094"/>
         <source>Products registered in database</source>
         <translation>Artikel in der Datenbank</translation>
     </message>
     <message>
         <location filename="wndmain.ui" line="315"/>
-        <location filename="wndmain.ui" line="1122"/>
+        <location filename="wndmain.ui" line="1116"/>
         <source>Product status on the selected date</source>
         <translation>Artikel Bestand an einem ausgewählten Tag</translation>
     </message>
     <message>
         <location filename="wndmain.ui" line="334"/>
-        <location filename="wndmain.ui" line="1133"/>
+        <location filename="wndmain.ui" line="1127"/>
         <source>History of the selected product</source>
         <translation>Die Historie des ausgewählten Artikels</translation>
     </message>
     <message>
         <location filename="wndmain.ui" line="360"/>
-        <location filename="wndmain.ui" line="1166"/>
+        <location filename="wndmain.ui" line="1160"/>
         <source>Summarized information about registered guests</source>
         <translation>Daten aller registrierten Kunden</translation>
     </message>
     <message>
         <location filename="wndmain.ui" line="386"/>
-        <location filename="wndmain.ui" line="1177"/>
+        <location filename="wndmain.ui" line="1171"/>
         <source>Summary of device usages</source>
         <translation>Geräte Benutzung Zusammenfassung</translation>
     </message>
     <message>
         <location filename="wndmain.ui" line="405"/>
-        <location filename="wndmain.ui" line="1188"/>
+        <location filename="wndmain.ui" line="1182"/>
         <source>Summary of device minute usages</source>
         <translation type="unfinished"></translation>
     </message>
@@ -1906,13 +1906,13 @@
     </message>
     <message>
         <location filename="wndmain.ui" line="958"/>
-        <location filename="wndmain.ui" line="1097"/>
+        <location filename="wndmain.ui" line="1091"/>
         <source>Products</source>
         <translation>Artikel</translation>
     </message>
     <message>
         <location filename="wndmain.ui" line="966"/>
-        <location filename="wndmain.ui" line="1163"/>
+        <location filename="wndmain.ui" line="1157"/>
         <source>Guests</source>
         <translation>Gäste</translation>
     </message>
@@ -1922,97 +1922,92 @@
         <translation>Geräte</translation>
     </message>
     <message>
-        <location filename="wndmain.ui" line="979"/>
-        <source>Type Here</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <location filename="wndmain.ui" line="996"/>
+        <location filename="wndmain.ui" line="990"/>
         <source>E&amp;xit</source>
         <translation>&amp;Abmelden</translation>
     </message>
     <message>
-        <location filename="wndmain.ui" line="1007"/>
+        <location filename="wndmain.ui" line="1001"/>
         <source>&amp;Toolbar</source>
         <translation>&amp;Werkzeug</translation>
     </message>
     <message>
-        <location filename="wndmain.ui" line="1018"/>
+        <location filename="wndmain.ui" line="1012"/>
         <source>&amp;Filter bar</source>
         <translation>&amp; Filter Panel</translation>
     </message>
     <message>
-        <location filename="wndmain.ui" line="1026"/>
+        <location filename="wndmain.ui" line="1020"/>
         <source>&amp;Daily</source>
         <translation>&amp; Tages</translation>
     </message>
     <message>
-        <location filename="wndmain.ui" line="1029"/>
+        <location filename="wndmain.ui" line="1023"/>
         <source>Daily bookkeeping</source>
         <translation>Tagbuch</translation>
     </message>
     <message>
-        <location filename="wndmain.ui" line="1037"/>
+        <location filename="wndmain.ui" line="1031"/>
         <source>&amp;Ledger</source>
         <translation>&amp;Buchhaltung</translation>
     </message>
     <message>
-        <location filename="wndmain.ui" line="1045"/>
+        <location filename="wndmain.ui" line="1039"/>
         <source>&amp;Active patientcard types</source>
         <translation>&amp;Aktive Club-Kartentypen</translation>
     </message>
     <message>
-        <location filename="wndmain.ui" line="1056"/>
+        <location filename="wndmain.ui" line="1050"/>
         <source>Inactive patientcards</source>
         <translation>Ungültige Club Karten</translation>
     </message>
     <message>
-        <location filename="wndmain.ui" line="1075"/>
+        <location filename="wndmain.ui" line="1069"/>
         <source>&amp;Cassa history</source>
         <translation>&amp;Kassenbuch</translation>
     </message>
     <message>
-        <location filename="wndmain.ui" line="1086"/>
+        <location filename="wndmain.ui" line="1080"/>
         <source>Patientcard sells</source>
         <translation>Club-Karten Verkauf</translation>
     </message>
     <message>
-        <location filename="wndmain.ui" line="1108"/>
+        <location filename="wndmain.ui" line="1102"/>
         <source>Patientcard debts</source>
         <translation>Club-Karten Wert</translation>
     </message>
     <message>
-        <location filename="wndmain.ui" line="1119"/>
+        <location filename="wndmain.ui" line="1113"/>
         <source>Product status</source>
         <translation>Artikel Bestand</translation>
     </message>
     <message>
-        <location filename="wndmain.ui" line="1130"/>
+        <location filename="wndmain.ui" line="1124"/>
         <source>Product history</source>
         <translation>Historie des Artikels</translation>
     </message>
     <message>
-        <location filename="wndmain.ui" line="1141"/>
+        <location filename="wndmain.ui" line="1135"/>
         <source>Patient card usages</source>
         <translation>Club-Karten Benutzung</translation>
     </message>
     <message>
-        <location filename="wndmain.ui" line="1144"/>
+        <location filename="wndmain.ui" line="1138"/>
         <source>Patientcard usages on a defined date intervall</source>
         <translation>Club-Karten Benutzung in angegebenem Zeitraum</translation>
     </message>
     <message>
-        <location filename="wndmain.ui" line="1152"/>
+        <location filename="wndmain.ui" line="1146"/>
         <source>Monthly</source>
         <translation>Monats-Abschluss</translation>
     </message>
     <message>
-        <location filename="wndmain.ui" line="1174"/>
+        <location filename="wndmain.ui" line="1168"/>
         <source>Device usages</source>
         <translation>Geräte-Benutzungen</translation>
     </message>
     <message>
-        <location filename="wndmain.ui" line="1185"/>
+        <location filename="wndmain.ui" line="1179"/>
         <source>Device Minute Usages</source>
         <translation type="unfinished"></translation>
     </message>
