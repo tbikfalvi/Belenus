@@ -20,7 +20,7 @@
     </message>
     <message>
         <location filename="mainwindow.ui" line="161"/>
-        <location filename="mainwindow.cpp" line="325"/>
+        <location filename="mainwindow.cpp" line="326"/>
         <source>Please wait until the process finish.</source>
         <translation>Bitte warten Sie bis der Prozess beendet is.</translation>
     </message>
@@ -58,7 +58,7 @@
         <location filename="mainwindow.cpp" line="232"/>
         <location filename="mainwindow.cpp" line="242"/>
         <location filename="mainwindow.cpp" line="270"/>
-        <location filename="mainwindow.cpp" line="330"/>
+        <location filename="mainwindow.cpp" line="331"/>
         <source>Error</source>
         <translation>Fehler</translation>
     </message>
@@ -96,7 +96,7 @@ Bitte bei Einstellungen kontrollieren</translation>
         <translation>Die temporäre Datei konnte nicht erstellt werden: dbreactivate.sql</translation>
     </message>
     <message>
-        <location filename="mainwindow.cpp" line="331"/>
+        <location filename="mainwindow.cpp" line="332"/>
         <source>The selected file not exists or not readable
 
 %1</source>

@@ -802,6 +802,7 @@
             <file src="%DOWNLOAD_DIR%/resources/40x40_rfid.png" dst="%INSTALL_DIR%/resources/40x40_rfid.png" />
             <file src="%DOWNLOAD_DIR%/belenus.exe" dst="%INSTALL_DIR%/belenus.exe" />
             <file src="%DOWNLOAD_DIR%/DBBackup.exe" dst="%INSTALL_DIR%/DBBackup.exe" />
+            <file src="%DOWNLOAD_DIR%/ReportViewer.exe" dst="%INSTALL_DIR%/ReportViewer.exe" />
             <file src="%DOWNLOAD_DIR%/websync.exe" dst="%INSTALL_DIR%/websync.exe" />
             <file src="%DOWNLOAD_DIR%/DBBackup.exe" dst="%CURRENT_DIR%/DBBackup.exe" />
             <file src="%DOWNLOAD_DIR%/mysql/my-huge.ini" dst="C:/wamp/bin/mysql/mysql5.5.24/my.ini" />
