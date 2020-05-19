@@ -132,3 +132,20 @@ Version 1.8.0.1
 Version 1.8.0.2
 ===============
 - DBBackup es WebSync meg mindig a belenus.ini-t hasznalta, javitva
+
+Version 1.9.0.0
+===============
+- Online es VIP berlet elrejtes
+- Varakozok listajaba ha bekerül valaki, akkor is megjelenik, hogy mennyi berlet egyseg marad majd a hasznalat utan
+- Adatbazis hasznalat optimalizacio: my_huge.ini es binlog torles
+- RFID
+- Perc alapu hasznalat kimutatasa
+- Lejarati ido atallitasa 60 napra
+- Lejarat kozeleben figyelmeztessen, de nem irja ki a napok szamat
+- uj admin - kiwiadmin
+- Berlet egyseg ervenyesseg meghosszabbitasa nem mukodott megfeleloen
+- Websync szerver adatok frissitese mind Belenus, mind WebSync oldaldol automatikusan megy
+- DBBackup-al nem lehetett vegrehajtani sql file-t
+- Belenus-ban ha vendeget akarunk torolni, a program a kapcsolt berleteket levalasztja es inaktivalja a vendeget
+
+
