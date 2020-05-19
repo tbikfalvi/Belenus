@@ -15,13 +15,14 @@ public:
     void    getCardsBarcode( QString *p_qsBarcodeMain, QString *p_qsBarcodeAssign );
 
 protected:
+    void timerEvent( QTimerEvent *p_poEvent );
 
 private:
 
     bool            _isCardsCanBeAssigned();
     void            _fillOldCardAssignStructure();
     void            _disableControls();
-    bool            _checkIfExists( QString p_qsBarcode );
+    bool            _checkIfExists(QString p_qsBarcode, QCheckBox *p_poCheck = NULL );
     void            _loadAssignedCard();
     void            _assignNewCardToOldCard();
     void            _processAssignNewToOld();
@@ -33,6 +34,7 @@ private:
     void            _processSelectedToMain();
 
     cDlgProgress    *m_dlgProgress;
+    int              m_nTimer;
     bool             m_bMainCardOk;
     bool             m_bAssignCardOk;
     QString          m_qsBarcodeMain;
@@ -58,6 +60,8 @@ private slots:
     void on_pbAssign_clicked();
     void on_pbCancel_clicked();
     void slotRadioClicked();
+    void on_ledMainBarcode_textEdited(const QString &arg1);
+    void on_ledAssignBarcode_textEdited(const QString &arg1);
 };
 
 #endif

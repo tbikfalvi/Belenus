@@ -547,6 +547,13 @@ void cLicenceManager::_checkCode()
             m_qsCode += m_qslCode.at( i*10 + m_qsCod.at(i).digitValue() );
         }
     }
+    else if( m_qsCod.length() == 6 )
+    {
+        for( int i=0; i<6; i++ )
+        {
+            m_qsCode += m_qslCode.at( i*10 + m_qsCod.at(i).digitValue() );
+        }
+    }
 }
 
 void cLicenceManager::_checkValidity()

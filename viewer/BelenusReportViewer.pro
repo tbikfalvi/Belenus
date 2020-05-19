@@ -46,6 +46,7 @@ SOURCES      = ../framework/dbconnection.cpp \
                creportmonthclose.cpp \
                creportguests.cpp \
                creportdeviceusages.cpp \
+               creportdeviceminuteusages.cpp \
                dlgprogress.cpp
 
 HEADERS      = ../framework/dbconnection.h \
@@ -74,6 +75,7 @@ HEADERS      = ../framework/dbconnection.h \
                creportmonthclose.h \
                creportguests.h \
                creportdeviceusages.h \
+               creportdeviceminuteusages.h \
                dlgprogress.h
 
 FORMS        = wndmain.ui \

@@ -128,7 +128,7 @@ private:
     QAction             *actionShowMainWindow;
     QAction             *actionUserSendAllPatientCard;
     QAction             *actionUserWaitingClearPatientCards;
-    QAction             *actionUserGetOnlinePatientCards;
+//    QAction             *actionUserGetOnlinePatientCards;
     QAction             *actionClearPatientCard;
     QAction             *actionClearAllPatientCard;
     QAction             *actionExit;
@@ -156,18 +156,18 @@ private:
     bool                 m_bSyncPCFromServer;
     bool                 m_bSendMailToServer;
     int                  m_nTimerPCStatusSync;
-    int                  m_nTimerPCOnlineSync;
+//    int                  m_nTimerPCOnlineSync;
     int                  m_nTimerSendMailCheck;
     int                  m_nIndexUser;
     int                  m_nIndexPCStatusSync;
-    int                  m_nIndexPCOnlineSync;
+//    int                  m_nIndexPCOnlineSync;
     int                  m_nIndexSendMailSync;
     int                  m_enGroup;
     QString              m_qsRPSW;
     int                  m_nIndexUpdateSyncDataCount;
-    unsigned int         m_uiPatientCardTypeId;
+//    unsigned int         m_uiPatientCardTypeId;
     bool                 m_bStartFinished;
-    unsigned int         m_uiPaymentMethodId;
+//    unsigned int         m_uiPaymentMethodId;
     QString              m_qsHttpStatus;
     int                  m_nLogLevel;
     int                  m_nIndexCheckEnablers;
@@ -181,10 +181,11 @@ private:
     bool                 m_FlagHttpEnabled;
     bool                 m_FlagHttpSuspended;
     bool                 m_FlagHttpContinued;
-    bool                 m_FlagNoPaymentMethod;
-    bool                 m_FlagNoPCType;
+//    bool                 m_FlagNoPaymentMethod;
+//    bool                 m_FlagNoPCType;
 
     QString              m_qsServerAddress;
+    bool                 m_bServerAddressChanged;
 
     void                _setActions();
     void                _setMenu();
@@ -198,6 +199,7 @@ private:
     void                _setPCTypeForHttp();
     void                _displayUserNotification( userInfo p_tUserInfo, QString p_qsInfoText = "", QSystemTrayIcon::MessageIcon icon = QSystemTrayIcon::Information );
     void                _checkIfHttpDisabledByUser();
+    void                _checkIfHttpChangedByUser();
     void                _disableHttpBySetting();
     QString             _bytearrayToString( QString p_qsString );
     bool                _isAppicationRunning( QString p_qsAppName );

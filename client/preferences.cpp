@@ -13,6 +13,8 @@
 // Alkalmazas beallitasok allomanya.
 //====================================================================================
 
+#include <QMessageBox>
+
 #include "preferences.h"
 #include "belenus.h"
 
@@ -94,6 +96,9 @@ void cPreferences::init()
     m_bShowPatientInfoOnStart       = false;
     m_nShowInfoOnWindow             = 1;
     m_nCloseInfoWindowAfterSecs     = 5;
+
+    m_bIsRFIDEnabled                = false;
+    m_nRFIDComPort                  = 1;
 }
 
 void cPreferences::loadSettings() throw (cSevException)
@@ -153,6 +158,8 @@ void cPreferences::loadSettings() throw (cSevException)
         m_bForceModuleSendTime          = loadSettingB( "HW_ForceModuleSendTime", false );
         m_bForceModuleCheckButton       = loadSettingB( "HW_ForceModuleCheckButton", false );
         m_nForceTimeSendCounter         = loadSettingB( "HW_ForceTimeSendCounter", 0);
+        m_bIsRFIDEnabled                = loadSettingB( "HW_RFIDEnabled", false );
+        m_nRFIDComPort                  = loadSettingI( "HW_RFIDComPort", 1);
 
         m_qsCurrencyShort               = loadSettingS( "CURR_Short", "Ft." );
         m_qsCurrencyLong                = loadSettingS( "CURR_Long", "Forint" );
@@ -285,6 +292,8 @@ void cPreferences::saveSettings() throw (cSevException)
         saveSettingB( "HW_ForceModuleSendTime", m_bForceModuleSendTime );
         saveSettingB( "HW_ForceModuleCheckButton", m_bForceModuleCheckButton );
         saveSettingB( "HW_ForceTimeSendCounter", m_nForceTimeSendCounter );
+        saveSettingB( "HW_RFIDEnabled", m_bIsRFIDEnabled );
+        saveSettingI( "HW_RFIDComPort", m_nRFIDComPort );
 
         saveSettingS( "UI_MainBackground", m_qsMainBackground );
 
@@ -1687,5 +1696,25 @@ void cPreferences::resizeWindowSecondary( int width, int height )
     m_wWindowSecondary->resize( width, height );
 
     setSecondaryWindowSize( QSize( width, height ) );
+}
+
+void cPreferences::setRFIDEnabled( bool p_bIsRFIDEnabled )
+{
+    m_bIsRFIDEnabled = p_bIsRFIDEnabled;
+}
+
+bool cPreferences::isRFIDEnabled()
+{
+    return m_bIsRFIDEnabled;
+}
+
+void cPreferences::setRFIDComPort( const int p_nRFIDComPort )
+{
+    m_nRFIDComPort = p_nRFIDComPort;
+}
+
+int cPreferences::getRFIDComPort() const
+{
+    return m_nRFIDComPort;
 }
 

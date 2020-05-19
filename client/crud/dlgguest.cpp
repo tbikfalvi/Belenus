@@ -203,7 +203,8 @@ void cDlgGuest::deleteClicked( bool )
     cDBGuest  *poGuest = NULL;
 
     if( QMessageBox::question( this, tr( "Question" ),
-                               tr( "Are you sure you want to delete this Guest?" ),
+                               tr( "Are you sure you want to delete this Guest?\n"
+                                   "This action can not be undone!"),
                                QMessageBox::Yes | QMessageBox::No, QMessageBox::No ) == QMessageBox::Yes )
     {
         try

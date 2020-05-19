@@ -66,6 +66,7 @@ private:
 //    QPushButton              m_pbStatusHttp;
     QPushButton              m_pbStatusCommunication;
     QPushButton              m_pbStatusKeyboard;
+    QPushButton              m_pbStatusRFID;
 //    QPushButton              m_pbStatusCommunicationSuspended;
 //    QLabel                   m_lblHttpCount;
     QLabel                   m_lblStatusRight;
@@ -84,6 +85,7 @@ private:
     int                      m_nEnterAction;
     int                      m_inPanelStartMinute;
     QString                  m_qsPanelStartBarcode;
+    QString                  m_qsPanelStartRFID;
     int                      m_inCommunicationCounter;
     bool                     m_bActionProcessing;
     bool                     m_bProgressErrorVisible;
@@ -106,7 +108,7 @@ private:
     void enableElementsByLogin( bool p_bEnable );
     void updateTitle();
     void updateStatusText( QString p_qsStatusText="" );
-    void processInputPatientCard( QString p_stBarcode );
+    void processInputPatientCard( QString p_stBarcode, QString p_qsRFID = "" );
     void processInputProduct( QString p_stBarcode );
     void processInputTimePeriod( int p_inMinute );
     void showAdWindows();

@@ -50,7 +50,7 @@ public:
     bool             isSystemAdmin();
     bool             isExtendedAdmin();
     bool             isExtendedOrSystemAdmin();
-    void             showPatientCardInformation( QString p_qsBarcode );
+    void             showPatientCardInformation( QString p_qsBarcode, int p_nCloseSeconds = 0 );
     void             showPatientLastVisitInformation(QString p_qsBarcode, int p_nCloseSeconds = 0 );
     QString          getPatientCardInformationString( QString p_qsBarcode );
     QStringList      getPatientCardUnusedUnits( unsigned int p_uiCardId );

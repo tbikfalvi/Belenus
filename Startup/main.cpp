@@ -8,16 +8,19 @@
 QTranslator     *poTransStartup;
 QTranslator     *poTransQT;
 QApplication    *apMainApp;
+QString         g_qsCurrentPath;
 
 int main(int argc, char *argv[])
 {
     apMainApp = new QApplication(argc, argv);
 
+    g_qsCurrentPath = QDir::currentPath();
+
     poTransStartup = new QTranslator();
     poTransQT = new QTranslator();
 
-    poTransStartup->load( QString("%1\\lang\\startup_en.qm").arg(QDir::currentPath()) );
-    poTransQT->load( QString("%1\\lang\\qt_en.qm").arg(QDir::currentPath()) );
+    poTransStartup->load( QString("%1\\lang\\startup_en.qm").arg( g_qsCurrentPath ) );
+    poTransQT->load( QString("%1\\lang\\qt_en.qm").arg( g_qsCurrentPath ) );
 
     apMainApp->installTranslator( poTransStartup );
     apMainApp->installTranslator( poTransQT );

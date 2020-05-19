@@ -6,8 +6,8 @@
    <rect>
     <x>0</x>
     <y>0</y>
-    <width>419</width>
-    <height>303</height>
+    <width>640</width>
+    <height>431</height>
    </rect>
   </property>
   <property name="windowTitle">
@@ -18,10 +18,19 @@
     <layout class="QVBoxLayout" name="verticalLayout">
      <item>
       <widget class="QGroupBox" name="gbIdentification">
+       <property name="minimumSize">
+        <size>
+         <width>0</width>
+         <height>0</height>
+        </size>
+       </property>
        <property name="title">
         <string> Identification </string>
        </property>
        <layout class="QFormLayout" name="formLayout">
+        <property name="fieldGrowthPolicy">
+         <enum>QFormLayout::AllNonFixedFieldsGrow</enum>
+        </property>
         <item row="0" column="0">
          <widget class="QLabel" name="lblBarcode">
           <property name="text">
@@ -51,6 +60,43 @@
            <widget class="QPushButton" name="pbCheckBarcode">
             <property name="text">
              <string/>
+            </property>
+           </widget>
+          </item>
+          <item>
+           <widget class="QCheckBox" name="chkService">
+            <property name="enabled">
+             <bool>false</bool>
+            </property>
+            <property name="text">
+             <string>Service card</string>
+            </property>
+           </widget>
+          </item>
+          <item>
+           <widget class="QCheckBox" name="chkIsRFID">
+            <property name="enabled">
+             <bool>false</bool>
+            </property>
+            <property name="text">
+             <string>RFID card</string>
+            </property>
+           </widget>
+          </item>
+          <item>
+           <widget class="QLineEdit" name="ledRFID">
+            <property name="enabled">
+             <bool>false</bool>
+            </property>
+            <property name="echoMode">
+             <enum>QLineEdit::Password</enum>
+            </property>
+           </widget>
+          </item>
+          <item>
+           <widget class="QPushButton" name="pbRFID">
+            <property name="text">
+             <string>Assign RFID</string>
             </property>
            </widget>
           </item>
@@ -315,7 +361,7 @@
        <property name="sizeHint" stdset="0">
         <size>
          <width>20</width>
-         <height>20</height>
+         <height>10</height>
         </size>
        </property>
       </spacer>
@@ -343,6 +389,36 @@
          <width>20</width>
          <height>20</height>
         </size>
+       </property>
+      </widget>
+     </item>
+     <item>
+      <spacer name="verticalSpacer_4">
+       <property name="orientation">
+        <enum>Qt::Vertical</enum>
+       </property>
+       <property name="sizeType">
+        <enum>QSizePolicy::Fixed</enum>
+       </property>
+       <property name="sizeHint" stdset="0">
+        <size>
+         <width>20</width>
+         <height>10</height>
+        </size>
+       </property>
+      </spacer>
+     </item>
+     <item>
+      <widget class="QPushButton" name="pbAddUnits">
+       <property name="text">
+        <string>Add units</string>
+       </property>
+      </widget>
+     </item>
+     <item>
+      <widget class="QPushButton" name="pbRemoveUnits">
+       <property name="text">
+        <string>Remove units</string>
        </property>
       </widget>
      </item>
@@ -377,6 +453,8 @@
   <tabstop>pbDeactivate</tabstop>
   <tabstop>pbSell</tabstop>
   <tabstop>pbRefill</tabstop>
+  <tabstop>pbAddUnits</tabstop>
+  <tabstop>pbRemoveUnits</tabstop>
  </tabstops>
  <resources/>
  <connections/>

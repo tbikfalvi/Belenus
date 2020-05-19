@@ -5,6 +5,7 @@
 #include "ui_dlgpatientcardedit.h"
 #include "../db/dbpatientcard.h"
 #include "../db/dbpatientcardtype.h"
+#include "../dlg/dlgprogress.h"
 
 class cDlgPatientCardEdit : public QDialog, protected Ui::dlgPatientCardEdit
 {
@@ -17,6 +18,7 @@ public:
 
 protected:
 //    cDBPatientCardType  *m_poPatientCardType;
+    void timerEvent( QTimerEvent *p_poEvent );
 
 private slots:
     void slotRefreshWarningColors();
@@ -32,8 +34,15 @@ private slots:
 //    void on_ledBarcode_lostFocus();
 //    void on_cmbPatient_currentIndexChanged(int index);
 //    void on_cmbCardType_currentIndexChanged(int index);
+    void on_pbRFID_clicked();
+    void on_chkIsRFID_clicked();
+    void on_pbAddUnits_clicked();
+    void on_pbRemoveUnits_clicked();
 
 private:
+    cDlgProgress                *m_dlgProgress;
+    int                          m_nTimer;
+    int                          m_nTimerCounter;
 //    bool                 m_bDlgLoaded;
 //    bool                 m_bNewCard;
 //    bool                 m_bRefillCard;

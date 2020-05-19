@@ -4,6 +4,7 @@
 #include <QComboBox>
 #include <QLabel>
 #include <QSpacerItem>
+#include <QCheckBox>
 
 #include "../framework/dlgcrud.h"
 
@@ -16,8 +17,6 @@ public:
     virtual ~cDlgPatientCard();
 
     QHBoxLayout     *horizontalLayout;
-//    QLabel          *lblPatientCardType;
-//    QComboBox       *cmbPatientCardType;
     QLabel          *lblBarcode;
     QLineEdit       *ledBarcode;
     QLabel          *lblOwner;
@@ -26,8 +25,13 @@ public:
     QPushButton     *pbPatientCardReplace;
     QPushButton     *pbPartnerCardAssign;
     QPushButton     *pbAddUnits;
+    QPushButton     *pbRemoveUnits;
+    QCheckBox       *chkRFID;
+    QCheckBox       *chkAssigned;
+    QCheckBox       *chkHasComment;
 
 protected:
+    void timerEvent( QTimerEvent *p_poEvent );
     virtual void     setupTableView();
     virtual void     enableButtons();
 
@@ -38,6 +42,7 @@ signals:
 private:
     QWidget         *m_poParent;
     QString          m_qsCondition;
+    int                          m_nTimer;
 
     bool             _isPatientCardNotForService();
 
@@ -46,8 +51,8 @@ protected slots:
     virtual void     newClicked( bool );
     virtual void     deleteClicked( bool );
     virtual void     editClicked( bool );
-//    virtual void     _slotPatientCardTypes();
     virtual void     _slotAddUnits();
+    virtual void     _slotRemoveUnits();
     virtual void     _slotPatientCardReplace();
     virtual void     _slotPartnerCardAssign();
 };

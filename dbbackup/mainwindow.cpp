@@ -29,6 +29,16 @@ MainWindow::MainWindow(QWidget *parent, QString p_qsVersion, teAction p_teAction
     m_qsFileName    = p_qsFileName;
     g_poDB          = new cQTMySQLConnection;
 
+    // remove binary logs to save time for db backup
+    try
+    {
+        g_poDB->executeQTQuery( QString( "PURGE BINARY LOGS BEFORE '%1'; " ).arg( QDateTime::currentDateTime().toString("yyyy-MM-dd hh:mm:ss") ) );
+    }
+    catch( cSevException &e )
+    {
+        g_obLogger(e.severity()) << e.what() << EOM;
+    }
+
     switch( m_teAction )
     {
         case ACT_RESTORE:
@@ -302,6 +312,7 @@ void MainWindow::on_pbSelect_clicked()
 
         ui->ledDatabase->setText( qsFile );
         ui->ledDatabase->setToolTip( QString("%1/%2").arg( qsDir ).arg( qsFile ) );
+        m_qsFileName = ui->ledDatabase->toolTip();
     }
 }
 

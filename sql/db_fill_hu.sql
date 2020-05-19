@@ -2,8 +2,8 @@
 -- Belenus Szoftver Rendszer (c) Pagony Multimedia Studio Bt - 2013
 -- -----------------------------------------------------------------------------------
 -- Filename    : db_fill_hu.sql
--- AppVersion  : 1.8.0.2
--- DbVersion   : 1.8.0.2
+-- AppVersion  : 1.9.0.0
+-- DbVersion   : 1.9.0.0
 -- Author      : Bikfalvi Tamas
 -- -----------------------------------------------------------------------------------
 -- Adatbazist default adatokkal feltolto SQL script
@@ -26,7 +26,9 @@ UPDATE `users` SET `userId`=0 WHERE `userId`=1;
 ALTER TABLE `users` auto_increment=1;
 
 INSERT INTO `users` (`licenceId`, `name`, `realName`, `password`, `accgroup`, `active`, `comment`, `archive`) VALUES
- ( 1, 'system', 'KiwiSun Adminisztrátor', 'a382329cfe97ae74677649d1f7fc03986b27cf3f', 3, 1, 'Szolárium stúdió alapértelmezett felhasználója bővített rendszergazdai jogosultságokkal.', 'ARC' );
+ ( 1, 'system', 'KiwiSun Rendszer Adminisztrátor', 'a382329cfe97ae74677649d1f7fc03986b27cf3f', 3, 1, 'Szolárium stúdió alapértelmezett felhasználója bővített rendszergazdai jogosultságokkal.', 'ARC' );
+INSERT INTO `users` (`licenceId`, `name`, `realName`, `password`, `accgroup`, `active`, `comment`, `archive`) VALUES
+ ( 1, 'kiwiadmin', 'KiwiSun Adminisztrátor', '1180796965429c0903c2ef9194121493a5127e44', 2, 1, 'Szolárium stúdió alapértelmezett felhasználója normál rendszergazdai jogosultságokkal.', 'ARC' );
 INSERT INTO `users` (`licenceId`, `name`, `realName`, `password`, `accgroup`, `active`, `comment`, `archive`) VALUES
  ( 1, 'admin', 'Adminisztrátor', 'd033e22ae348aeb5660fc2140aec35850c4da997', 2, 1, 'Szolárium stúdió alapértelmezett felhasználója rendszergazdai jogosultságokkal.', 'ARC' );
 INSERT INTO `users` (`licenceId`, `name`, `realName`, `password`, `accgroup`, `active`, `comment`, `archive`) VALUES
@@ -117,13 +119,13 @@ INSERT INTO `patientCardTypes` (`patientCardTypeId`, `licenceId`, `name`, `price
 
 -- -----------------------------------------------------------------------------------
 
-INSERT INTO `patientCards` (`patientCardId`, `licenceId`, `patientCardTypeId`, `patientId`, `barcode`, `comment`, `units`, `timeLeft`, `validDateFrom`, `validDateTo`, `pincode`, `active`, `archive`) VALUES
- (0, 0, 0, 0, '', NULL, 0, 0, '0000-00-00', '0000-00-00', NULL, 0, 'ARC');
+INSERT INTO `patientCards` (`patientCardId`, `licenceId`, `patientCardTypeId`, `patientId`, `servicecard`, `barcode` , `rfId`, `comment`, `units`, `timeLeft`, `validDateFrom`, `validDateTo`, `pincode`, `active`, `archive`) VALUES
+ (0, 0, 0, 0, 0, '', '', NULL, 0, 0, '0000-00-00', '0000-00-00', NULL, 0, 'ARC');
 UPDATE `patientCards` SET `patientCardId`=0 WHERE `patientCardId`=1;
 ALTER TABLE `patientCards` auto_increment=1;
 
-INSERT INTO `patientCards` (`patientCardId`, `licenceId`, `patientCardTypeId`, `patientId`, `barcode`, `comment`, `units`, `timeLeft`, `validDateFrom`, `validDateTo`, `pincode`, `active`, `archive`) VALUES
- (1, 0, 1, 0, '000000', 'Szerviz kártya. Csak szerviz használatra', 999, 43200, '2012-01-01', '2100-12-31', NULL, 1, 'ARC');
+INSERT INTO `patientCards` (`patientCardId`, `licenceId`, `patientCardTypeId`, `patientId`, `servicecard`, `barcode` , `rfId`, `comment`, `units`, `timeLeft`, `validDateFrom`, `validDateTo`, `pincode`, `active`, `archive`) VALUES
+ (1, 0, 1, 0, 0, '000000', '', 'Szerviz kártya. Csak szerviz használatra', 999, 43200, '2012-01-01', '2100-12-31', NULL, 1, 'ARC');
 
 -- -----------------------------------------------------------------------------------
 
@@ -3646,12 +3648,12 @@ ALTER TABLE `shoppingcartitems` auto_increment=1;
 -- -----------------------------------------------------------------------------------
 
 INSERT INTO `settings` (`settingId`, `identifier`, `value`) VALUES
- (NULL, 'GLOBAL_DATA_UPDATED', '2019-11-07 12:00:00'),
- (NULL, 'LICENCE_LAST_VALIDATED', '2000-01-01 12:00:00'),
+ (NULL, 'GLOBAL_DATA_UPDATED', '2020-05-01 12:00:00'),
+ (NULL, 'LICENCE_LAST_VALIDATED', '2020-05-01 12:00:00'),
  (NULL, 'ABOUT_INFO_LINK', 'http://www.kiwisun.eu/elerhetosegeink.html'),
  (NULL, 'CURRENT_CASSA_ID', '0'),
- (NULL, 'APPLICATION_VERSION', '1_8_0_2'),
- (NULL, 'DATABASE_VERSION', '1_8_0_2'),
+ (NULL, 'APPLICATION_VERSION', '1_9_0_0'),
+ (NULL, 'DATABASE_VERSION', '1_9_0_0'),
  (NULL, "GEN_LastUser", "" ),
  (NULL, "GEN_PanelsPerRow", 3 ),
  (NULL, "GEN_BarcodeLength", 8 ),
@@ -3701,6 +3703,8 @@ INSERT INTO `settings` (`settingId`, `identifier`, `value`) VALUES
  (NULL, "HW_ForceModuleSendTime", 0 ),
  (NULL, "HW_ForceModuleCheckButton", 0 ),
  (NULL, "HW_ForceTimeSendCounter", 0 ),
+ (NULL, "HW_RFIDEnabled", 0 ),
+ (NULL, "HW_RFIDComPort", 1 ),
  (NULL, "CURR_Short", "Ft." ),
  (NULL, "CURR_Long", "Forint" ),
  (NULL, "CURR_Separator", "," ),
