@@ -3,7 +3,11 @@
 
 #include <QMainWindow>
 #include <QTranslator>
+#include <QDomDocument>
 #include <QFile>
+#include <QtSql>
+
+#include "cregistry.h"
 
 extern QTranslator     *poTransStartup;
 extern QTranslator     *poTransQT;
@@ -22,7 +26,6 @@ public:
     ~MainWindow();
 
 private slots:
-    void on_cmbLanguage_currentIndexChanged(int);
     void on_pbDefault_clicked();
     void on_pbDirectoryStartup_clicked();
     void on_pbDirectoryTarget_clicked();
@@ -45,11 +48,30 @@ private:
     QString                  m_qsInfoFile;
     QString                  m_qsLangInstaller;
 
+    QSqlDatabase            *m_poDB;
+    QFile                   *m_obFile;
+    QDomDocument            *obProcessDoc;
+
+    QString                  m_qsPathWampServer;
+    QString                  m_qsUninstallWampExec;
+    QString                  m_qsRootPassword;
+
+    bool                     m_bWampServerAlreadyInstalled;
+    bool                     m_bDatabaseAlreadyInstalled;
+    bool                     m_bRootUserExists;
+    bool                     m_bBelenusUserExists;
+
+    QString                  m_qsProcessErrorMsg;
+    QString                  m_qsLanguage;
+    QString                  m_qsClientInstallDir;
+
+    void _setProgressText( QString qsMessage );
+
     void _updateEnvironmentVariables();
     bool _createPaths();
     bool _createPath( QString p_qsPath );
     bool _createSettingsFile();
-    bool _updateSettingsFile();
+//    bool _updateSettingsFile();
     void _progressStep();
     bool _copyUpdaterFiles();
     bool _copyXmlFile();
@@ -62,6 +84,25 @@ private:
     void _deleteRegistryKey( QString p_qsRegPath, QString p_qsKey = "" );
     void _removeShortcuts();
     void _removeDirectory( QString p_qsPath );
+
+    void                    _checkInstallComponents();
+    bool                    _installWampServer();
+    bool                    _processWampServerInstall( QString *p_qsMessage );
+    int                     _checkWampServer();
+
+    bool                    _processDatabaseInstall();
+    bool                    _processRootCreate();
+    bool                    _processDatabaseCreate();
+    bool                    _processBelenusUserCreate();
+    bool                    _processBelenusUserRights();
+    bool                    _processBelenusTablesCreate();
+    bool                    _processBelenusTablesFill();
+    bool                    _processBelenusDeviceFill();
+    bool                    _processClientInstall();
+    bool                    _copyInstallFiles( QString p_qsFileName, bool p_bInstall = true );
+    bool                    _createFolderShortcut();
+    bool                    _createTargetDirectory( QString p_qsPath );
+    bool                    _createClientLanguageSelectFile();
 };
 
 #endif // MAINWINDOW_H

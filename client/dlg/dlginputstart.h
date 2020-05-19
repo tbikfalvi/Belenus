@@ -21,8 +21,12 @@ public:
     bool m_bPat;
     bool m_bProd;
 
+protected:
+    void timerEvent( QTimerEvent *p_poEvent );
+
 private:
     bool     m_bInitCalled;
+    int                          m_nTimer;
 
     bool    _IsServiceCard();
 

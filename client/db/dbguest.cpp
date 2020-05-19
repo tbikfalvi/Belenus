@@ -322,20 +322,9 @@ void cDBGuest::remove() throw( cSevException )
 
     if( m_uiId )
     {
-        QString  qsQuery;
-
-        if( m_qsArchive == "NEW" )
-        {
-            qsQuery = "DELETE FROM patients ";
-        }
-        else
-        {
-            qsQuery = "UPDATE patients SET active=0, archive=\"MOD\" ";
-        }
-        qsQuery += QString( " WHERE patientId = %1" ).arg( m_uiId );
-
-        QSqlQuery  *poQuery = g_poDB->executeQTQuery( qsQuery );
-        if( poQuery ) delete poQuery;
+        g_poDB->executeQTQuery( QString( "UPDATE patientCards SET patientId = 0 WHERE patientId = %1 " ).arg( m_uiId ) );
+        g_poDB->executeQTQuery( QString( "DELETE FROM connectPatientWithCard WHERE patientId = %1 " ).arg( m_uiId ) );
+        g_poDB->executeQTQuery( QString( "UPDATE patients SET active=0, archive=\"DEL\", modified=NOW() WHERE patientId = %1" ).arg( m_uiId ) );
     }
 }
 

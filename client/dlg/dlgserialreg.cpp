@@ -33,6 +33,7 @@ cDlgSerialReg::cDlgSerialReg( QWidget *p_poParent ) : QDialog( p_poParent )
     lblStudioValidDate->setText( g_poPrefs->getLicenceLastValidated().left(10) );
 
     ledSerialKey->setEnabled( g_obUser.isInGroup( cAccessGroup::SYSTEM ) );
+    pbChangeKey->setEnabled( g_obUser.isInGroup( cAccessGroup::SYSTEM ) );
     pbActivateKey->setEnabled( g_obUser.isInGroup( cAccessGroup::SYSTEM ) );
     ledCodeActivation->setEnabled( g_obUser.isInGroup( cAccessGroup::SYSTEM ) );
     deLastValidated->setEnabled( g_obUser.isInGroup( cAccessGroup::SYSTEM ) );

@@ -11,7 +11,7 @@
 #include "../framework/logger/FileWriter.h"
 #include "../language/language.h"
 
-#define APPLICATION_VERSION_NUMBER  "1.8.0.2"
+#define APPLICATION_VERSION_NUMBER  "1.9.0.0"
 
 QApplication            *apMainApp;
 cQTLogger                g_obLogger;

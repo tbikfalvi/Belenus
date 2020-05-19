@@ -1,4 +1,4 @@
-<installer version="1.8.0.2">
+<installer version="1.9.0.0">
 
     <files>
 
@@ -32,7 +32,6 @@
         <file src="%CURRENT_DIR%/lang/qt_de.qm" dst="%INSTALL_DIR%/lang/qt_de.qm" />
         <file src="%CURRENT_DIR%/lang/qt_hu.qm" dst="%INSTALL_DIR%/lang/qt_hu.qm" />
         <file src="%CURRENT_DIR%/lang/qt_it.qm" dst="%INSTALL_DIR%/lang/qt_it.qm" />
-        <file src="%CURRENT_DIR%/lang/qt_ro.qm" dst="%INSTALL_DIR%/lang/qt_ro.qm" />
         <file src="%CURRENT_DIR%/lang/websync_de.qm" dst="%INSTALL_DIR%/lang/websync_de.qm" />
         <file src="%CURRENT_DIR%/lang/websync_hu.qm" dst="%INSTALL_DIR%/lang/websync_hu.qm" />
         <file src="%CURRENT_DIR%/lang/websync_it.qm" dst="%INSTALL_DIR%/lang/websync_it.qm" />
@@ -151,6 +150,8 @@
         <file src="%CURRENT_DIR%/resources/40x40_patient_wait.png" dst="%INSTALL_DIR%/resources/40x40_patient_wait.png" />
         <file src="%CURRENT_DIR%/resources/40x40_send.png" dst="%INSTALL_DIR%/resources/40x40_send.png" />
         <file src="%CURRENT_DIR%/resources/40x40_websync.png" dst="%INSTALL_DIR%/resources/40x40_websync.png" />
+        <file src="%CURRENT_DIR%/resources/40x40_patientcard_rfid.png" dst="%INSTALL_DIR%/resources/40x40_patientcard_rfid.png" />
+        <file src="%CURRENT_DIR%/resources/40x40_rfid.png" dst="%INSTALL_DIR%/resources/40x40_rfid.png" />
         
         <file src="%CURRENT_DIR%/sqldrivers/qsqlmysql4.dll" dst="%INSTALL_DIR%/sqldrivers/qsqlmysql4.dll" />
 
@@ -170,6 +171,9 @@
         <file src="%CURRENT_DIR%/DBBackup.exe" dst="%INSTALL_DIR%/DBBackup.exe" />
         <file src="%CURRENT_DIR%/ReportViewer.exe" dst="%INSTALL_DIR%/ReportViewer.exe" />
         <file src="%CURRENT_DIR%/websync.exe" dst="%INSTALL_DIR%/websync.exe" />
+		
+		<file src="%CURRENT_DIR%/mysql/my-huge.ini" dst="C:/wamp/bin/mysql/mysql5.5.24/my.ini" />
+        <file src="%CURRENT_DIR%/mysql/config.inc.php" dst="c:/wamp/apps/phpmyadmin3.5.1/config.inc.php" />
 
     </files>
 

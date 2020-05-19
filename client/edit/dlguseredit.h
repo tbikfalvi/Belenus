@@ -17,8 +17,15 @@ public slots:
     virtual void accept ();
 
 protected:
+    void timerEvent( QTimerEvent *p_poEvent );
+
+protected:
     cDBUser *m_poUser;
     QString  m_qsDefaultPwd;
+
+private:
+    int                          m_nTimer;
+
 };
 
 #endif

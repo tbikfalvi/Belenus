@@ -5,8 +5,14 @@
 #include "dlgpatientcardtype.h"
 #include "../edit/dlgpatientcardedit.h"
 #include "../edit/dlgaddunits.h"
+#include "../edit/dlgremoveunits.h"
+#include "../communication_rfid.h"
 
+extern cCommRFID       *g_poCommRFID;
+
+//===========================================================================================================
 cDlgPatientCard::cDlgPatientCard( QWidget *p_poParent ) : cDlgCrud( p_poParent )
+//-----------------------------------------------------------------------------------------------------------
 {
     setWindowTitle( tr( "Patient Card List" ) );
     setWindowIcon( QIcon("./resources/40x40_patientcard.png") );
@@ -44,42 +50,38 @@ cDlgPatientCard::cDlgPatientCard( QWidget *p_poParent ) : cDlgCrud( p_poParent )
     ledOwner->setMaximumWidth( 100 );
     horizontalLayout->addWidget( ledOwner );
 
+    chkRFID = new QCheckBox( this );
+    chkRFID->setObjectName( QString::fromUtf8( "chkRFID" ) );
+    chkRFID->setText( tr("RFID card") );
+    horizontalLayout->addWidget( chkRFID );
+
+    chkAssigned = new QCheckBox( this );
+    chkAssigned->setObjectName( QString::fromUtf8( "chkAssigned" ) );
+    chkAssigned->setText( tr("Assigned card") );
+    horizontalLayout->addWidget( chkAssigned );
+
+    chkHasComment = new QCheckBox( this );
+    chkHasComment->setObjectName( QString::fromUtf8( "chkRFID" ) );
+    chkHasComment->setText( tr("Card with comment") );
+    horizontalLayout->addWidget( chkHasComment );
+
     horizontalSpacer1 = new QSpacerItem( 10, 20, QSizePolicy::Expanding, QSizePolicy::Minimum );
     horizontalLayout->addItem( horizontalSpacer1 );
     verticalLayout->insertLayout( 0, horizontalLayout );
 
-/*    QSqlQuery   *poQuery;
-    QString      qsQuery;
-
-    cmbPatientCardType->addItem( tr("<All patientcard types>"), -1 );
-    if( g_obUser.isInGroup( cAccessGroup::ROOT ) )
-    {
-        qsQuery = QString( "SELECT patientCardTypeId, name FROM patientCardTypes WHERE archive<>\"DEL\"" );
-    }
-    else
-    {
-        qsQuery = QString( "SELECT patientCardTypeId, name FROM patientCardTypes WHERE ((patientCardTypeId>0 AND licenceId!=0) OR (patientCardTypeId=0 AND licenceId=0)) AND active=1 AND archive<>\"DEL\"" );
-    }
-
-    poQuery = g_poDB->executeQTQuery( qsQuery );
-    while( poQuery->next() )
-    {
-        cmbPatientCardType->addItem( poQuery->value( 1 ).toString(), poQuery->value( 0 ) );
-    }*/
-/*
-    pbPatientCardType = new QPushButton( tr( "Patientcard types" ), this );
-    pbPatientCardType->setObjectName( QString::fromUtf8( "pbPatientCardType" ) );
-    pbPatientCardType->setIconSize( QSize(20, 20) );
-    pbPatientCardType->setIcon( QIcon("./resources/40x40_patientcardtype.png") );
-    btbButtonsSide->addButton( pbPatientCardType, QDialogButtonBox::RejectRole );
-    connect( pbPatientCardType, SIGNAL(clicked()), this, SLOT(_slotPatientCardTypes()) );
-*/
     pbAddUnits = new QPushButton( tr( "Add units" ), this );
     pbAddUnits->setObjectName( QString::fromUtf8( "pbAddUnits" ) );
     pbAddUnits->setIconSize( QSize(20, 20) );
     pbAddUnits->setIcon( QIcon("./resources/40x40_patientcard.png") );
     btbButtons->addButton( pbAddUnits, QDialogButtonBox::ActionRole );
     connect( pbAddUnits, SIGNAL(clicked()), this, SLOT(_slotAddUnits()) );
+
+    pbRemoveUnits = new QPushButton( tr( "Remove units" ), this );
+    pbRemoveUnits->setObjectName( QString::fromUtf8( "pbRemoveUnits" ) );
+    pbRemoveUnits->setIconSize( QSize(20, 20) );
+    pbRemoveUnits->setIcon( QIcon("./resources/40x40_patientcard.png") );
+    btbButtons->addButton( pbRemoveUnits, QDialogButtonBox::ActionRole );
+    connect( pbRemoveUnits, SIGNAL(clicked()), this, SLOT(_slotRemoveUnits()) );
 
     pbPatientCardReplace = new QPushButton( tr( "Replace lost" ), this );
     pbPatientCardReplace->setObjectName( QString::fromUtf8( "pbPatientCardReplace" ) );
@@ -100,19 +102,54 @@ cDlgPatientCard::cDlgPatientCard( QWidget *p_poParent ) : cDlgCrud( p_poParent )
 
     setupTableView();
 
-//    connect( cmbPatientCardType, SIGNAL(currentIndexChanged(int)), this, SLOT(refreshTable()) );
     connect( ledBarcode, SIGNAL(textChanged(QString)), this, SLOT(refreshTable()) );
     connect( ledOwner, SIGNAL(textChanged(QString)), this, SLOT(refreshTable()) );
+    connect( chkRFID, SIGNAL(clicked()), this, SLOT(refreshTable()) );
+    connect( chkAssigned, SIGNAL(clicked()), this, SLOT(refreshTable()) );
+    connect( chkHasComment, SIGNAL(clicked()), this, SLOT(refreshTable()) );
 
     m_qsCondition = "";
-}
 
+    m_nTimer = startTimer( 1000 );
+}
+//===========================================================================================================
 cDlgPatientCard::~cDlgPatientCard()
+//-----------------------------------------------------------------------------------------------------------
 {
     g_poPrefs->setDialogSize( "ListPatientCards", QPoint( width(), height() ) );
 }
+//===========================================================================================================
+void cDlgPatientCard::timerEvent(QTimerEvent *)
+//-----------------------------------------------------------------------------------------------------------
+{
+    if( g_poCommRFID != NULL && g_poCommRFID->isRFIDConnected() )
+    {
+        QString qsRFID = g_poCommRFID->readRFID();
 
+        if( qsRFID.length() > 0 )
+        {
+            try
+            {
+                cDBPatientCard  obDBPatientCard;
+
+                // remove \n\r from the end
+                qsRFID = qsRFID.left( qsRFID.length()-2 );
+
+                obDBPatientCard.loadRFID( qsRFID );
+                ledBarcode->setText( obDBPatientCard.barcode() );
+            }
+            catch( cSevException &e )
+            {
+                g_obLogger(cSeverity::INFO) << "RFID [" << qsRFID << "] not found in database" << EOM;
+                g_obGen.showTrayWarning( tr( "Reading card data failed or this card is not registered in database." ) );
+            }
+            g_obLogger(cSeverity::INFO) << "RFID read [" << qsRFID << "] " << EOM;
+        }
+    }
+}
+//===========================================================================================================
 void cDlgPatientCard::setupTableView()
+//-----------------------------------------------------------------------------------------------------------
 {
 //    cTracer obTracer( "cDlgPatientCard::setupTableView" );
 
@@ -163,8 +200,9 @@ void cDlgPatientCard::setupTableView()
         tbvCrud->sortByColumn( 1, Qt::AscendingOrder );
     }
 }
-
+//===========================================================================================================
 void cDlgPatientCard::refreshTable( QString p_qsCondition )
+//-----------------------------------------------------------------------------------------------------------
 {
 //    cTracer obTracer( "cDlgPatientCard::refreshTable" );
 
@@ -177,12 +215,6 @@ void cDlgPatientCard::refreshTable( QString p_qsCondition )
         m_qsQuery = "SELECT patientCards.patientCardId AS id, patientCards.barcode, patients.name, patientCards.validDateFrom, patientCards.validDateTo, patientCards.comment, patientCards.active FROM patientCards, patientCardTypes, patients WHERE patientCards.patientCardTypeId=patientCardTypes.patientCardTypeId AND patientCards.patientId=patients.patientId AND patientCards.patientCardId>0";
     }
 
-    /*int uiPatientCardTypeId = cmbPatientCardType->itemData( cmbPatientCardType->currentIndex() ).toInt();
-    if( uiPatientCardTypeId > -1 )
-    {
-        m_qsQuery += " AND ";
-        m_qsQuery += QString( "patientCards.patientCardTypeId=%1" ).arg( uiPatientCardTypeId );
-    }*/
     QString stTemp;
 
     stTemp = ledBarcode->text();
@@ -199,6 +231,24 @@ void cDlgPatientCard::refreshTable( QString p_qsCondition )
         m_qsQuery += QString( "patients.name LIKE '\%%1\%'" ).arg( stTemp );
     }
 
+    if( chkRFID->isChecked() )
+    {
+        m_qsQuery += " AND ";
+        m_qsQuery += "patientCards.rfid != \"\"";
+    }
+
+    if( chkAssigned->isChecked() )
+    {
+        m_qsQuery += " AND ";
+        m_qsQuery += "patientCards.parentCardId > 0";
+    }
+
+    if( chkHasComment->isChecked() )
+    {
+        m_qsQuery += " AND ";
+        m_qsQuery += "patientCards.comment != \"\"";
+    }
+
     if( p_qsCondition != "" )
         m_qsCondition = p_qsCondition;
 
@@ -210,8 +260,9 @@ void cDlgPatientCard::refreshTable( QString p_qsCondition )
 
     cDlgCrud::refreshTable();
 }
-
+//===========================================================================================================
 void cDlgPatientCard::enableButtons()
+//-----------------------------------------------------------------------------------------------------------
 {
 //    cTracer obTracer( "cDlgPatientCard::enableButtons" );
 
@@ -245,15 +296,18 @@ void cDlgPatientCard::enableButtons()
     m_poBtnEdit->setEnabled( bUserCanModify );
     m_poBtnDelete->setEnabled( bUserCanModify && m_uiSelectedId > 1 );
     m_poBtnSave->setEnabled( false );
-    pbAddUnits->setEnabled( g_obUser.isInGroup( cAccessGroup::SYSTEM ) && m_uiSelectedId > 1 );
+    pbAddUnits->setEnabled( bUserCanModify && g_obUser.isInGroup( cAccessGroup::ADMIN ) && m_uiSelectedId > 1 );
+    pbRemoveUnits->setEnabled( bUserCanModify && g_obUser.isInGroup( cAccessGroup::ADMIN ) && m_uiSelectedId > 1 );
     pbPatientCardReplace->setEnabled( bCanBeReplaced );
     pbPartnerCardAssign->setEnabled( bCanBeParent );
 
-    pbAddUnits->setVisible( g_obUser.isInGroup( cAccessGroup::SYSTEM ) );
+    pbAddUnits->setVisible( g_obUser.isInGroup( cAccessGroup::ADMIN ) );
+    pbRemoveUnits->setVisible( g_obUser.isInGroup( cAccessGroup::ADMIN ) );
     m_poBtnSave->setVisible( false );
 }
-
+//===========================================================================================================
 void cDlgPatientCard::newClicked( bool )
+//-----------------------------------------------------------------------------------------------------------
 {
     cDBPatientCard *poPatientCard = new cDBPatientCard;
     poPatientCard->createNew();
@@ -268,8 +322,9 @@ void cDlgPatientCard::newClicked( bool )
 
     delete poPatientCard;
 }
-
+//===========================================================================================================
 void cDlgPatientCard::editClicked( bool )
+//-----------------------------------------------------------------------------------------------------------
 {
     cDBPatientCard  *poPatientCard = NULL;
 
@@ -292,8 +347,9 @@ void cDlgPatientCard::editClicked( bool )
         g_obGen.showTrayError( e.what() );
     }
 }
-
+//===========================================================================================================
 void cDlgPatientCard::deleteClicked( bool )
+//-----------------------------------------------------------------------------------------------------------
 {
     cDBPatientCard  *poPatientCard = NULL;
 
@@ -323,8 +379,9 @@ void cDlgPatientCard::deleteClicked( bool )
         }
     }
 }
-
+//===========================================================================================================
 bool cDlgPatientCard::_isPatientCardNotForService()
+//-----------------------------------------------------------------------------------------------------------
 {
     bool             bRet           = true;
     cDBPatientCard  *poPatientCard  = NULL;
@@ -350,16 +407,9 @@ bool cDlgPatientCard::_isPatientCardNotForService()
 
     return bRet;
 }
-/*
-void cDlgPatientCard::_slotPatientCardTypes()
-{
-    cDlgPatientCardType   obDlgPatientCardType( m_poParent );
-
-    QDialog::accept();
-    obDlgPatientCardType.exec();
-}
-*/
+//===========================================================================================================
 void cDlgPatientCard::_slotAddUnits()
+//-----------------------------------------------------------------------------------------------------------
 {
     cDBPatientCard  *poPatientCard = new cDBPatientCard;
     poPatientCard->load( m_uiSelectedId );
@@ -370,8 +420,22 @@ void cDlgPatientCard::_slotAddUnits()
 
     refreshTable();
 }
+//===========================================================================================================
+void cDlgPatientCard::_slotRemoveUnits()
+//-----------------------------------------------------------------------------------------------------------
+{
+    cDBPatientCard  *poPatientCard = new cDBPatientCard;
+    poPatientCard->load( m_uiSelectedId );
 
+    cDlgRemoveUnits    obDlgRemoveUnits( this, poPatientCard );
+
+    obDlgRemoveUnits.exec();
+
+    refreshTable();
+}
+//===========================================================================================================
 void cDlgPatientCard::_slotPatientCardReplace()
+//-----------------------------------------------------------------------------------------------------------
 {
     cDBPatientCard  *poPatientCard = new cDBPatientCard;
     poPatientCard->load( m_uiSelectedId );
@@ -380,8 +444,9 @@ void cDlgPatientCard::_slotPatientCardReplace()
 
     refreshTable();
 }
-
+//===========================================================================================================
 void cDlgPatientCard::_slotPartnerCardAssign()
+//-----------------------------------------------------------------------------------------------------------
 {
     cTracer obTracer( "cDlgPatientCard::_slotPartnerCardAssign" );
 
@@ -392,4 +457,5 @@ void cDlgPatientCard::_slotPartnerCardAssign()
 
     refreshTable();
 }
+//===========================================================================================================
 

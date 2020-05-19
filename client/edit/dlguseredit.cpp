@@ -4,6 +4,10 @@
 #include "dlguseredit.h"
 #include "../dlg/dlgpwdconfirm.h"
 
+#include "communication_rfid.h"
+
+extern cCommRFID       *g_poCommRFID;
+
 // KiwiSun rendszer adminisztrátor jelszó: KW13sun
 
 cDlgUserEdit::cDlgUserEdit( QWidget *p_poParent, cDBUser *p_poUser )
@@ -85,11 +89,36 @@ cDlgUserEdit::cDlgUserEdit( QWidget *p_poParent, cDBUser *p_poUser )
 
     QPoint  qpDlgSize = g_poPrefs->getDialogSize( "EditUsers", QPoint(370,300) );
     resize( qpDlgSize.x(), qpDlgSize.y() );
+
+    m_nTimer = startTimer( 500 );
 }
 
 cDlgUserEdit::~cDlgUserEdit()
 {
+    killTimer( m_nTimer );
     g_poPrefs->setDialogSize( "EditUsers", QPoint( width(), height() ) );
+}
+
+//----------------------------------------------------------------------------------------------
+void cDlgUserEdit::timerEvent(QTimerEvent *)
+{
+    if( g_poCommRFID != NULL && g_poCommRFID->isRFIDConnected() )
+    {
+        QString qsRFID = g_poCommRFID->readRFID();
+
+        if( qsRFID.length() > 0 )
+        {
+            if( QMessageBox::question( this, tr("Question"),
+                                       tr("Do you want to use RFID card to login instead of typing password?"),
+                                       QMessageBox::Yes, QMessageBox::No ) == QMessageBox::Yes )
+            {
+                ledPwd->setText( qsRFID );
+                ledRePwd->setText( qsRFID );
+            }
+
+            g_obLogger(cSeverity::INFO) << "RFID read [" << qsRFID << "] " << EOM;
+        }
+    }
 }
 
 void cDlgUserEdit::accept ()

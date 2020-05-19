@@ -13,8 +13,8 @@
 // Alkalmazas fo allomanya.
 //====================================================================================
 
-#define APPLICATION_VERSION_NUMBER  "1.8.0.2"
-#define DATABASE_VERSION_NUMBER     "1.8.0.2"
+#define APPLICATION_VERSION_NUMBER  "1.9.0.0"
+#define DATABASE_VERSION_NUMBER     "1.9.0.0"
 
 //====================================================================================
 
@@ -45,6 +45,7 @@
 #ifdef __WIN32__
     #include "communication_serial.h"
 #endif
+#include "communication_rfid.h"
 #include "wndmain.h"
 
 //====================================================================================
@@ -66,6 +67,7 @@ cGeneral                 g_obGen;
 cDBGuest                 g_obGuest;
 cLicenceManager          g_obLicenceManager;
 cLanguage                g_obLanguage;
+cCommRFID               *g_poCommRFID;
 
 // 'TO BE SOLVED' felirat, ahol még valamit meg kell oldani
 // g_obLogger(cSeverity::DEBUG) << QString("") << EOM;
@@ -216,8 +218,8 @@ int main( int argc, char *argv[] )
 
         int     nDaysRemain = g_obLicenceManager.daysRemain();
 
-        qsSpalsh += QObject::tr("Days remains: %1\n").arg( nDaysRemain );
-        obSplash.showMessage(qsSpalsh,Qt::AlignLeft,QColor(59,44,75));
+//        qsSpalsh += QObject::tr("Days remains: %1\n").arg( nDaysRemain );
+//        obSplash.showMessage(qsSpalsh,Qt::AlignLeft,QColor(59,44,75));
 
         if( nDaysRemain < cLicenceManager::EXPIRE_MAX_DAYS || g_obLicenceManager.ltLicenceType() == cLicenceManager::LTYPE_REGISTERED )
         {
@@ -274,13 +276,44 @@ int main( int argc, char *argv[] )
         Sleep( g_poPrefs->getSecondsWaitOnSlpashScreen()*1000 );
 
         //-------------------------------------------------------------------------------
+        // Initialize and set RFID communication if enabled
+        //-------------------------------------------------------------------------------
+
+        g_poCommRFID = NULL;
+        g_poCommRFID = new cCommRFID();
+
+        if( g_poPrefs->isRFIDEnabled() )
+        {
+            qsSpalsh += QObject::tr("\nRFID communication enabled\nChecking RFID connection ... ");
+
+            Sleep( g_poPrefs->getSecondsWaitOnSlpashScreen()*1000 );
+
+            g_poCommRFID->init( g_poPrefs->getRFIDComPort() );
+
+            if( g_poCommRFID->isRFIDConnected() )
+            {
+                qsSpalsh += QObject::tr("CONNECTED\n\n");
+            }
+            else
+            {
+                qsSpalsh += QObject::tr("FAILED\n\n");
+            }
+        }
+        else
+        {
+            qsSpalsh += QObject::tr("\nRFID communication disabled\n\n");
+        }
+
+        Sleep( g_poPrefs->getSecondsWaitOnSlpashScreen()*1000 );
+
+        //-------------------------------------------------------------------------------
         // If Hardware component active, process hardware initialization
         g_obLogger(cSeverity::DEBUG) << QString("HW check nID: %1 HWInstalled: %2").arg(nId).arg(g_poPrefs->isComponentHardwareInstalled()) << EOM;
         if( nId >= 2 /*&& g_poPrefs->isComponentHardwareInstalled()*/ &&
             nDaysRemain > 0 &&
             g_obLicenceManager.ltLicenceType() != cLicenceManager::LTYPE_REGISTERED )
         {
-            qsSpalsh += QObject::tr("Checking hardware connection ...");
+            qsSpalsh += QObject::tr("Checking hardware connection ... ");
             obSplash.showMessage(qsSpalsh,Qt::AlignLeft,QColor(59,44, 75));
 
             Sleep( g_poPrefs->getSecondsWaitOnSlpashScreen()*1000 );
@@ -365,7 +398,7 @@ int main( int argc, char *argv[] )
         obMainWindow.move( g_poPrefs->getMainWindowLeft(), g_poPrefs->getMainWindowTop() );
         obMainWindow.resize( g_poPrefs->getMainWindowWidth(), g_poPrefs->getMainWindowHeight() );
 
-        Sleep( g_poPrefs->getSecondsWaitOnSlpashScreen()*1000 );
+        Sleep( 5000 );
 
         obMainWindow.setCommunicationEnabled( g_poHardware->isHardwareConnected() );
 

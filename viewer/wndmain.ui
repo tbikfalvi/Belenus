@@ -400,6 +400,25 @@
         </widget>
        </item>
        <item>
+        <widget class="QPushButton" name="pbDeviceMinuteUsages">
+         <property name="toolTip">
+          <string>Summary of device minute usages</string>
+         </property>
+         <property name="text">
+          <string/>
+         </property>
+         <property name="iconSize">
+          <size>
+           <width>30</width>
+           <height>30</height>
+          </size>
+         </property>
+         <property name="checkable">
+          <bool>true</bool>
+         </property>
+        </widget>
+       </item>
+       <item>
         <spacer name="horizontalSpacer">
          <property name="orientation">
           <enum>Qt::Horizontal</enum>
@@ -953,6 +972,7 @@
       <string>Devices</string>
      </property>
      <addaction name="action_DeviceUsages"/>
+     <addaction name="action_DeviceMinuteUsages"/>
     </widget>
     <addaction name="menu_Bookkeeping"/>
     <addaction name="menuPatientcards"/>
@@ -1149,6 +1169,17 @@
    </property>
    <property name="toolTip">
     <string>Summary of device usages</string>
+   </property>
+  </action>
+  <action name="action_DeviceMinuteUsages">
+   <property name="checkable">
+    <bool>true</bool>
+   </property>
+   <property name="text">
+    <string>Device Minute Usages</string>
+   </property>
+   <property name="toolTip">
+    <string>Summary of device minute usages</string>
    </property>
   </action>
  </widget>

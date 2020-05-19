@@ -24,6 +24,7 @@
 #include "cdlgtest.h"
 #include "belenus.h"
 #include "licenceManager.h"
+#include "communication_rfid.h"
 
 //====================================================================================
 
@@ -107,6 +108,7 @@
 
 //extern DatabaseWriter   g_obLogDBWriter;
 extern cLicenceManager  g_obLicenceManager;
+extern cCommRFID       *g_poCommRFID;
 
 //====================================================================================
 cWndMain::cWndMain( QWidget *parent ) : QMainWindow( parent )
@@ -125,6 +127,7 @@ cWndMain::cWndMain( QWidget *parent ) : QMainWindow( parent )
     m_nEnterAction                  = 0;
     m_inPanelStartMinute            = 0;
     m_qsPanelStartBarcode           = "";
+    m_qsPanelStartRFID              = "";
     m_inCommunicationCounter        = 0;
     m_bActionProcessing             = false;
     m_bProgressErrorVisible         = false;
@@ -406,6 +409,14 @@ cWndMain::cWndMain( QWidget *parent ) : QMainWindow( parent )
 
     m_pbStatusKeyboard.setEnabled( false );
 
+    m_pbStatusRFID.setIcon( QIcon( "./resources/40x40_rfid.png" ) );
+    m_pbStatusRFID.setFlat( true );
+    m_pbStatusRFID.setText( "" );
+    m_pbStatusRFID.setIconSize( QSize(20,20) );
+    m_pbStatusRFID.setFixedSize( 22, 22 );
+
+    m_pbStatusRFID.setEnabled( false );
+
     /*if( !g_poPrefs->isFapados() )
     {
         m_pbStatusHttp.setIcon( QIcon( "./resources/40x40_http_disabled.png" ) );
@@ -428,6 +439,7 @@ cWndMain::cWndMain( QWidget *parent ) : QMainWindow( parent )
     statusbar->addPermanentWidget( &m_lblStatusLeft, 3 );
 //    statusbar->addPermanentWidget( &m_pbStatusCommunication, 0 );
     statusbar->addPermanentWidget( &m_pbStatusKeyboard, 0 );
+    statusbar->addPermanentWidget( &m_pbStatusRFID, 0 );
     /*if( !g_poPrefs->isFapados() )
     {
         statusbar->addPermanentWidget( &m_pbStatusHttp, 0 );
@@ -435,25 +447,6 @@ cWndMain::cWndMain( QWidget *parent ) : QMainWindow( parent )
         statusbar->addPermanentWidget( &m_lblHttpCount );
     }*/
     statusbar->addPermanentWidget( &m_lblStatusRight, 1 );
-/*
-    g_poBlnsHttp = new cBlnsHttp();
-
-    if( !g_poPrefs->isFapados() )
-    {
-        connect( g_poBlnsHttp, SIGNAL(signalErrorOccured()),            this, SLOT(on_BlnsHttpErrorOccured()) );
-        connect( g_poBlnsHttp, SIGNAL(signalActionProcessed(QString)),  this, SLOT(on_BlnsHttpActionFinished(QString)) );
-        connect( g_poBlnsHttp, SIGNAL(signalStepProgress()),            this, SLOT(on_BlnsHttpStepProgress()) );
-        connect( g_poBlnsHttp, SIGNAL(signalHideProgress()),            this, SLOT(on_BlnsHttpHideProgress()) );
-        connect( g_poBlnsHttp, SIGNAL(signalHttpProcessDisabled()),     this, SLOT(on_BlnsHttpProcessStopped()) );
-        connect( g_poBlnsHttp, SIGNAL(signalHttpProcessSuspended()),    this, SLOT(on_BlnsHttpProcessStopped()) );
-
-        g_poBlnsHttp->setTimeout( g_poPrefs->getBlnsHttpMessageWaitTime()*1000 );
-
-        m_lblHttpCount.setText( QString::number( g_poBlnsHttp->getNumberOfWaitingRecords() ) );
-        m_pbStatusHttp.setToolTip( tr("Number of records to process: %1")
-                                   .arg( m_lblHttpCount.text() ) );
-    }
-*/
 
     g_poPrefs->setWindowMain( this );
     g_poPrefs->setWindowSecondary( m_dlgSecondaryWindow );
@@ -549,10 +542,6 @@ void cWndMain::on_pbLogin_clicked()
 
         updateTitle();
         loginUser();
-        /*if( g_poPrefs->isBlnsHttpEnabled() )
-        {
-            g_poBlnsHttp->checkHttpServerAvailability();
-        }*/
     }
     catch( cSevException &e )
     {
@@ -603,7 +592,7 @@ void cWndMain::loginUser()
         return;
     }
 
-    m_bMainWindowActive = true;
+    slotMainWindowActivated();
 
     // Felhasznalohoz tartozo, legutolso nem lezart kassza keresese
     if( g_obCassa.loadOpenCassa(g_obUser.id()) )
@@ -1021,7 +1010,7 @@ void cWndMain::keyPressEvent( QKeyEvent *p_poEvent )
 //    g_poPrefs->setBlnsHttpSuspended( true );
 //    m_pbStatusCommunicationSuspended.setIcon( QIcon( "./resources/40x40_minus.png" ) );
     setCursor( Qt::ArrowCursor);
-    m_bMainWindowActive = true;
+    slotMainWindowActivated();
 
     if( !g_obUser.isLoggedIn() )
     {
@@ -1403,6 +1392,9 @@ action_Logs->setVisible( false );
     {
         m_pbStatusKeyboard.setIcon( QIcon( "./resources/40x40_keyboard.png" ) );
     }
+
+    m_pbStatusRFID.setEnabled( g_poCommRFID->isRFIDConnected() );
+
 //    m_pbStatusHttp.setEnabled( bIsUserLoggedIn );
 //    m_pbStatusCommunicationSuspended.setEnabled( bIsUserLoggedIn );
 
@@ -1434,38 +1426,6 @@ void cWndMain::timerEvent(QTimerEvent *)
             m_nCommResetStep = 0;
             break;
     }
-
-    // Suspend patientcard synchronization if panels are in use
-/*
-    bool bIsPanelWorking    = mdiPanels->isPanelWorking();
-    int  nCountHttpRecord   = m_lblHttpCount.text().toInt();
-    int  nHttpSyncAutoSecs  = g_poPrefs->getStartHttpSyncAutoSeconds()*4+2;
-
-    if( bIsPanelWorking || !m_bMainWindowActive )
-    {
-        m_nHttpCommCounter = 0;
-        g_poPrefs->setBlnsHttpSuspended( true );
-        m_pbStatusCommunicationSuspended.setIcon( QIcon( "./resources/40x40_minus.png" ) );
-        setCursor( Qt::ArrowCursor);
-    }
-    else
-    {
-        m_nHttpCommCounter++;
-    }
-
-    // 15 masodpercenkent 250 tizedmasodperces timer -> 4 * 15 + 2 = 60
-    // 15 -> ini file-bol jon
-    if( g_poPrefs->isStartHttpSyncAuto() &&
-        m_nHttpCommCounter == nHttpSyncAutoSecs )
-    {
-        g_poPrefs->setBlnsHttpSuspended( false );
-        m_pbStatusCommunicationSuspended.setIcon( QIcon( "./resources/40x40_ok.png" ) );
-        if( nCountHttpRecord > 0 )
-        {
-            _processHttpActions();
-        }
-    }
-*/
 
     QFile   fileCheck( "belenus.chk" );
 
@@ -1578,6 +1538,49 @@ void cWndMain::timerEvent(QTimerEvent *)
     else
     {
         mdiPanels->itemRemovedFromShoppingCart();
+    }
+
+    if( m_bMainWindowActive && g_poCommRFID != NULL && g_poCommRFID->isRFIDConnected() )
+    {
+        QString qsRFID = g_poCommRFID->readRFID();
+
+        if( qsRFID.length() > 0 )
+        {
+            try
+            {
+                cDBPatientCard  obDBPatientCard;
+
+                // remove \n\r from the end
+                qsRFID = qsRFID.left( qsRFID.length()-2 );
+
+                obDBPatientCard.loadRFID( qsRFID );
+
+                on_KeyboardDisabled();
+                processInputPatientCard( obDBPatientCard.barcode(), qsRFID );
+            }
+            catch( cSevException &e )
+            {
+                g_obLogger(cSeverity::INFO) << "RFID [" << qsRFID << "] not found in database" << EOM;
+                g_obGen.showTrayWarning( tr( "Reading card data failed or this card is not registered in database." ) );
+            }
+
+            g_obLogger(cSeverity::INFO) << "RFID read [" << qsRFID << "] " << EOM;
+//            g_obGen.m_stIcon->showMessage( "RFID read", QString( "RFID: %1" ).arg(qsRFID), QSystemTrayIcon::Information, 5000 );
+        }
+    }
+    else if( m_bMainWindowActive && g_poCommRFID != NULL && !g_poCommRFID->isRFIDConnected() )
+    {
+        g_poCommRFID->openRFIDConnection();
+    }
+    else if( !m_bMainWindowActive && frmLogin->isEnabled() && g_poCommRFID != NULL && g_poCommRFID->isRFIDConnected() )
+    {
+        QString qsRFID = g_poCommRFID->readRFID();
+
+        if( qsRFID.length() > 0 )
+        {
+            ledPassword->setText( qsRFID );
+            on_pbLogin_clicked();
+        }
     }
 
     updateTitle();
@@ -1697,7 +1700,7 @@ void cWndMain::on_action_Preferences_triggered()
         }
     }
 
-    m_bMainWindowActive = true;
+    slotMainWindowActivated();
 /*
     if( g_poPrefs->isBlnsHttpEnabled() )
     {
@@ -1724,7 +1727,7 @@ void cWndMain::on_action_Users_triggered()
 
     obDlgUsers.exec();
 
-    m_bMainWindowActive = true;
+    slotMainWindowActivated();
 
     updateTitle();  //needed in case the login or real name of current user changed
 }
@@ -1737,7 +1740,7 @@ void cWndMain::on_action_Logs_triggered()
 
     cDlgLogs  obDlgLogs( this );
 
-    m_bMainWindowActive = true;
+    slotMainWindowActivated();
 
     obDlgLogs.exec();
 }
@@ -1760,7 +1763,7 @@ void cWndMain::on_action_Hardwaretest_triggered()
                               tr( "This area is restricted for system administrators only!" ) );
     }
 
-    m_bMainWindowActive = true;
+    slotMainWindowActivated();
 }
 
 //====================================================================================
@@ -1812,7 +1815,7 @@ void cWndMain::on_action_Panelgroups_triggered()
 
     obDlgPanelGroups.exec();
 
-    m_bMainWindowActive = true;
+    slotMainWindowActivated();
 }
 //====================================================================================
 void cWndMain::on_action_Paneltypes_triggered()
@@ -1829,7 +1832,7 @@ void cWndMain::on_action_Paneltypes_triggered()
 
     obDlgPanelTypes.exec();
 
-    m_bMainWindowActive = true;
+    slotMainWindowActivated();
 }
 //====================================================================================
 void cWndMain::on_action_Guests_triggered()
@@ -1846,7 +1849,7 @@ void cWndMain::on_action_Guests_triggered()
 
     obDlgGuest.exec();
 
-    m_bMainWindowActive = true;
+    slotMainWindowActivated();
 }
 //====================================================================================
 void cWndMain::on_action_PatientNew_triggered()
@@ -1879,7 +1882,7 @@ void cWndMain::on_action_PatientNew_triggered()
 
     delete poGuest;
 
-    m_bMainWindowActive = true;
+    slotMainWindowActivated();
 }
 //====================================================================================
 void cWndMain::on_action_WaitingPatients_triggered()
@@ -1974,7 +1977,7 @@ void cWndMain::on_action_PatientSelect_triggered()
         updateTitle();
     }
 
-    m_bMainWindowActive = true;
+    slotMainWindowActivated();
 }
 //====================================================================================
 void cWndMain::on_action_PatientEmpty_triggered()
@@ -2006,7 +2009,7 @@ void cWndMain::on_action_PanelStatuses_triggered()
                                   tr( "Some of the changes you made will only be applied after the application is restarted." ) );
     }
 
-    m_bMainWindowActive = true;
+    slotMainWindowActivated();
 }
 //====================================================================================
 void cWndMain::on_action_UseDevice_triggered()
@@ -2031,8 +2034,9 @@ void cWndMain::on_action_UseDevice_triggered()
     }
     if( m_qsPanelStartBarcode.length() > 0 )
     {
-        obDlgPanelUse.setPanelUsePatientCard( m_qsPanelStartBarcode );
-        m_qsPanelStartBarcode = "";
+        obDlgPanelUse.initPanelUseWithPatientCard( m_qsPanelStartBarcode, m_qsPanelStartRFID );
+        m_qsPanelStartBarcode   = "";
+        m_qsPanelStartRFID      = "";
     }
 
     m_dlgProgress->hideProgress();
@@ -2067,7 +2071,7 @@ void cWndMain::on_action_UseDevice_triggered()
                                            QMessageBox::Yes,QMessageBox::No ) == QMessageBox::No )
                 {
                     on_KeyboardEnabled();                    
-                    m_bMainWindowActive = true;
+                    slotMainWindowActivated();
                     return;
                 }
             }
@@ -2091,8 +2095,10 @@ void cWndMain::on_action_UseDevice_triggered()
 
             mdiPanels->setMainProcessTime( obDlgPanelUse.panelUsePatientCardId(), obDlgPanelUse.panelUnitIds(), obDlgPanelUse.panelUseSecondsCard() );
 
-            int nCount = obDlgPanelUse.countPatientCardUnitsLeft();
-            mdiPanels->setTextInformation( tr( "%1 units left on the selected card" ).arg(nCount) );
+            g_obGen.showPatientCardInformation( obDBPatientCard.barcode(), 4 );
+
+//            int nCount = obDlgPanelUse.countPatientCardUnitsLeft();
+//            mdiPanels->setTextInformation( tr( "%1 units left on the selected card" ).arg(nCount) );
         }
         if( obDlgPanelUse.panelUseSecondsCash() > 0 )
         {
@@ -2101,7 +2107,7 @@ void cWndMain::on_action_UseDevice_triggered()
     }
     on_KeyboardEnabled();
 
-    m_bMainWindowActive = true;
+    slotMainWindowActivated();
 }
 //====================================================================================
 void cWndMain::on_action_UseDeviceLater_triggered()
@@ -2113,6 +2119,13 @@ void cWndMain::on_action_UseDeviceLater_triggered()
     m_dlgProgress->showProgress();
     cDlgPanelUse obDlgPanelUse( this, mdiPanels->activePanelId() );
     m_dlgProgress->hideProgress();
+
+    if( m_qsPanelStartBarcode.length() > 0 )
+    {
+        obDlgPanelUse.initPanelUseWithPatientCard( m_qsPanelStartBarcode, m_qsPanelStartRFID );
+        m_qsPanelStartBarcode   = "";
+        m_qsPanelStartRFID      = "";
+    }
 
     if( obDlgPanelUse.exec() == QDialog::Accepted )
     {
@@ -2149,7 +2162,7 @@ void cWndMain::on_action_UseDeviceLater_triggered()
                                       tr("Cassa is disabled!\n\n"
                                          "Please relogin to enable cassa.") );
 
-                m_bMainWindowActive = true;
+                slotMainWindowActivated();
                 return;
             }
 
@@ -2266,9 +2279,11 @@ void cWndMain::on_action_UseDeviceLater_triggered()
             g_obLogger(e.severity()) << e.what() << EOM;
             g_obGen.showTrayError( e.what() );
         }
+
+        g_obGen.showPatientCardInformation( obDlgPanelUse.panelUsePatientCardBarcode(), 4 );
     }
 
-    m_bMainWindowActive = true;
+    slotMainWindowActivated();
 }
 //====================================================================================
 void cWndMain::on_action_Cards_triggered()
@@ -2288,7 +2303,7 @@ void cWndMain::on_action_Cards_triggered()
 
     obDlgPatientCard.exec();
 
-    m_bMainWindowActive = true;
+    slotMainWindowActivated();
 }
 //====================================================================================
 void cWndMain::on_action_CardTypes_triggered()
@@ -2305,7 +2320,7 @@ void cWndMain::on_action_CardTypes_triggered()
 
     obDlgPatientCardType.exec();
 
-    m_bMainWindowActive = true;
+    slotMainWindowActivated();
 }
 //====================================================================================
 void cWndMain::on_action_ProductTypes_triggered()
@@ -2322,7 +2337,7 @@ void cWndMain::on_action_ProductTypes_triggered()
 
     obDlgProductType.exec();
 
-    m_bMainWindowActive = true;
+    slotMainWindowActivated();
 }
 //====================================================================================
 void cWndMain::on_action_ProductActionType_triggered()
@@ -2339,7 +2354,7 @@ void cWndMain::on_action_ProductActionType_triggered()
 
     obDlgProductActionType.exec();
 
-    m_bMainWindowActive = true;
+    slotMainWindowActivated();
 }
 //====================================================================================
 void cWndMain::on_action_Products_triggered()
@@ -2356,7 +2371,7 @@ void cWndMain::on_action_Products_triggered()
 
     obDlgProduct.exec();
 
-    m_bMainWindowActive = true;
+    slotMainWindowActivated();
 }
 //====================================================================================
 void cWndMain::on_action_SellProduct_triggered()
@@ -2390,7 +2405,7 @@ void cWndMain::on_action_SellProduct_triggered( QString p_qsBarcode )
 
     obDlgProductSell.exec();
 
-    m_bMainWindowActive = true;
+    slotMainWindowActivated();
 }
 //====================================================================================
 void cWndMain::on_action_ShoppingCart_triggered()
@@ -2427,7 +2442,7 @@ void cWndMain::slotOpenShoppingCart( unsigned int /*p_uiPanelId*/ )
 
     on_KeyboardEnabled();
 
-    m_bMainWindowActive = true;
+    slotMainWindowActivated();
 }
 //====================================================================================
 void cWndMain::slotOpenScheduleTable( unsigned int p_uiPanelId )
@@ -2455,7 +2470,7 @@ void cWndMain::on_action_CassaActionStorno_triggered()
 
     obDlgStorno.exec();
 
-    m_bMainWindowActive = true;
+    slotMainWindowActivated();
 }
 //====================================================================================
 void cWndMain::on_action_PCSaveToDatabase_triggered()
@@ -2472,7 +2487,7 @@ void cWndMain::on_action_PCSaveToDatabase_triggered()
 
     obDlgPatientCardAdd.exec();
 
-    m_bMainWindowActive = true;
+    slotMainWindowActivated();
 }
 //====================================================================================
 void cWndMain::on_action_Cassa_triggered()
@@ -2489,7 +2504,7 @@ void cWndMain::on_action_Cassa_triggered()
 
     obDlgCassaEdit.exec();
 
-    m_bMainWindowActive = true;
+    slotMainWindowActivated();
 }
 //====================================================================================
 void cWndMain::on_action_Accounting_triggered()
@@ -2506,7 +2521,7 @@ void cWndMain::on_action_Accounting_triggered()
 
     obDlgLedgerMain.exec();
 
-    m_bMainWindowActive = true;
+    slotMainWindowActivated();
 }
 //====================================================================================
 void cWndMain::on_action_DeviceSkipStatus_triggered()
@@ -2545,7 +2560,7 @@ void cWndMain::on_action_ValidateSerialKey_triggered()
         }
     }
 
-    m_bMainWindowActive = true;
+    slotMainWindowActivated();
 }
 //====================================================================================
 void cWndMain::on_action_PatientCardSell_triggered()
@@ -2570,7 +2585,7 @@ void cWndMain::on_action_PatientCardSell_triggered()
                 QMessageBox::warning( this, tr("Attention"),
                                       tr("This patientcard has been lost and replaced\nand can not be used or sold again.") );
 
-                m_bMainWindowActive = true;
+                slotMainWindowActivated();
                 return;
             }
         }
@@ -2612,7 +2627,7 @@ void cWndMain::on_action_PatientCardSell_triggered()
                                               "Do you want to refill the patientcard now?%3").arg(obDBPatientCard.units()).arg(obDBPatientCard.timeLeftStr()).arg(qsTemp),
                                            QMessageBox::Yes,QMessageBox::No ) == QMessageBox::No )
                 {                    
-                    m_bMainWindowActive = true;
+                    slotMainWindowActivated();
                     return;
                 }
                 else
@@ -2648,7 +2663,7 @@ void cWndMain::on_action_PatientCardSell_triggered()
         m_bShoppingCartHasItem = g_obGen.isShoppingCartHasItems();
     }
 
-    m_bMainWindowActive = true;
+    slotMainWindowActivated();
 }
 //====================================================================================
 void cWndMain::on_action_PatientCardAssign_triggered()
@@ -2695,10 +2710,10 @@ void cWndMain::on_action_ReplaceLostCard_triggered()
         }
     }
 
-    m_bMainWindowActive = true;
+    slotMainWindowActivated();
 }
 //====================================================================================
-void cWndMain::processInputPatientCard( QString p_stBarcode )
+void cWndMain::processInputPatientCard(QString p_stBarcode , QString p_qsRFID)
 {
     cTracer obTrace( "cWndMain::processInputPatientCard" );
 
@@ -2723,7 +2738,8 @@ void cWndMain::processInputPatientCard( QString p_stBarcode )
                 }
                 break;
             case 2:
-                m_qsPanelStartBarcode = p_stBarcode;
+                m_qsPanelStartBarcode   = p_stBarcode;
+                m_qsPanelStartRFID      = p_qsRFID;
                 on_action_UseDeviceLater_triggered();
                 on_KeyboardEnabled();
                 return;
@@ -2735,7 +2751,8 @@ void cWndMain::processInputPatientCard( QString p_stBarcode )
         }
     }
 
-    m_qsPanelStartBarcode = p_stBarcode;
+    m_qsPanelStartBarcode   = p_stBarcode;
+    m_qsPanelStartRFID      = p_qsRFID;
     if( mdiPanels->isPanelWorking( mdiPanels->activePanel() ) )
     {
         on_action_UseDeviceLater_triggered();
@@ -2827,7 +2844,7 @@ void cWndMain::on_action_EditActualPatient_triggered()
 
     obDlgEdit.exec();
 
-    m_bMainWindowActive = true;
+    slotMainWindowActivated();
 }
 //====================================================================================
 void cWndMain::on_action_DeviceSettings_triggered()
@@ -2849,7 +2866,7 @@ void cWndMain::on_action_DeviceSettings_triggered()
         m_dlgSecondaryWindow->refreshTitle( mdiPanels->activePanel() );
     }
 
-    m_bMainWindowActive = true;
+    slotMainWindowActivated();
 }
 //====================================================================================
 void cWndMain::on_action_PayCash_triggered()
@@ -2918,7 +2935,7 @@ void cWndMain::on_action_PayCash_triggered()
     m_bShoppingCartHasItem = g_obGen.isShoppingCartHasItems();
     on_KeyboardEnabled();
 
-    m_bMainWindowActive = true;
+    slotMainWindowActivated();
 }
 //====================================================================================
 void cWndMain::processDeviceUsePayment( unsigned int p_uiPanelId, unsigned int p_uiLedgerId, int p_nPaymentType )
@@ -2965,7 +2982,7 @@ void cWndMain::processProductSellPayment( const cDBShoppingCart &p_obDBShoppingC
     }
     m_bShoppingCartHasItem = g_obGen.isShoppingCartHasItems();
 
-    m_bMainWindowActive = true;
+    slotMainWindowActivated();
 }
 //====================================================================================
 void cWndMain::on_action_CassaHistory_triggered()
@@ -3007,7 +3024,7 @@ void cWndMain::on_action_EditLicenceInformation_triggered()
 
     obDlgLicenceEdit.exec();
 
-    m_bMainWindowActive = true;
+    slotMainWindowActivated();
 }
 //====================================================================================
 void cWndMain::on_action_ReportPatientcards_triggered()
@@ -3039,7 +3056,7 @@ void cWndMain::on_action_Discounts_triggered()
 
     obDlgDiscount.exec();
 
-    m_bMainWindowActive = true;
+    slotMainWindowActivated();
 }
 //====================================================================================
 void cWndMain::on_action_PatientcardsObsolete_triggered()
@@ -3057,7 +3074,7 @@ void cWndMain::on_action_PatientcardsObsolete_triggered()
 
     obDlgReportPatientCardObs.exec();
 
-    m_bMainWindowActive = true;
+    slotMainWindowActivated();
 }
 //====================================================================================
 void cWndMain::on_action_EmptyDemoDB_triggered()
@@ -3114,7 +3131,7 @@ void cWndMain::on_action_EmptyDemoDB_triggered()
         g_obGen.showTrayError( e.what() );
     }
 
-    m_bMainWindowActive = true;
+    slotMainWindowActivated();
 }
 //====================================================================================
 void cWndMain::slotStatusChanged( unsigned int p_uiPanelId, const unsigned int p_uiPanelStatusId, const QString p_qsStatus )
@@ -3187,7 +3204,7 @@ void cWndMain::slotReplacePatientCard(const QString &p_qsBarcode,
                 QMessageBox::warning( this, tr("Attention"),
                                       tr("This patientcard has been lost and replaced\nand can not be used or sold again.") );
 
-                m_bMainWindowActive = true;
+                slotMainWindowActivated();
                 return;
             }
         }
@@ -3218,7 +3235,7 @@ void cWndMain::slotReplacePatientCard(const QString &p_qsBarcode,
             QMessageBox::warning( this, tr("Warning"), tr("This patientcard already in use.\n"
                                                           "Please select a non-active patientcard.") );
 
-            m_bMainWindowActive = true;
+            slotMainWindowActivated();
             return;
         }
         else
@@ -3275,7 +3292,7 @@ void cWndMain::slotReplacePatientCard(const QString &p_qsBarcode,
             else if( inCassaAction != QDialog::Accepted )
             {
                 // Nem tortent meg az eladas
-                m_bMainWindowActive = true;
+                slotMainWindowActivated();
                 return;
             }
 
@@ -3308,7 +3325,7 @@ void cWndMain::slotReplacePatientCard(const QString &p_qsBarcode,
         m_bShoppingCartHasItem = g_obGen.isShoppingCartHasItems();
     }
 
-    m_bMainWindowActive = true;
+    slotMainWindowActivated();
 }
 //====================================================================================
 void cWndMain::slotAssignPartnerCard( const QString &p_qsBarcode )
@@ -3323,7 +3340,7 @@ void cWndMain::slotAssignPartnerCard( const QString &p_qsBarcode )
 
     m_bShoppingCartHasItem = g_obGen.isShoppingCartHasItems();
 
-    m_bMainWindowActive = true;
+    slotMainWindowActivated();
 }
 
 void cWndMain::on_action_PaymentMethods_triggered()
@@ -3340,7 +3357,7 @@ void cWndMain::on_action_PaymentMethods_triggered()
 
     obDlgPaymentMethod.exec();
 
-    m_bMainWindowActive = true;
+    slotMainWindowActivated();
 }
 
 void cWndMain::on_action_TestDlgStarted()
@@ -3356,7 +3373,7 @@ void cWndMain::on_action_TestDlgStarted()
         obDlgTest.exec();
     }
 
-    m_bMainWindowActive = true;
+    slotMainWindowActivated();
 }
 
 
@@ -3432,7 +3449,7 @@ void cWndMain::on_action_About_triggered()
                                  "For more information visit the <a href=\"%4\">KiwiSun website</a>"
                                  ).arg( qsAppVersion ).arg( qsDbVersion ).arg( qsLicenceString ).arg( qsInfoLink ) );
 
-    m_bMainWindowActive = true;
+    slotMainWindowActivated();
 }
 //====================================================================================
 int cWndMain::customMsgBox(QWidget */*parent*/, msgBoxType msgtype, QString buttonstext, QString msg, QString details)
@@ -3502,7 +3519,7 @@ void cWndMain::on_action_ManageDatabase_triggered()
 
     obDlgManageDatabase.exec();
 
-    m_bMainWindowActive = true;
+    slotMainWindowActivated();
 }
 
 void cWndMain::on_action_ManageDevicePanels_triggered()
@@ -3513,7 +3530,7 @@ void cWndMain::on_action_ManageDevicePanels_triggered()
 
     obDlgPanels.exec();
 
-    m_bMainWindowActive = true;
+    slotMainWindowActivated();
 }
 
 
@@ -3525,7 +3542,7 @@ void cWndMain::on_action_ManageSkinTypes_triggered()
 
     obDlgSkinTypes.exec();
 
-    m_bMainWindowActive = true;
+    slotMainWindowActivated();
 }
 
 void cWndMain::on_action_Import_triggered()
@@ -3763,7 +3780,7 @@ void cWndMain::on_action_Advertisements_triggered()
     QMessageBox::warning( this, tr("Attention"),
                           tr("Please note that you should restart the application for the modifications to take effect."));
 */
-    m_bMainWindowActive = true;
+    slotMainWindowActivated();
 }
 
 void cWndMain::on_action_DistributionLists_triggered()
@@ -3873,7 +3890,7 @@ void cWndMain::on_action_PatientcardInformation_triggered()
         g_obGen.showPatientCardInformation( obDlgInputStart.getEditText() );
     }
 
-    m_bMainWindowActive = true;
+    slotMainWindowActivated();
 }
 
 void cWndMain::on_KeyboardEnabled()
@@ -4057,10 +4074,15 @@ void cWndMain::_checkIsActivationNeeded()
     {
         QMessageBox::warning( this, tr("Warning"),
                               tr( "The validity of the application's licence\n"
+                                  "will be expire soon.\n\n"
+                                  "Please contact your franchise provider\n"
+                                  "and extend your licence valid time period.") );
+        /*QMessageBox::warning( this, tr("Warning"),
+                              tr( "The validity of the application's licence\n"
                                   "will be expire in %1 days.\n\n"
                                   "Please contact your franchise provider\n"
                                   "and extend your licence valid time period.")
-                              .arg( nDaysRemain ) );
+                              .arg( nDaysRemain ) );*/
     }
     if( g_obLicenceManager.ltLicenceType() == cLicenceManager::LTYPE_REGISTERED )
     {
@@ -4127,7 +4149,8 @@ void cWndMain::on_BlnsHttpProcessStopped()
 */
 void cWndMain::slotMainWindowActivated()
 {
-    m_bMainWindowActive = true;
+    m_bMainWindowActive  = true;
+    g_poCommRFID->readRFID();
     setCursor( Qt::ArrowCursor);
 }
 
@@ -4245,4 +4268,5 @@ void cWndMain::slotWindowPosition()
 
     obDlgWindowPosition.exec();
 }
+
 

@@ -28,6 +28,11 @@
 //#include "../db/dbledger.h"
 //#include "../db/dbshoppingcart.h"
 //#include "../db/dbdiscount.h"
+#include "../communication_rfid.h"
+#include "../edit/dlgaddunits.h"
+#include "../edit/dlgremoveunits.h"
+
+extern cCommRFID       *g_poCommRFID;
 
 //===========================================================================================================
 //
@@ -40,6 +45,8 @@ cDlgPatientCardEdit::cDlgPatientCardEdit( QWidget *p_poParent, cDBPatientCard *p
 
     setupUi( this );
 
+    m_dlgProgress = new cDlgProgress( this );
+
     setWindowTitle( tr( "Patient card" ) );
     setWindowIcon( QIcon("./resources/40x40_patientcard.png") );
 
@@ -50,16 +57,28 @@ cDlgPatientCardEdit::cDlgPatientCardEdit( QWidget *p_poParent, cDBPatientCard *p
     pbDeactivate->setIcon( QIcon("./resources/40x40_delete.png") );
     pbSell->setIcon( QIcon("./resources/40x40_cassa.png") );
     pbRefill->setIcon( QIcon("./resources/40x40_cassa.png") );
+    pbRFID->setIcon( QIcon("./resources/40x40_rfid.png") );
+    pbAddUnits->setIcon( QIcon("./resources/40x40_patientcard.png") );
+    pbRemoveUnits->setIcon( QIcon("./resources/40x40_patientcard.png") );
 
     deValidDateFrom->setDisplayFormat( g_poPrefs->getDateFormat().replace("-",".") );
     deValidDateTo->setDisplayFormat( g_poPrefs->getDateFormat().replace("-",".") );
 
     m_poPatientCard     = p_poPatientCard;
 
+    chkIsRFID->setChecked( false );
+
     // Fill controls with values
     if( m_poPatientCard )
     {
         ledBarcode->setText( m_poPatientCard->barcode() );
+        chkService->setChecked( m_poPatientCard->servicecard() );
+        if( m_poPatientCard->RFID().length() > 0 )
+        {
+            chkIsRFID->setChecked( true );
+            pbRFID->setText( tr("Reassign RFID") );
+        }
+        ledRFID->setText( m_poPatientCard->RFID() );
 //        cmbCardType->addItem( tr("<Not selected>"), 0 );
         cmbPatient->addItem( tr("<Not selected>"), 0 );
 
@@ -96,6 +115,7 @@ cDlgPatientCardEdit::cDlgPatientCardEdit( QWidget *p_poParent, cDBPatientCard *p
         pteComment->setPlainText( m_poPatientCard->comment() );
     }
 
+    ledRFID->setVisible( false );
 lblCardType->setVisible( false );
 cmbCardType->setEnabled( false/*m_poPatientCard->active()*/ );
 cmbCardType->setVisible( false );
@@ -107,6 +127,8 @@ cmbCardType->setVisible( false );
     pbDeactivate->setEnabled( m_poPatientCard->active() );
     pbSell->setEnabled( !m_poPatientCard->active() );
     pbRefill->setEnabled( m_poPatientCard->active() );
+    pbAddUnits->setEnabled( m_poPatientCard->active() );
+    pbRemoveUnits->setEnabled( m_poPatientCard->active() );
 
     // If this is a service card, do not deactivate or modify sensitive data
     if( m_poPatientCard->patientCardTypeId() == 1 )
@@ -119,15 +141,21 @@ cmbCardType->setVisible( false );
         pbDeactivate->setEnabled( g_obUser.isInGroup( cAccessGroup::SYSTEM ) );
         pbSell->setEnabled( false );
         pbRefill->setEnabled( false );
+        pbAddUnits->setEnabled( false );
+        pbRemoveUnits->setEnabled( false );
     }
 
     // If this is a partner card, do not modify it
     if( m_poPatientCard->parentId() > 0 )
     {
+        ledBarcode->setEnabled( false );
+        pbCheckBarcode->setEnabled( false );
 //        cmbCardType->setEnabled( false );
         pbChangeValidity->setEnabled( false );
         pbSell->setEnabled( false );
         pbRefill->setEnabled( false );
+        pbAddUnits->setEnabled( false );
+        pbRemoveUnits->setEnabled( false );
     }
 
     slotRefreshWarningColors();
@@ -153,13 +181,62 @@ cDlgPatientCardEdit::~cDlgPatientCardEdit()
 //    if( m_poPatientCardType ) delete m_poPatientCardType;
 }
 //-----------------------------------------------------------------------------------------------------------
+void cDlgPatientCardEdit::timerEvent(QTimerEvent *)
+//-----------------------------------------------------------------------------------------------------------
+{
+    m_nTimerCounter++;
+
+    if( m_nTimerCounter > 40 )
+    {
+        killTimer( m_nTimer );
+        m_dlgProgress->hideProgress();
+    }
+
+    if( g_poCommRFID != NULL && g_poCommRFID->isRFIDConnected() )
+    {
+        QString qsRFID = g_poCommRFID->readRFID();
+
+        if( qsRFID.length() > 0 )
+        {
+            try
+            {
+                // remove \n\r from the end
+                qsRFID = qsRFID.left( qsRFID.length()-2 );
+
+                ledRFID->setText( qsRFID );
+                chkIsRFID->setChecked( true );
+
+                killTimer( m_nTimer );
+                m_dlgProgress->hideProgress();
+            }
+            catch( cSevException &e )
+            {
+                g_obLogger(cSeverity::INFO) << "RFID [" << qsRFID << "] not found in database" << EOM;
+                g_obGen.showTrayWarning( tr( "Reading card data failed or this card is not registered in database." ) );
+            }
+
+            g_obLogger(cSeverity::INFO) << "RFID read [" << qsRFID << "] " << EOM;
+            slotRefreshWarningColors();
+        }
+    }
+}
+//-----------------------------------------------------------------------------------------------------------
 void cDlgPatientCardEdit::slotRefreshWarningColors()
 //-----------------------------------------------------------------------------------------------------------
 {
     lblBarcode->setStyleSheet( "QLabel {font: normal;}" );
-    if( ledBarcode->text().length() != g_poPrefs->getBarcodeLength() )
+    chkIsRFID->setStyleSheet( "QCheckBox {font: normal;}" );
+    lblPatient->setStyleSheet( "QLabel {font: normal;}" );
+    lblValidDate->setStyleSheet( "QLabel {font: normal;}" );
+
+    if( ledBarcode->text().length() != g_poPrefs->getBarcodeLength() && !g_obUser.isInGroup( cAccessGroup::SYSTEM ) )
     {
         lblBarcode->setStyleSheet( "QLabel {font: bold; color: red;}" );
+    }
+
+    if( chkIsRFID->isChecked() && ledRFID->text().length() < 1 )
+    {
+        chkIsRFID->setStyleSheet( "QCheckBox {font: bold; color: red;}" );
     }
 /*
     lblCardType->setStyleSheet( "QLabel {font: normal;}" );
@@ -168,13 +245,11 @@ void cDlgPatientCardEdit::slotRefreshWarningColors()
         lblCardType->setStyleSheet( "QLabel {font: bold; color: red;}" );
     }
 */
-    lblPatient->setStyleSheet( "QLabel {font: normal;}" );
     if( cmbPatient->currentIndex() == 0 )
     {
         lblPatient->setStyleSheet( "QLabel {font: bold; color: blue;}" );
     }
 
-    lblValidDate->setStyleSheet( "QLabel {font: normal;}" );
     if( deValidDateTo->date() < QDate::currentDate() )
     {
         lblValidDate->setStyleSheet( "QLabel {font: bold; color: red;}" );
@@ -244,21 +319,19 @@ void cDlgPatientCardEdit::on_pbChangeValidity_clicked()
         if( dateSelection != cDlgChangePCValidity::SV_NONE )
         {
             if( QMessageBox::question( this, tr("Attention"),
-                                       tr("Are you sure you want to change the validity date\n"
-                                          "from:  %1  to:  %2  "
-                                          "\nfor the selected patientcard units?\n\n"
+                                       tr("Are you sure you want to change the validity date to\n"
+                                          " %1 \n"
+                                          "for the selected patientcard units?\n\n"
                                           "Please note this change cannot be undone!")
-                                       .arg( deValidDateTo->date().toString(g_poPrefs->getDateFormat().replace("-",".")) )
                                        .arg( qdNewDate.toString(g_poPrefs->getDateFormat().replace("-",".")) ),
                                        QMessageBox::Yes | QMessageBox::No, QMessageBox::Yes ) == QMessageBox::Yes )
             {
-                deValidDateTo->setDate( qdNewDate );
+                if( qdNewDate > deValidDateTo->date() )
+                {
+                    deValidDateTo->setDate( qdNewDate );
+                }
                 m_qsUnitCondition = obDlgChangePCValidity.unitCondition();
-//                m_bIsValidationChanged = true;
-//                if( m_bIsValidationChanged )
-//                {
-                    m_poPatientCard->updateActiveUnits( deValidDateTo->date(), m_qsUnitCondition );
-//                }
+                m_poPatientCard->updateActiveUnits( qdNewDate, m_qsUnitCondition );
                 m_poPatientCard->synchronizeUnits();
             }
         }
@@ -306,6 +379,10 @@ void cDlgPatientCardEdit::on_pbSave_clicked()
     {
         m_poPatientCard->setLicenceId( g_poPrefs->getLicenceId() );
         m_poPatientCard->setBarcode( ledBarcode->text() );
+        if( chkIsRFID->isChecked() )
+        {
+            m_poPatientCard->setRFID( ledRFID->text() );
+        }
 //        m_poPatientCard->setPatientCardTypeId( cmbCardType->itemData( cmbCardType->currentIndex() ).toUInt() );
         m_poPatientCard->setPatientId( cmbPatient->itemData( cmbPatient->currentIndex() ).toUInt() );
         m_poPatientCard->setValidDateTo( deValidDateTo->date().toString("yyyy-MM-dd") );
@@ -412,7 +489,7 @@ bool cDlgPatientCardEdit::_checkCardJustForSave( QString *p_qsErrorMessage )
         p_qsErrorMessage->append( tr( "Barcode cannot be empty." ) );
         lblBarcode->setStyleSheet( "QLabel {font: bold; color: red;}" );
     }
-    else if( ledBarcode->text().length() != g_poPrefs->getBarcodeLength() )
+    else if( ledBarcode->text().length() != g_poPrefs->getBarcodeLength() && !g_obUser.isInGroup( cAccessGroup::SYSTEM ) )
     {
         boCanBeSaved = false;
         if( p_qsErrorMessage->length() ) p_qsErrorMessage->append( "\n\n" );
@@ -434,5 +511,45 @@ bool cDlgPatientCardEdit::_checkCardJustForSave( QString *p_qsErrorMessage )
     }
 
     return boCanBeSaved;
+}
+//-----------------------------------------------------------------------------------------------------------
+void cDlgPatientCardEdit::on_pbRFID_clicked()
+//-----------------------------------------------------------------------------------------------------------
+{
+    m_nTimerCounter = 0;
+    m_nTimer = startTimer( 500 );
+    m_dlgProgress->showInformation( tr( "Please read your RFID card!" ) );
+}
+//-----------------------------------------------------------------------------------------------------------
+void cDlgPatientCardEdit::on_chkIsRFID_clicked()
+//-----------------------------------------------------------------------------------------------------------
+{
+    if( !chkIsRFID->isChecked() )
+    {
+        chkIsRFID->setEnabled( false );
+        ledRFID->setText( "" );
+    }
+}
+//-----------------------------------------------------------------------------------------------------------
+void cDlgPatientCardEdit::on_pbAddUnits_clicked()
+//-----------------------------------------------------------------------------------------------------------
+{
+    cDlgAddUnits    obDlgAddUnits( this, m_poPatientCard );
+
+    obDlgAddUnits.exec();
+
+    m_poPatientCard->synchronizeUnits();
+    lblUnitInfo->setText( g_obGen.getPatientCardInformationString( m_poPatientCard->barcode() ) );
+}
+//-----------------------------------------------------------------------------------------------------------
+void cDlgPatientCardEdit::on_pbRemoveUnits_clicked()
+//-----------------------------------------------------------------------------------------------------------
+{
+    cDlgRemoveUnits    obDlgRemoveUnits( this, m_poPatientCard );
+
+    obDlgRemoveUnits.exec();
+
+    m_poPatientCard->synchronizeUnits();
+    lblUnitInfo->setText( g_obGen.getPatientCardInformationString( m_poPatientCard->barcode() ) );
 }
 //-----------------------------------------------------------------------------------------------------------

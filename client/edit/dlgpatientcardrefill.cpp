@@ -433,8 +433,16 @@ void cDlgPatientCardRefill::on_pbSell_clicked()
 
             cDBPatientcardUnit  obDBPatientcardUnit;
             QStringList         qslUnitIds;
+            int                 nUnitCount = ledUnits->text().toInt();
 
-            for( int i=0; i<ledUnits->text().toInt(); i++ )
+            // szerviz kartyanak max 9 egyseg
+            if( m_poPatientCardType->id() == 1 )
+            {
+                m_poPatientCard->setServiceCard( true );
+                nUnitCount = 9;
+            }
+
+            for( int i=0; i<nUnitCount; i++ )
             {
                 obDBPatientcardUnit.createNew();
                 obDBPatientcardUnit.setLicenceId( m_poPatientCard->licenceId() );
