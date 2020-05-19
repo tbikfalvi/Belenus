@@ -288,6 +288,7 @@
      <addaction name="separator"/>
      <addaction name="action_DeviceStart"/>
      <addaction name="action_DeviceSkipStatus"/>
+     <addaction name="action_DeviceCool"/>
      <addaction name="action_DeviceReset"/>
      <addaction name="separator"/>
      <addaction name="action_DeviceClear"/>
@@ -430,6 +431,7 @@
    <addaction name="separator"/>
    <addaction name="action_DeviceStart"/>
    <addaction name="action_DeviceSkipStatus"/>
+   <addaction name="action_DeviceCool"/>
    <addaction name="action_DeviceReset"/>
    <addaction name="action_DeviceSettings"/>
   </widget>
@@ -965,6 +967,14 @@
   <action name="action_EditEmails">
    <property name="text">
     <string>Edit emails ...</string>
+   </property>
+  </action>
+  <action name="action_DeviceCool">
+   <property name="text">
+    <string>Cool device</string>
+   </property>
+   <property name="toolTip">
+    <string>Start device cooling</string>
    </property>
   </action>
  </widget>

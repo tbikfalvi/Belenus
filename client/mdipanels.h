@@ -28,6 +28,7 @@ public:
     void            clear();
     void            next();
     void            clean();
+    void            cool();
     bool            isNeedToBeCleaned();
     int             activePanel();
     unsigned int    activePanelId();
@@ -36,6 +37,7 @@ public:
     bool            isStatusCanBeSkipped( const unsigned int p_uiPanel );
     bool            isStatusCanBeStopped( const unsigned int p_uiPanel );
     bool            isStatusCanBeReseted();
+    bool            isDeviceHasCoolingProcess();
     void            reload();
     void            refreshDisplay();
     void            setTextInformation( QString p_qsInfoText );
