@@ -175,6 +175,7 @@ private slots:
     void on_action_Cassa_triggered();
     void on_action_Accounting_triggered();
     void on_action_DeviceSkipStatus_triggered();
+    void on_action_DeviceCool_triggered();
     void on_action_ValidateSerialKey_triggered();
     void on_action_PatientCardSell_triggered();
     void on_action_PatientCardAssign_triggered();

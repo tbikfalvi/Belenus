@@ -150,12 +150,13 @@ cFrmPanel::cFrmPanel( const unsigned int p_uiPanelId ) : QFrame()
     m_uiPaymentMethodId     = 0;
     m_uiShoppingCartItemId  = 0;
 
-    m_bIsItemInShoppingCart = false;
-    m_bIsPatientWaiting     = false;
-    m_bIsNeedToBeCleaned    = false;
-    m_bIsDeviceStopped      = false;
-    m_bIsTubeReplaceNeeded  = false;
-    m_bIsTubeCleanupNeeded  = false;
+    m_bIsItemInShoppingCart     = false;
+    m_bIsPatientWaiting         = false;
+    m_bIsNeedToBeCleaned        = false;
+    m_bIsDeviceStopped          = false;
+    m_bIsTubeReplaceNeeded      = false;
+    m_bIsTubeCleanupNeeded      = false;
+    m_bDeviceHasCoolingProcess  = false;
 
     m_qsCashToPay               = "";
     m_qsTransactionId           = "";
@@ -217,6 +218,11 @@ bool cFrmPanel::isStatusCanBeReseted()
     }
 
     return bRet;
+}
+//====================================================================================
+bool cFrmPanel::isDeviceHasCoolingProcess()
+{
+    return m_bDeviceHasCoolingProcess;
 }
 //====================================================================================
 void cFrmPanel::start()
@@ -406,11 +412,33 @@ void cFrmPanel::next()
 }
 //====================================================================================
 void cFrmPanel::clean()
-//====================================================================================
 {
     m_bIsNeedToBeCleaned = false;
     displayStatus();
     g_poPrefs->setPanelSterile( m_uiId, true );
+}
+//====================================================================================
+void cFrmPanel::cool()
+{
+    if( m_uiStatus == 0 )
+    {
+        for( int i=0; i<m_obStatuses.size(); i++ )
+        {
+            if( m_obStatuses.at( i )->activateCommand() == STATUS_UTOHUTES )
+            {
+                m_uiStatus = i-1;
+                break;
+            }
+        }
+        if( m_uiStatus )
+        {
+            m_bIsDeviceStopped = false;
+            icoPanelStart->setVisible( false );
+            activateNextStatus();
+            g_obLogger(cSeverity::INFO) << "Cooling process started by user [" << m_uiStatus << "] [" << m_uiCounter << "]" << m_uiLedgerId << EOM;
+            m_inTimerId = startTimer( 1000 );
+        }
+    }
 }
 //====================================================================================
 void cFrmPanel::inactivate()
@@ -732,6 +760,7 @@ void cFrmPanel::load( const unsigned int p_uiPanelId )
         poQuery = NULL;
 
         m_uiProcessWaitTime = 0;
+        m_bDeviceHasCoolingProcess = false;
         m_obStatuses.clear();
         m_obStatusSettings.clear();
         poQuery = g_poDB->executeQTQuery( QString( "SELECT panelStatusId, length, panelTypeId, seqNumber from panelStatuses WHERE panelTypeId=%1 ORDER BY seqNumber" ).arg( m_uiType ) );
@@ -743,6 +772,11 @@ void cFrmPanel::load( const unsigned int p_uiPanelId )
             cDBPanelStatuses  *poStatus = new cDBPanelStatuses();
             poStatus->load( uiStatusId );
             m_obStatuses.push_back( poStatus );
+
+            if( poStatus->activateCommand() == STATUS_UTOHUTES )
+            {
+                m_bDeviceHasCoolingProcess = true;
+            }
 
             cDBPanelStatusSettings  *poStatusSettings = new cDBPanelStatusSettings();
             poStatusSettings->loadStatus( poStatus->id() );
