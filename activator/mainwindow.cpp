@@ -234,9 +234,9 @@ MainWindow::MainWindow(QWidget *parent) : QMainWindow(parent), ui(new Ui::MainWi
                                      << "BLNS93"    //
                                      << "BLNS94"    //
                                      << "BLNS95"    //
-//                                     << "BLNS96"    //
-//                                     << "BLNS97""    //
-//                                     << "BLNS98""    //
+                                     << "BLNS96"    //
+                                     << "BLNS97"    //
+                                     << "BLNS98"    //
                                      << "BLNS99";    //
 
     // These are the random values
