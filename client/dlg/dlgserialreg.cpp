@@ -57,6 +57,9 @@ cDlgSerialReg::cDlgSerialReg( QWidget *p_poParent ) : QDialog( p_poParent )
         deLastValidated->setEnabled( false );
         pbValidateApplication->setEnabled( false );
     }
+
+    gbActivation->setEnabled( false );
+    gbActivation->setVisible( false );
 }
 
 cDlgSerialReg::~cDlgSerialReg()
@@ -79,12 +82,14 @@ void cDlgSerialReg::on_pbChangeKey_clicked()
 
 void cDlgSerialReg::on_pbActivateKey_clicked()
 {
+    g_obLogger(cSeverity::INFO) << "Licence (ledSerialKey): " << ledSerialKey->text() << EOM;
     int nRet = g_obLicenceManager.activateLicence( ledSerialKey->text(), m_bChangeLicenceKey );
 
     switch( nRet )
     {
         case cLicenceManager::ERR_NO_ERROR:
             g_obLicenceManager.initialize();
+/*
             QMessageBox::information( this, tr("Information"),
                                       tr("Your licence key has been verified successfully.\n"
                                          "Please send the 'Activation code' to the\n"
@@ -96,8 +101,14 @@ void cDlgSerialReg::on_pbActivateKey_clicked()
             ledCodeActivation->selectAll();
             ledCodeValidation->setEnabled( true );
             pbValidateCode->setEnabled( true );
+*/
+            QMessageBox::information( this, tr("Information"),
+                                      tr("Your licence key has been verified successfully.\n"
+                                         "Please set the validation date and\n"
+                                         "click on the 'Validate' button.") );
             lblValidDays->setText( QString::number( g_obLicenceManager.daysRemain() ) );
             deLastValidated->setDate( QDate::fromString( g_obLicenceManager.lastValidated(), "yyyy-MM-dd" ) );
+            deLastValidated->setFocus();
             break;
 
         case cLicenceManager::ERR_KEY_FORMAT_MISMATCH:

@@ -139,6 +139,28 @@ MainWindow::MainWindow(QWidget *parent) : QMainWindow(parent), ui(new Ui::MainWi
                                      << "OZSHY@"  // BLNS98_DQXCRK <- BLNS98_363278
                                      << "LDJH@^";  // BLNS99_GOACKU <- BLNS99_649200
 
+    m_qslLicenceKeys1 = QStringList()<< "THG^AG"  // BLNL00_CLUJLA <- BLNL00_210919
+                                     << "TA@SIZ"  // BLNL01_JKXBQU <- BLNL01_903160
+                                     << "THX@L_"  // BLNL02_CSKGTX <- BLNL02_288693
+                                     << "THZSAZ"  // BLNL03_CQXJQU <- BLNL03_263960
+                                     << "TMX_IZ"  // BLNL04_FSTBQJ <- BLNL04_587166
+                                     << "TI_QHF"  // BLNL05_BTZCMJ <- BLNL05_195226
+                                     << "TIE@LF"  // BLNL06_BNKGMK <- BLNL06_138628
+                                     << "THEJHE"  // BLNL07_CNACNJ <- BLNL07_239236
+                                     << "TLXDH@"  // BLNL08_GSOCKV <- BLNL08_682201
+                                     << "TOFDH["  // BLNL09_DMOCPJ <- BLNL09_322256
+                                     << "TC@SMF"  // BLNL10_HKXFMU <- BLNL10_703520
+                                     << "TB[@M_"  // BLNL11_IPKFTK <- BLNL11_858598
+                                     << "TAFQMZ"  // BLNL12_JMZFQU <- BLNL12_925560
+                                     << "TC[@MX"  // BLNL13_HPKFSZ <- BLNL13_758585
+                                     << "TBD_N@"  // BLNL14_IOTEKU <- BLNL14_847400
+                                     << "TOX]B_"  // BLNL15_DSVITJ <- BLNL15_381896
+                                     << "TO_DB_"  // BLNL16_DTOITO <- BLNL16_392892
+                                     << "TA_RBG"  // BLNL17_JTYILU <- BLNL17_994810
+                                     << "TO@]O_"  // BLNL18_DKVDTY <- BLNL18_301394
+                                     << "THZJBX"  // BLNL19_CQAISU <- BLNL19_269880
+                                     << "TH[_A@"; // BLNL20_CPTJKU <- BLNL20_257900
+
     m_qslActiveKeys = QStringList()  << "BLNS01"    // Budapest             Szt. Istvan korut
                                      << "BLNS02"    // London               Beckhanem
                                      << "BLNS03"    // London               Sheenlane
@@ -234,10 +256,31 @@ MainWindow::MainWindow(QWidget *parent) : QMainWindow(parent), ui(new Ui::MainWi
                                      << "BLNS93"    //
                                      << "BLNS94"    //
                                      << "BLNS95"    //
-//                                     << "BLNS96"    //
-//                                     << "BLNS97""    //
-//                                     << "BLNS98""    //
-                                     << "BLNS99";    //
+                                     << "BLNS96"    //
+                                     << "BLNS97"    //
+                                     << "BLNS98"    //
+                                     << "BLNS99"    //
+                                     << "BLNL00"
+                                     << "BLNL01"
+                                     << "BLNL02"
+                                     << "BLNL03"
+                                     << "BLNL04"
+                                     << "BLNL05"
+                                     << "BLNL06"
+                                     << "BLNL07"
+                                     << "BLNL08"
+                                     << "BLNL09"
+                                     << "BLNL10"
+                                     << "BLNL11"
+                                     << "BLNL12"
+                                     << "BLNL13"
+                                     << "BLNL14"
+                                     << "BLNL15"
+                                     << "BLNL16"
+                                     << "BLNL17"
+                                     << "BLNL18"
+                                     << "BLNL19"
+                                     << "BLNL20";
 
     // These are the random values
     m_qslLicenceCodes = QStringList()<< "358194"
@@ -338,7 +381,28 @@ MainWindow::MainWindow(QWidget *parent) : QMainWindow(parent), ui(new Ui::MainWi
                                      << "973675"
                                      << "584382"
                                      << "363278"
-                                     << "649200";
+                                     << "649200"   // 99
+                                     << "210919"
+                                     << "903160"
+                                     << "288693"
+                                     << "263960"
+                                     << "587166"
+                                     << "195226"
+                                     << "138628"
+                                     << "239236"
+                                     << "682201"
+                                     << "322256"
+                                     << "703520"
+                                     << "858598"
+                                     << "925560"
+                                     << "758585"
+                                     << "847400"
+                                     << "381896"
+                                     << "392892"
+                                     << "994810"
+                                     << "301394"
+                                     << "269880"
+                                     << "257900";
 
 //    _fillLicenceTree();
 

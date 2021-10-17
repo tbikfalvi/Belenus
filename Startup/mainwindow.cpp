@@ -578,6 +578,7 @@ void MainWindow::_updateEnvironmentVariables()
 
     qsProcess = QString( "c:/windows/system32/setx.exe BelenusStartup \"%1\" " ).arg( ui->ledDirectoryStartup->text() );
 
+    _logProcess( "Set BelenusStartup variable" );
     if( !qpProcess->startDetached( qsProcess ) )
     {
         QMessageBox::warning( this, tr("Warning"),
@@ -594,6 +595,7 @@ void MainWindow::_updateEnvironmentVariables()
 
     qsProcess = QString( "c:/windows/system32/setx.exe BelenusTarget \"%1\" " ).arg( ui->ledDirectoryTarget->text() );
 
+    _logProcess( "Set BelenusTarget variable" );
     if( !qpProcess->startDetached( qsProcess ) )
     {
         QMessageBox::warning( this, tr("Warning"),
@@ -610,6 +612,7 @@ void MainWindow::_updateEnvironmentVariables()
 
     qsProcess = QString( "c:/windows/system32/setx.exe BelenusResource \"%1\" " ).arg( ui->ledDirectoryResource->toolTip() );
 
+    _logProcess( "Set BelenusResource variable" );
     if( !qpProcess->startDetached( qsProcess ) )
     {
         QMessageBox::warning( this, tr("Warning"),
@@ -626,6 +629,7 @@ void MainWindow::_updateEnvironmentVariables()
 
     qsProcess = QString( "c:/windows/system32/setx.exe BelenusBackup \"%1\" " ).arg( ui->ledDirectoryBackup->toolTip() );
 
+    _logProcess( "Set BelenusBackup variable" );
     if( !qpProcess->startDetached( qsProcess ) )
     {
         QMessageBox::warning( this, tr("Warning"),
@@ -642,6 +646,7 @@ void MainWindow::_updateEnvironmentVariables()
 
     delete qpProcess;
 
+    _logProcess( "Set parameters in registry" );
     QSettings obPref( "HKEY_LOCAL_MACHINE\\System\\CurrentControlSet\\Control\\Session Manager\\Environment",
                       QSettings::NativeFormat );
 
@@ -650,7 +655,8 @@ void MainWindow::_updateEnvironmentVariables()
     obPref.setValue( "BelenusResource", ui->ledDirectoryResource->toolTip() );
     obPref.setValue( "BelenusBackup", ui->ledDirectoryBackup->toolTip() );
 
-    SendMessage( HWND_BROADCAST, WM_SETTINGCHANGE, 0, (LPARAM)L"Environment" );
+//    _logProcess( "Send broadcast message WM_SETTINGCHANGE" );
+//    SendMessage( HWND_BROADCAST, WM_SETTINGCHANGE, 0, (LPARAM)L"Environment" );
 }
 //=================================================================================================
 // _createPaths

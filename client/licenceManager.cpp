@@ -141,7 +141,29 @@ cLicenceManager::cLicenceManager()
                                      << "AYSLYQ"  // BLNS96_JRXGRZ <- BLNS96_973675
                                      << "MXROXD"  // BLNS97_FSYDSO <- BLNS97_584382
                                      << "OZSHY@"  // BLNS98_DQXCRK <- BLNS98_363278
-                                     << "LDJH@^";  // BLNS99_GOACKU <- BLNS99_649200
+                                     << "LDJH@^"; // BLNS99_GOACKU <- BLNS99_649200
+
+
+    m_qslLicenceKeys1 = QStringList()<< "A@SIZ^"  // BLNL01_JKXBQU <- BLNL01_903160
+                                     << "HX@L_S"  // BLNL02_CSKGTX <- BLNL02_288693
+                                     << "HZSAZ^"  // BLNL03_CQXJQU <- BLNL03_263960
+                                     << "MX_IZA"  // BLNL04_FSTBQJ <- BLNL04_587166
+                                     << "I_QHFA"  // BLNL05_BTZCMJ <- BLNL05_195226
+                                     << "IE@LF@"  // BLNL06_BNKGMK <- BLNL06_138628
+                                     << "HEJHEA"  // BLNL07_CNACNJ <- BLNL07_239236
+                                     << "LXDH@]"  // BLNL08_GSOCKV <- BLNL08_682201
+                                     << "OFDH[A"  // BLNL09_DMOCPJ <- BLNL09_322256
+                                     << "C@SMF^"  // BLNL10_HKXFMU <- BLNL10_703520
+                                     << "B[@M_@"  // BLNL11_IPKFTK <- BLNL11_858598
+                                     << "AFQMZ^"  // BLNL12_JMZFQU <- BLNL12_925560
+                                     << "C[@MXQ"  // BLNL13_HPKFSZ <- BLNL13_758585
+                                     << "BD_N@^"  // BLNL14_IOTEKU <- BLNL14_847400
+                                     << "OX]B_A"  // BLNL15_DSVITJ <- BLNL15_381896
+                                     << "O_DB_D"  // BLNL16_DTOITO <- BLNL16_392892
+                                     << "A_RBG^"  // BLNL17_JTYILU <- BLNL17_994810
+                                     << "O@]O_R"  // BLNL18_DKVDTY <- BLNL18_301394
+                                     << "HZJBX^"  // BLNL19_CQAISU <- BLNL19_269880
+                                     << "H[_A@^";  // BLNL20_CPTJKU <- BLNL20_257900
 
     // These are the random values
     m_qslLicenceCodes = QStringList()<< "358194"
@@ -243,6 +265,27 @@ cLicenceManager::cLicenceManager()
                                      << "584382"
                                      << "363278"
                                      << "649200";
+
+    m_qslLicenceCodes1 =QStringList()<< "903160"
+                                     << "288693"
+                                     << "263960"
+                                     << "587166"
+                                     << "195226"
+                                     << "138628"
+                                     << "239236"
+                                     << "682201"
+                                     << "322256"
+                                     << "703520"
+                                     << "858598"
+                                     << "925560"
+                                     << "758585"
+                                     << "847400"
+                                     << "381896"
+                                     << "392892"
+                                     << "994810"
+                                     << "301394"
+                                     << "269880"
+                                     << "257900";
 
     m_nLicenceId        = 0;
     m_qsLicenceString   = "";
@@ -357,15 +400,18 @@ void cLicenceManager::validateApplication( QString p_qsDate )
 
 int cLicenceManager::activateLicence(const QString &p_qsLicenceString , bool p_bChangeLicence )
 {
+    g_obLogger(cSeverity::INFO) << "Activating licence: " << p_qsLicenceString << EOM;
     int nRet = ERR_NO_ERROR;
 
+    g_obLogger(cSeverity::DEBUG) << "Checking licence length" << EOM;
     if( p_qsLicenceString.length() != 13 )
     {
-        g_obLogger(cSeverity::INFO) << "Licence length: " << p_qsLicenceString.length() << EOM;
+        g_obLogger(cSeverity::INFO) << "Licence - " << p_qsLicenceString << " - length: " << p_qsLicenceString.length() << EOM;
         return ERR_KEY_FORMAT_MISMATCH;
     }
 
-    if( p_qsLicenceString.left(4).toUpper().compare("BLNS") ||
+    g_obLogger(cSeverity::DEBUG) << "Checking licence format" << EOM;
+    if( (p_qsLicenceString.left(4).toUpper().compare("BLNS") && p_qsLicenceString.left(4).toUpper().compare("BLNL")) ||
         !p_qsLicenceString.at(4).isDigit() ||
         !p_qsLicenceString.at(5).isDigit() ||
         p_qsLicenceString.at(6) != QChar('_') )
@@ -377,23 +423,50 @@ int cLicenceManager::activateLicence(const QString &p_qsLicenceString , bool p_b
         return ERR_KEY_FORMAT_MISMATCH;
     }
 
+    g_obLogger(cSeverity::DEBUG) << "Encoding last 6 character" << EOM;
     char    strLicenceRandomCode[7];
 
     strLicenceRandomCode[6] = 0;
     strncpy( strLicenceRandomCode, p_qsLicenceString.right(6).toStdString().c_str(), 6 );
     _EnCode( strLicenceRandomCode, 6 );
 
+    g_obLogger(cSeverity::DEBUG) << "Encoded string: " << strLicenceRandomCode << EOM;
+
     int     nLicenceNumber = p_qsLicenceString.mid( 4, 2 ).toInt();
 
-    if( nLicenceNumber < 1 || nLicenceNumber > LICENCE_MAX_NUMBER )
-    {
-        g_obLogger(cSeverity::INFO) << "Licence order number is: " << nLicenceNumber << EOM;
-        return ERR_KEY_NUMBER_INCORRECT;
-    }
+    g_obLogger(cSeverity::DEBUG) << "Licence number: " << nLicenceNumber << EOM;
 
-    if( m_qslLicenceKeys.at( nLicenceNumber-1 ).compare( QString( strLicenceRandomCode ) ) != 0 )
+    if( p_qsLicenceString.left(4).toUpper().compare("BLNS") == 0 )
+    // Elso szaz liszensz kod
     {
-        return ERR_KEY_NOT_EXISTS;
+        g_obLogger(cSeverity::DEBUG) << "First licence pack" << EOM;
+
+        if( nLicenceNumber < 1 || nLicenceNumber > LICENCE_MAX_NUMBER )
+        {
+            g_obLogger(cSeverity::INFO) << "BLNS Licence order number is: " << nLicenceNumber << EOM;
+            return ERR_KEY_NUMBER_INCORRECT;
+        }
+
+        if( m_qslLicenceKeys.at( nLicenceNumber-1 ).compare( QString( strLicenceRandomCode ) ) != 0 )
+        {
+            return ERR_KEY_NOT_EXISTS;
+        }
+    }
+    else if( p_qsLicenceString.left(4).toUpper().compare("BLNL") == 0 )
+    // Uj BLNL liszensz kodok
+    {
+        g_obLogger(cSeverity::DEBUG) << "Second licence pack" << EOM;
+
+        if( nLicenceNumber < 1 || nLicenceNumber > LICENCE_MAX_NUMBER1 )
+        {
+            g_obLogger(cSeverity::INFO) << "BLNL Licence order number is: " << nLicenceNumber << EOM;
+            return ERR_KEY_NUMBER_INCORRECT;
+        }
+
+        if( m_qslLicenceKeys1.at( nLicenceNumber-1 ).compare( QString( strLicenceRandomCode ) ) != 0 )
+        {
+            return ERR_KEY_NOT_EXISTS;
+        }
     }
 
     if( nRet == ERR_NO_ERROR && m_qsLicenceString.compare( p_qsLicenceString ) != 0 )
@@ -558,6 +631,11 @@ void cLicenceManager::_checkCode()
 
 void cLicenceManager::_checkValidity()
 {
+    m_LicenceType = LTYPE_ACTIVATED;
+
+//-----------------------------------------------------------------------------------------------------------------------------------
+// itt kezdődik az eredeti rész
+/*
     m_nLicenceOrderNumber = m_qsLicenceString.mid( 4, 2 ).toInt();
 
     if( m_nLicenceOrderNumber < 1 || m_nLicenceOrderNumber > LICENCE_MAX_NUMBER )
@@ -608,6 +686,7 @@ void cLicenceManager::_checkValidity()
             }
         }
     }
+*/
 }
 
 void cLicenceManager::_EnCode( char *str, int size )
@@ -626,8 +705,11 @@ void cLicenceManager::_DeCode( char *str, int size )
    }
 }
 
-QString cLicenceManager::createLicenceKey( QString qsNumber )
+QString cLicenceManager::createLicenceKey( QString /*qsNumber*/ )
 {
+    return "nem mukodik";
+// ez új liszensz kódokat állít elő, nem lesz rá szükség
+/*
     if( m_qslLicenceCodes.contains( qsNumber ) )
     {
         return "Already entered";
@@ -672,6 +754,7 @@ QString cLicenceManager::createLicenceKey( QString qsNumber )
     qsLK += QString("<< \"%1\"  // %2 <- BLNS%3_%4 ").arg(qsCodedKey.mid(7,6)).arg(qsKey).arg(j+1).arg(qsNumber);
 
     return qsLK;
+*/
 }
 
 void cLicenceManager::refreshValidationDates()

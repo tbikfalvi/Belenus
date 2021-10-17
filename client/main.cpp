@@ -13,8 +13,8 @@
 // Alkalmazas fo allomanya.
 //====================================================================================
 
-#define APPLICATION_VERSION_NUMBER  "1.9.0.0"
-#define DATABASE_VERSION_NUMBER     "1.9.0.0"
+#define APPLICATION_VERSION_NUMBER  "1.9.0.1"
+#define DATABASE_VERSION_NUMBER     "1.9.0.1"
 
 //====================================================================================
 
@@ -178,7 +178,8 @@ int main( int argc, char *argv[] )
             return 0;
         }
 
-        QSqlQuery *poQuery = g_poDB->executeQTQuery( QString( "SELECT * FROM licences" ) );
+// ennek itt nincs értelme
+//        QSqlQuery *poQuery = g_poDB->executeQTQuery( QString( "SELECT * FROM licences" ) );
 
         qsSpalsh += "\n";
         obSplash.showMessage(qsSpalsh,Qt::AlignLeft,QColor(59,44, 75));
@@ -191,7 +192,7 @@ int main( int argc, char *argv[] )
         int         nId = 0;
         QString     qsSerial = QObject::tr("NO_SERIAL_DETECTED");
 
-        poQuery = g_poDB->executeQTQuery( QString( "SELECT * FROM licences" ) );
+        QSqlQuery *poQuery = g_poDB->executeQTQuery( QString( "SELECT * FROM licences" ) );
         if( poQuery->last() )
         {
             nId = poQuery->value( 0 ).toInt();
