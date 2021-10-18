@@ -1341,7 +1341,7 @@ void cWndMain::updateToolbar()
             action_EditLicenceInformation->setEnabled( bIsUserLoggedIn );
             action_EmptyDemoDB->setEnabled( bIsUserLoggedIn );
             action_ManageDevicePanels->setEnabled( !mdiPanels->isPanelWorking() );
-            action_Advertisements->setEnabled( bIsUserLoggedIn && g_obUser.isInGroup(cAccessGroup::ADMIN) );
+            action_Advertisements->setEnabled( bIsUserLoggedIn /*&& g_obUser.isInGroup(cAccessGroup::ADMIN)*/ );
             action_DistributionLists->setEnabled( bIsUserLoggedIn && g_obUser.isInGroup(cAccessGroup::SYSTEM) );
             action_EditEmails->setEnabled( bIsUserLoggedIn && g_obUser.isInGroup(cAccessGroup::ADMIN) );
         action_Preferences->setEnabled( bIsUserLoggedIn );
