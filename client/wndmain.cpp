@@ -264,6 +264,7 @@ cWndMain::cWndMain( QWidget *parent ) : QMainWindow( parent )
     action_Guests->setIcon( QIcon("./resources/40x40_patient.png") );
     action_CardTypes->setIcon( QIcon( "./resources/40x40_patientcardtype.png" ) );
     action_Cards->setIcon( QIcon( "./resources/40x40_patientcards.png" ) );
+    action_Advertisements->setIcon( QIcon( "./resources/40x40_advertisement.png" ) );
     menuAdministrator->setIcon( QIcon("./resources/40x40_key.png") );
         action_Users->setIcon( QIcon("./resources/40x40_user.png") );
         action_Company->setIcon( QIcon("./resources/40x40_company.png") );
@@ -275,7 +276,6 @@ cWndMain::cWndMain( QWidget *parent ) : QMainWindow( parent )
         action_PanelStatuses->setIcon( QIcon( "./resources/40x40_device_settings.png" ) );
         action_ValidateSerialKey->setIcon( QIcon( "./resources/40x40_key.png" ) );
         action_ManageDatabase->setIcon( QIcon( "./resources/40x40_connect_db.png" ) );
-        action_Advertisements->setIcon( QIcon( "./resources/40x40_advertisement.png" ) );
         action_DistributionLists->setIcon( QIcon( "./resources/40x40_distlist.png" ) );
         action_EditEmails->setIcon( QIcon( "./resources/40x40_draftmail.png" ) );
     action_Preferences->setIcon( QIcon("./resources/40x40_settings.png") );
@@ -1323,6 +1323,7 @@ void cWndMain::updateToolbar()
         action_Guests->setEnabled( bIsUserLoggedIn );
         action_CardTypes->setEnabled( bIsUserLoggedIn );
         action_Cards->setEnabled( bIsUserLoggedIn );
+        action_Advertisements->setEnabled( bIsUserLoggedIn /*&& g_obUser.isInGroup(cAccessGroup::ADMIN)*/ );
         menuAdministrator->setEnabled( bIsUserLoggedIn && g_obUser.isInGroup(cAccessGroup::ADMIN) );
             action_Users->setEnabled( bIsUserLoggedIn );
             action_Company->setEnabled( bIsUserLoggedIn && g_poPrefs->isComponentKiwiSunInstalled() );
@@ -1341,7 +1342,6 @@ void cWndMain::updateToolbar()
             action_EditLicenceInformation->setEnabled( bIsUserLoggedIn );
             action_EmptyDemoDB->setEnabled( bIsUserLoggedIn );
             action_ManageDevicePanels->setEnabled( !mdiPanels->isPanelWorking() );
-            action_Advertisements->setEnabled( bIsUserLoggedIn /*&& g_obUser.isInGroup(cAccessGroup::ADMIN)*/ );
             action_DistributionLists->setEnabled( bIsUserLoggedIn && g_obUser.isInGroup(cAccessGroup::SYSTEM) );
             action_EditEmails->setEnabled( bIsUserLoggedIn && g_obUser.isInGroup(cAccessGroup::ADMIN) );
         action_Preferences->setEnabled( bIsUserLoggedIn );

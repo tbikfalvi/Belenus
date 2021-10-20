@@ -248,8 +248,6 @@
      <addaction name="separator"/>
      <addaction name="action_PaymentMethods"/>
      <addaction name="separator"/>
-     <addaction name="action_Advertisements"/>
-     <addaction name="separator"/>
      <addaction name="action_DistributionLists"/>
      <addaction name="action_EditEmails"/>
      <addaction name="separator"/>
@@ -261,6 +259,8 @@
     </widget>
     <addaction name="action_Patients"/>
     <addaction name="action_Guests"/>
+    <addaction name="separator"/>
+    <addaction name="action_Advertisements"/>
     <addaction name="separator"/>
     <addaction name="menuAdministrator"/>
    </widget>
