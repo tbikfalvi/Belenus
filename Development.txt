@@ -148,7 +148,12 @@ Version 1.9.0.0
 - DBBackup-al nem lehetett vegrehajtani sql file-t
 - Belenus-ban ha vendeget akarunk torolni, a program a kapcsolt berleteket levalasztja es inaktivalja a vendeget
 
-Version 1.9.1.0
+Version 1.9.0.1
 ===============
 - Kulon gomb a hutes indtitasara
+- Reklam ablakot kezelo is tud manage-elni
+
+Version 2.0.0.0
+===============
+- Liszensz lekerdezes webszerverrol
 
