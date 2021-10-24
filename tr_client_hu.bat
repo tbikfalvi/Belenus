@@ -3,11 +3,11 @@ echo.
 cd client
 echo.
 echo Update language files
-C:\DevEnv\Qt\4.8.6\bin\lupdate belenus.pro
+C:\DevEnv\Qt\Qt4.8.6\bin\lupdate belenus.pro
 echo.
 echo Translate language file to HUN
 echo.
-C:\DevEnv\Qt\4.8.6\bin\linguist belenus_hu.ts
+C:\DevEnv\Qt\Qt4.8.6\bin\linguist belenus_hu.ts
 REM echo Translate language file to HUN
 REM C:\DevEnv\Qt\4.8.6\bin\linguist belenus_it.ts
 echo.

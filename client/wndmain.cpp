@@ -235,6 +235,7 @@ cWndMain::cWndMain( QWidget *parent ) : QMainWindow( parent )
 
     action_DeviceStart->setIcon( QIcon( "./resources/40x40_device_start.png" ) );
     action_DeviceSkipStatus->setIcon( QIcon( "./resources/40x40_device_next.png" ) );
+    action_DeviceCool->setIcon( QIcon( "./resources/40x40_device_cool.png" ) );
     action_DeviceReset->setIcon( QIcon( "./resources/40x40_stop.png" ) );
 
     action_DeviceSettings->setIcon( QIcon( "./resources/40x40_device_settings.png" ) );
@@ -263,6 +264,7 @@ cWndMain::cWndMain( QWidget *parent ) : QMainWindow( parent )
     action_Guests->setIcon( QIcon("./resources/40x40_patient.png") );
     action_CardTypes->setIcon( QIcon( "./resources/40x40_patientcardtype.png" ) );
     action_Cards->setIcon( QIcon( "./resources/40x40_patientcards.png" ) );
+    action_Advertisements->setIcon( QIcon( "./resources/40x40_advertisement.png" ) );
     menuAdministrator->setIcon( QIcon("./resources/40x40_key.png") );
         action_Users->setIcon( QIcon("./resources/40x40_user.png") );
         action_Company->setIcon( QIcon("./resources/40x40_company.png") );
@@ -274,7 +276,6 @@ cWndMain::cWndMain( QWidget *parent ) : QMainWindow( parent )
         action_PanelStatuses->setIcon( QIcon( "./resources/40x40_device_settings.png" ) );
         action_ValidateSerialKey->setIcon( QIcon( "./resources/40x40_key.png" ) );
         action_ManageDatabase->setIcon( QIcon( "./resources/40x40_connect_db.png" ) );
-        action_Advertisements->setIcon( QIcon( "./resources/40x40_advertisement.png" ) );
         action_DistributionLists->setIcon( QIcon( "./resources/40x40_distlist.png" ) );
         action_EditEmails->setIcon( QIcon( "./resources/40x40_draftmail.png" ) );
     action_Preferences->setIcon( QIcon("./resources/40x40_settings.png") );
@@ -330,6 +331,7 @@ cWndMain::cWndMain( QWidget *parent ) : QMainWindow( parent )
     action_DeviceClear->setEnabled( false );
     action_DeviceStart->setEnabled( false );
     action_DeviceSkipStatus->setEnabled( false );
+    action_DeviceCool->setEnabled( false );
     action_DeviceReset->setEnabled( false );
     action_DeviceSettings->setEnabled( false );
 
@@ -1030,7 +1032,7 @@ void cWndMain::keyPressEvent( QKeyEvent *p_poEvent )
     if( p_poEvent->key() == Qt::Key_Control )
     {
         m_bCtrlPressed = true;
-        _setStatusText( tr("Q -> Exit application | F -> pay device usage | S -> start device | N -> skip status | T -> device cleared | K -> open shopping kart") );
+        _setStatusText( tr("Q -> Exit application | F -> pay device usage | S -> start device | N -> skip status | H -> start cooling | T -> device cleared | K -> open shopping kart") );
     }
 
     if( m_bCtrlPressed )
@@ -1081,6 +1083,14 @@ void cWndMain::keyPressEvent( QKeyEvent *p_poEvent )
             _setStatusText( m_qsStatusText );
             on_KeyboardDisabled();
             on_action_DeviceSkipStatus_triggered();
+        }
+        else if( p_poEvent->key() == Qt::Key_H && action_DeviceCool->isEnabled() )
+        {
+            g_obLogger(cSeverity::INFO) << "User pressed CTRL + H" << EOM;
+            m_bCtrlPressed = false;
+            _setStatusText( m_qsStatusText );
+            on_KeyboardDisabled();
+            on_action_DeviceCool_triggered();
         }
         else if( p_poEvent->key() == Qt::Key_F12 )
         {
@@ -1313,6 +1323,7 @@ void cWndMain::updateToolbar()
         action_Guests->setEnabled( bIsUserLoggedIn );
         action_CardTypes->setEnabled( bIsUserLoggedIn );
         action_Cards->setEnabled( bIsUserLoggedIn );
+        action_Advertisements->setEnabled( bIsUserLoggedIn /*&& g_obUser.isInGroup(cAccessGroup::ADMIN)*/ );
         menuAdministrator->setEnabled( bIsUserLoggedIn && g_obUser.isInGroup(cAccessGroup::ADMIN) );
             action_Users->setEnabled( bIsUserLoggedIn );
             action_Company->setEnabled( bIsUserLoggedIn && g_poPrefs->isComponentKiwiSunInstalled() );
@@ -1331,7 +1342,6 @@ void cWndMain::updateToolbar()
             action_EditLicenceInformation->setEnabled( bIsUserLoggedIn );
             action_EmptyDemoDB->setEnabled( bIsUserLoggedIn );
             action_ManageDevicePanels->setEnabled( !mdiPanels->isPanelWorking() );
-            action_Advertisements->setEnabled( bIsUserLoggedIn && g_obUser.isInGroup(cAccessGroup::ADMIN) );
             action_DistributionLists->setEnabled( bIsUserLoggedIn && g_obUser.isInGroup(cAccessGroup::SYSTEM) );
             action_EditEmails->setEnabled( bIsUserLoggedIn && g_obUser.isInGroup(cAccessGroup::ADMIN) );
         action_Preferences->setEnabled( bIsUserLoggedIn );
@@ -1343,6 +1353,7 @@ void cWndMain::updateToolbar()
             action_DeviceClear->setEnabled( bIsUserLoggedIn && mdiPanels->isNeedToBeCleaned() );
             action_DeviceStart->setEnabled( bIsUserLoggedIn && ((!mdiPanels->isPanelWorking(mdiPanels->activePanel()) && mdiPanels->mainProcessTime() > 0) || mdiPanels->isDeviceStopped() ) );
             action_DeviceSkipStatus->setEnabled( bIsUserLoggedIn && mdiPanels->isStatusCanBeSkipped(mdiPanels->activePanel()) );
+            action_DeviceCool->setEnabled( bIsUserLoggedIn && (!mdiPanels->isPanelWorking(mdiPanels->activePanel()) || mdiPanels->isDeviceStopped() ) && mdiPanels->isDeviceHasCoolingProcess() );
 //            action_DeviceReset->setEnabled( bIsUserLoggedIn && mdiPanels->isMainProcess() );
             action_DeviceReset->setEnabled( bIsUserLoggedIn && mdiPanels->isStatusCanBeStopped(mdiPanels->activePanel()) );
             action_ManageDatabase->setEnabled( bIsUserLoggedIn && g_obUser.isInGroup(cAccessGroup::ADMIN) && !mdiPanels->isPanelWorking() );
@@ -2533,6 +2544,19 @@ void cWndMain::on_action_DeviceSkipStatus_triggered()
                                QMessageBox::Yes|QMessageBox::No, QMessageBox::No ) == QMessageBox::Yes )
     {
         mdiPanels->next();
+    }
+    on_KeyboardEnabled();
+}
+//====================================================================================
+void cWndMain::on_action_DeviceCool_triggered()
+{
+    cTracer obTrace( "cWndMain::on_action_DeviceSkipStatus_triggered" );
+
+    if( QMessageBox::question( this, tr("Question"),
+                               tr("Do you want to start the device cooling process?"),
+                               QMessageBox::Yes|QMessageBox::No, QMessageBox::No ) == QMessageBox::Yes )
+    {
+        mdiPanels->cool();
     }
     on_KeyboardEnabled();
 }

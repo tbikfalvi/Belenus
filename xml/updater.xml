@@ -1,4 +1,4 @@
-<updater version="1.9.0.0">
+<updater version="1.9.0.1">
 
     <files>
         <file src="%CURRENT_DIR%/package/Update_1_4_5.zip" dst="%DOWNLOAD_DIR%/Update_1_4_5.zip" />
@@ -46,6 +46,7 @@
         <file src="%CURRENT_DIR%/package/Update_1_8_0_1.zip" dst="%DOWNLOAD_DIR%/Update_1_8_0_1.zip" />
         <file src="%CURRENT_DIR%/package/Update_1_8_0_2.zip" dst="%DOWNLOAD_DIR%/Update_1_8_0_2.zip" />
         <file src="%CURRENT_DIR%/package/Update_1_9_0_0.zip" dst="%DOWNLOAD_DIR%/Update_1_9_0_0.zip" />
+        <file src="%CURRENT_DIR%/package/Update_1_9_0_1.zip" dst="%DOWNLOAD_DIR%/Update_1_9_0_1.zip" />
         <file src="%CURRENT_DIR%/lang/updater_hu.qm" dst="%INSTALL_DIR%/lang/updater_hu.qm" />
         <file src="%CURRENT_DIR%/lang/updater_de.qm" dst="%INSTALL_DIR%/lang/updater_de.qm" />
         <file src="%CURRENT_DIR%/lang/qt_hu.qm" dst="%INSTALL_DIR%/lang/qt_hu.qm" />

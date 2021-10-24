@@ -67,11 +67,13 @@ public:
     bool            isStatusCanBeSkipped();
     bool            isStatusCanBeStopped();
     bool            isStatusCanBeReseted();
+    bool            isDeviceHasCoolingProcess();
     void            start();
     void            reset();
     void            clear();
     void            next();
     void            clean();
+    void            cool();
     void            inactivate();
     void            activate();
     void            reload();
@@ -143,6 +145,7 @@ private:
     QString                      m_qsTransactionId;
     int                          m_nMinuteOfPanel;
     int                          m_nForceTimeSendCounter;
+    bool                         m_bDeviceHasCoolingProcess;
 
     QVBoxLayout                 *verticalLayout;
     QLabel                      *lblTitle;

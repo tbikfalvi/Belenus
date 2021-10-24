@@ -1,4 +1,4 @@
-<installer version="1.9.0.0">
+<installer version="1.9.0.1">
 
     <files>
 
@@ -57,6 +57,7 @@
         <file src="%CURRENT_DIR%/resources/40x40_delete.png" dst="%INSTALL_DIR%/resources/40x40_delete.png" />
         <file src="%CURRENT_DIR%/resources/40x40_device.png" dst="%INSTALL_DIR%/resources/40x40_device.png" />
         <file src="%CURRENT_DIR%/resources/40x40_device_clear.png" dst="%INSTALL_DIR%/resources/40x40_device_clear.png" />
+        <file src="%CURRENT_DIR%/resources/40x40_device_cool.png" dst="%INSTALL_DIR%/resources/40x40_device_cool.png" />
         <file src="%CURRENT_DIR%/resources/40x40_device_later.png" dst="%INSTALL_DIR%/resources/40x40_device_later.png" />
         <file src="%CURRENT_DIR%/resources/40x40_device_next.png" dst="%INSTALL_DIR%/resources/40x40_device_next.png" />
         <file src="%CURRENT_DIR%/resources/40x40_device_pause.png" dst="%INSTALL_DIR%/resources/40x40_device_pause.png" />
