@@ -13,10 +13,10 @@ USE `belenus`;
 
 -- -----------------------------------------------------------------------------------
 
-INSERT INTO `licences` (`licenceId`, `serial`, `country`, `region`, `city`, `zip`, `address`, `studio`, `contact`, `lastValidated`, `Act`, `Cod`, `active`, `archive`) VALUES
- ( 0, 'BLNS_SERIAL_GLOBAL', 'Magyarország', 'Budapest', 'Budapest', '', '', 'KiwiSun Franchise', NULL, '2013-10-01', '', '', 1, 'ARC');
-INSERT INTO `licences` (`licenceId`, `serial`, `country`, `region`, `city`, `zip`, `address`, `studio`, `contact`, `lastValidated`, `Act`, `Cod`, `active`, `archive`) VALUES
- ( 1, 'BLNS_SERIAL_DEMO', 'Magyarország', 'Budapest', 'Budapest', '', '', 'KiwiSun Franchise', NULL, '2013-10-01', '', '', 1, 'ARC');
+INSERT INTO `licences` (`licenceId`, `serial`, `country`, `region`, `city`, `zip`, `address`, `studio`, `contact`, `lastValidated`, `type`, `Act`, `Cod`, `active`, `archive`) VALUES
+ ( 0, 'BLNS_SERIAL_GLOBAL', 'Magyarország', 'Budapest', 'Budapest', '', '', 'KiwiSun Franchise', NULL, '2022-01-01', 'VALIDATED', '', '', 1, 'ARC');
+INSERT INTO `licences` (`licenceId`, `serial`, `country`, `region`, `city`, `zip`, `address`, `studio`, `contact`, `lastValidated`, `type`, `Act`, `Cod`, `active`, `archive`) VALUES
+ ( 1, 'BLNS_SERIAL_DEMO', 'Magyarország', 'Budapest', 'Budapest', '', '', 'KiwiSun Franchise', NULL, '2022-01-01', 'VALIDATED', '', '', 1, 'ARC');
 
 -- -----------------------------------------------------------------------------------
 

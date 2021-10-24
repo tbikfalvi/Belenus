@@ -16,6 +16,61 @@ extern cGeneral             g_obGen;
 
 cLicenceManager::cLicenceManager()
 {
+    m_nLicenceId        = 0;
+    m_qsLicenceString   = "";
+}
+
+cLicenceManager::~cLicenceManager()
+{
+}
+
+void cLicenceManager::initialize()
+{
+    g_obLogger(cSeverity::INFO) << "Licence initialization started" << EOM;
+
+    QSqlQuery   *poQuery = NULL;
+
+    try
+    {
+        // Get the actually used licence data
+        poQuery = g_poDB->executeQTQuery( QString( "SELECT licenceId, serial, lastValidated, Act, Cod FROM licences ORDER BY licenceId DESC LIMIT 1" ) );
+        if( poQuery->first() )
+        {
+            m_nLicenceId        = poQuery->value( 0 ).toUInt();
+            m_qsLicenceString   = poQuery->value( 1 ).toString();
+//          m_qdLastValidated   = poQuery->value( 2 ).toDate();
+            m_qsAct             = poQuery->value( 3 ).toString();
+            m_qsCod             = poQuery->value( 4 ).toString();
+        }
+        g_obLogger(cSeverity::INFO) << "Initialization finished successfully" << EOM;
+    }
+    catch( cSevException &e )
+    {
+        if( poQuery ) delete poQuery;
+        g_obLogger(e.severity()) << e.what() << EOM;
+        g_obGen.showTrayError( e.what() );
+    }
+}
+
+unsigned int cLicenceManager::licenceID()
+{
+    return m_nLicenceId;
+}
+
+QString cLicenceManager::licenceSerialString()
+{
+    return m_qsLicenceString;
+}
+
+cLicenceManager::licenceType cLicenceManager::ltLicenceType()
+{
+    return m_LicenceType;
+}
+
+
+/*
+cLicenceManager::cLicenceManager()
+{
     // Default licence type is DEMO
     m_LicenceType = LTYPE_DEMO;
 
@@ -632,10 +687,11 @@ void cLicenceManager::_checkCode()
 void cLicenceManager::_checkValidity()
 {
     m_LicenceType = LTYPE_ACTIVATED;
+    return;
 
 //-----------------------------------------------------------------------------------------------------------------------------------
 // itt kezdődik az eredeti rész
-/*
+
     m_nLicenceOrderNumber = m_qsLicenceString.mid( 4, 2 ).toInt();
 
     if( m_nLicenceOrderNumber < 1 || m_nLicenceOrderNumber > LICENCE_MAX_NUMBER )
@@ -686,7 +742,6 @@ void cLicenceManager::_checkValidity()
             }
         }
     }
-*/
 }
 
 void cLicenceManager::_EnCode( char *str, int size )
@@ -705,11 +760,12 @@ void cLicenceManager::_DeCode( char *str, int size )
    }
 }
 
-QString cLicenceManager::createLicenceKey( QString /*qsNumber*/ )
+QString cLicenceManager::createLicenceKey( QString qsNumber )
 {
     return "nem mukodik";
+
 // ez új liszensz kódokat állít elő, nem lesz rá szükség
-/*
+
     if( m_qslLicenceCodes.contains( qsNumber ) )
     {
         return "Already entered";
@@ -754,7 +810,6 @@ QString cLicenceManager::createLicenceKey( QString /*qsNumber*/ )
     qsLK += QString("<< \"%1\"  // %2 <- BLNS%3_%4 ").arg(qsCodedKey.mid(7,6)).arg(qsKey).arg(j+1).arg(qsNumber);
 
     return qsLK;
-*/
 }
 
 void cLicenceManager::refreshValidationDates()
