@@ -264,6 +264,8 @@ dlgMain::dlgMain(QWidget *parent, QString p_qsAppVersion) : QDialog(parent), ui(
     ui->lblIndexMailSendCheck->setVisible( _isInGroup( GROUP_SYSTEM ) );
     ui->pbTest->setVisible( _isInGroup( GROUP_SYSTEM ) );
     ui->pbTest->setEnabled( _isInGroup( GROUP_SYSTEM ) );
+    ui->pbManageLicence->setVisible( _isInGroup( GROUP_SYSTEM ) );
+    ui->pbManageLicence->setEnabled( _isInGroup( GROUP_SYSTEM ) );
 
     m_bStartTimerOnStart = true;
     m_nTimer = startTimer( 500 );
@@ -826,6 +828,9 @@ void dlgMain::_setGUIEnabled(bool p_bEnabled)
 
     ui->cmbOnlinePatientCardType->setEnabled( false /*p_bEnabled && _isInGroup( GROUP_USER )*/ );
     ui->cmbOnlinePaymentMethod->setEnabled( false /*p_bEnabled && _isInGroup( GROUP_USER )*/ );
+
+    ui->pbManageLicence->setVisible( p_bEnabled && _isInGroup( GROUP_SYSTEM ) );
+    ui->pbManageLicence->setEnabled( p_bEnabled && _isInGroup( GROUP_SYSTEM ) );
 
     ui->pbExit->setEnabled( p_bEnabled && _isInGroup( GROUP_USER ) );
     actionExit->setEnabled( p_bEnabled && _isInGroup( GROUP_USER ) );
@@ -1537,4 +1542,11 @@ void dlgMain::_saveSettings()
     obPref.setValue( "LogLevel", m_nLogLevel );
 
     g_poDB->executeQTQuery( QString( "UPDATE settings SET value=\"%1\" WHERE identifier=\"SERVER_Address\" " ).arg( ui->ledWebServerAddress->text().replace("\\\\","/") ) );
+}
+
+//====================================================================================
+void dlgMain::on_pbManageLicence_clicked()
+//------------------------------------------------------------------------------------
+{
+
 }

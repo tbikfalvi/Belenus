@@ -116,6 +116,8 @@ private slots:
     void slotShowModuleNotification( QString p_qsMessage );
     void on_pbSaveSettings_clicked();
 
+    void on_pbManageLicence_clicked();
+
 private:
     Ui::dlgMain         *ui;
     QSystemTrayIcon     *trayIcon;

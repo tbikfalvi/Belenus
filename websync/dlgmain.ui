@@ -2,6 +2,9 @@
 <ui version="4.0">
  <class>dlgMain</class>
  <widget class="QDialog" name="dlgMain">
+  <property name="enabled">
+   <bool>true</bool>
+  </property>
   <property name="geometry">
    <rect>
     <x>0</x>
@@ -986,103 +989,25 @@
       </item>
       <item>
        <widget class="QGroupBox" name="gbExecuteActions">
+        <property name="enabled">
+         <bool>true</bool>
+        </property>
         <property name="title">
          <string> User actions </string>
         </property>
         <layout class="QGridLayout" name="gridLayout_2">
-         <item row="0" column="1">
-          <widget class="QPushButton" name="pbClearPCData">
-           <property name="enabled">
-            <bool>true</bool>
-           </property>
-           <property name="text">
-            <string>Clear patientcard data
-to be synchronized</string>
-           </property>
-           <property name="icon">
-            <iconset resource="websync.qrc">
-             <normaloff>:/trash.png</normaloff>:/trash.png</iconset>
-           </property>
-           <property name="iconSize">
-            <size>
-             <width>40</width>
-             <height>40</height>
-            </size>
-           </property>
-           <property name="autoDefault">
-            <bool>false</bool>
-           </property>
-          </widget>
-         </item>
-         <item row="0" column="3">
-          <spacer name="horizontalSpacer_7">
-           <property name="orientation">
-            <enum>Qt::Horizontal</enum>
-           </property>
-           <property name="sizeHint" stdset="0">
-            <size>
-             <width>40</width>
-             <height>20</height>
-            </size>
-           </property>
-          </spacer>
-         </item>
-         <item row="0" column="0">
-          <widget class="QPushButton" name="pbSyncAllPatientCard">
+         <item row="1" column="1">
+          <widget class="QPushButton" name="pbClearAllPatientCard">
            <property name="enabled">
             <bool>false</bool>
            </property>
            <property name="text">
-            <string>Send all patientcard
-data to web server</string>
+            <string>Delete all inactive patientcard
+data from web server</string>
            </property>
            <property name="icon">
             <iconset resource="websync.qrc">
-             <normaloff>:/patientcards.png</normaloff>:/patientcards.png</iconset>
-           </property>
-           <property name="iconSize">
-            <size>
-             <width>40</width>
-             <height>40</height>
-            </size>
-           </property>
-           <property name="autoDefault">
-            <bool>false</bool>
-           </property>
-          </widget>
-         </item>
-         <item row="0" column="2">
-          <widget class="QPushButton" name="pbSyncOnlinePC">
-           <property name="enabled">
-            <bool>false</bool>
-           </property>
-           <property name="text">
-            <string>Retrieve patientcards
-sold online</string>
-           </property>
-           <property name="icon">
-            <iconset resource="websync.qrc">
-             <normaloff>:/onlinepcsync.png</normaloff>:/onlinepcsync.png</iconset>
-           </property>
-           <property name="iconSize">
-            <size>
-             <width>40</width>
-             <height>40</height>
-            </size>
-           </property>
-           <property name="autoDefault">
-            <bool>false</bool>
-           </property>
-          </widget>
-         </item>
-         <item row="0" column="4">
-          <widget class="QPushButton" name="pbTest">
-           <property name="text">
-            <string/>
-           </property>
-           <property name="icon">
-            <iconset resource="websync.qrc">
-             <normaloff>:/settings.png</normaloff>:/settings.png</iconset>
+             <normaloff>:/patientcards_delete.png</normaloff>:/patientcards_delete.png</iconset>
            </property>
            <property name="iconSize">
             <size>
@@ -1119,18 +1044,14 @@ data from web server</string>
            </property>
           </widget>
          </item>
-         <item row="1" column="1">
-          <widget class="QPushButton" name="pbClearAllPatientCard">
-           <property name="enabled">
-            <bool>false</bool>
-           </property>
+         <item row="0" column="5">
+          <widget class="QPushButton" name="pbTest">
            <property name="text">
-            <string>Delete all inactive patientcard
-data from web server</string>
+            <string/>
            </property>
            <property name="icon">
             <iconset resource="websync.qrc">
-             <normaloff>:/patientcards_delete.png</normaloff>:/patientcards_delete.png</iconset>
+             <normaloff>:/settings.png</normaloff>:/settings.png</iconset>
            </property>
            <property name="iconSize">
             <size>
@@ -1140,6 +1061,111 @@ data from web server</string>
            </property>
            <property name="autoDefault">
             <bool>false</bool>
+           </property>
+          </widget>
+         </item>
+         <item row="0" column="2">
+          <widget class="QPushButton" name="pbSyncOnlinePC">
+           <property name="enabled">
+            <bool>false</bool>
+           </property>
+           <property name="text">
+            <string>Retrieve patientcards
+sold online</string>
+           </property>
+           <property name="icon">
+            <iconset resource="websync.qrc">
+             <normaloff>:/onlinepcsync.png</normaloff>:/onlinepcsync.png</iconset>
+           </property>
+           <property name="iconSize">
+            <size>
+             <width>40</width>
+             <height>40</height>
+            </size>
+           </property>
+           <property name="autoDefault">
+            <bool>false</bool>
+           </property>
+          </widget>
+         </item>
+         <item row="0" column="1">
+          <widget class="QPushButton" name="pbClearPCData">
+           <property name="enabled">
+            <bool>true</bool>
+           </property>
+           <property name="text">
+            <string>Clear patientcard data
+to be synchronized</string>
+           </property>
+           <property name="icon">
+            <iconset resource="websync.qrc">
+             <normaloff>:/trash.png</normaloff>:/trash.png</iconset>
+           </property>
+           <property name="iconSize">
+            <size>
+             <width>40</width>
+             <height>40</height>
+            </size>
+           </property>
+           <property name="autoDefault">
+            <bool>false</bool>
+           </property>
+          </widget>
+         </item>
+         <item row="0" column="0">
+          <widget class="QPushButton" name="pbSyncAllPatientCard">
+           <property name="enabled">
+            <bool>false</bool>
+           </property>
+           <property name="text">
+            <string>Send all patientcard
+data to web server</string>
+           </property>
+           <property name="icon">
+            <iconset resource="websync.qrc">
+             <normaloff>:/patientcards.png</normaloff>:/patientcards.png</iconset>
+           </property>
+           <property name="iconSize">
+            <size>
+             <width>40</width>
+             <height>40</height>
+            </size>
+           </property>
+           <property name="autoDefault">
+            <bool>false</bool>
+           </property>
+          </widget>
+         </item>
+         <item row="0" column="3">
+          <spacer name="horizontalSpacer_7">
+           <property name="orientation">
+            <enum>Qt::Horizontal</enum>
+           </property>
+           <property name="sizeHint" stdset="0">
+            <size>
+             <width>40</width>
+             <height>20</height>
+            </size>
+           </property>
+          </spacer>
+         </item>
+         <item row="0" column="4">
+          <widget class="QPushButton" name="pbManageLicence">
+           <property name="enabled">
+            <bool>false</bool>
+           </property>
+           <property name="text">
+            <string>Manage licence key</string>
+           </property>
+           <property name="icon">
+            <iconset resource="websync.qrc">
+             <normaloff>:/key.png</normaloff>:/key.png</iconset>
+           </property>
+           <property name="iconSize">
+            <size>
+             <width>40</width>
+             <height>40</height>
+            </size>
            </property>
           </widget>
          </item>
