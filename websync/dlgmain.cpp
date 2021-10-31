@@ -100,6 +100,11 @@ dlgMain::dlgMain(QWidget *parent, QString p_qsAppVersion) : QDialog(parent), ui(
     trayIcon->setToolTip( tr("Belenus WebSync") );
     trayIcon->show();
 
+    ui->tabWidget->setCurrentIndex( 0 );
+    ui->tabLicence->setEnabled( false );
+    ui->gbLicenceInformation->setVisible( false );
+    ui->gbLicenceActions->setVisible( false );
+
     ui->lblProcessStatus->setVisible( false );
     ui->prgbProcess->setVisible( false );
     ui->lblIndexPCData->setVisible( false );
@@ -118,8 +123,8 @@ dlgMain::dlgMain(QWidget *parent, QString p_qsAppVersion) : QDialog(parent), ui(
     ui->pbSyncOnlinePC->setVisible( false );
 
     // resize dialog
-    resize( obPref.value( "WindowPosition/Mainwindow_width", 900 ).toInt(),
-            obPref.value( "WindowPosition/Mainwindow_height", 600 ).toInt() );
+    resize( obPref.value( "WindowPosition/Mainwindow_width", 785 ).toInt(),
+            obPref.value( "WindowPosition/Mainwindow_height", 470 ).toInt() );
     move( obPref.value( "WindowPosition/Mainwindow_left", 100).toInt(),
           obPref.value( "WindowPosition/Mainwindow_top", 100).toInt() );
 
@@ -155,10 +160,15 @@ dlgMain::dlgMain(QWidget *parent, QString p_qsAppVersion) : QDialog(parent), ui(
             m_qsServerAddress = poQuery->value( 0 ).toString();
         }
 
-        poQuery = g_poDB->executeQTQuery( QString( "SELECT licenceId, serial FROM licences ORDER BY licenceId DESC LIMIT 1" ) );
+        poQuery = g_poDB->executeQTQuery( QString( "SELECT * FROM licences ORDER BY licenceId DESC LIMIT 1" ) );
         if( poQuery->first() )
         {
             g_poBlnsHttp->setStudioLicence( poQuery->value( 0 ).toUInt(), poQuery->value( 1 ).toString() );
+
+            ui->ledLicenceKeyCurrent->setText( poQuery->value( 1 ).toString() );
+            ui->deValidated->setDate( poQuery->value( 9 ).toDate() );
+            ui->ledCodeServer->setText( poQuery->value( 11 ).toString() );
+            ui->ledCodeClient->setText( poQuery->value( 12 ).toString() );
         }
 
         cQTMySQLQueryModel *m_poModel = new cQTMySQLQueryModel( this );
@@ -264,8 +274,9 @@ dlgMain::dlgMain(QWidget *parent, QString p_qsAppVersion) : QDialog(parent), ui(
     ui->lblIndexMailSendCheck->setVisible( _isInGroup( GROUP_SYSTEM ) );
     ui->pbTest->setVisible( _isInGroup( GROUP_SYSTEM ) );
     ui->pbTest->setEnabled( _isInGroup( GROUP_SYSTEM ) );
-    ui->pbManageLicence->setVisible( _isInGroup( GROUP_SYSTEM ) );
-    ui->pbManageLicence->setEnabled( _isInGroup( GROUP_SYSTEM ) );
+    ui->tabLicence->setEnabled( _isInGroup( GROUP_SYSTEM ) );
+    ui->gbLicenceInformation->setVisible( _isInGroup( GROUP_SYSTEM ) );
+    ui->gbLicenceActions->setVisible( _isInGroup( GROUP_SYSTEM ) );
 
     m_bStartTimerOnStart = true;
     m_nTimer = startTimer( 500 );
@@ -319,6 +330,14 @@ void dlgMain::timerEvent(QTimerEvent *)
         fileCheck.open( QIODevice::WriteOnly );
         fileCheck.write( "" );
         fileCheck.close();
+    }
+
+    //---------------------------------------------------------------------------------------------
+    // If Licence management tab is selected but not Kiwisun system admin logged in jump back to
+    // status tab
+    if( ui->tabWidget->currentIndex() == 3 && !_isInGroup( GROUP_SYSTEM ) )
+    {
+        ui->tabWidget->setCurrentIndex( 0 );
     }
 
     //---------------------------------------------------------------------------------------------
@@ -388,7 +407,7 @@ void dlgMain::timerEvent(QTimerEvent *)
     if( m_bSyncPCToServer || m_bSyncPCFromServer || m_bSendMailToServer )
     {
         // Synchronization process in progress, wait for next time slot
-        g_obLogger(cSeverity::DEBUG) << "Processes: " << m_bSyncPCFromServer << "|" << m_bSyncPCFromServer << "|" << m_bSendMailToServer << EOM;
+        g_obLogger(cSeverity::DEBUG) << "Processes: " << m_bSyncPCToServer << "|" << m_bSyncPCFromServer << "|" << m_bSendMailToServer << EOM;
         return;
     }
 
@@ -577,21 +596,7 @@ void dlgMain::on_pbRetranslate_clicked()
     m_bReloadLanguage = true;
 
     g_obLanguage.reloadLanguage( m_qsLang );
-/*
-    apMainApp->removeTranslator( poTransApp );
-    apMainApp->removeTranslator( poTransQT );
-
-    poTransApp->load( QString("%1\\lang\\websync_%2.qm").arg( QDir::currentPath() ).arg(m_qsLang) );
-    poTransQT->load( QString("%1\\lang\\qt_%2.qm").arg( QDir::currentPath() ).arg(m_qsLang) );
-
-    apMainApp->installTranslator( poTransApp );
-    apMainApp->installTranslator( poTransQT );*/
-
     ui->retranslateUi( this );
-
-//    int nCurrentIndex   = ui->cmbLang->findText( QString("%1 (").arg(m_qsLang), Qt::MatchContains );
-//
-//    ui->cmbLang->setCurrentIndex( nCurrentIndex );
 
     m_bReloadLanguage = false;
 }
@@ -829,8 +834,9 @@ void dlgMain::_setGUIEnabled(bool p_bEnabled)
     ui->cmbOnlinePatientCardType->setEnabled( false /*p_bEnabled && _isInGroup( GROUP_USER )*/ );
     ui->cmbOnlinePaymentMethod->setEnabled( false /*p_bEnabled && _isInGroup( GROUP_USER )*/ );
 
-    ui->pbManageLicence->setVisible( p_bEnabled && _isInGroup( GROUP_SYSTEM ) );
-    ui->pbManageLicence->setEnabled( p_bEnabled && _isInGroup( GROUP_SYSTEM ) );
+    ui->tabLicence->setEnabled( p_bEnabled && _isInGroup( GROUP_SYSTEM ) );
+    ui->gbLicenceInformation->setVisible( p_bEnabled && _isInGroup( GROUP_SYSTEM ) );
+    ui->gbLicenceActions->setVisible( p_bEnabled && _isInGroup( GROUP_SYSTEM ) );
 
     ui->pbExit->setEnabled( p_bEnabled && _isInGroup( GROUP_USER ) );
     actionExit->setEnabled( p_bEnabled && _isInGroup( GROUP_USER ) );
@@ -1401,68 +1407,6 @@ void dlgMain::on_chkHttpCommunicationEnabled_clicked()
     g_poDB->executeQTQuery( QString( "UPDATE settings SET value=\"%1\" WHERE identifier=\"SYNC_Enabled\" " ).arg( ui->chkHttpCommunicationEnabled->isChecked() ) );
 }
 
-//=================================================================================================
-void dlgMain::on_pbTest_clicked()
-//-------------------------------------------------------------------------------------------------
-{
-    // Read text from database and test sha1
-    try
-    {
-        QString      qsQuery            = "SELECT * FROM "
-                                          "httpsendmail WHERE "
-                                          "dateOfSending=\"" + QDate::currentDate().toString( "yyyy-MM-dd" ) + "\" AND "
-                                          "active=1 AND "
-                                          "archive='NEW' "
-                                          "LIMIT 1 ";
-        QSqlQuery   *poQuery            = g_poDB->executeQTQuery( qsQuery );
-        QByteArray   qbaSha1Base        = "";
-
-        poQuery->first();
-        qbaSha1Base.append( poQuery->value(6).toString().toUtf8() );
-
-        QString qsSha1Gen = QString(QCryptographicHash::hash(qbaSha1Base,QCryptographicHash::Sha1).toHex());
-
-        _displayUserNotification( INFO_Custom, "Check logs for sha1 test values" );
-
-        g_obLogger(cSeverity::DEBUG) << "qbaSha1Base:  [" << _bytearrayToString(qbaSha1Base) << "]" << EOM;
-        g_obLogger(cSeverity::DEBUG) << "qsSha1Gen:    [" << qsSha1Gen << "]" << EOM;
-    }
-    catch( cSevException &e )
-    {
-        cerr << ">> " << e.what() << endl << flush;;
-        g_obLogger(e.severity()) << e.what() << EOM;
-    }
-
-
-
-/*    QFile   file( "ansi.php" );
-
-    file.open(QIODevice::ReadOnly | QIODevice::Text);
-
-    QString     sha1    = file.readLine();
-    QByteArray  qbaTest = file.readLine();
-    QString     gen = QString(QCryptographicHash::hash(qbaTest,QCryptographicHash::Sha1).toHex());
-
-    _displayUserNotification( INFO_Custom, qbaTest+"\n"+sha1+"\n"+gen );
-    g_obLogger(cSeverity::DEBUG) << "TEST: [" << _bytearrayToString(qbaTest) << "]" << EOM;
-    g_obLogger(cSeverity::DEBUG) << "sha1: [" << sha1.left(40) << "]" << EOM;
-    g_obLogger(cSeverity::DEBUG) << "gen:  [" << gen << "]" << EOM;
-
-    g_poDB->executeQTQuery( QString("INSERT INTO settings SET identifier=\"Ekezet teszt\", value=\"%1\" ").arg( _bytearrayToString(qbaTest) ) );
-
-    _displayUserNotification( INFO_Custom, tr("árvíztűrő tükörfúrógép\nÁRVÍZTŰRŐ TÜKÖRFÚRÓGÉP") );
-
-    dlgLineEdit obDlgLineEdit(this);
-
-    if( obDlgLineEdit.exec() == QDialog::Accepted )
-    {
-        _isAppicationRunning( obDlgLineEdit.value() );
-    }
-
-    _displayUserNotification( INFO_Custom, tr("") );
-*/
-}
-
 //====================================================================================
 QString dlgMain::_bytearrayToString(QString p_qsString)
 //------------------------------------------------------------------------------------
@@ -1544,9 +1488,90 @@ void dlgMain::_saveSettings()
     g_poDB->executeQTQuery( QString( "UPDATE settings SET value=\"%1\" WHERE identifier=\"SERVER_Address\" " ).arg( ui->ledWebServerAddress->text().replace("\\\\","/") ) );
 }
 
-//====================================================================================
-void dlgMain::on_pbManageLicence_clicked()
-//------------------------------------------------------------------------------------
+//=================================================================================================
+void dlgMain::on_pbRegisterLicence_clicked()
+//-------------------------------------------------------------------------------------------------
 {
-
+    ui->lblStatusIconLicenceAction->setPixmap( QPixmap( ":/hourglass.png" ) );
 }
+
+//=================================================================================================
+void dlgMain::on_pbActivateLicence_clicked()
+//-------------------------------------------------------------------------------------------------
+{
+    ui->lblStatusIconLicenceAction->setPixmap( QPixmap( ":/hourglass.png" ) );
+}
+
+//=================================================================================================
+void dlgMain::on_pbChangeLicence_clicked()
+//-------------------------------------------------------------------------------------------------
+{
+    ui->lblStatusIconLicenceAction->setPixmap( QPixmap( ":/hourglass.png" ) );
+}
+
+//=================================================================================================
+void dlgMain::on_pbTest_clicked()
+//-------------------------------------------------------------------------------------------------
+{
+    ui->lblStatusIconLicenceAction->setPixmap( QPixmap( ":/status_green.png" ) );
+//    _displayUserNotification( INFO_Custom, "This button is for testing purpose.\nNo current action to be tested." );
+
+/*
+    // Read text from database and test sha1
+    try
+    {
+        QString      qsQuery            = "SELECT * FROM "
+                                          "httpsendmail WHERE "
+                                          "dateOfSending=\"" + QDate::currentDate().toString( "yyyy-MM-dd" ) + "\" AND "
+                                          "active=1 AND "
+                                          "archive='NEW' "
+                                          "LIMIT 1 ";
+        QSqlQuery   *poQuery            = g_poDB->executeQTQuery( qsQuery );
+        QByteArray   qbaSha1Base        = "";
+
+        poQuery->first();
+        qbaSha1Base.append( poQuery->value(6).toString().toUtf8() );
+
+        QString qsSha1Gen = QString(QCryptographicHash::hash(qbaSha1Base,QCryptographicHash::Sha1).toHex());
+
+        _displayUserNotification( INFO_Custom, "Check logs for sha1 test values" );
+
+        g_obLogger(cSeverity::DEBUG) << "qbaSha1Base:  [" << _bytearrayToString(qbaSha1Base) << "]" << EOM;
+        g_obLogger(cSeverity::DEBUG) << "qsSha1Gen:    [" << qsSha1Gen << "]" << EOM;
+    }
+    catch( cSevException &e )
+    {
+        cerr << ">> " << e.what() << endl << flush;;
+        g_obLogger(e.severity()) << e.what() << EOM;
+    }
+*/
+
+
+/*    QFile   file( "ansi.php" );
+
+    file.open(QIODevice::ReadOnly | QIODevice::Text);
+
+    QString     sha1    = file.readLine();
+    QByteArray  qbaTest = file.readLine();
+    QString     gen = QString(QCryptographicHash::hash(qbaTest,QCryptographicHash::Sha1).toHex());
+
+    _displayUserNotification( INFO_Custom, qbaTest+"\n"+sha1+"\n"+gen );
+    g_obLogger(cSeverity::DEBUG) << "TEST: [" << _bytearrayToString(qbaTest) << "]" << EOM;
+    g_obLogger(cSeverity::DEBUG) << "sha1: [" << sha1.left(40) << "]" << EOM;
+    g_obLogger(cSeverity::DEBUG) << "gen:  [" << gen << "]" << EOM;
+
+    g_poDB->executeQTQuery( QString("INSERT INTO settings SET identifier=\"Ekezet teszt\", value=\"%1\" ").arg( _bytearrayToString(qbaTest) ) );
+
+    _displayUserNotification( INFO_Custom, tr("árvíztűrő tükörfúrógép\nÁRVÍZTŰRŐ TÜKÖRFÚRÓGÉP") );
+
+    dlgLineEdit obDlgLineEdit(this);
+
+    if( obDlgLineEdit.exec() == QDialog::Accepted )
+    {
+        _isAppicationRunning( obDlgLineEdit.value() );
+    }
+
+    _displayUserNotification( INFO_Custom, tr("") );
+*/
+}
+

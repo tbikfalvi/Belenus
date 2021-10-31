@@ -115,8 +115,9 @@ private slots:
     void on_PatientCardUpdated( unsigned int p_uiPatientCardId, QString p_qsBarcode );
     void slotShowModuleNotification( QString p_qsMessage );
     void on_pbSaveSettings_clicked();
-
-    void on_pbManageLicence_clicked();
+    void on_pbRegisterLicence_clicked();
+    void on_pbActivateLicence_clicked();
+    void on_pbChangeLicence_clicked();
 
 private:
     Ui::dlgMain         *ui;
