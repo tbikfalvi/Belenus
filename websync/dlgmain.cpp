@@ -26,47 +26,58 @@ dlgMain::dlgMain(QWidget *parent, QString p_qsAppVersion) : QDialog(parent), ui(
     // Initialize variables
     g_obLogger(cSeverity::DEBUG) << "Initialize main window variables" << EOM;
 
-    m_bStartFinished            = false;
+    m_bStartFinished                    = false;
 
-    m_qsRPSW                    = "7c01fcbe9cab6ae14c98c76cf943a7b2be6a7922";
+    m_qsRPSW                            = "7c01fcbe9cab6ae14c98c76cf943a7b2be6a7922";
 
-    m_FlagNoHttpServer          = false;
-    m_FlagHttpFailed            = false;
-    m_FlagHttpDisabled          = false;
-    m_FlagHttpEnabled           = false;
-    m_FlagHttpSuspended         = false;
-    m_FlagHttpContinued         = false;
-//    m_FlagNoPaymentMethod       = false;
-//    m_FlagNoPCType              = false;
+    m_FlagNoHttpServer                  = false;
+    m_FlagHttpFailed                    = false;
+    m_FlagHttpDisabled                  = false;
+    m_FlagHttpEnabled                   = false;
+    m_FlagHttpSuspended                 = false;
+    m_FlagHttpContinued                 = false;
+//    m_FlagNoPaymentMethod             = false;
+//    m_FlagNoPCType                    = false;
 
-    m_bStartTimerOnStart        = false;
-    m_nTimer                    = 0;
-    m_bMousePressed             = false;
-    m_bReloadLanguage           = false;
-    m_bShowMainWindowOnStart    = true;
-    m_nLogLevel                 = 0;
+    m_bStartTimerOnStart                = false;
+    m_nTimer                            = 0;
+    m_bMousePressed                     = false;
+    m_bReloadLanguage                   = false;
+    m_bShowMainWindowOnStart            = true;
+    m_nLogLevel                         = 0;
 
-    m_bHttpEnabledBySetting     = true;
-    m_bHttpEnabledByUser        = true;
-    m_bHttpSuspendedByUser      = false;
+    m_bHttpEnabledBySetting             = true;
+    m_bHttpEnabledByUser                = true;
+    m_bHttpSuspendedByUser              = false;
 
-    m_bSyncPCToServer           = false;
-    m_bSyncPCFromServer         = false;
-    m_bSendMailToServer         = false;
+    m_bSyncPCToServer                   = false;
+    m_bSyncPCFromServer                 = false;
+    m_bSendMailToServer                 = false;
+    m_bRegisterLicenceKey               = false;
+    m_bReactivateLicenceKey             = false;
+    m_bChangeLicenceKey                 = false;
 
-    m_nIndexPCStatusSync        = 0;
-//    m_nIndexPCOnlineSync        = 0;
-    m_nIndexUpdateSyncDataCount = 0;
-    m_nIndexUser                = 0;
-    m_nIndexCheckEnablers       = 0;
-    m_nIndexSendMailSync        = 0;
+    m_bStartRegisterLicenceKey          = false;
+    m_bStartReactivateLicenceKey        = false;
+    m_bStartChangeLicenceKey            = false;
+    m_bValidateLicenceKey               = false;
 
-    m_enGroup                   = GROUP_MIN;
+    m_nIndexPCStatusSync                = 0;
+//    m_nIndexPCOnlineSync              = 0;
+    m_nIndexUpdateSyncDataCount         = 0;
+    m_nIndexUser                        = 0;
+    m_nIndexCheckEnablers               = 0;
+    m_nIndexSendMailSync                = 0;
+    m_nIndexLicenceValidation           = 0;
 
-    m_bServerAddressChanged     = false;
+    m_nTimerLicenceValidationCheck      = 3600;
 
-    g_poDB                      = new cQTMySQLConnection;
-    g_poBlnsHttp                = new cBlnsHttp();
+    m_enGroup                           = GROUP_MIN;
+
+    m_bServerAddressChanged             = false;
+
+    g_poDB                              = new cQTMySQLConnection;
+    g_poBlnsHttp                        = new cBlnsHttp();
 
     ui->pbHide->setVisible( false );
 
@@ -77,12 +88,14 @@ dlgMain::dlgMain(QWidget *parent, QString p_qsAppVersion) : QDialog(parent), ui(
     QSettings   obPref( QString( "%1/websync.inf" ).arg( QDir::currentPath() ), QSettings::IniFormat );
 
     m_bShowMainWindowOnStart    = obPref.value( "ShowMainWindowOnStart", false ).toBool();
+    m_nIndexLicenceValidation   = obPref.value( "TimerLicenceValidation", 0 ).toInt();
     m_nTimerPCStatusSync        = obPref.value( "TimerPCStatusSync", 2 ).toInt();
-//    m_nTimerPCOnlineSync        = obPref.value( "TimerPCOnlineSync", 60 ).toInt();
     m_nTimerSendMailCheck       = obPref.value( "TimerSendMailCheck", 11 ).toInt();
+    m_nLogLevel                 = obPref.value( "LogLevel", cSeverity::DEBUG ).toInt();
+
+//    m_nTimerPCOnlineSync        = obPref.value( "TimerPCOnlineSync", 60 ).toInt();
 //    m_uiPatientCardTypeId       = obPref.value( "OnlinePatientCardType", 0 ).toUInt();
 //    m_uiPaymentMethodId         = obPref.value( "OnlinePaymentMethod", 0 ).toUInt();
-    m_nLogLevel                 = obPref.value( "LogLevel", cSeverity::DEBUG ).toInt();
 
     g_obLogger.setMinimumSeverity("file", (cSeverity::teSeverity)m_nLogLevel);
 
@@ -160,6 +173,14 @@ dlgMain::dlgMain(QWidget *parent, QString p_qsAppVersion) : QDialog(parent), ui(
             m_qsServerAddress = poQuery->value( 0 ).toString();
         }
 
+        poQuery = g_poDB->executeQTQuery( "SELECT value FROM `settings` WHERE identifier='LICENCE_WORKTIME_COUNTER' " );
+        if( poQuery->first() )
+        {
+            int nHour = (poQuery->value( 0 ).toInt() * 15)/60;
+
+            ui->lblLicenceCheckValue->setText( QString( "%1 work hours" ).arg( nHour ) );
+        }
+
         poQuery = g_poDB->executeQTQuery( QString( "SELECT * FROM licences ORDER BY licenceId DESC LIMIT 1" ) );
         if( poQuery->first() )
         {
@@ -169,6 +190,23 @@ dlgMain::dlgMain(QWidget *parent, QString p_qsAppVersion) : QDialog(parent), ui(
             ui->deValidated->setDate( poQuery->value( 9 ).toDate() );
             ui->ledCodeServer->setText( poQuery->value( 11 ).toString() );
             ui->ledCodeClient->setText( poQuery->value( 12 ).toString() );
+
+            if( poQuery->value( 11 ).toString().compare( "VALIDATED" ) == 0 )
+            {
+                ui->ledLicenceStatus->setText( tr( "Validated" ) );
+            }
+            else if( poQuery->value( 11 ).toString().compare( "UNVERIFIED" ) == 0 )
+            {
+                ui->ledLicenceStatus->setText( tr( "Not activated" ) );
+            }
+            else if( poQuery->value( 11 ).toString().compare( "INVALID" ) == 0 )
+            {
+                ui->ledLicenceStatus->setText( tr( "Expired / Invalid" ) );
+            }
+            else
+            {
+                ui->ledLicenceStatus->setText( tr( "Demo" ) );
+            }
         }
 
         cQTMySQLQueryModel *m_poModel = new cQTMySQLQueryModel( this );
@@ -304,10 +342,12 @@ void dlgMain::timerEvent(QTimerEvent *)
     m_nIndexUser++;
     m_nIndexCheckEnablers++;
     m_nIndexSendMailSync++;
+    m_nIndexLicenceValidation++;
 
     ui->lblIndexPCData->setText( QString::number(m_nIndexPCStatusSync) );
 //    ui->lblIndexPCOnline->setText( QString::number(m_nIndexPCOnlineSync) );
     ui->lblIndexMailSendCheck->setText( QString::number(m_nIndexSendMailSync ) );
+    ui->lblWorktimeCounterValue->setText( QString( "%1:%2" ).arg( (m_nTimerLicenceValidationCheck-m_nIndexLicenceValidation)/60 ).arg( (m_nTimerLicenceValidationCheck-m_nIndexLicenceValidation)%60 ) );
 
     //---------------------------------------------------------------------------------------------
     // Executed only at the beginning
@@ -404,10 +444,17 @@ void dlgMain::timerEvent(QTimerEvent *)
 
     //---------------------------------------------------------------------------------------------
     // Check if any action is in progress
-    if( m_bSyncPCToServer || m_bSyncPCFromServer || m_bSendMailToServer )
+    if( m_bSyncPCToServer || m_bSyncPCFromServer || m_bSendMailToServer || m_bRegisterLicenceKey || m_bReactivateLicenceKey || m_bChangeLicenceKey || m_bValidateLicenceKey )
     {
         // Synchronization process in progress, wait for next time slot
-        g_obLogger(cSeverity::DEBUG) << "Processes: " << m_bSyncPCToServer << "|" << m_bSyncPCFromServer << "|" << m_bSendMailToServer << EOM;
+        g_obLogger(cSeverity::DEBUG) << "Processes: " << m_bSyncPCToServer
+                                     << "|" << m_bSyncPCFromServer
+                                     << "|" << m_bSendMailToServer
+                                     << "|" << m_bRegisterLicenceKey
+                                     << "|" << m_bReactivateLicenceKey
+                                     << "|" << m_bChangeLicenceKey
+                                     << "|" << m_bValidateLicenceKey
+                                     << EOM;
         return;
     }
 
@@ -455,6 +502,69 @@ void dlgMain::timerEvent(QTimerEvent *)
             ui->lblOnlinePaymentMethod->setStyleSheet( "QLabel {font: bold; color: red;}" );
             return;
         }*/
+    }
+
+    //---------------------------------------------------------------------------------------------
+    // Check if Licence key registration is needed
+    if( m_bStartRegisterLicenceKey )
+    {
+        m_bStartRegisterLicenceKey = false;
+        m_bRegisterLicenceKey = true;
+        g_poBlnsHttp->registerLicenceKey( ui->ledLicenceKey->text(), ui->ledCodeClient->text() );
+        return;
+    }
+
+    //---------------------------------------------------------------------------------------------
+    // Check if Licence key reactivation is needed
+    if( m_bStartReactivateLicenceKey )
+    {
+        m_bStartReactivateLicenceKey = false;
+        m_bReactivateLicenceKey = true;
+        g_poBlnsHttp->reactivateLicenceKey( ui->ledCodeClient->text() );
+        return;
+    }
+
+    //---------------------------------------------------------------------------------------------
+    // Check if Licence key change is needed
+    if( m_bStartChangeLicenceKey )
+    {
+        m_bStartChangeLicenceKey = false;
+        m_bChangeLicenceKey = true;
+        g_poBlnsHttp->changeLicenceKey( ui->ledLicenceKeyCurrent->text(), ui->ledLicenceKey->text(), ui->ledCodeClient->text() );
+        return;
+    }
+
+    //---------------------------------------------------------------------------------------------
+    // Check every hour if the licence key validetion has to be checked or not
+    if( m_nIndexLicenceValidation > m_nTimerLicenceValidationCheck )
+    {
+        m_nIndexLicenceValidation = 0;
+
+        // Retrieve worktime counter from database, if it reached zero, then validation needed
+        try
+        {
+            QSqlQuery *poQuery = g_poDB->executeQTQuery( "SELECT value FROM `settings` WHERE identifier='LICENCE_WORKTIME_COUNTER' " );
+
+            if( poQuery->first() )
+            {
+                int nWorktimeCounter = poQuery->value( 0 ).toInt();
+                int nHour = (nWorktimeCounter * 15)/60;
+
+                ui->lblLicenceCheckValue->setText( QString( "%1 work hours" ).arg( nHour ) );
+
+                if( nWorktimeCounter < 1 )
+                {
+                    m_bValidateLicenceKey = true;
+                    g_poBlnsHttp->validateLicenceKey();
+                    return;
+                }
+            }
+        }
+        catch( cSevException &e )
+        {
+            cerr << ">> " << e.what() << endl << flush;;
+            g_obLogger(e.severity()) << e.what() << EOM;
+        }
     }
 
     //---------------------------------------------------------------------------------------------
@@ -745,11 +855,15 @@ void dlgMain::on_pbClearAllPatientCard_clicked()
 // Executed when any error occures during http process
 void dlgMain::on_BlnsHttpErrorOccured()
 {
-    QString qsTooltip   = "";
-    m_bSyncPCToServer   = false;
-    m_bSyncPCFromServer = false;
-    m_bSendMailToServer = false;
-    m_qsHttpStatus      = g_poBlnsHttp->errorMessage();
+    QString qsTooltip       = "";
+    m_bSyncPCToServer       = false;
+    m_bSyncPCFromServer     = false;
+    m_bSendMailToServer     = false;
+    m_bRegisterLicenceKey   = false;
+    m_bReactivateLicenceKey = false;
+    m_bChangeLicenceKey     = false;
+    m_bValidateLicenceKey   = false;
+    m_qsHttpStatus          = g_poBlnsHttp->errorMessage();
 
     qsTooltip.append( m_qsHttpStatus );
     if( _isInGroup( GROUP_SYSTEM ) )
@@ -770,11 +884,15 @@ void dlgMain::on_BlnsHttpErrorOccured()
 // Executed when a http process finished
 void dlgMain::on_BlnsHttpActionFinished(QString p_qsInfo)
 {
-    QString qsTooltip   = "";
-    m_bSyncPCToServer   = false;
-    m_bSyncPCFromServer = false;
-    m_bSendMailToServer = false;
-    m_qsHttpStatus      = tr("HTTP Connection established");
+    QString qsTooltip       = "";
+    m_bSyncPCToServer       = false;
+    m_bSyncPCFromServer     = false;
+    m_bSendMailToServer     = false;
+    m_bRegisterLicenceKey   = false;
+    m_bReactivateLicenceKey = false;
+    m_bChangeLicenceKey     = false;
+    m_bValidateLicenceKey   = false;
+    m_qsHttpStatus          = tr("HTTP Connection established");
 
     qsTooltip.append( m_qsHttpStatus );
     if( _isInGroup( GROUP_SYSTEM ) )
@@ -1478,12 +1596,14 @@ void dlgMain::_saveSettings()
     obPref.setValue( "WindowPosition/Mainwindow_top", y() );
     obPref.setValue( "WindowPosition/Mainwindow_width", width() );
     obPref.setValue( "WindowPosition/Mainwindow_height", height() );
+    obPref.setValue( "TimerLicenceValidation", m_nIndexLicenceValidation );
     obPref.setValue( "TimerPCStatusSync", m_nTimerPCStatusSync );
-//    obPref.setValue( "TimerPCOnlineSync", m_nTimerPCOnlineSync );
     obPref.setValue( "TimerSendMailCheck", m_nTimerSendMailCheck );
+    obPref.setValue( "LogLevel", m_nLogLevel );
+
+//    obPref.setValue( "TimerPCOnlineSync", m_nTimerPCOnlineSync );
 //    obPref.setValue( "OnlinePatientCardType", m_uiPatientCardTypeId );
 //    obPref.setValue( "OnlinePaymentMethod", m_uiPaymentMethodId );
-    obPref.setValue( "LogLevel", m_nLogLevel );
 
     g_poDB->executeQTQuery( QString( "UPDATE settings SET value=\"%1\" WHERE identifier=\"SERVER_Address\" " ).arg( ui->ledWebServerAddress->text().replace("\\\\","/") ) );
 }
@@ -1492,21 +1612,59 @@ void dlgMain::_saveSettings()
 void dlgMain::on_pbRegisterLicence_clicked()
 //-------------------------------------------------------------------------------------------------
 {
+    if( ui->ledCodeServer->text().length() > 0 && ui->ledCodeClient->text().length() > 0 )
+    {
+        QMessageBox::warning( this, tr("Warning"), tr("This licence key already registered at server.\n"
+                                                      "If you want to re-register it, please use the\n"
+                                                      "'Reactivate licence key' button.") );
+        ui->pbActivateLicence->setFocus();
+        return;
+    }
+    if( g_poBlnsHttp->licenceId() > 1 )
+    {
+        QMessageBox::warning( this, tr("Warning"), tr("There is a valid licence key already registered for this client.\n"
+                                                      "If you want to change it, please use the\n"
+                                                      "'Change current key to new' button.") );
+        ui->pbChangeLicence->setFocus();
+        return;
+    }
+    if( ui->ledLicenceKey->text().length() != 13 )
+    {
+        QMessageBox::critical( this, tr("Error"), tr("The licence key is invalid.\n"
+                                                      "Please check and retype it again.") );
+        ui->ledLicenceKey->setFocus();
+        return;
+    }
+
     ui->lblStatusIconLicenceAction->setPixmap( QPixmap( ":/hourglass.png" ) );
+
+    ui->ledCodeServer->setText( "" );
+    ui->ledCodeClient->setText( QTime::currentTime().toString( "hhmmss" ) );
+
+    m_bStartRegisterLicenceKey = true;
 }
 
 //=================================================================================================
 void dlgMain::on_pbActivateLicence_clicked()
 //-------------------------------------------------------------------------------------------------
 {
+
     ui->lblStatusIconLicenceAction->setPixmap( QPixmap( ":/hourglass.png" ) );
+
+    ui->ledCodeServer->setText( "" );
+    ui->ledCodeClient->setText( QTime::currentTime().toString( "hhmmss" ) );
+
+    m_bStartReactivateLicenceKey = true;
 }
 
 //=================================================================================================
 void dlgMain::on_pbChangeLicence_clicked()
 //-------------------------------------------------------------------------------------------------
 {
+
     ui->lblStatusIconLicenceAction->setPixmap( QPixmap( ":/hourglass.png" ) );
+
+    m_bStartChangeLicenceKey = true;
 }
 
 //=================================================================================================

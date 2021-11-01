@@ -119,9 +119,16 @@ public:
     void             getPatientCardsSoldOnline();
     void             processWaitingMails();
 
+    void             registerLicenceKey( QString p_qsLicenceString, QString p_qsClientCode );
+    void             reactivateLicenceKey( QString p_qsClientCode );
+    void             changeLicenceKey( QString p_qsLicenceStringOld, QString p_qsLicenceStringNew, QString p_qsClientCode );
+    void             validateLicenceKey();
+
     int              getNumberOfWaitingRecords();
     QString          errorMessage();
     QString          settingsInfo();
+
+    unsigned int     licenceId() { return m_uiLicenceId; }
 
 protected:
 

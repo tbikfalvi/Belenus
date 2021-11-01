@@ -16,6 +16,9 @@ UPDATE `settings` SET value = DATE_ADD( NOW(), INTERVAL 60 DAY) WHERE identifier
 
 ALTER TABLE `licences` ADD `type` VARCHAR( 10 ) NOT NULL DEFAULT 'UNVERIFIED' AFTER `lastValidated`;
 
+INSERT INTO `belenus`.`settings` ( `settingId`, `identifier`, `value` ) VALUES ( NULL , 'LICENCE_WORKTIME_COUNTER', '336' );
+
+
 -- -----------------------------------------------------------------------------------
 
 UPDATE settings SET value='2_0_0_0' WHERE identifier='APPLICATION_VERSION';
