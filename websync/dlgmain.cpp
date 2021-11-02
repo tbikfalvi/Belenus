@@ -1661,10 +1661,19 @@ void dlgMain::on_pbActivateLicence_clicked()
 void dlgMain::on_pbChangeLicence_clicked()
 //-------------------------------------------------------------------------------------------------
 {
+    if( QMessageBox::question( this, tr("Question"),
+                               tr("Are you sure you want to replace the licence key?\n\n"
+                                  "Please note this modification affect all data connected "
+                                  "to this licence key. If you use a currently active licence "
+                                  "key, the related data will be corrupted!"),
+                               QMessageBox::Yes|QMessageBox::No, QMessageBox::No ) == QMessageBox::Yes )
+    {
+        ui->lblStatusIconLicenceAction->setPixmap( QPixmap( ":/hourglass.png" ) );
 
-    ui->lblStatusIconLicenceAction->setPixmap( QPixmap( ":/hourglass.png" ) );
+//        g_poDB->executeQTQuery( QString( "UPDATE licences SET `serial`=\"%1\" WHERE licenceId=%2" ) );
 
-    m_bStartChangeLicenceKey = true;
+        m_bStartChangeLicenceKey = true;
+    }
 }
 
 //=================================================================================================

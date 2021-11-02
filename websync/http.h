@@ -72,7 +72,11 @@ public:
         HA_SENDMAILTOSERVER,        //  7
         HA_MAILPROCESSQUEUE,        //  8
         HA_UPDATEMAILRECORD,        //  9
-        HA_PROCESSFINISHED          // 10
+        HA_LICENCE_REGISTER,        // 10
+        HA_LICENCE_REACTIVATE,      // 11
+        HA_LICENCE_CHANGE,          // 12
+        HA_LICENCE_CHECK,           // 13
+        HA_PROCESSFINISHED          // 14
     };
 
     static const char *toStr( teBlnsHttpAction p_enGA )
@@ -89,6 +93,10 @@ public:
             case HA_SENDMAILTOSERVER:           return "HTTPMSG_07 Send waiting mail to server";                    break;
             case HA_MAILPROCESSQUEUE:           return "HTTPMSG_08 Process waiting mails queue";                    break;
             case HA_UPDATEMAILRECORD:           return "HTTPMSG_09 Update mail record";                             break;
+            case HA_LICENCE_REGISTER:           return "HTTPMSG_10 Register licence key";                           break;
+            case HA_LICENCE_REACTIVATE:         return "HTTPMSG_11 Reactivate licence key";                         break;
+            case HA_LICENCE_CHANGE:             return "HTTPMSG_12 Change licence key";                             break;
+            case HA_LICENCE_CHECK:              return "HTTPMSG_13 Check licence key validity";                     break;
             case HA_PROCESSFINISHED:            return "HTTPMSG_99";                                                break;
             default:                            return "HTTPMSGERR";
         }
@@ -120,9 +128,9 @@ public:
     void             processWaitingMails();
 
     void             registerLicenceKey( QString p_qsLicenceString, QString p_qsClientCode );
-    void             reactivateLicenceKey( QString p_qsClientCode );
+    void             reactivateLicenceKey( QString p_qsLicenceString, QString p_qsClientCode );
     void             changeLicenceKey( QString p_qsLicenceStringOld, QString p_qsLicenceStringNew, QString p_qsClientCode );
-    void             validateLicenceKey();
+    void             validateLicenceKey( QString p_qsLicenceString, QString p_qsClientCode, QString p_qsServerCode );
 
     int              getNumberOfWaitingRecords();
     QString          errorMessage();
@@ -177,6 +185,10 @@ private:
     QString          m_qsMailVarDateTime;
     QString          m_qsMailVarUnitCount;
     QString          m_qsMailSha1;
+    QString          m_qsLicenceStringCurrent;
+    QString          m_qsLicenceStringNew;
+    QString          m_qsLicenceClientCode;
+    QString          m_qsLicenceServerCode;
 
     QDomDocument    *obResponseXML;
 
@@ -207,6 +219,11 @@ private:
     void            _updateMailRecord();
     void            _readMailResponseFromFile();
     QString         _getNameForPatientCardType( unsigned int p_uiPatientCardTypeId );
+    void            _httpRegisterLicence();
+    void            _httpReactivateLicence();
+    void            _httpChangeLicence();
+    void            _httpCheckLicence();
+    bool            _processLicence();
 
 signals:
 
