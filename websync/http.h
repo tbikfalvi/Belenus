@@ -53,7 +53,13 @@ using namespace std;
 #define HTTP_ERROR_MISSING_MAIL_VAR_UNITCOUNT       -21
 #define HTTP_ERROR_MISSING_MAIL_VAR_DATETIME        -22
 #define HTTP_ERROR_INVALID_EMAIL_ADDRESS            -23
+#define HTTP_ERROR_LICENCE_INVALID                  -24
+#define HTTP_ERROR_LICENCE_ALREADY_REGISTERED       -25
+#define HTTP_ERROR_LICENCE_INACTIVE                 -26
+#define HTTP_ERROR_LICENCE_CLIENT_CODE_INVALID      -27
+#define HTTP_ERROR_LICENCE_SERVER_CODE_INVALID      -28
 
+#define HTTP_ERROR_INVALID_ANSWER                   -98
 #define HTTP_ERROR_UNKNOWN                          -99
 
 //====================================================================================
@@ -74,9 +80,8 @@ public:
         HA_UPDATEMAILRECORD,        //  9
         HA_LICENCE_REGISTER,        // 10
         HA_LICENCE_REACTIVATE,      // 11
-        HA_LICENCE_CHANGE,          // 12
-        HA_LICENCE_CHECK,           // 13
-        HA_PROCESSFINISHED          // 14
+        HA_LICENCE_CHECK,           // 12
+        HA_PROCESSFINISHED          // 13
     };
 
     static const char *toStr( teBlnsHttpAction p_enGA )
@@ -95,7 +100,6 @@ public:
             case HA_UPDATEMAILRECORD:           return "HTTPMSG_09 Update mail record";                             break;
             case HA_LICENCE_REGISTER:           return "HTTPMSG_10 Register licence key";                           break;
             case HA_LICENCE_REACTIVATE:         return "HTTPMSG_11 Reactivate licence key";                         break;
-            case HA_LICENCE_CHANGE:             return "HTTPMSG_12 Change licence key";                             break;
             case HA_LICENCE_CHECK:              return "HTTPMSG_13 Check licence key validity";                     break;
             case HA_PROCESSFINISHED:            return "HTTPMSG_99";                                                break;
             default:                            return "HTTPMSGERR";
@@ -129,7 +133,6 @@ public:
 
     void             registerLicenceKey( QString p_qsLicenceString, QString p_qsClientCode );
     void             reactivateLicenceKey( QString p_qsLicenceString, QString p_qsClientCode );
-    void             changeLicenceKey( QString p_qsLicenceStringOld, QString p_qsLicenceStringNew, QString p_qsClientCode );
     void             validateLicenceKey( QString p_qsLicenceString, QString p_qsClientCode, QString p_qsServerCode );
 
     int              getNumberOfWaitingRecords();
@@ -137,6 +140,7 @@ public:
     QString          settingsInfo();
 
     unsigned int     licenceId() { return m_uiLicenceId; }
+    QString          licenceServerCode() { return m_qsLicenceServerCode; }
 
 protected:
 

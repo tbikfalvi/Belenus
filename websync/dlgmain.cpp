@@ -55,11 +55,9 @@ dlgMain::dlgMain(QWidget *parent, QString p_qsAppVersion) : QDialog(parent), ui(
     m_bSendMailToServer                 = false;
     m_bRegisterLicenceKey               = false;
     m_bReactivateLicenceKey             = false;
-    m_bChangeLicenceKey                 = false;
 
     m_bStartRegisterLicenceKey          = false;
     m_bStartReactivateLicenceKey        = false;
-    m_bStartChangeLicenceKey            = false;
     m_bValidateLicenceKey               = false;
 
     m_nIndexPCStatusSync                = 0;
@@ -444,7 +442,7 @@ void dlgMain::timerEvent(QTimerEvent *)
 
     //---------------------------------------------------------------------------------------------
     // Check if any action is in progress
-    if( m_bSyncPCToServer || m_bSyncPCFromServer || m_bSendMailToServer || m_bRegisterLicenceKey || m_bReactivateLicenceKey || m_bChangeLicenceKey || m_bValidateLicenceKey )
+    if( m_bSyncPCToServer || m_bSyncPCFromServer || m_bSendMailToServer || m_bRegisterLicenceKey || m_bReactivateLicenceKey || m_bValidateLicenceKey )
     {
         // Synchronization process in progress, wait for next time slot
         g_obLogger(cSeverity::DEBUG) << "Processes: " << m_bSyncPCToServer
@@ -452,7 +450,6 @@ void dlgMain::timerEvent(QTimerEvent *)
                                      << "|" << m_bSendMailToServer
                                      << "|" << m_bRegisterLicenceKey
                                      << "|" << m_bReactivateLicenceKey
-                                     << "|" << m_bChangeLicenceKey
                                      << "|" << m_bValidateLicenceKey
                                      << EOM;
         return;
@@ -520,17 +517,7 @@ void dlgMain::timerEvent(QTimerEvent *)
     {
         m_bStartReactivateLicenceKey = false;
         m_bReactivateLicenceKey = true;
-        g_poBlnsHttp->reactivateLicenceKey( ui->ledCodeClient->text() );
-        return;
-    }
-
-    //---------------------------------------------------------------------------------------------
-    // Check if Licence key change is needed
-    if( m_bStartChangeLicenceKey )
-    {
-        m_bStartChangeLicenceKey = false;
-        m_bChangeLicenceKey = true;
-        g_poBlnsHttp->changeLicenceKey( ui->ledLicenceKeyCurrent->text(), ui->ledLicenceKey->text(), ui->ledCodeClient->text() );
+        g_poBlnsHttp->reactivateLicenceKey( ui->ledLicenceKeyCurrent->text(), ui->ledCodeClient->text() );
         return;
     }
 
@@ -555,7 +542,7 @@ void dlgMain::timerEvent(QTimerEvent *)
                 if( nWorktimeCounter < 1 )
                 {
                     m_bValidateLicenceKey = true;
-                    g_poBlnsHttp->validateLicenceKey();
+                    g_poBlnsHttp->validateLicenceKey( ui->ledLicenceKeyCurrent->text(), ui->ledCodeClient->text(), ui->ledCodeServer->text() );
                     return;
                 }
             }
@@ -861,7 +848,6 @@ void dlgMain::on_BlnsHttpErrorOccured()
     m_bSendMailToServer     = false;
     m_bRegisterLicenceKey   = false;
     m_bReactivateLicenceKey = false;
-    m_bChangeLicenceKey     = false;
     m_bValidateLicenceKey   = false;
     m_qsHttpStatus          = g_poBlnsHttp->errorMessage();
 
@@ -890,7 +876,6 @@ void dlgMain::on_BlnsHttpActionFinished(QString p_qsInfo)
     m_bSendMailToServer     = false;
     m_bRegisterLicenceKey   = false;
     m_bReactivateLicenceKey = false;
-    m_bChangeLicenceKey     = false;
     m_bValidateLicenceKey   = false;
     m_qsHttpStatus          = tr("HTTP Connection established");
 
@@ -1670,9 +1655,13 @@ void dlgMain::on_pbChangeLicence_clicked()
     {
         ui->lblStatusIconLicenceAction->setPixmap( QPixmap( ":/hourglass.png" ) );
 
-//        g_poDB->executeQTQuery( QString( "UPDATE licences SET `serial`=\"%1\" WHERE licenceId=%2" ) );
+        g_poDB->executeQTQuery( QString( "UPDATE licences SET `serial`=\"%1\" WHERE licenceId=%2" ) );
+        ui->ledLicenceKeyCurrent->setText( ui->ledLicenceKey->text() );
+        ui->ledLicenceKey->setText( "" );
+        ui->ledCodeServer->setText( "" );
+        ui->ledCodeClient->setText( QTime::currentTime().toString( "hhmmss" ) );
 
-        m_bStartChangeLicenceKey = true;
+        m_bStartReactivateLicenceKey = true;
     }
 }
 
@@ -1680,6 +1669,10 @@ void dlgMain::on_pbChangeLicence_clicked()
 void dlgMain::on_pbTest_clicked()
 //-------------------------------------------------------------------------------------------------
 {
+    QString qsResponse = "LICENCE_REGISTRATION_OK - 700919";
+
+    QMessageBox::information( this, "Teszt", qsResponse.right( qsResponse.length() - qsResponse.indexOf( '-' ) - 2 ) );
+
     ui->lblStatusIconLicenceAction->setPixmap( QPixmap( ":/status_green.png" ) );
 //    _displayUserNotification( INFO_Custom, "This button is for testing purpose.\nNo current action to be tested." );
 

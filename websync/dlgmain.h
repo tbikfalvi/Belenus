@@ -160,10 +160,8 @@ private:
     bool                 m_bSendMailToServer;
     bool                 m_bRegisterLicenceKey;
     bool                 m_bReactivateLicenceKey;
-    bool                 m_bChangeLicenceKey;
     bool                 m_bStartRegisterLicenceKey;
     bool                 m_bStartReactivateLicenceKey;
-    bool                 m_bStartChangeLicenceKey;
     bool                 m_bValidateLicenceKey;
     int                  m_nTimerPCStatusSync;
 //    int                  m_nTimerPCOnlineSync;
