@@ -1398,7 +1398,7 @@
                     </widget>
                    </item>
                    <item>
-                    <widget class="QLineEdit" name="ledLicenceKey"/>
+                    <widget class="QLineEdit" name="ledLicenceKeyNew"/>
                    </item>
                   </layout>
                  </item>

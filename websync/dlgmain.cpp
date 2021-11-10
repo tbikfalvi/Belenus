@@ -74,6 +74,8 @@ dlgMain::dlgMain(QWidget *parent, QString p_qsAppVersion) : QDialog(parent), ui(
 
     m_bServerAddressChanged             = false;
 
+    m_uiLicenceId                       = 0;
+
     g_poDB                              = new cQTMySQLConnection;
     g_poBlnsHttp                        = new cBlnsHttp();
 
@@ -182,8 +184,7 @@ dlgMain::dlgMain(QWidget *parent, QString p_qsAppVersion) : QDialog(parent), ui(
         poQuery = g_poDB->executeQTQuery( QString( "SELECT * FROM licences ORDER BY licenceId DESC LIMIT 1" ) );
         if( poQuery->first() )
         {
-            g_poBlnsHttp->setStudioLicence( poQuery->value( 0 ).toUInt(), poQuery->value( 1 ).toString() );
-
+            m_uiLicenceId = poQuery->value( 0 ).toUInt();
             ui->ledLicenceKeyCurrent->setText( poQuery->value( 1 ).toString() );
             ui->deValidated->setDate( poQuery->value( 9 ).toDate() );
             ui->ledCodeServer->setText( poQuery->value( 11 ).toString() );
@@ -205,6 +206,8 @@ dlgMain::dlgMain(QWidget *parent, QString p_qsAppVersion) : QDialog(parent), ui(
             {
                 ui->ledLicenceStatus->setText( tr( "Demo" ) );
             }
+
+            g_poBlnsHttp->setStudioLicence( m_uiLicenceId, ui->ledLicenceKeyCurrent->text() );
         }
 
         cQTMySQLQueryModel *m_poModel = new cQTMySQLQueryModel( this );
@@ -507,7 +510,7 @@ void dlgMain::timerEvent(QTimerEvent *)
     {
         m_bStartRegisterLicenceKey = false;
         m_bRegisterLicenceKey = true;
-        g_poBlnsHttp->registerLicenceKey( ui->ledLicenceKey->text(), ui->ledCodeClient->text() );
+        g_poBlnsHttp->registerLicenceKey( ui->ledLicenceKeyNew->text(), ui->ledCodeClient->text() );
         return;
     }
 
@@ -870,6 +873,21 @@ void dlgMain::on_BlnsHttpErrorOccured()
 // Executed when a http process finished
 void dlgMain::on_BlnsHttpActionFinished(QString p_qsInfo)
 {
+    if( m_bRegisterLicenceKey )
+    {
+        _licenceRegistrationAdmin();
+        _resetLicenceValidationTimers();
+    }
+    else if( m_bReactivateLicenceKey )
+    {
+        _licenceReactivationAdmin();
+        _resetLicenceValidationTimers();
+    }
+    else if( m_bValidateLicenceKey )
+    {
+        _resetLicenceValidationTimers();
+    }
+
     QString qsTooltip       = "";
     m_bSyncPCToServer       = false;
     m_bSyncPCFromServer     = false;
@@ -1507,7 +1525,14 @@ void dlgMain::on_ledWebServerAddress_textEdited(const QString &/*arg1*/)
 void dlgMain::on_chkHttpCommunicationEnabled_clicked()
 //-------------------------------------------------------------------------------------------------
 {
-    g_poDB->executeQTQuery( QString( "UPDATE settings SET value=\"%1\" WHERE identifier=\"SYNC_Enabled\" " ).arg( ui->chkHttpCommunicationEnabled->isChecked() ) );
+    try
+    {
+        g_poDB->executeQTQuery( QString( "UPDATE settings SET value=\"%1\" WHERE identifier=\"SYNC_Enabled\" " ).arg( ui->chkHttpCommunicationEnabled->isChecked() ) );
+    }
+    catch( cSevException &e )
+    {
+        g_obLogger(e.severity()) << e.what() << EOM;
+    }
 }
 
 //====================================================================================
@@ -1590,7 +1615,81 @@ void dlgMain::_saveSettings()
 //    obPref.setValue( "OnlinePatientCardType", m_uiPatientCardTypeId );
 //    obPref.setValue( "OnlinePaymentMethod", m_uiPaymentMethodId );
 
-    g_poDB->executeQTQuery( QString( "UPDATE settings SET value=\"%1\" WHERE identifier=\"SERVER_Address\" " ).arg( ui->ledWebServerAddress->text().replace("\\\\","/") ) );
+    try
+    {
+        g_poDB->executeQTQuery( QString( "UPDATE settings SET value=\"%1\" WHERE identifier=\"SERVER_Address\" " ).arg( ui->ledWebServerAddress->text().replace("\\\\","/") ) );
+    }
+    catch( cSevException &e )
+    {
+        g_obLogger(e.severity()) << e.what() << EOM;
+    }
+}
+
+//=================================================================================================
+void dlgMain::_licenceRegistrationAdmin()
+//-------------------------------------------------------------------------------------------------
+{
+    QSqlQuery   *poQuery = NULL;
+
+    QString qsLicenceId     = "";
+    QString qsLicenceText   = ui->ledLicenceKeyNew->text();
+
+    for( int i=0; i<qsLicenceText.length(); i++ )
+    {
+        if( qsLicenceText.at(i).isDigit() )
+        {
+            qsLicenceId.append( qsLicenceText.at(i) );
+        }
+    }
+
+    try
+    {
+        poQuery = g_poDB->executeQTQuery( QString( "INSERT INTO licences ( `licenceId`, `serial`, `lastValidated`, `Type`, `Act`, `Cod` ) "
+                                                   "VALUES ( %1, '%2', '%3' )" ).arg( qsLicenceId.toUInt() )
+                                                                                .arg( qsLicenceText )
+                                                                                .arg( QDate::currentDate().toString("yyyy-MM-dd") )
+                                                                                .arg( "VALIDATED" )
+                                                                                .arg( ui->ledCodeServer->text() )
+                                                                                .arg( ui->ledCodeClient->text() )
+                                         );
+        if( poQuery )
+        {
+            m_uiLicenceId = poQuery->lastInsertId().toUInt();
+        }
+
+        ui->ledLicenceKeyCurrent->setText( qsLicenceText );
+        ui->ledLicenceKeyCurrent->setText( "" );
+        ui->ledCodeServer->setText( g_poBlnsHttp->licenceServerCode() );
+
+        g_poBlnsHttp->setStudioLicence( m_uiLicenceId, ui->ledLicenceKeyCurrent->text() );
+    }
+    catch( cSevException &e )
+    {
+        g_obLogger(e.severity()) << e.what() << EOM;
+    }
+}
+
+//=================================================================================================
+void dlgMain::_licenceReactivationAdmin()
+//-------------------------------------------------------------------------------------------------
+{
+    ui->ledCodeServer->setText( g_poBlnsHttp->licenceServerCode() );
+
+    try
+    {
+        g_poDB->executeQTQuery( QString( "UPDATE licences SET Cod=\"%1\" WHERE licenceId=%2" ).arg( ui->ledCodeServer->text() ).arg( m_uiLicenceId ) );
+    }
+    catch( cSevException &e )
+    {
+        g_obLogger(e.severity()) << e.what() << EOM;
+    }
+}
+
+//=================================================================================================
+void dlgMain::_resetLicenceValidationTimers()
+//-------------------------------------------------------------------------------------------------
+{
+
 }
 
 //=================================================================================================
@@ -1613,11 +1712,11 @@ void dlgMain::on_pbRegisterLicence_clicked()
         ui->pbChangeLicence->setFocus();
         return;
     }
-    if( ui->ledLicenceKey->text().length() != 13 )
+    if( ui->ledLicenceKeyNew->text().length() != 13 )
     {
         QMessageBox::critical( this, tr("Error"), tr("The licence key is invalid.\n"
                                                       "Please check and retype it again.") );
-        ui->ledLicenceKey->setFocus();
+        ui->ledLicenceKeyNew->setFocus();
         return;
     }
 
@@ -1655,9 +1754,16 @@ void dlgMain::on_pbChangeLicence_clicked()
     {
         ui->lblStatusIconLicenceAction->setPixmap( QPixmap( ":/hourglass.png" ) );
 
-        g_poDB->executeQTQuery( QString( "UPDATE licences SET `serial`=\"%1\" WHERE licenceId=%2" ) );
-        ui->ledLicenceKeyCurrent->setText( ui->ledLicenceKey->text() );
-        ui->ledLicenceKey->setText( "" );
+        try
+        {
+            g_poDB->executeQTQuery( QString( "UPDATE licences SET `serial`=\"%1\" WHERE licenceId=%2" ).arg( ui->ledLicenceKeyNew->text() ).arg( m_uiLicenceId ) );
+        }
+        catch( cSevException &e )
+        {
+            g_obLogger(e.severity()) << e.what() << EOM;
+        }
+        ui->ledLicenceKeyCurrent->setText( ui->ledLicenceKeyNew->text() );
+        ui->ledLicenceKeyNew->setText( "" );
         ui->ledCodeServer->setText( "" );
         ui->ledCodeClient->setText( QTime::currentTime().toString( "hhmmss" ) );
 
@@ -1669,9 +1775,8 @@ void dlgMain::on_pbChangeLicence_clicked()
 void dlgMain::on_pbTest_clicked()
 //-------------------------------------------------------------------------------------------------
 {
-    QString qsResponse = "LICENCE_REGISTRATION_OK - 700919";
-
-    QMessageBox::information( this, "Teszt", qsResponse.right( qsResponse.length() - qsResponse.indexOf( '-' ) - 2 ) );
+//    QString qsResponse = "LICENCE_REGISTRATION_OK - 700919";
+//    QMessageBox::information( this, "Teszt", qsResponse.right( qsResponse.length() - qsResponse.indexOf( '-' ) - 2 ) );
 
     ui->lblStatusIconLicenceAction->setPixmap( QPixmap( ":/status_green.png" ) );
 //    _displayUserNotification( INFO_Custom, "This button is for testing purpose.\nNo current action to be tested." );

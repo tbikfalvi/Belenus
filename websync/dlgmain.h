@@ -197,6 +197,8 @@ private:
     QString              m_qsServerAddress;
     bool                 m_bServerAddressChanged;
 
+    unsigned int         m_uiLicenceId;
+
     void                _setActions();
     void                _setMenu();
     void                _sendPCData( unsigned int p_uiId, QString p_qsBarcode );
@@ -214,6 +216,9 @@ private:
     QString             _bytearrayToString( QString p_qsString );
     bool                _isAppicationRunning( QString p_qsAppName );
     void                _saveSettings();
+    void                _licenceRegistrationAdmin();
+    void                _licenceReactivationAdmin();
+    void                _resetLicenceValidationTimers();
 };
 
 #endif // DLGMAIN_H
