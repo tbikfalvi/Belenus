@@ -1359,7 +1359,7 @@
                   </widget>
                  </item>
                  <item row="5" column="1">
-                  <widget class="QLabel" name="lblWorktimeCounterValue">
+                  <widget class="QLabel" name="lblLicenceCheckCounterValue">
                    <property name="text">
                     <string>00:00</string>
                    </property>
@@ -1373,9 +1373,9 @@
                   </widget>
                  </item>
                  <item row="5" column="0">
-                  <widget class="QLabel" name="lblWorktimeCounter">
+                  <widget class="QLabel" name="lblLicenceCheckCounter">
                    <property name="text">
-                    <string>Worktime check in ...</string>
+                    <string>Licence check in ...</string>
                    </property>
                   </widget>
                  </item>

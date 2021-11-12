@@ -4054,16 +4054,13 @@ void cWndMain::_checkVersions()
     QString      qsAppVersion       = "";
     QString      qsDbVersion        = "";
 
-    poQuery = g_poDB->executeQTQuery( QString( "SELECT * FROM settings " ) );
-    while( poQuery->next() )
-    {
-        QString qsIdentifier = poQuery->value(1).toString();
+    poQuery = g_poDB->executeQTQuery( QString( "SELECT * FROM settings WHERE identifier=\"APPLICATION_VERSION\"" ) );
+    poQuery->first();
+    qsAppVersion = poQuery->value( 2 ).toString();
 
-        if( qsIdentifier.compare("APPLICATION_VERSION") == 0 )
-            qsAppVersion = poQuery->value( 2 ).toString();
-        else if( qsIdentifier.compare("DATABASE_VERSION") == 0 )
-            qsDbVersion = poQuery->value( 2 ).toString();
-    }
+    poQuery = g_poDB->executeQTQuery( QString( "SELECT * FROM settings WHERE identifier=\"DATABASE_VERSION\"" ) );
+    poQuery->first();
+    qsDbVersion = poQuery->value( 2 ).toString();
 
     qsAppVersion.replace( "_", "." );
     qsDbVersion.replace( "_", "." );
@@ -4079,6 +4076,7 @@ void cWndMain::_checkVersions()
                                   "Version numbers stored in database:\n"
                                   "Application version number: %3\n"
                                   "Database version number: %4\n\n"
+                                  "The proper operation of the application is not guaranteed.\n"
                                   "It is recommended to exit application and to contact system administrator.")
                               .arg( g_poPrefs->getVersion() )
                               .arg( g_poPrefs->getVersionDb() )

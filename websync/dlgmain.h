@@ -63,7 +63,7 @@ class dlgMain : public QDialog
     };
 
 public:
-    explicit dlgMain(QWidget *parent = 0, QString p_qsAppVersion = "1.0.0.0");
+    explicit dlgMain(QWidget *parent = 0, QString p_qsAppVersion = "1.0.0.0", QString p_qsDbVersion = "1.0.0.0");
     ~dlgMain();
     bool checkTimeValues();
 
@@ -147,6 +147,9 @@ private:
     QAction             *actionResetSQL;
     QAction             *actionResetHTTP;
 */
+    QString              m_qsAppVersion;
+    QString              m_qsDBVersion;
+
     int                  m_nTimer;
     bool                 m_bMousePressed;
     int                  m_nMouseX;
@@ -166,7 +169,6 @@ private:
     int                  m_nTimerPCStatusSync;
 //    int                  m_nTimerPCOnlineSync;
     int                  m_nTimerSendMailCheck;
-    int                  m_nTimerLicenceValidationCheck;
     int                  m_nIndexUser;
     int                  m_nIndexPCStatusSync;
 //    int                  m_nIndexPCOnlineSync;
@@ -219,6 +221,7 @@ private:
     void                _licenceRegistrationAdmin();
     void                _licenceReactivationAdmin();
     void                _resetLicenceValidationTimers();
+    void                _checkVersions();
 };
 
 #endif // DLGMAIN_H

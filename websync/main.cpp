@@ -11,6 +11,7 @@ QTranslator     *poTransQT;
 QApplication    *apMainApp;
 
 #define APPLICATION_VERSION_NUMBER  "2.0.0.0"
+#define DATABASE_VERSION_NUMBER     "2.0.0.0"
 
 #include "../framework/qtlogger.h"
 #include "../framework/qtframework.h"
@@ -81,7 +82,7 @@ int main(int argc, char *argv[])
         return 0;
     }
 
-    dlgMain obDlgMain( 0, QString( APPLICATION_VERSION_NUMBER ) );
+    dlgMain obDlgMain( 0, QString( APPLICATION_VERSION_NUMBER ), QString( DATABASE_VERSION_NUMBER ) );
 
     if( argc > 1 )
     {

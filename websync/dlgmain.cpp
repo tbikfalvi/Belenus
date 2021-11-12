@@ -18,13 +18,16 @@
 using namespace std;
 
 //=================================================================================================
-dlgMain::dlgMain(QWidget *parent, QString p_qsAppVersion) : QDialog(parent), ui(new Ui::dlgMain)
+dlgMain::dlgMain(QWidget *parent, QString p_qsAppVersion, QString p_qsDbVersion) : QDialog(parent), ui(new Ui::dlgMain)
 {
     ui->setupUi(this);
 
     //---------------------------------------------------------------------------------------------
     // Initialize variables
     g_obLogger(cSeverity::DEBUG) << "Initialize main window variables" << EOM;
+
+    m_qsAppVersion                      = p_qsAppVersion;
+    m_qsDBVersion                       = p_qsDbVersion;
 
     m_bStartFinished                    = false;
 
@@ -67,8 +70,6 @@ dlgMain::dlgMain(QWidget *parent, QString p_qsAppVersion) : QDialog(parent), ui(
     m_nIndexCheckEnablers               = 0;
     m_nIndexSendMailSync                = 0;
     m_nIndexLicenceValidation           = 0;
-
-    m_nTimerLicenceValidationCheck      = 3600;
 
     m_enGroup                           = GROUP_MIN;
 
@@ -173,7 +174,7 @@ dlgMain::dlgMain(QWidget *parent, QString p_qsAppVersion) : QDialog(parent), ui(
             m_qsServerAddress = poQuery->value( 0 ).toString();
         }
 
-        poQuery = g_poDB->executeQTQuery( "SELECT value FROM `settings` WHERE identifier='LICENCE_WORKTIME_COUNTER' " );
+        poQuery = g_poDB->executeQTQuery( "SELECT value FROM `settings` WHERE identifier='LICENCE_CHECK_COUNTER' " );
         if( poQuery->first() )
         {
             int nHour = (poQuery->value( 0 ).toInt() * 15)/60;
@@ -343,17 +344,26 @@ void dlgMain::timerEvent(QTimerEvent *)
     m_nIndexUser++;
     m_nIndexCheckEnablers++;
     m_nIndexSendMailSync++;
-    m_nIndexLicenceValidation++;
+
+    //---------------------------------------------------------------------------------------------
+    // Licence check and validation only needs if it is not demo licence
+    if( m_uiLicenceId > 1 )
+    {
+        m_nIndexLicenceValidation++;
+    }
+
+    //---------------------------------------------------------------------------------------------
 
     ui->lblIndexPCData->setText( QString::number(m_nIndexPCStatusSync) );
 //    ui->lblIndexPCOnline->setText( QString::number(m_nIndexPCOnlineSync) );
     ui->lblIndexMailSendCheck->setText( QString::number(m_nIndexSendMailSync ) );
-    ui->lblWorktimeCounterValue->setText( QString( "%1:%2" ).arg( (m_nTimerLicenceValidationCheck-m_nIndexLicenceValidation)/60 ).arg( (m_nTimerLicenceValidationCheck-m_nIndexLicenceValidation)%60 ) );
+    ui->lblLicenceCheckCounterValue->setText( QString( "%1:%2" ).arg( (3600-m_nIndexLicenceValidation)/60 ).arg( (3600-m_nIndexLicenceValidation)%60 ) );
 
     //---------------------------------------------------------------------------------------------
     // Executed only at the beginning
     if( m_bStartTimerOnStart )
     {
+        _checkVersions();
         killTimer( m_nTimer );
         if( m_bShowMainWindowOnStart )
         {
@@ -525,24 +535,24 @@ void dlgMain::timerEvent(QTimerEvent *)
     }
 
     //---------------------------------------------------------------------------------------------
-    // Check every hour if the licence key validetion has to be checked or not
-    if( m_nIndexLicenceValidation > m_nTimerLicenceValidationCheck )
+    // Check every hour if the licence key validation has to be checked or not
+    if( m_nIndexLicenceValidation > 3600 )
     {
         m_nIndexLicenceValidation = 0;
 
         // Retrieve worktime counter from database, if it reached zero, then validation needed
         try
         {
-            QSqlQuery *poQuery = g_poDB->executeQTQuery( "SELECT value FROM `settings` WHERE identifier='LICENCE_WORKTIME_COUNTER' " );
+            QSqlQuery *poQuery = g_poDB->executeQTQuery( "SELECT value FROM `settings` WHERE identifier='LICENCE_CHECK_COUNTER' " );
 
             if( poQuery->first() )
             {
-                int nWorktimeCounter = poQuery->value( 0 ).toInt();
-                int nHour = (nWorktimeCounter * 15)/60;
+                int nLicenceCheckCounter = poQuery->value( 0 ).toInt();
+                int nHour = (nLicenceCheckCounter * 15)/60;
 
                 ui->lblLicenceCheckValue->setText( QString( "%1 work hours" ).arg( nHour ) );
 
-                if( nWorktimeCounter < 1 )
+                if( nLicenceCheckCounter < 1 )
                 {
                     m_bValidateLicenceKey = true;
                     g_poBlnsHttp->validateLicenceKey( ui->ledLicenceKeyCurrent->text(), ui->ledCodeClient->text(), ui->ledCodeServer->text() );
@@ -1840,3 +1850,40 @@ void dlgMain::on_pbTest_clicked()
 */
 }
 
+//=================================================================================================
+void dlgMain::_checkVersions()
+//-------------------------------------------------------------------------------------------------
+{
+    QSqlQuery   *poQuery            = NULL;
+    QString      qsAppVersion       = "";
+    QString      qsDbVersion        = "";
+
+    poQuery = g_poDB->executeQTQuery( QString( "SELECT * FROM settings WHERE identifier=\"APPLICATION_VERSION\"" ) );
+    poQuery->first();
+    qsAppVersion = poQuery->value( 2 ).toString();
+
+    poQuery = g_poDB->executeQTQuery( QString( "SELECT * FROM settings WHERE identifier=\"DATABASE_VERSION\"" ) );
+    poQuery->first();
+    qsDbVersion = poQuery->value( 2 ).toString();
+
+    qsAppVersion.replace( "_", "." );
+    qsDbVersion.replace( "_", "." );
+
+    if( qsAppVersion.compare( m_qsAppVersion ) || qsDbVersion.compare( m_qsDBVersion ) )
+    {
+        QMessageBox::warning( this, tr("Warning"),
+                              tr( "The version information stored in database is not match.\n\n"
+                                  "Correct version numbers:\n"
+                                  "Application version number: %1\n"
+                                  "Database version number: %2\n\n"
+                                  "Version numbers stored in database:\n"
+                                  "Application version number: %3\n"
+                                  "Database version number: %4\n\n"
+                                  "The proper operation of the application is not guaranteed.\n"
+                                  "It is recommended to exit application and to contact system administrator.")
+                              .arg( m_qsAppVersion )
+                              .arg( m_qsDBVersion )
+                              .arg( qsAppVersion )
+                              .arg( qsDbVersion ) );
+    }
+}
