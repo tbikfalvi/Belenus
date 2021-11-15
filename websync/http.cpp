@@ -1215,7 +1215,7 @@ void cBlnsHttp::_httpProcessResponse()
             break;
 
         case cBlnsHttpAction::HA_LICENCE_CODE_VALIDATE:
-            g_obLogger(cSeverity::DEBUG) << "HTTP: Read check response from licence.php" << EOM;
+            g_obLogger(cSeverity::DEBUG) << "HTTP: Read check response from integrity licence.php" << EOM;
             if( !_processLicenceIntegrity() )
             {
                 g_obLogger(cSeverity::ERROR) << "Error occured during processing licence.php ErrorCode: " << m_inHttpProcessStep << EOM;
@@ -1331,6 +1331,8 @@ void cBlnsHttp::_readTokenFromFile()
 
     QTextStream qtsFile(&file);
     QString     qsLine = qtsFile.readLine();
+
+    g_obLogger(cSeverity::DEBUG) << "HTTP: Token [" << qsLine << "]" << EOM;
 
     m_qsToken = qsLine.left( 16 );
 }
@@ -2266,28 +2268,28 @@ bool cBlnsHttp::_processLicence()
     }
     else if( qsResponse.contains( "LICENCE_ALREADY_REGISTERED" ) )
     {
-        m_qsError = tr("Server did not received token");
+        m_qsError = tr("The licence code already registered.\nPlease use a different licence code.");
         g_obLogger(cSeverity::WARNING) << "HTTP: Server did not received token" << EOM;
         emit signalErrorOccured();
         m_inHttpProcessStep = HTTP_ERROR_LICENCE_ALREADY_REGISTERED;
     }
     else if( qsResponse.contains( "LICENCE_INACTIVE" ) )
     {
-        m_qsError = tr("Server did not received token");
+        m_qsError = tr("The licence code set to inactive on Kiwisun server.\nPlease set the licence code to active.");
         g_obLogger(cSeverity::WARNING) << "HTTP: Server did not received token" << EOM;
         emit signalErrorOccured();
         m_inHttpProcessStep = HTTP_ERROR_LICENCE_INACTIVE;
     }
     else if( qsResponse.contains( "LICENCE_CLIENT_CODE_INVALID" ) )
     {
-        m_qsError = tr("Server did not received token");
+        m_qsError = tr("The client validation code is invalid.\nPlease contact your Kiwisun administrator!");
         g_obLogger(cSeverity::WARNING) << "HTTP: Server did not received token" << EOM;
         emit signalErrorOccured();
         m_inHttpProcessStep = HTTP_ERROR_LICENCE_CLIENT_CODE_INVALID;
     }
     else if( qsResponse.contains( "LICENCE_SERVER_CODE_INVALID" ) )
     {
-        m_qsError = tr("Server did not received token");
+        m_qsError = tr("The server validation code is invalid.\nPlease contact your Kiwisun administrator!");
         g_obLogger(cSeverity::WARNING) << "HTTP: Server did not received token" << EOM;
         emit signalErrorOccured();
         m_inHttpProcessStep = HTTP_ERROR_LICENCE_SERVER_CODE_INVALID;
@@ -2306,9 +2308,11 @@ bool cBlnsHttp::_processLicence()
 //=================================================================================================
 bool cBlnsHttp::_processLicenceIntegrity()
 //-------------------------------------------------------------------------------------------------
-{
-    QString fileName = QString("%1\\licence.php").arg( QDir::currentPath() );
+{    
+    QString fileName = QString("%1/licence.php").arg( QDir::currentPath() );
     QFile   file( fileName );
+
+    g_obLogger(cSeverity::DEBUG) << "HTTP: Response file [" << fileName << "]" << EOM;
 
     if (!file.open(QIODevice::ReadOnly | QIODevice::Text))
     {

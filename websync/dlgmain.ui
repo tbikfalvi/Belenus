@@ -1422,7 +1422,7 @@
                  <item>
                   <widget class="QPushButton" name="pbActivateLicence">
                    <property name="text">
-                    <string>Reactivate licence key</string>
+                    <string>Reactivate current licence key</string>
                    </property>
                    <property name="icon">
                     <iconset resource="websync.qrc">

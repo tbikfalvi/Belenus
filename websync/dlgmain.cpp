@@ -856,12 +856,7 @@ void dlgMain::on_pbClearAllPatientCard_clicked()
 void dlgMain::on_BlnsHttpErrorOccured()
 {
     QString qsTooltip       = "";
-    m_bSyncPCToServer       = false;
-    m_bSyncPCFromServer     = false;
-    m_bSendMailToServer     = false;
-    m_bRegisterLicenceKey   = false;
-    m_bReactivateLicenceKey = false;
-    m_bValidateLicenceKey   = false;
+
     m_qsHttpStatus          = g_poBlnsHttp->errorMessage();
 
     qsTooltip.append( m_qsHttpStatus );
@@ -871,18 +866,51 @@ void dlgMain::on_BlnsHttpErrorOccured()
         qsTooltip.append( g_poBlnsHttp->settingsInfo() );
     }
 
-    ui->lblStatusIconWebServer->setPixmap( QPixmap( ":/status_red.png" ) );
-    ui->lblStatusIconWebServer->setToolTip( qsTooltip );
-    actionStatusHttp->setIcon( QIcon( ":/status_red.png" ) );
-    ui->lblWebServerStatusText->setToolTip( g_poBlnsHttp->errorMessage() );
+    if( m_bRegisterLicenceKey || m_bReactivateLicenceKey || m_bValidateLicenceKey )
+    {
+        ui->lblStatusIconLicenceAction->setPixmap( QPixmap( ":/status_red.png" ) );
+        ui->lblStatusIconLicenceAction->setToolTip( qsTooltip );
+
+        if( m_qsHttpStatus.contains( tr("Licence code integrity broken") ) )
+        {
+            QMessageBox::critical( this, tr("Error"), tr("The given licence code is not validated in licence server.\n"
+                                                         "Please contact the licence code provider.") );
+        }
+    }
+    else
+    {
+        ui->lblStatusIconWebServer->setPixmap( QPixmap( ":/status_red.png" ) );
+        ui->lblStatusIconWebServer->setToolTip( qsTooltip );
+        actionStatusHttp->setIcon( QIcon( ":/status_red.png" ) );
+        ui->lblWebServerStatusText->setToolTip( g_poBlnsHttp->errorMessage() );
+        trayIcon->setIcon( QIcon( ":/websync_red.png" ) );
+    }
+
     ui->lblStatusSync->setPixmap( QPixmap( ":/ok.png" ) );
-    trayIcon->setIcon( QIcon( ":/websync_red.png" ) );
     _displayUserNotification( INFO_HttpFailed, g_poBlnsHttp->errorMessage() );
+
+    m_bSyncPCToServer       = false;
+    m_bSyncPCFromServer     = false;
+    m_bSendMailToServer     = false;
+    m_bRegisterLicenceKey   = false;
+    m_bReactivateLicenceKey = false;
+    m_bValidateLicenceKey   = false;
 }
 //=================================================================================================
 // Executed when a http process finished
 void dlgMain::on_BlnsHttpActionFinished(QString p_qsInfo)
 {
+    QString qsTooltip       = "";
+
+    m_qsHttpStatus          = tr("HTTP Communication succeeded");
+
+    qsTooltip.append( m_qsHttpStatus );
+    if( _isInGroup( GROUP_SYSTEM ) )
+    {
+        qsTooltip.append( "<br><br>" );
+        qsTooltip.append( g_poBlnsHttp->settingsInfo() );
+    }
+
     if( m_bRegisterLicenceKey )
     {
         _licenceRegistrationAdmin();
@@ -897,31 +925,25 @@ void dlgMain::on_BlnsHttpActionFinished(QString p_qsInfo)
     {
         _resetLicenceValidationTimers();
     }
+    else
+    {
+        ui->lblStatusIconWebServer->setPixmap( QPixmap( ":/status_green.png" ) );
+        ui->lblStatusIconWebServer->setToolTip( qsTooltip );
+        actionStatusHttp->setIcon( QIcon( ":/status_green.png" ) );
+        ui->lblWebServerStatusText->setToolTip( tr("HTTP Connection established") );
+        trayIcon->setIcon( QIcon( ":/websync.png" ) );
+    }
 
-    QString qsTooltip       = "";
+    m_FlagHttpFailed = false;
+    g_obLogger(cSeverity::INFO) << p_qsInfo << EOM;
+    ui->lblStatusSync->setPixmap( QPixmap( ":/ok.png" ) );
+
     m_bSyncPCToServer       = false;
     m_bSyncPCFromServer     = false;
     m_bSendMailToServer     = false;
     m_bRegisterLicenceKey   = false;
     m_bReactivateLicenceKey = false;
     m_bValidateLicenceKey   = false;
-    m_qsHttpStatus          = tr("HTTP Connection established");
-
-    qsTooltip.append( m_qsHttpStatus );
-    if( _isInGroup( GROUP_SYSTEM ) )
-    {
-        qsTooltip.append( "<br><br>" );
-        qsTooltip.append( g_poBlnsHttp->settingsInfo() );
-    }
-
-    ui->lblStatusIconWebServer->setPixmap( QPixmap( ":/status_green.png" ) );
-    ui->lblStatusIconWebServer->setToolTip( qsTooltip );
-    actionStatusHttp->setIcon( QIcon( ":/status_green.png" ) );
-    ui->lblWebServerStatusText->setToolTip( tr("HTTP Connection established") );
-    trayIcon->setIcon( QIcon( ":/websync.png" ) );
-    m_FlagHttpFailed = false;
-    g_obLogger(cSeverity::INFO) << p_qsInfo << EOM;
-    ui->lblStatusSync->setPixmap( QPixmap( ":/ok.png" ) );
 }
 //=================================================================================================
 // Executed when patientcard data updated on server
@@ -975,6 +997,11 @@ void dlgMain::_setGUIEnabled(bool p_bEnabled)
     ui->lblIndexPCData->setVisible( _isInGroup( GROUP_SYSTEM ) );
     ui->lblIndexPCOnline->setVisible( false/*_isInGroup( GROUP_SYSTEM )*/ );
     ui->lblIndexMailSendCheck->setVisible( _isInGroup( GROUP_SYSTEM ) );
+
+    ui->pbRegisterLicence->setEnabled( GROUP_SYSTEM && m_uiLicenceId < 2 );
+    ui->pbActivateLicence->setEnabled( GROUP_SYSTEM && m_uiLicenceId > 1 );
+    ui->pbChangeLicence->setEnabled( GROUP_SYSTEM && m_uiLicenceId > 1 );
+
     ui->pbTest->setVisible( _isInGroup( GROUP_SYSTEM ) );
     ui->pbTest->setEnabled( _isInGroup( GROUP_SYSTEM ) );
 }
@@ -1639,8 +1666,6 @@ void dlgMain::_saveSettings()
 void dlgMain::_licenceRegistrationAdmin()
 //-------------------------------------------------------------------------------------------------
 {
-    QSqlQuery   *poQuery = NULL;
-
     QString qsLicenceId     = "";
     QString qsLicenceText   = ui->ledLicenceKeyNew->text();
 
@@ -1654,24 +1679,34 @@ void dlgMain::_licenceRegistrationAdmin()
 
     try
     {
-        poQuery = g_poDB->executeQTQuery( QString( "INSERT INTO licences ( `licenceId`, `serial`, `lastValidated`, `Type`, `Act`, `Cod` ) "
-                                                   "VALUES ( %1, '%2', '%3' )" ).arg( qsLicenceId.toUInt() )
-                                                                                .arg( qsLicenceText )
-                                                                                .arg( QDate::currentDate().toString("yyyy-MM-dd") )
-                                                                                .arg( "VALIDATED" )
-                                                                                .arg( ui->ledCodeServer->text() )
-                                                                                .arg( ui->ledCodeClient->text() )
+        g_poDB->executeQTQuery( QString( "INSERT INTO licences ( `licenceId`, `serial`, `lastValidated`, `Type`, `Act`, `Cod` ) "
+                                         "VALUES ( %1, '%2', '%3', '%4', '%5', '%6' )" )
+                                        .arg( qsLicenceId.toUInt() )
+                                        .arg( qsLicenceText )
+                                        .arg( QDate::currentDate().toString("yyyy-MM-dd") )
+                                        .arg( "VALIDATED" )
+                                        .arg( g_poBlnsHttp->licenceServerCode() )
+                                        .arg( ui->ledCodeClient->text() )
                                          );
-        if( poQuery )
-        {
-            m_uiLicenceId = poQuery->lastInsertId().toUInt();
-        }
+
+        m_uiLicenceId = qsLicenceId.toUInt();
 
         ui->ledLicenceKeyCurrent->setText( qsLicenceText );
-        ui->ledLicenceKeyCurrent->setText( "" );
+        ui->deValidated->setDate( QDate::currentDate() );
+        ui->ledLicenceStatus->setText( tr( "Validated" ) );
         ui->ledCodeServer->setText( g_poBlnsHttp->licenceServerCode() );
+        ui->ledLicenceKeyNew->setText( "" );
+
+        ui->ledLicenceKeyNew->setFocus();
+
+        ui->lblStatusIconLicenceAction->setPixmap( QPixmap( ":/status_green.png" ) );
+        ui->lblStatusIconLicenceAction->setToolTip( tr( "Licence key registration succeeded." ) );
 
         g_poBlnsHttp->setStudioLicence( m_uiLicenceId, ui->ledLicenceKeyCurrent->text() );
+
+        _displayUserNotification( INFO_Custom, tr( "Licence key registration succeeded.\n%1" ).arg( m_uiLicenceId ) );
+
+        _setGUIEnabled();
     }
     catch( cSevException &e )
     {
@@ -1706,25 +1741,10 @@ void dlgMain::_resetLicenceValidationTimers()
 void dlgMain::on_pbRegisterLicence_clicked()
 //-------------------------------------------------------------------------------------------------
 {
-    if( ui->ledCodeServer->text().length() > 0 && ui->ledCodeClient->text().length() > 0 )
-    {
-        QMessageBox::warning( this, tr("Warning"), tr("This licence key already registered at server.\n"
-                                                      "If you want to re-register it, please use the\n"
-                                                      "'Reactivate licence key' button.") );
-        ui->pbActivateLicence->setFocus();
-        return;
-    }
-    if( g_poBlnsHttp->licenceId() > 1 )
-    {
-        QMessageBox::warning( this, tr("Warning"), tr("There is a valid licence key already registered for this client.\n"
-                                                      "If you want to change it, please use the\n"
-                                                      "'Change current key to new' button.") );
-        ui->pbChangeLicence->setFocus();
-        return;
-    }
     if( ui->ledLicenceKeyNew->text().length() != 13 )
     {
-        QMessageBox::critical( this, tr("Error"), tr("The licence key is invalid.\n"
+        QMessageBox::critical( this, tr("Error"), tr("The format of the licence key is invalid.\n"
+                                                     "The licence key must be 13 characters length\n."
                                                       "Please check and retype it again.") );
         ui->ledLicenceKeyNew->setFocus();
         return;
