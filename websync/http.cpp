@@ -305,8 +305,8 @@ void cBlnsHttp::registerLicenceKey( QString p_qsLicenceString, QString p_qsClien
         return;
     }
 
-    m_qsLicenceStringNew    = p_qsLicenceString;
-    m_qsLicenceClientCode   = p_qsClientCode;
+    m_qsLicenceStringValidate   = p_qsLicenceString;
+    m_qsLicenceClientCode       = p_qsClientCode;
 
     m_vrHttpActions.clear();
     m_vrHttpActions.push_back( cBlnsHttpAction::HA_AUTHENTICATE );
@@ -333,8 +333,8 @@ void cBlnsHttp::reactivateLicenceKey(QString p_qsLicenceString, QString p_qsClie
         return;
     }
 
-    m_qsLicenceStringCurrent= p_qsLicenceString;
-    m_qsLicenceClientCode   = p_qsClientCode;
+    m_qsLicenceStringValidate   = p_qsLicenceString;
+    m_qsLicenceClientCode       = p_qsClientCode;
 
     m_vrHttpActions.clear();
     m_vrHttpActions.push_back( cBlnsHttpAction::HA_AUTHENTICATE );
@@ -361,12 +361,13 @@ void cBlnsHttp::validateLicenceKey(QString p_qsLicenceString, QString p_qsClient
         return;
     }
 
-    m_qsLicenceStringCurrent= p_qsLicenceString;
-    m_qsLicenceClientCode   = p_qsClientCode;
-    m_qsLicenceServerCode   = p_qsServerCode;
+    m_qsLicenceStringValidate   = p_qsLicenceString;
+    m_qsLicenceClientCode       = p_qsClientCode;
+    m_qsLicenceServerCode       = p_qsServerCode;
 
     m_vrHttpActions.clear();
     m_vrHttpActions.push_back( cBlnsHttpAction::HA_AUTHENTICATE );
+    m_vrHttpActions.push_back( cBlnsHttpAction::HA_LICENCE_CODE_VALIDATE );
     m_vrHttpActions.push_back( cBlnsHttpAction::HA_LICENCE_CHECK );
     m_vrHttpActions.push_back( cBlnsHttpAction::HA_PROCESSFINISHED );
 
@@ -989,7 +990,7 @@ void cBlnsHttp::_httpRegisterLicence()
 
     qsFileName.append( QString( "?token=%1" ).arg( m_qsToken ) );
     qsFileName.append( QString( "&Cmd=LICENCE_REGISTER" ) );
-    qsFileName.append( QString( "&StudioId=%1" ).arg( m_qsLicenceStringNew ) );
+    qsFileName.append( QString( "&StudioId=%1" ).arg( m_qsLicenceStringValidate ) );
     qsFileName.append( QString( "&ClientCode=%1" ).arg( m_qsLicenceClientCode ) );
 
     g_obLogger(cSeverity::DEBUG) << "HTTP: Register licence ["
@@ -1007,7 +1008,7 @@ void cBlnsHttp::_httpValidateLicenceIntegrity()
     // http://download.bikfalvi.hu/belenus/official/licence.php
     QString qsFileName      = "http://download.bikfalvi.hu/belenus/official/licence.php";
 
-    qsFileName.append( QString( "?blns=%1" ).arg( m_qsLicenceStringNew ) );
+    qsFileName.append( QString( "?blns=%1" ).arg( m_qsLicenceStringValidate ) );
 
     g_obLogger(cSeverity::DEBUG) << "HTTP: Checking licence code integrity ["
                                  << qsFileName
@@ -1031,7 +1032,7 @@ void cBlnsHttp::_httpReactivateLicence()
 
     qsFileName.append( QString( "?token=%1" ).arg( m_qsToken ) );
     qsFileName.append( QString( "&Cmd=LICENCE_REACTIVATE" ) );
-    qsFileName.append( QString( "&StudioId=%1" ).arg( m_qsLicenceStringCurrent ) );
+    qsFileName.append( QString( "&StudioId=%1" ).arg( m_qsLicenceStringValidate ) );
     qsFileName.append( QString( "&ClientCode=%1" ).arg( m_qsLicenceClientCode ) );
 
     g_obLogger(cSeverity::DEBUG) << "HTTP: Reactivate licence ["
@@ -1043,8 +1044,9 @@ void cBlnsHttp::_httpReactivateLicence()
 }
 
 //=================================================================================================
-void cBlnsHttp::_httpChangeLicence()
+//void cBlnsHttp::_httpChangeLicence()
 //-------------------------------------------------------------------------------------------------
+/*
 {
     // https://www.kiwisun.hu/kiwi_ticket/licence.php
     QString qsFileName      = m_qsServerAddress;
@@ -1067,7 +1069,7 @@ void cBlnsHttp::_httpChangeLicence()
 
     _downloadFile( qsFileName );
 }
-
+*/
 //=================================================================================================
 void cBlnsHttp::_httpCheckLicence()
 //-------------------------------------------------------------------------------------------------
@@ -1082,11 +1084,11 @@ void cBlnsHttp::_httpCheckLicence()
 
     qsFileName.append( QString( "?token=%1" ).arg( m_qsToken ) );
     qsFileName.append( QString( "&Cmd=LICENCE_CHECK" ) );
-    qsFileName.append( QString( "&StudioId=%1" ).arg( m_qsLicenceStringCurrent ) );
+    qsFileName.append( QString( "&StudioId=%1" ).arg( m_qsLicenceStringValidate ) );
     qsFileName.append( QString( "&ClientCode=%1" ).arg( m_qsLicenceClientCode ) );
     qsFileName.append( QString( "&ServerCode=%1" ).arg( m_qsLicenceServerCode ) );
 
-    g_obLogger(cSeverity::DEBUG) << "HTTP: Send mail ["
+    g_obLogger(cSeverity::DEBUG) << "HTTP: Check licence validation ["
                                  << qsFileName
                                  << "]"
                                  << EOM;
@@ -2329,7 +2331,6 @@ bool cBlnsHttp::_processLicenceIntegrity()
     if( qsResponse.contains( "licence_integrity_ok" ) )
     {
         g_obLogger(cSeverity::INFO) << "HTTP: Response received without error" << EOM;
-        m_qsLicenceServerCode = qsResponse.right( qsResponse.length() - qsResponse.indexOf( '-' ) - 2 );
         return true;
     }
     else if( qsResponse.contains( "licence_integrity_broken" ) )

@@ -118,6 +118,8 @@ private slots:
     void on_pbRegisterLicence_clicked();
     void on_pbActivateLicence_clicked();
     void on_pbChangeLicence_clicked();
+    void on_pbReloadLicenceInfo_clicked();
+    void on_pbReloadCounterInfo_clicked();
 
 private:
     Ui::dlgMain         *ui;
@@ -200,6 +202,8 @@ private:
     bool                 m_bServerAddressChanged;
 
     unsigned int         m_uiLicenceId;
+    bool                 m_bLicenceValid;
+    int                  m_nLicenceCheckCounter;
 
     void                _setActions();
     void                _setMenu();
@@ -220,6 +224,7 @@ private:
     void                _saveSettings();
     void                _licenceRegistrationAdmin();
     void                _licenceReactivationAdmin();
+    void                _licenceValidationAdmin();
     void                _resetLicenceValidationTimers();
     void                _checkVersions();
 };

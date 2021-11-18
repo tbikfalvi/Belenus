@@ -24,7 +24,7 @@ CREATE TABLE `licences` (
   `studio`                  varchar(100)            DEFAULT NULL,
   `contact`                 varchar(100)            DEFAULT NULL,
   `lastValidated`           DATE                    NULL DEFAULT NULL,
-  `type`                    varchar(10)             NOT NULL DEFAULT 'UNVERIFIED',
+  `type`                    varchar(20)             NOT NULL DEFAULT 'UNVERIFIED',
   `Act` 					VARCHAR( 10 ) 			NOT NULL,
   `Cod` 					VARCHAR( 10 ) 			NOT NULL,
   `active`                  tinyint(1)              DEFAULT 0,

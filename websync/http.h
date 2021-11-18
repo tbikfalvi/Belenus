@@ -192,8 +192,7 @@ private:
     QString          m_qsMailVarDateTime;
     QString          m_qsMailVarUnitCount;
     QString          m_qsMailSha1;
-    QString          m_qsLicenceStringCurrent;
-    QString          m_qsLicenceStringNew;
+    QString          m_qsLicenceStringValidate;
     QString          m_qsLicenceClientCode;
     QString          m_qsLicenceServerCode;
 
@@ -228,7 +227,7 @@ private:
     QString         _getNameForPatientCardType( unsigned int p_uiPatientCardTypeId );
     void            _httpRegisterLicence();
     void            _httpReactivateLicence();
-    void            _httpChangeLicence();
+//    void            _httpChangeLicence();
     void            _httpCheckLicence();
     void            _httpValidateLicenceIntegrity();
     bool            _processLicence();
