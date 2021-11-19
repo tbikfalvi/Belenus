@@ -254,19 +254,19 @@ int main( int argc, char *argv[] )
         qsSpalsh += QObject::tr("Checking database consistency: ");
         obSplash.showMessage(qsSpalsh,Qt::AlignLeft,QColor(59,44,75));
 
-        QSqlQuery *poQuery = g_poDB->executeQTQuery( QString( "UPDATE patientcardunits SET "
-                                                   "prepared=0, "
-                                                   "active=0 "
-                                                   "WHERE "
-                                                   "prepared=1 AND "
-                                                   "patientCardId>1 AND "
-                                                   "dateTimeUsed>\"2000-01-01\" " ) );
+        g_poDB->executeQTQuery( QString( "UPDATE patientcardunits SET "
+                                         "prepared=0, "
+                                         "active=0 "
+                                         "WHERE "
+                                         "prepared=1 AND "
+                                         "patientCardId>1 AND "
+                                         "dateTimeUsed>\"2000-01-01\" " ) );
 
-        poQuery = g_poDB->executeQTQuery( QString( "UPDATE patientcardunits SET "
-                                                   "prepared=0 "
-                                                   "WHERE "
-                                                   "prepared=1 AND "
-                                                   "active=1 ") );
+        g_poDB->executeQTQuery( QString( "UPDATE patientcardunits SET "
+                                         "prepared=0 "
+                                         "WHERE "
+                                         "prepared=1 AND "
+                                         "active=1 ") );
 
         g_poDB->executeQTQuery( QString( "DELETE FROM httpsendmail WHERE "
                                          "dateOfSending<\"" + QDate::currentDate().addDays( -4 ).toString( "yyyy-MM-dd" ) + "\" AND "
@@ -317,8 +317,7 @@ int main( int argc, char *argv[] )
         // If Hardware component active, process hardware initialization
         g_obLogger(cSeverity::DEBUG) << QString("HW check nID: %1 HWInstalled: %2").arg( g_obLicenceManager.licenceID() ).arg( g_poPrefs->isComponentHardwareInstalled() ) << EOM;
 
-        if( g_obLicenceManager.licenceID() >= 2 &&
-            g_obLicenceManager.ltLicenceType() != cLicenceManager::LTYPE_INVALID )
+        if( g_obLicenceManager.licenceID() >= 2 && g_obLicenceManager.licenceState() != cLicenceManager::LTYPE_INVALID )
         {
             qsSpalsh += QObject::tr("Checking hardware connection ... ");
             obSplash.showMessage(qsSpalsh,Qt::AlignLeft,QColor(59,44, 75));

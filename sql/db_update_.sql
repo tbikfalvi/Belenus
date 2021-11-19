@@ -14,7 +14,7 @@ UPDATE `settings` SET value = DATE_ADD( NOW(), INTERVAL 60 DAY) WHERE identifier
 
 -- -----------------------------------------------------------------------------------
 
-ALTER TABLE `licences` ADD `type` VARCHAR( 20 ) NOT NULL DEFAULT 'UNVERIFIED' AFTER `lastValidated`;
+ALTER TABLE `licences` ADD `type` VARCHAR( 20 ) NOT NULL DEFAULT 'UNREGISTERED' AFTER `lastValidated`;
 
 UPDATE `licences` SET `type` = 'DEMO' WHERE `licenceId` < 2;
 

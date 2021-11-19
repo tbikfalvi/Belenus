@@ -15,6 +15,12 @@
 
 using namespace std;
 
+#define CONST_LICENCE_VALIDATED     0
+#define CONST_LICENCE_DEMO          1
+#define CONST_LICENCE_UNREGISTERED  2
+#define CONST_LICENCE_UNVALIDATED   3
+#define CONST_LICENCE_INVALID       4
+
 class cWndMain : public QMainWindow, private Ui::wndMain
 {
     Q_OBJECT
@@ -102,6 +108,8 @@ private:
     bool                     m_bResetAdWindows;
     int                      m_nCounterAdWindowReset;
 
+    int                      m_nLicenceStatus;
+
     vector<cDlgAdvertisementWindow *>   m_obAdWnd;
 
     void showElementsForComponents();
@@ -119,7 +127,7 @@ private:
     void _setStatusText( QString p_qsText, bool p_bError = false );
 //    void _processHttpActions();
     void _checkVersions();
-    void _checkIsActivationNeeded();
+    bool _checkIsActivationNeeded();
     void _checkIsWebSyncNeeded();
     void _setTrayIconMenu();
     void _checkArchiveDir();
@@ -176,7 +184,7 @@ private slots:
     void on_action_Accounting_triggered();
     void on_action_DeviceSkipStatus_triggered();
     void on_action_DeviceCool_triggered();
-    void on_action_ValidateSerialKey_triggered();
+//    void on_action_ValidateSerialKey_triggered();
     void on_action_PatientCardSell_triggered();
     void on_action_PatientCardAssign_triggered();
     void on_action_ReplaceLostCard_triggered();

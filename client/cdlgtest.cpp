@@ -54,8 +54,8 @@ void cDlgTest::on_pbCreateLicenceCodes_clicked()
 {
     QString qsText = ui->teLicenceArea->toPlainText();
 
-    qsText.append( "\n" );
-    qsText.append( g_obLicenceManager.createLicenceKey( ui->ledLicenceNumber->text() ) );
+    qsText.append( "ez mar nem mukodik\n" );
+//    qsText.append( g_obLicenceManager.createLicenceKey( ui->ledLicenceNumber->text() ) );
     ui->teLicenceArea->setPlainText( qsText );
 
     qsrand( ui->ledLicenceNumber->text().toUInt() );

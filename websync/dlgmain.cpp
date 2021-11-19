@@ -70,6 +70,7 @@ dlgMain::dlgMain(QWidget *parent, QString p_qsAppVersion, QString p_qsDbVersion)
     m_nIndexCheckEnablers               = 0;
     m_nIndexSendMailSync                = 0;
     m_nIndexLicenceValidation           = 0;
+    m_nIndexLicenceValidationMax        = 3599;
 
     m_enGroup                           = GROUP_MIN;
 
@@ -192,6 +193,15 @@ dlgMain::dlgMain(QWidget *parent, QString p_qsAppVersion, QString p_qsDbVersion)
             ui->lblLicenceCheckValue->setText( tr( "%1 work minutes" ).arg( m_nLicenceCheckCounter*15 ) );
         }
 
+        if( m_nLicenceCheckCounter < 5 )
+        {
+            m_nIndexLicenceValidationMax = 899;
+        }
+        else
+        {
+            m_nIndexLicenceValidationMax = 3599;
+        }
+
         poQuery = g_poDB->executeQTQuery( QString( "SELECT * FROM licences ORDER BY licenceId DESC LIMIT 1" ) );
         if( poQuery->first() )
         {
@@ -200,28 +210,7 @@ dlgMain::dlgMain(QWidget *parent, QString p_qsAppVersion, QString p_qsDbVersion)
             ui->deValidated->setDate( poQuery->value( 9 ).toDate() );
             ui->ledCodeServer->setText( poQuery->value( 11 ).toString() );
             ui->ledCodeClient->setText( poQuery->value( 12 ).toString() );
-
-            if( poQuery->value( 10 ).toString().compare( "VALIDATED" ) == 0 )
-            {
-                ui->ledLicenceStatus->setText( tr( "Validated" ) );
-                m_bLicenceValid = true;
-            }
-            else if( poQuery->value( 10 ).toString().compare( "UNVALIDATED" ) == 0 )
-            {
-                ui->ledLicenceStatus->setText( tr( "Not validated" ) );
-            }
-            else if( poQuery->value( 10 ).toString().compare( "UNVERIFIED" ) == 0 )
-            {
-                ui->ledLicenceStatus->setText( tr( "Not verified" ) );
-            }
-            else if( poQuery->value( 10 ).toString().compare( "INVALID" ) == 0 )
-            {
-                ui->ledLicenceStatus->setText( tr( "Expired / Invalid" ) );
-            }
-            else
-            {
-                ui->ledLicenceStatus->setText( tr( "Demo" ) );
-            }
+            _displayLicenceStatus( poQuery->value( 10 ).toString() );
 
             g_poBlnsHttp->setStudioLicence( m_uiLicenceId, ui->ledLicenceKeyCurrent->text() );
         }
@@ -407,8 +396,8 @@ void dlgMain::timerEvent(QTimerEvent *)
     ui->lblIndexPCData->setText( QString::number(m_nIndexPCStatusSync) );
     ui->lblIndexMailSendCheck->setText( QString::number(m_nIndexSendMailSync ) );
     ui->lblLicenceCheckCounterValue->setText( QString( "%1:%2" )
-                                              .arg( QString::number((3600-m_nIndexLicenceValidation)/60).rightJustified(2, '0') )
-                                              .arg( QString::number((3600-m_nIndexLicenceValidation)%60).rightJustified(2, '0') ) );
+                                              .arg( QString::number((m_nIndexLicenceValidationMax+1-m_nIndexLicenceValidation)/60).rightJustified(2, '0') )
+                                              .arg( QString::number((m_nIndexLicenceValidationMax+1-m_nIndexLicenceValidation)%60).rightJustified(2, '0') ) );
 //  ui->lblIndexPCOnline->setText( QString::number(m_nIndexPCOnlineSync) );
 
 
@@ -581,7 +570,7 @@ void dlgMain::timerEvent(QTimerEvent *)
 
     //---------------------------------------------------------------------------------------------
     // Check every hour if the licence key validation has to be checked or not
-    if( m_nIndexLicenceValidation > 3599 )
+    if( m_nIndexLicenceValidation > m_nIndexLicenceValidationMax )
     {
         m_nIndexLicenceValidation = 0;
 
@@ -593,6 +582,15 @@ void dlgMain::timerEvent(QTimerEvent *)
             if( poQuery->first() )
             {
                 m_nLicenceCheckCounter = poQuery->value( 0 ).toInt();
+
+                if( m_nLicenceCheckCounter < 5 )
+                {
+                    m_nIndexLicenceValidationMax = 899;
+                }
+                else
+                {
+                    m_nIndexLicenceValidationMax = 3599;
+                }
 
                 if( m_nLicenceCheckCounter < 1 )
                 {
@@ -1926,6 +1924,15 @@ void dlgMain::_resetLicenceValidationTimers()
         poQuery->first();
         int nLicenceWorkTime = poQuery->value( 0 ).toInt();
         g_poDB->executeQTQuery( QString( "UPDATE settings SET value = %1 WHERE identifier = 'LICENCE_WORKTIME_COUNTER' " ).arg( nLicenceWorkTime ) );
+
+        if( m_nLicenceCheckCounter < 5 )
+        {
+            m_nIndexLicenceValidationMax = 899;
+        }
+        else
+        {
+            m_nIndexLicenceValidationMax = 3599;
+        }
     }
     catch( cSevException &e )
     {
@@ -2125,28 +2132,7 @@ void dlgMain::on_pbReloadLicenceInfo_clicked()
             ui->deValidated->setDate( poQuery->value( 9 ).toDate() );
             ui->ledCodeServer->setText( poQuery->value( 11 ).toString() );
             ui->ledCodeClient->setText( poQuery->value( 12 ).toString() );
-
-            if( poQuery->value( 10 ).toString().compare( "VALIDATED" ) == 0 )
-            {
-                ui->ledLicenceStatus->setText( tr( "Validated" ) );
-                m_bLicenceValid = true;
-            }
-            else if( poQuery->value( 10 ).toString().compare( "UNVALIDATED" ) == 0 )
-            {
-                ui->ledLicenceStatus->setText( tr( "Not validated" ) );
-            }
-            else if( poQuery->value( 10 ).toString().compare( "UNVERIFIED" ) == 0 )
-            {
-                ui->ledLicenceStatus->setText( tr( "Not verified" ) );
-            }
-            else if( poQuery->value( 10 ).toString().compare( "INVALID" ) == 0 )
-            {
-                ui->ledLicenceStatus->setText( tr( "Expired / Invalid" ) );
-            }
-            else
-            {
-                ui->ledLicenceStatus->setText( tr( "Demo" ) );
-            }
+            _displayLicenceStatus( poQuery->value( 10 ).toString() );
         }
     }
     catch( cSevException &e )
@@ -2160,5 +2146,34 @@ void dlgMain::on_pbReloadLicenceInfo_clicked()
 void dlgMain::on_pbReloadCounterInfo_clicked()
 //-------------------------------------------------------------------------------------------------
 {
-    m_nIndexLicenceValidation = 3598;
+    m_nIndexLicenceValidation = m_nIndexLicenceValidationMax-5;
 }
+
+//=================================================================================================
+void dlgMain::_displayLicenceStatus(QString p_qsState)
+//-------------------------------------------------------------------------------------------------
+{
+    if( p_qsState.compare( "VALIDATED" ) == 0 )
+    {
+        ui->ledLicenceStatus->setText( tr( "Validated" ) );
+        m_bLicenceValid = true;
+    }
+    else if( p_qsState.compare( "UNVALIDATED" ) == 0 )
+    {
+        ui->ledLicenceStatus->setText( tr( "Not validated" ) );
+    }
+    else if( p_qsState.compare( "UNREGISTERED" ) == 0 )
+    {
+        ui->ledLicenceStatus->setText( tr( "Not registered" ) );
+    }
+    else if( p_qsState.compare( "INVALID" ) == 0 )
+    {
+        ui->ledLicenceStatus->setText( tr( "Expired / Invalid" ) );
+    }
+    else
+    {
+        ui->ledLicenceStatus->setText( tr( "Demo" ) );
+    }
+}
+
+

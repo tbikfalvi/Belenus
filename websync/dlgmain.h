@@ -176,6 +176,7 @@ private:
 //    int                  m_nIndexPCOnlineSync;
     int                  m_nIndexSendMailSync;
     int                  m_nIndexLicenceValidation;
+    int                  m_nIndexLicenceValidationMax;
     int                  m_enGroup;
     QString              m_qsRPSW;
     int                  m_nIndexUpdateSyncDataCount;
@@ -227,6 +228,7 @@ private:
     void                _licenceValidationAdmin();
     void                _resetLicenceValidationTimers();
     void                _checkVersions();
+    void                _displayLicenceStatus( QString p_qsState );
 };
 
 #endif // DLGMAIN_H

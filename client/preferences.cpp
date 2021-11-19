@@ -99,6 +99,11 @@ void cPreferences::init()
 
     m_bIsRFIDEnabled                = false;
     m_nRFIDComPort                  = 1;
+
+    m_nLicenceCheck                 = 56;
+    m_nLicenceCheckCounter          = 56;
+    m_nWorkTime                     = 336;
+    m_nWorkTimeCounter              = 336;
 }
 
 void cPreferences::loadSettings() throw (cSevException)
@@ -1717,4 +1722,46 @@ int cPreferences::getRFIDComPort() const
 {
     return m_nRFIDComPort;
 }
+
+void cPreferences::setLicenceCheck( const int p_nLicenceCheck )
+{
+    m_nLicenceCheck = p_nLicenceCheck;
+}
+
+int  cPreferences::getLicenceCheck() const
+{
+    return m_nLicenceCheck;
+}
+
+void cPreferences::setLicenceCheckCounter( const int p_nLicenceCheckCounter )
+{
+    m_nLicenceCheckCounter = p_nLicenceCheckCounter;
+}
+
+int  cPreferences::getLicenceCheckCounter() const
+{
+    return m_nLicenceCheckCounter;
+}
+
+void cPreferences::setWorktime( const int p_nWorktime )
+{
+    m_nWorkTime = p_nWorktime;
+}
+
+int  cPreferences::getWorktime() const
+{
+    return m_nWorkTime;
+}
+
+void cPreferences::setWorktimeCounter( const int p_nWorktimeCounter )
+{
+    m_nWorkTimeCounter = p_nWorktimeCounter;
+}
+
+int  cPreferences::getWorktimeCounter() const
+{
+    return m_nWorkTimeCounter;
+}
+
+
 

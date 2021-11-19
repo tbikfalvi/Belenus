@@ -149,7 +149,8 @@ cWndMain::cWndMain( QWidget *parent ) : QMainWindow( parent )
     frmLogin->setVisible( false );
     frmLogin->setEnabled( false );
 
-    lblDemoMode->setStyleSheet( "QLabel {color: blue;}" );
+    frmDemo->setVisible( false );
+//    lblDemoMode->setStyleSheet( "QLabel {color: blue;}" );
 
     g_obGen.setSysTrayIconParent( this );
     g_obGen.setWindowMainWidget( this );
@@ -274,7 +275,7 @@ cWndMain::cWndMain( QWidget *parent ) : QMainWindow( parent )
         action_Panelgroups->setIcon( QIcon("./resources/40x40_panel.png") );
         action_Paneltypes->setIcon( QIcon("./resources/40x40_panel.png") );
         action_PanelStatuses->setIcon( QIcon( "./resources/40x40_device_settings.png" ) );
-        action_ValidateSerialKey->setIcon( QIcon( "./resources/40x40_key.png" ) );
+//        action_ValidateSerialKey->setIcon( QIcon( "./resources/40x40_key.png" ) );
         action_ManageDatabase->setIcon( QIcon( "./resources/40x40_connect_db.png" ) );
         action_DistributionLists->setIcon( QIcon( "./resources/40x40_distlist.png" ) );
         action_EditEmails->setIcon( QIcon( "./resources/40x40_draftmail.png" ) );
@@ -506,11 +507,10 @@ bool cWndMain::showLogIn()
     ledPassword->setFocus();
 
     _checkVersions();
-    _checkIsActivationNeeded();
     _checkIsWebSyncNeeded();
     _checkArchiveDir();
 
-    return true;
+    return _checkIsActivationNeeded();
 }
 //====================================================================================
 void cWndMain::on_pbLogin_clicked()
@@ -522,6 +522,16 @@ void cWndMain::on_pbLogin_clicked()
         string  stName = cmbName->currentText().toStdString();
         stName = stName.substr( 0, stName.find( '(' ) - 1 );
         g_obUser.load( QString::fromStdString(stName) );
+
+        if( m_nLicenceStatus == CONST_LICENCE_INVALID && !( g_obUser.isInGroup( cAccessGroup::ROOT ) || g_obUser.isInGroup( cAccessGroup::SYSTEM) ) )
+        {
+            QMessageBox::warning( this, tr( "Warning" ),
+                                  tr( "You are not allowed to log in to application!\n\n"
+                                      "Application's licence key is invalid or expired.\n"
+                                      "Please contact you franchise provider!") );
+            return;
+        }
+
         QByteArray  obPwdHash = QCryptographicHash::hash( ledPassword->text().toAscii(), QCryptographicHash::Sha1 );
         g_obUser.logIn( QString( obPwdHash.toHex() ) );
 
@@ -1235,16 +1245,6 @@ void cWndMain::updateTitle()
     qsTitle += " - ";
     qsTitle += QString::fromStdString( g_poHardware->getCustomCaption() );
 
-    if( QString::fromStdString( g_poHardware->getCustomCaption() ).compare( "DEMO" ) == 0 )
-    {
-        action_Hardwaretest->setEnabled( false );
-        frmDemo->setVisible( true );
-    }
-    else
-    {
-        frmDemo->setVisible( false );
-    }
-
     if( g_obUser.isLoggedIn() )
     {
         qsTitle += " - ";
@@ -1338,7 +1338,8 @@ void cWndMain::updateToolbar()
             action_Products->setEnabled( bIsUserLoggedIn );
             action_ManageSkinTypes->setEnabled( bIsUserLoggedIn );
             action_PaymentMethods->setEnabled( bIsUserLoggedIn );
-            action_ValidateSerialKey->setEnabled( bIsUserLoggedIn );
+            action_ValidateSerialKey->setEnabled( false /*bIsUserLoggedIn*/ );
+            action_ValidateSerialKey->setVisible( false );
             action_EditLicenceInformation->setEnabled( bIsUserLoggedIn );
             action_EmptyDemoDB->setEnabled( bIsUserLoggedIn );
             action_ManageDevicePanels->setEnabled( !mdiPanels->isPanelWorking() );
@@ -2561,7 +2562,7 @@ void cWndMain::on_action_DeviceCool_triggered()
     on_KeyboardEnabled();
 }
 //====================================================================================
-void cWndMain::on_action_ValidateSerialKey_triggered()
+/*void cWndMain::on_action_ValidateSerialKey_triggered()
 {
     cTracer obTrace( "cWndMain::on_action_ValidateSerialKey_triggered" );
 
@@ -2585,7 +2586,7 @@ void cWndMain::on_action_ValidateSerialKey_triggered()
     }
 
     slotMainWindowActivated();
-}
+}*/
 //====================================================================================
 void cWndMain::on_action_PatientCardSell_triggered()
 {
@@ -4085,11 +4086,89 @@ void cWndMain::_checkVersions()
     }
 }
 
-void cWndMain::_checkIsActivationNeeded()
+//============================================================================================================================
+bool cWndMain::_checkIsActivationNeeded()
+//----------------------------------------------------------------------------------------------------------------------------
 {
-    if( m_bClosingShift )
-        return;
+    bool    bRet = true;
 
+    if( m_bClosingShift )
+    {
+        return bRet;
+    }
+    else
+    {
+        switch ( g_obLicenceManager.checkLicenceState() )
+        {
+            case cLicenceManager::LTYPE_DEMO :
+                m_nLicenceStatus = CONST_LICENCE_DEMO;
+                frmDemo->setVisible( true );
+                lblDemoMode->setText(  tr( "The application runs in DEMO mode." ) );
+                lblDemoNotes->setText( tr( "Please note, in DEMO mode you are not able to control the real hardware devices "
+                                           "(solarium machines etc.) from the application. Every action related to hardware devices are virtual." ) );
+                lblDemoMode->setStyleSheet( "QLabel {color: blue;}" );
+                action_Hardwaretest->setEnabled( false );
+                break;
+
+            case cLicenceManager::LTYPE_UNREGISTERED :
+                m_nLicenceStatus = CONST_LICENCE_UNREGISTERED;
+                frmDemo->setVisible( false );
+                QMessageBox::warning( this, tr("Warning"),
+                                      tr("The licence key of the application is not registered.\n"
+                                         "Please contact your franchise provider to register and activate your licence!") );
+                break;
+
+            case cLicenceManager::LTYPE_UNVALIDATED :
+                m_nLicenceStatus = CONST_LICENCE_UNVALIDATED;
+                frmDemo->setVisible( false );
+                QMessageBox::warning( this, tr("Warning"),
+                                      tr("The licence key of the application is not validated.\n"
+                                         "Please make sure your internet connection is active,\n"
+                                         "the WebSync application is running and http connection is enabled.\n\n"
+                                         "If everything is set correctly described above then\n"
+                                         "please contact your franchise provider to activate your licence!") );
+                break;
+
+            case cLicenceManager::LTYPE_VALIDATED :
+                m_nLicenceStatus = CONST_LICENCE_VALIDATED;
+                frmDemo->setVisible( false );
+                break;
+
+            case cLicenceManager::LTYPE_INVALID :
+                m_nLicenceStatus = CONST_LICENCE_INVALID;
+                frmDemo->setVisible( true );
+                lblDemoMode->setText(  tr( "The application's licence validity EXPIRED" ) );
+                lblDemoNotes->setText( tr( "The licence key of the application is invalid or expired. "
+                                           "Please contact your franchise provider to activate your licence!" ) );
+                lblDemoMode->setStyleSheet( "QLabel {color: red;}" );
+                QMessageBox::warning( this, tr("Error"),
+                                      tr("The licence key of the application is invalid or expired.\n"
+                                         "Please contact your franchise provider to activate your licence!") );
+                break;
+
+            default:
+                QMessageBox::warning( this, tr("Error"),
+                                      tr("Licence state can not be read from database.\n"
+                                         "Please contact your franchise provider to activate your licence!\n\n"
+                                         "The application now terminates ...") );
+                bRet = false;
+                break;
+        }
+    }
+
+    // If licence is ok, but no hardware detected go demo mode
+    if( m_nLicenceStatus == CONST_LICENCE_VALIDATED && QString::fromStdString( g_poHardware->getCustomCaption() ).compare( "DEMO" ) == 0 )
+    {
+        frmDemo->setVisible( true );
+        lblDemoMode->setText(  tr( "The application runs in DEMO mode." ) );
+        lblDemoNotes->setText( tr( "Please note, in DEMO mode you are not able to control the real hardware devices "
+                                   "(solarium machines etc.) from the application. Every action related to hardware devices are virtual." ) );
+        lblDemoMode->setStyleSheet( "QLabel {color: blue;}" );
+        action_Hardwaretest->setEnabled( false );
+    }
+
+return bRet;
+/*
     int     nDaysRemain = g_obLicenceManager.daysRemain();
 
     if( nDaysRemain < cLicenceManager::EXPIRE_MAX_DAYS )
@@ -4099,12 +4178,12 @@ void cWndMain::_checkIsActivationNeeded()
                                   "will be expire soon.\n\n"
                                   "Please contact your franchise provider\n"
                                   "and extend your licence valid time period.") );
-        /*QMessageBox::warning( this, tr("Warning"),
-                              tr( "The validity of the application's licence\n"
-                                  "will be expire in %1 days.\n\n"
-                                  "Please contact your franchise provider\n"
-                                  "and extend your licence valid time period.")
-                              .arg( nDaysRemain ) );*/
+//        QMessageBox::warning( this, tr("Warning"),
+//                              tr( "The validity of the application's licence\n"
+//                                  "will be expire in %1 days.\n\n"
+//                                  "Please contact your franchise provider\n"
+//                                  "and extend your licence valid time period.")
+//                              .arg( nDaysRemain ) );
     }
     if( g_obLicenceManager.ltLicenceType() == cLicenceManager::LTYPE_REGISTERED )
     {
@@ -4114,9 +4193,12 @@ void cWndMain::_checkIsActivationNeeded()
                                   "Please contact your franchise provider\n"
                                   "and validate your application's licence" ) );
     }
+*/
 }
 
+//============================================================================================================================
 void cWndMain::_checkIsWebSyncNeeded()
+//----------------------------------------------------------------------------------------------------------------------------
 {
     if( g_poPrefs->isBlnsHttpEnabled() )
     {
@@ -4147,7 +4229,9 @@ void cWndMain::_checkIsWebSyncNeeded()
     }
 }
 
+//============================================================================================================================
 void cWndMain::_checkArchiveDir()
+//----------------------------------------------------------------------------------------------------------------------------
 {
     if( !g_obGen.isArchiveOnDifferentPath() )
     {
@@ -4169,13 +4253,17 @@ void cWndMain::on_BlnsHttpProcessStopped()
                                .arg( m_lblHttpCount.text() ) );
 }
 */
+
+//============================================================================================================================
 void cWndMain::slotMainWindowActivated()
+//----------------------------------------------------------------------------------------------------------------------------
 {
     m_bMainWindowActive  = true;
     g_poCommRFID->readRFID();
     setCursor( Qt::ArrowCursor);
 }
 
+//============================================================================================================================
 void cWndMain::_setTrayIconMenu()
 {
     QMenu *trayIconMenu     = new QMenu(this);
