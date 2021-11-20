@@ -188,6 +188,16 @@ int main( int argc, char *argv[] )
         qsSpalsh += QObject::tr("Licence serial: %1\n").arg( g_obLicenceManager.licenceSerialString() );
         obSplash.showMessage(qsSpalsh,Qt::AlignLeft,QColor(59,44,75));
 
+        if( g_obLicenceManager.licenceID() >= 2 && g_obLicenceManager.licenceState() == cLicenceManager::LTYPE_INVALID )
+        {
+            qsSpalsh += "\n";
+            qsSpalsh += QObject::tr( "The application's licence validity EXPIRED" );
+            qsSpalsh += "\n";
+            qsSpalsh += QObject::tr( "Please contact your franchise provider to activate your licence!" );
+            qsSpalsh += "\n";
+            qsSpalsh += "\n";
+        }
+
 //------------------------------------------------------------------------------------------------------------------------------------------------
 // itt kezdodik az eredeti liszensz kiolvasos resz
 /*
