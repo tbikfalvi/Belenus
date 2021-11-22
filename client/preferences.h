@@ -270,10 +270,14 @@ public:
     int             getLicenceCheck() const;
     void            setLicenceCheckCounter( const int p_nLicenceCheckCounter );
     int             getLicenceCheckCounter() const;
+    void            resetLicenceCheckCounter();
+    void            decreaseLicenceCheckCounter();
     void            setWorktime( const int p_nWorktime );
     int             getWorktime() const;
     void            setWorktimeCounter( const int p_nWorktimeCounter );
     int             getWorktimeCounter() const;
+    void            resetWorktimeCounter();
+    void            decreaseWorktimeCounter();
 
 //void            setXXX( const QString &p_qsXXX );
 //QString         getXXX() const;

@@ -965,6 +965,7 @@ void dlgMain::on_BlnsHttpErrorOccured()
             poQuery->first();
             int nLicenceCheck = poQuery->value( 0 ).toInt();
             g_poDB->executeQTQuery( QString( "UPDATE settings SET value = %1 WHERE identifier = 'LICENCE_CHECK_COUNTER' " ).arg( nLicenceCheck ) );
+            m_nLicenceCheckCounter = nLicenceCheck;
 
             g_poDB->executeQTQuery( QString( "UPDATE licences SET type='UNVALIDATED' WHERE licenceId=%1" ).arg( m_uiLicenceId ) );
         }
@@ -973,6 +974,11 @@ void dlgMain::on_BlnsHttpErrorOccured()
             g_obLogger(e.severity()) << e.what() << EOM;
         }
         if( _isInGroup( GROUP_SYSTEM ) ) _displayUserNotification( INFO_Custom, g_poBlnsHttp->errorMessage(), QSystemTrayIcon::Warning );
+
+        ui->ledLicenceStatus->setText( tr( "Not validated" ) );
+        ui->lblStatusIconLicenceAction->setPixmap( QPixmap( ":/status_red.png" ) );
+        ui->lblStatusIconLicenceAction->setToolTip( qsTooltip );
+        ui->lblLicenceActionInfo->setText( "" );
     }
     else
     {
@@ -2161,6 +2167,7 @@ void dlgMain::_displayLicenceStatus(QString p_qsState)
     else if( p_qsState.compare( "UNVALIDATED" ) == 0 )
     {
         ui->ledLicenceStatus->setText( tr( "Not validated" ) );
+        m_bLicenceValid = true;
     }
     else if( p_qsState.compare( "UNREGISTERED" ) == 0 )
     {

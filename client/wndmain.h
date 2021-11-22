@@ -108,6 +108,11 @@ private:
     bool                     m_bResetAdWindows;
     int                      m_nCounterAdWindowReset;
 
+    int                      m_nTickMinute;
+    bool                     m_bTickMinute;
+    int                      m_nTickQuarter;
+    bool                     m_bTickQuarter;
+
     int                      m_nLicenceStatus;
 
     vector<cDlgAdvertisementWindow *>   m_obAdWnd;

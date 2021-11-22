@@ -130,12 +130,27 @@ cLicenceManager::licenceType cLicenceManager::checkLicenceState()
     {
         if( poQuery ) delete poQuery;
         g_obLogger(e.severity()) << e.what() << EOM;
-        g_obGen.showTrayError( e.what() );
     }
 
     return licenceState();
 }
 
+//============================================================================================================================
+void cLicenceManager::deactivate()
+//----------------------------------------------------------------------------------------------------------------------------
+{
+    try
+    {
+        m_qsState = "INVALID";
+        m_LicenceType = cLicenceManager::LTYPE_INVALID;
+
+        g_poDB->executeQTQuery( QString( "UPDATE licences SET type='%1' WHERE licenceId = %2 " ).arg( m_qsState ).arg( m_uiLicenceId ) );
+    }
+    catch( cSevException &e )
+    {
+        g_obLogger(e.severity()) << e.what() << EOM;
+    }
+}
 
 /*
 cLicenceManager::cLicenceManager()

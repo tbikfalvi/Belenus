@@ -144,6 +144,12 @@ cWndMain::cWndMain( QWidget *parent ) : QMainWindow( parent )
     m_bResetAdWindows               = false;
     m_nCounterAdWindowReset         = 0;
 
+    m_nTickMinute                   = 0;
+    m_bTickMinute                   = false;
+
+    m_nTickQuarter                  = 0;
+    m_bTickQuarter                  = false;
+
     pbLogin->setIcon( QIcon("./resources/40x40_ok.png") );
 
     frmLogin->setVisible( false );
@@ -1417,6 +1423,21 @@ action_Logs->setVisible( false );
 //====================================================================================
 void cWndMain::timerEvent(QTimerEvent *)
 {
+    // Timer event occurs 4 times in 1 second
+    m_nTickMinute++;
+    if( m_nTickMinute > 239 )
+    {
+        m_nTickMinute = 0;
+//        m_bTickMinute = true;
+    }
+
+    m_nTickQuarter++;
+    if( m_nTickQuarter > 3599 )
+    {
+        m_nTickQuarter = 0;
+        m_bTickQuarter = true;
+    }
+
     switch( m_nCommResetStep )
     {
         case 1:
@@ -1490,55 +1511,25 @@ void cWndMain::timerEvent(QTimerEvent *)
         m_lblStatusRight.setText( QDateTime::currentDateTime().toString( "yyyy-MM-dd hh:mm:ss  " ) );
     }
 
-    if( m_bSerialRegistration )
+    if( m_bTickQuarter )
     {
-        if( g_poPrefs->getLicenceId() > 1 )
+        m_bTickQuarter = false;
+
+        //-----------------------------------------------------------------------------------------------------------------------
+        // Process licence check management
+        if( g_obLicenceManager.licenceState() != cLicenceManager::LTYPE_DEMO )
         {
-            m_bSerialRegistration = false;
+            g_poPrefs->decreaseLicenceCheckCounter();
 
-//            g_obCassa.cassaClose();
-//            g_obCassa.createNew( g_obUser.id() );
+            if( g_obLicenceManager.checkLicenceState() != cLicenceManager::LTYPE_VALIDATED )
+            {
+                g_poPrefs->decreaseWorktimeCounter();
 
-            if( QMessageBox::question( this, tr("Question"),
-                                       tr("Application licence key successfully registered.\n"
-                                          "The application users currently attached to DEMO licence key.\n\n"
-                                          "Do you want to update application users and attach them to the newly registered licence key?"),
-                                       QMessageBox::Yes | QMessageBox::No, QMessageBox::No ) == QMessageBox::Yes )
-            {
-                g_poDB->executeQTQuery( QString("UPDATE users SET licenceId=%1 WHERE licenceId=1").arg(g_poPrefs->getLicenceId()) );
-            }
-            else
-            {
-                g_poDB->executeQTQuery( QString("UPDATE users SET licenceId=%1 WHERE (userId=1 OR userId=2) AND licenceId=1").arg(g_poPrefs->getLicenceId()) );
-            }
-
-            if( QMessageBox::question( this, tr("Question"),
-                                       tr("Do you want to set the additional information of the studio now?"),
-                                       QMessageBox::Yes | QMessageBox::No, QMessageBox::No ) == QMessageBox::Yes )
-            {
-                dlgLicenceEdit  obDlgLicenceEdit( this );
-
-                obDlgLicenceEdit.exec();
-            }
-        }
-        else
-        {
-            if( m_inRegistrationTimeout > 20 )
-            {
-                m_bSerialRegistration = false;
-                m_inRegistrationTimeout = 0;
-
-                QMessageBox::warning( this, tr("Warning"),
-                                      tr("Registration of the licence key has been failed.\n\n"
-                                         "Please check your internet connection and "
-                                         "try to restart the application.\n"
-                                         "Please also check whether the defined licence key is valid "
-                                         "and not used by somebody else. For this information please "
-                                         "contact your franchise distributor.") );
-            }
-            else
-            {
-                m_inRegistrationTimeout++;
+                if( g_poPrefs->getWorktimeCounter() < 1 )
+                {
+                    g_obLicenceManager.deactivate();
+                    on_action_LogOut_triggered();
+                }
             }
         }
     }
@@ -4141,9 +4132,8 @@ bool cWndMain::_checkIsActivationNeeded()
                 lblDemoNotes->setText( tr( "The licence key of the application is invalid or expired. "
                                            "Please contact your franchise provider to activate your licence!" ) );
                 lblDemoMode->setStyleSheet( "QLabel {color: red;}" );
-                QMessageBox::warning( this, tr("Error"),
-                                      tr("The licence key of the application is invalid or expired.\n"
-                                         "Please contact your franchise provider to activate your licence!") );
+                g_obGen.showTrayError( tr("The licence key of the application is invalid or expired.\n"
+                                          "Please contact your franchise provider to activate your licence!") );
                 break;
 
             default:
@@ -4156,8 +4146,8 @@ bool cWndMain::_checkIsActivationNeeded()
         }
     }
 
-    // If licence is ok, but no hardware detected go demo mode
-    if( m_nLicenceStatus == CONST_LICENCE_VALIDATED && QString::fromStdString( g_poHardware->getCustomCaption() ).compare( "DEMO" ) == 0 )
+    // If licence is not invalid, but no hardware detected go demo mode
+    if( m_nLicenceStatus != CONST_LICENCE_INVALID && QString::fromStdString( g_poHardware->getCustomCaption() ).compare( "DEMO" ) == 0 )
     {
         frmDemo->setVisible( true );
         lblDemoMode->setText(  tr( "The application runs in DEMO mode." ) );

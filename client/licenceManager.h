@@ -27,8 +27,8 @@ public:
     unsigned int    licenceID();
     QString         licenceSerialString();
     licenceType     licenceState();
-
     licenceType     checkLicenceState();
+    void            deactivate();
 
 private:
 
