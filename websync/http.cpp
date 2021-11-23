@@ -293,6 +293,91 @@ void cBlnsHttp::processWaitingMails()
 }
 
 //=================================================================================================
+void cBlnsHttp::registerLicenceKey( QString p_qsLicenceString, QString p_qsClientCode )
+//-------------------------------------------------------------------------------------------------
+{
+    if( !m_bIsHttpEnabled )
+    {
+        m_qsError = tr("HTTP connection disabled");
+        m_inHttpProcessStep = HTTP_STATUS_DEFAULT;
+        g_obLogger(cSeverity::WARNING) << "HTTP: " << m_qsError << EOM;
+        emit signalErrorOccured();
+        return;
+    }
+
+    m_qsLicenceStringValidate   = p_qsLicenceString;
+    m_qsLicenceClientCode       = p_qsClientCode;
+
+    m_vrHttpActions.clear();
+    m_vrHttpActions.push_back( cBlnsHttpAction::HA_AUTHENTICATE );
+    m_vrHttpActions.push_back( cBlnsHttpAction::HA_LICENCE_CODE_VALIDATE );
+    m_vrHttpActions.push_back( cBlnsHttpAction::HA_LICENCE_REGISTER );
+    m_vrHttpActions.push_back( cBlnsHttpAction::HA_PROCESSFINISHED );
+
+    m_teBlnsHttpProcess     = cBlnsHttpAction::HA_LICENCE_REGISTER;
+    m_inHttpProcessStep     = 0;
+
+    _httpStartProcess();
+}
+
+//=================================================================================================
+void cBlnsHttp::reactivateLicenceKey(QString p_qsLicenceString, QString p_qsClientCode )
+//-------------------------------------------------------------------------------------------------
+{
+    if( !m_bIsHttpEnabled )
+    {
+        m_qsError = tr("HTTP connection disabled");
+        m_inHttpProcessStep = HTTP_STATUS_DEFAULT;
+        g_obLogger(cSeverity::WARNING) << "HTTP: " << m_qsError << EOM;
+        emit signalErrorOccured();
+        return;
+    }
+
+    m_qsLicenceStringValidate   = p_qsLicenceString;
+    m_qsLicenceClientCode       = p_qsClientCode;
+
+    m_vrHttpActions.clear();
+    m_vrHttpActions.push_back( cBlnsHttpAction::HA_AUTHENTICATE );
+    m_vrHttpActions.push_back( cBlnsHttpAction::HA_LICENCE_CODE_VALIDATE );
+    m_vrHttpActions.push_back( cBlnsHttpAction::HA_LICENCE_REACTIVATE );
+    m_vrHttpActions.push_back( cBlnsHttpAction::HA_PROCESSFINISHED );
+
+    m_teBlnsHttpProcess     = cBlnsHttpAction::HA_LICENCE_REACTIVATE;
+    m_inHttpProcessStep     = 0;
+
+    _httpStartProcess();
+}
+
+//=================================================================================================
+void cBlnsHttp::validateLicenceKey(QString p_qsLicenceString, QString p_qsClientCode, QString p_qsServerCode)
+//-------------------------------------------------------------------------------------------------
+{
+    if( !m_bIsHttpEnabled )
+    {
+        m_qsError = tr("HTTP connection disabled");
+        m_inHttpProcessStep = HTTP_STATUS_DEFAULT;
+        g_obLogger(cSeverity::WARNING) << "HTTP: " << m_qsError << EOM;
+        emit signalErrorOccured();
+        return;
+    }
+
+    m_qsLicenceStringValidate   = p_qsLicenceString;
+    m_qsLicenceClientCode       = p_qsClientCode;
+    m_qsLicenceServerCode       = p_qsServerCode;
+
+    m_vrHttpActions.clear();
+    m_vrHttpActions.push_back( cBlnsHttpAction::HA_AUTHENTICATE );
+    m_vrHttpActions.push_back( cBlnsHttpAction::HA_LICENCE_CODE_VALIDATE );
+    m_vrHttpActions.push_back( cBlnsHttpAction::HA_LICENCE_CHECK );
+    m_vrHttpActions.push_back( cBlnsHttpAction::HA_PROCESSFINISHED );
+
+    m_teBlnsHttpProcess     = cBlnsHttpAction::HA_LICENCE_CHECK;
+    m_inHttpProcessStep     = 0;
+
+    _httpStartProcess();
+}
+
+//=================================================================================================
 //=================================================================================================
 //=================================================================================================
 //
@@ -624,42 +709,73 @@ void cBlnsHttp::_httpExecuteProcess()
             break;
         }
         case cBlnsHttpAction::HA_PCSENDDATA: // 2
+        {
             g_obLogger(cSeverity::DEBUG) << "HTTP: Send card data" << EOM;
             _httpSendCardData();
             break;
-
+        }
         case cBlnsHttpAction::HA_PCUPDATERECORD: // 3
+        {
             g_obLogger(cSeverity::DEBUG) << "HTTP: Update record" << EOM;
             _updateProcessedRecord();
             _httpProcessResponse();
             break;
-
+        }
         case cBlnsHttpAction::HA_REQUESTDATA: // 5
+        {
             g_obLogger(cSeverity::DEBUG) << "HTTP: Get online sold cards" << EOM;
             _httpGetOnlineRecords();
             break;
-
+        }
         case cBlnsHttpAction::HA_SENDREQUESTSFINISHED: // 6
+        {
             g_obLogger(cSeverity::DEBUG) << "HTTP: Confirm requested data arrived" << EOM;
             _httpConfirmRequestedData();
             break;
-
+        }
         case cBlnsHttpAction::HA_SENDMAILTOSERVER: // 7
+        {
             g_obLogger(cSeverity::DEBUG) << "HTTP: Send mail to server" << EOM;
             _httpSendMailToServer();
             break;
-
+        }
         case cBlnsHttpAction::HA_UPDATEMAILRECORD: // 9
+        {
             g_obLogger(cSeverity::DEBUG) << "HTTP: Update mail record" << EOM;
             _updateMailRecord();
             _httpProcessResponse();
             break;
-
-        case cBlnsHttpAction::HA_PROCESSFINISHED: // 10
+        }
+        case cBlnsHttpAction::HA_LICENCE_REGISTER: // 10
+        {
+            g_obLogger(cSeverity::DEBUG) << "HTTP: Register licence key" << EOM;
+            _httpRegisterLicence();
+            break;
+        }
+        case cBlnsHttpAction::HA_LICENCE_REACTIVATE: // 11
+        {
+            g_obLogger(cSeverity::DEBUG) << "HTTP: Reactivate licence key" << EOM;
+            _httpReactivateLicence();
+            break;
+        }
+        case cBlnsHttpAction::HA_LICENCE_CHECK: // 12
+        {
+            g_obLogger(cSeverity::DEBUG) << "HTTP: Check licence key" << EOM;
+            _httpCheckLicence();
+            break;
+        }
+        case cBlnsHttpAction::HA_LICENCE_CODE_VALIDATE: // 13
+        {
+            g_obLogger(cSeverity::DEBUG) << "HTTP: Validate licence code integrity" << EOM;
+            _httpValidateLicenceIntegrity();
+            break;
+        }
+        case cBlnsHttpAction::HA_PROCESSFINISHED: // 14
+        {
             g_obLogger(cSeverity::DEBUG) << "HTTP: Finish process" << EOM;
             _httpProcessResponse();
             break;
-
+        }
         default:
             // Nothing to do
             break;
@@ -861,6 +977,127 @@ void cBlnsHttp::_httpConfirmRequestedData()
 }
 
 //=================================================================================================
+void cBlnsHttp::_httpRegisterLicence()
+//-------------------------------------------------------------------------------------------------
+{
+    // https://www.kiwisun.hu/kiwi_ticket/licence.php
+    QString qsFileName      = m_qsServerAddress;
+
+    qsFileName.append( "/kiwi_ticket/licence.php" );
+
+    qsFileName = qsFileName.replace( "\\", "/" );
+    qsFileName = qsFileName.replace( "//kiwi", "/kiwi" );
+
+    qsFileName.append( QString( "?token=%1" ).arg( m_qsToken ) );
+    qsFileName.append( QString( "&Cmd=LICENCE_REGISTER" ) );
+    qsFileName.append( QString( "&StudioId=%1" ).arg( m_qsLicenceStringValidate ) );
+    qsFileName.append( QString( "&ClientCode=%1" ).arg( m_qsLicenceClientCode ) );
+
+    g_obLogger(cSeverity::DEBUG) << "HTTP: Register licence ["
+                                 << qsFileName
+                                 << "]"
+                                 << EOM;
+
+    _downloadFile( qsFileName );
+}
+
+//=================================================================================================
+void cBlnsHttp::_httpValidateLicenceIntegrity()
+//-------------------------------------------------------------------------------------------------
+{
+    // http://download.bikfalvi.hu/belenus/official/licence.php
+    QString qsFileName      = "http://download.bikfalvi.hu/belenus/official/licence.php";
+
+    qsFileName.append( QString( "?blns=%1" ).arg( m_qsLicenceStringValidate ) );
+
+    g_obLogger(cSeverity::DEBUG) << "HTTP: Checking licence code integrity ["
+                                 << qsFileName
+                                 << "]"
+                                 << EOM;
+
+    _downloadFile( qsFileName );
+}
+
+//=================================================================================================
+void cBlnsHttp::_httpReactivateLicence()
+//-------------------------------------------------------------------------------------------------
+{
+    // https://www.kiwisun.hu/kiwi_ticket/licence.php
+    QString qsFileName      = m_qsServerAddress;
+
+    qsFileName.append( "/kiwi_ticket/licence.php" );
+
+    qsFileName = qsFileName.replace( "\\", "/" );
+    qsFileName = qsFileName.replace( "//kiwi", "/kiwi" );
+
+    qsFileName.append( QString( "?token=%1" ).arg( m_qsToken ) );
+    qsFileName.append( QString( "&Cmd=LICENCE_REACTIVATE" ) );
+    qsFileName.append( QString( "&StudioId=%1" ).arg( m_qsLicenceStringValidate ) );
+    qsFileName.append( QString( "&ClientCode=%1" ).arg( m_qsLicenceClientCode ) );
+
+    g_obLogger(cSeverity::DEBUG) << "HTTP: Reactivate licence ["
+                                 << qsFileName
+                                 << "]"
+                                 << EOM;
+
+    _downloadFile( qsFileName );
+}
+
+//=================================================================================================
+//void cBlnsHttp::_httpChangeLicence()
+//-------------------------------------------------------------------------------------------------
+/*
+{
+    // https://www.kiwisun.hu/kiwi_ticket/licence.php
+    QString qsFileName      = m_qsServerAddress;
+
+    qsFileName.append( "/kiwi_ticket/licence.php" );
+
+    qsFileName = qsFileName.replace( "\\", "/" );
+    qsFileName = qsFileName.replace( "//kiwi", "/kiwi" );
+
+    qsFileName.append( QString( "?token=%1" ).arg( m_qsToken ) );
+    qsFileName.append( QString( "&Cmd=LICENCE_CHANGE" ) );
+    qsFileName.append( QString( "&StudioId=%1" ).arg( m_qsLicenceStringCurrent ) );
+    qsFileName.append( QString( "&StudioIdNew=%1" ).arg( m_qsLicenceStringNew ) );
+    qsFileName.append( QString( "&ClientCode=%1" ).arg( m_qsLicenceClientCode ) );
+
+    g_obLogger(cSeverity::DEBUG) << "HTTP: Change licence key ["
+                                 << qsFileName
+                                 << "]"
+                                 << EOM;
+
+    _downloadFile( qsFileName );
+}
+*/
+//=================================================================================================
+void cBlnsHttp::_httpCheckLicence()
+//-------------------------------------------------------------------------------------------------
+{
+    // https://www.kiwisun.hu/kiwi_ticket/licence.php
+    QString qsFileName      = m_qsServerAddress;
+
+    qsFileName.append( "/kiwi_ticket/licence.php" );
+
+    qsFileName = qsFileName.replace( "\\", "/" );
+    qsFileName = qsFileName.replace( "//kiwi", "/kiwi" );
+
+    qsFileName.append( QString( "?token=%1" ).arg( m_qsToken ) );
+    qsFileName.append( QString( "&Cmd=LICENCE_CHECK" ) );
+    qsFileName.append( QString( "&StudioId=%1" ).arg( m_qsLicenceStringValidate ) );
+    qsFileName.append( QString( "&ClientCode=%1" ).arg( m_qsLicenceClientCode ) );
+    qsFileName.append( QString( "&ServerCode=%1" ).arg( m_qsLicenceServerCode ) );
+
+    g_obLogger(cSeverity::DEBUG) << "HTTP: Check licence validation ["
+                                 << qsFileName
+                                 << "]"
+                                 << EOM;
+
+    _downloadFile( qsFileName );
+}
+
+
+//=================================================================================================
 void cBlnsHttp::_httpProcessResponse()
 //-------------------------------------------------------------------------------------------------
 {
@@ -940,6 +1177,50 @@ void cBlnsHttp::_httpProcessResponse()
             if( !_processResponse() )
             {
                 g_obLogger(cSeverity::ERROR) << "Error occured during processing comm.php ErrorCode: " << m_inHttpProcessStep << EOM;
+                return;
+            }
+            m_inHttpProcessStep++;
+            _httpExecuteProcess();
+            break;
+
+        case cBlnsHttpAction::HA_LICENCE_REGISTER:
+            g_obLogger(cSeverity::DEBUG) << "HTTP: Read register response from licence.php" << EOM;
+            if( !_processLicence() )
+            {
+                g_obLogger(cSeverity::ERROR) << "Error occured during processing licence.php ErrorCode: " << m_inHttpProcessStep << EOM;
+                return;
+            }
+            m_inHttpProcessStep++;
+            _httpExecuteProcess();
+            break;
+
+        case cBlnsHttpAction::HA_LICENCE_REACTIVATE:
+            g_obLogger(cSeverity::DEBUG) << "HTTP: Read reactivate response from licence.php" << EOM;
+            if( !_processLicence() )
+            {
+                g_obLogger(cSeverity::ERROR) << "Error occured during processing licence.php ErrorCode: " << m_inHttpProcessStep << EOM;
+                return;
+            }
+            m_inHttpProcessStep++;
+            _httpExecuteProcess();
+            break;
+
+        case cBlnsHttpAction::HA_LICENCE_CHECK:
+            g_obLogger(cSeverity::DEBUG) << "HTTP: Read check response from licence.php" << EOM;
+            if( !_processLicence() )
+            {
+                g_obLogger(cSeverity::ERROR) << "Error occured during processing licence.php ErrorCode: " << m_inHttpProcessStep << EOM;
+                return;
+            }
+            m_inHttpProcessStep++;
+            _httpExecuteProcess();
+            break;
+
+        case cBlnsHttpAction::HA_LICENCE_CODE_VALIDATE:
+            g_obLogger(cSeverity::DEBUG) << "HTTP: Read check response from integrity licence.php" << EOM;
+            if( !_processLicenceIntegrity() )
+            {
+                g_obLogger(cSeverity::ERROR) << "Error occured during processing licence.php ErrorCode: " << m_inHttpProcessStep << EOM;
                 return;
             }
             m_inHttpProcessStep++;
@@ -1053,6 +1334,8 @@ void cBlnsHttp::_readTokenFromFile()
     QTextStream qtsFile(&file);
     QString     qsLine = qtsFile.readLine();
 
+    g_obLogger(cSeverity::DEBUG) << "HTTP: Token [" << qsLine << "]" << EOM;
+
     m_qsToken = qsLine.left( 16 );
 }
 
@@ -1097,6 +1380,21 @@ void cBlnsHttp::_sendProcessFinished()
             break;
 
         case cBlnsHttpAction::HA_REQUESTDATA:
+            emit signalActionProcessed( QString("%1 succeeded")
+                                                .arg( cBlnsHttpAction::toStr( m_teBlnsHttpProcess ) ));
+            break;
+
+        case cBlnsHttpAction::HA_LICENCE_REGISTER:
+            emit signalActionProcessed( QString("%1 succeeded")
+                                                .arg( cBlnsHttpAction::toStr( m_teBlnsHttpProcess ) ));
+            break;
+
+        case cBlnsHttpAction::HA_LICENCE_REACTIVATE:
+            emit signalActionProcessed( QString("%1 succeeded")
+                                                .arg( cBlnsHttpAction::toStr( m_teBlnsHttpProcess ) ));
+            break;
+
+        case cBlnsHttpAction::HA_LICENCE_CHECK:
             emit signalActionProcessed( QString("%1 succeeded")
                                                 .arg( cBlnsHttpAction::toStr( m_teBlnsHttpProcess ) ));
             break;
@@ -1920,6 +2218,134 @@ bool cBlnsHttp::_processResponse()
         g_obLogger(cSeverity::WARNING) << "HTTP: Result not sent to server" << EOM;
         emit signalErrorOccured();
         m_inHttpProcessStep = HTTP_ERROR_RESULT_NOT_SENT;
+    }
+
+    return false;
+}
+
+//=================================================================================================
+bool cBlnsHttp::_processLicence()
+//-------------------------------------------------------------------------------------------------
+{
+    QString fileName = QString("%1\\licence.php").arg( QDir::currentPath() );
+    QFile   file( fileName );
+
+    if (!file.open(QIODevice::ReadOnly | QIODevice::Text))
+    {
+        g_obLogger(cSeverity::ERROR) << "HTTP Unable to open file " << fileName << EOM;
+        return false;
+    }
+
+    QTextStream qtsFile(&file);
+
+    QString     qsResponse   = qtsFile.readLine();
+
+    g_obLogger(cSeverity::DEBUG) << "HTTP: Response [" << qsResponse << "]" << EOM;
+
+    if( qsResponse.contains( "LICENCE_REGISTRATION_OK" ) ||
+        qsResponse.contains( "LICENCE_ACTIVATION_OK" ) )
+    {
+        g_obLogger(cSeverity::INFO) << "HTTP: Response received without error" << EOM;
+        m_qsLicenceServerCode = qsResponse.right( qsResponse.length() - qsResponse.indexOf( '-' ) - 2 );
+        return true;
+    }
+    else if( qsResponse.contains( "LICENCE_OK" ) )
+    {
+        g_obLogger(cSeverity::INFO) << "HTTP: Response received without error" << EOM;
+        return true;
+    }
+    else if( qsResponse.contains( "Missing token" ) )
+    {
+        m_qsError = tr("Server did not received token");
+        g_obLogger(cSeverity::WARNING) << "HTTP: Server did not received token" << EOM;
+        emit signalErrorOccured();
+        m_inHttpProcessStep = HTTP_ERROR_INVALID_TOKEN;
+    }
+    else if( qsResponse.contains( "LICENCE_INVALID" ) )
+    {
+        m_qsError = tr("Licence code not found in server database");
+        g_obLogger(cSeverity::WARNING) << "HTTP: Server did not received token" << EOM;
+        emit signalErrorOccured();
+        m_inHttpProcessStep = HTTP_ERROR_LICENCE_INVALID;
+    }
+    else if( qsResponse.contains( "LICENCE_ALREADY_REGISTERED" ) )
+    {
+        m_qsError = tr("The licence code already registered.\nPlease use a different licence code.");
+        g_obLogger(cSeverity::WARNING) << "HTTP: Server did not received token" << EOM;
+        emit signalErrorOccured();
+        m_inHttpProcessStep = HTTP_ERROR_LICENCE_ALREADY_REGISTERED;
+    }
+    else if( qsResponse.contains( "LICENCE_INACTIVE" ) )
+    {
+        m_qsError = tr("The licence code set to inactive on Kiwisun server.\nPlease set the licence code to active.");
+        g_obLogger(cSeverity::WARNING) << "HTTP: Server did not received token" << EOM;
+        emit signalErrorOccured();
+        m_inHttpProcessStep = HTTP_ERROR_LICENCE_INACTIVE;
+    }
+    else if( qsResponse.contains( "LICENCE_CLIENT_CODE_INVALID" ) )
+    {
+        m_qsError = tr("The client validation code is invalid.\nPlease contact your Kiwisun administrator!");
+        g_obLogger(cSeverity::WARNING) << "HTTP: Server did not received token" << EOM;
+        emit signalErrorOccured();
+        m_inHttpProcessStep = HTTP_ERROR_LICENCE_CLIENT_CODE_INVALID;
+    }
+    else if( qsResponse.contains( "LICENCE_SERVER_CODE_INVALID" ) )
+    {
+        m_qsError = tr("The server validation code is invalid.\nPlease contact your Kiwisun administrator!");
+        g_obLogger(cSeverity::WARNING) << "HTTP: Server did not received token" << EOM;
+        emit signalErrorOccured();
+        m_inHttpProcessStep = HTTP_ERROR_LICENCE_SERVER_CODE_INVALID;
+    }
+    else
+    {
+        m_qsError = tr("Response from server is invalid or other unknown error occured");
+        g_obLogger(cSeverity::WARNING) << "HTTP: Response from server is invalid or other unknown error occured" << EOM;
+        emit signalErrorOccured();
+        m_inHttpProcessStep = HTTP_ERROR_INVALID_ANSWER;
+    }
+
+    return false;
+}
+
+//=================================================================================================
+bool cBlnsHttp::_processLicenceIntegrity()
+//-------------------------------------------------------------------------------------------------
+{    
+    QString fileName = QString("%1/licence.php").arg( QDir::currentPath() );
+    QFile   file( fileName );
+
+    g_obLogger(cSeverity::DEBUG) << "HTTP: Response file [" << fileName << "]" << EOM;
+
+    if (!file.open(QIODevice::ReadOnly | QIODevice::Text))
+    {
+        g_obLogger(cSeverity::ERROR) << "HTTP Unable to open file " << fileName << EOM;
+        return false;
+    }
+
+    QTextStream qtsFile(&file);
+
+    QString     qsResponse   = qtsFile.readLine();
+
+    g_obLogger(cSeverity::DEBUG) << "HTTP: Response [" << qsResponse << "]" << EOM;
+
+    if( qsResponse.contains( "licence_integrity_ok" ) )
+    {
+        g_obLogger(cSeverity::INFO) << "HTTP: Response received without error" << EOM;
+        return true;
+    }
+    else if( qsResponse.contains( "licence_integrity_broken" ) )
+    {
+        m_qsError = tr("Licence code integrity broken");
+        g_obLogger(cSeverity::WARNING) << "HTTP: Licence code integrity broken" << EOM;
+        emit signalErrorOccured();
+        m_inHttpProcessStep = HTTP_ERROR_INVALID_LICENCE_CODE;
+    }
+    else
+    {
+        m_qsError = tr("Response from server is invalid or other unknown error occured");
+        g_obLogger(cSeverity::WARNING) << "HTTP: Response from server is invalid or other unknown error occured" << EOM;
+        emit signalErrorOccured();
+        m_inHttpProcessStep = HTTP_ERROR_INVALID_ANSWER;
     }
 
     return false;

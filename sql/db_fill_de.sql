@@ -13,10 +13,10 @@ USE `belenus`;
 
 -- -----------------------------------------------------------------------------------
 
-INSERT INTO `licences` (`licenceId`, `serial`, `country`, `region`, `city`, `zip`, `address`, `studio`, `contact`, `lastValidated`, `Act`, `Cod`, `active`, `archive`) VALUES
- ( 0, 'BLNS_SERIAL_GLOBAL', 'Hungary', 'Budapest', 'Budapest', '', '', 'KiwiSun Franchise', NULL, '2013-10-01', '', '', 1, 'ARC');
-INSERT INTO `licences` (`licenceId`, `serial`, `country`, `region`, `city`, `zip`, `address`, `studio`, `contact`, `lastValidated`, `Act`, `Cod`, `active`, `archive`) VALUES
- ( 1, 'BLNS_SERIAL_DEMO', 'Hungary', 'Budapest', 'Budapest', '', '', 'KiwiSun Franchise', NULL, '2013-10-01', '', '', 1, 'ARC');
+INSERT INTO `licences` (`licenceId`, `serial`, `country`, `region`, `city`, `zip`, `address`, `studio`, `contact`, `lastValidated`, `type`, `Act`, `Cod`, `active`, `archive`) VALUES
+ ( 0, 'BLNS_SERIAL_GLOBAL', 'Hungary', 'Budapest', 'Budapest', '', '', 'KiwiSun Franchise', NULL, '2022-01-01', 'DEMO', '', '', 1, 'ARC');
+INSERT INTO `licences` (`licenceId`, `serial`, `country`, `region`, `city`, `zip`, `address`, `studio`, `contact`, `lastValidated`, `type`, `Act`, `Cod`, `active`, `archive`) VALUES
+ ( 1, 'BLNS_SERIAL_DEMO', 'Hungary', 'Budapest', 'Budapest', '', '', 'KiwiSun Franchise', NULL, '2022-01-01', 'DEMO', '', '', 1, 'ARC');
 
 -- -----------------------------------------------------------------------------------
 
@@ -323,8 +323,12 @@ INSERT INTO `settings` (`settingId`, `identifier`, `value`) VALUES
  (NULL, 'LICENCE_LAST_VALIDATED', '2020-05-01 12:00:00'),
  (NULL, 'ABOUT_INFO_LINK', 'http://www.kiwisun.eu/elerhetosegeink.html'),
  (NULL, 'CURRENT_CASSA_ID', '0'),
- (NULL, 'APPLICATION_VERSION', '1_9_0_1'),
- (NULL, 'DATABASE_VERSION', '1_9_0_1'),
+ (NULL, 'APPLICATION_VERSION', '2_0_0_0'),
+ (NULL, 'DATABASE_VERSION', '2_0_0_0'),
+ (NULL, 'LICENCE_CHECK', 56),
+ (NULL, 'LICENCE_CHECK_COUNTER', 56),
+ (NULL, 'LICENCE_WORKTIME', 336),
+ (NULL, 'LICENCE_WORKTIME_COUNTER', 336),
  (NULL, "GEN_LastUser", "" ),
  (NULL, "GEN_PanelsPerRow", 3 ),
  (NULL, "GEN_BarcodeLength", 8 ),

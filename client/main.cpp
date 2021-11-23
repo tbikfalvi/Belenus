@@ -13,8 +13,8 @@
 // Alkalmazas fo allomanya.
 //====================================================================================
 
-#define APPLICATION_VERSION_NUMBER  "1.9.0.1"
-#define DATABASE_VERSION_NUMBER     "1.9.0.1"
+#define APPLICATION_VERSION_NUMBER  "2.0.0.0"
+#define DATABASE_VERSION_NUMBER     "2.0.0.0"
 
 //====================================================================================
 
@@ -178,15 +178,29 @@ int main( int argc, char *argv[] )
             return 0;
         }
 
-// ennek itt nincs értelme
-//        QSqlQuery *poQuery = g_poDB->executeQTQuery( QString( "SELECT * FROM licences" ) );
-
-        qsSpalsh += "\n";
+        qsSpalsh += "\n\n";
         obSplash.showMessage(qsSpalsh,Qt::AlignLeft,QColor(59,44, 75));
 
-        qsSpalsh += QObject::tr("License is ... ");
-        obSplash.showMessage(qsSpalsh,Qt::AlignLeft,QColor(59,44, 75));
+        Sleep( g_poPrefs->getSecondsWaitOnSlpashScreen()*1000 );
 
+        g_obLicenceManager.initialize();
+
+        qsSpalsh += QObject::tr("Licence serial: %1\n").arg( g_obLicenceManager.licenceSerialString() );
+        obSplash.showMessage(qsSpalsh,Qt::AlignLeft,QColor(59,44,75));
+
+        if( g_obLicenceManager.licenceID() >= 2 && g_obLicenceManager.licenceState() == cLicenceManager::LTYPE_INVALID )
+        {
+            qsSpalsh += "\n";
+            qsSpalsh += QObject::tr( "The application's licence validity EXPIRED" );
+            qsSpalsh += "\n";
+            qsSpalsh += QObject::tr( "Please contact your franchise provider to activate your licence!" );
+            qsSpalsh += "\n";
+            qsSpalsh += "\n";
+        }
+
+//------------------------------------------------------------------------------------------------------------------------------------------------
+// itt kezdodik az eredeti liszensz kiolvasos resz
+/*
         Sleep(1000);
 
         int         nId = 0;
@@ -234,6 +248,8 @@ int main( int argc, char *argv[] )
                 obSplash.showMessage(qsSpalsh,Qt::AlignLeft,QColor(59,44,75));
             }
         }
+*/
+//------------------------------------------------------------------------------------------------------------------------------------------------
 
 
         Sleep( g_poPrefs->getSecondsWaitOnSlpashScreen()*1000 );
@@ -248,19 +264,19 @@ int main( int argc, char *argv[] )
         qsSpalsh += QObject::tr("Checking database consistency: ");
         obSplash.showMessage(qsSpalsh,Qt::AlignLeft,QColor(59,44,75));
 
-        poQuery = g_poDB->executeQTQuery( QString( "UPDATE patientcardunits SET "
-                                                   "prepared=0, "
-                                                   "active=0 "
-                                                   "WHERE "
-                                                   "prepared=1 AND "
-                                                   "patientCardId>1 AND "
-                                                   "dateTimeUsed>\"2000-01-01\" " ) );
+        g_poDB->executeQTQuery( QString( "UPDATE patientcardunits SET "
+                                         "prepared=0, "
+                                         "active=0 "
+                                         "WHERE "
+                                         "prepared=1 AND "
+                                         "patientCardId>1 AND "
+                                         "dateTimeUsed>\"2000-01-01\" " ) );
 
-        poQuery = g_poDB->executeQTQuery( QString( "UPDATE patientcardunits SET "
-                                                   "prepared=0 "
-                                                   "WHERE "
-                                                   "prepared=1 AND "
-                                                   "active=1 ") );
+        g_poDB->executeQTQuery( QString( "UPDATE patientcardunits SET "
+                                         "prepared=0 "
+                                         "WHERE "
+                                         "prepared=1 AND "
+                                         "active=1 ") );
 
         g_poDB->executeQTQuery( QString( "DELETE FROM httpsendmail WHERE "
                                          "dateOfSending<\"" + QDate::currentDate().addDays( -4 ).toString( "yyyy-MM-dd" ) + "\" AND "
@@ -309,10 +325,9 @@ int main( int argc, char *argv[] )
 
         //-------------------------------------------------------------------------------
         // If Hardware component active, process hardware initialization
-        g_obLogger(cSeverity::DEBUG) << QString("HW check nID: %1 HWInstalled: %2").arg(nId).arg(g_poPrefs->isComponentHardwareInstalled()) << EOM;
-        if( nId >= 2 /*&& g_poPrefs->isComponentHardwareInstalled()*/ &&
-            nDaysRemain > 0 &&
-            g_obLicenceManager.ltLicenceType() != cLicenceManager::LTYPE_REGISTERED )
+        g_obLogger(cSeverity::DEBUG) << QString("HW check nID: %1 HWInstalled: %2").arg( g_obLicenceManager.licenceID() ).arg( g_poPrefs->isComponentHardwareInstalled() ) << EOM;
+
+        if( g_obLicenceManager.licenceID() >= 2 && g_obLicenceManager.licenceState() != cLicenceManager::LTYPE_INVALID )
         {
             qsSpalsh += QObject::tr("Checking hardware connection ... ");
             obSplash.showMessage(qsSpalsh,Qt::AlignLeft,QColor(59,44, 75));

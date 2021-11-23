@@ -11,6 +11,7 @@ TRANSLATIONS = websync_hu.ts \
                websync_de.ts \
                websync_it.ts \
                websync_ro.ts
+
 TARGET       = websync
 
 HEADERS     += ../framework/dbconnection.h \
@@ -37,5 +38,4 @@ SOURCES     += ../framework/dbconnection.cpp \
                dlglineedit.cpp
 
 FORMS       += dlgmain.ui \
-    dlgLineEdit.ui \
-    dlglineedit.ui
+               dlgLineEdit.ui

@@ -53,7 +53,14 @@ using namespace std;
 #define HTTP_ERROR_MISSING_MAIL_VAR_UNITCOUNT       -21
 #define HTTP_ERROR_MISSING_MAIL_VAR_DATETIME        -22
 #define HTTP_ERROR_INVALID_EMAIL_ADDRESS            -23
+#define HTTP_ERROR_LICENCE_INVALID                  -24
+#define HTTP_ERROR_LICENCE_ALREADY_REGISTERED       -25
+#define HTTP_ERROR_LICENCE_INACTIVE                 -26
+#define HTTP_ERROR_LICENCE_CLIENT_CODE_INVALID      -27
+#define HTTP_ERROR_LICENCE_SERVER_CODE_INVALID      -28
 
+#define HTTP_ERROR_INVALID_LICENCE_CODE             -70
+#define HTTP_ERROR_INVALID_ANSWER                   -98
 #define HTTP_ERROR_UNKNOWN                          -99
 
 //====================================================================================
@@ -72,24 +79,32 @@ public:
         HA_SENDMAILTOSERVER,        //  7
         HA_MAILPROCESSQUEUE,        //  8
         HA_UPDATEMAILRECORD,        //  9
-        HA_PROCESSFINISHED          // 10
+        HA_LICENCE_REGISTER,        // 10
+        HA_LICENCE_REACTIVATE,      // 11
+        HA_LICENCE_CHECK,           // 12
+        HA_LICENCE_CODE_VALIDATE,   // 13
+        HA_PROCESSFINISHED          // 14
     };
 
     static const char *toStr( teBlnsHttpAction p_enGA )
     {
         switch( p_enGA )
         {
-            case HA_DEFAULT:                    return "HTTPMSG_00";                                                break;
-            case HA_AUTHENTICATE:               return "HTTPMSG_01 Authentication with server";                     break;
-            case HA_PCSENDDATA:                 return "HTTPMSG_02 Send patientcard data to server";                break;
-            case HA_PCUPDATERECORD:             return "HTTPMSG_03 Update patientcard record on server";            break;
-            case HA_PCPROCESSQUEUE:             return "HTTPMSG_04 Process waiting patientcard queue";              break;
-            case HA_REQUESTDATA:                return "HTTPMSG_05 Get patientcard data sold online";               break;
-            case HA_SENDREQUESTSFINISHED:       return "HTTPMSG_06 Processing patientcards sold online finished";   break;
-            case HA_SENDMAILTOSERVER:           return "HTTPMSG_07 Send waiting mail to server";                    break;
-            case HA_MAILPROCESSQUEUE:           return "HTTPMSG_08 Process waiting mails queue";                    break;
-            case HA_UPDATEMAILRECORD:           return "HTTPMSG_09 Update mail record";                             break;
-            case HA_PROCESSFINISHED:            return "HTTPMSG_99";                                                break;
+            case HA_DEFAULT:                    return "HTTPMSG_00";                                                    break;
+            case HA_AUTHENTICATE:               return "HTTPMSG_01 Authentication with server";                         break;
+            case HA_PCSENDDATA:                 return "HTTPMSG_02 Send patientcard data to server";                    break;
+            case HA_PCUPDATERECORD:             return "HTTPMSG_03 Update patientcard record on server";                break;
+            case HA_PCPROCESSQUEUE:             return "HTTPMSG_04 Process waiting patientcard queue";                  break;
+            case HA_REQUESTDATA:                return "HTTPMSG_05 Get patientcard data sold online";                   break;
+            case HA_SENDREQUESTSFINISHED:       return "HTTPMSG_06 Processing patientcards sold online finished";       break;
+            case HA_SENDMAILTOSERVER:           return "HTTPMSG_07 Send waiting mail to server";                        break;
+            case HA_MAILPROCESSQUEUE:           return "HTTPMSG_08 Process waiting mails queue";                        break;
+            case HA_UPDATEMAILRECORD:           return "HTTPMSG_09 Update mail record";                                 break;
+            case HA_LICENCE_REGISTER:           return "HTTPMSG_10 Register licence key";                               break;
+            case HA_LICENCE_REACTIVATE:         return "HTTPMSG_11 Reactivate licence key";                             break;
+            case HA_LICENCE_CHECK:              return "HTTPMSG_12 Check licence key validity";                         break;
+            case HA_LICENCE_CODE_VALIDATE:      return "HTTPMSG_13 Check licence code integrity at licence provider";   break;
+            case HA_PROCESSFINISHED:            return "HTTPMSG_99";                                                    break;
             default:                            return "HTTPMSGERR";
         }
     }
@@ -119,9 +134,16 @@ public:
     void             getPatientCardsSoldOnline();
     void             processWaitingMails();
 
+    void             registerLicenceKey( QString p_qsLicenceString, QString p_qsClientCode );
+    void             reactivateLicenceKey( QString p_qsLicenceString, QString p_qsClientCode );
+    void             validateLicenceKey( QString p_qsLicenceString, QString p_qsClientCode, QString p_qsServerCode );
+
     int              getNumberOfWaitingRecords();
     QString          errorMessage();
     QString          settingsInfo();
+
+    unsigned int     licenceId() { return m_uiLicenceId; }
+    QString          licenceServerCode() { return m_qsLicenceServerCode; }
 
 protected:
 
@@ -170,6 +192,9 @@ private:
     QString          m_qsMailVarDateTime;
     QString          m_qsMailVarUnitCount;
     QString          m_qsMailSha1;
+    QString          m_qsLicenceStringValidate;
+    QString          m_qsLicenceClientCode;
+    QString          m_qsLicenceServerCode;
 
     QDomDocument    *obResponseXML;
 
@@ -200,6 +225,13 @@ private:
     void            _updateMailRecord();
     void            _readMailResponseFromFile();
     QString         _getNameForPatientCardType( unsigned int p_uiPatientCardTypeId );
+    void            _httpRegisterLicence();
+    void            _httpReactivateLicence();
+//    void            _httpChangeLicence();
+    void            _httpCheckLicence();
+    void            _httpValidateLicenceIntegrity();
+    bool            _processLicence();
+    bool            _processLicenceIntegrity();
 
 signals:
 
