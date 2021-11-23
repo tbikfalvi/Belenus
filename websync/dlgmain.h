@@ -63,7 +63,7 @@ class dlgMain : public QDialog
     };
 
 public:
-    explicit dlgMain(QWidget *parent = 0, QString p_qsAppVersion = "1.0.0.0");
+    explicit dlgMain(QWidget *parent = 0, QString p_qsAppVersion = "1.0.0.0", QString p_qsDbVersion = "1.0.0.0");
     ~dlgMain();
     bool checkTimeValues();
 
@@ -115,6 +115,11 @@ private slots:
     void on_PatientCardUpdated( unsigned int p_uiPatientCardId, QString p_qsBarcode );
     void slotShowModuleNotification( QString p_qsMessage );
     void on_pbSaveSettings_clicked();
+    void on_pbRegisterLicence_clicked();
+    void on_pbActivateLicence_clicked();
+    void on_pbChangeLicence_clicked();
+    void on_pbReloadLicenceInfo_clicked();
+    void on_pbReloadCounterInfo_clicked();
 
 private:
     Ui::dlgMain         *ui;
@@ -144,6 +149,9 @@ private:
     QAction             *actionResetSQL;
     QAction             *actionResetHTTP;
 */
+    QString              m_qsAppVersion;
+    QString              m_qsDBVersion;
+
     int                  m_nTimer;
     bool                 m_bMousePressed;
     int                  m_nMouseX;
@@ -155,6 +163,11 @@ private:
     bool                 m_bSyncPCToServer;
     bool                 m_bSyncPCFromServer;
     bool                 m_bSendMailToServer;
+    bool                 m_bRegisterLicenceKey;
+    bool                 m_bReactivateLicenceKey;
+    bool                 m_bStartRegisterLicenceKey;
+    bool                 m_bStartReactivateLicenceKey;
+    bool                 m_bValidateLicenceKey;
     int                  m_nTimerPCStatusSync;
 //    int                  m_nTimerPCOnlineSync;
     int                  m_nTimerSendMailCheck;
@@ -162,6 +175,8 @@ private:
     int                  m_nIndexPCStatusSync;
 //    int                  m_nIndexPCOnlineSync;
     int                  m_nIndexSendMailSync;
+    int                  m_nIndexLicenceValidation;
+    int                  m_nIndexLicenceValidationMax;
     int                  m_enGroup;
     QString              m_qsRPSW;
     int                  m_nIndexUpdateSyncDataCount;
@@ -187,6 +202,10 @@ private:
     QString              m_qsServerAddress;
     bool                 m_bServerAddressChanged;
 
+    unsigned int         m_uiLicenceId;
+    bool                 m_bLicenceValid;
+    int                  m_nLicenceCheckCounter;
+
     void                _setActions();
     void                _setMenu();
     void                _sendPCData( unsigned int p_uiId, QString p_qsBarcode );
@@ -204,6 +223,12 @@ private:
     QString             _bytearrayToString( QString p_qsString );
     bool                _isAppicationRunning( QString p_qsAppName );
     void                _saveSettings();
+    void                _licenceRegistrationAdmin();
+    void                _licenceReactivationAdmin();
+    void                _licenceValidationAdmin();
+    void                _resetLicenceValidationTimers();
+    void                _checkVersions();
+    void                _displayLicenceStatus( QString p_qsState );
 };
 
 #endif // DLGMAIN_H

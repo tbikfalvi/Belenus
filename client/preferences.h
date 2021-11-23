@@ -266,6 +266,19 @@ public:
     void            setRFIDComPort( const int p_nRFIDComPort );
     int             getRFIDComPort() const;
 
+    void            setLicenceCheck( const int p_nLicenceCheck );
+    int             getLicenceCheck() const;
+    void            setLicenceCheckCounter( const int p_nLicenceCheckCounter );
+    int             getLicenceCheckCounter() const;
+    void            resetLicenceCheckCounter();
+    void            decreaseLicenceCheckCounter();
+    void            setWorktime( const int p_nWorktime );
+    int             getWorktime() const;
+    void            setWorktimeCounter( const int p_nWorktimeCounter );
+    int             getWorktimeCounter() const;
+    void            resetWorktimeCounter();
+    void            decreaseWorktimeCounter();
+
 //void            setXXX( const QString &p_qsXXX );
 //QString         getXXX() const;
 //void            setXXX( const int p_nXXX );
@@ -374,6 +387,10 @@ private:
     int             m_nCloseInfoWindowAfterSecs;
     bool            m_bIsRFIDEnabled;
     int             m_nRFIDComPort;
+    int             m_nLicenceCheck;
+    int             m_nLicenceCheckCounter;
+    int             m_nWorkTime;
+    int             m_nWorkTimeCounter;
 
     void init();
 };

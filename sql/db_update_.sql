@@ -1,9 +1,9 @@
 ﻿-- -----------------------------------------------------------------------------------
 -- Belenus Szoftver Rendszer (c) Pagony Multimedia Studio Bt - 2014
 -- -----------------------------------------------------------------------------------
--- Filename    : db_update_1_9_0_1.sql
--- AppVersion  : 1.9.0.1
--- DbVersion   : 1.9.0.1
+-- Filename    : db_update_2_0_0_0.sql
+-- AppVersion  : 2.0.0.0
+-- DbVersion   : 2.0.0.0
 -- -----------------------------------------------------------------------------------
 
 USE `belenus`;
@@ -14,8 +14,16 @@ UPDATE `settings` SET value = DATE_ADD( NOW(), INTERVAL 60 DAY) WHERE identifier
 
 -- -----------------------------------------------------------------------------------
 
+ALTER TABLE `licences` ADD `type` VARCHAR( 20 ) NOT NULL DEFAULT 'UNREGISTERED' AFTER `lastValidated`;
+
+UPDATE `licences` SET `type` = 'DEMO' WHERE `licenceId` < 2;
+
+INSERT INTO `settings` ( `settingId`, `identifier`, `value` ) VALUES ( NULL , 'LICENCE_CHECK', '56' );
+INSERT INTO `settings` ( `settingId`, `identifier`, `value` ) VALUES ( NULL , 'LICENCE_CHECK_COUNTER', '56' );
+INSERT INTO `settings` ( `settingId`, `identifier`, `value` ) VALUES ( NULL , 'LICENCE_WORKTIME', '336' );
+INSERT INTO `settings` ( `settingId`, `identifier`, `value` ) VALUES ( NULL , 'LICENCE_WORKTIME_COUNTER', '336' );
 
 -- -----------------------------------------------------------------------------------
 
-UPDATE settings SET value='1_9_0_1' WHERE identifier='APPLICATION_VERSION';
-UPDATE settings SET value='1_9_0_1' WHERE identifier='DATABASE_VERSION';
+UPDATE settings SET value='2_0_0_0' WHERE identifier='APPLICATION_VERSION';
+UPDATE settings SET value='2_0_0_0' WHERE identifier='DATABASE_VERSION';

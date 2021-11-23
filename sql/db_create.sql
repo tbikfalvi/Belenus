@@ -2,8 +2,8 @@
 -- Belenus Szoftver Rendszer (c) Pagony Multimedia Studio Bt - 2013
 -- -----------------------------------------------------------------------------------
 -- Filename    : db_create.sql
--- AppVersion  : 1.9.0.1
--- DbVersion   : 1.9.0.1
+-- AppVersion  : 2.0.0.0
+-- DbVersion   : 2.0.0.0
 -- -----------------------------------------------------------------------------------
 -- Adatbazist letrehozo SQL script
 -- -----------------------------------------------------------------------------------
@@ -24,6 +24,7 @@ CREATE TABLE `licences` (
   `studio`                  varchar(100)            DEFAULT NULL,
   `contact`                 varchar(100)            DEFAULT NULL,
   `lastValidated`           DATE                    NULL DEFAULT NULL,
+  `type`                    varchar(20)             NOT NULL DEFAULT 'UNREGISTERED',
   `Act` 					VARCHAR( 10 ) 			NOT NULL,
   `Cod` 					VARCHAR( 10 ) 			NOT NULL,
   `active`                  tinyint(1)              DEFAULT 0,

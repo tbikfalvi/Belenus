@@ -12,18 +12,40 @@ class cLicenceManager : public QObject
 
 public:
 
+    enum licenceType {
+        LTYPE_DEMO,
+        LTYPE_VALIDATED,
+        LTYPE_UNREGISTERED,
+        LTYPE_UNVALIDATED,
+        LTYPE_INVALID
+    };
+
+    cLicenceManager();
+    ~cLicenceManager();
+
+    void            initialize();
+    unsigned int    licenceID();
+    QString         licenceSerialString();
+    licenceType     licenceState();
+    licenceType     checkLicenceState();
+    void            deactivate();
+
+private:
+
+    licenceType     m_LicenceType;
+
+    unsigned int    m_uiLicenceId;
+    QString         m_qsLicenceString;
+    QDate           m_qdLastValidated;
+    QString         m_qsState;
+
+
+/*
     static const int EXPIRE_IN_DAYS = 0;
     static const int EXPIRE_MAX_DAYS = 15;
     static const int DEMO_LICENCE_KEY_ID = 1;
     static const int LICENCE_MAX_NUMBER = 99;
     static const int LICENCE_MAX_NUMBER1 = 20;
-    enum licenceType {
-        LTYPE_DEMO,
-        LTYPE_REGISTERED,
-        LTYPE_ACTIVATED,
-        LTYPE_EXPIRED,
-        LTYPE_INVALID
-    };
 
     enum licenceError {
         ERR_NO_ERROR = 0,
@@ -33,10 +55,6 @@ public:
         ERR_ACT_KEY_INCORRECT
     };
 
-    cLicenceManager();
-    ~cLicenceManager();
-
-    void            initialize();
     bool            isDemo();
     int             daysRemain();
     int             validateLicence( const QString &p_qsLicenceString );
@@ -52,6 +70,7 @@ public:
 
 private:
 
+    unsigned int    m_nLicenceId;
     QStringList     m_qslLicenceKeys;
     QStringList     m_qslLicenceKeys1;
     QStringList     m_qslLicenceCodes;
@@ -73,6 +92,7 @@ private:
     void            _checkValidity();
     void            _EnCode( char *str, int size );
     void            _DeCode( char *str, int size );
+*/
 };
 
 #endif
