@@ -38,6 +38,7 @@ void cDBGuest::init( const unsigned int p_uiId,
                      const int p_nAgeType,
                      const bool p_bIsReturning,
                      const QString &p_qsUniqueId,
+                     const bool p_bIsCardy,
                      const QString &p_qsEmail,
                      const bool p_bRegularCustomer,
                      const bool p_bEmployee,
@@ -65,6 +66,7 @@ void cDBGuest::init( const unsigned int p_uiId,
     m_nAgeType              = p_nAgeType;
     m_bIsReturning          = p_bIsReturning;
     m_qsUniqueId            = p_qsUniqueId;
+    m_bIsCardy              = p_bIsCardy;
     m_qsEmail               = p_qsEmail;
     m_bRegularCustomer      = p_bRegularCustomer;
     m_bEmployee             = p_bEmployee;
@@ -95,6 +97,7 @@ void cDBGuest::init( const QSqlRecord &p_obRecord ) throw()
     int inAgeTypeIdx            = p_obRecord.indexOf( "ageType" );
     int inIsReturningIdx        = p_obRecord.indexOf( "isReturning" );
     int inUniqueIdIdx           = p_obRecord.indexOf( "uniqueId" );
+    int inIsCardyIdx            = p_obRecord.indexOf( "isCardy" );
     int inEmailIdx              = p_obRecord.indexOf( "email" );
     int inRegularCustomerIdx    = p_obRecord.indexOf( "regularCustomer" );
     int inEmployeeIdx           = p_obRecord.indexOf( "employee" );
@@ -121,6 +124,7 @@ void cDBGuest::init( const QSqlRecord &p_obRecord ) throw()
           p_obRecord.value( inAgeTypeIdx ).toInt(),
           p_obRecord.value( inIsReturningIdx ).toBool(),
           p_obRecord.value( inUniqueIdIdx ).toString(),
+          p_obRecord.value( inIsCardyIdx ).toBool(),
           p_obRecord.value( inEmailIdx ).toString(),
           p_obRecord.value( inRegularCustomerIdx ).toBool(),
           p_obRecord.value( inEmployeeIdx ).toBool(),
@@ -289,6 +293,7 @@ void cDBGuest::save() throw( cSevException )
     qsQuery += QString( "ageType = \"%1\", " ).arg( m_nAgeType );
     qsQuery += QString( "isReturning = %1, " ).arg( m_bIsReturning );
     qsQuery += QString( "uniqueId = \"%1\", " ).arg( m_qsUniqueId );
+    qsQuery += QString( "isCardy = %1, " ).arg( m_bIsCardy );
     qsQuery += QString( "email = \"%1\", " ).arg( m_qsEmail );
     qsQuery += QString( "regularCustomer = %1, " ).arg( m_bRegularCustomer );
     qsQuery += QString( "employee = %1, " ).arg( m_bEmployee );
@@ -413,6 +418,16 @@ void cDBGuest::setUniqueId( const QString &p_qsUniqueId ) throw()
 {
     m_qsUniqueId = p_qsUniqueId;
     m_qsUniqueId = m_qsUniqueId.replace( QString("\""), QString("\\\"") );
+}
+
+bool cDBGuest::isCardy() const throw()
+{
+    return m_bIsCardy;
+}
+
+void cDBGuest::setIsCardy( const bool p_bIsCardy ) throw()
+{
+    m_bIsCardy = p_bIsCardy;
 }
 
 QString cDBGuest::email() const throw()

@@ -18,6 +18,8 @@ ALTER TABLE `licences` ADD `type` VARCHAR( 20 ) NOT NULL DEFAULT 'UNREGISTERED' 
 
 UPDATE `licences` SET `type` = 'DEMO' WHERE `licenceId` < 2;
 
+ALTER TABLE `patients` ADD `isCardy` TINYINT NOT NULL DEFAULT '0' AFTER `uniqueId`;
+
 INSERT INTO `settings` ( `settingId`, `identifier`, `value` ) VALUES ( NULL , 'LICENCE_CHECK', '56' );
 INSERT INTO `settings` ( `settingId`, `identifier`, `value` ) VALUES ( NULL , 'LICENCE_CHECK_COUNTER', '56' );
 INSERT INTO `settings` ( `settingId`, `identifier`, `value` ) VALUES ( NULL , 'LICENCE_WORKTIME', '336' );
