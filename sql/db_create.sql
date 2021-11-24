@@ -939,6 +939,7 @@ CREATE TABLE `httpsendmail` (
   `httpSendMailId`          int(10) unsigned        NOT NULL AUTO_INCREMENT,
   `licenceId`               int(10) unsigned        NOT NULL,
   `mailTypeId`              int(10) unsigned        NOT NULL,
+  `mailDestination`         int(10) unsigned        NOT NULL,
   `dateOfSending`           date                    NOT NULL,
   `recipients`              text                    NOT NULL,
   `subject`                 varchar(500)            NOT NULL,

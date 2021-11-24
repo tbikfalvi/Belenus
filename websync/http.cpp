@@ -566,14 +566,15 @@ void cBlnsHttp::_httpStartProcess()
 
             m_uiRecordId        = poQuery->value(0).toUInt();
             m_nMailTypeId       = poQuery->value(2).toInt();
-            m_qsMailRecipients  = poQuery->value(4).toString();
-            m_qsMailSubject     = poQuery->value(5).toString();
-            m_qsMailText        = poQuery->value(6).toString();
-            m_qsMailVarName     = poQuery->value(7).toString();
-            m_qsMailVarBarcode  = poQuery->value(8).toString();
-            m_qsMailVarCardInfo = poQuery->value(9).toString();
-            m_qsMailVarUnitCount= poQuery->value(10).toString();
-            m_qsMailVarDateTime = poQuery->value(11).toString();
+            m_nMailDestination  = poQuery->value(3).toInt();
+            m_qsMailRecipients  = poQuery->value(5).toString();
+            m_qsMailSubject     = poQuery->value(6).toString();
+            m_qsMailText        = poQuery->value(7).toString();
+            m_qsMailVarName     = poQuery->value(8).toString();
+            m_qsMailVarBarcode  = poQuery->value(9).toString();
+            m_qsMailVarCardInfo = poQuery->value(10).toString();
+            m_qsMailVarUnitCount= poQuery->value(11).toString();
+            m_qsMailVarDateTime = poQuery->value(12).toString();
 
             // ^[a-z0-9!#$%&\'*+\=?^_`{|}~-]+(?:\.[a-z0-9!#$%&\'*+\=?^_`{|}~-]+)*@(?:[a-z0-9](?:[a-z0-9-]*[a-z0-9])?\.)+[a-z0-9](?:[a-z0-9-]*[a-z0-9])?
             QRegExp qreEmail( "^[a-z0-9!#$%&\\'*+\\=?^_`{|}~-]+(?:\\.[a-z0-9!#$%&\\'*+\\=?^_`{|}~-]+)*@(?:[a-z0-9](?:[a-z0-9-]*[a-z0-9])?\\.)+[a-z0-9](?:[a-z0-9-]*[a-z0-9])?" );
@@ -663,6 +664,28 @@ void cBlnsHttp::_httpStartProcess()
                     m_inHttpProcessStep = 2;
                     _httpExecuteProcess();
                     return;
+                }
+            }
+
+            if( m_nMailTypeId > 0 )
+            {
+                switch ( m_nMailDestination )
+                {
+                    case 1:
+                        m_qsMailSubject = "MAIL_ONLY";
+                    break;
+
+                    case 2:
+                        m_qsMailSubject = "CARDY_ONLY";
+                    break;
+
+                    case 3:
+                        m_qsMailSubject = "MAIL_CARDY";
+                    break;
+
+                    default:
+                        m_qsMailSubject = "";
+                        break;
                 }
             }
 
@@ -1425,7 +1448,7 @@ void cBlnsHttp::_readPCResponseFromFile()
                                  << "]"
                                  << EOM;
 
-    if( qsLine.contains( "true" ) || qsLine.contains( "Missing Card" ) )
+    if( qsLine.contains( "true" ) || qsLine.contains( "Missing Card" ) || qsLine.contains( "StudioId unknown" ) )
     {
         g_obLogger(cSeverity::DEBUG) << "HTTP: Update record with id ["
                                      << m_uiRecordId
@@ -1472,13 +1495,13 @@ void cBlnsHttp::_readPCResponseFromFile()
         emit signalErrorOccured();
         m_inHttpProcessStep = HTTP_ERROR_MD5_MISMATCH;
     }
-    else if( qsLine.contains( "StudioId unknown" ) )
+    /*else if( qsLine.contains( "StudioId unknown" ) )
     {
         m_qsError = tr("Unknown studio Id");
         g_obLogger(cSeverity::WARNING) << "HTTP: Studio Id not accepted by server" << EOM;
         emit signalErrorOccured();
         m_inHttpProcessStep = HTTP_ERROR_INVALID_STUDIO;
-    }
+    }*/
     else if( qsLine.contains( "SQL error" ) )
     {
         m_qsError = tr("Database error occured on server side");

@@ -183,6 +183,7 @@ void dlgSendMail::on_pbSend_clicked()
         obDBSendMail.createNew();
         obDBSendMail.setLicenceId( g_poPrefs->getLicenceId() );
         obDBSendMail.setMailTypeId( 0 );
+        obDBSendMail.setMailDestination( 0 );
         obDBSendMail.setDateSend( QDate::currentDate().toString("yyyy-MM-dd") );
         obDBSendMail.setRecipients( qslMailRecipients.join(";") );
         obDBSendMail.setSubject( ledSubject->text() );
@@ -207,6 +208,7 @@ void dlgSendMail::on_pbSave_clicked()
         obDBSendMail.createNew();
         obDBSendMail.setLicenceId( g_poPrefs->getLicenceId() );
         obDBSendMail.setMailTypeId( 0 );
+        obDBSendMail.setMailDestination( 0 );
         obDBSendMail.setDateSend( "" );
         obDBSendMail.setRecipients( teTo->toPlainText().trimmed() );
         obDBSendMail.setSubject( ledSubject->text() );

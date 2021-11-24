@@ -25,6 +25,11 @@ INSERT INTO `settings` ( `settingId`, `identifier`, `value` ) VALUES ( NULL , 'L
 INSERT INTO `settings` ( `settingId`, `identifier`, `value` ) VALUES ( NULL , 'LICENCE_WORKTIME', '336' );
 INSERT INTO `settings` ( `settingId`, `identifier`, `value` ) VALUES ( NULL , 'LICENCE_WORKTIME_COUNTER', '336' );
 
+INSERT INTO `settings` ( `settingId`, `identifier`, `value` ) VALUES ( NULL , 'AUTOMAIL_OnUnitChange', 0 );
+INSERT INTO `settings` ( `settingId`, `identifier`, `value` ) VALUES ( NULL , 'AUTOMAIL_OnCardyGo', 0 );
+
+ALTER TABLE `httpsendmail` ADD `mailDestination` INT UNSIGNED NOT NULL AFTER `mailTypeId`;
+
 -- -----------------------------------------------------------------------------------
 
 UPDATE settings SET value='2_0_0_0' WHERE identifier='APPLICATION_VERSION';

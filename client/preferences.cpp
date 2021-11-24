@@ -92,6 +92,7 @@ void cPreferences::init()
     m_bAutoMailOnPCSell             = false;
     m_bAutoMailOnPCUse              = false;
     m_bAutoMailOnPCExpiration       = false;
+    m_bAutoMailOnPCUnitChange       = false;
 
     m_bShowPatientInfoOnStart       = false;
     m_nShowInfoOnWindow             = 1;
@@ -104,6 +105,8 @@ void cPreferences::init()
     m_nLicenceCheckCounter          = 56;
     m_nWorkTime                     = 336;
     m_nWorkTimeCounter              = 336;
+
+    m_bCardyGoSync                  = false;
 }
 
 void cPreferences::loadSettings() throw (cSevException)
@@ -208,6 +211,8 @@ void cPreferences::loadSettings() throw (cSevException)
         m_bAutoMailOnPCUse              = loadSettingB( "AUTOMAIL_OnUse", false );
         m_bAutoMailOnPCExpiration       = loadSettingB( "AUTOMAIL_OnExpiration", false );
         m_nPCExpirationDays             = loadSettingI( "AUTOMAIL_ExpirationDays", 7 );
+        m_bAutoMailOnPCUnitChange       = loadSettingB( "AUTOMAIL_OnUnitChange", false );
+        m_bCardyGoSync                  = loadSettingB( "AUTOMAIL_OnCardyGo", false );
 
         m_qpSecondaryPosition = QPoint( nLeft, nTop );
         m_qsSecondarySize = QSize( nWidth, nHeight );
@@ -347,6 +352,8 @@ void cPreferences::saveSettings() throw (cSevException)
         saveSettingB( "AUTOMAIL_OnUse", m_bAutoMailOnPCUse );
         saveSettingB( "AUTOMAIL_OnExpiration", m_bAutoMailOnPCExpiration );
         saveSettingI( "AUTOMAIL_ExpirationDays", m_nPCExpirationDays );
+        saveSettingB( "AUTOMAIL_OnUnitChange", m_bAutoMailOnPCUnitChange );
+        saveSettingB( "AUTOMAIL_OnCardyGo", m_bCardyGoSync );
 
         delete poQuery;
     }
@@ -1642,6 +1649,16 @@ int cPreferences::getPCExpirationDays() const
     return m_nPCExpirationDays;
 }
 
+void cPreferences::setAutoMailOnPCUnitChange( bool p_bAutoMailOnPCUnitChange )
+{
+    m_bAutoMailOnPCUnitChange = p_bAutoMailOnPCUnitChange;
+}
+
+bool cPreferences::isAutoMailOnPCUnitChange()
+{
+    return m_bAutoMailOnPCUnitChange;
+}
+
 void cPreferences::setAdvertisementSizeAndPos( const unsigned int p_uiId,
                                                const unsigned int p_uiLeft,
                                                const unsigned int p_uiTop,
@@ -1802,6 +1819,16 @@ void cPreferences::decreaseWorktimeCounter()
     m_nWorkTimeCounter = loadSettingI( "LICENCE_WORKTIME_COUNTER", 336 );
     if( m_nWorkTimeCounter > 0 ) m_nWorkTimeCounter--;
     saveSettingI( "LICENCE_WORKTIME_COUNTER", m_nWorkTimeCounter );
+}
+
+void cPreferences::setCardyGoSync( bool p_bCardyGoSync )
+{
+    m_bCardyGoSync = p_bCardyGoSync;
+}
+
+bool cPreferences::isCardyGoSync()
+{
+    return m_bCardyGoSync;
 }
 
 

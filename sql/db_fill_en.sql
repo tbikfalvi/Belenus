@@ -406,6 +406,8 @@ INSERT INTO `settings` (`settingId`, `identifier`, `value`) VALUES
  (NULL, "AUTOMAIL_OnSell", 0 ),
  (NULL, "AUTOMAIL_OnUse", 0 ),
  (NULL, "AUTOMAIL_OnExpiration", 0 ),
- (NULL, "AUTOMAIL_ExpirationDays", 7 );
+ (NULL, "AUTOMAIL_ExpirationDays", 7 ),
+ (NULL, "AUTOMAIL_OnUnitChange", 0 ),
+ (NULL, "AUTOMAIL_OnCardyGo", 0 );
 
 -- -----------------------------------------------------------------------------------

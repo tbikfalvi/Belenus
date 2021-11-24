@@ -803,6 +803,7 @@ void cDBPatientCard::sendDataToWeb() throw()
 }
 
 void cDBPatientCard::sendAutoMail( const int p_nMailType,
+                                   const int p_nMailDestination,
                                    const QString &p_qsDate,
                                    const int p_nUnitCount,
                                    const QString &p_qsDateTime ) throw()
@@ -949,6 +950,7 @@ void cDBPatientCard::sendAutoMail( const int p_nMailType,
         obDBSendMail.createNew();
         obDBSendMail.setLicenceId( m_uiLicenceId );
         obDBSendMail.setMailTypeId( p_nMailType );
+        obDBSendMail.setMailDestination( p_nMailDestination );
         obDBSendMail.setDateSend( p_qsDate );
         obDBSendMail.setRecipients( qsPatientEmail );
         obDBSendMail.setSubject( qsUnitIds );
