@@ -152,6 +152,8 @@ void cDlgRemoveUnits::on_pbRemove_clicked()
 
             g_poDB->executeQTQuery( qsQuery );
         }
+
+        m_poPatientCard->sendDataToWeb();
     }
     catch( cSevException &e )
     {
