@@ -236,11 +236,8 @@ cDlgPreferences::cDlgPreferences( QWidget *p_poParent )
     }
 
     ledCurrencyFullName->setText( g_poPrefs->getCurrencyLong() );
-
     ledCurrencyShortName->setText( g_poPrefs->getCurrencyShort() );
-
     ledSeparatorDecimal->setText( g_poPrefs->getCurrencyDecimalSeparator() );
-
     ledSeparatorThousand->setText( g_poPrefs->getCurrencySeparator() );
 
     //---------------------------------------------------------------------------------------------------------------------------------------------------
@@ -248,12 +245,11 @@ cDlgPreferences::cDlgPreferences( QWidget *p_poParent )
     //---------------------------------------------------------------------------------------------------------------------------------------------------
 
     chkAutoMailPCSell->setChecked( g_poPrefs->isAutoMailOnPCSell() );
-
     chkAutoMailPCUse->setChecked( g_poPrefs->isAutoMailOnPCUse() );
-
     chkAutoMailPCExpire->setChecked( g_poPrefs->isAutoMailOnPCExpiration() );
-
     ledAutoMailPCExpireDays->setText( QString::number(g_poPrefs->getPCExpirationDays()) );
+    chkAutoMailPCUnitChange->setChecked( g_poPrefs->isAutoMailOnPCUnitChange() );
+    chkSyncCardyGo->setChecked( g_poPrefs->isCardyGoSync() );
 
     //---------------------------------------------------------------------------------------------------------------------------------------------------
     // Server page
@@ -395,6 +391,8 @@ cDlgPreferences::cDlgPreferences( QWidget *p_poParent )
     lblGUILogLevelValue->setVisible( false );
     sliGUILogLevel->setVisible( false );
 
+    chkAutoMailPCUnitChange->setVisible( false );
+    chkAutoMailPCUnitChange->setEnabled( false );
 }
 
 cDlgPreferences::~cDlgPreferences()
@@ -617,6 +615,8 @@ void cDlgPreferences::accept()
     g_poPrefs->setAutoMailOnPCUse( chkAutoMailPCUse->isChecked() );
     g_poPrefs->setAutoMailOnPCExpiration( chkAutoMailPCExpire->isChecked() );
     g_poPrefs->setPCExpirationDays( ledAutoMailPCExpireDays->text().toInt() );
+    g_poPrefs->setAutoMailOnPCUnitChange( chkAutoMailPCUnitChange->isChecked() );
+    g_poPrefs->setCardyGoSync( chkSyncCardyGo->isChecked() );
 
     g_poPrefs->setBlnsHttpEnabled( chkEnableHttp->isChecked() );
     g_poPrefs->setWebSyncAutoStart( chkWebSyncAutoStart->isChecked() );

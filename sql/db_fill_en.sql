@@ -96,8 +96,8 @@ ALTER TABLE `skinTypes` auto_increment=1;
 
 -- -----------------------------------------------------------------------------------
 
-INSERT INTO `patients` (`patientId`, `licenceId`, `companyId`, `created`, `name`, `gender`, `ageType`, `isReturning`, `uniqueId`, `email`, `regularCustomer`, `employee`, `service`, `company`, `discountType`, `comment`, `loyaltyPoints`, `modified`, `active`, `archive`) VALUES
- ('0', '0', '0', '', '', '0', '0', '0', NULL, NULL, '0', '0', '0', '0', '', NULL, 0, '', '0', 'ARC');
+INSERT INTO `patients` (`patientId`, `licenceId`, `companyId`, `created`, `name`, `gender`, `ageType`, `isReturning`, `uniqueId`, `isCardy`, `email`, `regularCustomer`, `employee`, `service`, `company`, `discountType`, `comment`, `loyaltyPoints`, `modified`, `active`, `archive`) VALUES
+ ('0', '0', '0', '', '', '0', '0', '0', NULL, '0', NULL, '0', '0', '0', '0', '', NULL, 0, '', '0', 'ARC');
 UPDATE `patients` SET `patientId`=0 WHERE `patientId`=1;
 ALTER TABLE `patients` auto_increment=1;
 
@@ -406,6 +406,8 @@ INSERT INTO `settings` (`settingId`, `identifier`, `value`) VALUES
  (NULL, "AUTOMAIL_OnSell", 0 ),
  (NULL, "AUTOMAIL_OnUse", 0 ),
  (NULL, "AUTOMAIL_OnExpiration", 0 ),
- (NULL, "AUTOMAIL_ExpirationDays", 7 );
+ (NULL, "AUTOMAIL_ExpirationDays", 7 ),
+ (NULL, "AUTOMAIL_OnUnitChange", 0 ),
+ (NULL, "AUTOMAIL_OnCardyGo", 0 );
 
 -- -----------------------------------------------------------------------------------
