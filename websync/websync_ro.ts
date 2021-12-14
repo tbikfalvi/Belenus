@@ -4,12 +4,12 @@
 <context>
     <name>QObject</name>
     <message>
-        <location filename="http.cpp" line="642"/>
+        <location filename="http.cpp" line="643"/>
         <source> units (</source>
         <translation> unități (</translation>
     </message>
     <message>
-        <location filename="http.cpp" line="644"/>
+        <location filename="http.cpp" line="645"/>
         <source> minutes) (</source>
         <translation> minute) (</translation>
     </message>
@@ -34,16 +34,16 @@
     <message>
         <location filename="http.cpp" line="197"/>
         <location filename="http.cpp" line="536"/>
-        <location filename="http.cpp" line="685"/>
-        <location filename="http.cpp" line="892"/>
-        <location filename="http.cpp" line="908"/>
-        <location filename="http.cpp" line="1451"/>
-        <location filename="http.cpp" line="1535"/>
-        <location filename="http.cpp" line="1561"/>
-        <location filename="http.cpp" line="1953"/>
-        <location filename="http.cpp" line="2020"/>
-        <location filename="http.cpp" line="2095"/>
-        <location filename="http.cpp" line="2133"/>
+        <location filename="http.cpp" line="708"/>
+        <location filename="http.cpp" line="915"/>
+        <location filename="http.cpp" line="931"/>
+        <location filename="http.cpp" line="1474"/>
+        <location filename="http.cpp" line="1558"/>
+        <location filename="http.cpp" line="1584"/>
+        <location filename="http.cpp" line="1976"/>
+        <location filename="http.cpp" line="2043"/>
+        <location filename="http.cpp" line="2118"/>
+        <location filename="http.cpp" line="2156"/>
         <source>Error occured during executing database command</source>
         <translation>A intervenit o eroare în timpul executării comenzii bazei de date</translation>
     </message>
@@ -88,254 +88,253 @@
         <translation>Expirare HTTP.</translation>
     </message>
     <message>
-        <location filename="http.cpp" line="1118"/>
+        <location filename="http.cpp" line="1141"/>
         <source>Invalid token received: </source>
         <translation>Token-ul primit nu este valabil: </translation>
     </message>
     <message>
-        <location filename="http.cpp" line="1281"/>
+        <location filename="http.cpp" line="1304"/>
         <source>Unable to save HTTP communication file.</source>
         <translation>Nu se poate salva fișierul de comunicare HTTP.</translation>
     </message>
     <message>
-        <location filename="http.cpp" line="1456"/>
-        <location filename="http.cpp" line="1566"/>
+        <location filename="http.cpp" line="1479"/>
+        <location filename="http.cpp" line="1589"/>
         <source>Unknown error occured on server side.</source>
         <translation>A apărut o eroare necunoscută pe partea de server.</translation>
     </message>
     <message>
-        <location filename="http.cpp" line="1463"/>
-        <location filename="http.cpp" line="1594"/>
+        <location filename="http.cpp" line="1486"/>
+        <location filename="http.cpp" line="1617"/>
         <source>HTTP Session expired</source>
         <translation>Sesiune HTTP expirată</translation>
     </message>
     <message>
-        <location filename="http.cpp" line="1470"/>
-        <location filename="http.cpp" line="1601"/>
+        <location filename="http.cpp" line="1493"/>
+        <location filename="http.cpp" line="1624"/>
         <source>HTTP security check failed</source>
         <translation>Verificarea de securitate HTTP a eșuat</translation>
     </message>
     <message>
-        <location filename="http.cpp" line="1477"/>
         <source>Unknown studio Id</source>
-        <translation>ID Studio necunoscută</translation>
+        <translation type="obsolete">ID Studio necunoscută</translation>
     </message>
     <message>
-        <location filename="http.cpp" line="1484"/>
-        <location filename="http.cpp" line="1573"/>
+        <location filename="http.cpp" line="1507"/>
+        <location filename="http.cpp" line="1596"/>
         <source>Database error occured on server side</source>
         <translation>A apărut o eroare necunoscută pe partea de server</translation>
     </message>
     <message>
-        <location filename="http.cpp" line="1580"/>
+        <location filename="http.cpp" line="1603"/>
         <source>Token already used before</source>
         <translation>Token-ul a fost deja folosit</translation>
     </message>
     <message>
-        <location filename="http.cpp" line="1587"/>
+        <location filename="http.cpp" line="1610"/>
         <source>Token expired</source>
         <translation>Token-ul a expirat</translation>
     </message>
     <message>
-        <location filename="http.cpp" line="1608"/>
+        <location filename="http.cpp" line="1631"/>
         <source>HTTP Missing sha1 code</source>
         <translation>HTTP Codul sha1 lipsește</translation>
     </message>
     <message>
-        <location filename="http.cpp" line="1615"/>
+        <location filename="http.cpp" line="1638"/>
         <source>HTTP Missing Studio identifier</source>
         <translation>HTTP Identificatorul Studioului lipsește</translation>
     </message>
     <message>
-        <location filename="http.cpp" line="1622"/>
+        <location filename="http.cpp" line="1645"/>
         <source>HTTP Missing mail recipient</source>
         <translation>HTTP Destinatarul e-mailului lipsește</translation>
     </message>
     <message>
-        <location filename="http.cpp" line="1629"/>
+        <location filename="http.cpp" line="1652"/>
         <source>HTTP Missing mail subject</source>
         <translation>HTTP Subiectul e-mailului lipsește</translation>
     </message>
     <message>
-        <location filename="http.cpp" line="1636"/>
+        <location filename="http.cpp" line="1659"/>
         <source>HTTP Missing mail body</source>
         <translation>HTTP Textul e-mailului lipsește</translation>
     </message>
     <message>
-        <location filename="http.cpp" line="1643"/>
+        <location filename="http.cpp" line="1666"/>
         <source>HTTP Missing mail variable NAME</source>
         <translation>HTTP Variabilul NUME lipsește din e-mail</translation>
     </message>
     <message>
-        <location filename="http.cpp" line="1650"/>
+        <location filename="http.cpp" line="1673"/>
         <source>HTTP Missing mail variable BARCODE</source>
         <translation>HTTP Variabilul COD DE BARE lipsește din e-mail</translation>
     </message>
     <message>
-        <location filename="http.cpp" line="1657"/>
+        <location filename="http.cpp" line="1680"/>
         <source>HTTP Missing mail variable CARDINFO</source>
         <translation>HTTP Variabilul INFO CARD lipsește din e-mail</translation>
     </message>
     <message>
-        <location filename="http.cpp" line="1664"/>
+        <location filename="http.cpp" line="1687"/>
         <source>HTTP Missing mail variable UNITCOUNT</source>
         <translation>HTTP Variabilul NUMĂR UNITĂȚI lipsește din e-mail</translation>
     </message>
     <message>
-        <location filename="http.cpp" line="1671"/>
+        <location filename="http.cpp" line="1694"/>
         <source>HTTP Missing mail variable DATETIME</source>
         <translation>HTTP Variabilul DATA TIMP lipsește din e-mail</translation>
     </message>
     <message>
-        <location filename="http.cpp" line="1678"/>
+        <location filename="http.cpp" line="1701"/>
         <source>HTTP Invalid e-mail address</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="http.cpp" line="1716"/>
+        <location filename="http.cpp" line="1739"/>
         <source>SHA1 code mismatch in comm response</source>
         <translation>Nepotrivire cod SHA1 în răspunsul com</translation>
     </message>
     <message>
-        <location filename="http.cpp" line="1727"/>
-        <location filename="http.cpp" line="2175"/>
-        <location filename="http.cpp" line="2259"/>
+        <location filename="http.cpp" line="1750"/>
+        <location filename="http.cpp" line="2198"/>
+        <location filename="http.cpp" line="2282"/>
         <source>Server did not received token</source>
         <translation>Serverul nu a primit token-ul</translation>
     </message>
     <message>
-        <location filename="http.cpp" line="1734"/>
-        <location filename="http.cpp" line="2182"/>
+        <location filename="http.cpp" line="1757"/>
+        <location filename="http.cpp" line="2205"/>
         <source>Server did not received Sha1 hash</source>
         <translation>Serverul nu a primit hash-ul Sha1</translation>
     </message>
     <message>
-        <location filename="http.cpp" line="1741"/>
-        <location filename="http.cpp" line="2189"/>
+        <location filename="http.cpp" line="1764"/>
+        <location filename="http.cpp" line="2212"/>
         <source>Server did not received Studio Id</source>
         <translation>Serverul nu a primit ID-ul Studioului</translation>
     </message>
     <message>
-        <location filename="http.cpp" line="1748"/>
-        <location filename="http.cpp" line="2196"/>
+        <location filename="http.cpp" line="1771"/>
+        <location filename="http.cpp" line="2219"/>
         <source>Server did not received last successfull request Id</source>
         <translation>Serverul nu a primit ultimul ID cerut cu succes</translation>
     </message>
     <message>
-        <location filename="http.cpp" line="1755"/>
-        <location filename="http.cpp" line="2203"/>
+        <location filename="http.cpp" line="1778"/>
+        <location filename="http.cpp" line="2226"/>
         <source>Token sent to server is invalid</source>
         <translation>Token-ul trimis la server nu este valabil</translation>
     </message>
     <message>
-        <location filename="http.cpp" line="1762"/>
+        <location filename="http.cpp" line="1785"/>
         <source>SQL error occured on server side</source>
         <translation>A apărut o eroare SQL pe partea de server</translation>
     </message>
     <message>
-        <location filename="http.cpp" line="1769"/>
+        <location filename="http.cpp" line="1792"/>
         <source>Token sent to server is already sent</source>
         <translation>Token-ul trimis la server a fost deja trimis</translation>
     </message>
     <message>
-        <location filename="http.cpp" line="1776"/>
+        <location filename="http.cpp" line="1799"/>
         <source>Token sent to server is obsolete</source>
         <translation>Token-ul trimis la server este prea vechi</translation>
     </message>
     <message>
-        <location filename="http.cpp" line="1783"/>
-        <location filename="http.cpp" line="2210"/>
+        <location filename="http.cpp" line="1806"/>
+        <location filename="http.cpp" line="2233"/>
         <source>Sha1 code sent to server is invalid</source>
         <translation>Codul Sha1 trimis la server nu este valabil</translation>
     </message>
     <message>
-        <location filename="http.cpp" line="1875"/>
+        <location filename="http.cpp" line="1898"/>
         <source>Patientcard record for &apos;%1&apos; updated
 %2</source>
         <translation>Înregistrarea cardului de pacient pentru &apos;%1&apos; a fost actualizat
 %2</translation>
     </message>
     <message>
-        <location filename="http.cpp" line="1913"/>
+        <location filename="http.cpp" line="1936"/>
         <source>Data updated for guest:
 %1</source>
         <translation>Datele au fost actualizate pentru oaspetele:
 %1</translation>
     </message>
     <message>
-        <location filename="http.cpp" line="1946"/>
+        <location filename="http.cpp" line="1969"/>
         <source>New guest data record created:
 %1</source>
         <translation>Înregistrările noi de date ale oaspetelui au fost create:
 %1</translation>
     </message>
     <message>
-        <location filename="http.cpp" line="1988"/>
+        <location filename="http.cpp" line="2011"/>
         <source>Patientcard refilled online</source>
         <translation>Cardul pacientului a fost reîncărcat online</translation>
     </message>
     <message>
-        <location filename="http.cpp" line="2011"/>
+        <location filename="http.cpp" line="2034"/>
         <source>Patientcard sold online</source>
         <translation>Cardul pacientului a fost vândut online</translation>
     </message>
     <message>
-        <location filename="http.cpp" line="2217"/>
+        <location filename="http.cpp" line="2240"/>
         <source>Result not sent to server</source>
         <translation>Rezultatul nu a fost trimis la server</translation>
     </message>
     <message>
-        <location filename="http.cpp" line="2266"/>
+        <location filename="http.cpp" line="2289"/>
         <source>Licence code not found in server database</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="http.cpp" line="2273"/>
+        <location filename="http.cpp" line="2296"/>
         <source>The licence code already registered.
 Please use a different licence code.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="http.cpp" line="2280"/>
+        <location filename="http.cpp" line="2303"/>
         <source>The licence code set to inactive on Kiwisun server.
 Please set the licence code to active.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="http.cpp" line="2287"/>
+        <location filename="http.cpp" line="2310"/>
         <source>The client validation code is invalid.
 Please contact your Kiwisun administrator!</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="http.cpp" line="2294"/>
+        <location filename="http.cpp" line="2317"/>
         <source>The server validation code is invalid.
 Please contact your Kiwisun administrator!</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="http.cpp" line="2301"/>
-        <location filename="http.cpp" line="2345"/>
+        <location filename="http.cpp" line="2324"/>
+        <location filename="http.cpp" line="2368"/>
         <source>Response from server is invalid or other unknown error occured</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="http.cpp" line="2338"/>
+        <location filename="http.cpp" line="2361"/>
         <source>Licence code integrity broken</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="http.cpp" line="2389"/>
+        <location filename="http.cpp" line="2412"/>
         <source>Http request aborted</source>
         <translation>Cererea de HTTP a fost anulată</translation>
     </message>
     <message>
-        <location filename="http.cpp" line="2400"/>
+        <location filename="http.cpp" line="2423"/>
         <source>Error occured during downloading HTTP file.</source>
         <translation>În timpul descărcării fișierului HTTP a intervenit o eroare.</translation>
     </message>
     <message>
-        <location filename="http.cpp" line="2409"/>
+        <location filename="http.cpp" line="2432"/>
         <source>Http error occured: %1</source>
         <translation>Eroare HTTP: %1</translation>
     </message>
@@ -574,7 +573,7 @@ Please contact your Kiwisun administrator!</source>
     </message>
     <message>
         <location filename="dlgmain.ui" line="1449"/>
-        <location filename="dlgmain.cpp" line="1949"/>
+        <location filename="dlgmain.cpp" line="1964"/>
         <source>Register new licence key</source>
         <translation type="unfinished"></translation>
     </message>
@@ -735,27 +734,27 @@ Te rog, ia în considerare dacă ai suficient timp la dispoziție pentru a aște
         <translation>Codul de bare definit nu a fost găsit în baza de date.</translation>
     </message>
     <message>
-        <location filename="dlgmain.cpp" line="1031"/>
+        <location filename="dlgmain.cpp" line="1037"/>
         <source>HTTP Connection established</source>
         <translation>Conexiune SQL stabilită</translation>
     </message>
     <message>
-        <location filename="dlgmain.cpp" line="1109"/>
+        <location filename="dlgmain.cpp" line="1115"/>
         <source>Database connection</source>
         <translation>Conexiune bază de date</translation>
     </message>
     <message>
-        <location filename="dlgmain.cpp" line="1112"/>
+        <location filename="dlgmain.cpp" line="1118"/>
         <source>Http connection</source>
         <translation>Conexiune HTTP</translation>
     </message>
     <message>
-        <location filename="dlgmain.cpp" line="1119"/>
+        <location filename="dlgmain.cpp" line="1125"/>
         <source>Send all patientcard</source>
         <translation>Trimite toate cardurile de pacient</translation>
     </message>
     <message>
-        <location filename="dlgmain.cpp" line="1123"/>
+        <location filename="dlgmain.cpp" line="1129"/>
         <source>Clear waiting queue</source>
         <translation>Curăță coada de așteptare</translation>
     </message>
@@ -776,27 +775,28 @@ Te rog, ia în considerare dacă ai suficient timp la dispoziție pentru a aște
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="dlgmain.cpp" line="1798"/>
-        <location filename="dlgmain.cpp" line="1849"/>
-        <location filename="dlgmain.cpp" line="1888"/>
-        <location filename="dlgmain.cpp" line="2149"/>
+        <location filename="dlgmain.cpp" line="1804"/>
+        <location filename="dlgmain.cpp" line="1855"/>
+        <location filename="dlgmain.cpp" line="1894"/>
+        <location filename="dlgmain.cpp" line="2164"/>
         <source>Validated</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="dlgmain.cpp" line="2154"/>
+        <location filename="dlgmain.cpp" line="978"/>
+        <location filename="dlgmain.cpp" line="2169"/>
         <source>Not validated</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
         <location filename="dlgmain.cpp" line="937"/>
-        <location filename="dlgmain.cpp" line="2162"/>
+        <location filename="dlgmain.cpp" line="2178"/>
         <source>Expired / Invalid</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
         <location filename="dlgmain.cpp" line="941"/>
-        <location filename="dlgmain.cpp" line="2166"/>
+        <location filename="dlgmain.cpp" line="2182"/>
         <source>Demo</source>
         <translation type="unfinished"></translation>
     </message>
@@ -812,7 +812,7 @@ Te rog, ia în considerare dacă ai suficient timp la dispoziție pentru a aște
     </message>
     <message>
         <location filename="dlgmain.cpp" line="950"/>
-        <location filename="dlgmain.cpp" line="1941"/>
+        <location filename="dlgmain.cpp" line="1956"/>
         <source>Error</source>
         <translation type="unfinished"></translation>
     </message>
@@ -823,182 +823,182 @@ Please contact the licence code provider.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="dlgmain.cpp" line="1002"/>
+        <location filename="dlgmain.cpp" line="1008"/>
         <source>HTTP Communication succeeded</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="dlgmain.cpp" line="1131"/>
+        <location filename="dlgmain.cpp" line="1137"/>
         <source>Clear patientcard</source>
         <translation>Curăță cardul de pacient</translation>
     </message>
     <message>
-        <location filename="dlgmain.cpp" line="1135"/>
+        <location filename="dlgmain.cpp" line="1141"/>
         <source>Clear all inactive patientcards</source>
         <translation>Șterge toate cardurile de pacient inactive</translation>
     </message>
     <message>
-        <location filename="dlgmain.cpp" line="1139"/>
+        <location filename="dlgmain.cpp" line="1145"/>
         <source>&amp;Exit application</source>
         <translation>&amp;Părăsirea aplicatiei</translation>
     </message>
     <message>
-        <location filename="dlgmain.cpp" line="1151"/>
+        <location filename="dlgmain.cpp" line="1157"/>
         <source>User actions</source>
         <translation>Acțiuni utilizator</translation>
     </message>
     <message>
-        <location filename="dlgmain.cpp" line="1342"/>
+        <location filename="dlgmain.cpp" line="1348"/>
         <source>Need authentication ...</source>
         <translation>Este nevoie de autentificare ...</translation>
     </message>
     <message>
-        <location filename="dlgmain.cpp" line="1346"/>
+        <location filename="dlgmain.cpp" line="1352"/>
         <source>User successfully authenticated.</source>
         <translation>Utilizatorul a fost autentificat cu succes.</translation>
     </message>
     <message>
-        <location filename="dlgmain.cpp" line="1356"/>
+        <location filename="dlgmain.cpp" line="1362"/>
         <source>The username entered not found in the Belenus database</source>
         <translation>Numele de utilizator introdus nu a fost găsit în baza de date Belenus</translation>
     </message>
     <message>
-        <location filename="dlgmain.cpp" line="1358"/>
+        <location filename="dlgmain.cpp" line="1364"/>
         <source>The password entered is incorrect</source>
         <translation>Parola introdusă este incorectă</translation>
     </message>
     <message>
-        <location filename="dlgmain.cpp" line="1360"/>
+        <location filename="dlgmain.cpp" line="1366"/>
         <source>Connection to Belenus database failed</source>
         <translation>Conexiunea la baza de date Belenus a eșuat</translation>
     </message>
     <message>
-        <location filename="dlgmain.cpp" line="1362"/>
+        <location filename="dlgmain.cpp" line="1368"/>
         <source>Authentication failed. Please retry later ...</source>
         <translation>Autentificarea a eșuat. Te rog, reîncearcă mai târziu ...</translation>
     </message>
     <message>
-        <location filename="dlgmain.cpp" line="1468"/>
+        <location filename="dlgmain.cpp" line="1474"/>
         <source>Http server address is not defined!
 Http connection is going to be disabled.</source>
         <translation>Adresa serverului HTTP nu a fost definită!
 Conexiunea HTTP va fi dezactivată.</translation>
     </message>
     <message>
-        <location filename="dlgmain.cpp" line="1479"/>
+        <location filename="dlgmain.cpp" line="1485"/>
         <source>Http error occured!
 %1</source>
         <translation>Eroare HTTP!
 %1</translation>
     </message>
     <message>
-        <location filename="dlgmain.cpp" line="1489"/>
+        <location filename="dlgmain.cpp" line="1495"/>
         <source>Http communication disabled.</source>
         <translation>Comunicare HTTP dezactivată.</translation>
     </message>
     <message>
-        <location filename="dlgmain.cpp" line="1499"/>
+        <location filename="dlgmain.cpp" line="1505"/>
         <source>Http communication enabled.</source>
         <translation>Comunicare HTTP activată.</translation>
     </message>
     <message>
-        <location filename="dlgmain.cpp" line="1509"/>
+        <location filename="dlgmain.cpp" line="1515"/>
         <source>Http communication suspended.</source>
         <translation>Comunicare HTTP suspendată.</translation>
     </message>
     <message>
-        <location filename="dlgmain.cpp" line="1519"/>
+        <location filename="dlgmain.cpp" line="1525"/>
         <source>Http communication continued.</source>
         <translation>Comunicare HTTP reluată.</translation>
     </message>
     <message>
-        <location filename="dlgmain.cpp" line="1805"/>
+        <location filename="dlgmain.cpp" line="1811"/>
         <source>Licence key registration succeeded.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="dlgmain.cpp" line="1810"/>
+        <location filename="dlgmain.cpp" line="1816"/>
         <source>Licence key registration succeeded.
 </source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="dlgmain.cpp" line="1817"/>
+        <location filename="dlgmain.cpp" line="1823"/>
         <source>Licence registration failed due to database process error
 
 %1</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="dlgmain.cpp" line="1820"/>
+        <location filename="dlgmain.cpp" line="1826"/>
         <source>Licence key registration failed.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="dlgmain.cpp" line="1851"/>
+        <location filename="dlgmain.cpp" line="1857"/>
         <source>Licence key activation succeeded.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="dlgmain.cpp" line="1854"/>
+        <location filename="dlgmain.cpp" line="1860"/>
         <source>Licence key activation succeeded.
 </source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="dlgmain.cpp" line="1862"/>
+        <location filename="dlgmain.cpp" line="1868"/>
         <source>Licence activation failed due to database process error
 
 %1</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="dlgmain.cpp" line="1865"/>
+        <location filename="dlgmain.cpp" line="1871"/>
         <source>Licence key activation failed.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="dlgmain.cpp" line="1890"/>
+        <location filename="dlgmain.cpp" line="1896"/>
         <source>Licence key validation succeeded.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="dlgmain.cpp" line="1893"/>
+        <location filename="dlgmain.cpp" line="1899"/>
         <source>Licence key validation succeeded.
 </source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="dlgmain.cpp" line="1901"/>
+        <location filename="dlgmain.cpp" line="1907"/>
         <source>Licence validation failed due to database process error
 
 %1</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="dlgmain.cpp" line="1904"/>
+        <location filename="dlgmain.cpp" line="1910"/>
         <source>Licence key validation failed.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="dlgmain.cpp" line="1941"/>
+        <location filename="dlgmain.cpp" line="1956"/>
         <source>The format of the licence key is invalid.
 The licence key must be 13 characters length
 .Please check and retype it again.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="dlgmain.cpp" line="1963"/>
+        <location filename="dlgmain.cpp" line="1978"/>
         <source>Activate current licence key</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="dlgmain.cpp" line="1975"/>
+        <location filename="dlgmain.cpp" line="1990"/>
         <source>Question</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="dlgmain.cpp" line="1976"/>
+        <location filename="dlgmain.cpp" line="1991"/>
         <source>Are you sure you want to replace the licence key
 
 from this: %1  to this %2
@@ -1008,12 +1008,12 @@ If you use a currently active licence key, the related data will be corrupted!</
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="dlgmain.cpp" line="2094"/>
+        <location filename="dlgmain.cpp" line="2109"/>
         <source>Warning</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="dlgmain.cpp" line="2095"/>
+        <location filename="dlgmain.cpp" line="2110"/>
         <source>The version information stored in database is not match.
 
 Correct version numbers:
@@ -1029,7 +1029,7 @@ It is recommended to exit application and to contact system administrator.</sour
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="dlgmain.cpp" line="2158"/>
+        <location filename="dlgmain.cpp" line="2174"/>
         <source>Not registered</source>
         <translation type="unfinished"></translation>
     </message>
