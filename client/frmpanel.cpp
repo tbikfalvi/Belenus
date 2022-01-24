@@ -1221,7 +1221,7 @@ void cFrmPanel::closeAttendance()
                 obDBPatientCard.save();
                 obDBPatientCard.sendDataToWeb();
 
-                if( g_poPrefs->isAutoMailOnPCUse() || g_poPrefs->isCardyGoSync() )
+                if( g_poPrefs->isAutoMailOnPCUse() || (g_poPrefs->isCardyGoSync() && obDBPatientCard.isCardOwnerRegisteredOnCardy()) )
                 {
                     int nDestination = AUTO_MAIL_DESTINATION_MAIL_CARDY;
 

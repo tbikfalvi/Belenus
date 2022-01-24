@@ -541,7 +541,7 @@ void cDlgPatientCardSell::on_pbSell_clicked()
 
             QDate   deValidDateTo = QDate::fromString( m_poPatientCard->validDateTo(), "yyyy-MM-dd" );
 
-            if( g_poPrefs->isAutoMailOnPCSell() || g_poPrefs->isCardyGoSync() )
+            if( g_poPrefs->isAutoMailOnPCSell() || (g_poPrefs->isCardyGoSync() && m_poPatientCard->isCardOwnerRegisteredOnCardy()) )
             {
                 int nDestination = AUTO_MAIL_DESTINATION_MAIL_CARDY;
 

@@ -969,3 +969,44 @@ void cDBPatientCard::sendAutoMail( const int p_nMailType,
     }
 }
 
+bool cDBPatientCard::isCardOwnerRegisteredOnCardy() throw()
+{
+    bool    bRet = false;
+
+    try
+    {
+        unsigned int    uiPatientId     = 0;
+
+        if( m_uiPatientId > 0 )
+        {
+            uiPatientId = m_uiPatientId;
+        }
+        else
+        {
+            QSqlQuery  *poQuery = g_poDB->executeQTQuery( QString( "SELECT patientId FROM connectpatientwithcard WHERE patientCardId=%1 " ).arg( m_uiId ) );
+
+            if( poQuery->size() > 0 )
+            {
+                poQuery->first();
+                uiPatientId = poQuery->value( 0 ).toUInt();
+            }
+        }
+
+        if( uiPatientId == 0 )
+            return false;
+
+        cDBGuest    obDBGuest;
+
+        obDBGuest.load( uiPatientId );
+
+        bRet = obDBGuest.isCardy();
+    }
+    catch( cSevException &e )
+    {
+        g_obLogger(e.severity()) << e.what() << EOM;
+        g_obGen.showTrayError( e.what() );
+    }
+
+    return bRet;
+}
+

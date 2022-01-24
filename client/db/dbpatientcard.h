@@ -74,6 +74,7 @@ public:
                                   const QString &p_qsDate,
                                   const int p_nUnitCount,
                                   const QString &p_qsDateTime )                 throw();
+    bool            isCardOwnerRegisteredOnCardy()                              throw();
 
 private:
     unsigned int    m_uiId;
