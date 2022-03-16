@@ -726,12 +726,6 @@ void cDBPatientCard::sendDataToWeb() throw()
 
         synchronizeUnits();
 
-//        qsMessageData.append( "<div id='valid'><label>T201</label>" );
-//        qsMessageData.append( validDateTo() );
-//        qsMessageData.append( "</div><div id='unit'><label>T202</label>" );
-//        qsMessageData.append( QString::number(units()) );
-//        qsMessageData.append( "</div><label id='validT'>T203</label>" );
-
         qsMessageData.append( "<div id='unit'><label>T202</label></div>" );
 
         QString qsQuery = QString( "SELECT patientCardUnitId, "
@@ -764,14 +758,6 @@ void cDBPatientCard::sendDataToWeb() throw()
                 cDBPatientCardType obDBPatientCardType;
 
                 obDBPatientCardType.load( uiPCTId );
-//                isPatientCardCanBeUsed( uiPCTId, &qsValid );
-//                qsValid.replace( QObject::tr("Mon"), "T205" );
-//                qsValid.replace( QObject::tr("Tue"), "T206" );
-//                qsValid.replace( QObject::tr("Wed"), "T207" );
-//                qsValid.replace( QObject::tr("Thu"), "T208" );
-//                qsValid.replace( QObject::tr("Fri"), "T209" );
-//                qsValid.replace( QObject::tr("Sat"), "T210" );
-//                qsValid.replace( QObject::tr("Sun"), "T211" );
 
                 qsMessageData.append( "<div class='validType'><span class='cardName'>" );
                 qsMessageData.append( poQuery->value( 5 ).toString() );
@@ -793,7 +779,6 @@ void cDBPatientCard::sendDataToWeb() throw()
         qsQuery += QString( "archive = \"NEW\" " );
 
         g_poDB->executeQTQuery( qsQuery );
-//        g_poBlnsHttp->sendPatientCardData( barcode(), qsMessageData, p_bSendNow );
     }
     catch( cSevException &e )
     {
