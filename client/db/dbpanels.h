@@ -20,10 +20,12 @@ public:
     void            setLicenceId( const unsigned int p_uiLicenceId )        throw();
     unsigned int    panelTypeId() const                                     throw();
     void            setPanelTypeId( const unsigned int p_uiPanelTypeId )    throw();
-    unsigned int    panelGroupId() const                                     throw();
-    void            setPanelGroupId( const unsigned int p_uiPanelGroupId )    throw();
+    unsigned int    panelGroupId() const                                    throw();
+    void            setPanelGroupId( const unsigned int p_uiPanelGroupId )  throw();
     QString         title() const                                           throw();
     void            setTitle( const QString &p_qsTitle )                    throw();
+    QString         image() const                                           throw();
+    void            setImage( const QString &p_qsImage )                    throw();
     unsigned int    workTime() const                                        throw();
     void            setWorkTime( const unsigned int p_uiWorkTime)           throw();
     unsigned int    maxWorkTime() const                                     throw();
@@ -44,6 +46,7 @@ private:
     unsigned int    m_uiPanelTypeId;
     unsigned int    m_uiPanelGroupId;
     QString         m_qsTitle;
+    QString         m_qsImage;
     unsigned int    m_uiWorkTime;
     unsigned int    m_uiMaxWorkTime;
     unsigned int    m_uiCleanTime;
@@ -57,6 +60,7 @@ private:
                const unsigned int p_uiPanelTypeId = 0,
                const unsigned int p_uiPanelGroupId = 0,
                const QString &p_qsTitle = "",
+               const QString &p_qsImage = "",
                const unsigned int p_uiWorkTime = 0,
                const unsigned int p_uiMaxWorkTime = 0,
                const unsigned int p_uiCleanTime = 0,

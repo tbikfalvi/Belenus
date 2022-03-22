@@ -95,9 +95,11 @@ cFrmPanel::cFrmPanel( const unsigned int p_uiPanelId ) : QFrame()
                                     .arg( g_poPrefs->getActiveCaptionBackground() )
                                     .arg( g_poPrefs->getActiveCaptionColor() ) );
 
-//    lblImage->setSizePolicy( QSizePolicy::Ignored, QSizePolicy::Ignored );
     lblImage->setMinimumHeight( 100 );
     lblImage->setScaledContents( true );
+
+// elrejtve a fo ablakon, hatha kesobb kell
+lblImage->setVisible( false );
 
     icoPanelStart->setIconSize( QSize(20,20) );
     icoPanelStart->setIcon( QIcon(QString("./resources/40x40_start.png")) );
@@ -726,19 +728,29 @@ void cFrmPanel::load( const unsigned int p_uiPanelId )
 {
     m_uiId = p_uiPanelId;
 
+    QString qsImageFilename = "";
+
     QSqlQuery  *poQuery = NULL;
     try
     {
-        poQuery = g_poDB->executeQTQuery( QString( "SELECT panelTypeId, title, workTime, maxWorkTime, cleanTime, maxCleanTime FROM panels WHERE panelId=%1" ).arg( m_uiId ) );
+        poQuery = g_poDB->executeQTQuery( QString( "SELECT panelTypeId, title, workTime, maxWorkTime, cleanTime, maxCleanTime, imagePathFileName FROM panels WHERE panelId=%1" ).arg( m_uiId ) );
         if( poQuery->size() )
         {
             poQuery->first();
             m_uiType = poQuery->value( 0 ).toInt();
             lblTitle->setText( poQuery->value( 1 ).toString() );
+            qsImageFilename = poQuery->value( 6 ).toString();
         }
         else
         {
             lblTitle->setText( tr("Panel Not Found in Database") );
+        }
+
+        if( qsImageFilename.length() > 0 )
+        {
+            QPixmap *qpAd = new QPixmap( qsImageFilename );
+
+            lblImage->setPixmap( *qpAd );
         }
 
         m_bIsTubeReplaceNeeded = false;
@@ -761,10 +773,6 @@ void cFrmPanel::load( const unsigned int p_uiPanelId )
         {
             m_bIsTubeCleanupNeeded = true;
         }
-
-QPixmap *qpAd = new QPixmap( "C:\\KiwiSun\\Kepek\\kiwisun_polar.jpg" );
-
-lblImage->setPixmap( *qpAd );
 
         delete poQuery;
         poQuery = NULL;
@@ -885,7 +893,7 @@ void cFrmPanel::displayStatus()
             m_qsTimer = "";
         m_qsTimerNextStatus = "";
 
-        lblImage->setVisible( true );
+//        lblImage->setVisible( true );
     }
 
     if( m_inCashToPay > 0 )

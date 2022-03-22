@@ -72,6 +72,7 @@ cDspPanel::cDspPanel( const unsigned int p_uiPanelId ) : QFrame()
     verticalLayout->addItem( spacer1 );
     verticalLayout->addWidget( lblCurrStatus );
     verticalLayout->addItem( spacer2 );
+    verticalLayout->addWidget( lblImage );
     verticalLayout->addWidget( lblCurrTimer );
     verticalLayout->addItem( spacer3 );
     verticalLayout->addWidget( lblEstTimer );
@@ -98,6 +99,19 @@ void cDspPanel::refreshTitle()
 void cDspPanel::setPanelStatus( const unsigned int p_uiPanelStatusId )
 {
 //    cTracer obTrace( "cDspPanel::setPanelStatus" );
+
+    if( p_uiPanelStatusId == 1 )
+    {
+        lblImage->setVisible( true );
+        lblCurrStatus->setVisible( false );
+        lblEstTimer->setVisible( false );
+    }
+    else
+    {
+        lblImage->setVisible( false );
+        lblCurrStatus->setVisible( true );
+        lblEstTimer->setVisible( true );
+    }
 
     try
     {
@@ -174,9 +188,12 @@ void cDspPanel::setPanelWaitTime( const unsigned int p_uiWaitTime )
 //====================================================================================
 void cDspPanel::setImage( QString p_qsFilename )
 {
-    QPixmap *qpAd = new QPixmap( p_qsFilename );
+    if( p_qsFilename.length() > 0 )
+    {
+        QPixmap *qpAd = new QPixmap( p_qsFilename );
 
-    lblImage->setPixmap( *qpAd );
+        lblImage->setPixmap( *qpAd );
+    }
 }
 //====================================================================================
 void cDspPanel::_load()
@@ -186,11 +203,14 @@ void cDspPanel::_load()
     QSqlQuery  *poQuery = NULL;
     try
     {
-        poQuery = g_poDB->executeQTQuery( QString( "SELECT panelTypeId, title from panels WHERE panelId=%1" ).arg( m_uiId ) );
+        poQuery = g_poDB->executeQTQuery( QString( "SELECT panelTypeId, title, imagePathFileName from panels WHERE panelId=%1" ).arg( m_uiId ) );
         if( poQuery->first() )
         {
+            QString qsImageFilename = "";
+
             g_obLogger(cSeverity::DEBUG) << poQuery->value( 1 ).toString() << EOM;
             lblTitle->setText( poQuery->value( 1 ).toString() );
+            setImage( poQuery->value( 2 ).toString() );
         }
         else
         {

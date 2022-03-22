@@ -63,6 +63,7 @@ cDlgPanelSettings::cDlgPanelSettings( QWidget *p_poParent, unsigned int p_uiPane
         ledCleanTimeMin->setText( QString::number(minuteClean) );
         ledCleanTimeSec->setText( QString::number(secondClean) );
         ledMaxCleanTime->setText( QString::number(obDBPanel.maxCleanTime()) );
+        ledImagePath->setText( obDBPanel.image() );
 
         QSqlQuery *poQueryType;
 
@@ -527,6 +528,7 @@ void cDlgPanelSettings::saveClicked( bool )
 
         obDBPanel.load( m_uiPanelId );
         obDBPanel.setTitle( ledTitle->text() );
+        obDBPanel.setImage( ledImagePath->text() );
 
         if( g_obUser.isInGroup(cAccessGroup::ADMIN) || cmbPanelGroup->isEnabled() )
         {

@@ -30,6 +30,8 @@ INSERT INTO `settings` ( `settingId`, `identifier`, `value` ) VALUES ( NULL , 'A
 
 ALTER TABLE `httpsendmail` ADD `mailDestination` INT UNSIGNED NOT NULL AFTER `mailTypeId`;
 
+ALTER TABLE `panels` ADD `imagePathFileName` VARCHAR( 500 ) NOT NULL AFTER `title`
+
 -- -----------------------------------------------------------------------------------
 
 UPDATE settings SET value='2_0_0_0' WHERE identifier='APPLICATION_VERSION';
