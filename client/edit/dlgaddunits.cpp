@@ -187,6 +187,8 @@ void cDlgAddUnits::on_pbAdd_clicked()
             m_poPatientCard->synchronizeTime();
             m_poPatientCard->save();
 
+            m_poPatientCard->sendDataToWeb();
+
             QDialog::accept();
 
         }

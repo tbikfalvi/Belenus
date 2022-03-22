@@ -59,6 +59,9 @@ void cLicenceManager::initialize()
             m_qdLastValidated   = poQuery->value( 9 ).toDate();
             m_qsState           = poQuery->value( 10 ).toString();
         }
+
+        g_poPrefs->setLicenceId( m_uiLicenceId );
+
         g_obLogger(cSeverity::INFO) << "Initialization finished successfully" << EOM;
     }
     catch( cSevException &e )

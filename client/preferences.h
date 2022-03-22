@@ -236,6 +236,8 @@ public:
     bool            isAutoMailOnPCExpiration();
     void            setPCExpirationDays( const int p_nPCExpirationDays  );
     int             getPCExpirationDays() const;
+    void            setAutoMailOnPCUnitChange( bool p_bAutoMailOnPCUnitChange );
+    bool            isAutoMailOnPCUnitChange();
     void            setAdvertisementSizeAndPos(const unsigned int p_uiId,
                                                 const unsigned int p_uiLeft,
                                                 const unsigned int p_uiTop,
@@ -278,6 +280,9 @@ public:
     int             getWorktimeCounter() const;
     void            resetWorktimeCounter();
     void            decreaseWorktimeCounter();
+
+    void            setCardyGoSync( bool p_bCardyGoSync );
+    bool            isCardyGoSync();
 
 //void            setXXX( const QString &p_qsXXX );
 //QString         getXXX() const;
@@ -381,6 +386,7 @@ private:
     bool            m_bAutoMailOnPCUse;
     bool            m_bAutoMailOnPCExpiration;
     int             m_nPCExpirationDays;
+    bool            m_bAutoMailOnPCUnitChange;
     int             m_nSecondsWaitOnSlpashScreen;
     bool            m_bShowPatientInfoOnStart;
     int             m_nShowInfoOnWindow;
@@ -391,6 +397,7 @@ private:
     int             m_nLicenceCheckCounter;
     int             m_nWorkTime;
     int             m_nWorkTimeCounter;
+    bool            m_bCardyGoSync;
 
     void init();
 };

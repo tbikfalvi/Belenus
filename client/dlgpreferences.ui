@@ -23,7 +23,7 @@
    <item>
     <widget class="QTabWidget" name="tbwPreferences">
      <property name="currentIndex">
-      <number>6</number>
+      <number>0</number>
      </property>
      <widget class="QWidget" name="tab_General">
       <attribute name="title">
@@ -1986,7 +1986,7 @@ is different :</string>
       <attribute name="title">
        <string>Notification</string>
       </attribute>
-      <layout class="QVBoxLayout" name="verticalLayout_30">
+      <layout class="QVBoxLayout" name="verticalLayout_34">
        <item>
         <widget class="QGroupBox" name="gbSendMail">
          <property name="title">
@@ -2055,6 +2055,13 @@ is different :</string>
            </layout>
           </item>
           <item>
+           <widget class="QCheckBox" name="chkAutoMailPCUnitChange">
+            <property name="text">
+             <string>number of units of patientcard has changed</string>
+            </property>
+           </widget>
+          </item>
+          <item>
            <spacer name="verticalSpacer_11">
             <property name="orientation">
              <enum>Qt::Vertical</enum>
@@ -2083,6 +2090,57 @@ is different :</string>
             </property>
             <property name="text">
              <string>Please note automatic mail only be sent to patients with registered e-mail address!</string>
+            </property>
+            <property name="wordWrap">
+             <bool>true</bool>
+            </property>
+           </widget>
+          </item>
+         </layout>
+        </widget>
+       </item>
+       <item>
+        <widget class="QGroupBox" name="gbCardyGo">
+         <property name="title">
+          <string> CardyGo integration </string>
+         </property>
+         <layout class="QVBoxLayout" name="verticalLayout_30">
+          <item>
+           <widget class="QCheckBox" name="chkSyncCardyGo">
+            <property name="text">
+             <string>Synchronize with CardyGo</string>
+            </property>
+           </widget>
+          </item>
+          <item>
+           <spacer name="verticalSpacer_12">
+            <property name="orientation">
+             <enum>Qt::Vertical</enum>
+            </property>
+            <property name="sizeType">
+             <enum>QSizePolicy::Fixed</enum>
+            </property>
+            <property name="sizeHint" stdset="0">
+             <size>
+              <width>20</width>
+              <height>10</height>
+             </size>
+            </property>
+           </spacer>
+          </item>
+          <item>
+           <widget class="QLabel" name="lblCardyGoWarning">
+            <property name="font">
+             <font>
+              <weight>75</weight>
+              <bold>true</bold>
+             </font>
+            </property>
+            <property name="styleSheet">
+             <string notr="true">color: rgb(0, 0, 255);</string>
+            </property>
+            <property name="text">
+             <string>Please note CardyGo integration works only for patients with registered e-mail address!</string>
             </property>
             <property name="wordWrap">
              <bool>true</bool>
@@ -2516,21 +2574,21 @@ is different :</string>
             </item>
            </layout>
           </item>
-          <item>
-           <spacer name="verticalSpacer_3">
-            <property name="orientation">
-             <enum>Qt::Vertical</enum>
-            </property>
-            <property name="sizeHint" stdset="0">
-             <size>
-              <width>20</width>
-              <height>40</height>
-             </size>
-            </property>
-           </spacer>
-          </item>
          </layout>
         </widget>
+       </item>
+       <item>
+        <spacer name="verticalSpacer_3">
+         <property name="orientation">
+          <enum>Qt::Vertical</enum>
+         </property>
+         <property name="sizeHint" stdset="0">
+          <size>
+           <width>20</width>
+           <height>40</height>
+          </size>
+         </property>
+        </spacer>
        </item>
       </layout>
      </widget>

@@ -29,28 +29,33 @@
 
 //====================================================================================
 
-#define CONST_COMPONENT_SENSOLITE   1
-#define CONST_COMPONENT_KIWISUN     2
-#define CONST_COMPONENT_DATABASE    4
-#define CONST_COMPONENT_HARDWARE    8
-#define CONST_COMPONENT_INTERNET    16
-#define CONST_COMPONENT_CLIENT      32
-#define CONST_COMPONENT_VIEWER      64
+#define CONST_COMPONENT_SENSOLITE           1
+#define CONST_COMPONENT_KIWISUN             2
+#define CONST_COMPONENT_DATABASE            4
+#define CONST_COMPONENT_HARDWARE            8
+#define CONST_COMPONENT_INTERNET            16
+#define CONST_COMPONENT_CLIENT              32
+#define CONST_COMPONENT_VIEWER              64
 
 //====================================================================================
 
-#define STATUS_ALAP                     0
-#define STATUS_VETKOZES                 1
-#define STATUS_SZAUNAZAS                2
-#define STATUS_BARNULAS                 3
-#define STATUS_UTOHUTES                 4
-#define STATUS_VARAKOZAS                9
+#define STATUS_ALAP                         0
+#define STATUS_VETKOZES                     1
+#define STATUS_SZAUNAZAS                    2
+#define STATUS_BARNULAS                     3
+#define STATUS_UTOHUTES                     4
+#define STATUS_VARAKOZAS                    9
 
 //====================================================================================
 
-#define AUTO_MAIL_ON_PCSELL             1
-#define AUTO_MAIL_ON_PCUSE              2
-#define AUTO_MAIL_ON_EXPIRE             3
+#define AUTO_MAIL_ON_PCSELL                 1
+#define AUTO_MAIL_ON_PCUSE                  2
+#define AUTO_MAIL_ON_EXPIRE                 3
+#define AUTO_MAIL_ON_UNITCHANGE             4
+
+#define AUTO_MAIL_DESTINATION_MAIL          1
+#define AUTO_MAIL_DESTINATION_CARDY         2
+#define AUTO_MAIL_DESTINATION_MAIL_CARDY    3
 
 //====================================================================================
 extern QApplication            *apMainApp;

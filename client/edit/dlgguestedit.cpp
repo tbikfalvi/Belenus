@@ -124,6 +124,7 @@ cDlgGuestEdit::cDlgGuestEdit( QWidget *p_poParent, cDBGuest *p_poGuest, cDBPostp
         QDate   qdRegistration( QDate::fromString(m_poGuest->dateCreated().left(10),"yyyy-MM-dd") );
         ledMembership->setText( m_poGuest->membership() );
         ledUniqueId->setText( m_poGuest->uniqueId() );
+        chkCardyRegistered->setChecked( m_poGuest->isCardy() );
         ledEmail->setText( m_poGuest->email() );
         ledPhone->setText( m_poGuest->mobile() );
         teAddress->setText( m_poGuest->address() );
@@ -204,6 +205,7 @@ cDlgGuestEdit::cDlgGuestEdit( QWidget *p_poParent, cDBGuest *p_poGuest, cDBPostp
     }
 
     connect( ledName, SIGNAL(textEdited(QString)), this, SLOT(slotRefreshWarningColors()) );
+    connect( chkCardyRegistered, SIGNAL(toggled(bool)), this, SLOT(slotRefreshWarningColors()) );
     connect( ledEmail, SIGNAL(textEdited(QString)), this, SLOT(slotRefreshWarningColors()) );
     connect( rbGenderMale, SIGNAL(toggled(bool)), this, SLOT(slotRefreshWarningColors()) );
     connect( rbGenderFemale, SIGNAL(toggled(bool)), this, SLOT(slotRefreshWarningColors()) );
@@ -259,6 +261,12 @@ void cDlgGuestEdit::on_pbSaveExit_clicked()
         if( qsErrorMessage.length() ) qsErrorMessage.append( "\n\n" );
         qsErrorMessage.append( tr( "Gender of the guest must be set." ) );
     }
+    if( chkCardyRegistered->isChecked() && ledEmail->text().length() < 1 )
+    {
+        boCanBeSaved = false;
+        if( qsErrorMessage.length() ) qsErrorMessage.append( "\n\n" );
+        qsErrorMessage.append( tr( "E-Mail must be set for patients registered at Cardy." ) );
+    }
     if( ledEmail->text().length() > 0 )
     {
         // ^[a-z0-9!#$%&\'*+\=?^_`{|}~-]+(?:\.[a-z0-9!#$%&\'*+\=?^_`{|}~-]+)*@(?:[a-z0-9](?:[a-z0-9-]*[a-z0-9])?\.)+[a-z0-9](?:[a-z0-9-]*[a-z0-9])?
@@ -308,6 +316,12 @@ void cDlgGuestEdit::on_pbSave_clicked()
         boCanBeSaved = false;
         if( qsErrorMessage.length() ) qsErrorMessage.append( "\n\n" );
         qsErrorMessage.append( tr( "Gender of the guest must be set." ) );
+    }
+    if( chkCardyRegistered->isChecked() && ledEmail->text().length() < 1 )
+    {
+        boCanBeSaved = false;
+        if( qsErrorMessage.length() ) qsErrorMessage.append( "\n\n" );
+        qsErrorMessage.append( tr( "E-Mail must be set for patients registered at Cardy." ) );
     }
     if( ledEmail->text().length() > 0 )
     {
@@ -524,8 +538,14 @@ void cDlgGuestEdit::slotRefreshWarningColors()
     if( rbAge0->isChecked() )
         lblAge->setStyleSheet( "QLabel {font: bold; color: blue;}" );
 
-    if( ledEmail->text().length() == 0 )
+    if( chkCardyRegistered->isChecked() && ledEmail->text().length() < 1 )
+    {
+        lblEmail->setStyleSheet( "QLabel {font: bold; color: red;}" );
+    }
+    else if( ledEmail->text().length() == 0 )
+    {
         lblEmail->setStyleSheet( "QLabel {font: bold; color: blue;}" );
+    }
 }
 //===========================================================================================================
 //
@@ -649,6 +669,7 @@ bool cDlgGuestEdit::_saveGuestData()
             m_poGuest->setGender( 2 );
         m_poGuest->setDateBirth( deBirthDate->date().toString("yyyy-MM-dd") );
         m_poGuest->setMembership( ledMembership->text() );
+        m_poGuest->setIsCardy( chkCardyRegistered->isChecked() );
         m_poGuest->setEmail( ledEmail->text() );
         m_poGuest->setMobile( ledPhone->text() );
         m_poGuest->setAddress( teAddress->toPlainText() );

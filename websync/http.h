@@ -183,6 +183,7 @@ private:
     QStringList      m_qslProcessedRecordIds;
     QString          m_qsDisplayMessage;
     int              m_nMailTypeId;
+    int              m_nMailDestination;
     QString          m_qsMailRecipients;
     QString          m_qsMailSubject;
     QString          m_qsMailText;

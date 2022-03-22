@@ -35,6 +35,8 @@ public:
     void            setIsReturning( const bool p_bIsReturning )                     throw();
     QString         uniqueId() const                                                throw();
     void            setUniqueId( const QString &p_qsUniqueId )                      throw();
+    bool            isCardy() const                                                 throw();
+    void            setIsCardy( const bool p_bIsCardy )                             throw();
     QString         email() const                                                   throw();
     void            setEmail( const QString &p_qsEmail )                            throw();
     bool            regularCustomer() const                                         throw();
@@ -77,6 +79,7 @@ private:
     int             m_nAgeType;
     bool            m_bIsReturning;
     QString         m_qsUniqueId;
+    bool            m_bIsCardy;
     QString         m_qsEmail;
     bool            m_bRegularCustomer;
     bool            m_bEmployee;
@@ -94,7 +97,7 @@ private:
     bool            m_bActive;
     QString         m_qsArchive;
 
-    void init( const unsigned int p_uiId = 0,
+    void init(const unsigned int p_uiId = 0,
                const unsigned int p_uiLicenceId = 0,
                const unsigned int p_uiCompanyId = 0,
                const QString &p_qsDateCreated = "",
@@ -103,6 +106,7 @@ private:
                const int p_nAgeType = 0,
                const bool p_bIsReturning = false,
                const QString &p_qsUniqueId = "",
+               const bool p_bIsCardy = false,
                const QString &p_qsEmail = "",
                const bool p_bRegularCustomer = false,
                const bool p_bEmployee = false,

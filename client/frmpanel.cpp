@@ -1262,10 +1262,16 @@ void cFrmPanel::closeAttendance()
                 obDBPatientCard.save();
                 obDBPatientCard.sendDataToWeb();
 
-                if( g_poPrefs->isAutoMailOnPCUse() )
+                if( g_poPrefs->isAutoMailOnPCUse() || (g_poPrefs->isCardyGoSync() && obDBPatientCard.isCardOwnerRegisteredOnCardy()) )
                 {
+                    int nDestination = AUTO_MAIL_DESTINATION_MAIL_CARDY;
+
+                    if( !g_poPrefs->isCardyGoSync() )           nDestination = AUTO_MAIL_DESTINATION_MAIL;
+                    else if( !g_poPrefs->isAutoMailOnPCSell() ) nDestination = AUTO_MAIL_DESTINATION_CARDY;
+
                     g_obLogger(cSeverity::INFO) << "PatientCard used, send auto mail about usage" << EOM;
                     obDBPatientCard.sendAutoMail( AUTO_MAIL_ON_PCUSE,
+                                                  nDestination,
                                                   QDate::currentDate().toString("yyyy-MM-dd"),
                                                   stTemp->qslUnitIds.count(),
                                                   QDateTime::currentDateTime().toString("yyyy-MM-dd hh:mm") );

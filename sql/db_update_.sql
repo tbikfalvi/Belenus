@@ -18,10 +18,17 @@ ALTER TABLE `licences` ADD `type` VARCHAR( 20 ) NOT NULL DEFAULT 'UNREGISTERED' 
 
 UPDATE `licences` SET `type` = 'DEMO' WHERE `licenceId` < 2;
 
+ALTER TABLE `patients` ADD `isCardy` TINYINT NOT NULL DEFAULT '0' AFTER `uniqueId`;
+
 INSERT INTO `settings` ( `settingId`, `identifier`, `value` ) VALUES ( NULL , 'LICENCE_CHECK', '56' );
 INSERT INTO `settings` ( `settingId`, `identifier`, `value` ) VALUES ( NULL , 'LICENCE_CHECK_COUNTER', '56' );
 INSERT INTO `settings` ( `settingId`, `identifier`, `value` ) VALUES ( NULL , 'LICENCE_WORKTIME', '336' );
 INSERT INTO `settings` ( `settingId`, `identifier`, `value` ) VALUES ( NULL , 'LICENCE_WORKTIME_COUNTER', '336' );
+
+INSERT INTO `settings` ( `settingId`, `identifier`, `value` ) VALUES ( NULL , 'AUTOMAIL_OnUnitChange', 0 );
+INSERT INTO `settings` ( `settingId`, `identifier`, `value` ) VALUES ( NULL , 'AUTOMAIL_OnCardyGo', 0 );
+
+ALTER TABLE `httpsendmail` ADD `mailDestination` INT UNSIGNED NOT NULL AFTER `mailTypeId`;
 
 -- -----------------------------------------------------------------------------------
 
