@@ -86,7 +86,6 @@
 #include "dlg/dlglogs.h"
 #include "dlg/dlginputstart.h"
 #include "dlg/dlgpatientcardadd.h"
-#include "dlg/dlgserialreg.h"
 #include "dlg/dlgcassaaction.h"
 #include "dlg/dlgpaneluse.h"
 #include "dlg/dlgpatientcardassign.h"

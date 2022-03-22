@@ -48,6 +48,7 @@ cDspPanel::cDspPanel( const unsigned int p_uiPanelId ) : QFrame()
     spacer4         = new QSpacerItem( 20, 2, QSizePolicy::Minimum, QSizePolicy::Minimum );
     lblInfo         = new QLabel( this );
     spacer5         = new QSpacerItem( 20, 5, QSizePolicy::Minimum, QSizePolicy::Minimum );
+    lblImage        = new QLabel( this );
 
     verticalLayout->setContentsMargins( 0, 0, 0, 0 );
 
@@ -65,6 +66,7 @@ cDspPanel::cDspPanel( const unsigned int p_uiPanelId ) : QFrame()
 
     lblCurrStatus->setWordWrap( true );
     lblInfo->setWordWrap( true );
+    lblImage->setScaledContents( true );
 
     verticalLayout->addWidget( lblTitle );
     verticalLayout->addItem( spacer1 );
@@ -168,6 +170,13 @@ void cDspPanel::setPanelWaitTime( const unsigned int p_uiWaitTime )
     {
         _formatWaitTimeString( "" );
     }
+}
+//====================================================================================
+void cDspPanel::setImage( QString p_qsFilename )
+{
+    QPixmap *qpAd = new QPixmap( p_qsFilename );
+
+    lblImage->setPixmap( *qpAd );
 }
 //====================================================================================
 void cDspPanel::_load()

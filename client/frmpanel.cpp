@@ -44,6 +44,7 @@ cFrmPanel::cFrmPanel( const unsigned int p_uiPanelId ) : QFrame()
     lblCurrTimer        = new QLabel( this );
     lblNextStatusLen    = new QLabel( this );
     lblInfo             = new QLabel( this );
+    lblImage            = new QLabel( this );
     spacer1             = new QSpacerItem( 20, 15, QSizePolicy::Minimum, QSizePolicy::Expanding );
     spacer2             = new QSpacerItem( 20, 50, QSizePolicy::Minimum, QSizePolicy::Expanding );
     spacer3             = new QSpacerItem( 20, 20, QSizePolicy::Minimum, QSizePolicy::Expanding );
@@ -80,6 +81,7 @@ cFrmPanel::cFrmPanel( const unsigned int p_uiPanelId ) : QFrame()
     verticalLayout->addWidget( lblNextStatusLen );
     verticalLayout->addItem( spacer3 );
     verticalLayout->addWidget( lblInfo );
+    verticalLayout->addWidget( lblImage );
     verticalLayout->addItem( spacer4 );
     verticalLayout->addLayout( layoutIcons );
     verticalLayout->addWidget( prgUsageMonitor );
@@ -92,6 +94,10 @@ cFrmPanel::cFrmPanel( const unsigned int p_uiPanelId ) : QFrame()
     lblTitle->setStyleSheet( QString("QLabel {background-color: %1;font: bold; color: %2; font-size:14px;}")
                                     .arg( g_poPrefs->getActiveCaptionBackground() )
                                     .arg( g_poPrefs->getActiveCaptionColor() ) );
+
+//    lblImage->setSizePolicy( QSizePolicy::Ignored, QSizePolicy::Ignored );
+    lblImage->setMinimumHeight( 100 );
+    lblImage->setScaledContents( true );
 
     icoPanelStart->setIconSize( QSize(20,20) );
     icoPanelStart->setIcon( QIcon(QString("./resources/40x40_start.png")) );
@@ -756,6 +762,10 @@ void cFrmPanel::load( const unsigned int p_uiPanelId )
             m_bIsTubeCleanupNeeded = true;
         }
 
+QPixmap *qpAd = new QPixmap( "C:\\KiwiSun\\Kepek\\kiwisun_polar.jpg" );
+
+lblImage->setPixmap( *qpAd );
+
         delete poQuery;
         poQuery = NULL;
 
@@ -863,6 +873,8 @@ void cFrmPanel::displayStatus()
         {
             m_qsTimerNextStatus = "";
         }
+
+        lblImage->setVisible( false );
     }
     else
     {
@@ -872,6 +884,8 @@ void cFrmPanel::displayStatus()
         else
             m_qsTimer = "";
         m_qsTimerNextStatus = "";
+
+        lblImage->setVisible( true );
     }
 
     if( m_inCashToPay > 0 )
@@ -927,6 +941,15 @@ void cFrmPanel::displayStatus()
 //====================================================================================
 void cFrmPanel::formatStatusString( QString p_qsStatusText )
 {
+    if( p_qsStatusText.length() == 0 )
+    {
+        lblCurrStatus->setVisible( false );
+    }
+    else
+    {
+        lblCurrStatus->setVisible( true );
+    }
+
     QFont   obFont;
 
     obFont = lblCurrStatus->font();
@@ -942,6 +965,15 @@ void cFrmPanel::formatStatusString( QString p_qsStatusText )
 //====================================================================================
 void cFrmPanel::formatTimerString( QString p_qsTimerText )
 {
+    if( p_qsTimerText.length() == 0 )
+    {
+        lblCurrTimer->setVisible( false );
+    }
+    else
+    {
+        lblCurrTimer->setVisible( true );
+    }
+
     QFont   obFont;
 
     obFont = lblCurrTimer->font();
@@ -958,6 +990,15 @@ void cFrmPanel::formatTimerString( QString p_qsTimerText )
 //====================================================================================
 void cFrmPanel::formatNextLengthString( QString p_qsNextLengthText )
 {
+    if( p_qsNextLengthText.length() == 0 )
+    {
+        lblNextStatusLen->setVisible( false );
+    }
+    else
+    {
+        lblNextStatusLen->setVisible( true );
+    }
+
     QFont   obFont;
 
     obFont = lblNextStatusLen->font();

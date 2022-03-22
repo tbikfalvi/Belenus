@@ -22,6 +22,12 @@ public:
     QLabel          *lblType;
     QComboBox       *cmbPanelType;
 
+    QHBoxLayout     *horizontalLayout5;
+    QLabel          *lblImagePath;
+    QLineEdit       *ledImagePath;
+    QPushButton     *pbChangeDir;
+    QSpacerItem     *horizontalSpacer5;
+
     QHBoxLayout     *horizontalLayout2;
     QLabel          *lblWorkTime;
     QLineEdit       *ledWorkTimeHour;
@@ -52,6 +58,7 @@ public:
 
     cDlgPanelSettings( QWidget *p_poParent = 0, unsigned int p_uiPanelId = 0 );
     void             addTitleLayout();
+    void             addImageLayout();
     void             addWorkTimeLayout();
     void             addCleanTimeLayout();
     void             addCopyTimeValuesLayout();
@@ -72,6 +79,7 @@ protected slots:
     virtual void deleteClicked( bool );
     virtual void editClicked( bool );
     virtual void saveClicked( bool );
+    virtual void on_pbChangeDir_clicked( bool );
     virtual void on_pbWTReset_clicked( bool );
     virtual void on_pbCTReset_clicked( bool );
     virtual void on_pbCopyToAll_clicked( bool );
