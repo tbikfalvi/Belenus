@@ -47,6 +47,7 @@ SOURCES      = ../framework/dbconnection.cpp \
                creportguests.cpp \
                creportdeviceusages.cpp \
                creportdeviceminuteusages.cpp \
+               creportdevicepatientdispersion.cpp \
                dlgprogress.cpp
 
 HEADERS      = ../framework/dbconnection.h \
@@ -76,6 +77,7 @@ HEADERS      = ../framework/dbconnection.h \
                creportguests.h \
                creportdeviceusages.h \
                creportdeviceminuteusages.h \
+               creportdevicepatientdispersion.h \
                dlgprogress.h
 
 FORMS        = wndmain.ui \
