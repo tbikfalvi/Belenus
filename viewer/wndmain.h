@@ -140,6 +140,8 @@ private:
     void                            _updateReportIndexes();
     void                            _updateReportButtons( bool p_bEnable );
 
+    QString                         _loadSettingS( QString p_Identifier, QString p_Default );
+
 private slots:
     void on_tabReports_tabCloseRequested(int index);
     void on_action_Toolbar_triggered(bool checked);

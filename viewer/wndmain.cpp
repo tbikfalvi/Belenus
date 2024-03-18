@@ -22,6 +22,12 @@
 
 #include "../framework/qtmysqlquerymodel.h"
 #include "wndmain.h"
+#include "currency.h"
+
+extern QString                  g_qsCurrencyShort;
+extern QString                  g_qsCurrencyLong;
+extern QString                  g_qsCurrencySeparator;
+extern QString                  g_qsCurrencyDecimalSeparator;
 
 //====================================================================================
 //
@@ -81,6 +87,11 @@ cWndMain::cWndMain(QWidget *parent , QString p_qsAppVersion) : QMainWindow( pare
     cQTMySQLQueryModel *m_poModel = new cQTMySQLQueryModel( this );
     m_poModel->setQuery( "SELECT CONCAT(name,\" (\",realName,\")\") AS n FROM users WHERE active = 1 ORDER BY name" );
     cmbName->setModel( m_poModel );
+
+    g_qsCurrencyShort               = _loadSettingS( "CURR_Short", "Ft." );
+    g_qsCurrencyLong                = _loadSettingS( "CURR_Long", "Forint" );
+    g_qsCurrencySeparator           = _loadSettingS( "CURR_Separator", "," );
+    g_qsCurrencyDecimalSeparator    = _loadSettingS( "CURR_Decimal", "." );
 
     ledPassword->setFocus();
 }
@@ -1449,3 +1460,33 @@ void cWndMain::_updateReportButtons(bool p_bEnable)
     pbPrint->setEnabled( p_bEnable && bReportVisible );
 }
 //------------------------------------------------------------------------------------
+QString cWndMain::_loadSettingS( QString p_Identifier, QString p_Default )
+//------------------------------------------------------------------------------------
+{
+    QString value = "";
+    QSqlQuery *poQuery = NULL;
+
+    try
+    {
+        poQuery = g_poDB->executeQTQuery( QString( "SELECT value FROM settings WHERE identifier=\"%1\" " ).arg( p_Identifier ) );
+        if( poQuery->first() )
+        {
+            value = poQuery->value( 0 ).toString();
+        }
+        else
+        {
+            g_poDB->executeQTQuery( QString("INSERT INTO `settings` (`settingId`, `identifier`, `value`) VALUES (NULL, '%1', '%2') " )
+                                            .arg( p_Identifier )
+                                            .arg( p_Default ) );
+            value = p_Default;
+        }
+        delete poQuery;
+    }
+    catch( cSevException &e )
+    {
+        if( poQuery ) delete poQuery;
+    }
+
+    return value;
+}
+
