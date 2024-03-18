@@ -391,6 +391,8 @@ cDlgPreferences::cDlgPreferences( QWidget *p_poParent )
     lblGUILogLevelValue->setVisible( false );
     sliGUILogLevel->setVisible( false );
 
+    chkAutoMailPCUnitChange->setVisible( false );
+    chkAutoMailPCUnitChange->setEnabled( false );
 }
 
 cDlgPreferences::~cDlgPreferences()

@@ -54,26 +54,26 @@ void cDlgWindowPosition::on_cmbWindows_currentIndexChanged(const QString &itemTe
 
         if( cmbWindows->currentIndex() == 1 )
         {
-            m_qsLeft    = "UserInterface/MainWindowLeft";
-            m_qsTop     = "UserInterface/MainWindowTop";
-            m_qsWidth   = "UserInterface/MainWindowWidth";
-            m_qsHeight  = "UserInterface/MainWindowHeight";
+            m_qsLeft    = "UI_MainWindowLeft";
+            m_qsTop     = "UI_MainWindowTop";
+            m_qsWidth   = "UI_MainWindowWidth";
+            m_qsHeight  = "UI_MainWindowHeight";
         }
         else if( cmbWindows->currentIndex() == 2 )
         {
-            m_qsLeft    = "SecondaryWindow/Left";
-            m_qsTop     = "SecondaryWindow/Top";
-            m_qsWidth   = "SecondaryWindow/Width";
-            m_qsHeight  = "SecondaryWindow/Height";
+            m_qsLeft    = "EXTWIN_Left";
+            m_qsTop     = "EXTWIN_Top";
+            m_qsWidth   = "EXTWIN_Width";
+            m_qsHeight  = "EXTWIN_Height";
         }
         else
         {
             QStringList qslItem = itemText.split( " - " );
 
-            m_qsLeft    = QString( "Dialogs/%1_left" ).arg( qslItem.at(0) );
-            m_qsTop     = QString( "Dialogs/%1_top" ).arg( qslItem.at(0) );
-            m_qsWidth   = QString( "Dialogs/%1_width" ).arg( qslItem.at(0) );
-            m_qsHeight  = QString( "Dialogs/%1_height" ).arg( qslItem.at(0) );
+            m_qsLeft    = QString( "DLG_%1_left" ).arg( qslItem.at(0) );
+            m_qsTop     = QString( "DLG_%1_top" ).arg( qslItem.at(0) );
+            m_qsWidth   = QString( "DLG_%1_width" ).arg( qslItem.at(0) );
+            m_qsHeight  = QString( "DLG_%1_height" ).arg( qslItem.at(0) );
 
             m_qsAdId    = qslItem.at(0).right( qslItem.at(0).length()-2 );
         }

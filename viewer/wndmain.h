@@ -22,6 +22,7 @@
 #include "creportguests.h"
 #include "creportdeviceusages.h"
 #include "creportdeviceminuteusages.h"
+#include "creportdevicepatientdispersion.h"
 
 extern cQTMySQLConnection  *g_poDB;
 
@@ -72,6 +73,7 @@ signals: // <_NEW_REPORT_>  report signal-ja
     void                    setCheckedReportGuests( bool p_bChecked );
     void                    setCheckedReportDeviceUsages( bool p_bChecked );
     void                    setCheckedReportDeviceMinuteUsages( bool p_bChecked );
+    void                    setCheckedReportDevicePatientDispersion( bool p_bChecked );
 
 public slots: // <_NEW_REPORT_> report slot-ja
     void                    slotCheckReportDaily( bool p_bChecked );
@@ -90,6 +92,7 @@ public slots: // <_NEW_REPORT_> report slot-ja
     void                    slotCheckReportGuests( bool p_bChecked );
     void                    slotCheckReportDeviceUsages( bool p_bChecked );
     void                    slotCheckReportDeviceMinuteUsages( bool p_bChecked );
+    void                    slotCheckReportDevicePatientDispersion( bool p_bChecked );
 
 private:
 
@@ -112,6 +115,7 @@ private:
     cReportGuests                   *m_repGuests;
     cReportDeviceUsages             *m_repDeviceUsages;
     cReportDeviceMinuteUsages       *m_repDeviceMinuteUsages;
+    cReportDevicePatientDispersion  *m_repDevicePatientDispersion;
 
     QVector<cReport*>                m_qvReports;
 
@@ -135,6 +139,8 @@ private:
 
     void                            _updateReportIndexes();
     void                            _updateReportButtons( bool p_bEnable );
+
+    QString                         _loadSettingS( QString p_Identifier, QString p_Default );
 
 private slots:
     void on_tabReports_tabCloseRequested(int index);

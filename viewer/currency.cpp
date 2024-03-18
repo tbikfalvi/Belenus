@@ -4,6 +4,11 @@
 #include <QMessageBox>
 #include "currency.h"
 
+QString                  g_qsCurrencyShort;
+QString                  g_qsCurrencyLong;
+QString                  g_qsCurrencySeparator;
+QString                  g_qsCurrencyDecimalSeparator;
+
 //*********************************************************************************************************************
 // Class cCurrency
 //*********************************************************************************************************************
@@ -15,14 +20,14 @@ cCurrency::cCurrency(const QString &p_qsCurrencyString, currType p_ctCurrencyTyp
     m_ctCurrType    = p_ctCurrencyType;
     m_nVatValue     = p_nVat;
     m_bIsNegative   = false;
-
+/*
     QSettings obPrefFile( "belenus.ini", QSettings::IniFormat );
 
     m_qsCurrencyShort               = obPrefFile.value( QString::fromAscii( "Currency/Short" ), "Ft." ).toString();
     m_qsCurrencyLong                = obPrefFile.value( QString::fromAscii( "Currency/Long" ), "Forint" ).toString();
     m_qsCurrencySeparator           = obPrefFile.value( QString::fromAscii( "Currency/Separator" ), "," ).toString();
     m_qsCurrencyDecimalSeparator    = obPrefFile.value( QString::fromAscii( "Currency/Decimal" ), "." ).toString();
-
+*/
     _init( p_qsCurrencyString, p_ctCurrencyType, p_nVat );
 }
 //*********************************************************************************************************************
@@ -35,14 +40,14 @@ cCurrency::cCurrency(int p_nCurrencyValue, currType p_ctCurrencyType, int p_nVat
     m_nValueRight   = 0;
     m_ctCurrType    = p_ctCurrencyType;
     m_nVatValue     = p_nVat;
-
+/*
     QSettings obPrefFile( "belenus.ini", QSettings::IniFormat );
 
     m_qsCurrencyShort               = obPrefFile.value( QString::fromAscii( "Currency/Short" ), "Ft." ).toString();
     m_qsCurrencyLong                = obPrefFile.value( QString::fromAscii( "Currency/Long" ), "Forint" ).toString();
     m_qsCurrencySeparator           = obPrefFile.value( QString::fromAscii( "Currency/Separator" ), "," ).toString();
     m_qsCurrencyDecimalSeparator    = obPrefFile.value( QString::fromAscii( "Currency/Decimal" ), "." ).toString();
-
+*/
     QString qsCurrency = QString::number(p_nCurrencyValue);
 
     qsCurrency.insert( qsCurrency.length()-2, _currencyDecimalSeparator() );
@@ -222,20 +227,20 @@ QString cCurrency::_separatedValue(int p_nValue)
 //====================================================================================
 QString cCurrency::_currencyDecimalSeparator()
 {
-    return m_qsCurrencyDecimalSeparator;
+    return g_qsCurrencyDecimalSeparator;
 }
 //====================================================================================
 QString cCurrency::_currencySeparator()
 {
-    return m_qsCurrencySeparator;
+    return g_qsCurrencySeparator;
 }
 //====================================================================================
 QString cCurrency::_currencyLong()
 {
-    return m_qsCurrencyLong;
+    return g_qsCurrencyLong;
 }
 //====================================================================================
 QString cCurrency::_currencyShort()
 {
-    return m_qsCurrencyShort;
+    return g_qsCurrencyShort;
 }

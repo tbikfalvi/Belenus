@@ -29,6 +29,7 @@ void cDBPatientcardUnit::init( const unsigned int p_uiId,
                                const unsigned int p_uiLicenceId,
                                const unsigned int p_uiPatientCardId,
                                const unsigned int p_uiPatientCardTypeId,
+                               const unsigned int p_uiPanelGroupId,
                                const unsigned int p_uiLedgerId,
                                const unsigned int p_uiPanelId,
                                const int p_nUnitTime,
@@ -44,6 +45,7 @@ void cDBPatientcardUnit::init( const unsigned int p_uiId,
     m_uiLicenceId           = p_uiLicenceId;
     m_uiPatientCardId       = p_uiPatientCardId;
     m_uiPatientCardTypeId   = p_uiPatientCardTypeId;
+    m_uiPanelGroupId        = p_uiPanelGroupId;
     m_uiLedgerId            = p_uiLedgerId;
     m_uiPanelId             = p_uiPanelId;
     m_nUnitTime             = p_nUnitTime;
@@ -62,6 +64,7 @@ void cDBPatientcardUnit::init( const QSqlRecord &p_obRecord ) throw()
     int inLicenceIdIdx          = p_obRecord.indexOf( "licenceId" );
     int inPatientCardIdIdx      = p_obRecord.indexOf( "patientCardId" );
     int inPatientCardTypeIdIdx  = p_obRecord.indexOf( "patientCardTypeId" );
+    int inPanelGroupIdIdx       = p_obRecord.indexOf( "panelGroupId" );
     int inLedgerIdIdx           = p_obRecord.indexOf( "ledgerId" );
     int inPanelIdIdx            = p_obRecord.indexOf( "panelId" );
     int inUnitTimeIdx           = p_obRecord.indexOf( "unitTime" );
@@ -77,6 +80,7 @@ void cDBPatientcardUnit::init( const QSqlRecord &p_obRecord ) throw()
           p_obRecord.value( inLicenceIdIdx ).toInt(),
           p_obRecord.value( inPatientCardIdIdx ).toInt(),
           p_obRecord.value( inPatientCardTypeIdIdx ).toInt(),
+          p_obRecord.value( inPanelGroupIdIdx ).toInt(),
           p_obRecord.value( inLedgerIdIdx ).toInt(),
           p_obRecord.value( inPanelIdIdx ).toInt(),
           p_obRecord.value( inUnitTimeIdx ).toInt(),
@@ -181,6 +185,7 @@ void cDBPatientcardUnit::save() throw( cSevException )
     qsQuery += QString( "licenceId = \"%1\", " ).arg( m_uiLicenceId );
     qsQuery += QString( "patientCardId = \"%1\", " ).arg( m_uiPatientCardId );
     qsQuery += QString( "patientCardTypeId = \"%1\", " ).arg( m_uiPatientCardTypeId );
+    qsQuery += QString( "panelGroupId = \"%1\", " ).arg( m_uiPanelGroupId );
     qsQuery += QString( "ledgerId = \"%1\", " ).arg( m_uiLedgerId );
     qsQuery += QString( "panelId = \"%1\", " ).arg( m_uiPanelId );
     qsQuery += QString( "unitTime = \"%1\", " ).arg( m_nUnitTime );
@@ -302,6 +307,16 @@ unsigned int cDBPatientcardUnit::patientCardTypeId() const throw()
 void cDBPatientcardUnit::setPatientCardTypeId( const unsigned int p_nPatientCardTypeId ) throw()
 {
     m_uiPatientCardTypeId = p_nPatientCardTypeId;
+}
+
+unsigned int cDBPatientcardUnit::panelGroupId() const throw()
+{
+    return m_uiPanelGroupId;
+}
+
+void cDBPatientcardUnit::setPanelGroupId( const unsigned int p_nPanelGroupId ) throw()
+{
+    m_uiPanelGroupId = p_nPanelGroupId;
 }
 
 unsigned int cDBPatientcardUnit::ledgerId() const throw()

@@ -82,6 +82,12 @@ cDlgPatientCardSell::cDlgPatientCardSell( QWidget *p_poParent, cDBPatientCard *p
                 cmbCardType->setCurrentIndex( cmbCardType->count()-1 );
         }
 
+        poQuery = g_poDB->executeQTQuery( QString( "SELECT panelGroupId, name FROM panelgroups WHERE active=1 AND archive<>\"DEL\" ORDER BY name " ) );
+        while( poQuery->next() )
+        {
+            cmbPanelGroup->addItem( poQuery->value( 1 ).toString(), poQuery->value( 0 ) );
+        }
+
         cmbPatient->addItem( tr("<Not selected>"), 0 );
         poQuery = g_poDB->executeQTQuery( QString( "SELECT patientId, name FROM patients WHERE active=1 AND archive<>\"DEL\" ORDER BY name " ) );
         while( poQuery->next() )
@@ -507,6 +513,7 @@ void cDlgPatientCardSell::on_pbSell_clicked()
                 obDBPatientcardUnit.setLicenceId( m_poPatientCard->licenceId() );
                 obDBPatientcardUnit.setPatientCardId( m_poPatientCard->id() );
                 obDBPatientcardUnit.setPatientCardTypeId( m_poPatientCardType->id() );
+                obDBPatientcardUnit.setPanelGroupId( cmbPanelGroup->currentIndex() );
                 obDBPatientcardUnit.setLedgerId( uiLedgerId );
                 obDBPatientcardUnit.setUnitTime( m_poPatientCardType->unitTime() );
                 obDBPatientcardUnit.setUnitPrice( m_poPatientCardType->price()/ledUnits->text().toInt() );

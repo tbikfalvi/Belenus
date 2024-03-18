@@ -261,12 +261,13 @@ void cDlgPanelUse::_fillUiItems()
     QString qsQuery = "";
     QSqlQuery *poQuery = NULL;
 
-    qsQuery = QString( "SELECT title, panelTypeId FROM panels WHERE panelId=%1 " ).arg( m_uiPanelId );
+    qsQuery = QString( "SELECT title, panelTypeId, panelGroupId FROM panels WHERE panelId=%1 " ).arg( m_uiPanelId );
     poQuery = g_poDB->executeQTQuery( qsQuery );
     poQuery->first();
 
     lblPanelTitle->setText( poQuery->value(0).toString() );
     m_uiPanelTypeId = poQuery->value(1).toUInt();
+    m_uiPanelGroupId = poQuery->value(2).toUInt();
 
     cmbTimeIntervall->addItem( tr("<No time intervall selected>"), 0 );
     m_qslPanelUseTimes.append( QString("0|0") );
@@ -407,7 +408,8 @@ void cDlgPanelUse::setPanelUsePatientCard(/*unsigned int p_uiPatientCardId*/)
                                             "patientcardunits.validDateFrom, "
                                             "patientcardunits.validDateTo, "
                                             "COUNT(patientcardunits.unitTime), "
-                                            "name "
+                                            "name, "
+                                            "patientcardunits.panelGroupId "
                                        "FROM patientcardunits, patientcardtypes "
                                        "WHERE "
                                             "patientCardId=%1 "
@@ -419,7 +421,8 @@ void cDlgPanelUse::setPanelUsePatientCard(/*unsigned int p_uiPatientCardId*/)
                                        "GROUP BY "
                                             "patientcardunits.unitTime, "
                                             "patientcardunits.validDateTo, "
-                                            "patientcardunits.patientCardTypeId "
+                                            "patientcardunits.patientCardTypeId, "
+                                            "patientcardunits.panelGroupId "
                                        "ORDER BY "
                                             "patientcardunits.validDateTo, "
                                             "patientcardunits.patientCardUnitId" ).arg( m_obDBPatientCard.id() );
@@ -429,6 +432,7 @@ void cDlgPanelUse::setPanelUsePatientCard(/*unsigned int p_uiPatientCardId*/)
             {
                 QString qsValid;
                 unsigned int uiPCTId = poQuery->value( 1 ).toUInt();
+                unsigned int uiPanelGroupId = poQuery->value( 7 ).toUInt();
 
                 if( uiPCTId > 0 )
                 {
@@ -438,6 +442,11 @@ void cDlgPanelUse::setPanelUsePatientCard(/*unsigned int p_uiPatientCardId*/)
                                            .arg( poQuery->value( 2 ).toString() )
                                            .arg( qsValid ) );
                     if( !isValid )
+                    {
+                        continue;
+                    }
+                    g_obLogger(cSeverity::DEBUG) << "unitPanelGroup: " << uiPanelGroupId << " panelGroup: " << m_uiPanelGroupId << EOM;
+                    if( uiPanelGroupId > 0 && uiPanelGroupId != m_uiPanelGroupId )
                     {
                         continue;
                     }

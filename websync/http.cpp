@@ -310,7 +310,7 @@ void cBlnsHttp::registerLicenceKey( QString p_qsLicenceString, QString p_qsClien
 
     m_vrHttpActions.clear();
     m_vrHttpActions.push_back( cBlnsHttpAction::HA_AUTHENTICATE );
-    m_vrHttpActions.push_back( cBlnsHttpAction::HA_LICENCE_CODE_VALIDATE );
+//    m_vrHttpActions.push_back( cBlnsHttpAction::HA_LICENCE_CODE_VALIDATE );
     m_vrHttpActions.push_back( cBlnsHttpAction::HA_LICENCE_REGISTER );
     m_vrHttpActions.push_back( cBlnsHttpAction::HA_PROCESSFINISHED );
 
@@ -338,7 +338,7 @@ void cBlnsHttp::reactivateLicenceKey(QString p_qsLicenceString, QString p_qsClie
 
     m_vrHttpActions.clear();
     m_vrHttpActions.push_back( cBlnsHttpAction::HA_AUTHENTICATE );
-    m_vrHttpActions.push_back( cBlnsHttpAction::HA_LICENCE_CODE_VALIDATE );
+//    m_vrHttpActions.push_back( cBlnsHttpAction::HA_LICENCE_CODE_VALIDATE );
     m_vrHttpActions.push_back( cBlnsHttpAction::HA_LICENCE_REACTIVATE );
     m_vrHttpActions.push_back( cBlnsHttpAction::HA_PROCESSFINISHED );
 
@@ -367,7 +367,7 @@ void cBlnsHttp::validateLicenceKey(QString p_qsLicenceString, QString p_qsClient
 
     m_vrHttpActions.clear();
     m_vrHttpActions.push_back( cBlnsHttpAction::HA_AUTHENTICATE );
-    m_vrHttpActions.push_back( cBlnsHttpAction::HA_LICENCE_CODE_VALIDATE );
+//    m_vrHttpActions.push_back( cBlnsHttpAction::HA_LICENCE_CODE_VALIDATE );
     m_vrHttpActions.push_back( cBlnsHttpAction::HA_LICENCE_CHECK );
     m_vrHttpActions.push_back( cBlnsHttpAction::HA_PROCESSFINISHED );
 
@@ -787,13 +787,13 @@ void cBlnsHttp::_httpExecuteProcess()
             _httpCheckLicence();
             break;
         }
-        case cBlnsHttpAction::HA_LICENCE_CODE_VALIDATE: // 13
+        /*case cBlnsHttpAction::HA_LICENCE_CODE_VALIDATE: // 13
         {
             g_obLogger(cSeverity::DEBUG) << "HTTP: Validate licence code integrity" << EOM;
             _httpValidateLicenceIntegrity();
             break;
-        }
-        case cBlnsHttpAction::HA_PROCESSFINISHED: // 14
+        }*/
+        case cBlnsHttpAction::HA_PROCESSFINISHED: // 13
         {
             g_obLogger(cSeverity::DEBUG) << "HTTP: Finish process" << EOM;
             _httpProcessResponse();
@@ -1023,7 +1023,7 @@ void cBlnsHttp::_httpRegisterLicence()
 
     _downloadFile( qsFileName );
 }
-
+/*
 //=================================================================================================
 void cBlnsHttp::_httpValidateLicenceIntegrity()
 //-------------------------------------------------------------------------------------------------
@@ -1040,7 +1040,7 @@ void cBlnsHttp::_httpValidateLicenceIntegrity()
 
     _downloadFile( qsFileName );
 }
-
+*/
 //=================================================================================================
 void cBlnsHttp::_httpReactivateLicence()
 //-------------------------------------------------------------------------------------------------
@@ -1239,7 +1239,7 @@ void cBlnsHttp::_httpProcessResponse()
             _httpExecuteProcess();
             break;
 
-        case cBlnsHttpAction::HA_LICENCE_CODE_VALIDATE:
+        /*case cBlnsHttpAction::HA_LICENCE_CODE_VALIDATE:
             g_obLogger(cSeverity::DEBUG) << "HTTP: Read check response from integrity licence.php" << EOM;
             if( !_processLicenceIntegrity() )
             {
@@ -1248,7 +1248,7 @@ void cBlnsHttp::_httpProcessResponse()
             }
             m_inHttpProcessStep++;
             _httpExecuteProcess();
-            break;
+            break;*/
 
         case cBlnsHttpAction::HA_PROCESSFINISHED:
             g_obLogger(cSeverity::DEBUG) << "HTTP: Process finished. Reply to main process" << EOM;
