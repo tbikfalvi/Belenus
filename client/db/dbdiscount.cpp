@@ -519,16 +519,16 @@ int cDBDiscount::discountedValue( int p_inValue )
 
     if( m_inDiscountValue > 0 )
     {
-        g_obLogger(cSeverity::DEBUG) << "Discount calculation -> Value-DiscountValue: [" << p_inValue << "-" << m_inDiscountValue<< "]" << EOM;
+//        g_obLogger(cSeverity::DEBUG) << "Discount calculation -> Value-DiscountValue: [" << p_inValue << "-" << m_inDiscountValue<< "]" << EOM;
         nRet -= m_inDiscountValue;
     }
     else
     {
-        g_obLogger(cSeverity::DEBUG) << "Discount calculation -> Value/100*DiscountPercent: [" << p_inValue << "*" << m_inDiscountPercent<< "/100] DiscountValue [" << (p_inValue * m_inDiscountPercent / 100) << "]" << EOM;
+//        g_obLogger(cSeverity::DEBUG) << "Discount calculation -> Value/100*DiscountPercent: [" << p_inValue << "*" << m_inDiscountPercent<< "/100] DiscountValue [" << (p_inValue * m_inDiscountPercent / 100) << "]" << EOM;
         nRet -= (p_inValue * m_inDiscountPercent / 100);
     }
 
-    g_obLogger(cSeverity::DEBUG) << "Value [" << p_inValue << "] discount [" << p_inValue-nRet  << "] discounted[" << nRet << "]" << EOM;
+//    g_obLogger(cSeverity::DEBUG) << "Value [" << p_inValue << "] discount [" << p_inValue-nRet  << "] discounted[" << nRet << "]" << EOM;
 
     return nRet;
 }
