@@ -183,14 +183,14 @@ ALTER TABLE `panelUses` auto_increment=1;
 
 -- -----------------------------------------------------------------------------------
 
-INSERT INTO `patientcardunits` (`patientCardUnitId` ,`licenceId` ,`patientCardId` ,`ledgerId` ,`panelId` ,`unitTime` ,`unitPrice` ,`validDateFrom` ,`validDateTo` ,`dateTimeUsed` ,`active` ,`archive` ) VALUES
- ('0',  '0', '1', '0', '0', '5', '0', '2013-01-01', '2100-12-31', CURRENT_TIMESTAMP , '1', 'ARC');
+INSERT INTO `patientcardunits` (`patientCardUnitId` ,`licenceId` ,`patientCardId` ,`panelGroupID` ,`ledgerId` ,`panelId` ,`unitTime` ,`unitPrice` ,`validDateFrom` ,`validDateTo` ,`dateTimeUsed` ,`active` ,`archive` ) VALUES
+ ('0',  '0', '1', '0', '0', '0', '5', '0', '2024-01-01', '2100-12-31', CURRENT_TIMESTAMP , '1', 'ARC');
 UPDATE `patientcardunits` SET `patientCardUnitId`='0' WHERE `patientCardUnitId`=1;
 
 -- -----------------------------------------------------------------------------------
 
 INSERT INTO `patientcardtypeenabled` (`patientCardTypeEnabledId`, `licenceId`, `patientCardTypeId`, `validWeekDays`, `start`, `stop`, `modified`, `archive`) VALUES
- ('0', '0', '1', '127', '00:00:00', '23:59:59', '2013-01-01 00:00:00', 'ARC');
+ ('0', '0', '1', '127', '00:00:00', '23:59:59', '2024-01-01 00:00:00', 'ARC');
 UPDATE `patientcardtypeenabled` SET `patientCardTypeEnabledId`='0' WHERE `patientCardTypeEnabledId`=1;
 
 -- -----------------------------------------------------------------------------------

@@ -132,10 +132,10 @@ void cDlgPanelGroups::deleteClicked( bool )
         {
             poPanelGroups = new cDBPanelGroups;
             poPanelGroups->load( m_uiSelectedId );
-            if( poPanelGroups->licenceId() == 0 && !g_obUser.isInGroup( cAccessGroup::ROOT ) && !g_obUser.isInGroup( cAccessGroup::SYSTEM ) )
+            if( poPanelGroups->id() == 0 )
             {
                 QMessageBox::warning( this, tr("Warning"),
-                                      tr("You are not allowed to delete studio independent data."));
+                                      tr("You are not allowed to delete default Panel Group."));
                 return;
             }
             poPanelGroups->remove();
@@ -147,7 +147,7 @@ void cDlgPanelGroups::deleteClicked( bool )
         {
             if( poPanelGroups ) delete poPanelGroups;
             g_obLogger(e.severity()) << e.what() << EOM;
-            g_obGen.showTrayError( e.what() );
+            g_obGen.showTrayError( tr("Panel Group is in use. Delete is not allowed.") );
         }
     }
 }

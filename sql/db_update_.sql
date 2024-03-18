@@ -10,7 +10,9 @@ USE `belenus`;
 
 -- -----------------------------------------------------------------------------------
 
+ALTER TABLE `patientcardunits` ADD `panelGroupID` int(10) unsigned NOT NULL DEFAULT 0 AFTER `patientCardTypeId`;
 
+UPDATE `panelgroups` SET `name` = '* Osszes *' WHERE `panelGroupId` = 0;
 
 -- -----------------------------------------------------------------------------------
 

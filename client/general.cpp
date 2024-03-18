@@ -24,6 +24,7 @@
 #include "db/dbguest.h"
 #include "db/dbpatientcardtype.h"
 #include "db/dbskintypes.h"
+#include "db/dbpanelgroups.h"
 
 //====================================================================================
 cGeneral::cGeneral()
@@ -279,13 +280,13 @@ QString cGeneral::getPatientCardInformationString(QString p_qsBarcode)
         cDBPatientCard  obDBPatientCard;
         obDBPatientCard.load( p_qsBarcode );
 
-        QString qsQuery = QString( "SELECT patientCardUnitId, patientCardTypeId, unitTime, validDateFrom, validDateTo, COUNT(unitTime) "
+        QString qsQuery = QString( "SELECT patientCardUnitId, patientCardTypeId, unitTime, validDateFrom, validDateTo, COUNT(unitTime), panelGroupId "
                                    "FROM patientcardunits "
                                    "WHERE patientCardId=%1 "
                                    "AND validDateFrom<=CURDATE() AND validDateTo>=CURDATE() "
                                    "AND prepared=0 "
                                    "AND active=1 "
-                                   "GROUP BY unitTime, validDateTo, patientCardTypeId ORDER BY validDateTo, patientCardUnitId" ).arg( obDBPatientCard.id() );
+                                   "GROUP BY unitTime, validDateTo, patientCardTypeId, panelGroupId ORDER BY validDateTo, patientCardUnitId" ).arg( obDBPatientCard.id() );
         QSqlQuery  *poQuery = g_poDB->executeQTQuery( qsQuery );
 
         qsText.append( QObject::tr("<b>Valid units:</b>") );
@@ -297,18 +298,25 @@ QString cGeneral::getPatientCardInformationString(QString p_qsBarcode)
             {
                 QString qsValid;
                 unsigned int uiPCTId = poQuery->value( 1 ).toUInt();
+                unsigned int uiPanelGroupId = poQuery->value( 6 ).toUInt();
 
                 if( uiPCTId > 0 )
                 {
                     cDBPatientCardType obDBPatientCardType;
+                    cDBPanelGroups     obDBPanelGroup;
 
                     obDBPatientCardType.load( uiPCTId );
                     obDBPatientCard.isPatientCardCanBeUsed( uiPCTId, &qsValid );
 
+                    obDBPanelGroup.load( uiPanelGroupId );
+
+                    QString qsPanelGroupName = obDBPanelGroup.name();
+                    g_obLogger(cSeverity::INFO) << "Panel group [" << qsPanelGroupName << "] " << EOM;
+
                     qsText.append( "<tr>" );
                     qsText.append( QObject::tr("<td><b>%1 units</b></td>").arg( poQuery->value( 5 ).toString() ) );
                     qsText.append( QObject::tr("<td>(<i>%1 minutes</i>)</td>").arg( poQuery->value( 2 ).toString() ) );
-                    qsText.append( QString("<td>(<i>%1</i>)</td>").arg( obDBPatientCardType.name() ) );
+                    qsText.append( QString("<td>(<i>%1 - %2</i>)</td>").arg( obDBPatientCardType.name() ).arg( qsPanelGroupName ) );
                     qsText.append( QObject::tr("<td>valid on %1</td>").arg( qsValid ) );
                     qsText.append( "<td> | </td>" );
                     qsText.append( QString("<td>%1</td>").arg( poQuery->value( 3 ).toString() ) );

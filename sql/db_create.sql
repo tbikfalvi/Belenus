@@ -401,6 +401,7 @@ CREATE TABLE `patientCardUnits` (
   `licenceId`               int(10) unsigned        NOT NULL,
   `patientCardId`           int(10) unsigned        NOT NULL,
   `patientCardTypeId`       int(10) unsigned        NOT NULL DEFAULT 0,
+  `panelGroupID`       		int(10) unsigned        NOT NULL DEFAULT 0,
   `ledgerId`                int(10) unsigned        NOT NULL,
   `panelId`                 int(10) unsigned        NOT NULL,
   `unitTime`                int(11)                 NOT NULL DEFAULT 0,

@@ -83,6 +83,7 @@ private:
     bool                         m_bInit;
     cDBPatientCard               m_obDBPatientCard;
     unsigned int                 m_uiPanelId;
+    unsigned int                 m_uiPanelGroupId;
     QVector<cPanelPCUnitUse*>    qvPanelUseUnits;
     unsigned int                 m_uiPanelUsePatientCardId;
     unsigned int                 m_uiPanelBaseTimeCard;
