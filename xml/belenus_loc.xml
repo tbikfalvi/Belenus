@@ -731,7 +731,7 @@
 	
     <version current="1.9.0.1" next="2.0.0.0">
         <uncompress>
-            <file path="%DOWNLOAD_DIR%" name="Update_2_0_0_0_beta.zip" />
+            <file path="%DOWNLOAD_DIR%" name="Update_2_0_0_0.zip" />
         </uncompress>
         <backup>
             <file path="%INSTALL_DIR%" directory="" name="belenus.exe" move="yes" />
@@ -744,7 +744,7 @@
             <file src="%DOWNLOAD_DIR%/resources/40x40_device_cool.png" dst="%INSTALL_DIR%/resources/40x40_device_cool.png" />
         </update>
         <execute>
-            <application home="%CURRENT_DIR%" name="DBBackup.exe" params='-execute "%DOWNLOAD_DIR%/sql/db_update_2_0_0_0_beta.sql"' />
+            <application home="%CURRENT_DIR%" name="DBBackup.exe" params='-execute "%DOWNLOAD_DIR%/sql/db_update_2_0_0_0.sql"' />
         </execute>
     </version>    
 	

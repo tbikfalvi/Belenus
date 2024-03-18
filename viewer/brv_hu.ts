@@ -1853,63 +1853,63 @@
 <context>
     <name>cWndMain</name>
     <message>
-        <location filename="wndmain.cpp" line="47"/>
+        <location filename="wndmain.cpp" line="53"/>
         <source>Belenus Report Viewer - v.%1</source>
         <translation>Belenus Statisztika Megjelenítő - v.%1</translation>
     </message>
     <message>
-        <location filename="wndmain.cpp" line="324"/>
-        <location filename="wndmain.cpp" line="428"/>
+        <location filename="wndmain.cpp" line="335"/>
+        <location filename="wndmain.cpp" line="439"/>
         <source>Login</source>
         <translation>Bejelentkezés</translation>
     </message>
     <message>
-        <location filename="wndmain.cpp" line="329"/>
+        <location filename="wndmain.cpp" line="340"/>
         <source>Need authentication ...</source>
         <translation>Szükség van azonosításra ...</translation>
     </message>
     <message>
-        <location filename="wndmain.cpp" line="334"/>
+        <location filename="wndmain.cpp" line="345"/>
         <source>User successfully authenticated.</source>
         <translation>A felhasználó sikeresen azonosítva.</translation>
     </message>
     <message>
-        <location filename="wndmain.cpp" line="339"/>
+        <location filename="wndmain.cpp" line="350"/>
         <source>Logout</source>
         <translation>Kijelentkezés</translation>
     </message>
     <message>
-        <location filename="wndmain.cpp" line="345"/>
+        <location filename="wndmain.cpp" line="356"/>
         <source>The username entered not found in the Belenus database</source>
         <translation>A megadott felhasználónév nem található meg a Belenus adatbázisában.</translation>
     </message>
     <message>
-        <location filename="wndmain.cpp" line="347"/>
+        <location filename="wndmain.cpp" line="358"/>
         <source>The password entered is incorrect</source>
         <translation>A megadott jelszó helytelen</translation>
     </message>
     <message>
-        <location filename="wndmain.cpp" line="349"/>
+        <location filename="wndmain.cpp" line="360"/>
         <source>Connection to Belenus database failed</source>
         <translation>A kapcsolódás a Belenus adatbázishoz nem sikerült</translation>
     </message>
     <message>
-        <location filename="wndmain.cpp" line="351"/>
+        <location filename="wndmain.cpp" line="362"/>
         <source>Authentication failed. Please retry later ...</source>
         <translation>Az azonosítás sikertelen volt. Kérem próbálja meg később ...</translation>
     </message>
     <message>
-        <location filename="wndmain.cpp" line="1092"/>
+        <location filename="wndmain.cpp" line="1103"/>
         <source>&lt;i&gt;Please select a report to show the related filters ...&lt;/i&gt;</source>
         <translation>&lt;i&gt;Kérem válasszon ki egy kimutatást a szűrőfeltételek megjelenítéséhez ...&lt;/i&gt;</translation>
     </message>
     <message>
-        <location filename="wndmain.cpp" line="1423"/>
+        <location filename="wndmain.cpp" line="1434"/>
         <source>Save report to ...</source>
         <translation>Kimutatás mentése ...</translation>
     </message>
     <message>
-        <location filename="wndmain.cpp" line="1425"/>
+        <location filename="wndmain.cpp" line="1436"/>
         <source>Html files (*.html);;Text files (*.txt)</source>
         <oldsource>Html files (*.html)</oldsource>
         <translation>Html állományok (*.html);;Szöveges állományok (*.txt)</translation>

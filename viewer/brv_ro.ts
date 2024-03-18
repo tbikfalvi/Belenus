@@ -1708,63 +1708,63 @@
 <context>
     <name>cWndMain</name>
     <message>
-        <location filename="wndmain.cpp" line="47"/>
+        <location filename="wndmain.cpp" line="53"/>
         <source>Belenus Report Viewer - v.%1</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="wndmain.cpp" line="324"/>
-        <location filename="wndmain.cpp" line="428"/>
+        <location filename="wndmain.cpp" line="335"/>
+        <location filename="wndmain.cpp" line="439"/>
         <source>Login</source>
         <translation>Autentificare</translation>
     </message>
     <message>
-        <location filename="wndmain.cpp" line="329"/>
+        <location filename="wndmain.cpp" line="340"/>
         <source>Need authentication ...</source>
         <translation>Este nevoie de autentificare ...</translation>
     </message>
     <message>
-        <location filename="wndmain.cpp" line="334"/>
+        <location filename="wndmain.cpp" line="345"/>
         <source>User successfully authenticated.</source>
         <translation>Utilizatorul a fost autentificat cu succes.</translation>
     </message>
     <message>
-        <location filename="wndmain.cpp" line="339"/>
+        <location filename="wndmain.cpp" line="350"/>
         <source>Logout</source>
         <translation>Ieșire</translation>
     </message>
     <message>
-        <location filename="wndmain.cpp" line="345"/>
+        <location filename="wndmain.cpp" line="356"/>
         <source>The username entered not found in the Belenus database</source>
         <translation>Numele de utilizator introdus nu a fost găsit în baza de date Belenus</translation>
     </message>
     <message>
-        <location filename="wndmain.cpp" line="347"/>
+        <location filename="wndmain.cpp" line="358"/>
         <source>The password entered is incorrect</source>
         <translation>Parola introdusă este incorectă</translation>
     </message>
     <message>
-        <location filename="wndmain.cpp" line="349"/>
+        <location filename="wndmain.cpp" line="360"/>
         <source>Connection to Belenus database failed</source>
         <translation>Conexiunea la baza de date Belenus a eșuat</translation>
     </message>
     <message>
-        <location filename="wndmain.cpp" line="351"/>
+        <location filename="wndmain.cpp" line="362"/>
         <source>Authentication failed. Please retry later ...</source>
         <translation>Autentificarea a eșuat. Te rog, reîncearcă mai târziu ...</translation>
     </message>
     <message>
-        <location filename="wndmain.cpp" line="1092"/>
+        <location filename="wndmain.cpp" line="1103"/>
         <source>&lt;i&gt;Please select a report to show the related filters ...&lt;/i&gt;</source>
         <translation>&lt;i&gt;Selectează un raport pentru a arăta filtrele aferente...&lt;/i&gt;</translation>
     </message>
     <message>
-        <location filename="wndmain.cpp" line="1423"/>
+        <location filename="wndmain.cpp" line="1434"/>
         <source>Save report to ...</source>
         <translation>Salvează raportul pe ...</translation>
     </message>
     <message>
-        <location filename="wndmain.cpp" line="1425"/>
+        <location filename="wndmain.cpp" line="1436"/>
         <source>Html files (*.html);;Text files (*.txt)</source>
         <translation>Fișiere html files (*.html);; fișiere text (*.txt)</translation>
     </message>
