@@ -53,20 +53,21 @@ cDlgRemoveUnits::cDlgRemoveUnits( QWidget *p_poParent, cDBPatientCard *p_poPatie
 
         ledBarcode->setText( m_poPatientCard->barcode() );
 
-        poQuery = g_poDB->executeQTQuery( QString( "SELECT patientCardTypes.patientCardTypeId, COUNT(name), name, patientcardunits.validDateTo "
-                                                   "FROM patientcardunits, patientCardTypes "
+        poQuery = g_poDB->executeQTQuery( QString( "SELECT patientCardTypes.patientCardTypeId, COUNT(patientCardTypes.name), patientCardTypes.name, patientcardunits.validDateTo, panelgroups.name "
+                                                   "FROM patientcardunits, patientCardTypes, panelgroups "
                                                    "WHERE "
                                                    "patientcardunits.patientCardId=%1 AND "
                                                    "patientCardTypes.patientCardTypeId = patientcardunits.patientCardTypeId AND "
+                                                   "patientcardunits.panelGroupId = panelgroups.panelGroupId AND "
                                                    "patientcardunits.active=1 "
-                                                   "GROUP BY name, patientcardunits.validDateTo ORDER BY name " ).arg( m_poPatientCard->id() ) );
+                                                   "GROUP BY patientCardTypes.name, panelgroups.name, patientcardunits.validDateTo ORDER BY patientCardTypes.name " ).arg( m_poPatientCard->id() ) );
         nCount = poQuery->size();
 
         if( nCount > 0 )
         {
             while( poQuery->next() )
             {
-                cmbCardType->addItem( tr( "%1 (Valid unitl: %2)" ).arg( poQuery->value( 2 ).toString() ).arg( poQuery->value( 3 ).toString() ), poQuery->value( 0 ) );
+                cmbCardType->addItem( tr( "%1 - %2 (Valid unitl: %3)" ).arg( poQuery->value( 2 ).toString() ).arg( poQuery->value( 4 ).toString() ).arg( poQuery->value( 3 ).toString() ), poQuery->value( 0 ) );
                 m_qslList.append( QString( "%1" ).arg( poQuery->value( 1 ).toInt() ) );
             }
             cmbCardType->setCurrentIndex( 0 );

@@ -384,7 +384,7 @@ cWndMain::cWndMain( QWidget *parent ) : QMainWindow( parent )
     g_obGen.setWindowSecondaryWidget( m_dlgSecondaryWindow );
 
     m_dlgSecondaryWindow->initPanels();
-    m_dlgSecondaryWindow->setCaption( tr("Belenus Software System - %1 - (c) Pagony Multimedia Studio Bt.").arg( g_poPrefs->getVersion() ) );
+    m_dlgSecondaryWindow->setCaption( tr("Belenus Software System - %1").arg( g_poPrefs->getVersion() ) );
 
     if( g_poPrefs->isSecondaryWindowVisible() )
     {
@@ -3151,6 +3151,8 @@ void cWndMain::on_action_EmptyDemoDB_triggered()
 //====================================================================================
 void cWndMain::slotStatusChanged( unsigned int p_uiPanelId, const unsigned int p_uiPanelStatusId, const QString p_qsStatus )
 {
+    g_obLogger(cSeverity::DEBUG) << "cWndMain::slotStatusChanged p_uiPanelId [" << p_uiPanelId << "] p_uiPanelStatusId [" << p_uiPanelStatusId << "]" << EOM;
+
     m_dlgSecondaryWindow->setPanelStatus( p_uiPanelId, p_uiPanelStatusId );
     m_dlgSecondaryWindow->setPanelStatusText( p_uiPanelId, p_qsStatus );
 }

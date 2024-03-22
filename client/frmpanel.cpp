@@ -97,9 +97,8 @@ cFrmPanel::cFrmPanel( const unsigned int p_uiPanelId ) : QFrame()
 
     lblImage->setMinimumHeight( 100 );
     lblImage->setScaledContents( true );
-
-// elrejtve a fo ablakon, hatha kesobb kell
-lblImage->setVisible( false );
+    // Fo ablakon nem latszodnak a kepek egyelore
+    lblImage->setVisible( false );
 
     icoPanelStart->setIconSize( QSize(20,20) );
     icoPanelStart->setIcon( QIcon(QString("./resources/40x40_start.png")) );
@@ -430,7 +429,7 @@ void cFrmPanel::cool()
 {
     if( m_uiStatus == 0 )
     {
-        for( int i=0; i<m_obStatuses.size(); i++ )
+        for( int i=0; i<(int)m_obStatuses.size(); i++ )
         {
             if( m_obStatuses.at( i )->activateCommand() == STATUS_UTOHUTES )
             {
@@ -746,12 +745,14 @@ void cFrmPanel::load( const unsigned int p_uiPanelId )
             lblTitle->setText( tr("Panel Not Found in Database") );
         }
 
+        lblImage->clear();
         if( qsImageFilename.length() > 0 )
         {
             QPixmap *qpAd = new QPixmap( qsImageFilename );
 
             lblImage->setPixmap( *qpAd );
         }
+        g_obLogger(cSeverity::DEBUG) << "Image for panel [" << qsImageFilename << "]" << EOM;
 
         m_bIsTubeReplaceNeeded = false;
         prgUsageMonitor->setMaximum( poQuery->value(3).toInt() );
@@ -818,7 +819,7 @@ void cFrmPanel::reload()
     QSqlQuery  *poQuery = NULL;
     try
     {
-        poQuery = g_poDB->executeQTQuery( QString( "SELECT panelTypeId, title, workTime, maxWorkTime, cleanTime, maxCleanTime FROM panels WHERE panelId=%1" ).arg( m_uiId ) );
+        poQuery = g_poDB->executeQTQuery( QString( "SELECT panelTypeId, title, workTime, maxWorkTime, cleanTime, maxCleanTime, imagePathFileName FROM panels WHERE panelId=%1" ).arg( m_uiId ) );
         if( poQuery->size() )
         {
             m_bIsTubeReplaceNeeded = false;
@@ -846,6 +847,18 @@ void cFrmPanel::reload()
 
             formatInfoString();
             prgUsageMonitor->setVisible( g_poPrefs->isUsageVisibleOnMain() );
+
+            QString qsImageFilename = "";
+            lblImage->clear();
+
+            qsImageFilename = poQuery->value( 6 ).toString();
+            if( qsImageFilename.length() > 0 )
+            {
+                QPixmap *qpAd = new QPixmap( qsImageFilename );
+
+                lblImage->setPixmap( *qpAd );
+            }
+            g_obLogger(cSeverity::DEBUG) << "New image for panel [" << qsImageFilename << "]" << EOM;
         }
         delete poQuery;
     }
@@ -882,7 +895,8 @@ void cFrmPanel::displayStatus()
             m_qsTimerNextStatus = "";
         }
 
-        lblImage->setVisible( false );
+        // Fo ablakon nem latszodnak a kepek egyelore
+//        lblImage->setVisible( false );
     }
     else
     {
@@ -893,6 +907,7 @@ void cFrmPanel::displayStatus()
             m_qsTimer = "";
         m_qsTimerNextStatus = "";
 
+        // Fo ablakon nem latszodnak a kepek egyelore
 //        lblImage->setVisible( true );
     }
 
@@ -914,6 +929,7 @@ void cFrmPanel::displayStatus()
     formatNextLengthString( m_qsTimerNextStatus );
     formatInfoString();
 
+    g_obLogger(cSeverity::DEBUG) << "signalStatusChanged - " << m_obStatuses.at(m_uiStatus)->id() << " | " << m_qsStatus << EOM;
     emit signalStatusChanged( m_uiId-1, m_obStatuses.at(m_uiStatus)->id(), m_qsStatus );
 
     if( m_uiStatus == 0 && m_inMainProcessLength == 0 )
@@ -1096,13 +1112,9 @@ void cFrmPanel::formatInfoString()
                       .arg(QColor( m_obStatusSettings.at(m_uiStatus)->infoFontColor()).name())
                       .arg(qsMainInfoText) );
 
-    g_obLogger(cSeverity::DEBUG) << "MainInfo: "
-                                 << qsMainInfoText
-                                 << EOM;
-    g_obLogger(cSeverity::DEBUG) << "SecondaryInfo: "
-                                 << qsSecondaryInfoText
-                                 << EOM;
-
+    g_obLogger(cSeverity::DEBUG) << "MainInfo: " << qsMainInfoText << EOM;
+    g_obLogger(cSeverity::DEBUG) << "SecondaryInfo: " << qsSecondaryInfoText << EOM;
+    g_obLogger(cSeverity::DEBUG) << "Set info text for m_uiID=" << m_uiId-1 << " Text: " << qsSecondaryInfoText << EOM;
     emit signalSetInfoText( m_uiId-1, qsSecondaryInfoText );
 }
 //====================================================================================
@@ -1592,7 +1604,7 @@ unsigned int cFrmPanel::_calculateWaitTime()
 //====================================================================================
 void cFrmPanel::setTextInformation(QString p_qsInfoText, bool p_bCallDisplayStatus)
 {
-    cTracer obTrace( "cFrmPanel::setTextInformation" );
+//    cTracer obTrace( "cFrmPanel::setTextInformation" );
 
     m_qsInfo = p_qsInfoText;
 

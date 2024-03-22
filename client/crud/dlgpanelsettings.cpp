@@ -40,6 +40,7 @@ cDlgPanelSettings::cDlgPanelSettings( QWidget *p_poParent, unsigned int p_uiPane
     connect( pbEnableSystemAdmin, SIGNAL(clicked()), this, SLOT(on_pbEnableSystemAdmin_clicked()) );
     connect( pbEnableDeviceAdmin, SIGNAL(clicked()), this, SLOT(on_pbEnableDeviceAdmin_clicked()) );
     connect( pbChangeDir, SIGNAL( clicked( bool ) ), this, SLOT( on_pbChangeDir_clicked( bool ) ) );
+    connect( pbEmptyImage, SIGNAL( clicked( bool ) ), this, SLOT( on_pbEmptyImage_clicked( bool ) ) );
 
     if( p_uiPanelId > 0 )
     {
@@ -149,6 +150,17 @@ void cDlgPanelSettings::addImageLayout()
     pbChangeDir->setToolTip( tr("Change directory and filename of panel image.") );
     pbChangeDir->setEnabled( g_obUser.isInGroup( cAccessGroup::SYSTEM ) );
     horizontalLayout5->addWidget( pbChangeDir );
+
+    pbEmptyImage = new QPushButton( this );
+    pbEmptyImage->setObjectName( QString::fromUtf8( "pbEmptyImage" ) );
+    pbEmptyImage->setMinimumHeight( 30 );
+    pbEmptyImage->setMaximumHeight( 30 );
+    pbEmptyImage->setIconSize( QSize(20, 20) );
+    pbEmptyImage->setIcon( QIcon("./resources/40x40_delete.png") );
+    pbEmptyImage->setText( tr("Remove image") );
+    pbEmptyImage->setToolTip( tr("Remove image from panel.") );
+    pbEmptyImage->setEnabled( g_obUser.isInGroup( cAccessGroup::SYSTEM ) );
+    horizontalLayout5->addWidget( pbEmptyImage );
 
     horizontalSpacer5 = new QSpacerItem( 300, 20, QSizePolicy::Expanding, QSizePolicy::Minimum );
     horizontalLayout5->addItem( horizontalSpacer5 );
@@ -569,6 +581,11 @@ void cDlgPanelSettings::on_pbChangeDir_clicked(bool)
     {
         ledImagePath->setText( qsFilename );
     }
+}
+
+void cDlgPanelSettings::on_pbEmptyImage_clicked(bool)
+{
+    ledImagePath->setText( "" );
 }
 
 void cDlgPanelSettings::on_pbWTReset_clicked( bool )

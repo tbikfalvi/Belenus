@@ -26,6 +26,7 @@ public:
     QLabel          *lblImagePath;
     QLineEdit       *ledImagePath;
     QPushButton     *pbChangeDir;
+    QPushButton     *pbEmptyImage;
     QSpacerItem     *horizontalSpacer5;
 
     QHBoxLayout     *horizontalLayout2;
@@ -80,6 +81,7 @@ protected slots:
     virtual void editClicked( bool );
     virtual void saveClicked( bool );
     virtual void on_pbChangeDir_clicked( bool );
+    virtual void on_pbEmptyImage_clicked( bool );
     virtual void on_pbWTReset_clicked( bool );
     virtual void on_pbCTReset_clicked( bool );
     virtual void on_pbCopyToAll_clicked( bool );

@@ -102,12 +102,16 @@ void cDspPanel::setPanelStatus( const unsigned int p_uiPanelStatusId )
 
     if( p_uiPanelStatusId == 1 )
     {
+        g_obLogger(cSeverity::DEBUG) << "DspImage visible for panel " << m_uiId << EOM;
+
         lblImage->setVisible( true );
         lblCurrStatus->setVisible( false );
         lblEstTimer->setVisible( false );
     }
     else
     {
+        g_obLogger(cSeverity::DEBUG) << "DspImage hidden for panel " << m_uiId << EOM;
+
         lblImage->setVisible( false );
         lblCurrStatus->setVisible( true );
         lblEstTimer->setVisible( true );
@@ -188,11 +192,13 @@ void cDspPanel::setPanelWaitTime( const unsigned int p_uiWaitTime )
 //====================================================================================
 void cDspPanel::setImage( QString p_qsFilename )
 {
+    lblImage->clear();
     if( p_qsFilename.length() > 0 )
     {
         QPixmap *qpAd = new QPixmap( p_qsFilename );
 
         lblImage->setPixmap( *qpAd );
+        lblImage->setVisible( true );
     }
 }
 //====================================================================================
