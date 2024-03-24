@@ -102,17 +102,11 @@ void cDspPanel::setPanelStatus( const unsigned int p_uiPanelStatusId )
 
     if( p_uiPanelStatusId == 1 )
     {
-        g_obLogger(cSeverity::DEBUG) << "DspImage visible for panel " << m_uiId << EOM;
-
-        lblImage->setVisible( true );
         lblCurrStatus->setVisible( false );
         lblEstTimer->setVisible( false );
     }
     else
     {
-        g_obLogger(cSeverity::DEBUG) << "DspImage hidden for panel " << m_uiId << EOM;
-
-        lblImage->setVisible( false );
         lblCurrStatus->setVisible( true );
         lblEstTimer->setVisible( true );
     }
@@ -239,6 +233,35 @@ void cDspPanel::_displayStatus()
     QPalette  obFramePalette = palette();
     obFramePalette.setBrush( QPalette::Window, QBrush( QColor(m_obDBPanelStatusSettings.backgroundColor()) ) );
     setPalette( obFramePalette );
+
+    QSqlQuery  *poQuery = NULL;
+    int         nActivateCmd = 999;
+    try
+    {
+        poQuery = g_poDB->executeQTQuery( QString( "SELECT activateCmd FROM panelstatuses WHERE panelStatusId=%1" ).arg( m_uiPanelStatusId ) );
+        if( poQuery->first() )
+        {
+            nActivateCmd = poQuery->value( 0 ).toInt();
+        }
+
+        delete poQuery;
+        poQuery = NULL;
+    }
+    catch( cSevException &e )
+    {
+        g_obLogger(e.severity()) << e.what() << EOM;
+        g_obGen.showTrayError( e.what() );
+        if( poQuery ) delete poQuery;
+    }
+
+    if( nActivateCmd == 0 )
+    {
+        lblImage->setVisible( true );
+    }
+    else
+    {
+        lblImage->setVisible( false );
+    }
 }
 //====================================================================================
 void cDspPanel::_formatStatusString( QString p_qsStatusText )

@@ -55,6 +55,13 @@ cDlgAddUnits::cDlgAddUnits( QWidget *p_poParent, cDBPatientCard *p_poPatientCard
             cmbCardType->addItem( poQuery->value( 1 ).toString(), poQuery->value( 0 ) );
         }
         cmbCardType->setCurrentIndex( 0 );
+
+        poQuery = g_poDB->executeQTQuery( QString( "SELECT panelGroupId, name FROM panelgroups WHERE active=1 AND archive<>\"DEL\" ORDER BY name " ) );
+        while( poQuery->next() )
+        {
+            cmbPanelGroup->addItem( poQuery->value( 1 ).toString(), poQuery->value( 0 ) );
+        }
+
         deValidDateTo->setDate( QDate::currentDate() );
     }
 
@@ -163,6 +170,7 @@ void cDlgAddUnits::on_pbAdd_clicked()
                 obDBPatientcardUnit.setLicenceId( m_poPatientCard->licenceId() );
                 obDBPatientcardUnit.setPatientCardId( m_poPatientCard->id() );
                 obDBPatientcardUnit.setPatientCardTypeId( m_poPatientCardType->id() );
+                obDBPatientcardUnit.setPanelGroupId( cmbPanelGroup->currentIndex() );
                 obDBPatientcardUnit.setLedgerId( 0 );
                 obDBPatientcardUnit.setUnitTime( m_poPatientCardType->unitTime() );
                 obDBPatientcardUnit.setUnitPrice( m_poPatientCardType->price()/ledUnits->text().toInt() );
