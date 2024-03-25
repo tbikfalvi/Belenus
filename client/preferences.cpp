@@ -92,6 +92,7 @@ void cPreferences::init()
     m_bAutoMailOnPCSell             = false;
     m_bAutoMailOnPCUse              = false;
     m_bAutoMailOnPCExpiration       = false;
+    m_bAutoMailOnPCUnitChange       = false;
 
     m_bShowPatientInfoOnStart       = false;
     m_nShowInfoOnWindow             = 1;
@@ -99,6 +100,13 @@ void cPreferences::init()
 
     m_bIsRFIDEnabled                = false;
     m_nRFIDComPort                  = 1;
+
+    m_nLicenceCheck                 = 56;
+    m_nLicenceCheckCounter          = 56;
+    m_nWorkTime                     = 336;
+    m_nWorkTimeCounter              = 336;
+
+    m_bCardyGoSync                  = false;
 }
 
 void cPreferences::loadSettings() throw (cSevException)
@@ -107,6 +115,10 @@ void cPreferences::loadSettings() throw (cSevException)
 
     try
     {
+        m_nLicenceCheck                 = loadSettingI( "LICENCE_CHECK", 56 );
+        m_nLicenceCheckCounter          = loadSettingI( "LICENCE_CHECK_COUNTER", 56 );
+        m_nWorkTime                     = loadSettingI( "LICENCE_WORKTIME", 336 );
+        m_nWorkTimeCounter              = loadSettingI( "LICENCE_WORKTIME_COUNTER", 336 );
         m_qsLastUser                    = loadSettingS( "GEN_LastUser", "" );
         m_uiPanelsPerRow                = loadSettingU( "GEN_PanelsPerRow", 3 );
         m_inBarcodeLength               = loadSettingI( "GEN_BarcodeLength", 8 );
@@ -199,6 +211,8 @@ void cPreferences::loadSettings() throw (cSevException)
         m_bAutoMailOnPCUse              = loadSettingB( "AUTOMAIL_OnUse", false );
         m_bAutoMailOnPCExpiration       = loadSettingB( "AUTOMAIL_OnExpiration", false );
         m_nPCExpirationDays             = loadSettingI( "AUTOMAIL_ExpirationDays", 7 );
+        m_bAutoMailOnPCUnitChange       = loadSettingB( "AUTOMAIL_OnUnitChange", false );
+        m_bCardyGoSync                  = loadSettingB( "AUTOMAIL_OnCardyGo", false );
 
         m_qpSecondaryPosition = QPoint( nLeft, nTop );
         m_qsSecondarySize = QSize( nWidth, nHeight );
@@ -235,6 +249,11 @@ void cPreferences::saveSettings() throw (cSevException)
     {
         if( m_qsLang != "" )        g_obLanguage.saveCurrentLanguage( m_qsLang );
         if( m_qsLastUser != "" )    saveSettingS( "GEN_LastUser", m_qsLastUser );
+
+        saveSettingI( "LICENCE_CHECK", m_nLicenceCheck );
+        saveSettingI( "LICENCE_CHECK_COUNTER", m_nLicenceCheckCounter );
+        saveSettingI( "LICENCE_WORKTIME", m_nWorkTime );
+        saveSettingI( "LICENCE_WORKTIME_COUNTER", m_nWorkTimeCounter );
 
         saveSettingU( "GEN_PanelsPerRow", m_uiPanelsPerRow );
         saveSettingI( "GEN_BarcodeLength", m_inBarcodeLength );
@@ -333,6 +352,8 @@ void cPreferences::saveSettings() throw (cSevException)
         saveSettingB( "AUTOMAIL_OnUse", m_bAutoMailOnPCUse );
         saveSettingB( "AUTOMAIL_OnExpiration", m_bAutoMailOnPCExpiration );
         saveSettingI( "AUTOMAIL_ExpirationDays", m_nPCExpirationDays );
+        saveSettingB( "AUTOMAIL_OnUnitChange", m_bAutoMailOnPCUnitChange );
+        saveSettingB( "AUTOMAIL_OnCardyGo", m_bCardyGoSync );
 
         delete poQuery;
     }
@@ -1628,6 +1649,16 @@ int cPreferences::getPCExpirationDays() const
     return m_nPCExpirationDays;
 }
 
+void cPreferences::setAutoMailOnPCUnitChange( bool p_bAutoMailOnPCUnitChange )
+{
+    m_bAutoMailOnPCUnitChange = p_bAutoMailOnPCUnitChange;
+}
+
+bool cPreferences::isAutoMailOnPCUnitChange()
+{
+    return m_bAutoMailOnPCUnitChange;
+}
+
 void cPreferences::setAdvertisementSizeAndPos( const unsigned int p_uiId,
                                                const unsigned int p_uiLeft,
                                                const unsigned int p_uiTop,
@@ -1717,4 +1748,88 @@ int cPreferences::getRFIDComPort() const
 {
     return m_nRFIDComPort;
 }
+
+void cPreferences::setLicenceCheck( const int p_nLicenceCheck )
+{
+    m_nLicenceCheck = p_nLicenceCheck;
+
+    if( m_nLicenceCheckCounter > m_nLicenceCheck ) resetLicenceCheckCounter();
+}
+
+int  cPreferences::getLicenceCheck() const
+{
+    return m_nLicenceCheck;
+}
+
+void cPreferences::setLicenceCheckCounter( const int p_nLicenceCheckCounter )
+{
+    m_nLicenceCheckCounter = p_nLicenceCheckCounter;
+    saveSettingI( "LICENCE_CHECK_COUNTER", m_nLicenceCheckCounter );
+}
+
+int  cPreferences::getLicenceCheckCounter() const
+{
+    return m_nLicenceCheckCounter;
+}
+
+void cPreferences::resetLicenceCheckCounter()
+{
+    m_nLicenceCheckCounter = m_nLicenceCheck;
+    saveSettingI( "LICENCE_CHECK_COUNTER", m_nLicenceCheckCounter );
+}
+
+void cPreferences::decreaseLicenceCheckCounter()
+{
+    m_nLicenceCheckCounter = loadSettingI( "LICENCE_CHECK_COUNTER", 56 );
+    if( m_nLicenceCheckCounter > 0 )  m_nLicenceCheckCounter--;
+    saveSettingI( "LICENCE_CHECK_COUNTER", m_nLicenceCheckCounter );
+}
+
+void cPreferences::setWorktime( const int p_nWorktime )
+{
+    m_nWorkTime = p_nWorktime;
+
+    if( m_nWorkTimeCounter > m_nWorkTime ) resetWorktimeCounter();
+}
+
+int  cPreferences::getWorktime() const
+{
+    return m_nWorkTime;
+}
+
+void cPreferences::setWorktimeCounter( const int p_nWorktimeCounter )
+{
+    m_nWorkTimeCounter = p_nWorktimeCounter;
+    saveSettingI( "LICENCE_WORKTIME_COUNTER", m_nWorkTimeCounter );
+}
+
+int  cPreferences::getWorktimeCounter() const
+{
+    return m_nWorkTimeCounter;
+}
+
+void cPreferences::resetWorktimeCounter()
+{
+    m_nWorkTimeCounter = m_nWorkTime;
+    saveSettingI( "LICENCE_WORKTIME_COUNTER", m_nWorkTimeCounter );
+}
+
+void cPreferences::decreaseWorktimeCounter()
+{
+    m_nWorkTimeCounter = loadSettingI( "LICENCE_WORKTIME_COUNTER", 336 );
+    if( m_nWorkTimeCounter > 0 ) m_nWorkTimeCounter--;
+    saveSettingI( "LICENCE_WORKTIME_COUNTER", m_nWorkTimeCounter );
+}
+
+void cPreferences::setCardyGoSync( bool p_bCardyGoSync )
+{
+    m_bCardyGoSync = p_bCardyGoSync;
+}
+
+bool cPreferences::isCardyGoSync()
+{
+    return m_bCardyGoSync;
+}
+
+
 

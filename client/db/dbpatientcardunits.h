@@ -26,6 +26,8 @@ public:
     void            setPatientCardId( const unsigned int p_nPatientCardId ) throw();
     unsigned int    patientCardTypeId() const                                   throw();
     void            setPatientCardTypeId( const unsigned int p_nPatientCardTypeId ) throw();
+    unsigned int    panelGroupId() const                                   throw();
+    void            setPanelGroupId( const unsigned int p_nPanelGroupId ) throw();
     unsigned int    ledgerId() const                                        throw();
     void            setLedgerId( const unsigned int p_nLedgerId )           throw();
     unsigned int    panelId() const                                         throw();
@@ -52,6 +54,7 @@ private:
     unsigned int    m_uiLicenceId;
     unsigned int    m_uiPatientCardId;
     unsigned int    m_uiPatientCardTypeId;
+    unsigned int    m_uiPanelGroupId;
     unsigned int    m_uiLedgerId;
     unsigned int    m_uiPanelId;
     int             m_nUnitTime;
@@ -67,6 +70,7 @@ private:
                const unsigned int p_uiLicenceId = 0,
                const unsigned int p_uiPatientCardId = 0,
                const unsigned int p_uiPatientCardTypeId = 0,
+               const unsigned int p_uiPanelGroupId = 0,
                const unsigned int p_uiLedgerId = 0,
                const unsigned int p_uiPanelId = 0,
                const int p_nUnitTime = 0,

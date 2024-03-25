@@ -48,6 +48,7 @@ cDspPanel::cDspPanel( const unsigned int p_uiPanelId ) : QFrame()
     spacer4         = new QSpacerItem( 20, 2, QSizePolicy::Minimum, QSizePolicy::Minimum );
     lblInfo         = new QLabel( this );
     spacer5         = new QSpacerItem( 20, 5, QSizePolicy::Minimum, QSizePolicy::Minimum );
+    lblImage        = new QLabel( this );
 
     verticalLayout->setContentsMargins( 0, 0, 0, 0 );
 
@@ -70,6 +71,7 @@ cDspPanel::cDspPanel( const unsigned int p_uiPanelId ) : QFrame()
     verticalLayout->addItem( spacer1 );
     verticalLayout->addWidget( lblCurrStatus );
     verticalLayout->addItem( spacer2 );
+    verticalLayout->addWidget( lblImage );
     verticalLayout->addWidget( lblCurrTimer );
     verticalLayout->addItem( spacer3 );
     verticalLayout->addWidget( lblEstTimer );
@@ -170,6 +172,20 @@ void cDspPanel::setPanelWaitTime( const unsigned int p_uiWaitTime )
     }
 }
 //====================================================================================
+void cDspPanel::setImage( QString p_qsFilename )
+{
+    lblImage->clear();
+    if( p_qsFilename.length() > 0 )
+    {
+        QPixmap *qpAd = new QPixmap( p_qsFilename );
+
+        lblImage->setPixmap( *qpAd );
+        lblImage->setVisible( true );
+        lblImage->setScaledContents( true );
+
+    }
+}
+//====================================================================================
 void cDspPanel::_load()
 {
 //    cTracer obTrace( "cDspPanel::_load" );
@@ -177,11 +193,14 @@ void cDspPanel::_load()
     QSqlQuery  *poQuery = NULL;
     try
     {
-        poQuery = g_poDB->executeQTQuery( QString( "SELECT panelTypeId, title from panels WHERE panelId=%1" ).arg( m_uiId ) );
+        poQuery = g_poDB->executeQTQuery( QString( "SELECT panelTypeId, title, imagePathFileName from panels WHERE panelId=%1" ).arg( m_uiId ) );
         if( poQuery->first() )
         {
+            QString qsImageFilename = "";
+
             g_obLogger(cSeverity::DEBUG) << poQuery->value( 1 ).toString() << EOM;
             lblTitle->setText( poQuery->value( 1 ).toString() );
+            setImage( poQuery->value( 2 ).toString() );
         }
         else
         {
@@ -204,6 +223,39 @@ void cDspPanel::_displayStatus()
     QPalette  obFramePalette = palette();
     obFramePalette.setBrush( QPalette::Window, QBrush( QColor(m_obDBPanelStatusSettings.backgroundColor()) ) );
     setPalette( obFramePalette );
+
+    QSqlQuery  *poQuery = NULL;
+    int         nActivateCmd = 999;
+    try
+    {
+        poQuery = g_poDB->executeQTQuery( QString( "SELECT activateCmd FROM panelstatuses WHERE panelStatusId=%1" ).arg( m_uiPanelStatusId ) );
+        if( poQuery->first() )
+        {
+            nActivateCmd = poQuery->value( 0 ).toInt();
+        }
+
+        delete poQuery;
+        poQuery = NULL;
+    }
+    catch( cSevException &e )
+    {
+        g_obLogger(e.severity()) << e.what() << EOM;
+        g_obGen.showTrayError( e.what() );
+        if( poQuery ) delete poQuery;
+    }
+
+    if( nActivateCmd == 0 )
+    {
+        lblCurrStatus->setVisible( false );
+        lblEstTimer->setVisible( false );
+        lblImage->setVisible( true );
+    }
+    else
+    {
+        lblCurrStatus->setVisible( true );
+        lblEstTimer->setVisible( true );
+        lblImage->setVisible( false );
+    }
 }
 //====================================================================================
 void cDspPanel::_formatStatusString( QString p_qsStatusText )

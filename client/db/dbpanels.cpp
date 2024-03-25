@@ -25,11 +25,12 @@ cDBPanel::~cDBPanel()
 {
 }
 
-void cDBPanel::init( const unsigned int p_uiId,
+void cDBPanel::init(const unsigned int p_uiId,
                      const unsigned int p_uiLicenceId,
                      const unsigned int p_uiPanelTypeId,
                      const unsigned int p_uiPanelGroupId,
                      const QString &p_qsTitle,
+                     const QString &p_qsImage,
                      const unsigned int p_uiWorkTime,
                      const unsigned int p_uiMaxWorkTime,
                      const unsigned int p_uiCleanTime,
@@ -43,6 +44,7 @@ void cDBPanel::init( const unsigned int p_uiId,
     m_uiPanelTypeId     = p_uiPanelTypeId;
     m_uiPanelGroupId    = p_uiPanelGroupId;
     m_qsTitle           = p_qsTitle;
+    m_qsImage           = p_qsImage;
     m_uiWorkTime        = p_uiWorkTime;
     m_uiMaxWorkTime     = p_uiMaxWorkTime;
     m_uiCleanTime       = p_uiCleanTime;
@@ -59,6 +61,7 @@ void cDBPanel::init( const QSqlRecord &p_obRecord ) throw()
     int inPanelTypeIdIdx    = p_obRecord.indexOf( "panelTypeId" );
     int inPanelGroupIdIdx   = p_obRecord.indexOf( "panelGroupId" );
     int inTitleIdx          = p_obRecord.indexOf( "title" );
+    int inImageIdx          = p_obRecord.indexOf( "imagePathFileName" );
     int inWorkTimeIdx       = p_obRecord.indexOf( "workTime" );
     int inMaxWorkTimeIdx    = p_obRecord.indexOf( "maxWorkTime" );
     int inCleanTimeIdx      = p_obRecord.indexOf( "cleanTime" );
@@ -72,6 +75,7 @@ void cDBPanel::init( const QSqlRecord &p_obRecord ) throw()
           p_obRecord.value( inPanelTypeIdIdx ).toUInt(),
           p_obRecord.value( inPanelGroupIdIdx ).toUInt(),
           p_obRecord.value( inTitleIdx ).toString(),
+          p_obRecord.value( inImageIdx ).toString(),
           p_obRecord.value( inWorkTimeIdx ).toUInt(),
           p_obRecord.value( inMaxWorkTimeIdx ).toUInt(),
           p_obRecord.value( inCleanTimeIdx ).toUInt(),
@@ -114,6 +118,7 @@ void cDBPanel::save() throw( cSevException )
     qsQuery += QString( "panelTypeId = \"%1\", " ).arg( m_uiPanelTypeId );
     qsQuery += QString( "panelGroupId = \"%1\", " ).arg( m_uiPanelGroupId );
     qsQuery += QString( "title = \"%1\", " ).arg( m_qsTitle );
+    qsQuery += QString( "imagePathFileName = \"%1\", " ).arg( m_qsImage );
     qsQuery += QString( "workTime = \"%1\", " ).arg( m_uiWorkTime );
     qsQuery += QString( "maxWorkTime = \"%1\", " ).arg( m_uiMaxWorkTime );
     qsQuery += QString( "cleanTime = \"%1\", " ).arg( m_uiCleanTime );
@@ -209,6 +214,17 @@ void cDBPanel::setTitle( const QString &p_qsTitle ) throw()
 {
     m_qsTitle = p_qsTitle;
     m_qsTitle = m_qsTitle.replace( QString("\""), QString("\\\"") );
+}
+
+QString cDBPanel::image() const throw()
+{
+    return m_qsImage;
+}
+
+void cDBPanel::setImage( const QString &p_qsImage ) throw()
+{
+    m_qsImage = p_qsImage;
+    m_qsImage = m_qsImage.replace( '\\', '/' );
 }
 
 unsigned int cDBPanel::workTime() const throw()

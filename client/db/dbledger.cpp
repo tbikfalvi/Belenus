@@ -250,20 +250,6 @@ void cDBLedger::revoke() throw( cSevException )
     {
         try
         {
-/*            cDBPatientCardType  obDBPatientCardType;
-            cDBPatientCard      obDBPatientCard;
-
-            obDBPatientCardType.load( patientCardTypeId() );
-            obDBPatientCard.load( patientCardId() );
-
-            obDBPatientCard.setUnits( obDBPatientCard.units() - obDBPatientCardType.units() );
-            if( obDBPatientCard.units() < 0 ) obDBPatientCard.setUnits( 0 );
-
-            obDBPatientCard.setTimeLeft( obDBPatientCard.timeLeft() - obDBPatientCardType.units() * obDBPatientCardType.unitTime() * 60 );
-            if( obDBPatientCard.timeLeft() < 0 ) obDBPatientCard.setTimeLeft( 0 );
-
-            obDBPatientCard.save();
-*/
             cDBPatientcardUnit  obDBPatientcardUnit;
             cDBPatientCard      obDBPatientCard;
 
@@ -271,6 +257,12 @@ void cDBLedger::revoke() throw( cSevException )
             obDBPatientCard.load( patientCardId() );
             obDBPatientCard.save();
             obDBPatientCard.sendDataToWeb();
+
+            if( g_poPrefs->isCardyGoSync() && obDBPatientCard.isCardOwnerRegisteredOnCardy() )
+            {
+                g_obLogger(cSeverity::INFO) << "PatientCard units revoked, update Cardy data" << EOM;
+                obDBPatientCard.sendAutoMail( AUTO_MAIL_ON_PCSELL, AUTO_MAIL_DESTINATION_CARDY, QDate::currentDate().toString("yyyy-MM-dd"), 0, "" );
+            }
         }
         catch( cSevException &e )
         {

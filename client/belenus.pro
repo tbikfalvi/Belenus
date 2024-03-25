@@ -31,7 +31,6 @@ FORMS = ../framework/dlgcrud.ui \
     dlgpatientcardtypeedit.ui \
     dlgpatientcardedit.ui \
     dlgpatientcardadd.ui \
-    dlgserialreg.ui \
     dlgcassa.ui \
     dlgcassaaction.ui \
     dlgpaneluseedit.ui \
@@ -164,7 +163,6 @@ HEADERS = belenus.h \
     dlg/dlgpwdconfirm.h \
     dlg/dlginputstart.h \
     dlg/dlgpatientcardadd.h \
-    dlg/dlgserialreg.h \
     dlg/dlgcassaaction.h \
     dlg/dlgpanelappereance.h \
     dlg/dlgpaneltimecopy.h \
@@ -322,7 +320,6 @@ SOURCES = main.cpp \
     dlg/dlgpwdconfirm.cpp \
     dlg/dlginputstart.cpp \
     dlg/dlgpatientcardadd.cpp \
-    dlg/dlgserialreg.cpp \
     dlg/dlgcassaaction.cpp \
     dlg/dlgpanelappereance.cpp \
     dlg/dlgpaneltimecopy.cpp \

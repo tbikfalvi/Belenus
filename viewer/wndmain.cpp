@@ -22,6 +22,12 @@
 
 #include "../framework/qtmysqlquerymodel.h"
 #include "wndmain.h"
+#include "currency.h"
+
+extern QString                  g_qsCurrencyShort;
+extern QString                  g_qsCurrencyLong;
+extern QString                  g_qsCurrencySeparator;
+extern QString                  g_qsCurrencyDecimalSeparator;
 
 //====================================================================================
 //
@@ -63,6 +69,7 @@ cWndMain::cWndMain(QWidget *parent , QString p_qsAppVersion) : QMainWindow( pare
     connect( this, SIGNAL(setCheckedReportGuests(bool)), this, SLOT(slotCheckReportGuests(bool)) );
     connect( this, SIGNAL(setCheckedReportDeviceUsages(bool)), this, SLOT(slotCheckReportDeviceUsages(bool)) );
     connect( this, SIGNAL(setCheckedReportDeviceMinuteUsages(bool)), this, SLOT(slotCheckReportDeviceMinuteUsages(bool)) );
+    connect( this, SIGNAL(setCheckedReportDevicePatientDispersion(bool)), this, SLOT(slotCheckReportDevicePatientDispersion(bool)) );
 
     connect( cmbName, SIGNAL(returnPressed()), this, SLOT(on_pbAuthenticate_clicked()) );
     connect( ledPassword, SIGNAL(returnPressed()), this, SLOT(on_pbAuthenticate_clicked()) );
@@ -80,6 +87,11 @@ cWndMain::cWndMain(QWidget *parent , QString p_qsAppVersion) : QMainWindow( pare
     cQTMySQLQueryModel *m_poModel = new cQTMySQLQueryModel( this );
     m_poModel->setQuery( "SELECT CONCAT(name,\" (\",realName,\")\") AS n FROM users WHERE active = 1 ORDER BY name" );
     cmbName->setModel( m_poModel );
+
+    g_qsCurrencyShort               = _loadSettingS( "CURR_Short", "Ft." );
+    g_qsCurrencyLong                = _loadSettingS( "CURR_Long", "Forint" );
+    g_qsCurrencySeparator           = _loadSettingS( "CURR_Separator", "," );
+    g_qsCurrencyDecimalSeparator    = _loadSettingS( "CURR_Decimal", "." );
 
     ledPassword->setFocus();
 }
@@ -144,6 +156,7 @@ void cWndMain::_initActions()
 
     connect( action_DeviceUsages, SIGNAL(triggered(bool)), this, SLOT(slotCheckReportDeviceUsages(bool)) );
     connect( action_DeviceMinuteUsages, SIGNAL(triggered(bool)), this, SLOT(slotCheckReportDeviceMinuteUsages(bool)) );
+    connect( action_DevicePatientDispersion, SIGNAL(triggered(bool)), this, SLOT(slotCheckReportDevicePatientDispersion(bool)) );
 
     // ICONS
     action_Exit->setIcon( QIcon("./resources/40x40_shutdown.png") );
@@ -169,6 +182,7 @@ void cWndMain::_initActions()
 
     action_DeviceUsages->setIcon( QIcon("./resources/40x40_device.png") );
     action_DeviceMinuteUsages->setIcon( QIcon("./resources/40x40_device_later.png") );
+    action_DevicePatientDispersion->setIcon( QIcon("./resources/40x40_device_dispersion.png") );
 
     // BEHAVIOUR
     action_FilterBar->setEnabled( false );
@@ -194,6 +208,7 @@ void cWndMain::_initActions()
 
     action_DeviceUsages->setEnabled( false );
     action_DeviceMinuteUsages->setEnabled( false );
+    action_DevicePatientDispersion->setEnabled( false );
 }
 //------------------------------------------------------------------------------------
 void cWndMain::_initToolbar()
@@ -225,6 +240,7 @@ void cWndMain::_initToolbar()
 
     connect( pbDeviceUsages, SIGNAL(clicked(bool)), this, SLOT(slotCheckReportDeviceUsages(bool)) );
     connect( pbDeviceMinuteUsages, SIGNAL(clicked(bool)), this, SLOT(slotCheckReportDeviceMinuteUsages(bool)) );
+    connect( pbDevicePatientDispersion, SIGNAL(clicked(bool)), this, SLOT(slotCheckReportDevicePatientDispersion(bool)) );
 
     // ICONS
     pbExit->setIcon( QIcon("./resources/40x40_shutdown.png") );
@@ -250,6 +266,7 @@ void cWndMain::_initToolbar()
 
     pbDeviceUsages->setIcon( QIcon("./resources/40x40_device.png") );
     pbDeviceMinuteUsages->setIcon( QIcon("./resources/40x40_device_later.png") );
+    pbDevicePatientDispersion->setIcon( QIcon("./resources/40x40_device_dispersion.png") );
 
     pbSave->setIcon( QIcon("./resources/40x40_save.png") );
     pbPrint->setIcon( QIcon("./resources/40x40_print.png") );
@@ -276,6 +293,7 @@ void cWndMain::_initToolbar()
 
     pbDeviceUsages->setEnabled( false );
     pbDeviceMinuteUsages->setEnabled( false );
+    pbDevicePatientDispersion->setEnabled( false );
 
     pbSave->setEnabled( false );
     pbPrint->setEnabled( false );
@@ -388,6 +406,8 @@ return;
             emit setCheckedReportDeviceUsages( false );
         else if( m_repDeviceMinuteUsages && m_repDeviceMinuteUsages->index() == index )
             emit setCheckedReportDeviceMinuteUsages( false );
+        else if( m_repDevicePatientDispersion && m_repDevicePatientDispersion->index() == index )
+            emit setCheckedReportDevicePatientDispersion( false );
     }
 }
 //------------------------------------------------------------------------------------
@@ -524,6 +544,7 @@ void cWndMain::_setReportsEnabled(bool p_bEnable)
 
     action_DeviceUsages->setEnabled( p_bEnable && _isInGroup( GROUP_USER ) );
     action_DeviceMinuteUsages->setEnabled( p_bEnable && _isInGroup( GROUP_USER ) );
+    action_DevicePatientDispersion->setEnabled( p_bEnable && _isInGroup( GROUP_USER ) );
 
     // <_NEW_REPORT_> a toolbar gomb engedelyezese/tiltasa
     pbBookkeepingDaily->setEnabled( p_bEnable && _isInGroup( GROUP_USER ) );
@@ -546,6 +567,7 @@ void cWndMain::_setReportsEnabled(bool p_bEnable)
 
     pbDeviceUsages->setEnabled( p_bEnable && _isInGroup( GROUP_USER ) );
     pbDeviceMinuteUsages->setEnabled( p_bEnable && _isInGroup( GROUP_USER ) );
+    pbDevicePatientDispersion->setEnabled( p_bEnable && _isInGroup( GROUP_USER ) );
 
     _updateReportButtons( p_bEnable );
 }
@@ -1034,6 +1056,36 @@ void cWndMain::slotCheckReportDeviceMinuteUsages(bool p_bChecked)
     _updateReportIndexes();
     m_bReportTabSwitching = false;
 }
+//------------------------------------------------------------------------------------
+void cWndMain::slotCheckReportDevicePatientDispersion(bool p_bChecked)
+//------------------------------------------------------------------------------------
+{
+    cTracer obTrace( "cWndMain::slotCheckReportDevicePatientDispersion" );
+
+    m_bReportTabSwitching = true;
+
+    action_DevicePatientDispersion->setChecked( p_bChecked );
+    pbDevicePatientDispersion->setChecked( p_bChecked );
+
+    if( p_bChecked )
+    {
+        m_repDevicePatientDispersion = new cReportDevicePatientDispersion( this, "", _isInGroup( GROUP_ADMIN ) );
+
+        m_qvReports.append( m_repDevicePatientDispersion );
+        m_repDevicePatientDispersion->setIndex( tabReports->addTab( m_repDevicePatientDispersion, QIcon("./resources/40x40_device_dispersion.png"), m_repDevicePatientDispersion->name() ) );
+        tabReports->setCurrentIndex( m_repDevicePatientDispersion->index() );
+    }
+    else
+    {
+        m_qvReports.remove( m_repDevicePatientDispersion->index()-1 );
+        tabReports->removeTab( m_repDevicePatientDispersion->index() );
+        delete m_repDevicePatientDispersion;
+        m_repDevicePatientDispersion = NULL;
+    }
+
+    _updateReportIndexes();
+    m_bReportTabSwitching = false;
+}
 //====================================================================================
 // Altalanos fuggvenyek
 //====================================================================================
@@ -1408,3 +1460,33 @@ void cWndMain::_updateReportButtons(bool p_bEnable)
     pbPrint->setEnabled( p_bEnable && bReportVisible );
 }
 //------------------------------------------------------------------------------------
+QString cWndMain::_loadSettingS( QString p_Identifier, QString p_Default )
+//------------------------------------------------------------------------------------
+{
+    QString value = "";
+    QSqlQuery *poQuery = NULL;
+
+    try
+    {
+        poQuery = g_poDB->executeQTQuery( QString( "SELECT value FROM settings WHERE identifier=\"%1\" " ).arg( p_Identifier ) );
+        if( poQuery->first() )
+        {
+            value = poQuery->value( 0 ).toString();
+        }
+        else
+        {
+            g_poDB->executeQTQuery( QString("INSERT INTO `settings` (`settingId`, `identifier`, `value`) VALUES (NULL, '%1', '%2') " )
+                                            .arg( p_Identifier )
+                                            .arg( p_Default ) );
+            value = p_Default;
+        }
+        delete poQuery;
+    }
+    catch( cSevException &e )
+    {
+        if( poQuery ) delete poQuery;
+    }
+
+    return value;
+}
+

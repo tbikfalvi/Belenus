@@ -82,6 +82,12 @@ cDlgPatientCardSell::cDlgPatientCardSell( QWidget *p_poParent, cDBPatientCard *p
                 cmbCardType->setCurrentIndex( cmbCardType->count()-1 );
         }
 
+        poQuery = g_poDB->executeQTQuery( QString( "SELECT panelGroupId, name FROM panelgroups WHERE active=1 AND archive<>\"DEL\" ORDER BY name " ) );
+        while( poQuery->next() )
+        {
+            cmbPanelGroup->addItem( poQuery->value( 1 ).toString(), poQuery->value( 0 ) );
+        }
+
         cmbPatient->addItem( tr("<Not selected>"), 0 );
         poQuery = g_poDB->executeQTQuery( QString( "SELECT patientId, name FROM patients WHERE active=1 AND archive<>\"DEL\" ORDER BY name " ) );
         while( poQuery->next() )
@@ -507,6 +513,7 @@ void cDlgPatientCardSell::on_pbSell_clicked()
                 obDBPatientcardUnit.setLicenceId( m_poPatientCard->licenceId() );
                 obDBPatientcardUnit.setPatientCardId( m_poPatientCard->id() );
                 obDBPatientcardUnit.setPatientCardTypeId( m_poPatientCardType->id() );
+                obDBPatientcardUnit.setPanelGroupId( cmbPanelGroup->currentIndex() );
                 obDBPatientcardUnit.setLedgerId( uiLedgerId );
                 obDBPatientcardUnit.setUnitTime( m_poPatientCardType->unitTime() );
                 obDBPatientcardUnit.setUnitPrice( m_poPatientCardType->price()/ledUnits->text().toInt() );
@@ -540,15 +547,21 @@ void cDlgPatientCardSell::on_pbSell_clicked()
             m_poPatientCard->sendDataToWeb();
 
             QDate   deValidDateTo = QDate::fromString( m_poPatientCard->validDateTo(), "yyyy-MM-dd" );
-            if( g_poPrefs->isAutoMailOnPCSell() )
+
+            if( g_poPrefs->isAutoMailOnPCSell() || (g_poPrefs->isCardyGoSync() && m_poPatientCard->isCardOwnerRegisteredOnCardy()) )
             {
+                int nDestination = AUTO_MAIL_DESTINATION_MAIL_CARDY;
+
+                if( !g_poPrefs->isCardyGoSync() )           nDestination = AUTO_MAIL_DESTINATION_MAIL;
+                else if( !g_poPrefs->isAutoMailOnPCSell() ) nDestination = AUTO_MAIL_DESTINATION_CARDY;
+
                 g_obLogger(cSeverity::INFO) << "PatientCard sold, send auto mail about sell" << EOM;
-                m_poPatientCard->sendAutoMail( AUTO_MAIL_ON_PCSELL, QDate::currentDate().toString("yyyy-MM-dd"), 0, "" );
+                m_poPatientCard->sendAutoMail( AUTO_MAIL_ON_PCSELL, nDestination, QDate::currentDate().toString("yyyy-MM-dd"), 0, "" );
             }
             if( g_poPrefs->isAutoMailOnPCExpiration() )
             {
                 g_obLogger(cSeverity::INFO) << "PatientCard sold, send auto mail about expiration" << EOM;
-                m_poPatientCard->sendAutoMail( AUTO_MAIL_ON_EXPIRE, deValidDateTo.addDays( g_poPrefs->getPCExpirationDays()*(-1) ).toString("yyyy-MM-dd"), 0, qslUnitIds.join(",") );
+                m_poPatientCard->sendAutoMail( AUTO_MAIL_ON_EXPIRE, AUTO_MAIL_DESTINATION_MAIL, deValidDateTo.addDays( g_poPrefs->getPCExpirationDays()*(-1) ).toString("yyyy-MM-dd"), 0, qslUnitIds.join(",") );
             }
 
             QDialog::accept();

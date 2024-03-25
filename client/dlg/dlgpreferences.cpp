@@ -236,11 +236,8 @@ cDlgPreferences::cDlgPreferences( QWidget *p_poParent )
     }
 
     ledCurrencyFullName->setText( g_poPrefs->getCurrencyLong() );
-
     ledCurrencyShortName->setText( g_poPrefs->getCurrencyShort() );
-
     ledSeparatorDecimal->setText( g_poPrefs->getCurrencyDecimalSeparator() );
-
     ledSeparatorThousand->setText( g_poPrefs->getCurrencySeparator() );
 
     //---------------------------------------------------------------------------------------------------------------------------------------------------
@@ -248,12 +245,11 @@ cDlgPreferences::cDlgPreferences( QWidget *p_poParent )
     //---------------------------------------------------------------------------------------------------------------------------------------------------
 
     chkAutoMailPCSell->setChecked( g_poPrefs->isAutoMailOnPCSell() );
-
     chkAutoMailPCUse->setChecked( g_poPrefs->isAutoMailOnPCUse() );
-
     chkAutoMailPCExpire->setChecked( g_poPrefs->isAutoMailOnPCExpiration() );
-
     ledAutoMailPCExpireDays->setText( QString::number(g_poPrefs->getPCExpirationDays()) );
+    chkAutoMailPCUnitChange->setChecked( g_poPrefs->isAutoMailOnPCUnitChange() );
+    chkSyncCardyGo->setChecked( g_poPrefs->isCardyGoSync() );
 
     //---------------------------------------------------------------------------------------------------------------------------------------------------
     // Server page
@@ -265,6 +261,36 @@ cDlgPreferences::cDlgPreferences( QWidget *p_poParent )
 
     chkWebSyncAutoStart->setChecked( g_poPrefs->isWebSyncAutoStart() );
     chkWebSyncAutoStart->setEnabled( g_poPrefs->isBlnsHttpEnabled() );
+
+    gbLicenceCheck->setEnabled( g_obUser.isInGroup( cAccessGroup::SYSTEM ) );
+    ledLicenceCheckValue->setEnabled( g_obUser.isInGroup( cAccessGroup::SYSTEM ) );
+    ledMaxWorkHours->setEnabled( g_obUser.isInGroup( cAccessGroup::SYSTEM ) );
+
+    int nLicenceCheckValue      = g_poPrefs->getLicenceCheck() / 4;
+    int nLicenceCheckCounter    = g_poPrefs->getLicenceCheckCounter() / 4;
+    int nLicenceWorkHours       = g_poPrefs->getWorktime() / 4;
+    int nLicenceWorkHoursCounter= g_poPrefs->getWorktimeCounter() / 4;
+
+    ledLicenceCheckValue->setText( QString::number( nLicenceCheckValue ) );
+    if( nLicenceCheckCounter > 3 )
+    {
+        lblLicenceCheckCounter->setText( tr( "Licence will be checked in %1 hours" ).arg( nLicenceCheckCounter ) );
+    }
+    else
+    {
+        lblLicenceCheckCounter->setText( tr( "Licence will be checked in %1 minutes" ).arg( nLicenceCheckCounter*15 ) );
+    }
+
+    ledMaxWorkHours->setText( QString::number( nLicenceWorkHours ) );
+    if( nLicenceWorkHoursCounter > 3 )
+    {
+        lblMaxWorkHoursCounter->setText( tr( "Remaining work hours: %1" ).arg( nLicenceWorkHoursCounter ) );
+    }
+    else
+    {
+        lblMaxWorkHoursCounter->setText( tr( "Remaining work minutes: %1" ).arg( nLicenceWorkHoursCounter/15 ) );
+    }
+
 
     //---------------------------------------------------------------------------------------------------------------------------------------------------
     // Hardware page
@@ -286,7 +312,7 @@ cDlgPreferences::cDlgPreferences( QWidget *p_poParent )
     }
 
     //---------------------------------------------------------------------------------------------------------------------------------------------------
-    // Hardware page
+    // Database page
     //---------------------------------------------------------------------------------------------------------------------------------------------------
 
     ledBinaryLocation->setText( g_poPrefs->getDirDbBinaries() );
@@ -365,6 +391,8 @@ cDlgPreferences::cDlgPreferences( QWidget *p_poParent )
     lblGUILogLevelValue->setVisible( false );
     sliGUILogLevel->setVisible( false );
 
+    chkAutoMailPCUnitChange->setVisible( false );
+    chkAutoMailPCUnitChange->setEnabled( false );
 }
 
 cDlgPreferences::~cDlgPreferences()
@@ -587,10 +615,15 @@ void cDlgPreferences::accept()
     g_poPrefs->setAutoMailOnPCUse( chkAutoMailPCUse->isChecked() );
     g_poPrefs->setAutoMailOnPCExpiration( chkAutoMailPCExpire->isChecked() );
     g_poPrefs->setPCExpirationDays( ledAutoMailPCExpireDays->text().toInt() );
+    g_poPrefs->setAutoMailOnPCUnitChange( chkAutoMailPCUnitChange->isChecked() );
+    g_poPrefs->setCardyGoSync( chkSyncCardyGo->isChecked() );
 
     g_poPrefs->setBlnsHttpEnabled( chkEnableHttp->isChecked() );
     g_poPrefs->setWebSyncAutoStart( chkWebSyncAutoStart->isChecked() );
 //    g_poPrefs->setBlnsHttpMessageWaitTime( sbHttpWaitTime->value() );
+
+    g_poPrefs->setLicenceCheck( ledLicenceCheckValue->text().toInt()*4 );
+    g_poPrefs->setWorktime( ledMaxWorkHours->text().toInt()*4 );
 
     if( g_obUser.isInGroup( cAccessGroup::SYSTEM ) )
     {

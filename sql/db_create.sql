@@ -2,8 +2,8 @@
 -- Belenus Szoftver Rendszer (c) Pagony Multimedia Studio Bt - 2013
 -- -----------------------------------------------------------------------------------
 -- Filename    : db_create.sql
--- AppVersion  : 1.9.0.1
--- DbVersion   : 1.9.0.1
+-- AppVersion  : 2.0.0.0
+-- DbVersion   : 2.0.0.0
 -- -----------------------------------------------------------------------------------
 -- Adatbazist letrehozo SQL script
 -- -----------------------------------------------------------------------------------
@@ -24,6 +24,7 @@ CREATE TABLE `licences` (
   `studio`                  varchar(100)            DEFAULT NULL,
   `contact`                 varchar(100)            DEFAULT NULL,
   `lastValidated`           DATE                    NULL DEFAULT NULL,
+  `type`                    varchar(20)             NOT NULL DEFAULT 'UNREGISTERED',
   `Act` 					VARCHAR( 10 ) 			NOT NULL,
   `Cod` 					VARCHAR( 10 ) 			NOT NULL,
   `active`                  tinyint(1)              DEFAULT 0,
@@ -167,6 +168,7 @@ CREATE TABLE `patients` (
   `ageType`                 int(11)                 DEFAULT 0,
   `isReturning`             tinyint(1)              DEFAULT 0,
   `uniqueId`                varchar(20)             DEFAULT NULL,
+  `isCardy`                 tinyint(1)              NOT NULL DEFAULT 0,
   `email`                   varchar(100)            DEFAULT NULL,
   `regularCustomer`         tinyint(1)              DEFAULT 0,
   `employee`                tinyint(1)              DEFAULT 0,
@@ -378,6 +380,7 @@ CREATE TABLE `panels` (
   `panelTypeId`             int(10) unsigned        NOT NULL,
   `panelGroupId`            int(10) unsigned        NOT NULL,
   `title`                   varchar(50)             NOT NULL,
+  `imagePathFileName` 		varchar( 500 ) 			NOT NULL,
   `workTime`                int(10) unsigned        NOT NULL DEFAULT 0,
   `maxWorkTime`             int(10) unsigned        NOT NULL,
   `cleanTime`               int(10) unsigned        NOT NULL DEFAULT 0,
@@ -399,6 +402,7 @@ CREATE TABLE `patientCardUnits` (
   `licenceId`               int(10) unsigned        NOT NULL,
   `patientCardId`           int(10) unsigned        NOT NULL,
   `patientCardTypeId`       int(10) unsigned        NOT NULL DEFAULT 0,
+  `panelGroupID`       		int(10) unsigned        NOT NULL DEFAULT 0,
   `ledgerId`                int(10) unsigned        NOT NULL,
   `panelId`                 int(10) unsigned        NOT NULL,
   `unitTime`                int(11)                 NOT NULL DEFAULT 0,
@@ -937,6 +941,7 @@ CREATE TABLE `httpsendmail` (
   `httpSendMailId`          int(10) unsigned        NOT NULL AUTO_INCREMENT,
   `licenceId`               int(10) unsigned        NOT NULL,
   `mailTypeId`              int(10) unsigned        NOT NULL,
+  `mailDestination`         int(10) unsigned        NOT NULL,
   `dateOfSending`           date                    NOT NULL,
   `recipients`              text                    NOT NULL,
   `subject`                 varchar(500)            NOT NULL,

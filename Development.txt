@@ -148,7 +148,22 @@ Version 1.9.0.0
 - DBBackup-al nem lehetett vegrehajtani sql file-t
 - Belenus-ban ha vendeget akarunk torolni, a program a kapcsolt berleteket levalasztja es inaktivalja a vendeget
 
-Version 1.9.1.0
+Version 1.9.0.1
 ===============
 - Kulon gomb a hutes indtitasara
+- Reklam ablakot kezelo is tud manage-elni
 
+Version 2.0.0.0
+===============
+- Liszensz lekerdezes webszerverrol
+- CardyGo integracio
+- Berletegyseg modositas kezzel - adatkuldes webszervernek
+
+Version 2.1.0.0
+===============
+- HIBAJAVITAS: a report viewer-ben a penz formatum nem a nyelvi beallitasnak megfelelo volt
+- Liszensz ellenorzesbol a bikfalvi.hu-s ellenorzes kiszedve
+- Kep megjelenites a masodlagos ablakon
+- Egyseg hasznalat gepcsoporthoz kotve
+- Szazalekos kedvezmeny szamitas javitva
+- Berlet info ablak zaras valtoztathato hossz

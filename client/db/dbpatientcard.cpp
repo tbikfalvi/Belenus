@@ -726,12 +726,6 @@ void cDBPatientCard::sendDataToWeb() throw()
 
         synchronizeUnits();
 
-//        qsMessageData.append( "<div id='valid'><label>T201</label>" );
-//        qsMessageData.append( validDateTo() );
-//        qsMessageData.append( "</div><div id='unit'><label>T202</label>" );
-//        qsMessageData.append( QString::number(units()) );
-//        qsMessageData.append( "</div><label id='validT'>T203</label>" );
-
         qsMessageData.append( "<div id='unit'><label>T202</label></div>" );
 
         QString qsQuery = QString( "SELECT patientCardUnitId, "
@@ -764,14 +758,6 @@ void cDBPatientCard::sendDataToWeb() throw()
                 cDBPatientCardType obDBPatientCardType;
 
                 obDBPatientCardType.load( uiPCTId );
-//                isPatientCardCanBeUsed( uiPCTId, &qsValid );
-//                qsValid.replace( QObject::tr("Mon"), "T205" );
-//                qsValid.replace( QObject::tr("Tue"), "T206" );
-//                qsValid.replace( QObject::tr("Wed"), "T207" );
-//                qsValid.replace( QObject::tr("Thu"), "T208" );
-//                qsValid.replace( QObject::tr("Fri"), "T209" );
-//                qsValid.replace( QObject::tr("Sat"), "T210" );
-//                qsValid.replace( QObject::tr("Sun"), "T211" );
 
                 qsMessageData.append( "<div class='validType'><span class='cardName'>" );
                 qsMessageData.append( poQuery->value( 5 ).toString() );
@@ -793,7 +779,6 @@ void cDBPatientCard::sendDataToWeb() throw()
         qsQuery += QString( "archive = \"NEW\" " );
 
         g_poDB->executeQTQuery( qsQuery );
-//        g_poBlnsHttp->sendPatientCardData( barcode(), qsMessageData, p_bSendNow );
     }
     catch( cSevException &e )
     {
@@ -803,6 +788,7 @@ void cDBPatientCard::sendDataToWeb() throw()
 }
 
 void cDBPatientCard::sendAutoMail( const int p_nMailType,
+                                   const int p_nMailDestination,
                                    const QString &p_qsDate,
                                    const int p_nUnitCount,
                                    const QString &p_qsDateTime ) throw()
@@ -949,6 +935,7 @@ void cDBPatientCard::sendAutoMail( const int p_nMailType,
         obDBSendMail.createNew();
         obDBSendMail.setLicenceId( m_uiLicenceId );
         obDBSendMail.setMailTypeId( p_nMailType );
+        obDBSendMail.setMailDestination( p_nMailDestination );
         obDBSendMail.setDateSend( p_qsDate );
         obDBSendMail.setRecipients( qsPatientEmail );
         obDBSendMail.setSubject( qsUnitIds );
@@ -965,5 +952,46 @@ void cDBPatientCard::sendAutoMail( const int p_nMailType,
         g_obLogger(e.severity()) << e.what() << EOM;
         g_obGen.showTrayError( e.what() );
     }
+}
+
+bool cDBPatientCard::isCardOwnerRegisteredOnCardy() throw()
+{
+    bool    bRet = false;
+
+    try
+    {
+        unsigned int    uiPatientId     = 0;
+
+        if( m_uiPatientId > 0 )
+        {
+            uiPatientId = m_uiPatientId;
+        }
+        else
+        {
+            QSqlQuery  *poQuery = g_poDB->executeQTQuery( QString( "SELECT patientId FROM connectpatientwithcard WHERE patientCardId=%1 " ).arg( m_uiId ) );
+
+            if( poQuery->size() > 0 )
+            {
+                poQuery->first();
+                uiPatientId = poQuery->value( 0 ).toUInt();
+            }
+        }
+
+        if( uiPatientId == 0 )
+            return false;
+
+        cDBGuest    obDBGuest;
+
+        obDBGuest.load( uiPatientId );
+
+        bRet = obDBGuest.isCardy();
+    }
+    catch( cSevException &e )
+    {
+        g_obLogger(e.severity()) << e.what() << EOM;
+        g_obGen.showTrayError( e.what() );
+    }
+
+    return bRet;
 }
 
