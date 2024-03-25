@@ -2097,7 +2097,7 @@ void cWndMain::on_action_UseDevice_triggered()
 
             mdiPanels->setMainProcessTime( obDlgPanelUse.panelUsePatientCardId(), obDlgPanelUse.panelUnitIds(), obDlgPanelUse.panelUseSecondsCard() );
 
-            g_obGen.showPatientCardInformation( obDBPatientCard.barcode(), 4 );
+            g_obGen.showPatientCardInformation( obDBPatientCard.barcode(), g_poPrefs->getCloseInfoWindowAfterSecs() );
 
 //            int nCount = obDlgPanelUse.countPatientCardUnitsLeft();
 //            mdiPanels->setTextInformation( tr( "%1 units left on the selected card" ).arg(nCount) );
@@ -2282,7 +2282,7 @@ void cWndMain::on_action_UseDeviceLater_triggered()
             g_obGen.showTrayError( e.what() );
         }
 
-        g_obGen.showPatientCardInformation( obDlgPanelUse.panelUsePatientCardBarcode(), 4 );
+        g_obGen.showPatientCardInformation( obDlgPanelUse.panelUsePatientCardBarcode(), g_poPrefs->getCloseInfoWindowAfterSecs() );
     }
 
     slotMainWindowActivated();
