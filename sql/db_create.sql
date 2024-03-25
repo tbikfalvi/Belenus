@@ -380,6 +380,7 @@ CREATE TABLE `panels` (
   `panelTypeId`             int(10) unsigned        NOT NULL,
   `panelGroupId`            int(10) unsigned        NOT NULL,
   `title`                   varchar(50)             NOT NULL,
+  `imagePathFileName` 		varchar( 500 ) 			NOT NULL,
   `workTime`                int(10) unsigned        NOT NULL DEFAULT 0,
   `maxWorkTime`             int(10) unsigned        NOT NULL,
   `cleanTime`               int(10) unsigned        NOT NULL DEFAULT 0,
