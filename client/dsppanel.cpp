@@ -66,7 +66,6 @@ cDspPanel::cDspPanel( const unsigned int p_uiPanelId ) : QFrame()
 
     lblCurrStatus->setWordWrap( true );
     lblInfo->setWordWrap( true );
-    lblImage->setScaledContents( true );
 
     verticalLayout->addWidget( lblTitle );
     verticalLayout->addItem( spacer1 );
@@ -99,17 +98,6 @@ void cDspPanel::refreshTitle()
 void cDspPanel::setPanelStatus( const unsigned int p_uiPanelStatusId )
 {
 //    cTracer obTrace( "cDspPanel::setPanelStatus" );
-
-    if( p_uiPanelStatusId == 1 )
-    {
-        lblCurrStatus->setVisible( false );
-        lblEstTimer->setVisible( false );
-    }
-    else
-    {
-        lblCurrStatus->setVisible( true );
-        lblEstTimer->setVisible( true );
-    }
 
     try
     {
@@ -193,6 +181,8 @@ void cDspPanel::setImage( QString p_qsFilename )
 
         lblImage->setPixmap( *qpAd );
         lblImage->setVisible( true );
+        lblImage->setScaledContents( true );
+
     }
 }
 //====================================================================================
@@ -256,10 +246,14 @@ void cDspPanel::_displayStatus()
 
     if( nActivateCmd == 0 )
     {
+        lblCurrStatus->setVisible( false );
+        lblEstTimer->setVisible( false );
         lblImage->setVisible( true );
     }
     else
     {
+        lblCurrStatus->setVisible( true );
+        lblEstTimer->setVisible( true );
         lblImage->setVisible( false );
     }
 }
