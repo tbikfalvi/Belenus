@@ -153,6 +153,7 @@ private:
     QLabel                      *lblCurrTimer;
     QLabel                      *lblNextStatusLen;
     QLabel                      *lblInfo;
+    QLabel                      *lblImage;
     QSpacerItem                 *spacer1;
     QSpacerItem                 *spacer2;
     QSpacerItem                 *spacer3;

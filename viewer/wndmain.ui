@@ -6,7 +6,7 @@
    <rect>
     <x>0</x>
     <y>0</y>
-    <width>1024</width>
+    <width>1043</width>
     <height>600</height>
    </rect>
   </property>
@@ -403,6 +403,25 @@
         <widget class="QPushButton" name="pbDeviceMinuteUsages">
          <property name="toolTip">
           <string>Summary of device minute usages</string>
+         </property>
+         <property name="text">
+          <string/>
+         </property>
+         <property name="iconSize">
+          <size>
+           <width>30</width>
+           <height>30</height>
+          </size>
+         </property>
+         <property name="checkable">
+          <bool>true</bool>
+         </property>
+        </widget>
+       </item>
+       <item>
+        <widget class="QPushButton" name="pbDevicePatientDispersion">
+         <property name="toolTip">
+          <string>Summary of dispersion of the panel usages per patients</string>
          </property>
          <property name="text">
           <string/>
@@ -910,8 +929,8 @@
     <rect>
      <x>0</x>
      <y>0</y>
-     <width>1024</width>
-     <height>21</height>
+     <width>1043</width>
+     <height>26</height>
     </rect>
    </property>
    <widget class="QMenu" name="menu_File">
@@ -973,6 +992,7 @@
      </property>
      <addaction name="action_DeviceUsages"/>
      <addaction name="action_DeviceMinuteUsages"/>
+     <addaction name="action_DevicePatientDispersion"/>
     </widget>
     <addaction name="menu_Bookkeeping"/>
     <addaction name="menuPatientcards"/>
@@ -1180,6 +1200,17 @@
    </property>
    <property name="toolTip">
     <string>Summary of device minute usages</string>
+   </property>
+  </action>
+  <action name="action_DevicePatientDispersion">
+   <property name="checkable">
+    <bool>true</bool>
+   </property>
+   <property name="text">
+    <string>Device patient dispersion</string>
+   </property>
+   <property name="toolTip">
+    <string>Summary of dispersion of the panel usages per patients</string>
    </property>
   </action>
  </widget>

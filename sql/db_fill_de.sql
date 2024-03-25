@@ -2,8 +2,8 @@
 -- Belenus Szoftver Rendszer (c) Pagony Multimedia Studio Bt - 2013
 -- -----------------------------------------------------------------------------------
 -- Filename    : db_fill_de.sql
--- AppVersion  : 1.9.0.1
--- DbVersion   : 1.9.0.1
+-- AppVersion  : 2.1.0.0
+-- DbVersion   : 2.1.0.0
 -- Author      : Bikfalvi Tamas
 -- -----------------------------------------------------------------------------------
 -- Adatbazist default adatokkal feltolto SQL script
@@ -96,8 +96,8 @@ ALTER TABLE `skinTypes` auto_increment=1;
 
 -- -----------------------------------------------------------------------------------
 
-INSERT INTO `patients` (`patientId`, `licenceId`, `companyId`, `created`, `name`, `gender`, `ageType`, `isReturning`, `uniqueId`, `email`, `regularCustomer`, `employee`, `service`, `company`, `discountType`, `comment`, `loyaltyPoints`, `modified`, `active`, `archive`) VALUES
- ('0', '0', '0', '', '', '0', '0', '0', NULL, NULL, '0', '0', '0', '0', '', NULL, 0, '', '0', 'ARC');
+INSERT INTO `patients` (`patientId`, `licenceId`, `companyId`, `created`, `name`, `gender`, `ageType`, `isReturning`, `uniqueId`, `isCardy`, `email`, `regularCustomer`, `employee`, `service`, `company`, `discountType`, `comment`, `loyaltyPoints`, `modified`, `active`, `archive`) VALUES
+ ('0', '0', '0', '', '', '0', '0', '0', NULL, '0', NULL, '0', '0', '0', '0', '', NULL, 0, '', '0', 'ARC');
 UPDATE `patients` SET `patientId`=0 WHERE `patientId`=1;
 ALTER TABLE `patients` auto_increment=1;
 
@@ -169,8 +169,8 @@ ALTER TABLE `panelgroups` auto_increment=1;
 
 -- -----------------------------------------------------------------------------------
 
-INSERT INTO `panels` ( `panelId`, `licenceId`, `panelTypeId`, `panelGroupId`, `title`, `workTime`, `maxWorkTime`, `active`, `archive` ) VALUES
-  ( 0, 0, 0, 0, "", 0, 0, 0, "ARC" );
+INSERT INTO `panels` ( `panelId`, `licenceId`, `panelTypeId`, `panelGroupId`, `title`, `imagePathFileName`, `workTime`, `maxWorkTime`, `active`, `archive` ) VALUES
+  ( 0, 0, 0, 0, "", "", 0, 0, 0, "ARC" );
 UPDATE `panels` SET `panelId`='0' WHERE `panelId`=1;
 ALTER TABLE `panels` auto_increment=1;
 
@@ -183,14 +183,14 @@ ALTER TABLE `panelUses` auto_increment=1;
 
 -- -----------------------------------------------------------------------------------
 
-INSERT INTO `patientcardunits` (`patientCardUnitId` ,`licenceId` ,`patientCardId` ,`ledgerId` ,`panelId` ,`unitTime` ,`unitPrice` ,`validDateFrom` ,`validDateTo` ,`dateTimeUsed` ,`active` ,`archive` ) VALUES
- ('0',  '0', '1', '0', '0', '5', '0', '2013-01-01', '2100-12-31', CURRENT_TIMESTAMP , '1', 'ARC');
+INSERT INTO `patientcardunits` (`patientCardUnitId` ,`licenceId` ,`patientCardId` ,`panelGroupID` ,`ledgerId` ,`panelId` ,`unitTime` ,`unitPrice` ,`validDateFrom` ,`validDateTo` ,`dateTimeUsed` ,`active` ,`archive` ) VALUES
+ ('0',  '0', '1', '0', '0', '0', '5', '0', '2024-01-01', '2100-12-31', CURRENT_TIMESTAMP , '1', 'ARC');
 UPDATE `patientcardunits` SET `patientCardUnitId`='0' WHERE `patientCardUnitId`=1;
 
 -- -----------------------------------------------------------------------------------
 
 INSERT INTO `patientcardtypeenabled` (`patientCardTypeEnabledId`, `licenceId`, `patientCardTypeId`, `validWeekDays`, `start`, `stop`, `modified`, `archive`) VALUES
- ('0', '0', '1', '127', '00:00:00', '23:59:59', '2013-01-01 00:00:00', 'ARC');
+ ('0', '0', '1', '127', '00:00:00', '23:59:59', '2024-01-01 00:00:00', 'ARC');
 UPDATE `patientcardtypeenabled` SET `patientCardTypeEnabledId`='0' WHERE `patientCardTypeEnabledId`=1;
 
 -- -----------------------------------------------------------------------------------
@@ -319,12 +319,12 @@ ALTER TABLE `shoppingcartitems` auto_increment=1;
 -- -----------------------------------------------------------------------------------
 
 INSERT INTO `settings` (`settingId`, `identifier`, `value`) VALUES
- (NULL, 'GLOBAL_DATA_UPDATED', '2020-05-01 12:00:00'),
- (NULL, 'LICENCE_LAST_VALIDATED', '2020-05-01 12:00:00'),
+ (NULL, 'GLOBAL_DATA_UPDATED', '2024-03-25 12:00:00'),
+ (NULL, 'LICENCE_LAST_VALIDATED', '2024-03-25 12:00:00'),
  (NULL, 'ABOUT_INFO_LINK', 'http://www.kiwisun.eu/elerhetosegeink.html'),
  (NULL, 'CURRENT_CASSA_ID', '0'),
- (NULL, 'APPLICATION_VERSION', '2_0_0_0'),
- (NULL, 'DATABASE_VERSION', '2_0_0_0'),
+ (NULL, 'APPLICATION_VERSION', '2_1_0_0'),
+ (NULL, 'DATABASE_VERSION', '2_1_0_0'),
  (NULL, 'LICENCE_CHECK', 56),
  (NULL, 'LICENCE_CHECK_COUNTER', 56),
  (NULL, 'LICENCE_WORKTIME', 336),
@@ -406,7 +406,8 @@ INSERT INTO `settings` (`settingId`, `identifier`, `value`) VALUES
  (NULL, "AUTOMAIL_OnSell", 0 ),
  (NULL, "AUTOMAIL_OnUse", 0 ),
  (NULL, "AUTOMAIL_OnExpiration", 0 ),
- (NULL, "AUTOMAIL_ExpirationDays", 7 );
-
+ (NULL, "AUTOMAIL_ExpirationDays", 7 ),
+ (NULL, "AUTOMAIL_OnUnitChange", 0 ),
+ (NULL, "AUTOMAIL_OnCardyGo", 0 );
  
 -- -----------------------------------------------------------------------------------

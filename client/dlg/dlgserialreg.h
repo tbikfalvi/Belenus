@@ -2,7 +2,7 @@
 #define DLGSERIALREG_H
 
 #include "../belenus.h"
-#include "ui_dlgserialreg.h"
+//#include "ui_dlgserialreg.h"
 
 class cDlgSerialReg : public QDialog, protected Ui::dlgSerialReg
 {

@@ -44,6 +44,7 @@ cFrmPanel::cFrmPanel( const unsigned int p_uiPanelId ) : QFrame()
     lblCurrTimer        = new QLabel( this );
     lblNextStatusLen    = new QLabel( this );
     lblInfo             = new QLabel( this );
+    lblImage            = new QLabel( this );
     spacer1             = new QSpacerItem( 20, 15, QSizePolicy::Minimum, QSizePolicy::Expanding );
     spacer2             = new QSpacerItem( 20, 50, QSizePolicy::Minimum, QSizePolicy::Expanding );
     spacer3             = new QSpacerItem( 20, 20, QSizePolicy::Minimum, QSizePolicy::Expanding );
@@ -80,6 +81,7 @@ cFrmPanel::cFrmPanel( const unsigned int p_uiPanelId ) : QFrame()
     verticalLayout->addWidget( lblNextStatusLen );
     verticalLayout->addItem( spacer3 );
     verticalLayout->addWidget( lblInfo );
+    verticalLayout->addWidget( lblImage );
     verticalLayout->addItem( spacer4 );
     verticalLayout->addLayout( layoutIcons );
     verticalLayout->addWidget( prgUsageMonitor );
@@ -92,6 +94,11 @@ cFrmPanel::cFrmPanel( const unsigned int p_uiPanelId ) : QFrame()
     lblTitle->setStyleSheet( QString("QLabel {background-color: %1;font: bold; color: %2; font-size:14px;}")
                                     .arg( g_poPrefs->getActiveCaptionBackground() )
                                     .arg( g_poPrefs->getActiveCaptionColor() ) );
+
+    lblImage->setMinimumHeight( 100 );
+    lblImage->setScaledContents( true );
+    // Fo ablakon nem latszodnak a kepek egyelore
+    lblImage->setVisible( false );
 
     icoPanelStart->setIconSize( QSize(20,20) );
     icoPanelStart->setIcon( QIcon(QString("./resources/40x40_start.png")) );
@@ -422,7 +429,7 @@ void cFrmPanel::cool()
 {
     if( m_uiStatus == 0 )
     {
-        for( int i=0; i<m_obStatuses.size(); i++ )
+        for( int i=0; i<(int)m_obStatuses.size(); i++ )
         {
             if( m_obStatuses.at( i )->activateCommand() == STATUS_UTOHUTES )
             {
@@ -720,20 +727,32 @@ void cFrmPanel::load( const unsigned int p_uiPanelId )
 {
     m_uiId = p_uiPanelId;
 
+    QString qsImageFilename = "";
+
     QSqlQuery  *poQuery = NULL;
     try
     {
-        poQuery = g_poDB->executeQTQuery( QString( "SELECT panelTypeId, title, workTime, maxWorkTime, cleanTime, maxCleanTime FROM panels WHERE panelId=%1" ).arg( m_uiId ) );
+        poQuery = g_poDB->executeQTQuery( QString( "SELECT panelTypeId, title, workTime, maxWorkTime, cleanTime, maxCleanTime, imagePathFileName FROM panels WHERE panelId=%1" ).arg( m_uiId ) );
         if( poQuery->size() )
         {
             poQuery->first();
             m_uiType = poQuery->value( 0 ).toInt();
             lblTitle->setText( poQuery->value( 1 ).toString() );
+            qsImageFilename = poQuery->value( 6 ).toString();
         }
         else
         {
             lblTitle->setText( tr("Panel Not Found in Database") );
         }
+
+        lblImage->clear();
+        if( qsImageFilename.length() > 0 )
+        {
+            QPixmap *qpAd = new QPixmap( qsImageFilename );
+
+            lblImage->setPixmap( *qpAd );
+        }
+        g_obLogger(cSeverity::DEBUG) << "Image for panel [" << qsImageFilename << "]" << EOM;
 
         m_bIsTubeReplaceNeeded = false;
         prgUsageMonitor->setMaximum( poQuery->value(3).toInt() );
@@ -800,7 +819,7 @@ void cFrmPanel::reload()
     QSqlQuery  *poQuery = NULL;
     try
     {
-        poQuery = g_poDB->executeQTQuery( QString( "SELECT panelTypeId, title, workTime, maxWorkTime, cleanTime, maxCleanTime FROM panels WHERE panelId=%1" ).arg( m_uiId ) );
+        poQuery = g_poDB->executeQTQuery( QString( "SELECT panelTypeId, title, workTime, maxWorkTime, cleanTime, maxCleanTime, imagePathFileName FROM panels WHERE panelId=%1" ).arg( m_uiId ) );
         if( poQuery->size() )
         {
             m_bIsTubeReplaceNeeded = false;
@@ -828,6 +847,18 @@ void cFrmPanel::reload()
 
             formatInfoString();
             prgUsageMonitor->setVisible( g_poPrefs->isUsageVisibleOnMain() );
+
+            QString qsImageFilename = "";
+            lblImage->clear();
+
+            qsImageFilename = poQuery->value( 6 ).toString();
+            if( qsImageFilename.length() > 0 )
+            {
+                QPixmap *qpAd = new QPixmap( qsImageFilename );
+
+                lblImage->setPixmap( *qpAd );
+            }
+            g_obLogger(cSeverity::DEBUG) << "New image for panel [" << qsImageFilename << "]" << EOM;
         }
         delete poQuery;
     }
@@ -863,6 +894,9 @@ void cFrmPanel::displayStatus()
         {
             m_qsTimerNextStatus = "";
         }
+
+        // Fo ablakon nem latszodnak a kepek egyelore
+//        lblImage->setVisible( false );
     }
     else
     {
@@ -872,6 +906,9 @@ void cFrmPanel::displayStatus()
         else
             m_qsTimer = "";
         m_qsTimerNextStatus = "";
+
+        // Fo ablakon nem latszodnak a kepek egyelore
+//        lblImage->setVisible( true );
     }
 
     if( m_inCashToPay > 0 )
@@ -892,6 +929,7 @@ void cFrmPanel::displayStatus()
     formatNextLengthString( m_qsTimerNextStatus );
     formatInfoString();
 
+    g_obLogger(cSeverity::DEBUG) << "signalStatusChanged - " << m_obStatuses.at(m_uiStatus)->id() << " | " << m_qsStatus << EOM;
     emit signalStatusChanged( m_uiId-1, m_obStatuses.at(m_uiStatus)->id(), m_qsStatus );
 
     if( m_uiStatus == 0 && m_inMainProcessLength == 0 )
@@ -927,6 +965,15 @@ void cFrmPanel::displayStatus()
 //====================================================================================
 void cFrmPanel::formatStatusString( QString p_qsStatusText )
 {
+    if( p_qsStatusText.length() == 0 )
+    {
+        lblCurrStatus->setVisible( false );
+    }
+    else
+    {
+        lblCurrStatus->setVisible( true );
+    }
+
     QFont   obFont;
 
     obFont = lblCurrStatus->font();
@@ -942,6 +989,15 @@ void cFrmPanel::formatStatusString( QString p_qsStatusText )
 //====================================================================================
 void cFrmPanel::formatTimerString( QString p_qsTimerText )
 {
+    if( p_qsTimerText.length() == 0 )
+    {
+        lblCurrTimer->setVisible( false );
+    }
+    else
+    {
+        lblCurrTimer->setVisible( true );
+    }
+
     QFont   obFont;
 
     obFont = lblCurrTimer->font();
@@ -958,6 +1014,15 @@ void cFrmPanel::formatTimerString( QString p_qsTimerText )
 //====================================================================================
 void cFrmPanel::formatNextLengthString( QString p_qsNextLengthText )
 {
+    if( p_qsNextLengthText.length() == 0 )
+    {
+        lblNextStatusLen->setVisible( false );
+    }
+    else
+    {
+        lblNextStatusLen->setVisible( true );
+    }
+
     QFont   obFont;
 
     obFont = lblNextStatusLen->font();
@@ -1047,13 +1112,9 @@ void cFrmPanel::formatInfoString()
                       .arg(QColor( m_obStatusSettings.at(m_uiStatus)->infoFontColor()).name())
                       .arg(qsMainInfoText) );
 
-    g_obLogger(cSeverity::DEBUG) << "MainInfo: "
-                                 << qsMainInfoText
-                                 << EOM;
-    g_obLogger(cSeverity::DEBUG) << "SecondaryInfo: "
-                                 << qsSecondaryInfoText
-                                 << EOM;
-
+    g_obLogger(cSeverity::DEBUG) << "MainInfo: " << qsMainInfoText << EOM;
+    g_obLogger(cSeverity::DEBUG) << "SecondaryInfo: " << qsSecondaryInfoText << EOM;
+    g_obLogger(cSeverity::DEBUG) << "Set info text for m_uiID=" << m_uiId-1 << " Text: " << qsSecondaryInfoText << EOM;
     emit signalSetInfoText( m_uiId-1, qsSecondaryInfoText );
 }
 //====================================================================================
@@ -1221,10 +1282,16 @@ void cFrmPanel::closeAttendance()
                 obDBPatientCard.save();
                 obDBPatientCard.sendDataToWeb();
 
-                if( g_poPrefs->isAutoMailOnPCUse() )
+                if( g_poPrefs->isAutoMailOnPCUse() || (g_poPrefs->isCardyGoSync() && obDBPatientCard.isCardOwnerRegisteredOnCardy()) )
                 {
+                    int nDestination = AUTO_MAIL_DESTINATION_MAIL_CARDY;
+
+                    if( !g_poPrefs->isCardyGoSync() )           nDestination = AUTO_MAIL_DESTINATION_MAIL;
+                    else if( !g_poPrefs->isAutoMailOnPCSell() ) nDestination = AUTO_MAIL_DESTINATION_CARDY;
+
                     g_obLogger(cSeverity::INFO) << "PatientCard used, send auto mail about usage" << EOM;
                     obDBPatientCard.sendAutoMail( AUTO_MAIL_ON_PCUSE,
+                                                  nDestination,
                                                   QDate::currentDate().toString("yyyy-MM-dd"),
                                                   stTemp->qslUnitIds.count(),
                                                   QDateTime::currentDateTime().toString("yyyy-MM-dd hh:mm") );
@@ -1537,7 +1604,7 @@ unsigned int cFrmPanel::_calculateWaitTime()
 //====================================================================================
 void cFrmPanel::setTextInformation(QString p_qsInfoText, bool p_bCallDisplayStatus)
 {
-    cTracer obTrace( "cFrmPanel::setTextInformation" );
+//    cTracer obTrace( "cFrmPanel::setTextInformation" );
 
     m_qsInfo = p_qsInfoText;
 

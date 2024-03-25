@@ -82,8 +82,8 @@ public:
         HA_LICENCE_REGISTER,        // 10
         HA_LICENCE_REACTIVATE,      // 11
         HA_LICENCE_CHECK,           // 12
-        HA_LICENCE_CODE_VALIDATE,   // 13
-        HA_PROCESSFINISHED          // 14
+//        HA_LICENCE_CODE_VALIDATE,   // 13
+        HA_PROCESSFINISHED          // 13
     };
 
     static const char *toStr( teBlnsHttpAction p_enGA )
@@ -103,7 +103,7 @@ public:
             case HA_LICENCE_REGISTER:           return "HTTPMSG_10 Register licence key";                               break;
             case HA_LICENCE_REACTIVATE:         return "HTTPMSG_11 Reactivate licence key";                             break;
             case HA_LICENCE_CHECK:              return "HTTPMSG_12 Check licence key validity";                         break;
-            case HA_LICENCE_CODE_VALIDATE:      return "HTTPMSG_13 Check licence code integrity at licence provider";   break;
+//            case HA_LICENCE_CODE_VALIDATE:      return "HTTPMSG_13 Check licence code integrity at licence provider";   break;
             case HA_PROCESSFINISHED:            return "HTTPMSG_99";                                                    break;
             default:                            return "HTTPMSGERR";
         }
@@ -183,6 +183,7 @@ private:
     QStringList      m_qslProcessedRecordIds;
     QString          m_qsDisplayMessage;
     int              m_nMailTypeId;
+    int              m_nMailDestination;
     QString          m_qsMailRecipients;
     QString          m_qsMailSubject;
     QString          m_qsMailText;
@@ -229,7 +230,7 @@ private:
     void            _httpReactivateLicence();
 //    void            _httpChangeLicence();
     void            _httpCheckLicence();
-    void            _httpValidateLicenceIntegrity();
+//    void            _httpValidateLicenceIntegrity();
     bool            _processLicence();
     bool            _processLicenceIntegrity();
 

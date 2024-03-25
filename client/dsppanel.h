@@ -46,6 +46,7 @@ public:
     void                         setPanelInfoText( const QString &p_qsInfo );
     void                         setCounterText( const QString &p_qsCounter );
     void                         setPanelWaitTime( const unsigned int p_uiWaitTime );
+    void                         setImage( QString p_qsFilename );
 
 private:
 
@@ -60,6 +61,7 @@ private:
     QSpacerItem                 *spacer4;
     QLabel                      *lblInfo;
     QSpacerItem                 *spacer5;
+    QLabel                      *lblImage;
 
     unsigned int                 m_uiId;
     unsigned int                 m_uiWaitTime;

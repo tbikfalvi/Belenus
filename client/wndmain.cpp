@@ -86,7 +86,6 @@
 #include "dlg/dlglogs.h"
 #include "dlg/dlginputstart.h"
 #include "dlg/dlgpatientcardadd.h"
-#include "dlg/dlgserialreg.h"
 #include "dlg/dlgcassaaction.h"
 #include "dlg/dlgpaneluse.h"
 #include "dlg/dlgpatientcardassign.h"
@@ -385,7 +384,7 @@ cWndMain::cWndMain( QWidget *parent ) : QMainWindow( parent )
     g_obGen.setWindowSecondaryWidget( m_dlgSecondaryWindow );
 
     m_dlgSecondaryWindow->initPanels();
-    m_dlgSecondaryWindow->setCaption( tr("Belenus Software System - %1 - (c) Pagony Multimedia Studio Bt.").arg( g_poPrefs->getVersion() ) );
+    m_dlgSecondaryWindow->setCaption( tr("Belenus Software System - %1").arg( g_poPrefs->getVersion() ) );
 
     if( g_poPrefs->isSecondaryWindowVisible() )
     {
@@ -2098,7 +2097,7 @@ void cWndMain::on_action_UseDevice_triggered()
 
             mdiPanels->setMainProcessTime( obDlgPanelUse.panelUsePatientCardId(), obDlgPanelUse.panelUnitIds(), obDlgPanelUse.panelUseSecondsCard() );
 
-            g_obGen.showPatientCardInformation( obDBPatientCard.barcode(), 4 );
+            g_obGen.showPatientCardInformation( obDBPatientCard.barcode(), g_poPrefs->getCloseInfoWindowAfterSecs() );
 
 //            int nCount = obDlgPanelUse.countPatientCardUnitsLeft();
 //            mdiPanels->setTextInformation( tr( "%1 units left on the selected card" ).arg(nCount) );
@@ -2283,7 +2282,7 @@ void cWndMain::on_action_UseDeviceLater_triggered()
             g_obGen.showTrayError( e.what() );
         }
 
-        g_obGen.showPatientCardInformation( obDlgPanelUse.panelUsePatientCardBarcode(), 4 );
+        g_obGen.showPatientCardInformation( obDlgPanelUse.panelUsePatientCardBarcode(), g_poPrefs->getCloseInfoWindowAfterSecs() );
     }
 
     slotMainWindowActivated();
@@ -3152,6 +3151,8 @@ void cWndMain::on_action_EmptyDemoDB_triggered()
 //====================================================================================
 void cWndMain::slotStatusChanged( unsigned int p_uiPanelId, const unsigned int p_uiPanelStatusId, const QString p_qsStatus )
 {
+    g_obLogger(cSeverity::DEBUG) << "cWndMain::slotStatusChanged p_uiPanelId [" << p_uiPanelId << "] p_uiPanelStatusId [" << p_uiPanelStatusId << "]" << EOM;
+
     m_dlgSecondaryWindow->setPanelStatus( p_uiPanelId, p_uiPanelStatusId );
     m_dlgSecondaryWindow->setPanelStatusText( p_uiPanelId, p_qsStatus );
 }

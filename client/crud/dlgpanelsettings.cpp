@@ -1,4 +1,6 @@
+
 #include <QMessageBox>
+#include <QFileDialog>
 
 #include "belenus.h"
 #include "dlgpanelsettings.h"
@@ -17,14 +19,16 @@ cDlgPanelSettings::cDlgPanelSettings( QWidget *p_poParent, unsigned int p_uiPane
     m_bIsSettingChanged = false;
 
     addTitleLayout();
+    addImageLayout();
     addWorkTimeLayout();
     addCleanTimeLayout();
     addCopyTimeValuesLayout();
 
     verticalLayout->insertLayout( 0, horizontalLayout1 );
-    verticalLayout->insertLayout( 1, horizontalLayout2 );
-    verticalLayout->insertLayout( 2, horizontalLayout4 );
-    verticalLayout->insertLayout( 4, horizontalLayout3 );
+    verticalLayout->insertLayout( 1, horizontalLayout5 );
+    verticalLayout->insertLayout( 2, horizontalLayout2 );
+    verticalLayout->insertLayout( 3, horizontalLayout4 );
+    verticalLayout->insertLayout( 5, horizontalLayout3 );
 
     m_poBtnSave->setEnabled( true );
     m_poBtnSave->setVisible( true );
@@ -35,6 +39,8 @@ cDlgPanelSettings::cDlgPanelSettings( QWidget *p_poParent, unsigned int p_uiPane
     connect( pbCopyToAll, SIGNAL( clicked( bool ) ), this, SLOT( on_pbCopyToAll_clicked( bool ) ) );
     connect( pbEnableSystemAdmin, SIGNAL(clicked()), this, SLOT(on_pbEnableSystemAdmin_clicked()) );
     connect( pbEnableDeviceAdmin, SIGNAL(clicked()), this, SLOT(on_pbEnableDeviceAdmin_clicked()) );
+    connect( pbChangeDir, SIGNAL( clicked( bool ) ), this, SLOT( on_pbChangeDir_clicked( bool ) ) );
+    connect( pbEmptyImage, SIGNAL( clicked( bool ) ), this, SLOT( on_pbEmptyImage_clicked( bool ) ) );
 
     if( p_uiPanelId > 0 )
     {
@@ -58,6 +64,7 @@ cDlgPanelSettings::cDlgPanelSettings( QWidget *p_poParent, unsigned int p_uiPane
         ledCleanTimeMin->setText( QString::number(minuteClean) );
         ledCleanTimeSec->setText( QString::number(secondClean) );
         ledMaxCleanTime->setText( QString::number(obDBPanel.maxCleanTime()) );
+        ledImagePath->setText( obDBPanel.image() );
 
         QSqlQuery *poQueryType;
 
@@ -118,6 +125,45 @@ void cDlgPanelSettings::addTitleLayout()
     cmbPanelGroup->setObjectName( QString::fromUtf8( "cmbPanelGroup" ) );
     cmbPanelGroup->setEnabled( g_obUser.isInGroup( cAccessGroup::ADMIN ) );
     horizontalLayout1->addWidget( cmbPanelGroup );
+}
+
+void cDlgPanelSettings::addImageLayout()
+{
+    horizontalLayout5 = new QHBoxLayout();
+    horizontalLayout5->setObjectName( QString::fromUtf8( "horizontalLayout5" ) );
+
+    lblImagePath = new QLabel( this );
+    lblImagePath->setObjectName( QString::fromUtf8( "lblImagePath" ) );
+    lblImagePath->setText( tr("Image path: ") );
+    horizontalLayout5->addWidget( lblImagePath );
+
+    ledImagePath = new QLineEdit( this );
+    ledImagePath->setObjectName( QString::fromUtf8( "ledImagePath" ) );
+    ledImagePath->setReadOnly( true );
+    horizontalLayout5->addWidget( ledImagePath );
+
+    pbChangeDir = new QPushButton( this );
+    pbChangeDir->setObjectName( QString::fromUtf8( "pbChangeDir" ) );
+    pbChangeDir->setMinimumHeight( 30 );
+    pbChangeDir->setMaximumHeight( 30 );
+    pbChangeDir->setText( "..." );
+    pbChangeDir->setToolTip( tr("Change directory and filename of panel image.") );
+    pbChangeDir->setEnabled( g_obUser.isInGroup( cAccessGroup::SYSTEM ) );
+    horizontalLayout5->addWidget( pbChangeDir );
+
+    pbEmptyImage = new QPushButton( this );
+    pbEmptyImage->setObjectName( QString::fromUtf8( "pbEmptyImage" ) );
+    pbEmptyImage->setMinimumHeight( 30 );
+    pbEmptyImage->setMaximumHeight( 30 );
+    pbEmptyImage->setIconSize( QSize(20, 20) );
+    pbEmptyImage->setIcon( QIcon("./resources/40x40_delete.png") );
+    pbEmptyImage->setText( tr("Remove image") );
+    pbEmptyImage->setToolTip( tr("Remove image from panel.") );
+    pbEmptyImage->setEnabled( g_obUser.isInGroup( cAccessGroup::SYSTEM ) );
+    horizontalLayout5->addWidget( pbEmptyImage );
+
+    horizontalSpacer5 = new QSpacerItem( 300, 20, QSizePolicy::Expanding, QSizePolicy::Minimum );
+    horizontalLayout5->addItem( horizontalSpacer5 );
 }
 
 void cDlgPanelSettings::addWorkTimeLayout()
@@ -494,6 +540,7 @@ void cDlgPanelSettings::saveClicked( bool )
 
         obDBPanel.load( m_uiPanelId );
         obDBPanel.setTitle( ledTitle->text() );
+        obDBPanel.setImage( ledImagePath->text() );
 
         if( g_obUser.isInGroup(cAccessGroup::ADMIN) || cmbPanelGroup->isEnabled() )
         {
@@ -522,6 +569,23 @@ void cDlgPanelSettings::saveClicked( bool )
 
         QDialog::accept();
     }
+}
+
+void cDlgPanelSettings::on_pbChangeDir_clicked(bool)
+{
+    QString qsFilename = QFileDialog::getOpenFileName( this, tr("Select image file"), ledImagePath->text() );
+
+    qsFilename.replace( '\\', '/' );
+
+    if( qsFilename.length() > 0 )
+    {
+        ledImagePath->setText( qsFilename );
+    }
+}
+
+void cDlgPanelSettings::on_pbEmptyImage_clicked(bool)
+{
+    ledImagePath->setText( "" );
 }
 
 void cDlgPanelSettings::on_pbWTReset_clicked( bool )

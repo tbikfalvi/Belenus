@@ -54,11 +54,14 @@ void cLicenceManager::initialize()
         poQuery = g_poDB->executeQTQuery( QString( "SELECT * FROM licences ORDER BY licenceId DESC LIMIT 1" ) );
         if( poQuery->first() )
         {
-            m_uiLicenceId        = poQuery->value( 0 ).toUInt();
+            m_uiLicenceId       = poQuery->value( 0 ).toUInt();
             m_qsLicenceString   = poQuery->value( 1 ).toString();
             m_qdLastValidated   = poQuery->value( 9 ).toDate();
             m_qsState           = poQuery->value( 10 ).toString();
         }
+
+        g_poPrefs->setLicenceId( m_uiLicenceId );
+
         g_obLogger(cSeverity::INFO) << "Initialization finished successfully" << EOM;
     }
     catch( cSevException &e )

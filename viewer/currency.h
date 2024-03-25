@@ -7,6 +7,11 @@
 
 #include <QString>
 
+extern QString                  g_qsCurrencyShort;
+extern QString                  g_qsCurrencyLong;
+extern QString                  g_qsCurrencySeparator;
+extern QString                  g_qsCurrencyDecimalSeparator;
+
 //====================================================================================
 class cCurrency
 {
@@ -37,10 +42,10 @@ private:
     int         m_nValue;
     int         m_nValueNet;
     int         m_nValueGross;
-    QString     m_qsCurrencyShort;
+/*    QString     m_qsCurrencyShort;
     QString     m_qsCurrencyLong;
     QString     m_qsCurrencySeparator;
-    QString     m_qsCurrencyDecimalSeparator;
+    QString     m_qsCurrencyDecimalSeparator;*/
     bool        m_bIsNegative;
 
     void        _init( const QString &p_qsCurrencyString = "", currType p_ctCurrencyType = CURR_GROSS, int p_nVat = 0 );

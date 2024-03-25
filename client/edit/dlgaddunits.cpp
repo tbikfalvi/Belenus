@@ -55,6 +55,13 @@ cDlgAddUnits::cDlgAddUnits( QWidget *p_poParent, cDBPatientCard *p_poPatientCard
             cmbCardType->addItem( poQuery->value( 1 ).toString(), poQuery->value( 0 ) );
         }
         cmbCardType->setCurrentIndex( 0 );
+
+        poQuery = g_poDB->executeQTQuery( QString( "SELECT panelGroupId, name FROM panelgroups WHERE active=1 AND archive<>\"DEL\" ORDER BY name " ) );
+        while( poQuery->next() )
+        {
+            cmbPanelGroup->addItem( poQuery->value( 1 ).toString(), poQuery->value( 0 ) );
+        }
+
         deValidDateTo->setDate( QDate::currentDate() );
     }
 
@@ -163,11 +170,12 @@ void cDlgAddUnits::on_pbAdd_clicked()
                 obDBPatientcardUnit.setLicenceId( m_poPatientCard->licenceId() );
                 obDBPatientcardUnit.setPatientCardId( m_poPatientCard->id() );
                 obDBPatientcardUnit.setPatientCardTypeId( m_poPatientCardType->id() );
+                obDBPatientcardUnit.setPanelGroupId( cmbPanelGroup->currentIndex() );
                 obDBPatientcardUnit.setLedgerId( 0 );
                 obDBPatientcardUnit.setUnitTime( m_poPatientCardType->unitTime() );
                 obDBPatientcardUnit.setUnitPrice( m_poPatientCardType->price()/ledUnits->text().toInt() );
                 obDBPatientcardUnit.setValidDateFrom( m_poPatientCard->validDateFrom() );
-                obDBPatientcardUnit.setValidDateTo( m_poPatientCard->validDateTo() );
+                obDBPatientcardUnit.setValidDateTo( deValidDateTo->date().toString( QString("yyyy-MM-dd") ) );
                 obDBPatientcardUnit.setDateTime( "" );
                 obDBPatientcardUnit.setActive( true );
                 obDBPatientcardUnit.save();
@@ -186,6 +194,19 @@ void cDlgAddUnits::on_pbAdd_clicked()
             m_poPatientCard->synchronizeUnits();
             m_poPatientCard->synchronizeTime();
             m_poPatientCard->save();
+
+            m_poPatientCard->sendDataToWeb();
+
+            if( g_poPrefs->isCardyGoSync() )
+            {
+                g_obLogger(cSeverity::INFO) << "PatientCard units added" << EOM;
+                m_poPatientCard->sendAutoMail( AUTO_MAIL_ON_UNITCHANGE, AUTO_MAIL_DESTINATION_CARDY, QDate::currentDate().toString("yyyy-MM-dd"), 0, "" );
+            }
+            if( g_poPrefs->isAutoMailOnPCExpiration() )
+            {
+                g_obLogger(cSeverity::INFO) << "PatientCard units added, send auto mail about expiration" << EOM;
+                m_poPatientCard->sendAutoMail( AUTO_MAIL_ON_EXPIRE, AUTO_MAIL_DESTINATION_MAIL, deValidDateTo->date().addDays( g_poPrefs->getPCExpirationDays()*(-1) ).toString("yyyy-MM-dd"), 0, qslUnitIds.join(",") );
+            }
 
             QDialog::accept();
 

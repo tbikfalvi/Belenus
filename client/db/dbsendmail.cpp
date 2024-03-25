@@ -28,6 +28,7 @@ cDBSendMail::~cDBSendMail()
 void cDBSendMail::init(const unsigned int p_uiId,
                        const unsigned int p_uiLicenceId,
                        unsigned int p_uiMailTypeId,
+                       unsigned int p_uiMailDestination,
                        QString p_qsDateSend,
                        QString p_qsRecipients,
                        QString p_qsSubject,
@@ -43,6 +44,7 @@ void cDBSendMail::init(const unsigned int p_uiId,
     m_uiId              = p_uiId;
     m_uiLicenceId       = p_uiLicenceId;
     m_uiMailTypeId      = p_uiMailTypeId;
+    m_uiMailDestination = p_uiMailDestination;
     m_qsDateSend        = p_qsDateSend;
     m_qsRecipients      = p_qsRecipients;
     m_qsSubject         = p_qsSubject;
@@ -61,6 +63,7 @@ void cDBSendMail::init( const QSqlRecord &p_obRecord ) throw()
     int inIdIdx             = p_obRecord.indexOf( "httpSendMailId" );
     int inLicenceIdIdx      = p_obRecord.indexOf( "licenceId" );
     int inMailTypeIdx       = p_obRecord.indexOf( "mailTypeId" );
+    int inMailDestinationx  = p_obRecord.indexOf( "mailDestination" );
     int inDateOfSendingIdx  = p_obRecord.indexOf( "dateOfSending" );
     int inRecipientsIdx     = p_obRecord.indexOf( "recipients" );
     int inSubjectIdx        = p_obRecord.indexOf( "subject" );
@@ -76,6 +79,7 @@ void cDBSendMail::init( const QSqlRecord &p_obRecord ) throw()
     init( p_obRecord.value( inIdIdx ).toInt(),
           p_obRecord.value( inLicenceIdIdx ).toInt(),
           p_obRecord.value( inMailTypeIdx ).toInt(),
+          p_obRecord.value( inMailDestinationx ).toInt(),
           p_obRecord.value( inDateOfSendingIdx ).toString(),
           p_obRecord.value( inRecipientsIdx ).toString(),
           p_obRecord.value( inSubjectIdx ).toString(),
@@ -120,6 +124,7 @@ void cDBSendMail::save() throw( cSevException )
     qsQuery += " httpsendmail SET ";
     qsQuery += QString( "licenceId = \"%1\", " ).arg( m_uiLicenceId );
     qsQuery += QString( "mailTypeId = \"%1\", " ).arg( m_uiMailTypeId );
+    qsQuery += QString( "mailDestination = \"%1\", " ).arg( m_uiMailDestination );
     qsQuery += QString( "dateOfSending = \"%1\", " ).arg( m_qsDateSend );
     qsQuery += QString( "recipients = \"%1\", " ).arg( m_qsRecipients );
     qsQuery += QString( "subject = \"%1\", " ).arg( m_qsSubject );
@@ -185,6 +190,16 @@ unsigned int cDBSendMail::mailTypeId() const throw()
 void cDBSendMail::setMailTypeId( const unsigned int p_nMailTypeId ) throw()
 {
     m_uiMailTypeId = p_nMailTypeId;
+}
+
+unsigned int cDBSendMail::mailDestination() const throw()
+{
+    return m_uiMailDestination;
+}
+
+void cDBSendMail::setMailDestination(const unsigned int p_nMailDestination) throw()
+{
+    m_uiMailDestination = p_nMailDestination;
 }
 
 QString cDBSendMail::dateSend() const throw()

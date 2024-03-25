@@ -156,5 +156,14 @@ Version 1.9.0.1
 Version 2.0.0.0
 ===============
 - Liszensz lekerdezes webszerverrol
+- CardyGo integracio
+- Berletegyseg modositas kezzel - adatkuldes webszervernek
 
-
+Version 2.1.0.0
+===============
+- HIBAJAVITAS: a report viewer-ben a penz formatum nem a nyelvi beallitasnak megfelelo volt
+- Liszensz ellenorzesbol a bikfalvi.hu-s ellenorzes kiszedve
+- Kep megjelenites a masodlagos ablakon
+- Egyseg hasznalat gepcsoporthoz kotve
+- Szazalekos kedvezmeny szamitas javitva
+- Berlet info ablak zaras valtoztathato hossz

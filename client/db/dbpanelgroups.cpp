@@ -132,14 +132,7 @@ void cDBPanelGroups::remove() throw( cSevException )
     {
         QString  qsQuery;
 
-        if( m_qsArchive != "NEW" )
-        {
-            qsQuery = "DELETE FROM panelGroups ";
-        }
-        else
-        {
-            qsQuery = "UPDATE panelGroups SET active=0, archive=\"MOD\" ";
-        }
+        qsQuery = "DELETE FROM panelGroups ";
         qsQuery += QString( " WHERE panelGroupId = %1" ).arg( m_uiId );
 
         QSqlQuery  *poQuery = g_poDB->executeQTQuery( qsQuery );
