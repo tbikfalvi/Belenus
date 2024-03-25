@@ -157,8 +157,4 @@ Version 2.0.0.0
 ===============
 - Liszensz lekerdezes webszerverrol
 
-Version 2.1.0.0
-===============
-- HIBAJAVITAS: a report viewer-ben a penz formatum nem a nyelvi beallitasnak megfelelo volt
-- Liszensz ellenorzesbol a bikfalvi.hu-s ellenorzes kiszedve
 
