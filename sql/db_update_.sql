@@ -14,7 +14,7 @@ ALTER TABLE `patientcardunits` ADD `panelGroupID` int(10) unsigned NOT NULL DEFA
 
 UPDATE `panelgroups` SET `name` = '* Osszes *' WHERE `panelGroupId` = 0;
 
-ALTER TABLE `panels` ADD `imagePathFileName` VARCHAR( 500 ) NOT NULL AFTER `title`
+ALTER TABLE `panels` ADD `imagePathFileName` VARCHAR( 500 ) NOT NULL AFTER `title`;
 
 -- -----------------------------------------------------------------------------------
 
