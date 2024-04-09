@@ -167,3 +167,7 @@ Version 2.1.0.0
 - Egyseg hasznalat gepcsoporthoz kotve
 - Szazalekos kedvezmeny szamitas javitva
 - Berlet info ablak zaras valtoztathato hossz
+
+Version 2.1.1.0
+===============
+- Berlettipusnal lehessen megadni a gep csoportot, ez oroklodjon berletegysegekre
