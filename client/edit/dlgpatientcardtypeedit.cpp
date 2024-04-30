@@ -38,6 +38,15 @@ cDlgPatientCardTypeEdit::cDlgPatientCardTypeEdit( QWidget *p_poParent, cDBPatien
 
     if( m_poPatientCardType )
     {
+        poQuery = g_poDB->executeQTQuery( QString( "SELECT panelGroupId, name FROM panelgroups WHERE active=1 AND archive<>\"DEL\" ORDER BY name " ) );
+        while( poQuery->next() )
+        {
+            cmbPanelGroup->addItem( poQuery->value( 1 ).toString(), poQuery->value( 0 ) );
+
+            if( m_poPatientCardType->panelGroupId() == poQuery->value( 0 ) )
+                cmbPanelGroup->setCurrentIndex( cmbPanelGroup->count()-1 );
+        }
+
         ledName->setText( m_poPatientCardType->name() );
         ledPrice->setText( QString::number(m_poPatientCardType->price()/100) );
         ledVatpercent->setText( QString::number(m_poPatientCardType->vatpercent()) );
