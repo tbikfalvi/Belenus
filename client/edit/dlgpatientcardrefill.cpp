@@ -224,6 +224,17 @@ void cDlgPatientCardRefill::on_cmbCardType_currentIndexChanged(int index)
         deValidDateTo->setDate( QDate::fromString(m_poPatientCardType->validDateTo(),"yyyy-MM-dd") );
     }
 
+    if( m_poPatientCardType->panelGroupId() > 0 )
+    {
+        cmbPanelGroup->setCurrentIndex( cmbPanelGroup->findData( m_poPatientCardType->panelGroupId() ) );
+        cmbPanelGroup->setEnabled( false );
+    }
+    else
+    {
+        cmbPanelGroup->setCurrentIndex( 0 );
+        cmbPanelGroup->setEnabled( true );
+    }
+
     cCurrency   cPrice( QString::number(m_poPatientCardType->price()/100), cCurrency::CURR_GROSS, m_poPatientCardType->vatpercent() );
 
     int priceTotal = cPrice.currencyValue().toInt()/100;

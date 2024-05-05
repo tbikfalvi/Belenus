@@ -38,7 +38,7 @@ cDlgPatientCardTypeEdit::cDlgPatientCardTypeEdit( QWidget *p_poParent, cDBPatien
 
     if( m_poPatientCardType )
     {
-        poQuery = g_poDB->executeQTQuery( QString( "SELECT panelGroupId, name FROM panelgroups WHERE active=1 AND archive<>\"DEL\" ORDER BY name " ) );
+        QSqlQuery *poQuery = g_poDB->executeQTQuery( QString( "SELECT panelGroupId, name FROM panelgroups WHERE active=1 AND archive<>\"DEL\" ORDER BY name " ) );
         while( poQuery->next() )
         {
             cmbPanelGroup->addItem( poQuery->value( 1 ).toString(), poQuery->value( 0 ) );
@@ -246,6 +246,7 @@ void cDlgPatientCardTypeEdit::on_pbSave_clicked()
             m_poPatientCardType->setValidDateFrom( (rbDays->isChecked()?"2000-01-01":deValidDateFrom->date().toString("yyyy-MM-dd")) );
             m_poPatientCardType->setValidDateTo( (rbDays->isChecked()?"2000-01-01":deValidDateTo->date().toString("yyyy-MM-dd")) );
             m_poPatientCardType->setValidDays( ledValidDays->text().toUInt() );
+            m_poPatientCardType->setPanelGroupId( cmbPanelGroup->itemData( cmbPanelGroup->currentIndex() ).toUInt() );
             m_poPatientCardType->setActive( true );
 
             if( checkIndependent->isChecked() )
