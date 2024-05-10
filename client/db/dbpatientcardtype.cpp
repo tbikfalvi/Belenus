@@ -28,6 +28,7 @@ cDBPatientCardType::~cDBPatientCardType()
 
 void cDBPatientCardType::init( const unsigned int p_uiId,
                                const unsigned int p_uiLicenceId,
+                               const unsigned int p_uiPanelGroupId,
                                const QString &p_qsName,
                                const float p_fPrice,
                                const int p_nVatpercent,
@@ -42,6 +43,7 @@ void cDBPatientCardType::init( const unsigned int p_uiId,
 {
     m_uiId              = p_uiId;
     m_uiLicenceId       = p_uiLicenceId;
+    m_uiPanelGroupId        = p_uiPanelGroupId;
     m_qsName            = p_qsName;
     m_fPrice            = p_fPrice;
     m_nVatpercent       = p_nVatpercent;
@@ -59,6 +61,7 @@ void cDBPatientCardType::init( const QSqlRecord &p_obRecord ) throw()
 {
     int inIdIdx             = p_obRecord.indexOf( "patientCardTypeId" );
     int inLicenceIdIdx      = p_obRecord.indexOf( "licenceId" );
+    int inPanelGroupIdIdx   = p_obRecord.indexOf( "panelGroupId" );
     int inNameIdx           = p_obRecord.indexOf( "name" );
     int inPriceIdx          = p_obRecord.indexOf( "price" );
     int inVatpercentIdx     = p_obRecord.indexOf( "vatpercent" );
@@ -73,6 +76,7 @@ void cDBPatientCardType::init( const QSqlRecord &p_obRecord ) throw()
 
     init( p_obRecord.value( inIdIdx ).toInt(),
           p_obRecord.value( inLicenceIdIdx ).toInt(),
+          p_obRecord.value( inPanelGroupIdIdx ).toInt(),
           p_obRecord.value( inNameIdx ).toString(),
           p_obRecord.value( inPriceIdx ).toFloat(),
           p_obRecord.value( inVatpercentIdx ).toInt(),
@@ -129,6 +133,7 @@ void cDBPatientCardType::save() throw( cSevException )
     }
     qsQuery += " patientCardTypes SET ";
     qsQuery += QString( "licenceId = \"%1\", " ).arg( m_uiLicenceId );
+    qsQuery += QString( "panelGroupId = \"%1\", " ).arg( m_uiPanelGroupId );
     qsQuery += QString( "name = \"%1\", " ).arg( m_qsName );
     qsQuery += QString( "price = \"%1\", " ).arg( m_fPrice );
     qsQuery += QString( "vatpercent = \"%1\", " ).arg( m_nVatpercent );
@@ -197,6 +202,16 @@ unsigned int cDBPatientCardType::licenceId() const throw()
 void cDBPatientCardType::setLicenceId( const unsigned int p_uiLicenceId ) throw()
 {
     m_uiLicenceId = p_uiLicenceId;
+}
+
+unsigned int cDBPatientCardType::panelGroupId() const throw()
+{
+    return m_uiPanelGroupId;
+}
+
+void cDBPatientCardType::setPanelGroupId( const unsigned int p_nPanelGroupId ) throw()
+{
+    m_uiPanelGroupId = p_nPanelGroupId;
 }
 
 QString cDBPatientCardType::name() const throw()
