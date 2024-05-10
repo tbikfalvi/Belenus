@@ -19,6 +19,8 @@ public:
     unsigned int    id() const                                          throw();
     unsigned int    licenceId() const                                   throw();
     void            setLicenceId( const unsigned int p_nLicenceId )     throw();
+    unsigned int    panelGroupId() const                                   throw();
+    void            setPanelGroupId( const unsigned int p_nPanelGroupId ) throw();
     QString         name() const                                        throw();
     void            setName( const QString &p_qsName )                  throw();
     float           price() const                                       throw();
@@ -45,6 +47,7 @@ public:
 private:
     unsigned int    m_uiId;
     unsigned int    m_uiLicenceId;
+    unsigned int    m_uiPanelGroupId;
     QString         m_qsName;
     float           m_fPrice;
     int             m_nVatpercent;
@@ -59,6 +62,7 @@ private:
 
     void init( const unsigned int p_uiId = 0,
                const unsigned int p_uiLicenceId = 0,
+               const unsigned int p_uiPanelGroupId = 0,
                const QString &p_qsName = "",
                const float p_fPrice = 0,
                const int p_nVatpercent = 0,
