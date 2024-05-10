@@ -524,7 +524,7 @@ void cDlgPatientCardSell::on_pbSell_clicked()
                 obDBPatientcardUnit.setLicenceId( m_poPatientCard->licenceId() );
                 obDBPatientcardUnit.setPatientCardId( m_poPatientCard->id() );
                 obDBPatientcardUnit.setPatientCardTypeId( m_poPatientCardType->id() );
-                obDBPatientcardUnit.setPanelGroupId( cmbPanelGroup->currentIndex() );
+                obDBPatientcardUnit.setPanelGroupId( cmbPanelGroup->itemData( cmbPanelGroup->currentIndex() ).toUInt() );
                 obDBPatientcardUnit.setLedgerId( uiLedgerId );
                 obDBPatientcardUnit.setUnitTime( m_poPatientCardType->unitTime() );
                 obDBPatientcardUnit.setUnitPrice( m_poPatientCardType->price()/ledUnits->text().toInt() );

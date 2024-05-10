@@ -170,7 +170,7 @@ void cDlgAddUnits::on_pbAdd_clicked()
                 obDBPatientcardUnit.setLicenceId( m_poPatientCard->licenceId() );
                 obDBPatientcardUnit.setPatientCardId( m_poPatientCard->id() );
                 obDBPatientcardUnit.setPatientCardTypeId( m_poPatientCardType->id() );
-                obDBPatientcardUnit.setPanelGroupId( cmbPanelGroup->currentIndex() );
+                obDBPatientcardUnit.setPanelGroupId( cmbPanelGroup->itemData( cmbPanelGroup->currentIndex() ).toUInt() );
                 obDBPatientcardUnit.setLedgerId( 0 );
                 obDBPatientcardUnit.setUnitTime( m_poPatientCardType->unitTime() );
                 obDBPatientcardUnit.setUnitPrice( m_poPatientCardType->price()/ledUnits->text().toInt() );

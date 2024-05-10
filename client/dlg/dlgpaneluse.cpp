@@ -445,7 +445,7 @@ void cDlgPanelUse::setPanelUsePatientCard(/*unsigned int p_uiPatientCardId*/)
                     {
                         continue;
                     }
-                    g_obLogger(cSeverity::DEBUG) << "unitPanelGroup: " << uiPanelGroupId << " panelGroup: " << m_uiPanelGroupId << EOM;
+                    g_obLogger(cSeverity::DEBUG) << "CHECK PanelGroup - unitPanelGroup: " << uiPanelGroupId << " panelGroup: " << m_uiPanelGroupId << EOM;
                     if( uiPanelGroupId > 0 && uiPanelGroupId != m_uiPanelGroupId )
                     {
                         continue;
