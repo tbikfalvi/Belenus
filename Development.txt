@@ -171,3 +171,4 @@ Version 2.1.0.0
 Version 2.1.1.0
 ===============
 - Berlettipusnal lehessen megadni a gep csoportot, ez oroklodjon berletegysegekre
+- HIBAJAVITAS: gepcsoport mentese a berlet egysegekhez hibas volt
