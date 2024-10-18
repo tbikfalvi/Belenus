@@ -172,3 +172,8 @@ Version 2.1.1.0
 ===============
 - Berlettipusnal lehessen megadni a gep csoportot, ez oroklodjon berletegysegekre
 - HIBAJAVITAS: gepcsoport mentese a berlet egysegekhez hibas volt
+
+Version 2.1.2.0
+===============
+- Kimutatas kezeloben az adatbazis valtozas kovetkezteben hibas kimutatasok javitva lettek
+
