@@ -95,7 +95,7 @@ int main(int argc, char *argv[])
 
     dlgMain obDlgMain( 0, QString( APPLICATION_VERSION_NUMBER ), QString( DATABASE_VERSION_NUMBER ) );
 
-    if( argc > 1 )
+/*    if( argc > 1 )
     {
         for( int i=1; i<argc; i++ )
         {
@@ -106,7 +106,7 @@ int main(int argc, char *argv[])
 //                obDlgMain.setTimerLength( atoi( qslParam.at(1).toStdString().c_str() ) );
 //            }
         }
-    }
+    }*/
 
     return apMainApp->exec();
 }

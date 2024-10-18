@@ -285,7 +285,7 @@ unsigned int cReportDaily::_reportPartPatientCardSell()
     }
     addTableCell( tr("Sum"), "center bold" );
 
-    poQueryResult = g_poDB->executeQTQuery( "SELECT * FROM patientcardtypes WHERE patientCardTypeId<>1" );
+    poQueryResult = g_poDB->executeQTQuery( "SELECT patientCardTypeId, name FROM patientcardtypes WHERE patientCardTypeId<>1" );
 
     while( poQueryResult->next() )
     {
@@ -294,10 +294,13 @@ unsigned int cReportDaily::_reportPartPatientCardSell()
         QString         qsPricePCTSum = "";
         QStringList     qslCells = QStringList();
 
+        unsigned int    queryPatientCardTypeId      = poQueryResult->value(0).toUInt();
+        QString         queryPatientCardTypeName    = poQueryResult->value(1).toString();
+
         for( int i=0; i<m_qslCassaIds.count(); i++ )
         {
             unsigned int uiPricePCSell = 0;
-            QString      qsCountPCSell = _countsumPatientCardTypeSell( m_qslCassaIds.at(i), poQueryResult->value(0).toUInt(), &uiPricePCSell );
+            QString      qsCountPCSell = _countsumPatientCardTypeSell( m_qslCassaIds.at(i), queryPatientCardTypeId, &uiPricePCSell );
 
             if( uiPricePCSell > 0 || qsCountPCSell.toInt() > 0 )
             {
@@ -320,13 +323,13 @@ unsigned int cReportDaily::_reportPartPatientCardSell()
         if( uiPricePCTSum > 0 || uiCountPCTSum > 0 )
         {
             addTableRow();
-            if( poQueryResult->value(0).toUInt() == 0 )
+            if( queryPatientCardTypeId == 0 )
             {
                 addTableCell( tr("Attached, lost cards") );
             }
             else
             {
-                addTableCell( poQueryResult->value(3).toString() );
+                addTableCell( queryPatientCardTypeName );
             }
 
             for( int i=0; i<qslCells.count(); i++ )
@@ -380,20 +383,22 @@ unsigned int cReportDaily::_reportPartPanelUse()
     }
     addTableCell( tr("Amount"), "center bold" );
 
-    poQueryResult = g_poDB->executeQTQuery( "SELECT * FROM panelgroups WHERE panelGroupId>0" );
+    poQueryResult = g_poDB->executeQTQuery( "SELECT panelGroupId, name FROM panelgroups WHERE panelGroupId>0" );
 
     while( poQueryResult->next() )
     {
         unsigned int    uiPricePanelTotal = 0;
         QString         qsPricePanelTotal = "";
-        QString         qsTitlePanel = poQueryResult->value(2).toString();
+
+        unsigned int    queryPanelGroupId   = poQueryResult->value(0).toUInt();
+        QString         queryName           = poQueryResult->value(1).toString();
 
         addTableRow();
-        addTableCell( qsTitlePanel );
+        addTableCell( queryName );
 
         for( int i=0; i<m_qslCassaIds.count(); i++ )
         {
-            int             nPricePanel  = _sumPanelUse( m_qslCassaIds.at(i), poQueryResult->value(0).toUInt() );
+            int             nPricePanel  = _sumPanelUse( m_qslCassaIds.at(i), queryPanelGroupId );
             QString         qsPricePanel = "";
 
             if( nPricePanel > 0 )
@@ -457,19 +462,21 @@ void cReportDaily::_reportPartPanelUseType(tePanelUse p_tePanelUse)
     }
     addTableCell( tr("Sum"), "center bold" );
 
-    poQueryResult = g_poDB->executeQTQuery( "SELECT * FROM panelgroups WHERE panelGroupId>0" );
+    poQueryResult = g_poDB->executeQTQuery( "SELECT panelGroupId, name FROM panelgroups WHERE panelGroupId>0" );
 
     while( poQueryResult->next() )
     {
         unsigned int    uiCountPanelTotal = 0;
-        QString         qsTitlePanel = poQueryResult->value(2).toString();
+
+        unsigned int    queryPanelGroupId   = poQueryResult->value(0).toUInt();
+        QString         queryName           = poQueryResult->value(1).toString();
 
         addTableRow();
-        addTableCell( qsTitlePanel );
+        addTableCell( queryName );
 
         for( int i=0; i<m_qslCassaIds.count(); i++ )
         {
-            int nCountPanel  = _countPanelUse( m_qslCassaIds.at(i), poQueryResult->value(0).toUInt(), p_tePanelUse, PU_COUNT_GUEST );
+            int nCountPanel  = _countPanelUse( m_qslCassaIds.at(i), queryPanelGroupId, p_tePanelUse, PU_COUNT_GUEST );
 
             addTableCell( QString::number(nCountPanel), "center" );
 
@@ -513,19 +520,21 @@ void cReportDaily::_reportPartUsedPatientcardunits()
     }
     addTableCell( tr("Sum"), "center bold" );
 
-    poQueryResult = g_poDB->executeQTQuery( "SELECT * FROM panelgroups WHERE panelGroupId>0" );
+    poQueryResult = g_poDB->executeQTQuery( "SELECT panelGroupId, name FROM panelgroups WHERE panelGroupId>0" );
 
     while( poQueryResult->next() )
     {
         unsigned int    uiCountPanelTotal = 0;
-        QString         qsTitlePanel = poQueryResult->value(2).toString();
+
+        unsigned int    queryPanelGroupId   = poQueryResult->value(0).toUInt();
+        QString         queryName           = poQueryResult->value(1).toString();
 
         addTableRow();
-        addTableCell( qsTitlePanel );
+        addTableCell( queryName );
 
         for( int i=0; i<m_qslCassaIds.count(); i++ )
         {
-            int nCountPanel  = _countPanelUse( m_qslCassaIds.at(i), poQueryResult->value(0).toUInt(), PU_USE_WITH_CARD, PU_COUNT_PCUNITS );
+            int nCountPanel  = _countPanelUse( m_qslCassaIds.at(i), queryPanelGroupId, PU_USE_WITH_CARD, PU_COUNT_PCUNITS );
 
             addTableCell( QString::number(nCountPanel), "center" );
 
