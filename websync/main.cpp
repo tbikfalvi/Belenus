@@ -1,3 +1,13 @@
+//====================================================================================
+//
+// Belenus WebSync alkalmazas (c) Bikfalvi Tamas
+//
+//====================================================================================
+
+#define APPLICATION_VERSION_NUMBER  "2.1.2.0"
+#define DATABASE_VERSION_NUMBER     "2.1.2.0"
+
+//====================================================================================
 
 #include <QApplication>
 #include <QProcessEnvironment>
@@ -6,12 +16,13 @@
 
 #include "dlgmain.h"
 
+//====================================================================================
+
 QTranslator     *poTransApp;
 QTranslator     *poTransQT;
 QApplication    *apMainApp;
 
-#define APPLICATION_VERSION_NUMBER  "2.1.1.0"
-#define DATABASE_VERSION_NUMBER     "2.1.1.0"
+//====================================================================================
 
 #include "../framework/qtlogger.h"
 #include "../framework/qtframework.h"

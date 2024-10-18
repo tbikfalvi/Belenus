@@ -326,7 +326,7 @@ unsigned int cReportDaily::_reportPartPatientCardSell()
             }
             else
             {
-                addTableCell( poQueryResult->value(2).toString() );
+                addTableCell( poQueryResult->value(3).toString() );
             }
 
             for( int i=0; i<qslCells.count(); i++ )
