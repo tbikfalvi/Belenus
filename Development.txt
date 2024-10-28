@@ -179,3 +179,4 @@ Version 2.1.2.0
 - HIBAJAVITAS: Fo konyvnel a berlettel kapcsolatos adatok nem megfeleloen jelentek meg
 - HIBAJAVITAS: Berlet adatok kimutatasnal az adatok nem megfeleloen jelentek meg
 - HIBAJAVITAS: Berlettipus torlesnel azokat az egysegeket, amiknek lejart az ervenyessegi ideje, inaktivva teszunk
+- HIBAJAVITAS: Gepek perc idejenek torlese nem mukodott
