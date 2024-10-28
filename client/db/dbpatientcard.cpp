@@ -283,22 +283,6 @@ void cDBPatientCard::deactivate() throw( cSevException )
 
 bool cDBPatientCard::isServiceCard() throw()
 {
-//    int     nBarcodeValue = barcode().toInt();
-/*
-    QSqlQuery       *poQuery;
-    unsigned int     uiCount = 0;
-
-    poQuery = g_poDB->executeQTQuery( QString( "SELECT * FROM patientCardUnits WHERE patientCardId = %1 AND patientCardTypeId = 1" ).arg( id() ) );
-
-    uiCount += poQuery->size();
-
-    if( uiCount > 0 )
-*/
-/*    if( nBarcodeValue == 0 )
-        return true;
-    else
-        return false;
-*/
     return servicecard();
 }
 
@@ -310,8 +294,9 @@ bool cDBPatientCard::isPatientCardTypeLinked( const unsigned int p_PCTId ) throw
     unsigned int     uiCount = 0;
 
     poQuery = g_poDB->executeQTQuery( QString( "UPDATE patientCards SET patientCardTypeId = 0 WHERE patientCardTypeId = %1" ).arg( p_PCTId ) );
+    poQuery = g_poDB->executeQTQuery( QString( "UPDATE patientCardUnits SET active = 0 WHERE validDateTo < NOW() AND patientCardTypeId = %1" ).arg( p_PCTId ) );
 
-    poQuery = g_poDB->executeQTQuery( QString( "SELECT * FROM patientCardUnits WHERE patientCardTypeId = %1 AND active = 1" ).arg( p_PCTId ) );
+    poQuery = g_poDB->executeQTQuery( QString( "SELECT * FROM patientCardUnits WHERE patientCardTypeId = %1 AND active = 1 AND validDateTo > NOW()" ).arg( p_PCTId ) );
 
     uiCount += poQuery->size();
 

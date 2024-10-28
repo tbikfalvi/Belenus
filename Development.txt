@@ -172,3 +172,10 @@ Version 2.1.1.0
 ===============
 - Berlettipusnal lehessen megadni a gep csoportot, ez oroklodjon berletegysegekre
 - HIBAJAVITAS: gepcsoport mentese a berlet egysegekhez hibas volt
+
+Version 2.1.2.0
+===============
+- HIBAJAVITAS: Napi konyvnel a berlettel kapcsolatos adatok nem megfeleloen jelentek meg
+- HIBAJAVITAS: Fo konyvnel a berlettel kapcsolatos adatok nem megfeleloen jelentek meg
+- HIBAJAVITAS: Berlet adatok kimutatasnal az adatok nem megfeleloen jelentek meg
+- HIBAJAVITAS: Berlettipus torlesnel azokat az egysegeket, amiknek lejart az ervenyessegi ideje, inaktivva teszunk
