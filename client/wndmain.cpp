@@ -1963,11 +1963,24 @@ void cWndMain::on_action_PatientSelect_triggered()
 {
     cTracer obTrace( "cWndMain::on_action_PatientSelect_triggered" );
 
-    m_bMainWindowActive = false;
+    m_bMainWindowActive     = false;
+    m_qsPatientNameFilter   = "";
+
+    cDlgInputStart     obDlgInputStart( this );
+
+    obDlgInputStart.m_bPat = true;
+    if( obDlgInputStart.exec() == QDialog::Accepted )
+    {
+        if( obDlgInputStart.m_bPat )
+        {
+            m_qsPatientNameFilter = obDlgInputStart.getEditText();
+        }
+    }
 
     m_dlgProgress->showProgress();
 
-    cDlgPatientSelect  obDlgPatientSelect( this );
+    cDlgPatientSelect  obDlgPatientSelect( this, m_qsPatientNameFilter );
+    m_qsPatientNameFilter   = "";
 
     m_dlgProgress->hideProgress();
 

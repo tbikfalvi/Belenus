@@ -9,8 +9,7 @@
 extern cCommRFID       *g_poCommRFID;
 
 
-cDlgInputStart::cDlgInputStart( QWidget *p_poParent )
-    : QDialog( p_poParent )
+cDlgInputStart::cDlgInputStart( QWidget *p_poParent ) : QDialog( p_poParent )
 {
     setupUi( this );
 

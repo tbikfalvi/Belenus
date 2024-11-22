@@ -1,7 +1,6 @@
 #include "dlgpatientselect.h"
 
-cDlgPatientSelect::cDlgPatientSelect( QWidget *p_poParent )
-    : cDlgCrud( p_poParent )
+cDlgPatientSelect::cDlgPatientSelect(QWidget *p_poParent , QString p_qsNameFilter) : cDlgCrud( p_poParent )
 {
     cTracer obTrace( "cDlgPatientSelect::cDlgPatientSelect" );
 
@@ -63,6 +62,11 @@ cDlgPatientSelect::cDlgPatientSelect( QWidget *p_poParent )
 
     QPoint  qpDlgSize = g_poPrefs->getDialogSize( "ListPatientSelect", QPoint(520,300) );
     resize( qpDlgSize.x(), qpDlgSize.y() );
+
+    if( p_qsNameFilter.length() > 0 )
+    {
+        ledName->setText( p_qsNameFilter );
+    }
 
     setupTableView();
 
