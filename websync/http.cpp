@@ -1972,7 +1972,10 @@ bool cBlnsHttp::_processOnlinePatientAndCard( QString p_qsPatientName, QString p
         cerr << ">> " << e.what() << endl << flush;;
         g_obLogger(e.severity()) << e.what() << EOM;
         m_qsError = tr("Error occured during executing database command");
+        return false;
     }
+
+    return true;
 }
 
 //=================================================================================================
@@ -2542,10 +2545,10 @@ QString cBlnsHttp::_bytearrayToString(QString p_qsString)
 QString cBlnsHttp::_findDataById( const QStringList &list, const QString &id )
 //-------------------------------------------------------------------------------------------------
 {
-    for (const QString &entry : list)
+    for(int i=0; i<list.count(); i++)
     {
-        QStringList parts = entry.split(":");  // Az elem felosztása azonosítóra és adatra
-        if (parts.size() == 2 && parts[0] == id)
+        QStringList parts = list.at(i).split(":");
+        if( parts.size() == 2 && parts[0] == id )
         {
             return parts[1];  // Visszaadjuk az adatot
         }

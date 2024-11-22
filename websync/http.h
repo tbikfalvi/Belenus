@@ -220,6 +220,7 @@ private:
     void            _updateProcessedRecord();
     void            _httpGetOnlineRecords();
     void            _httpConfirmRequestedData();
+    bool            _processApiProcessPhp();
     bool            _processCommXML();
     bool            _processCommResponse( QByteArray p_qsResponse );
     bool            _processOnlinePatientAndCard( QString p_qsPatientName, QString p_qsPatientEmail, QString p_qsPatientGender, QString p_qsBarcode, QString p_qsDateTime, int p_nOnlineAction );

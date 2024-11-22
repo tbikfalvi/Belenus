@@ -130,7 +130,6 @@ dlgMain::dlgMain(QWidget *parent, QString p_qsAppVersion, QString p_qsDbVersion)
 
     // hide obsolete items
     ui->lblOnlinePatientCardType->setVisible( false );
-    ui->cmbOnlinePatientCardType->setVisible( false );
     ui->lblOnlinePaymentMethod->setVisible( false );
     ui->cmbOnlinePaymentMethod->setVisible( false );
     ui->lblTimerPCOnlineSync->setVisible( false );
@@ -139,6 +138,7 @@ dlgMain::dlgMain(QWidget *parent, QString p_qsAppVersion, QString p_qsDbVersion)
     ui->lblIndexPCOnline->setVisible( false );
 
 // Angliai applikaciobol erkezo vendeg es berlet feltoltes lekerdezesehez kell megiscsak
+//    ui->cmbOnlinePatientCardType->setVisible( false );
 //    ui->pbSyncOnlinePC->setVisible( false );
 
     // resize dialog
@@ -220,7 +220,7 @@ dlgMain::dlgMain(QWidget *parent, QString p_qsAppVersion, QString p_qsDbVersion)
         cQTMySQLQueryModel *m_poModel = new cQTMySQLQueryModel( this );
         m_poModel->setQuery( "SELECT CONCAT(name,\" (\",realName,\")\") AS n FROM users WHERE active = 1 ORDER BY name" );
         ui->cmbName->setModel( m_poModel );
-/*
+
         ui->cmbOnlinePatientCardType->addItem( tr("<Not selected>"), 0 );
         poQuery = g_poDB->executeQTQuery( QString( "SELECT patientCardTypeId, name FROM patientCardTypes WHERE active=1 AND archive<>\"DEL\" ORDER BY name " ) );
         while( poQuery->next() )
@@ -232,7 +232,7 @@ dlgMain::dlgMain(QWidget *parent, QString p_qsAppVersion, QString p_qsDbVersion)
                 ui->cmbOnlinePatientCardType->setCurrentIndex( ui->cmbOnlinePatientCardType->count()-1 );
         }
         _setPCTypeForHttp();
-
+/*
         ui->cmbOnlinePaymentMethod->addItem( tr("<Not selected>"), 0 );
         poQuery = g_poDB->executeQTQuery( QString( "SELECT paymentMethodId, name FROM paymentMethods WHERE active=1 AND archive<>\"DEL\" ORDER BY name " ) );
         while( poQuery->next() )
@@ -1090,7 +1090,7 @@ void dlgMain::_setGUIEnabled(bool p_bEnabled)
     ui->pbClearAllPatientCard->setEnabled( p_bEnabled && _isInGroup( GROUP_SYSTEM ) && m_bHttpEnabledBySetting && m_bHttpEnabledByUser );
     actionClearAllPatientCard->setEnabled( p_bEnabled && _isInGroup( GROUP_SYSTEM ) && m_bHttpEnabledBySetting && m_bHttpEnabledByUser );
 
-    ui->cmbOnlinePatientCardType->setEnabled( false /*p_bEnabled && _isInGroup( GROUP_USER )*/ );
+    ui->cmbOnlinePatientCardType->setEnabled( p_bEnabled && _isInGroup( GROUP_USER ) );
     ui->cmbOnlinePaymentMethod->setEnabled( false /*p_bEnabled && _isInGroup( GROUP_USER )*/ );
 
     ui->tabLicence->setEnabled( p_bEnabled && _isInGroup( GROUP_SYSTEM ) );
@@ -1403,7 +1403,7 @@ void dlgMain::on_pbStartStopHTTP_clicked()
 
 //=================================================================================================
 void dlgMain::on_cmbOnlinePatientCardType_currentIndexChanged(int /*index*/)
-{/*
+{
     if( m_bStartFinished )
     {
         m_uiPatientCardTypeId = ui->cmbOnlinePatientCardType->itemData( index ).toUInt();
@@ -1418,11 +1418,11 @@ void dlgMain::on_cmbOnlinePatientCardType_currentIndexChanged(int /*index*/)
             ui->lblOnlinePatientCardType->setStyleSheet( "QLabel {font: bold; color: red;}" );
         }
     }
-*/}
+}
 
 //=================================================================================================
 void dlgMain::_setPCTypeForHttp()
-{/*
+{
     QSqlQuery *poQuery = g_poDB->executeQTQuery( QString( "SELECT price, units, unitTime "
                                                           "FROM patientCardTypes WHERE "
                                                           "active=1 AND archive<>\"DEL\" AND patientCardTypeId=%1 " )
@@ -1434,7 +1434,7 @@ void dlgMain::_setPCTypeForHttp()
                                    poQuery->value( 0 ).toInt(),
                                    poQuery->value( 1 ).toInt(),
                                    poQuery->value( 2 ).toInt() );
-*/}
+}
 
 //=================================================================================================
 void dlgMain::on_cmbOnlinePaymentMethod_currentIndexChanged(int /*index*/)
@@ -1737,7 +1737,7 @@ void dlgMain::slotShowModuleNotification(QString p_qsMessage)
 void dlgMain::_saveSettings()
 //------------------------------------------------------------------------------------
 {
-//    m_uiPatientCardTypeId = ui->cmbOnlinePatientCardType->itemData( ui->cmbOnlinePatientCardType->currentIndex() ).toUInt();
+    m_uiPatientCardTypeId = ui->cmbOnlinePatientCardType->itemData( ui->cmbOnlinePatientCardType->currentIndex() ).toUInt();
 //    m_uiPaymentMethodId   = ui->cmbOnlinePaymentMethod->itemData( ui->cmbOnlinePaymentMethod->currentIndex() ).toUInt();
 
     QSettings   obPref( QString( "%1/websync.inf" ).arg( QDir::currentPath() ), QSettings::IniFormat );
@@ -1754,8 +1754,8 @@ void dlgMain::_saveSettings()
     obPref.setValue( "WindowPosition/Mainwindow_width", width() );
     obPref.setValue( "WindowPosition/Mainwindow_height", height() );
 
-//    obPref.setValue( "TimerPCOnlineSync", m_nTimerPCOnlineSync );
-//    obPref.setValue( "OnlinePatientCardType", m_uiPatientCardTypeId );
+    obPref.setValue( "TimerPCOnlineSync", m_nTimerPCOnlineSync );
+    obPref.setValue( "OnlinePatientCardType", m_uiPatientCardTypeId );
 //    obPref.setValue( "OnlinePaymentMethod", m_uiPaymentMethodId );
 
     try

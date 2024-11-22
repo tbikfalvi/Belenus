@@ -182,4 +182,5 @@ Version 2.1.2.0
 - HIBAJAVITAS: Gepek perc idejenek torlese nem mukodott
 - Kezdo kepernyon szoveg beirasaval majd ENTER gomb lenyomasaval elo lehet hivni a vendegek listajat a megadott szoveg szuresevel
   Aktualis vendeg kivalasztasanal eloszor az InputDialog jon fel, igy lehetoseg van szurt listaban keresni rogton
+- London applikacios fejlesztes tamogatas: online regisztralt vendeg es berlet rogzitese a rendszerben
   
