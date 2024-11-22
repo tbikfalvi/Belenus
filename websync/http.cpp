@@ -936,28 +936,28 @@ void cBlnsHttp::_updateMailRecord()
 void cBlnsHttp::_httpGetOnlineRecords()
 //-------------------------------------------------------------------------------------------------
 {
-    // http://www.kiwisun.hu/kiwi_ticket/comm.php
+    // https://kiwisun.hu/kiwi_ticket/kiwiApiProcess.php
     QString qsFileName  = m_qsServerAddress;
     QString qsSha1Source = "";
 
     qsSha1Source.append( m_qsToken );
-    qsSha1Source.append( QString::number(m_uiCommId) );
+//    qsSha1Source.append( QString::number(m_uiCommId) );
     qsSha1Source.append( m_qsLicenceString );
-    qsSha1Source.append( "gifter" );
+    qsSha1Source.append( "apiProcess" );
 
     QString qsSha1Hash = QString(QCryptographicHash::hash(qsSha1Source.toStdString().c_str(),QCryptographicHash::Sha1).toHex());
 
-    qsFileName.append( "/kiwi_ticket/comm.php" );
+    qsFileName.append( "/kiwi_ticket/kiwiApiProcess.php" );
 
     qsFileName = qsFileName.replace( "\\", "/" );
     qsFileName = qsFileName.replace( "//kiwi", "/kiwi" );
 
     qsFileName.append( QString( "?token=%1" ).arg( m_qsToken ) );
-    qsFileName.append( QString( "&code=%1" ).arg( qsSha1Hash ) );
-    qsFileName.append( QString( "&StudioId=%1" ).arg( m_qsLicenceString ) );
-    qsFileName.append( QString( "&CommId=%1" ).arg( m_uiCommId ) );
+    qsFileName.append( QString( "&studioId=%1" ).arg( m_qsLicenceString ) );
+    qsFileName.append( QString( "&hash=%1" ).arg( qsSha1Hash ) );
+//    qsFileName.append( QString( "&CommId=%1" ).arg( m_uiCommId ) );
 
-    g_obLogger(cSeverity::DEBUG) << "HTTP: Get online sold card data ["
+    g_obLogger(cSeverity::DEBUG) << "HTTP: Get online registered patient and sold card data ["
                                  << qsFileName
                                  << "]"
                                  << EOM;
@@ -1707,6 +1707,105 @@ void cBlnsHttp::_readMailResponseFromFile()
 }
 
 //=================================================================================================
+bool cBlnsHttp::_processApiProcessPhp()
+//-------------------------------------------------------------------------------------------------
+{
+    QString fileName = QString("%1\\kiwiApiProcess.php").arg( QDir::currentPath() );
+    QFile   file( fileName );
+
+    if (!file.open(QIODevice::ReadOnly | QIODevice::Text))
+    {
+        g_obLogger(cSeverity::ERROR) << "HTTP Unable to open file " << fileName << EOM;
+        return false;
+    }
+
+    // példa: {"studio":"36","barcode":"011211","name":"Sandra Boyle","email":"sandra@gmail.com","sex":"2","type":"1","eventTime":"2024-11-12 10:11:11"}
+    QString     qsResponse  =  file.readLine();
+
+    qsResponse.remove( "{" );
+    qsResponse.remove( "}" );
+    qsResponse.remove( "\"" );
+
+    QStringList qslResponse = qsResponse.split( "," );
+
+    if( !qslResponse.isEmpty() )
+    {
+        QString qsPatientName   = _findDataById( qslResponse, "name" );
+        QString qsPatientEmail  = _findDataById( qslResponse, "email" );
+        QString qsPatientGender = _findDataById( qslResponse, "sex" );
+        QString qsBarcode       = _findDataById( qslResponse, "barcode" );
+        QString qsDateTime      = _findDataById( qslResponse, "eventTime" );
+        int     nOnlineAction   = _findDataById( qslResponse, "eventTime" ).toInt();
+
+        return _processOnlinePatientAndCard( qsPatientName, qsPatientEmail, qsPatientGender, qsBarcode, qsDateTime, nOnlineAction );
+    }
+    else if( qsResponse.compare( "0" ) == 0 )
+    {
+        m_qsError = tr("Server did not received token");
+        g_obLogger(cSeverity::INFO) << "HTTP: No new patient or card registered online" << EOM;
+        return true;
+    }
+    else if( qsResponse.compare( "1" ) == 0 )
+    {
+        m_qsError = tr("Server did not received token");
+        g_obLogger(cSeverity::WARNING) << "HTTP: SQL error occured on server side" << EOM;
+        emit signalErrorOccured();
+        m_inHttpProcessStep = HTTP_ERROR_SERVER_SQL;
+    }
+    else if( qsResponse.compare( "2" ) == 0 )
+    {
+        m_qsError = tr("Token sent to server is invalid");
+        g_obLogger(cSeverity::WARNING) << "HTTP: Token sent to server is invalid" << EOM;
+        emit signalErrorOccured();
+        m_inHttpProcessStep = HTTP_ERROR_INVALID_TOKEN;
+    }
+    else if( qsResponse.compare( "3" ) == 0 )
+    {
+        m_qsError = tr("Server did not received Sha1 hash");
+        g_obLogger(cSeverity::WARNING) << "HTTP: Server did not received Sha1 hash" << EOM;
+        emit signalErrorOccured();
+        m_inHttpProcessStep = HTTP_ERROR_SHA1_NOT_RECEIVED;
+    }
+    else if( qsResponse.compare( "4" ) == 0 )
+    {
+        m_qsError = tr("Server did not received Studio Id");
+        g_obLogger(cSeverity::WARNING) << "HTTP: Server did not received Studio Id" << EOM;
+        emit signalErrorOccured();
+        m_inHttpProcessStep = HTTP_ERROR_MISSING_STUDIOID;
+    }
+    else if( qsResponse.compare( "5" ) == 0 )
+    {
+        m_qsError = tr("Token sent to server is invalid");
+        g_obLogger(cSeverity::WARNING) << "HTTP: Token sent to server is invalid" << EOM;
+        emit signalErrorOccured();
+        m_inHttpProcessStep = HTTP_ERROR_INVALID_TOKEN;
+    }
+    else if( qsResponse.compare( "6" ) == 0 )
+    {
+        m_qsError = tr("Token sent to server is already sent");
+        g_obLogger(cSeverity::WARNING) << "HTTP: Token sent to server is already sent" << EOM;
+        emit signalErrorOccured();
+        m_inHttpProcessStep = HTTP_ERROR_OBSOLETE_TOKEN;
+    }
+    else if( qsResponse.compare( "7" ) == 0 )
+    {
+        m_qsError = tr("SHA1 code mismatch in comm response");
+        g_obLogger(cSeverity::WARNING) << "HTTP: SHA1 code mismatch" << EOM;
+        emit signalErrorOccured();
+        m_inHttpProcessStep = HTTP_ERROR_SHA1_MISMATCH;
+    }
+    else if( qsResponse.compare( "8" ) == 0 )
+    {
+        m_qsError = tr("JSON response is invalid");
+        g_obLogger(cSeverity::WARNING) << "HTTP: SHA1 code mismatch" << EOM;
+        emit signalErrorOccured();
+        m_inHttpProcessStep = HTTP_ERROR_WRONG_JASON;
+    }
+
+    return false;
+}
+
+//=================================================================================================
 bool cBlnsHttp::_processCommXML()
 //-------------------------------------------------------------------------------------------------
 {
@@ -1816,6 +1915,64 @@ bool cBlnsHttp::_processCommXML()
     }
 
     return false;
+}
+
+//=================================================================================================
+bool cBlnsHttp::_processOnlinePatientAndCard( QString p_qsPatientName, QString p_qsPatientEmail, QString p_qsPatientGender, QString p_qsBarcode, QString p_qsDateTime, int p_nOnlineAction )
+//-------------------------------------------------------------------------------------------------
+{
+    QString         qsErrorMsg  = "";
+    QString         qsQuery = "";
+    unsigned int    uiId    = 0;
+
+    try
+    {
+        qsQuery = QString( "SELECT patientId FROM patients WHERE name=\"%1\" AND email=\"%2\" " ).arg( p_qsPatientName ).arg( p_qsPatientEmail );
+
+        QSqlQuery   *poQuery = g_poDB->executeQTQuery( qsQuery );
+
+        if( poQuery->size() > 0 )
+        {
+            poQuery->first();
+            uiId = poQuery->value( 0 ).toUInt();
+        }
+        else
+        {
+            qsQuery = "INSERT INTO patients SET ";
+            qsQuery += QString( "licenceId = \"%1\", " ).arg( m_uiLicenceId );
+            qsQuery += QString( "companyId = \"0\", " );
+            qsQuery += QString( "created = \"%1\", " ).arg( p_qsDateTime );
+            qsQuery += QString( "name = \"%1\", " ).arg( p_qsPatientName );
+            qsQuery += QString( "gender = \"%1\", " ).arg( p_qsPatientGender );
+            qsQuery += QString( "ageType = \"0\", " );
+            qsQuery += QString( "isReturning = 0, " );
+            qsQuery += QString( "email = \"%1\", " ).arg( p_qsPatientEmail );
+            qsQuery += QString( "regularCustomer = 0, " );
+            qsQuery += QString( "employee = 0, " );
+            qsQuery += QString( "service = 0, " );
+            qsQuery += QString( "company = 0, " );
+            qsQuery += QString( "discountType = 0, " );
+            qsQuery += QString( "membership = \"\", " );
+            qsQuery += QString( "dateBirth = \"\", " );
+            qsQuery += QString( "address = \"\", " );
+            qsQuery += QString( "skinTypeId = 0, " );
+            qsQuery += QString( "mobile = \"\", " );
+            qsQuery += QString( "comment = \"\", " );
+            qsQuery += QString( "loyaltyPoints = 0, " );
+            qsQuery += QString( "modified = \"%1\", " ).arg( QDateTime::currentDateTime().toString( QString("yyyy-MM-dd hh:mm:ss") ) );
+            qsQuery += QString( "active = 1, " );
+            qsQuery += QString( "archive = \"NEW\" " );
+
+            poQuery = g_poDB->executeQTQuery( qsQuery );
+            uiId = poQuery->lastInsertId().toUInt();
+        }
+    }
+    catch( cSevException &e )
+    {
+        cerr << ">> " << e.what() << endl << flush;;
+        g_obLogger(e.severity()) << e.what() << EOM;
+        m_qsError = tr("Error occured during executing database command");
+    }
 }
 
 //=================================================================================================
@@ -2381,6 +2538,20 @@ QString cBlnsHttp::_bytearrayToString(QString p_qsString)
     return p_qsString;
 }
 
+//=================================================================================================
+QString cBlnsHttp::_findDataById( const QStringList &list, const QString &id )
+//-------------------------------------------------------------------------------------------------
+{
+    for (const QString &entry : list)
+    {
+        QStringList parts = entry.split(":");  // Az elem felosztása azonosítóra és adatra
+        if (parts.size() == 2 && parts[0] == id)
+        {
+            return parts[1];  // Visszaadjuk az adatot
+        }
+    }
+    return QString();  // Üres string, ha nincs találat
+}
 //=================================================================================================
 //=================================================================================================
 //=================================================================================================

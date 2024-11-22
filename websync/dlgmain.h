@@ -133,7 +133,7 @@ private:
     QAction             *actionShowMainWindow;
     QAction             *actionUserSendAllPatientCard;
     QAction             *actionUserWaitingClearPatientCards;
-//    QAction             *actionUserGetOnlinePatientCards;
+    QAction             *actionUserGetOnlinePatientCards;
     QAction             *actionClearPatientCard;
     QAction             *actionClearAllPatientCard;
     QAction             *actionExit;

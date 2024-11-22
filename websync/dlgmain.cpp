@@ -137,7 +137,9 @@ dlgMain::dlgMain(QWidget *parent, QString p_qsAppVersion, QString p_qsDbVersion)
     ui->ledTimerPCOnlineSync->setVisible( false );
     ui->lblSeconds2->setVisible( false );
     ui->lblIndexPCOnline->setVisible( false );
-    ui->pbSyncOnlinePC->setVisible( false );
+
+// Angliai applikaciobol erkezo vendeg es berlet feltoltes lekerdezesehez kell megiscsak
+//    ui->pbSyncOnlinePC->setVisible( false );
 
     // resize dialog
     resize( obPref.value( "WindowPosition/Mainwindow_width", 785 ).toInt(),
@@ -835,7 +837,7 @@ void dlgMain::on_pbClearPCData_clicked()
 //=================================================================================================
 void dlgMain::on_pbSyncOnlinePC_clicked()
 {
-//    g_poBlnsHttp->getPatientCardsSoldOnline();
+    g_poBlnsHttp->getPatientCardsSoldOnline();
 }
 
 //=================================================================================================
@@ -1079,8 +1081,8 @@ void dlgMain::_setGUIEnabled(bool p_bEnabled)
     ui->pbSyncAllPatientCard->setEnabled( p_bEnabled && _isInGroup( GROUP_SYSTEM ) && m_bHttpEnabledBySetting && m_bHttpEnabledByUser );
     actionUserSendAllPatientCard->setEnabled( p_bEnabled && _isInGroup( GROUP_SYSTEM ) && m_bHttpEnabledBySetting && m_bHttpEnabledByUser );
 
-    ui->pbSyncOnlinePC->setEnabled( false/*p_bEnabled && _isInGroup( GROUP_USER ) && m_bHttpEnabledBySetting && m_bHttpEnabledByUser*/ );
-//    actionUserGetOnlinePatientCards->setEnabled( false/*p_bEnabled && _isInGroup( GROUP_USER ) && m_bHttpEnabledBySetting && m_bHttpEnabledByUser*/ );
+    ui->pbSyncOnlinePC->setEnabled( p_bEnabled && _isInGroup( GROUP_USER ) && m_bHttpEnabledBySetting && m_bHttpEnabledByUser );
+    actionUserGetOnlinePatientCards->setEnabled( p_bEnabled && _isInGroup( GROUP_USER ) && m_bHttpEnabledBySetting && m_bHttpEnabledByUser );
 
     ui->pbClearPatientCard->setEnabled( p_bEnabled && _isInGroup( GROUP_SYSTEM ) && m_bHttpEnabledBySetting && m_bHttpEnabledByUser );
     actionClearPatientCard->setEnabled( p_bEnabled && _isInGroup( GROUP_SYSTEM ) && m_bHttpEnabledBySetting && m_bHttpEnabledByUser );
@@ -1130,9 +1132,9 @@ void dlgMain::_setActions()
     actionUserWaitingClearPatientCards->setIcon( QIcon( ":/trash.png" ) );
     connect( actionUserWaitingClearPatientCards, SIGNAL(triggered()), this, SLOT(on_pbClearPCData_clicked()) );
 
-//    actionUserGetOnlinePatientCards = new QAction(tr("Get online sold patientcards"), this);
-//    actionUserGetOnlinePatientCards->setIcon( QIcon( ":/onlinepcsync.png" ) );
-//    connect( actionUserGetOnlinePatientCards, SIGNAL(triggered()), this, SLOT(on_pbSyncOnlinePC_clicked()) );
+    actionUserGetOnlinePatientCards = new QAction(tr("Get online sold patientcards"), this);
+    actionUserGetOnlinePatientCards->setIcon( QIcon( ":/onlinepcsync.png" ) );
+    connect( actionUserGetOnlinePatientCards, SIGNAL(triggered()), this, SLOT(on_pbSyncOnlinePC_clicked()) );
 
     actionClearPatientCard = new QAction(tr("Clear patientcard"), this);
     actionClearPatientCard->setIcon( QIcon( ":/patientcard_delete.png" ) );
@@ -1158,7 +1160,7 @@ void dlgMain::_setMenu()
     menuUserActions->setIcon( QIcon( ":/user.png" ) );
     menuUserActions->addAction( actionUserSendAllPatientCard );
     menuUserActions->addAction( actionUserWaitingClearPatientCards );
-//    menuUserActions->addAction( actionUserGetOnlinePatientCards );
+    menuUserActions->addAction( actionUserGetOnlinePatientCards );
     menuUserActions->addAction( actionClearPatientCard );
     menuUserActions->addAction( actionClearAllPatientCard );
 

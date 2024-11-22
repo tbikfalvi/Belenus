@@ -58,6 +58,7 @@ using namespace std;
 #define HTTP_ERROR_LICENCE_INACTIVE                 -26
 #define HTTP_ERROR_LICENCE_CLIENT_CODE_INVALID      -27
 #define HTTP_ERROR_LICENCE_SERVER_CODE_INVALID      -28
+#define HTTP_ERROR_WRONG_JASON                      -29
 
 #define HTTP_ERROR_INVALID_LICENCE_CODE             -70
 #define HTTP_ERROR_INVALID_ANSWER                   -98
@@ -83,28 +84,32 @@ public:
         HA_LICENCE_REACTIVATE,      // 11
         HA_LICENCE_CHECK,           // 12
 //        HA_LICENCE_CODE_VALIDATE,   // 13
-        HA_PROCESSFINISHED          // 13
+        HA_NEWPATIENT_CHECK,        // 13
+        HA_NEWPATIENT_CONFIRM,      // 14
+        HA_PROCESSFINISHED          // 15
     };
 
     static const char *toStr( teBlnsHttpAction p_enGA )
     {
         switch( p_enGA )
         {
-            case HA_DEFAULT:                    return "HTTPMSG_00";                                                    break;
-            case HA_AUTHENTICATE:               return "HTTPMSG_01 Authentication with server";                         break;
-            case HA_PCSENDDATA:                 return "HTTPMSG_02 Send patientcard data to server";                    break;
-            case HA_PCUPDATERECORD:             return "HTTPMSG_03 Update patientcard record on server";                break;
-            case HA_PCPROCESSQUEUE:             return "HTTPMSG_04 Process waiting patientcard queue";                  break;
-            case HA_REQUESTDATA:                return "HTTPMSG_05 Get patientcard data sold online";                   break;
-            case HA_SENDREQUESTSFINISHED:       return "HTTPMSG_06 Processing patientcards sold online finished";       break;
-            case HA_SENDMAILTOSERVER:           return "HTTPMSG_07 Send waiting mail to server";                        break;
-            case HA_MAILPROCESSQUEUE:           return "HTTPMSG_08 Process waiting mails queue";                        break;
-            case HA_UPDATEMAILRECORD:           return "HTTPMSG_09 Update mail record";                                 break;
-            case HA_LICENCE_REGISTER:           return "HTTPMSG_10 Register licence key";                               break;
-            case HA_LICENCE_REACTIVATE:         return "HTTPMSG_11 Reactivate licence key";                             break;
-            case HA_LICENCE_CHECK:              return "HTTPMSG_12 Check licence key validity";                         break;
+            case HA_DEFAULT:                    return "HTTPMSG_00";                                                            break;
+            case HA_AUTHENTICATE:               return "HTTPMSG_01 Authentication with server";                                 break;
+            case HA_PCSENDDATA:                 return "HTTPMSG_02 Send patientcard data to server";                            break;
+            case HA_PCUPDATERECORD:             return "HTTPMSG_03 Update patientcard record on server";                        break;
+            case HA_PCPROCESSQUEUE:             return "HTTPMSG_04 Process waiting patientcard queue";                          break;
+            case HA_REQUESTDATA:                return "HTTPMSG_05 Get patientcard data sold online";                           break;
+            case HA_SENDREQUESTSFINISHED:       return "HTTPMSG_06 Processing patientcards sold online finished";               break;
+            case HA_SENDMAILTOSERVER:           return "HTTPMSG_07 Send waiting mail to server";                                break;
+            case HA_MAILPROCESSQUEUE:           return "HTTPMSG_08 Process waiting mails queue";                                break;
+            case HA_UPDATEMAILRECORD:           return "HTTPMSG_09 Update mail record";                                         break;
+            case HA_LICENCE_REGISTER:           return "HTTPMSG_10 Register licence key";                                       break;
+            case HA_LICENCE_REACTIVATE:         return "HTTPMSG_11 Reactivate licence key";                                     break;
+            case HA_LICENCE_CHECK:              return "HTTPMSG_12 Check licence key validity";                                 break;
 //            case HA_LICENCE_CODE_VALIDATE:      return "HTTPMSG_13 Check licence code integrity at licence provider";   break;
-            case HA_PROCESSFINISHED:            return "HTTPMSG_99";                                                    break;
+            case HA_NEWPATIENT_CHECK:           return "HTTPMSG_13 Check if new patient and/or patientcard registered online";  break;
+            case HA_NEWPATIENT_CONFIRM:         return "HTTPMSG_14 Confirm the new patient or patientcard saved in database";   break;
+            case HA_PROCESSFINISHED:            return "HTTPMSG_99";                                                            break;
             default:                            return "HTTPMSGERR";
         }
     }
@@ -217,12 +222,14 @@ private:
     void            _httpConfirmRequestedData();
     bool            _processCommXML();
     bool            _processCommResponse( QByteArray p_qsResponse );
+    bool            _processOnlinePatientAndCard( QString p_qsPatientName, QString p_qsPatientEmail, QString p_qsPatientGender, QString p_qsBarcode, QString p_qsDateTime, int p_nOnlineAction );
     bool            _processResponse();
     unsigned int    _saveGuest( QString p_qsName, QString p_qsUniqueId, QString p_qsEmail );
     unsigned int    _savePatientCard( QString p_qsBarcode, QString p_qsValidDateTo, QString p_qsUnitCount, unsigned int p_uiPatientId );
     unsigned int    _saveOnlineSell( unsigned int p_uiPatientCardId, QString p_qsBarcode, unsigned int p_uiPatientId, QString p_qsLedgerTime );
     void            _savePatientCardUnits( QString p_qsUnitCount, unsigned int p_uiPatientCardId, QString p_qsValidDateTo, unsigned int p_uiLedgerId );
     QString         _bytearrayToString( QString p_qsString );
+    QString         _findDataById( const QStringList &list, const QString &id );
     void            _updateMailRecord();
     void            _readMailResponseFromFile();
     QString         _getNameForPatientCardType( unsigned int p_uiPatientCardTypeId );
