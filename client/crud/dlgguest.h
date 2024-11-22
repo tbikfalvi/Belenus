@@ -12,7 +12,7 @@ class cDlgGuest : public cDlgCrud
     Q_OBJECT
 
 public:
-    cDlgGuest( QWidget *p_poParent = 0 );
+    cDlgGuest( QWidget *p_poParent = 0, QString p_qsPatientNameFilter = "" );
     virtual ~cDlgGuest();
 
     QHBoxLayout *horizontalLayout;

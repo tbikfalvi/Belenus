@@ -35,8 +35,6 @@ cDlgInputStart::cDlgInputStart( QWidget *p_poParent )
     pbProduct->setEnabled( false );
     pbPatient->setEnabled( false );
 
-    pbPatient->setVisible( false );
-
     if( g_poPrefs->isBarcodeHidden() && !g_obUser.isInGroup( cAccessGroup::ADMIN ) )
     {
         ledInputStart->setEchoMode( QLineEdit::Password );
@@ -136,21 +134,23 @@ void cDlgInputStart::on_ledInputStart_textChanged(QString )
 {
     if( m_bInitCalled ) return;
 
-    ledInputStart->setText( ledInputStart->text().remove( ' ' ) );
-
     bool boIsANumber = false;
     ledInputStart->text().toUInt( &boIsANumber );
 
+    if( boIsANumber )
+    {
+        ledInputStart->setText( ledInputStart->text().remove( ' ' ) );
+    }
+
     m_bTime = true;
     m_bCard = true;
-//    m_bPat  = true;
-    m_bPat  = false;
+    m_bPat  = true;
     m_bProd = true;
 
     pbTime->setEnabled( true );
     pbCardcode->setEnabled( true );
     pbProduct->setEnabled( true );
-//    pbPatient->setEnabled( true );
+    pbPatient->setEnabled( true );
 
     if( ledInputStart->text().length() == 0 ||
         ledInputStart->text().length() > 3 ||
@@ -177,6 +177,15 @@ void cDlgInputStart::on_ledInputStart_textChanged(QString )
     {
         m_bPat = false;
         pbPatient->setEnabled( false );
+    }
+    if( !boIsANumber )
+    {
+        m_bCard = false;
+        m_bTime = false;
+        m_bProd = false;
+        pbCardcode->setEnabled( false );
+        pbProduct->setEnabled( false );
+        pbTime->setEnabled( false );
     }
 
     if( _IsServiceCard() )
@@ -207,11 +216,11 @@ void cDlgInputStart::on_ledInputStart_textChanged(QString )
 
 void cDlgInputStart::on_pbPatient_clicked()
 {
-//    m_bPat = true;
-//    m_bCard = false;
-//    m_bProd = false;
-//    m_bTime = false;
-//    QDialog::accept();
+    m_bPat = true;
+    m_bCard = false;
+    m_bProd = false;
+    m_bTime = false;
+    QDialog::accept();
 }
 
 void cDlgInputStart::on_pbCardcode_clicked()

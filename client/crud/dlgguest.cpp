@@ -4,8 +4,7 @@
 #include "dlgguest.h"
 #include "../edit/dlgguestedit.h"
 
-cDlgGuest::cDlgGuest( QWidget *p_poParent )
-    : cDlgCrud( p_poParent )
+cDlgGuest::cDlgGuest(QWidget *p_poParent , QString p_qsPatientNameFilter) : cDlgCrud( p_poParent )
 {
     setWindowTitle( tr( "Guest List" ) );
     setWindowIcon( QIcon("./resources/40x40_patient.png") );
@@ -39,6 +38,8 @@ cDlgGuest::cDlgGuest( QWidget *p_poParent )
     horizontalLayout->addItem( horizontalSpacer1 );
 
     verticalLayout->insertLayout( 0, horizontalLayout );
+
+    ledFilterName->setText( p_qsPatientNameFilter );
 
     QSqlQuery   *poQuery;
 

@@ -149,6 +149,8 @@ cWndMain::cWndMain( QWidget *parent ) : QMainWindow( parent )
     m_nTickQuarter                  = 0;
     m_bTickQuarter                  = false;
 
+    m_qsPatientNameFilter           = "";
+
     pbLogin->setIcon( QIcon("./resources/40x40_ok.png") );
 
     frmLogin->setVisible( false );
@@ -1023,9 +1025,6 @@ void cWndMain::logoutUser()
 //====================================================================================
 void cWndMain::keyPressEvent( QKeyEvent *p_poEvent )
 {
-//    m_nHttpCommCounter = 0;
-//    g_poPrefs->setBlnsHttpSuspended( true );
-//    m_pbStatusCommunicationSuspended.setIcon( QIcon( "./resources/40x40_minus.png" ) );
     setCursor( Qt::ArrowCursor);
     slotMainWindowActivated();
 
@@ -1172,6 +1171,12 @@ void cWndMain::keyPressEvent( QKeyEvent *p_poEvent )
                 {
                     on_KeyboardDisabled();
                     processInputTimePeriod( obDlgInputStart.getEditText().toInt() );
+                }
+                else if( obDlgInputStart.m_bPat )
+                {
+                    on_KeyboardDisabled();
+                    m_qsPatientNameFilter = obDlgInputStart.getEditText();
+                    on_action_Guests_triggered();
                 }
             }
 
@@ -1845,7 +1850,8 @@ void cWndMain::on_action_Guests_triggered()
 
     m_dlgProgress->showProgress();
 
-    cDlgGuest  obDlgGuest( this );
+    cDlgGuest  obDlgGuest( this, m_qsPatientNameFilter );
+    m_qsPatientNameFilter = "";
 
     m_dlgProgress->hideProgress();
 
