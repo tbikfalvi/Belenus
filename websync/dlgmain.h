@@ -169,18 +169,18 @@ private:
     bool                 m_bStartReactivateLicenceKey;
     bool                 m_bValidateLicenceKey;
     int                  m_nTimerPCStatusSync;
-//    int                  m_nTimerPCOnlineSync;
+    int                  m_nTimerPCOnlineSync;
     int                  m_nTimerSendMailCheck;
     int                  m_nIndexUser;
     int                  m_nIndexPCStatusSync;
-//    int                  m_nIndexPCOnlineSync;
+    int                  m_nIndexPCOnlineSync;
     int                  m_nIndexSendMailSync;
     int                  m_nIndexLicenceValidation;
     int                  m_nIndexLicenceValidationMax;
     int                  m_enGroup;
     QString              m_qsRPSW;
     int                  m_nIndexUpdateSyncDataCount;
-//    unsigned int         m_uiPatientCardTypeId;
+    unsigned int         m_uiPatientCardTypeId;
     bool                 m_bStartFinished;
 //    unsigned int         m_uiPaymentMethodId;
     QString              m_qsHttpStatus;
@@ -197,7 +197,7 @@ private:
     bool                 m_FlagHttpSuspended;
     bool                 m_FlagHttpContinued;
 //    bool                 m_FlagNoPaymentMethod;
-//    bool                 m_FlagNoPCType;
+    bool                 m_FlagNoPCType;
 
     QString              m_qsServerAddress;
     bool                 m_bServerAddressChanged;

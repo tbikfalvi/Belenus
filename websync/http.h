@@ -58,7 +58,8 @@ using namespace std;
 #define HTTP_ERROR_LICENCE_INACTIVE                 -26
 #define HTTP_ERROR_LICENCE_CLIENT_CODE_INVALID      -27
 #define HTTP_ERROR_LICENCE_SERVER_CODE_INVALID      -28
-#define HTTP_ERROR_WRONG_JASON                      -29
+#define HTTP_ERROR_WRONG_JSON                       -29
+#define HTTP_ERROR_ONLINE_EVENT_NOT_FOUND           -30
 
 #define HTTP_ERROR_INVALID_LICENCE_CODE             -70
 #define HTTP_ERROR_INVALID_ANSWER                   -98
@@ -220,15 +221,16 @@ private:
     void            _updateProcessedRecord();
     void            _httpGetOnlineRecords();
     void            _httpConfirmRequestedData();
+// Gifter-es rendszerhez kellett helyette van az alábbi
+//    bool            _processCommXML();
+//    bool            _processCommResponse( QByteArray p_qsResponse );
     bool            _processApiProcessPhp();
-    bool            _processCommXML();
-    bool            _processCommResponse( QByteArray p_qsResponse );
-    bool            _processOnlinePatientAndCard( QString p_qsPatientName, QString p_qsPatientEmail, QString p_qsPatientGender, QString p_qsBarcode, QString p_qsDateTime, int p_nOnlineAction );
+    bool            _processOnlinePatientAndCard( QString p_qsResponse );
     bool            _processResponse();
-    unsigned int    _saveGuest( QString p_qsName, QString p_qsUniqueId, QString p_qsEmail );
-    unsigned int    _savePatientCard( QString p_qsBarcode, QString p_qsValidDateTo, QString p_qsUnitCount, unsigned int p_uiPatientId );
+    unsigned int    _saveGuest(QString p_qsName, QString p_qsEmail , int p_nGender, QString p_qsDateTime);
+    unsigned int    _savePatientCard(QString p_qsBarcode, int p_nUnitCount, unsigned int p_uiPatientId , QString p_qsValidDateTo);
     unsigned int    _saveOnlineSell( unsigned int p_uiPatientCardId, QString p_qsBarcode, unsigned int p_uiPatientId, QString p_qsLedgerTime );
-    void            _savePatientCardUnits( QString p_qsUnitCount, unsigned int p_uiPatientCardId, QString p_qsValidDateTo, unsigned int p_uiLedgerId );
+    void            _savePatientCardUnits(int p_nUnitCount, unsigned int p_uiPatientCardId, QString p_qsValidDateTo, unsigned int p_uiLedgerId );
     QString         _bytearrayToString( QString p_qsString );
     QString         _findDataById( const QStringList &list, const QString &id );
     void            _updateMailRecord();
@@ -241,6 +243,7 @@ private:
 //    void            _httpValidateLicenceIntegrity();
     bool            _processLicence();
     bool            _processLicenceIntegrity();
+    QString         _calculateValidDateTo( unsigned int p_uiPatientCardTypeId );
 
 signals:
 

@@ -285,7 +285,7 @@
          <bool>true</bool>
         </property>
         <property name="currentIndex">
-         <number>0</number>
+         <number>2</number>
         </property>
         <widget class="QWidget" name="tabStatus">
          <attribute name="title">
@@ -295,7 +295,7 @@
           <item>
            <widget class="QGroupBox" name="gbConnectionStatus">
             <property name="title">
-             <string>  </string>
+             <string/>
             </property>
             <property name="alignment">
              <set>Qt::AlignRight|Qt::AlignTrailing|Qt::AlignVCenter</set>
@@ -774,6 +774,19 @@
                   </widget>
                  </item>
                  <item>
+                  <spacer name="horizontalSpacer_16">
+                   <property name="orientation">
+                    <enum>Qt::Horizontal</enum>
+                   </property>
+                   <property name="sizeHint" stdset="0">
+                    <size>
+                     <width>40</width>
+                     <height>20</height>
+                    </size>
+                   </property>
+                  </spacer>
+                 </item>
+                 <item>
                   <widget class="QLabel" name="lblIndexPCOnline">
                    <property name="text">
                     <string>0</string>
@@ -1018,52 +1031,6 @@
          <layout class="QVBoxLayout" name="verticalLayout_7">
           <item>
            <layout class="QGridLayout" name="gridLayout">
-            <item row="0" column="0">
-             <widget class="QPushButton" name="pbSyncAllPatientCard">
-              <property name="enabled">
-               <bool>false</bool>
-              </property>
-              <property name="text">
-               <string>Send all patientcard data to web server</string>
-              </property>
-              <property name="icon">
-               <iconset resource="websync.qrc">
-                <normaloff>:/patientcards.png</normaloff>:/patientcards.png</iconset>
-              </property>
-              <property name="iconSize">
-               <size>
-                <width>40</width>
-                <height>40</height>
-               </size>
-              </property>
-              <property name="autoDefault">
-               <bool>false</bool>
-              </property>
-             </widget>
-            </item>
-            <item row="0" column="1">
-             <widget class="QPushButton" name="pbClearPCData">
-              <property name="enabled">
-               <bool>true</bool>
-              </property>
-              <property name="text">
-               <string>Clear patientcard data to be synchronized</string>
-              </property>
-              <property name="icon">
-               <iconset resource="websync.qrc">
-                <normaloff>:/trash.png</normaloff>:/trash.png</iconset>
-              </property>
-              <property name="iconSize">
-               <size>
-                <width>40</width>
-                <height>40</height>
-               </size>
-              </property>
-              <property name="autoDefault">
-               <bool>false</bool>
-              </property>
-             </widget>
-            </item>
             <item row="1" column="0">
              <widget class="QPushButton" name="pbClearPatientCard">
               <property name="enabled">
@@ -1075,6 +1042,29 @@
               <property name="icon">
                <iconset resource="websync.qrc">
                 <normaloff>:/patientcard_delete.png</normaloff>:/patientcard_delete.png</iconset>
+              </property>
+              <property name="iconSize">
+               <size>
+                <width>40</width>
+                <height>40</height>
+               </size>
+              </property>
+              <property name="autoDefault">
+               <bool>false</bool>
+              </property>
+             </widget>
+            </item>
+            <item row="0" column="0">
+             <widget class="QPushButton" name="pbSyncAllPatientCard">
+              <property name="enabled">
+               <bool>false</bool>
+              </property>
+              <property name="text">
+               <string>Send all patientcard data to web server</string>
+              </property>
+              <property name="icon">
+               <iconset resource="websync.qrc">
+                <normaloff>:/patientcards.png</normaloff>:/patientcards.png</iconset>
               </property>
               <property name="iconSize">
                <size>
@@ -1110,24 +1100,30 @@
               </property>
              </widget>
             </item>
-           </layout>
-          </item>
-          <item>
-           <spacer name="verticalSpacer_5">
-            <property name="orientation">
-             <enum>Qt::Vertical</enum>
-            </property>
-            <property name="sizeHint" stdset="0">
-             <size>
-              <width>20</width>
-              <height>133</height>
-             </size>
-            </property>
-           </spacer>
-          </item>
-          <item>
-           <layout class="QHBoxLayout" name="horizontalLayout_6">
-            <item>
+            <item row="0" column="1">
+             <widget class="QPushButton" name="pbClearPCData">
+              <property name="enabled">
+               <bool>true</bool>
+              </property>
+              <property name="text">
+               <string>Clear patientcard data to be synchronized</string>
+              </property>
+              <property name="icon">
+               <iconset resource="websync.qrc">
+                <normaloff>:/trash.png</normaloff>:/trash.png</iconset>
+              </property>
+              <property name="iconSize">
+               <size>
+                <width>40</width>
+                <height>40</height>
+               </size>
+              </property>
+              <property name="autoDefault">
+               <bool>false</bool>
+              </property>
+             </widget>
+            </item>
+            <item row="2" column="0">
              <layout class="QVBoxLayout" name="verticalLayout_3">
               <item>
                <layout class="QHBoxLayout" name="horizontalLayout_8">
@@ -1167,7 +1163,7 @@
               </item>
              </layout>
             </item>
-            <item>
+            <item row="2" column="1">
              <widget class="QPushButton" name="pbSyncOnlinePC">
               <property name="enabled">
                <bool>false</bool>
@@ -1190,6 +1186,23 @@
               </property>
              </widget>
             </item>
+           </layout>
+          </item>
+          <item>
+           <spacer name="verticalSpacer_5">
+            <property name="orientation">
+             <enum>Qt::Vertical</enum>
+            </property>
+            <property name="sizeHint" stdset="0">
+             <size>
+              <width>20</width>
+              <height>133</height>
+             </size>
+            </property>
+           </spacer>
+          </item>
+          <item>
+           <layout class="QHBoxLayout" name="horizontalLayout_6">
             <item>
              <spacer name="horizontalSpacer_18">
               <property name="orientation">
@@ -1664,7 +1677,6 @@
   <tabstop>pbClearAllPatientCard</tabstop>
   <tabstop>cmbOnlinePatientCardType</tabstop>
   <tabstop>cmbOnlinePaymentMethod</tabstop>
-  <tabstop>pbSyncOnlinePC</tabstop>
   <tabstop>ledLicenceKeyCurrent</tabstop>
   <tabstop>deValidated</tabstop>
   <tabstop>ledLicenceStatus</tabstop>

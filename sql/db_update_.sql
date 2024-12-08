@@ -1,9 +1,9 @@
 ﻿-- -----------------------------------------------------------------------------------
 -- Belenus Szoftver Rendszer (c) Pagony Multimedia Studio Bt - 2014
 -- -----------------------------------------------------------------------------------
--- Filename    : db_update_2_1_1_0.sql
--- AppVersion  : 2.1.1.0
--- DbVersion   : 2.1.1.0
+-- Filename    : db_update_2_1_2_0.sql
+-- AppVersion  : 2.1.2.0
+-- DbVersion   : 2.1.2.0
 -- -----------------------------------------------------------------------------------
 
 USE `belenus`;
@@ -14,5 +14,5 @@ ALTER TABLE `patientcardtypes` ADD `panelGroupID` int(10) unsigned NOT NULL DEFA
 
 -- -----------------------------------------------------------------------------------
 
-UPDATE settings SET value='2_1_1_0' WHERE identifier='APPLICATION_VERSION';
-UPDATE settings SET value='2_1_1_0' WHERE identifier='DATABASE_VERSION';
+UPDATE settings SET value='2_1_2_0' WHERE identifier='APPLICATION_VERSION';
+UPDATE settings SET value='2_1_2_0' WHERE identifier='DATABASE_VERSION';
