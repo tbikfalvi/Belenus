@@ -175,5 +175,11 @@ Version 2.1.1.0
 
 Version 2.1.2.0
 ===============
-- Kimutatas kezeloben az adatbazis valtozas kovetkezteben hibas kimutatasok javitva lettek
+- HIBAJAVITAS: Napi konyvnel a berlettel kapcsolatos adatok nem megfeleloen jelentek meg
+- HIBAJAVITAS: Fo konyvnel a berlettel kapcsolatos adatok nem megfeleloen jelentek meg
+- HIBAJAVITAS: Berlet adatok kimutatasnal az adatok nem megfeleloen jelentek meg
+- HIBAJAVITAS: Berlettipus torlesnel azokat az egysegeket, amiknek lejart az ervenyessegi ideje, inaktivva teszunk
+- HIBAJAVITAS: Gepek perc idejenek torlese nem mukodott
+- Kezdo kepernyon szoveg beirasaval majd ENTER gomb lenyomasaval elo lehet hivni a vendegek listajat a megadott szoveg szuresevel
+  Aktualis vendeg kivalasztasanal eloszor az InputDialog jon fel, igy lehetoseg van szurt listaban keresni rogton
 

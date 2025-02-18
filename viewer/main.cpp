@@ -4,6 +4,10 @@
 //
 //====================================================================================
 
+#define APPLICATION_VERSION_NUMBER  "2.1.2.0"
+
+//====================================================================================
+
 #include <QApplication>
 #include <QTranslator>
 #include <iostream>
@@ -17,10 +21,6 @@
 #include "../framework/qtframework.h"
 #include "../framework/logger/FileWriter.h"
 #include "../language/language.h"
-
-//====================================================================================
-
-#define APPLICATION_VERSION_NUMBER  "2.1.1.0"
 
 //====================================================================================
 

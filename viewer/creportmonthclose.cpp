@@ -90,7 +90,6 @@ unsigned int cReportMonthClose::_reportPartProductSell()
     addTableRow();
     addTableCell( tr("Product name"), "bold" );
     addTableCell( tr("Count"), "center bold" );
-//    addTableCell( tr("Amount"), "right bold" );
 
     QSqlQuery  *poQueryProducts = g_poDB->executeQTQuery( QString( "SELECT name, SUM(itemCount), SUM(totalPrice) "
                                                                    "FROM cassahistory, ledger WHERE "
@@ -103,16 +102,12 @@ unsigned int cReportMonthClose::_reportPartProductSell()
     unsigned int uiTotal = 0;
     while( poQueryProducts->next() )
     {
-//        cCurrency   obPrice( poQueryProducts->value(2).toInt() );
-//        uiTotalCassa += poQueryProducts->value(2).toInt();
 
         addTableRow();
         addTableCell( poQueryProducts->value(0).toString() );
         addTableCell( poQueryProducts->value(1).toString(), "center" );
         uiTotal += poQueryProducts->value(1).toUInt();
-//        addTableCell( obPrice.currencyFullStringShort(), "right" );
     }
-//    cCurrency   obTotalPriceAm( uiTotalCassa );
 
     addTableRow();
     addTableCell( tr("Sum"), "bold" );
@@ -127,13 +122,12 @@ unsigned int cReportMonthClose::_reportPartProductSell()
 unsigned int cReportMonthClose::_reportPartPatientCardSell()
 //------------------------------------------------------------------------------------
 {
-//    unsigned int    uiTotalCardSell = 0;
     QSqlQuery      *poQueryResult;
 
     startSection();
     addTable();
 
-    poQueryResult = g_poDB->executeQTQuery( "SELECT * FROM patientcardtypes WHERE patientCardTypeId>1" );
+    poQueryResult = g_poDB->executeQTQuery( "SELECT patientCardTypeId, name FROM patientcardtypes WHERE patientCardTypeId>1" );
 
     unsigned int    uiCountPCSum = 0;
 
@@ -141,10 +135,12 @@ unsigned int cReportMonthClose::_reportPartPatientCardSell()
     {
         unsigned int    uiCountPCTSum = 0;
         unsigned int    uiPricePCTSum = 0;
-        QString         qsPricePCTSum = "";
+
+        unsigned int    queryPatientCardTypeId      = poQueryResult->value(0).toUInt();
+        QString         queryPatientCardTypeName    = poQueryResult->value(1).toString();
 
         unsigned int uiPricePCSell = 0;
-        QString      qsCountPCSell = _countsumPatientCardTypeSell( m_qslCassaIds.join(","), poQueryResult->value(0).toUInt(), &uiPricePCSell );
+        QString      qsCountPCSell = _countsumPatientCardTypeSell( m_qslCassaIds.join(","), queryPatientCardTypeId, &uiPricePCSell );
 
         uiCountPCTSum += qsCountPCSell.toInt();
         uiPricePCTSum += uiPricePCSell;
@@ -152,20 +148,13 @@ unsigned int cReportMonthClose::_reportPartPatientCardSell()
         if( uiPricePCTSum > 0 || qsCountPCSell.toInt() > 0 )
         {
             addTableRow();
-            addTableCell( poQueryResult->value(2).toString() );
+            addTableCell( queryPatientCardTypeName );
 
-//            cCurrency   obPricePCTSum( uiPricePCTSum );
-
-//            qsPricePCTSum = obPricePCTSum.currencyFullStringShort();
-//            addTableCell( QString( "%1 / %2" ).arg( uiCountPCTSum ).arg( qsPricePCTSum ) );
             addTableCell( QString( "%1" ).arg( uiCountPCTSum ) );
         }
         uiCountPCSum += uiCountPCTSum;
 
-//        uiTotalCardSell += uiPricePCTSum;
     }
-
-//    cCurrency obTotalCardSell( uiTotalCardSell );
 
     addTableRow();
     addTableCell( tr("Sum"), "bold" );

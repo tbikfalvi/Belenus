@@ -1,3 +1,13 @@
+//====================================================================================
+//
+// Belenus WebSync alkalmazas (c) Bikfalvi Tamas
+//
+//====================================================================================
+
+#define APPLICATION_VERSION_NUMBER  "2.1.2.0"
+#define DATABASE_VERSION_NUMBER     "2.1.2.0"
+
+//====================================================================================
 
 #include <QApplication>
 #include <QProcessEnvironment>
@@ -6,12 +16,13 @@
 
 #include "dlgmain.h"
 
+//====================================================================================
+
 QTranslator     *poTransApp;
 QTranslator     *poTransQT;
 QApplication    *apMainApp;
 
-#define APPLICATION_VERSION_NUMBER  "2.1.1.0"
-#define DATABASE_VERSION_NUMBER     "2.1.1.0"
+//====================================================================================
 
 #include "../framework/qtlogger.h"
 #include "../framework/qtframework.h"
@@ -84,7 +95,7 @@ int main(int argc, char *argv[])
 
     dlgMain obDlgMain( 0, QString( APPLICATION_VERSION_NUMBER ), QString( DATABASE_VERSION_NUMBER ) );
 
-    if( argc > 1 )
+/*    if( argc > 1 )
     {
         for( int i=1; i<argc; i++ )
         {
@@ -95,7 +106,7 @@ int main(int argc, char *argv[])
 //                obDlgMain.setTimerLength( atoi( qslParam.at(1).toStdString().c_str() ) );
 //            }
         }
-    }
+    }*/
 
     return apMainApp->exec();
 }

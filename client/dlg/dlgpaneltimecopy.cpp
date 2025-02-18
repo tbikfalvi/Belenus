@@ -18,7 +18,7 @@ cDlgPanelTypeCopy::cDlgPanelTypeCopy( QWidget *p_poParent, unsigned int uiPanelI
 
     m_dlgProgress = new cDlgProgress( this );
 
-    QString qsQuery = QString( "SELECT name, useTime, usePrice FROM panelUses WHERE panelId=%1" ).arg(uiPanelId);
+    QString qsQuery = QString( "SELECT name, useTime, usePrice FROM panelUses WHERE panelId=%1 AND active=1" ).arg(uiPanelId);
     QSqlQuery  *poQuery = g_poDB->executeQTQuery( qsQuery );
 
     while( poQuery->next() )

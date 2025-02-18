@@ -64,7 +64,7 @@ dlgMain::dlgMain(QWidget *parent, QString p_qsAppVersion, QString p_qsDbVersion)
     m_bValidateLicenceKey               = false;
 
     m_nIndexPCStatusSync                = 0;
-//    m_nIndexPCOnlineSync              = 0;
+    m_nIndexPCOnlineSync              = 0;
     m_nIndexUpdateSyncDataCount         = 0;
     m_nIndexUser                        = 0;
     m_nIndexCheckEnablers               = 0;
@@ -97,8 +97,8 @@ dlgMain::dlgMain(QWidget *parent, QString p_qsAppVersion, QString p_qsDbVersion)
     m_nTimerSendMailCheck       = obPref.value( "TimerSendMailCheck", 11 ).toInt();
     m_nLogLevel                 = obPref.value( "LogLevel", cSeverity::DEBUG ).toInt();
 
-//    m_nTimerPCOnlineSync        = obPref.value( "TimerPCOnlineSync", 60 ).toInt();
-//    m_uiPatientCardTypeId       = obPref.value( "OnlinePatientCardType", 0 ).toUInt();
+    m_nTimerPCOnlineSync        = obPref.value( "TimerPCOnlineSync", 60 ).toInt();
+    m_uiPatientCardTypeId       = obPref.value( "OnlinePatientCardType", 0 ).toUInt();
 //    m_uiPaymentMethodId         = obPref.value( "OnlinePaymentMethod", 0 ).toUInt();
 
     g_obLogger.setMinimumSeverity("file", (cSeverity::teSeverity)m_nLogLevel);
@@ -130,14 +130,16 @@ dlgMain::dlgMain(QWidget *parent, QString p_qsAppVersion, QString p_qsDbVersion)
 
     // hide obsolete items
     ui->lblOnlinePatientCardType->setVisible( false );
-    ui->cmbOnlinePatientCardType->setVisible( false );
     ui->lblOnlinePaymentMethod->setVisible( false );
     ui->cmbOnlinePaymentMethod->setVisible( false );
-    ui->lblTimerPCOnlineSync->setVisible( false );
-    ui->ledTimerPCOnlineSync->setVisible( false );
-    ui->lblSeconds2->setVisible( false );
-    ui->lblIndexPCOnline->setVisible( false );
-    ui->pbSyncOnlinePC->setVisible( false );
+
+// Angliai applikaciobol erkezo vendeg es berlet feltoltes lekerdezesehez kell megiscsak
+//    ui->cmbOnlinePatientCardType->setVisible( false );
+//    ui->pbSyncOnlinePC->setVisible( false );
+//    ui->lblTimerPCOnlineSync->setVisible( false );
+//    ui->ledTimerPCOnlineSync->setVisible( false );
+//    ui->lblSeconds2->setVisible( false );
+//    ui->lblIndexPCOnline->setVisible( false );
 
     // resize dialog
     resize( obPref.value( "WindowPosition/Mainwindow_width", 785 ).toInt(),
@@ -218,7 +220,7 @@ dlgMain::dlgMain(QWidget *parent, QString p_qsAppVersion, QString p_qsDbVersion)
         cQTMySQLQueryModel *m_poModel = new cQTMySQLQueryModel( this );
         m_poModel->setQuery( "SELECT CONCAT(name,\" (\",realName,\")\") AS n FROM users WHERE active = 1 ORDER BY name" );
         ui->cmbName->setModel( m_poModel );
-/*
+
         ui->cmbOnlinePatientCardType->addItem( tr("<Not selected>"), 0 );
         poQuery = g_poDB->executeQTQuery( QString( "SELECT patientCardTypeId, name FROM patientCardTypes WHERE active=1 AND archive<>\"DEL\" ORDER BY name " ) );
         while( poQuery->next() )
@@ -230,7 +232,7 @@ dlgMain::dlgMain(QWidget *parent, QString p_qsAppVersion, QString p_qsDbVersion)
                 ui->cmbOnlinePatientCardType->setCurrentIndex( ui->cmbOnlinePatientCardType->count()-1 );
         }
         _setPCTypeForHttp();
-
+/*
         ui->cmbOnlinePaymentMethod->addItem( tr("<Not selected>"), 0 );
         poQuery = g_poDB->executeQTQuery( QString( "SELECT paymentMethodId, name FROM paymentMethods WHERE active=1 AND archive<>\"DEL\" ORDER BY name " ) );
         while( poQuery->next() )
@@ -296,7 +298,7 @@ dlgMain::dlgMain(QWidget *parent, QString p_qsAppVersion, QString p_qsDbVersion)
 
     ui->chkShowWindowOnStart->setChecked( m_bShowMainWindowOnStart );
     ui->ledTimerPCStatusSync->setText( QString::number( m_nTimerPCStatusSync ) );
-//    ui->ledTimerPCOnlineSync->setText( QString::number( m_nTimerPCOnlineSync ) );
+    ui->ledTimerPCOnlineSync->setText( QString::number( m_nTimerPCOnlineSync ) );
     ui->ledTimerMailSendCheck->setText( QString::number( m_nTimerSendMailCheck ) );
     ui->sliFileLogLevel->setValue( m_nLogLevel );
 
@@ -315,7 +317,7 @@ dlgMain::dlgMain(QWidget *parent, QString p_qsAppVersion, QString p_qsDbVersion)
     g_obLogger(cSeverity::DEBUG) << "Start main timer process" << EOM;
 
     ui->lblIndexPCData->setVisible( _isInGroup( GROUP_SYSTEM ) );
-    ui->lblIndexPCOnline->setVisible( false/*_isInGroup( GROUP_SYSTEM )*/ );
+    ui->lblIndexPCOnline->setVisible( _isInGroup( GROUP_SYSTEM ) );
     ui->lblIndexMailSendCheck->setVisible( _isInGroup( GROUP_SYSTEM ) );
     ui->pbTest->setVisible( _isInGroup( GROUP_ROOT ) );
     ui->pbTest->setEnabled( _isInGroup( GROUP_ROOT ) );
@@ -366,7 +368,7 @@ void dlgMain::timerEvent(QTimerEvent *)
         m_nIndexPCStatusSync++;
         m_nIndexLicenceValidation++;
         m_nIndexSendMailSync++;
-//      m_nIndexPCOnlineSync++;
+        m_nIndexPCOnlineSync++;
 
         int nProgress = m_nIndexLicenceValidation % 4;
 
@@ -398,7 +400,7 @@ void dlgMain::timerEvent(QTimerEvent *)
     ui->lblLicenceCheckCounterValue->setText( QString( "%1:%2" )
                                               .arg( QString::number((m_nIndexLicenceValidationMax+1-m_nIndexLicenceValidation)/60).rightJustified(2, '0') )
                                               .arg( QString::number((m_nIndexLicenceValidationMax+1-m_nIndexLicenceValidation)%60).rightJustified(2, '0') ) );
-//  ui->lblIndexPCOnline->setText( QString::number(m_nIndexPCOnlineSync) );
+    ui->lblIndexPCOnline->setText( QString::number(m_nIndexPCOnlineSync) );
 
 
     //---------------------------------------------------------------------------------------------------------------------------------------------
@@ -637,7 +639,7 @@ void dlgMain::timerEvent(QTimerEvent *)
 
     //---------------------------------------------------------------------------------------------
     // Check if timer of check online PC sold is reached the value set
-/*    if( m_nIndexPCOnlineSync >= m_nTimerPCOnlineSync && !m_bSyncPCFromServer && !m_bSyncPCToServer && !m_bSendMailToServer )
+    if( m_nIndexPCOnlineSync >= m_nTimerPCOnlineSync && !m_bSyncPCFromServer && !m_bSyncPCToServer && !m_bSendMailToServer )
     {
         m_nIndexPCOnlineSync = 0;
         m_bSyncPCFromServer = true;
@@ -646,7 +648,6 @@ void dlgMain::timerEvent(QTimerEvent *)
         trayIcon->setIcon( QIcon( ":/hourglass.png" ) );
         g_poBlnsHttp->getPatientCardsSoldOnline();
     }
-*/
 
     //---------------------------------------------------------------------------------------------
     // Check if timer of mail send is reached the value set
@@ -784,7 +785,7 @@ void dlgMain::on_ledTimerPCStatusSync_textEdited(const QString &/*arg1*/)
 //=================================================================================================
 void dlgMain::on_ledTimerPCOnlineSync_textEdited(const QString &/*arg1*/)
 {
-//    m_nTimerPCOnlineSync = ui->ledTimerPCOnlineSync->text().toInt();
+    m_nTimerPCOnlineSync = ui->ledTimerPCOnlineSync->text().toInt();
 }
 //=================================================================================================
 void dlgMain::on_ledTimerMailSendCheck_textEdited(const QString &/*arg1*/)
@@ -835,7 +836,7 @@ void dlgMain::on_pbClearPCData_clicked()
 //=================================================================================================
 void dlgMain::on_pbSyncOnlinePC_clicked()
 {
-//    g_poBlnsHttp->getPatientCardsSoldOnline();
+    g_poBlnsHttp->getPatientCardsSoldOnline();
 }
 
 //=================================================================================================
@@ -1071,7 +1072,7 @@ void dlgMain::_setGUIEnabled(bool p_bEnabled)
 {
     ui->chkShowWindowOnStart->setEnabled( p_bEnabled );
     ui->ledTimerPCStatusSync->setEnabled( p_bEnabled );
-    ui->ledTimerPCOnlineSync->setEnabled( false/*p_bEnabled*/ );
+    ui->ledTimerPCOnlineSync->setEnabled( p_bEnabled );
     ui->ledTimerMailSendCheck->setEnabled( p_bEnabled );
     ui->ledWebServerAddress->setEnabled( p_bEnabled && _isInGroup( GROUP_SYSTEM ) );
     ui->sliFileLogLevel->setEnabled( p_bEnabled && _isInGroup( GROUP_USER ) );
@@ -1079,8 +1080,8 @@ void dlgMain::_setGUIEnabled(bool p_bEnabled)
     ui->pbSyncAllPatientCard->setEnabled( p_bEnabled && _isInGroup( GROUP_SYSTEM ) && m_bHttpEnabledBySetting && m_bHttpEnabledByUser );
     actionUserSendAllPatientCard->setEnabled( p_bEnabled && _isInGroup( GROUP_SYSTEM ) && m_bHttpEnabledBySetting && m_bHttpEnabledByUser );
 
-    ui->pbSyncOnlinePC->setEnabled( false/*p_bEnabled && _isInGroup( GROUP_USER ) && m_bHttpEnabledBySetting && m_bHttpEnabledByUser*/ );
-//    actionUserGetOnlinePatientCards->setEnabled( false/*p_bEnabled && _isInGroup( GROUP_USER ) && m_bHttpEnabledBySetting && m_bHttpEnabledByUser*/ );
+    ui->pbSyncOnlinePC->setEnabled( p_bEnabled && _isInGroup( GROUP_USER ) && m_bHttpEnabledBySetting && m_bHttpEnabledByUser );
+    actionUserGetOnlinePatientCards->setEnabled( p_bEnabled && _isInGroup( GROUP_USER ) && m_bHttpEnabledBySetting && m_bHttpEnabledByUser );
 
     ui->pbClearPatientCard->setEnabled( p_bEnabled && _isInGroup( GROUP_SYSTEM ) && m_bHttpEnabledBySetting && m_bHttpEnabledByUser );
     actionClearPatientCard->setEnabled( p_bEnabled && _isInGroup( GROUP_SYSTEM ) && m_bHttpEnabledBySetting && m_bHttpEnabledByUser );
@@ -1088,7 +1089,7 @@ void dlgMain::_setGUIEnabled(bool p_bEnabled)
     ui->pbClearAllPatientCard->setEnabled( p_bEnabled && _isInGroup( GROUP_SYSTEM ) && m_bHttpEnabledBySetting && m_bHttpEnabledByUser );
     actionClearAllPatientCard->setEnabled( p_bEnabled && _isInGroup( GROUP_SYSTEM ) && m_bHttpEnabledBySetting && m_bHttpEnabledByUser );
 
-    ui->cmbOnlinePatientCardType->setEnabled( false /*p_bEnabled && _isInGroup( GROUP_USER )*/ );
+    ui->cmbOnlinePatientCardType->setEnabled( p_bEnabled && _isInGroup( GROUP_USER ) );
     ui->cmbOnlinePaymentMethod->setEnabled( false /*p_bEnabled && _isInGroup( GROUP_USER )*/ );
 
     ui->tabLicence->setEnabled( p_bEnabled && _isInGroup( GROUP_SYSTEM ) );
@@ -1099,7 +1100,7 @@ void dlgMain::_setGUIEnabled(bool p_bEnabled)
     actionExit->setEnabled( p_bEnabled && _isInGroup( GROUP_USER ) );
 
     ui->lblIndexPCData->setVisible( _isInGroup( GROUP_SYSTEM ) );
-    ui->lblIndexPCOnline->setVisible( false/*_isInGroup( GROUP_SYSTEM )*/ );
+    ui->lblIndexPCOnline->setVisible( _isInGroup( GROUP_SYSTEM ) );
     ui->lblIndexMailSendCheck->setVisible( _isInGroup( GROUP_SYSTEM ) );
 
     ui->pbRegisterLicence->setEnabled( GROUP_SYSTEM && m_uiLicenceId < 2 );
@@ -1130,9 +1131,9 @@ void dlgMain::_setActions()
     actionUserWaitingClearPatientCards->setIcon( QIcon( ":/trash.png" ) );
     connect( actionUserWaitingClearPatientCards, SIGNAL(triggered()), this, SLOT(on_pbClearPCData_clicked()) );
 
-//    actionUserGetOnlinePatientCards = new QAction(tr("Get online sold patientcards"), this);
-//    actionUserGetOnlinePatientCards->setIcon( QIcon( ":/onlinepcsync.png" ) );
-//    connect( actionUserGetOnlinePatientCards, SIGNAL(triggered()), this, SLOT(on_pbSyncOnlinePC_clicked()) );
+    actionUserGetOnlinePatientCards = new QAction(tr("Get online sold patientcards"), this);
+    actionUserGetOnlinePatientCards->setIcon( QIcon( ":/onlinepcsync.png" ) );
+    connect( actionUserGetOnlinePatientCards, SIGNAL(triggered()), this, SLOT(on_pbSyncOnlinePC_clicked()) );
 
     actionClearPatientCard = new QAction(tr("Clear patientcard"), this);
     actionClearPatientCard->setIcon( QIcon( ":/patientcard_delete.png" ) );
@@ -1158,7 +1159,7 @@ void dlgMain::_setMenu()
     menuUserActions->setIcon( QIcon( ":/user.png" ) );
     menuUserActions->addAction( actionUserSendAllPatientCard );
     menuUserActions->addAction( actionUserWaitingClearPatientCards );
-//    menuUserActions->addAction( actionUserGetOnlinePatientCards );
+    menuUserActions->addAction( actionUserGetOnlinePatientCards );
     menuUserActions->addAction( actionClearPatientCard );
     menuUserActions->addAction( actionClearAllPatientCard );
 
@@ -1400,8 +1401,8 @@ void dlgMain::on_pbStartStopHTTP_clicked()
 }
 
 //=================================================================================================
-void dlgMain::on_cmbOnlinePatientCardType_currentIndexChanged(int /*index*/)
-{/*
+void dlgMain::on_cmbOnlinePatientCardType_currentIndexChanged(int index)
+{
     if( m_bStartFinished )
     {
         m_uiPatientCardTypeId = ui->cmbOnlinePatientCardType->itemData( index ).toUInt();
@@ -1416,11 +1417,11 @@ void dlgMain::on_cmbOnlinePatientCardType_currentIndexChanged(int /*index*/)
             ui->lblOnlinePatientCardType->setStyleSheet( "QLabel {font: bold; color: red;}" );
         }
     }
-*/}
+}
 
 //=================================================================================================
 void dlgMain::_setPCTypeForHttp()
-{/*
+{
     QSqlQuery *poQuery = g_poDB->executeQTQuery( QString( "SELECT price, units, unitTime "
                                                           "FROM patientCardTypes WHERE "
                                                           "active=1 AND archive<>\"DEL\" AND patientCardTypeId=%1 " )
@@ -1432,7 +1433,7 @@ void dlgMain::_setPCTypeForHttp()
                                    poQuery->value( 0 ).toInt(),
                                    poQuery->value( 1 ).toInt(),
                                    poQuery->value( 2 ).toInt() );
-*/}
+}
 
 //=================================================================================================
 void dlgMain::on_cmbOnlinePaymentMethod_currentIndexChanged(int /*index*/)
@@ -1735,7 +1736,7 @@ void dlgMain::slotShowModuleNotification(QString p_qsMessage)
 void dlgMain::_saveSettings()
 //------------------------------------------------------------------------------------
 {
-//    m_uiPatientCardTypeId = ui->cmbOnlinePatientCardType->itemData( ui->cmbOnlinePatientCardType->currentIndex() ).toUInt();
+    m_uiPatientCardTypeId = ui->cmbOnlinePatientCardType->itemData( ui->cmbOnlinePatientCardType->currentIndex() ).toUInt();
 //    m_uiPaymentMethodId   = ui->cmbOnlinePaymentMethod->itemData( ui->cmbOnlinePaymentMethod->currentIndex() ).toUInt();
 
     QSettings   obPref( QString( "%1/websync.inf" ).arg( QDir::currentPath() ), QSettings::IniFormat );
@@ -1752,8 +1753,8 @@ void dlgMain::_saveSettings()
     obPref.setValue( "WindowPosition/Mainwindow_width", width() );
     obPref.setValue( "WindowPosition/Mainwindow_height", height() );
 
-//    obPref.setValue( "TimerPCOnlineSync", m_nTimerPCOnlineSync );
-//    obPref.setValue( "OnlinePatientCardType", m_uiPatientCardTypeId );
+    obPref.setValue( "TimerPCOnlineSync", m_nTimerPCOnlineSync );
+    obPref.setValue( "OnlinePatientCardType", m_uiPatientCardTypeId );
 //    obPref.setValue( "OnlinePaymentMethod", m_uiPaymentMethodId );
 
     try
