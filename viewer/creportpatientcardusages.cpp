@@ -44,7 +44,6 @@ void cReportPCUsages::refreshReport()
 
     if( filterName().length() > 0 )
     {
-//        qsTitle.append( tr( "%1Patientcard barcode contains: '%2'" ).arg( qsTitle.length()?"  -  ":"" ).arg( filterName() ) );
         qsCondition.append( QString(" AND patientcards.barcode LIKE \"\%%1\%\" ").arg(filterName()) );
     }
 

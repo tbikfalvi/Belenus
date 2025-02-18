@@ -29,6 +29,7 @@ public:
     QCheckBox       *chkRFID;
     QCheckBox       *chkAssigned;
     QCheckBox       *chkHasComment;
+    QLabel          *lblMessage;
 
 protected:
     void timerEvent( QTimerEvent *p_poEvent );

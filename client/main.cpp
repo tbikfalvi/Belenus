@@ -1,20 +1,11 @@
 //====================================================================================
 //
-// Belenus Kliens alkalmazas (c) Pagony Multimedia Studio Bt - 2010
+// Belenus Kliens alkalmazas (c) Bikfalvi Tamas
 //
-//====================================================================================
-//
-// Filename    : main.cpp
-// AppVersion  : 1.0
-// FileVersion : 1.0
-// Author      : Ballok Peter, Bikfalvi Tamas, Kovacs Gabor
-//
-//====================================================================================
-// Alkalmazas fo allomanya.
 //====================================================================================
 
-#define APPLICATION_VERSION_NUMBER  "2.1.1.0"
-#define DATABASE_VERSION_NUMBER     "2.1.1.0"
+#define APPLICATION_VERSION_NUMBER  "2.1.2.0"
+#define DATABASE_VERSION_NUMBER     "2.1.2.0"
 
 //====================================================================================
 

@@ -411,11 +411,11 @@ void cDlgPanelSettings::refreshTable()
 
     if( g_obUser.isInGroup( cAccessGroup::ROOT ) )
     {
-        m_qsQuery = QString("SELECT panelUseId, licenceId, name, useTime, (usePrice/100) as usePrice, archive FROM panelUses WHERE panelId=%1").arg( m_uiPanelId );
+        m_qsQuery = QString("SELECT panelUseId, licenceId, name, useTime, (usePrice/100) as usePrice, archive FROM panelUses WHERE panelId=%1 AND active=1").arg( m_uiPanelId );
     }
     else
     {
-        m_qsQuery = QString("SELECT panelUseId AS id, name, useTime, (usePrice/100) as usePrice FROM panelUses WHERE panelId=%1").arg( m_uiPanelId );
+        m_qsQuery = QString("SELECT panelUseId AS id, name, useTime, (usePrice/100) as usePrice FROM panelUses WHERE panelId=%1 AND active=1").arg( m_uiPanelId );
     }
 
     cDlgCrud::refreshTable();

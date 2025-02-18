@@ -56,11 +56,20 @@ void cReportCardDetails::refreshReport()
     }
     m_dlgProgress.increaseProgressValue();
 
-    QString      qsQueryCards = "SELECT * FROM patientcards, patientcardtypes, patients WHERE "
-                                "patientCardId>0 AND "
-                                "patientcards.active=1 AND "
-                                "patientcards.patientCardTypeId=patientcardtypes.patientCardTypeId AND "
-                                "patientcards.patientId=patients.patientId";
+    QString      qsQueryCards = "SELECT "
+                                    "patientCardId, "
+                                    "patientcards.validDateFrom, "
+                                    "barcode, "
+                                    "patients.name, "
+                                    "patientcards.validDateTo, "
+                                    "patientcards.comment, "
+                                    "patientcards.units, "
+                                    "patientcards.timeLeft "
+                                "FROM patientcards, patientcardtypes, patients WHERE "
+                                    "patientCardId>0 AND "
+                                    "patientcards.active=1 AND "
+                                    "patientcards.patientCardTypeId=patientcardtypes.patientCardTypeId AND "
+                                    "patientcards.patientId=patients.patientId";
 
     if( qsCondition.length() > 0 )
     {
@@ -97,8 +106,12 @@ void cReportCardDetails::refreshReport()
 
         poQueryResultCards->first();
 
-        unsigned int    uiPatientCardId = poQueryResultCards->value(0).toUInt();
-        QString         qsCardSold      = poQueryResultCards->value(10).toString();
+        unsigned int    queryPatientCardId      = poQueryResultCards->value(0).toUInt();
+        QString         queryCardValidDateFrom  = poQueryResultCards->value(1).toString();
+        QString         queryBarcode            = poQueryResultCards->value(2).toString();
+        QString         queryPatientName        = poQueryResultCards->value(3).toString();
+        QString         queryCardValidDateTo    = poQueryResultCards->value(4).toString();
+        QString         queryCardComment        = poQueryResultCards->value(5).toString();
 
         startSection();
         addTable();
@@ -106,25 +119,25 @@ void cReportCardDetails::refreshReport()
         addTableRow();
         addTableCell( tr( "Barcode" ), "bold" );
         addTableCell( " : ", "bold" );
-        addTableCell( poQueryResultCards->value(5).toString() );
+        addTableCell( queryBarcode );
         m_dlgProgress.increaseProgressValue();
 
         addTableRow();
         addTableCell( tr( "Owner" ), "bold" );
         addTableCell( " : ", "bold" );
-        addTableCell( poQueryResultCards->value(33).toString() );
+        addTableCell( queryPatientName );
         m_dlgProgress.increaseProgressValue();
 
         addTableRow();
         addTableCell( tr( "Valid" ), "bold" );
         addTableCell( " : ", "bold" );
-        addTableCell( QString("%1 -> %2").arg( poQueryResultCards->value(10).toString() ).arg( poQueryResultCards->value(11).toString() ) );
+        addTableCell( QString("%1 -> %2").arg( queryCardValidDateFrom ).arg( queryCardValidDateTo ) );
         m_dlgProgress.increaseProgressValue();
 
         addTableRow();
         addTableCell( tr( "Comment" ), "bold" );
         addTableCell( " : ", "bold" );
-        addTableCell( poQueryResultCards->value(6).toString() );
+        addTableCell( queryCardComment );
         m_dlgProgress.increaseProgressValue();
 
         finishTable();
@@ -154,7 +167,7 @@ void cReportCardDetails::refreshReport()
                                 "patientcardunits.unitTime, "
                                 "patientcardunits.validDateTo, "
                                 "patientcardunits.patientCardTypeId "
-                                "ORDER BY validDateTo" ).arg( uiPatientCardId );
+                                "ORDER BY validDateTo" ).arg( queryPatientCardId );
         poQueryResultCards = g_poDB->executeQTQuery( qsQueryCards );
 
         m_dlgProgress.setProgressValue( 10 );
@@ -221,7 +234,7 @@ void cReportCardDetails::refreshReport()
         // First activated
         g_poDB->executeQTQuery( QString( "INSERT INTO `report_cardhistory` ( `dateCardAction`, `cardAction`, `countUnits`, `unitTime`, `unitType`, `priceAction`, `userName` ) "
                                          " VALUES ( '%1', '%2', '%3', '%4', '%5', '%6', '%7' ) " )
-                                        .arg( qsCardSold )
+                                        .arg( queryCardValidDateFrom )
                                         .arg( tr( "Patientcard activated" ) )
                                         .arg( "" )
                                         .arg( "" )
@@ -242,7 +255,7 @@ void cReportCardDetails::refreshReport()
                                 "patientcardunits.active=0 "
                                 "GROUP BY "
                                 "patientcardunits.dateTimeUsed, "
-                                "patientcardunits.patientCardTypeId " ).arg( uiPatientCardId );
+                                "patientcardunits.patientCardTypeId " ).arg( queryPatientCardId );
         poQueryResultCards = g_poDB->executeQTQuery( qsQueryCards );
 
         m_dlgProgress.setProgressValue( 10 );
@@ -256,7 +269,7 @@ void cReportCardDetails::refreshReport()
                                             .arg( tr( "Patientcard usage" ) )
                                             .arg( QString( "-%1" ).arg( poQueryResultCards->value(1).toString() ) )
                                             .arg( poQueryResultCards->value(2).toString() )
-                                            .arg( poQueryResultCards->value(3).toString() )
+                                            .arg( poQueryResultCards->value(3).toString().replace( QString("\'"), QString("\\\'") ) )
                                             .arg( "" )
                                             .arg( "" ) );
 
@@ -278,7 +291,7 @@ void cReportCardDetails::refreshReport()
                                 "AND ledger.patientcardtypeid = patientcardtypes.patientcardtypeid "
                                 "AND ledger.ledgertypeid = ledgertypes.ledgertypeid "
                                 "AND (ledger.patientcardid = %1 OR patientcardunits.patientcardid = %1) "
-                                "GROUP BY ledger.ledgerid" ).arg( uiPatientCardId );
+                                "GROUP BY ledger.ledgerid" ).arg( queryPatientCardId );
         poQueryResultCards = g_poDB->executeQTQuery( qsQueryCards );
         m_dlgProgress.increaseProgressMax( poQueryResultCards->size() );
 
@@ -290,7 +303,7 @@ void cReportCardDetails::refreshReport()
                                             .arg( poQueryResultCards->value(1).toString() )
                                             .arg( poQueryResultCards->value(3).toString() )
                                             .arg( poQueryResultCards->value(4).toString() )
-                                            .arg( poQueryResultCards->value(2).toString() )
+                                            .arg( poQueryResultCards->value(2).toString().replace( QString("\'"), QString("\\\'") ) )
                                             .arg( poQueryResultCards->value(5).toString() )
                                             .arg( poQueryResultCards->value(6).toString() ) );
 
@@ -308,7 +321,7 @@ void cReportCardDetails::refreshReport()
                                 "ledger.userid = users.userid AND "
                                 "ledger.patientcardtypeid = patientcardtypes.patientcardtypeid AND "
                                 "(ledger.ledgertypeid=5 OR ledger.ledgertypeid=6) AND "
-                                "ledger.patientcardid = %1" ).arg( uiPatientCardId );
+                                "ledger.patientcardid = %1" ).arg( queryPatientCardId );
         poQueryResultCards = g_poDB->executeQTQuery( qsQueryCards );
         m_dlgProgress.increaseProgressMax( poQueryResultCards->size() );
 
@@ -320,7 +333,7 @@ void cReportCardDetails::refreshReport()
                                             .arg( poQueryResultCards->value(1).toString() )
                                             .arg( "" )
                                             .arg( "" )
-                                            .arg( poQueryResultCards->value(2).toString() )
+                                            .arg( poQueryResultCards->value(2).toString().replace( QString("\'"), QString("\\\'") ) )
                                             .arg( poQueryResultCards->value(3).toString() )
                                             .arg( poQueryResultCards->value(4).toString() ) );
 
@@ -329,35 +342,43 @@ void cReportCardDetails::refreshReport()
 
         //----------------------------------------------------------------------------------------------
         // Show history
-        poQueryResultCards = g_poDB->executeQTQuery( "SELECT * FROM `report_cardhistory` ORDER BY dateCardAction " );
+        poQueryResultCards = g_poDB->executeQTQuery( "SELECT dateCardAction, cardAction, countUnits, unitTime, unitType, priceAction, userName FROM `report_cardhistory` ORDER BY dateCardAction " );
 
         int nSumCount = 0;
         int nSumPrice = 0;
 
         while( poQueryResultCards->next() )
         {
-            cCurrency   obPrice( poQueryResultCards->value(5).toInt() );
+            QString     queryDateCardAction = poQueryResultCards->value(0).toDateTime().toString( "yyyy-MM-dd hh:mm" );
+            QString     queryCardAction     = poQueryResultCards->value(1).toString();
+            int         queryUnitCount      = poQueryResultCards->value(2).toInt();
+            int         queryUnitTime       = poQueryResultCards->value(3).toInt();
+            QString     queryUnitType       = poQueryResultCards->value(4).toString();
+            int         queryPriceAction    = poQueryResultCards->value(5).toInt();
+            QString     queryUserName       = poQueryResultCards->value(6).toString();
+
+            cCurrency   obPrice( queryPriceAction );
 
             addTableRow();
-            addTableCell( poQueryResultCards->value(0).toDateTime().toString( "yyyy-MM-dd hh:mm" ), "center" );
-            addTableCell( poQueryResultCards->value(1).toString(), "" );
-            if( poQueryResultCards->value(2).toInt() == 0 )
+            addTableCell( queryDateCardAction, "center" );
+            addTableCell( queryCardAction, "" );
+            if( queryUnitCount == 0 )
                 addTableCell( "", "" );
             else
-                addTableCell( poQueryResultCards->value(2).toString(), "center" );
-            if( poQueryResultCards->value(3).toInt() == 0 )
+                addTableCell( QString::number( queryUnitCount ), "center" );
+            if( queryUnitTime == 0 )
                 addTableCell( "", "" );
             else
-                addTableCell( poQueryResultCards->value(3).toString(), "center" );
-            addTableCell( poQueryResultCards->value(4).toString(), "" );
-            if( poQueryResultCards->value(5).toInt() == 0 )
+                addTableCell( QString::number( queryUnitTime ), "center" );
+            addTableCell( queryUnitType, "" );
+            if( queryPriceAction == 0 )
                 addTableCell( "", "" );
             else
                 addTableCell( obPrice.currencyFullStringShort(), "right" );
-            addTableCell( poQueryResultCards->value(6).toString(), "" );
+            addTableCell( queryUserName, "" );
 
-            nSumCount += poQueryResultCards->value(2).toInt();
-            nSumPrice += poQueryResultCards->value(5).toInt();
+            nSumCount += queryUnitCount;
+            nSumPrice += queryPriceAction;
         }
 
         cCurrency   obSumPrice( nSumPrice );
@@ -383,14 +404,21 @@ void cReportCardDetails::refreshReport()
         {
             QStringList qslRecord;
 
-            qslRecord << poQueryResultCards->value(5).toString();
-            qslRecord << poQueryResultCards->value(7).toString();
-            qslRecord << poQueryResultCards->value(9).toString();
-            qslRecord << poQueryResultCards->value(10).toString();
-            qslRecord << poQueryResultCards->value(11).toString();
-            qslRecord << poQueryResultCards->value(18).toString();
-            qslRecord << poQueryResultCards->value(33).toString();
-            qslRecord << poQueryResultCards->value(6).toString();
+            QString         queryCardValidDateFrom  = poQueryResultCards->value(1).toString();
+            QString         queryBarcode            = poQueryResultCards->value(2).toString();
+            QString         queryPatientName        = poQueryResultCards->value(3).toString();
+            QString         queryCardValidDateTo    = poQueryResultCards->value(4).toString();
+            QString         queryCardComment        = poQueryResultCards->value(5).toString();
+            QString         queryCardUnits          = poQueryResultCards->value(6).toString();
+            QString         queryCardTimeLeft       = poQueryResultCards->value(7).toString();
+
+            qslRecord << queryBarcode;
+            qslRecord << queryCardUnits;
+            qslRecord << queryCardTimeLeft;
+            qslRecord << queryCardValidDateFrom;
+            qslRecord << queryCardValidDateTo;
+            qslRecord << queryPatientName;
+            qslRecord << queryCardComment;
 
             qslQueryResult << qslRecord.join("#");
             m_dlgProgress.increaseProgressValue();
@@ -425,8 +453,8 @@ void cReportCardDetails::refreshReport()
             addTableCell( QString::number(nUnits), "center" );
             addTableCell( qtTemp.toString( "hh:mm:ss" ), "center" );
             addTableCell( QString("%1 -> %2").arg( qslRecord.at(3) ).arg( qslRecord.at(4) ), "center" );
+            addTableCell( qslRecord.at(5) );
             addTableCell( qslRecord.at(6) );
-            addTableCell( qslRecord.at(7) );
 
             nSumUnits += nUnits;
 

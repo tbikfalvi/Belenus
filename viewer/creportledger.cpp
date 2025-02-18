@@ -176,8 +176,6 @@ void cReportLedger::_reportPartCassaList()
 unsigned int cReportLedger::_reportPartProductSell()
 //------------------------------------------------------------------------------------
 {
-//    unsigned int uiTotal = 0;
-
     startSection();
     addTable();
     addTableRow();
@@ -185,53 +183,31 @@ unsigned int cReportLedger::_reportPartProductSell()
     addTableCell( tr("Count"), "center bold" );
     addTableCell( tr("Amount"), "right bold" );
 
-//    for( int i=0; i<m_qslCassaIds.count(); i++ )
-//    {
-//        unsigned int    uiCassaId   = m_qslCassaIds.at(i).toUInt();
-//        QString         qsUserName  = m_qslCassaOwners.at(i);
-
-//        addTableRow();
-//        addTableCell( qsUserName, "bold" );
-//        addTableCell();
-//        addTableCell();
-//        addTableCell();
-
-        QSqlQuery  *poQueryProducts = g_poDB->executeQTQuery( QString( "SELECT name, SUM(itemCount), SUM(totalPrice) "
-                                                                       "FROM cassahistory, ledger WHERE "
-                                                                       "cassahistory.ledgerId=ledger.ledgerId AND "
-                                                                       "cassahistory.ledgerId>0 AND "
-                                                                       "cassaId IN( %1 ) AND "
-                                                                       "ledgerTypeId=%2 AND "
-                                                                       "ledger.active=1 "
-                                                                       "GROUP BY productId" ).arg( m_qslCassaIds.join(",") ).arg( LT_PROD_SELL ) );
-        unsigned int uiTotalCassa = 0;
-        while( poQueryProducts->next() )
-        {
-            cCurrency   obPrice( poQueryProducts->value(2).toInt() );
-            uiTotalCassa += poQueryProducts->value(2).toInt();
-
-            addTableRow();
-            addTableCell( poQueryProducts->value(0).toString() );
-            addTableCell( poQueryProducts->value(1).toString(), "center" );
-            addTableCell( obPrice.currencyFullStringShort(), "right" );
-        }
-        cCurrency   obTotalPriceAm( uiTotalCassa );
+    QSqlQuery  *poQueryProducts = g_poDB->executeQTQuery( QString( "SELECT name, SUM(itemCount), SUM(totalPrice) "
+                                                                   "FROM cassahistory, ledger WHERE "
+                                                                   "cassahistory.ledgerId=ledger.ledgerId AND "
+                                                                   "cassahistory.ledgerId>0 AND "
+                                                                   "cassaId IN( %1 ) AND "
+                                                                   "ledgerTypeId=%2 AND "
+                                                                   "ledger.active=1 "
+                                                                   "GROUP BY productId" ).arg( m_qslCassaIds.join(",") ).arg( LT_PROD_SELL ) );
+    unsigned int uiTotalCassa = 0;
+    while( poQueryProducts->next() )
+    {
+        cCurrency   obPrice( poQueryProducts->value(2).toInt() );
+        uiTotalCassa += poQueryProducts->value(2).toInt();
 
         addTableRow();
-        addTableCell( tr("Sum"), "bold" );
-        addTableCell();
-        addTableCell( obTotalPriceAm.currencyFullStringShort(), "right bold" );
+        addTableCell( poQueryProducts->value(0).toString() );
+        addTableCell( poQueryProducts->value(1).toString(), "center" );
+        addTableCell( obPrice.currencyFullStringShort(), "right" );
+    }
+    cCurrency   obTotalPriceAm( uiTotalCassa );
 
-//        uiTotal += uiTotalCassa;
-//    }
-
-//    cCurrency   obTotalPrice( uiTotal );
-
-//    addTableRow();
-//    addTableCell( tr("Sum total"), "bold" );
-//    addTableCell();
-//    addTableCell();
-//    addTableCell( obTotalPrice.currencyFullStringShort(), "right bold" );
+    addTableRow();
+    addTableCell( tr("Sum"), "bold" );
+    addTableCell();
+    addTableCell( obTotalPriceAm.currencyFullStringShort(), "right bold" );
 
     finishTable();
     finishSection();
@@ -244,71 +220,38 @@ unsigned int cReportLedger::_reportPartPatientCardSell()
 {
     unsigned int    uiTotalCardSell = 0;
     QSqlQuery      *poQueryResult;
-//    unsigned int    uiCountPCSell[ m_qslCassaIds.count() ];
-//    unsigned int    uiSumPCSell[ m_qslCassaIds.count() ];
 
     startSection();
     addTable();
 
-//    addTableRow();
-//    addTableCell();
-//    for( int i=0; i<m_qslCassaOwners.count(); i++ )
-//    {
-//        uiCountPCSell[ i ] = 0;
-//        uiSumPCSell[ i ] = 0;
-//        addTableCell( m_qslCassaOwners.at(i), "center bold" );
-//    }
-//    addTableCell( tr("Sum"), "center bold" );
-
-    poQueryResult = g_poDB->executeQTQuery( "SELECT * FROM patientcardtypes WHERE patientCardTypeId<>1" );
+    poQueryResult = g_poDB->executeQTQuery( "SELECT patientCardTypeId, name FROM patientcardtypes WHERE patientCardTypeId<>1" );
 
     while( poQueryResult->next() )
     {
         unsigned int    uiCountPCTSum = 0;
         unsigned int    uiPricePCTSum = 0;
         QString         qsPricePCTSum = "";
-//        QStringList     qslCells = QStringList();
+        unsigned int    uiPricePCSell = 0;
 
-//        for( int i=0; i<m_qslCassaIds.count(); i++ )
-//        {
-            unsigned int uiPricePCSell = 0;
-//            QString      qsCountPCSell = _countsumPatientCardTypeSell( m_qslCassaIds.at(i), poQueryResult->value(0).toUInt(), &uiPricePCSell );
-            QString      qsCountPCSell = _countsumPatientCardTypeSell( m_qslCassaIds.join(","), poQueryResult->value(0).toUInt(), &uiPricePCSell );
+        unsigned int    queryPatientCardTypeId      = poQueryResult->value(0).toUInt();
+        QString         queryPatientCardTypeName    = poQueryResult->value(1).toString();
 
-//            if( uiPricePCSell > 0 )
-//            {
-//                cCurrency   obPricePCSell( uiPricePCSell );
-//
-//                qslCells << QString( "%1 / %2" ).arg( qsCountPCSell ).arg( obPricePCSell.currencyFullStringShort() );
-//            }
-//            else
-//            {
-//                qslCells << "";
-//            }
-//
-//            uiCountPCSell[ i ] += qsCountPCSell.toInt();
-//            uiSumPCSell[ i ]   += uiPricePCSell;
+        QString         qsCountPCSell = _countsumPatientCardTypeSell( m_qslCassaIds.join(","), queryPatientCardTypeId, &uiPricePCSell );
 
-            uiCountPCTSum += qsCountPCSell.toInt();
-            uiPricePCTSum += uiPricePCSell;
-//        }
+        uiCountPCTSum += qsCountPCSell.toInt();
+        uiPricePCTSum += uiPricePCSell;
 
         if( uiPricePCTSum > 0 || uiCountPCTSum > 0 )
         {
             addTableRow();
-            if( poQueryResult->value(0).toUInt() == 0 )
+            if( queryPatientCardTypeId == 0 )
             {
                 addTableCell( tr("Attached, lost cards") );
             }
             else
             {
-                addTableCell( poQueryResult->value(2).toString() );
+                addTableCell( queryPatientCardTypeName );
             }
-
-//            for( int i=0; i<qslCells.count(); i++ )
-//            {
-//                addTableCell( qslCells.at(i), "right" );
-//            }
 
             cCurrency   obPricePCTSum( uiPricePCTSum );
 
@@ -323,12 +266,6 @@ unsigned int cReportLedger::_reportPartPatientCardSell()
 
     addTableRow();
     addTableCell( tr("Sum total"), "bold" );
-//    for( int i=0; i<m_qslCassaIds.count(); i++ )
-//    {
-//        cCurrency   obPricePCTSum( uiSumPCSell[ i ] );
-
-//        addTableCell( QString( "%1 / %2" ).arg( uiCountPCSell[ i ] ).arg( obPricePCTSum.currencyFullStringShort() ), "right bold" );
-//    }
     addTableCell( obTotalCardSell.currencyFullStringShort(), "right bold" );
 
     finishTable();
@@ -342,47 +279,29 @@ unsigned int cReportLedger::_reportPartPanelUse()
 {
     unsigned int    uiPriceSumTotal = 0;
     QSqlQuery      *poQueryResult;
-//    unsigned int    uiPricePanelUse[ m_qslCassaIds.count() ];
 
     startSection();
     addTable();
 
     addTableRow();
     addTableCell();
-//    for( int i=0; i<m_qslCassaOwners.count(); i++ )
-//    {
-//        addTableCell( m_qslCassaOwners.at(i), "center bold" );
-//        uiPricePanelUse[ i ] = 0;
-//    }
     addTableCell( tr("Amount"), "center bold" );
 
-    poQueryResult = g_poDB->executeQTQuery( "SELECT * FROM panelgroups WHERE panelGroupId>0" );
+    poQueryResult = g_poDB->executeQTQuery( "SELECT panelGroupId, name FROM panelgroups WHERE panelGroupId>0" );
 
     while( poQueryResult->next() )
     {
         unsigned int    uiPricePanelTotal = 0;
         QString         qsPricePanelTotal = "";
-        QString         qsTitlePanel = poQueryResult->value(2).toString();
+
+        unsigned int    queryPanelGroupId   = poQueryResult->value(0).toUInt();
+        QString         queryName           = poQueryResult->value(1).toString();
 
         addTableRow();
-        addTableCell( qsTitlePanel );
+        addTableCell( queryName );
 
-//        for( int i=0; i<m_qslCassaIds.count(); i++ )
-//        {
-            int             nPricePanel  = _sumPanelUse( m_qslCassaIds.join(","), poQueryResult->value(0).toUInt() );
-//            QString         qsPricePanel = "";
-
-//            if( nPricePanel > 0 )
-//            {
-//                cCurrency obPrice( nPricePanel );
-//
-//                qsPricePanel = obPrice.currencyFullStringShort();
-//            }
-//            addTableCell( qsPricePanel, "right" );
-
-//            uiPricePanelUse[ i ] += nPricePanel;
-            uiPricePanelTotal += nPricePanel;
-//        }
+        int             nPricePanel  = _sumPanelUse( m_qslCassaIds.join(","), queryPanelGroupId );
+        uiPricePanelTotal += nPricePanel;
 
         if( uiPricePanelTotal > 0 )
         {
@@ -400,12 +319,6 @@ unsigned int cReportLedger::_reportPartPanelUse()
 
     addTableRow();
     addTableCell( tr("Sum total"), "bold" );
-//    for( int i=0; i<m_qslCassaIds.count(); i++ )
-//    {
-//        cCurrency   obPricePanel( uiPricePanelUse[ i ] );
-//
-//        addTableCell( obPricePanel.currencyFullStringShort(), "right bold" );
-//    }
     addTableCell( obPriceSumTotal.currencyFullStringShort(), "right bold" );
 
     finishTable();
@@ -425,90 +338,36 @@ unsigned int cReportLedger::_reportPartExpenses()
     addTableCell( tr("Description"), "bold" );
     addTableCell( tr("Amount"), "right bold" );
 
-//    for( int i=0; i<m_qslCassaIds.count(); i++ )
+    QSqlQuery  *poQueryResults = g_poDB->executeQTQuery( QString( "SELECT comment, actionValue "
+                                                                  "FROM cassahistory WHERE "
+                                                                  "parentId=0 AND "
+                                                                  "cassaId IN ( %1 ) AND "
+                                                                  "actionValue<0 AND "
+                                                                  "actionBalance<>0 AND "
+                                                                  "ledgerId>0 " ).arg( m_qslCassaIds.join(",") ) );
+    unsigned int uiTotalCassa = 0;
+    while( poQueryResults->next() )
     {
-//        unsigned int    uiCassaId   = m_qslCassaIds.at(i).toUInt();
-//        QString         qsUserName  = m_qslCassaOwners.at(i);
-
-//        addTableRow();
-//        addTableCell( qsUserName, "bold" );
-//        addTableCell();
-//        addTableCell();
-
-        QSqlQuery  *poQueryResults = g_poDB->executeQTQuery( QString( "SELECT comment, actionValue "
-                                                                      "FROM cassahistory WHERE "
-                                                                      "parentId=0 AND "
-                                                                      "cassaId IN ( %1 ) AND "
-                                                                      "actionValue<0 AND "
-                                                                      "actionBalance<>0 AND "
-                                                                      "ledgerId>0 " ).arg( m_qslCassaIds.join(",") ) );
-        unsigned int uiTotalCassa = 0;
-        while( poQueryResults->next() )
-        {
-            cCurrency   obPrice( poQueryResults->value(1).toInt() );
-            uiTotalCassa += poQueryResults->value(1).toInt();
-
-            addTableRow();
-            addTableCell( poQueryResults->value(0).toString() );
-            addTableCell( obPrice.currencyFullStringShort(), "right" );
-        }
-        cCurrency   obTotalPrice( uiTotalCassa );
+        cCurrency   obPrice( poQueryResults->value(1).toInt() );
+        uiTotalCassa += poQueryResults->value(1).toInt();
 
         addTableRow();
-        addTableCell( tr("Sum"), "bold" );
-        addTableCell( obTotalPrice.currencyFullStringShort(), "right bold" );
-
-        uiTotal += uiTotalCassa;
+        addTableCell( poQueryResults->value(0).toString() );
+        addTableCell( obPrice.currencyFullStringShort(), "right" );
     }
+    cCurrency   obTotalPrice( uiTotalCassa );
 
-//    cCurrency   obTotalPrice( uiTotal );
+    addTableRow();
+    addTableCell( tr("Sum"), "bold" );
+    addTableCell( obTotalPrice.currencyFullStringShort(), "right bold" );
 
-//    addTableRow();
-//    addTableCell( tr("Sum total"), "bold" );
-//    addTableCell();
-//    addTableCell( obTotalPrice.currencyFullStringShort(), "right bold" );
+    uiTotal += uiTotalCassa;
 
     finishTable();
     finishSection();
 
     return uiTotal;
 }
-//------------------------------------------------------------------------------------
-/*void cReportLedger::_reportPartPanelUseType(tePanelUse p_tePanelUse)
-//------------------------------------------------------------------------------------
-{
-    QString         qsQuery;
-    QSqlQuery      *poQueryResult;
-    int             nCountTotal = 0;
-
-    startSection();
-    addTable();
-
-    addTableRow();
-    addTableCell();
-    addTableCell( tr("Count"), "center bold" );
-
-    qsQuery = QString( "SELECT * FROM paneltypes WHERE panelTypeId>0" );
-    poQueryResult = g_poDB->executeQTQuery( qsQuery );
-
-    while( poQueryResult->next() )
-    {
-        int nCount = _countPanelUse( poQueryResult->value(0).toUInt(), p_tePanelUse );
-
-        nCountTotal += nCount;
-
-        addTableRow();
-        addTableCell( poQueryResult->value(2).toString() );
-        addTableCell( QString::number( nCount ), "center" );
-    }
-
-    addTableRow();
-    addTableCell( tr("Sum total"), "bold" );
-    addTableCell( QString::number(nCountTotal), "center bold" );
-
-    finishTable();
-    finishSection();
-}*/
 //------------------------------------------------------------------------------------
 int cReportLedger::_reportPartPaymentMethods()
 //------------------------------------------------------------------------------------
@@ -527,18 +386,7 @@ int cReportLedger::_reportPartPaymentMethods()
     int inTotalVoucher  = 0;
     int inTotal         = 0;
 
-//    for( int i=0; i<m_qslCassaIds.count(); i++ )
     {
-//        unsigned int    uiCassaId   = m_qslCassaIds.at(i).toUInt();
-//        QString         qsUserName  = m_qslCassaOwners.at(i);
-
-//        addTableRow();
-//        addTableCell( qsUserName, "bold" );
-//        addTableCell();
-//        addTableCell();
-//        addTableCell();
-//        addTableCell();
-
         QSqlQuery  *poQueryResults = g_poDB->executeQTQuery( QString( "SELECT ledgertypes.name, "
                                                                       "SUM(card), "
                                                                       "SUM(cash), "

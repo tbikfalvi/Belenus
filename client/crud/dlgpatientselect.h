@@ -24,7 +24,7 @@ public:
     QPushButton *pbSelect;
     QPushButton *pbCancel;
 
-    cDlgPatientSelect( QWidget *p_poParent = 0 );
+    cDlgPatientSelect( QWidget *p_poParent = 0, QString p_qsNameFilter ="" );
     ~cDlgPatientSelect();
     void setSearchPatientName( QString p_stName );
     unsigned int selectedPatientId() { return m_uiSelectedId; }

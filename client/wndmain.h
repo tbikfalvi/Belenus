@@ -115,6 +115,8 @@ private:
 
     int                      m_nLicenceStatus;
 
+    QString                  m_qsPatientNameFilter;
+
     vector<cDlgAdvertisementWindow *>   m_obAdWnd;
 
     void showElementsForComponents();
