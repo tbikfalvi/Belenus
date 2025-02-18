@@ -19,6 +19,7 @@ cDlgGuest::cDlgGuest(QWidget *p_poParent , QString p_qsPatientNameFilter) : cDlg
     ledFilterName->setObjectName( QString::fromUtf8( "ledFilterName" ) );
     ledFilterName->setMaximumWidth( 150 );
     horizontalLayout->addWidget( ledFilterName );
+
     lblFilterGender = new QLabel( this );
     lblFilterGender->setObjectName( QString::fromUtf8( "lblFilterGender" ) );
     lblFilterGender->setText( tr("Gender: ") );
@@ -26,6 +27,7 @@ cDlgGuest::cDlgGuest(QWidget *p_poParent , QString p_qsPatientNameFilter) : cDlg
     cmbFilterGender = new QComboBox( this );
     cmbFilterGender->setObjectName( QString::fromUtf8( "cmbFilterGender" ) );
     horizontalLayout->addWidget( cmbFilterGender );
+
     lblFilterAgeType = new QLabel( this );
     lblFilterAgeType->setObjectName( QString::fromUtf8( "lblFilterAgeType" ) );
     lblFilterAgeType->setText( tr("Age group: ") );
@@ -33,6 +35,12 @@ cDlgGuest::cDlgGuest(QWidget *p_poParent , QString p_qsPatientNameFilter) : cDlg
     cmbFilterAgeType = new QComboBox( this );
     cmbFilterAgeType->setObjectName( QString::fromUtf8( "cmbFilterAgeType" ) );
     horizontalLayout->addWidget( cmbFilterAgeType );
+
+    lblMessage = new QLabel( this );
+    lblMessage->setObjectName( QString::fromUtf8( "lblMessage" ) );
+    lblMessage->setStyleSheet( "QLabel {font: bold; color: blue;}" );
+    lblMessage->setText( "" );
+    horizontalLayout->addWidget( lblMessage );
 
     horizontalSpacer1 = new QSpacerItem( 10, 20, QSizePolicy::Expanding, QSizePolicy::Minimum );
     horizontalLayout->addItem( horizontalSpacer1 );
@@ -128,6 +136,17 @@ void cDlgGuest::refreshTable()
     {
         m_qsQuery = "SELECT patientId AS id, name, genderName, ageTypeName, email FROM patients, genders, ageTypes WHERE genders.genderId=patients.gender AND agetypes.ageTypeId=ageType AND patientId>0 AND active=1";
     }
+
+    if( ledFilterName->text().length() < 3 )
+    {
+        lblMessage->setText( tr("   >> Please enter part of the guest's name! <<") );
+
+        m_qsQuery += " AND ";
+        m_qsQuery += QString( "patients.name = 'ilyen_allat_nem_letezik'" );
+        cDlgCrud::refreshTable();
+        return;
+    }
+    lblMessage->setText( "" );
 
     if( ledFilterName->text().length() )
     {

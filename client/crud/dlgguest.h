@@ -23,6 +23,7 @@ public:
     QLabel      *lblFilterAgeType;
     QComboBox   *cmbFilterAgeType;
     QSpacerItem *horizontalSpacer1;
+    QLabel          *lblMessage;
 
 protected:
     virtual void setupTableView();

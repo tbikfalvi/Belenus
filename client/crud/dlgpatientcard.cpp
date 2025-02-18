@@ -65,6 +65,12 @@ cDlgPatientCard::cDlgPatientCard( QWidget *p_poParent ) : cDlgCrud( p_poParent )
     chkHasComment->setText( tr("Card with comment") );
     horizontalLayout->addWidget( chkHasComment );
 
+    lblMessage = new QLabel( this );
+    lblMessage->setObjectName( QString::fromUtf8( "lblMessage" ) );
+    lblMessage->setStyleSheet( "QLabel {font: bold; color: blue;}" );
+    lblMessage->setText( "" );
+    horizontalLayout->addWidget( lblMessage );
+
     horizontalSpacer1 = new QSpacerItem( 10, 20, QSizePolicy::Expanding, QSizePolicy::Minimum );
     horizontalLayout->addItem( horizontalSpacer1 );
     verticalLayout->insertLayout( 0, horizontalLayout );
@@ -216,6 +222,17 @@ void cDlgPatientCard::refreshTable( QString p_qsCondition )
     }
 
     QString stTemp;
+
+    if( ledBarcode->text().length() < g_poPrefs->getBarcodeLength()-2 && ledOwner->text().length() < 3 )
+    {
+        lblMessage->setText( tr("   >> Please enter part of the barcode or the owner's name! <<") );
+
+        m_qsQuery += " AND ";
+        m_qsQuery += QString( "barcode = '9999999999'" );
+        cDlgCrud::refreshTable();
+        return;
+    }
+    lblMessage->setText( "" );
 
     stTemp = ledBarcode->text();
     if( stTemp != "" )
