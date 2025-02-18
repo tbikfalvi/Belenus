@@ -183,3 +183,6 @@ Version 2.1.2.0
 - Kezdo kepernyon szoveg beirasaval majd ENTER gomb lenyomasaval elo lehet hivni a vendegek listajat a megadott szoveg szuresevel
   Aktualis vendeg kivalasztasanal eloszor az InputDialog jon fel, igy lehetoseg van szurt listaban keresni rogton
 
+Version 2.2.0.0
+===============
+
