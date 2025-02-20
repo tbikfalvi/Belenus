@@ -963,5 +963,40 @@
             <application home="%CURRENT_DIR%" name="DBBackup.exe" params='-execute "%DOWNLOAD_DIR%/sql/db_update_2_1_2_0.sql"' />
         </execute>
     </version>    
+
+	<version current="2.1.2.0" next="2.1.2.1">
+        <download>
+            <file path="http://download.bikfalvi.hu/belenus/official/Update_2_1_2_1.zip" />
+        </download>
+        <uncompress>
+            <file path="%DOWNLOAD_DIR%" name="Update_2_1_2_1.zip" />
+        </uncompress>
+        <backup>
+            <file path="%INSTALL_DIR%" directory="" name="websync.exe" move="yes" />
+        </backup>
+        <update>
+            <file src="%DOWNLOAD_DIR%/websync.exe" dst="%INSTALL_DIR%/websync.exe" />
+            <file src="%DOWNLOAD_DIR%/resources/40x40_device_dispersion.png" dst="%INSTALL_DIR%/resources/40x40_device_dispersion.png" />
+        </update>
+        <execute>
+            <application home="%CURRENT_DIR%" name="DBBackup.exe" params='-execute "%DOWNLOAD_DIR%/sql/db_update_2_1_2_1.sql"' />
+        </execute>
+    </version>    
+
+	<version current="2.1.2.1" next="2.1.2.2">
+        <download>
+            <file path="http://download.bikfalvi.hu/belenus/official/Update_2_1_2_2.zip" />
+        </download>
+        <uncompress>
+            <file path="%DOWNLOAD_DIR%" name="Update_2_1_2_2.zip" />
+        </uncompress>
+        <backup>
+        </backup>
+        <update>
+        </update>
+        <execute>
+            <application home="%CURRENT_DIR%" name="DBBackup.exe" params='-execute "%DOWNLOAD_DIR%/sql/db_update_2_1_2_2.sql"' />
+        </execute>
+    </version>    
 	
 </Process>
