@@ -1,9 +1,9 @@
 ﻿-- -----------------------------------------------------------------------------------
 -- Belenus Szoftver Rendszer (c) Pagony Multimedia Studio Bt - 2014
 -- -----------------------------------------------------------------------------------
--- Filename    : db_update_2_1_2_2.sql
--- AppVersion  : 2.1.2.0
--- DbVersion   : 2.1.2.0
+-- Filename    : db_update_2_1_2_1.sql
+-- AppVersion  : 2.1.2.1
+-- DbVersion   : 2.1.2.1
 -- -----------------------------------------------------------------------------------
 
 USE `belenus`;
@@ -13,5 +13,5 @@ USE `belenus`;
 
 -- -----------------------------------------------------------------------------------
 
-UPDATE settings SET value='2_1_2_0' WHERE identifier='APPLICATION_VERSION';
-UPDATE settings SET value='2_1_2_0' WHERE identifier='DATABASE_VERSION';
+UPDATE settings SET value='2_1_2_1' WHERE identifier='APPLICATION_VERSION';
+UPDATE settings SET value='2_1_2_1' WHERE identifier='DATABASE_VERSION';

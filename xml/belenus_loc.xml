@@ -789,6 +789,40 @@
             <application home="%CURRENT_DIR%" name="DBBackup.exe" params='-execute "%DOWNLOAD_DIR%/sql/db_update_2_1_1_0.sql"' />
         </execute>
     </version>    
+
+	<version current="2.1.1.0" next="2.1.2.0">
+        <uncompress>
+            <file path="%DOWNLOAD_DIR%" name="Update_2_1_2_0.zip" />
+        </uncompress>
+        <backup>
+            <file path="%INSTALL_DIR%" directory="" name="belenus.exe" move="yes" />
+            <file path="%INSTALL_DIR%" directory="" name="ReportViewer.exe" move="yes" />
+        </backup>
+        <update>
+            <file src="%DOWNLOAD_DIR%/belenus.exe" dst="%INSTALL_DIR%/belenus.exe" />
+            <file src="%DOWNLOAD_DIR%/lang/belenus_hu.qm" dst="%INSTALL_DIR%/lang/belenus_hu.qm" />
+            <file src="%DOWNLOAD_DIR%/ReportViewer.exe" dst="%INSTALL_DIR%/ReportViewer.exe" />
+        </update>
+        <execute>
+            <application home="%CURRENT_DIR%" name="DBBackup.exe" params='-execute "%DOWNLOAD_DIR%/sql/db_update_2_1_2_0.sql"' />
+        </execute>
+    </version>    
+
+	<version current="2.1.2.0" next="2.1.2.1">
+        <uncompress>
+            <file path="%DOWNLOAD_DIR%" name="Update_2_1_2_1.zip" />
+        </uncompress>
+        <backup>
+            <file path="%INSTALL_DIR%" directory="" name="websync.exe" move="yes" />
+        </backup>
+        <update>
+            <file src="%DOWNLOAD_DIR%/websync.exe" dst="%INSTALL_DIR%/websync.exe" />
+            <file src="%DOWNLOAD_DIR%/resources/40x40_device_dispersion.png" dst="%INSTALL_DIR%/resources/40x40_device_dispersion.png" />
+        </update>
+        <execute>
+            <application home="%CURRENT_DIR%" name="DBBackup.exe" params='-execute "%DOWNLOAD_DIR%/sql/db_update_2_1_2_1.sql"' />
+        </execute>
+    </version>    
 	
     <version current="2.1.1.0" next="2.1.2.0">
         <uncompress>
