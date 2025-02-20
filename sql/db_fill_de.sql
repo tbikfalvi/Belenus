@@ -2,8 +2,8 @@
 -- Belenus Szoftver Rendszer (c) Pagony Multimedia Studio Bt - 2013
 -- -----------------------------------------------------------------------------------
 -- Filename    : db_fill_de.sql
--- AppVersion  : 2.1.1.0
--- DbVersion   : 2.1.1.0
+-- AppVersion  : 2.1.2.1
+-- DbVersion   : 2.1.2.1
 -- Author      : Bikfalvi Tamas
 -- -----------------------------------------------------------------------------------
 -- Adatbazist default adatokkal feltolto SQL script
