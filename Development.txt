@@ -189,7 +189,8 @@ Version 2.1.2.1
 
 Version 2.1.3.0
 ===============
-HIBAJAVITAS: 
+HIBAJAVITAS: Termek vonalkod beirasnal a vendegek listaja nyilt meg, nem a termek eladas
+HIBAJAVITAS: Berlet eladasnal, feltoltesnel a gep csoport mostantol nem valtoztathato
 
 Version 2.2.0.0
 ===============
