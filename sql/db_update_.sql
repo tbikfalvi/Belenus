@@ -10,8 +10,10 @@ USE `belenus`;
 
 -- -----------------------------------------------------------------------------------
 
+INSERT INTO `settings` (`settingId`, `identifier`, `value`) VALUES (NULL, 'WEBSYNC_VERSION', '2_1_3_0');
+INSERT INTO `settings` (`settingId`, `identifier`, `value`) VALUES (NULL, 'VIEWER_VERSION', '2_1_3_0');
 
 -- -----------------------------------------------------------------------------------
 
 UPDATE settings SET value='2_1_3_0' WHERE identifier='APPLICATION_VERSION';
-UPDATE settings SET value='2_1_2_0' WHERE identifier='DATABASE_VERSION';
+UPDATE settings SET value='2_1_3_0' WHERE identifier='DATABASE_VERSION';

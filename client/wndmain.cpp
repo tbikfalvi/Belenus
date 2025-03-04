@@ -4049,15 +4049,11 @@ void cWndMain::_checkVersions()
         qsDbVersion.compare( g_poPrefs->getVersionDb() ) )
     {
         QMessageBox::warning( this, tr("Warning"),
-                              tr( "The version information stored in database is not match.\n\n"
-                                  "Correct version numbers:\n"
-                                  "Application version number: %1\n"
-                                  "Database version number: %2\n\n"
-                                  "Version numbers stored in database:\n"
-                                  "Application version number: %3\n"
-                                  "Database version number: %4\n\n"
-                                  "The proper operation of the application is not guaranteed.\n"
-                                  "It is recommended to exit application and to contact system administrator.")
+                              tr( "The version numbers in the database do not match those in the application.\n\n"
+                                  "There is a possibility that the application may not function properly.\n\n"
+                                  "Correct version numbers: AP_%1 - DB_%2\n"
+                                  "Version numbers stored in database: AP_%3 - DB_%4\n"
+                                )
                               .arg( g_poPrefs->getVersion() )
                               .arg( g_poPrefs->getVersionDb() )
                               .arg( qsAppVersion )

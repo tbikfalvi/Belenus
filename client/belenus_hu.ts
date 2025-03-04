@@ -581,32 +581,32 @@ Kérem indítsa el a WampServer alkalmazást, majd indítsa újra a Belenus alka
         <location filename="general.cpp" line="692"/>
         <location filename="general.cpp" line="699"/>
         <location filename="general.cpp" line="706"/>
-        <location filename="wndmain.cpp" line="3501"/>
+        <location filename="wndmain.cpp" line="3469"/>
         <source>Information</source>
         <translation>Információ</translation>
     </message>
     <message>
         <location filename="general.cpp" line="86"/>
-        <location filename="wndmain.cpp" line="3505"/>
+        <location filename="wndmain.cpp" line="3473"/>
         <source>Warning</source>
         <translation>Figyelmeztetés</translation>
     </message>
     <message>
         <location filename="general.cpp" line="90"/>
-        <location filename="wndmain.cpp" line="3509"/>
+        <location filename="wndmain.cpp" line="3477"/>
         <source>Attention</source>
         <translation>Figyelmeztetés</translation>
     </message>
     <message>
         <location filename="general.cpp" line="94"/>
-        <location filename="wndmain.cpp" line="3513"/>
+        <location filename="wndmain.cpp" line="3481"/>
         <source>Error</source>
         <translation>Hiba</translation>
     </message>
     <message>
         <location filename="general.cpp" line="98"/>
         <location filename="general.cpp" line="186"/>
-        <location filename="wndmain.cpp" line="3517"/>
+        <location filename="wndmain.cpp" line="3485"/>
         <source>Question</source>
         <translation>Kérdés</translation>
     </message>
@@ -3205,19 +3205,19 @@ El akarja menteni ezt a hármast az adatbázisba?</translation>
     </message>
     <message>
         <location filename="dlg/dlginputstart.cpp" line="58"/>
-        <location filename="dlg/dlginputstart.cpp" line="204"/>
+        <location filename="dlg/dlginputstart.cpp" line="207"/>
         <source>Entering time period ...</source>
         <translation>Idő intervallum beírása ...</translation>
     </message>
     <message>
         <location filename="dlg/dlginputstart.cpp" line="63"/>
-        <location filename="dlg/dlginputstart.cpp" line="208"/>
+        <location filename="dlg/dlginputstart.cpp" line="211"/>
         <source>Entering barcode ...</source>
         <translation>Vonalkód beírása ...</translation>
     </message>
     <message>
         <location filename="dlg/dlginputstart.cpp" line="72"/>
-        <location filename="dlg/dlginputstart.cpp" line="212"/>
+        <location filename="dlg/dlginputstart.cpp" line="215"/>
         <source>Entering patient name ...</source>
         <translation>Vendég nevének beírása ...</translation>
     </message>
@@ -3227,34 +3227,34 @@ El akarja menteni ezt a hármast az adatbázisba?</translation>
         <translation>Nem sikerült a kártya beolvasása, vagy a kártya nincs regisztrálva az adatbázisban.</translation>
     </message>
     <message>
-        <location filename="dlg/dlginputstart.cpp" line="231"/>
-        <location filename="dlg/dlginputstart.cpp" line="268"/>
-        <location filename="dlg/dlginputstart.cpp" line="276"/>
-        <location filename="dlg/dlginputstart.cpp" line="303"/>
+        <location filename="dlg/dlginputstart.cpp" line="234"/>
+        <location filename="dlg/dlginputstart.cpp" line="271"/>
+        <location filename="dlg/dlginputstart.cpp" line="279"/>
+        <location filename="dlg/dlginputstart.cpp" line="306"/>
         <source>Attention</source>
         <translation>Figyelmeztetés</translation>
     </message>
     <message>
-        <location filename="dlg/dlginputstart.cpp" line="232"/>
+        <location filename="dlg/dlginputstart.cpp" line="235"/>
         <source>Barcode of patientcard should be %1 character length.</source>
         <translation>A kártya vonalkódjának %1 karakter hosszúnak kell lennie.</translation>
     </message>
     <message>
-        <location filename="dlg/dlginputstart.cpp" line="269"/>
+        <location filename="dlg/dlginputstart.cpp" line="272"/>
         <source>Invalid value entered.
 Please use only numbers.</source>
         <translation>Érvénytelen a megadott érték.
 Kérem csak számokat használjon.</translation>
     </message>
     <message>
-        <location filename="dlg/dlginputstart.cpp" line="277"/>
+        <location filename="dlg/dlginputstart.cpp" line="280"/>
         <source>Invalid value entered.
 Time value can not be greater than %1 minutes.</source>
         <translation>Érvénytelen a megadott érték.
 Az időintervallum nem lehet nagyobb, mint %1 perc.</translation>
     </message>
     <message>
-        <location filename="dlg/dlginputstart.cpp" line="303"/>
+        <location filename="dlg/dlginputstart.cpp" line="306"/>
         <source>Please click on the desired button for the defined search value!</source>
         <translation>Kérem kattintson a megfelelő gombra a kívánt keresés indításához!</translation>
     </message>
@@ -5317,22 +5317,22 @@ Kérem töltse fel a fő kártyát a következő vonalkódot használva: %1</tra
         <translation>Nincs jogosultsága ahhoz, hogy szervíz bérletet hozzon létre.</translation>
     </message>
     <message>
-        <location filename="edit/dlgpatientcardrefill.cpp" line="299"/>
+        <location filename="edit/dlgpatientcardrefill.cpp" line="300"/>
         <source>Barcode cannot be empty.</source>
         <translation>A vonalkód megadása kötelező.</translation>
     </message>
     <message>
-        <location filename="edit/dlgpatientcardrefill.cpp" line="307"/>
+        <location filename="edit/dlgpatientcardrefill.cpp" line="308"/>
         <source>Invalid barcode. Barcode should be %1 character length.</source>
         <translation>Nem megfelelő vonalkód. A vonalkódnak %1 karakter hosszúnak kell lennie.</translation>
     </message>
     <message>
-        <location filename="edit/dlgpatientcardrefill.cpp" line="320"/>
+        <location filename="edit/dlgpatientcardrefill.cpp" line="321"/>
         <source>Invalid barcode. This barcode already saved into database.</source>
         <translation>Hibás vonalkód. Ez a vonalkód már regisztrálva van az adatbázisban.</translation>
     </message>
     <message>
-        <location filename="edit/dlgpatientcardrefill.cpp" line="330"/>
+        <location filename="edit/dlgpatientcardrefill.cpp" line="331"/>
         <source>Invalid Patientcard type.
 For active patientcard other type should be selected.
 If you want to connect the card to this type,
@@ -5343,12 +5343,12 @@ Ha a bérletet ehhez a bérlettípushoz akarja kötni,
 deaktiválja a bérletet.</translation>
     </message>
     <message>
-        <location filename="edit/dlgpatientcardrefill.cpp" line="341"/>
+        <location filename="edit/dlgpatientcardrefill.cpp" line="342"/>
         <source>Available units cannot be empty.</source>
         <translation>A felhasználható egységek száma nem lehet üres.</translation>
     </message>
     <message>
-        <location filename="edit/dlgpatientcardrefill.cpp" line="348"/>
+        <location filename="edit/dlgpatientcardrefill.cpp" line="349"/>
         <source>Number of available units can not be less then 1.
 If you want to reset the number of available units
 deactivate the card.</source>
@@ -5357,7 +5357,7 @@ Ha le akarja nullázni a kártya egységeinek számát,
 deaktiválja a bérletet.</translation>
     </message>
     <message>
-        <location filename="edit/dlgpatientcardrefill.cpp" line="355"/>
+        <location filename="edit/dlgpatientcardrefill.cpp" line="356"/>
         <source>Incorrect validation date.
 The patientcard with the selected units would not be used.</source>
         <translation>Nem megfelelő az érvényesség dátuma.
@@ -5373,12 +5373,12 @@ deaktiválja a bérletet.</translation>
     </message>
     <message>
         <location filename="edit/dlgpatientcardrefill.cpp" line="182"/>
-        <location filename="edit/dlgpatientcardrefill.cpp" line="381"/>
+        <location filename="edit/dlgpatientcardrefill.cpp" line="382"/>
         <source>Attention</source>
         <translation>Figyelmeztetés</translation>
     </message>
     <message>
-        <location filename="edit/dlgpatientcardrefill.cpp" line="382"/>
+        <location filename="edit/dlgpatientcardrefill.cpp" line="383"/>
         <source>Cassa is disabled!
 
 Please relogin to enable cassa.</source>
@@ -5387,12 +5387,12 @@ Please relogin to enable cassa.</source>
 Kérem jelentkezzen ki és vissza a pénztárműveletek engedélyezéséhez.</translation>
     </message>
     <message>
-        <location filename="edit/dlgpatientcardrefill.cpp" line="426"/>
+        <location filename="edit/dlgpatientcardrefill.cpp" line="427"/>
         <source>Refill patientcard [%1]</source>
         <translation>Bérlet feltöltés [%1]</translation>
     </message>
     <message>
-        <location filename="edit/dlgpatientcardrefill.cpp" line="527"/>
+        <location filename="edit/dlgpatientcardrefill.cpp" line="528"/>
         <source>Error</source>
         <translation>Hiba</translation>
     </message>
@@ -5492,7 +5492,7 @@ Kérem jelentkezzen ki és vissza a pénztárműveletek engedélyezéséhez.</tr
     <message>
         <location filename="edit/dlgpatientcardsell.cpp" line="73"/>
         <location filename="edit/dlgpatientcardsell.cpp" line="91"/>
-        <location filename="edit/dlgpatientcardsell.cpp" line="631"/>
+        <location filename="edit/dlgpatientcardsell.cpp" line="632"/>
         <source>&lt;Not selected&gt;</source>
         <translation>&lt;Nincs kiválasztva&gt;</translation>
     </message>
@@ -5509,37 +5509,37 @@ Kérem válassza a bérlet feltöltést ha további egységeket akar adni a bér
         <translation>Nem sikerült a kártya beolvasása, vagy a kártya nincs regisztrálva az adatbázisban.</translation>
     </message>
     <message>
-        <location filename="edit/dlgpatientcardsell.cpp" line="308"/>
+        <location filename="edit/dlgpatientcardsell.cpp" line="309"/>
         <source>Warning</source>
         <translation>Figyelmeztetés</translation>
     </message>
     <message>
-        <location filename="edit/dlgpatientcardsell.cpp" line="309"/>
+        <location filename="edit/dlgpatientcardsell.cpp" line="310"/>
         <source>You are not allowed to create System Service Patientcard.</source>
         <translation>Nincs jogosultsága ahhoz, hogy szervíz bérletet hozzon létre.</translation>
     </message>
     <message>
-        <location filename="edit/dlgpatientcardsell.cpp" line="353"/>
+        <location filename="edit/dlgpatientcardsell.cpp" line="354"/>
         <source>Barcode cannot be empty.</source>
         <translation>A vonalkód megadása kötelező.</translation>
     </message>
     <message>
-        <location filename="edit/dlgpatientcardsell.cpp" line="360"/>
+        <location filename="edit/dlgpatientcardsell.cpp" line="361"/>
         <source>Invalid barcode. Barcode should be %1 character length.</source>
         <translation>Nem megfelelő vonalkód. A vonalkódnak %1 karakter hosszúnak kell lennie.</translation>
     </message>
     <message>
-        <location filename="edit/dlgpatientcardsell.cpp" line="372"/>
+        <location filename="edit/dlgpatientcardsell.cpp" line="373"/>
         <source>Invalid barcode. This barcode already saved into database.</source>
         <translation>Hibás vonalkód. Ez a vonalkód már regisztrálva van az adatbázisban.</translation>
     </message>
     <message>
-        <location filename="edit/dlgpatientcardsell.cpp" line="381"/>
+        <location filename="edit/dlgpatientcardsell.cpp" line="382"/>
         <source>RFID must be set.</source>
         <translation>Az RFID azonosító nem lehet üres.</translation>
     </message>
     <message>
-        <location filename="edit/dlgpatientcardsell.cpp" line="389"/>
+        <location filename="edit/dlgpatientcardsell.cpp" line="390"/>
         <source>Invalid Patientcard type.
 For active patientcard other type should be selected.
 If you want to connect the card to this type,
@@ -5550,12 +5550,12 @@ Ha a bérletet ehhez a bérlettípushoz akarja kötni,
 deaktiválja a bérletet.</translation>
     </message>
     <message>
-        <location filename="edit/dlgpatientcardsell.cpp" line="400"/>
+        <location filename="edit/dlgpatientcardsell.cpp" line="401"/>
         <source>Available units cannot be empty.</source>
         <translation>A felhasználható egységek száma nem lehet üres.</translation>
     </message>
     <message>
-        <location filename="edit/dlgpatientcardsell.cpp" line="407"/>
+        <location filename="edit/dlgpatientcardsell.cpp" line="408"/>
         <source>Number of available units can not be less then 1.
 If you want to reset the number of available units
 deactivate the card.</source>
@@ -5564,7 +5564,7 @@ Ha le akarja nullázni a kártya egységeinek számát,
 deaktiválja a bérletet.</translation>
     </message>
     <message>
-        <location filename="edit/dlgpatientcardsell.cpp" line="414"/>
+        <location filename="edit/dlgpatientcardsell.cpp" line="415"/>
         <source>Incorrect validation date.
 If you want to reset the date of validation
 deactivate the card.</source>
@@ -5573,23 +5573,23 @@ Ha érvénytelenné akarja tenni a kártyát,
 deaktiválja a bérletet.</translation>
     </message>
     <message>
-        <location filename="edit/dlgpatientcardsell.cpp" line="621"/>
+        <location filename="edit/dlgpatientcardsell.cpp" line="622"/>
         <source>New Patient</source>
         <translation>Új vendég</translation>
     </message>
     <message>
-        <location filename="edit/dlgpatientcardsell.cpp" line="657"/>
+        <location filename="edit/dlgpatientcardsell.cpp" line="658"/>
         <source>Please read your RFID card!</source>
         <translation>Kérem olvassa be az RFID kártyát!</translation>
     </message>
     <message>
         <location filename="edit/dlgpatientcardsell.cpp" line="108"/>
-        <location filename="edit/dlgpatientcardsell.cpp" line="439"/>
+        <location filename="edit/dlgpatientcardsell.cpp" line="440"/>
         <source>Attention</source>
         <translation>Figyelmeztetés</translation>
     </message>
     <message>
-        <location filename="edit/dlgpatientcardsell.cpp" line="440"/>
+        <location filename="edit/dlgpatientcardsell.cpp" line="441"/>
         <source>Cassa is disabled!
 
 Please relogin to enable cassa.</source>
@@ -5598,12 +5598,12 @@ Please relogin to enable cassa.</source>
 Kérem jelentkezzen ki és vissza a pénztárműveletek engedélyezéséhez.</translation>
     </message>
     <message>
-        <location filename="edit/dlgpatientcardsell.cpp" line="484"/>
+        <location filename="edit/dlgpatientcardsell.cpp" line="485"/>
         <source>Sell patientcard [%1]</source>
         <translation>Bérlet eladás [%1]</translation>
     </message>
     <message>
-        <location filename="edit/dlgpatientcardsell.cpp" line="589"/>
+        <location filename="edit/dlgpatientcardsell.cpp" line="590"/>
         <source>Error</source>
         <translation>Hiba</translation>
     </message>
@@ -9636,12 +9636,12 @@ Az alkalmazás csak %1 gép kezelését teszi lehetővé.</translation>
 <context>
     <name>cWndMain</name>
     <message>
-        <location filename="wndmain.cpp" line="554"/>
+        <location filename="wndmain.cpp" line="522"/>
         <source>Password</source>
         <translation>Jelszó</translation>
     </message>
     <message>
-        <location filename="wndmain.cpp" line="555"/>
+        <location filename="wndmain.cpp" line="523"/>
         <source>Your password is empty. Please change it to a valid password.</source>
         <translation>Az Ön jelszava üres. Kérem adjon meg egy érvényes jelszót.</translation>
     </message>
@@ -9650,7 +9650,7 @@ Az alkalmazás csak %1 gép kezelését teszi lehetővé.</translation>
         <translation type="obsolete">A bejelentkezés sikertelen</translation>
     </message>
     <message>
-        <location filename="wndmain.cpp" line="570"/>
+        <location filename="wndmain.cpp" line="538"/>
         <source>Incorrect User Name and/or Password. Please try again.</source>
         <translation>Nem megfelelő felhasználó név és/vagy jelszó.
 Kérem próbálkozzon újra.</translation>
@@ -9672,14 +9672,14 @@ Folytatni akarja ezt a kasszát?
 Megjegyzés: Ha a NEM gombra kattint, új kassza nyílik az Ön nevére és ehhez a kasszához az egyenlegének megfelelő pénztárkivét lekönyvelésre kerül.</translation>
     </message>
     <message>
-        <location filename="wndmain.cpp" line="1619"/>
-        <location filename="wndmain.cpp" line="2182"/>
-        <location filename="wndmain.cpp" line="2411"/>
-        <location filename="wndmain.cpp" line="2619"/>
-        <location filename="wndmain.cpp" line="2712"/>
-        <location filename="wndmain.cpp" line="2912"/>
-        <location filename="wndmain.cpp" line="3203"/>
-        <location filename="wndmain.cpp" line="3240"/>
+        <location filename="wndmain.cpp" line="1587"/>
+        <location filename="wndmain.cpp" line="2150"/>
+        <location filename="wndmain.cpp" line="2379"/>
+        <location filename="wndmain.cpp" line="2587"/>
+        <location filename="wndmain.cpp" line="2680"/>
+        <location filename="wndmain.cpp" line="2880"/>
+        <location filename="wndmain.cpp" line="3171"/>
+        <location filename="wndmain.cpp" line="3208"/>
         <source>Attention</source>
         <translation>Figyelmeztetés</translation>
     </message>
@@ -9696,19 +9696,19 @@ Meg akarja most adni a liszensz kulcsát és regisztrálja a Belenus szerverrel?
 Figyelem: a regisztrációhoz élő internet kapcsolatra van szükség.</translation>
     </message>
     <message>
-        <location filename="wndmain.cpp" line="937"/>
-        <location filename="wndmain.cpp" line="1628"/>
-        <location filename="wndmain.cpp" line="1796"/>
-        <location filename="wndmain.cpp" line="1917"/>
-        <location filename="wndmain.cpp" line="2089"/>
-        <location filename="wndmain.cpp" line="2101"/>
-        <location filename="wndmain.cpp" line="2552"/>
-        <location filename="wndmain.cpp" line="2565"/>
-        <location filename="wndmain.cpp" line="2635"/>
-        <location filename="wndmain.cpp" line="2657"/>
-        <location filename="wndmain.cpp" line="2680"/>
-        <location filename="wndmain.cpp" line="3256"/>
-        <location filename="wndmain.cpp" line="4218"/>
+        <location filename="wndmain.cpp" line="905"/>
+        <location filename="wndmain.cpp" line="1596"/>
+        <location filename="wndmain.cpp" line="1764"/>
+        <location filename="wndmain.cpp" line="1885"/>
+        <location filename="wndmain.cpp" line="2057"/>
+        <location filename="wndmain.cpp" line="2069"/>
+        <location filename="wndmain.cpp" line="2520"/>
+        <location filename="wndmain.cpp" line="2533"/>
+        <location filename="wndmain.cpp" line="2603"/>
+        <location filename="wndmain.cpp" line="2625"/>
+        <location filename="wndmain.cpp" line="2648"/>
+        <location filename="wndmain.cpp" line="3224"/>
+        <location filename="wndmain.cpp" line="4182"/>
         <source>Question</source>
         <translation>Kérdés</translation>
     </message>
@@ -9717,18 +9717,18 @@ Figyelem: a regisztrációhoz élő internet kapcsolatra van szükség.</transla
         <translation type="obsolete">Folytatni akarja a korábban lezárt pénztár műveleteket?</translation>
     </message>
     <message>
-        <location filename="wndmain.cpp" line="535"/>
-        <location filename="wndmain.cpp" line="1942"/>
-        <location filename="wndmain.cpp" line="3271"/>
-        <location filename="wndmain.cpp" line="3430"/>
+        <location filename="wndmain.cpp" line="503"/>
+        <location filename="wndmain.cpp" line="1910"/>
+        <location filename="wndmain.cpp" line="3239"/>
+        <location filename="wndmain.cpp" line="3398"/>
+        <location filename="wndmain.cpp" line="3740"/>
         <location filename="wndmain.cpp" line="3772"/>
-        <location filename="wndmain.cpp" line="3804"/>
-        <location filename="wndmain.cpp" line="4083"/>
-        <location filename="wndmain.cpp" line="4127"/>
-        <location filename="wndmain.cpp" line="4135"/>
-        <location filename="wndmain.cpp" line="4228"/>
-        <location filename="wndmain.cpp" line="4248"/>
-        <location filename="wndmain.cpp" line="4372"/>
+        <location filename="wndmain.cpp" line="4051"/>
+        <location filename="wndmain.cpp" line="4091"/>
+        <location filename="wndmain.cpp" line="4099"/>
+        <location filename="wndmain.cpp" line="4192"/>
+        <location filename="wndmain.cpp" line="4212"/>
+        <location filename="wndmain.cpp" line="4336"/>
         <source>Warning</source>
         <translation>Figyelmeztetés</translation>
     </message>
@@ -9769,17 +9769,17 @@ Ha másik felhasználóval szeretne új pénztárat nyitni,
 kérem jelentkezzen ki és jelentkezzen be a kívánt felhasználóval.</translation>
     </message>
     <message>
-        <location filename="wndmain.cpp" line="1252"/>
+        <location filename="wndmain.cpp" line="1220"/>
         <source>Belenus </source>
         <translation>Belenus </translation>
     </message>
     <message>
-        <location filename="wndmain.cpp" line="1269"/>
+        <location filename="wndmain.cpp" line="1237"/>
         <source> &lt;=&gt; Current patient: [</source>
         <translation> &lt;==&gt; Aktuális vendég: [</translation>
     </message>
     <message>
-        <location filename="wndmain.cpp" line="1275"/>
+        <location filename="wndmain.cpp" line="1243"/>
         <source> &lt;=&gt; NO PATIENT SELECTED</source>
         <translation> &lt;=&gt; NINCS VENDÉG KIVÁLASZTVA</translation>
     </message>
@@ -9810,8 +9810,8 @@ Folytatni akarja ezt a kasszát?
 Megjegyzés: Ha a NEM gombra kattint, új kassza nyílik az Ön nevére és a nyitva hagyott kassza lezárásra kerül az egyenlegének megfelelő pénztárkivéttel lekönyvelve.</translation>
     </message>
     <message>
-        <location filename="wndmain.cpp" line="773"/>
-        <location filename="wndmain.cpp" line="782"/>
+        <location filename="wndmain.cpp" line="741"/>
+        <location filename="wndmain.cpp" line="750"/>
         <source>Cassa left in open.</source>
         <translation>Nyitva felejtett kassza.</translation>
     </message>
@@ -9832,16 +9832,16 @@ Folytatni akarja ezt a kasszát?
 Megjegyzés: Ha a NEM gombra kattint, új kassza nyílik az Ön nevére és ehhez a kasszához az egyenlegének megfelelő pénztárkivét lekönyvelésre kerül.</translation>
     </message>
     <message>
-        <location filename="wndmain.cpp" line="634"/>
-        <location filename="wndmain.cpp" line="644"/>
-        <location filename="wndmain.cpp" line="680"/>
+        <location filename="wndmain.cpp" line="602"/>
+        <location filename="wndmain.cpp" line="612"/>
+        <location filename="wndmain.cpp" line="648"/>
+        <location filename="wndmain.cpp" line="658"/>
         <location filename="wndmain.cpp" line="690"/>
-        <location filename="wndmain.cpp" line="722"/>
-        <location filename="wndmain.cpp" line="732"/>
-        <location filename="wndmain.cpp" line="806"/>
-        <location filename="wndmain.cpp" line="815"/>
-        <location filename="wndmain.cpp" line="854"/>
-        <location filename="wndmain.cpp" line="863"/>
+        <location filename="wndmain.cpp" line="700"/>
+        <location filename="wndmain.cpp" line="774"/>
+        <location filename="wndmain.cpp" line="783"/>
+        <location filename="wndmain.cpp" line="822"/>
+        <location filename="wndmain.cpp" line="831"/>
         <source>Cash left in cassa.</source>
         <translation>Készpénz maradt a kasszában.</translation>
     </message>
@@ -9850,7 +9850,7 @@ Megjegyzés: Ha a NEM gombra kattint, új kassza nyílik az Ön nevére és ehhe
         <translation type="obsolete">Kassza újraindítása|Új kassza indítása</translation>
     </message>
     <message>
-        <location filename="wndmain.cpp" line="890"/>
+        <location filename="wndmain.cpp" line="858"/>
         <source>The latest cassa record used:
 
 from %1 to %2
@@ -9863,7 +9863,7 @@ Do you want to continue this cassa?</source>
 Folytatni akarja ezt a kasszát?</translation>
     </message>
     <message>
-        <location filename="wndmain.cpp" line="893"/>
+        <location filename="wndmain.cpp" line="861"/>
         <source>It is possible to use your latest cassa with reopening it for example if you closed it previously for security reasons.
 Click the &apos;Reopen cassa&apos; if you want to use your previously closed cassa.
 Click the &apos;Start new cassa&apos; if you don&apos;t want to use the previously closed cassa. In this case a new cassa will be opened for you.</source>
@@ -9886,7 +9886,7 @@ Le akarja zárni a kasszát az egyenlegnek megfelelő automatikus pénzkivéttel
 Megjegyzés: Ha a NEM gombra kattint, a kassza az aktuális egyenleggel lesz lezárva.</translation>
     </message>
     <message>
-        <location filename="wndmain.cpp" line="751"/>
+        <location filename="wndmain.cpp" line="719"/>
         <source>Cassa still not closed means the cassa owner did not closed his/her cassa and possibly would like to continue the work with the cassa.
 But it is possible that the cassa owner forgot to close his/her cassa.
 You can decide how to start your work:
@@ -9900,13 +9900,13 @@ Kattintson az &apos;Új kassza indítása előző egyenleggel&apos; gombra, amen
 Kattintson az &apos;Új kassza indítása&apos; gombra, ha új kasszát akar kezdeni. Ebben az esetben a kassza le lesz zárva az egyenlegnek megfelelő készpénz kivétellel és új kassza nyílik az Ön nevére.</translation>
     </message>
     <message>
-        <location filename="wndmain.cpp" line="828"/>
+        <location filename="wndmain.cpp" line="796"/>
         <source> Reopen cassa | Start new cassa with balance | Start new cassa </source>
         <oldsource> Continue cassa | Start new cassa </oldsource>
         <translation> Kassza újranyitása | Új kassza indítása előző egyenleggel | Új kassza indítása </translation>
     </message>
     <message>
-        <location filename="wndmain.cpp" line="833"/>
+        <location filename="wndmain.cpp" line="801"/>
         <source>Cassa closed with balance means that previously the owner closed the cassa but there are cash left in cassa. The default action when closing the cassa is to withdraw money from the cassa therefore the cassa balance will be zero.
 Click the &apos;Reopen cassa&apos; if previously the cassa closed with reason without money withdraw and now you want to use that cassa again.
 Click the &apos;Start new cassa with balance&apos; button if you want to use a new cassa but you want to use the balance of the old cassa as a starting balance. In this case the previous cassa balance will be reseted and a new cassa will be opened for you with balance of the previous cassa
@@ -9917,19 +9917,19 @@ Kattintson az &apos;Új kassza indítása előző egyenleggel&apos; gombra, amen
 Kattintson az &apos;Új kassza indítása&apos; gombra, ha új kasszát akar kezdeni. Ebben az esetben a kassza le lesz zárva az egyenlegnek megfelelő készpénz kivétellel és új kassza nyílik az Ön nevére.</translation>
     </message>
     <message>
-        <location filename="wndmain.cpp" line="856"/>
+        <location filename="wndmain.cpp" line="824"/>
         <source>Start cassa with balance</source>
         <translation>Kassza nyitása előző egyenleggel</translation>
     </message>
     <message>
-        <location filename="wndmain.cpp" line="889"/>
+        <location filename="wndmain.cpp" line="857"/>
         <source> Reopen cassa | Start new cassa </source>
         <translation> Kassza újranyitása | Új kassza indítása </translation>
     </message>
     <message>
-        <location filename="wndmain.cpp" line="959"/>
-        <location filename="wndmain.cpp" line="996"/>
-        <location filename="wndmain.cpp" line="1008"/>
+        <location filename="wndmain.cpp" line="927"/>
+        <location filename="wndmain.cpp" line="964"/>
+        <location filename="wndmain.cpp" line="976"/>
         <source>Automatic cassa close.</source>
         <translation>Automatikus kassza zárás.</translation>
     </message>
@@ -9938,20 +9938,20 @@ Kattintson az &apos;Új kassza indítása&apos; gombra, ha új kasszát akar kez
         <translation type="obsolete">Q -&gt; Kilépés a programból | F -&gt; géphasználat kifizetése | S -&gt; gép indítása | N -&gt; ugrás a következő státuszra | T -&gt; gép kitisztítva | K -&gt; kosár megnyitása</translation>
     </message>
     <message>
-        <location filename="wndmain.cpp" line="1293"/>
+        <location filename="wndmain.cpp" line="1261"/>
         <source>SPACE -&gt; Enter time/barcode ...</source>
         <translation>SPACE -&gt; Géphasználat idő/vonalkód beírása ...</translation>
     </message>
     <message>
-        <location filename="wndmain.cpp" line="1298"/>
-        <location filename="wndmain.cpp" line="1303"/>
-        <location filename="wndmain.cpp" line="1308"/>
-        <location filename="wndmain.cpp" line="1313"/>
+        <location filename="wndmain.cpp" line="1266"/>
+        <location filename="wndmain.cpp" line="1271"/>
+        <location filename="wndmain.cpp" line="1276"/>
+        <location filename="wndmain.cpp" line="1281"/>
         <source> | ENTER -&gt; %1</source>
         <translation> | ENTER -&gt; %1</translation>
     </message>
     <message>
-        <location filename="wndmain.cpp" line="1507"/>
+        <location filename="wndmain.cpp" line="1475"/>
         <source>Communication stopped with hardware controller</source>
         <translation>Megszakadt a kapcsolat a hardver vezérlővel</translation>
     </message>
@@ -9980,33 +9980,33 @@ Kérem ellenőrizze az internet kapcsolatot és próbálja meg újraindítani az
 Kérem ellenőrizze azt is, hogy a liszensz kulcs nincs elgépelve és valódi-e illetve nincs-e más által használva. Ennek ellenőrzésére kérem lépjen kapcsolatba a franchise szolgáltatójával.</translation>
     </message>
     <message>
-        <location filename="wndmain.cpp" line="1571"/>
+        <location filename="wndmain.cpp" line="1539"/>
         <source>Reading card data failed or this card is not registered in database.</source>
         <oldsource>This card is not registered in database.</oldsource>
         <translation>Nem sikerült a kártya beolvasása, vagy a kártya nincs regisztrálva az adatbázisban.</translation>
     </message>
     <message>
-        <location filename="wndmain.cpp" line="1797"/>
+        <location filename="wndmain.cpp" line="1765"/>
         <source>Are you sure you want to close the current shift?</source>
         <translation>Biztos benne, hogy lezárja az aktuális műszakot?</translation>
     </message>
     <message>
-        <location filename="wndmain.cpp" line="1918"/>
+        <location filename="wndmain.cpp" line="1886"/>
         <source>Do you want to prepare the device from the waiting queue?</source>
         <translation>Elő akarja készíteni a gépet használatra a várakozó listából?</translation>
     </message>
     <message>
-        <location filename="wndmain.cpp" line="2232"/>
+        <location filename="wndmain.cpp" line="2200"/>
         <source>Using device later</source>
         <translation>Géphasználat később</translation>
     </message>
     <message>
-        <location filename="wndmain.cpp" line="2256"/>
+        <location filename="wndmain.cpp" line="2224"/>
         <source>Enter comment</source>
         <translation>Megjegyzés</translation>
     </message>
     <message>
-        <location filename="wndmain.cpp" line="2566"/>
+        <location filename="wndmain.cpp" line="2534"/>
         <source>Do you want to start the device cooling process?</source>
         <translation>El akarja indítani a gép hűtését?</translation>
     </message>
@@ -10017,12 +10017,12 @@ the licence key or the application&apos;s validity.</source>
 a liszensz kulcsot vagy az alkalmazás érvényességét.</translation>
     </message>
     <message>
-        <location filename="wndmain.cpp" line="389"/>
+        <location filename="wndmain.cpp" line="383"/>
         <source>Belenus Software System - %1</source>
         <translation>Belenus Szoftver Rendszer - %1</translation>
     </message>
     <message>
-        <location filename="wndmain.cpp" line="536"/>
+        <location filename="wndmain.cpp" line="504"/>
         <source>You are not allowed to log in to application!
 
 Application&apos;s licence key is invalid or expired.
@@ -10033,27 +10033,26 @@ Az alkalmazás liszensz kulcsa érvénytelen, vagy lejárt.
 Kérem lépjen kapcsolatba a franchise szolgáltatóval!</translation>
     </message>
     <message>
-        <location filename="wndmain.cpp" line="2620"/>
-        <location filename="wndmain.cpp" line="3241"/>
+        <location filename="wndmain.cpp" line="2588"/>
+        <location filename="wndmain.cpp" line="3209"/>
         <source>This patientcard has been lost and replaced
 and can not be used or sold again.</source>
         <translation>Ez a bérlet elveszett és lecserélték másik bérletre ezért nem lehet használni vagy eladni újra.</translation>
     </message>
     <message>
-        <location filename="wndmain.cpp" line="2681"/>
+        <location filename="wndmain.cpp" line="2649"/>
         <source>This patientcard still can be used.
 Do you want to refill anyway?</source>
         <translation>Ez a bérlet még nincs elhasználva.
 Biztos, hogy fel akarja tölteni?</translation>
     </message>
     <message>
-        <location filename="wndmain.cpp" line="3844"/>
-        <location filename="wndmain.cpp" line="3853"/>
+        <location filename="wndmain.cpp" line="3812"/>
+        <location filename="wndmain.cpp" line="3821"/>
         <source>Send custom e-mail</source>
         <translation>Egyedi e-mail küldés</translation>
     </message>
     <message>
-        <location filename="wndmain.cpp" line="4084"/>
         <source>The version information stored in database is not match.
 
 Correct version numbers:
@@ -10066,7 +10065,7 @@ Database version number: %4
 
 The proper operation of the application is not guaranteed.
 It is recommended to exit application and to contact system administrator.</source>
-        <translation>Az adatbázisban tárolt verzió információk nem egyeznek meg.
+        <translation type="obsolete">Az adatbázisban tárolt verzió információk nem egyeznek meg.
 
 Helyes verziószámok:
 Alkalmazás verziószám: %1
@@ -10080,26 +10079,42 @@ Az alkalmazás megfelelő működése nem garantált.
 Ajánlott kilépni az alkalmazásból és kapcsolatba lépni a rendszer adminisztrátorral.</translation>
     </message>
     <message>
-        <location filename="wndmain.cpp" line="4117"/>
-        <location filename="wndmain.cpp" line="4173"/>
+        <location filename="wndmain.cpp" line="4052"/>
+        <source>The version numbers in the database do not match those in the application.
+
+There is a possibility that the application may not function properly.
+
+Correct version numbers: AP_%1 - DB_%2
+Version numbers stored in database: AP_%3 - DB_%4
+</source>
+        <translation>Az adatbázisban található verzió számok nem egyeznek meg az alkalmazásban találhatóakkal.
+
+Fennáll annak a lehetősége, hogy az alkalmazás nem fog megfelelően működni.
+
+Megfelelő verziószámok: AP_%1 - DB_%2
+Adatbázisban tárolt verziószámok:  AP_%3 - DB_%4</translation>
+    </message>
+    <message>
+        <location filename="wndmain.cpp" line="4081"/>
+        <location filename="wndmain.cpp" line="4137"/>
         <source>The application runs in DEMO mode.</source>
         <translation>Az alkalmazás DEMÓ módban működik.</translation>
     </message>
     <message>
-        <location filename="wndmain.cpp" line="4118"/>
-        <location filename="wndmain.cpp" line="4174"/>
+        <location filename="wndmain.cpp" line="4082"/>
+        <location filename="wndmain.cpp" line="4138"/>
         <source>Please note, in DEMO mode you are not able to control the real hardware devices (solarium machines etc.) from the application. Every action related to hardware devices are virtual.</source>
         <translation>Kérem vegye figyelembe, hogy DEMÓ módban nem tudja vezérelni a hardver eszközöket (szolárium gépek stb.) az alkalmazásból. Minden hardver eszközhöz kapcsolódó folyamat virtuális, nem valós.</translation>
     </message>
     <message>
-        <location filename="wndmain.cpp" line="4128"/>
+        <location filename="wndmain.cpp" line="4092"/>
         <source>The licence key of the application is not registered.
 Please contact your franchise provider to register and activate your licence!</source>
         <translation>Az alkalmazás liszensz kulcsa nincs regisztrálva.
 Kérem lépjen kapcsolatba a franchise szolgáltatóval, hogy regisztrálja és érvényesítse a liszenszét!</translation>
     </message>
     <message>
-        <location filename="wndmain.cpp" line="4136"/>
+        <location filename="wndmain.cpp" line="4100"/>
         <source>The licence key of the application is not validated.
 Please make sure your internet connection is active,
 the WebSync application is running and http connection is enabled.
@@ -10114,29 +10129,29 @@ Ha minden pontosan a fent leírtak szerint van beállítva
 kérem lépjen kapcsolatba a franchise szolgáltatóval és aktiváltassa a liszenszét!</translation>
     </message>
     <message>
-        <location filename="wndmain.cpp" line="4151"/>
+        <location filename="wndmain.cpp" line="4115"/>
         <source>The application&apos;s licence validity EXPIRED</source>
         <translation>Az alkalmazás liszensz érvényessége LEJÁRT</translation>
     </message>
     <message>
-        <location filename="wndmain.cpp" line="4152"/>
+        <location filename="wndmain.cpp" line="4116"/>
         <source>The licence key of the application is invalid or expired. Please contact your franchise provider to activate your licence!</source>
         <translation>Az alkalmazás liszensz kulcsa nem megfelelő, vagy az érvényessége lejárt. Kérem lépjen kapcsolatba a franchise szolgáltatójával és érvényesíttesse a liszenszét!</translation>
     </message>
     <message>
-        <location filename="wndmain.cpp" line="4155"/>
+        <location filename="wndmain.cpp" line="4119"/>
         <source>The licence key of the application is invalid or expired.
 Please contact your franchise provider to activate your licence!</source>
         <translation>Az alkalmazás liszensz kulcsa nem megfelelő, vagy az érvényessége lejárt.
 Kérem lépjen kapcsolatba a franchise szolgáltatójával és érvényesíttesse a liszenszét!</translation>
     </message>
     <message>
-        <location filename="wndmain.cpp" line="4160"/>
+        <location filename="wndmain.cpp" line="4124"/>
         <source>Error</source>
         <translation>Hiba</translation>
     </message>
     <message>
-        <location filename="wndmain.cpp" line="4161"/>
+        <location filename="wndmain.cpp" line="4125"/>
         <source>Licence state can not be read from database.
 Please contact your franchise provider to activate your licence!
 
@@ -10147,7 +10162,7 @@ Kérem lépjen kapcsolatba a frachise szolgáltatójával és aktiváltassa a li
 Az alkalmazás most bezár ...</translation>
     </message>
     <message>
-        <location filename="wndmain.cpp" line="4219"/>
+        <location filename="wndmain.cpp" line="4183"/>
         <source>The http synchronization is enabled but the WebSync application is not running.
 
 Do you want to start this application now?</source>
@@ -10156,8 +10171,8 @@ Do you want to start this application now?</source>
 El akarja indítani az alkalmazást most?</translation>
     </message>
     <message>
-        <location filename="wndmain.cpp" line="4229"/>
-        <location filename="wndmain.cpp" line="4373"/>
+        <location filename="wndmain.cpp" line="4193"/>
+        <location filename="wndmain.cpp" line="4337"/>
         <source>Error occured when starting process:WebSync.exe
 
 Error code: %1
@@ -10178,7 +10193,7 @@ Hibakód: %1
 5 &gt; Ismeretlen hiba következett be.</translation>
     </message>
     <message>
-        <location filename="wndmain.cpp" line="4249"/>
+        <location filename="wndmain.cpp" line="4213"/>
         <source>The path of the application and the path of the archive directory is located on the same base directory.
 For safety point of view it is recommended to separate archive directory from the application environment.
 Please select a different directory path for &apos;archive&apos; and manually move the content of the archive directory to the newly selected directory!
@@ -10196,12 +10211,12 @@ Példa az alkalmazás elérési útvonalára: c:/Kiwisun/Belenus
 Példa az archív könyvtár elérési útvonalára: c:/Archive/BelenusDB</translation>
     </message>
     <message>
-        <location filename="wndmain.cpp" line="4284"/>
+        <location filename="wndmain.cpp" line="4248"/>
         <source>Windows</source>
         <translation>Ablakok</translation>
     </message>
     <message>
-        <location filename="wndmain.cpp" line="4292"/>
+        <location filename="wndmain.cpp" line="4256"/>
         <source>Advertisements</source>
         <translation>Hírdetések</translation>
     </message>
@@ -10214,7 +10229,7 @@ Példa az archív könyvtár elérési útvonalára: c:/Archive/BelenusDB</trans
         <translation type="obsolete">Hírdetés ablakok</translation>
     </message>
     <message>
-        <location filename="wndmain.cpp" line="4297"/>
+        <location filename="wndmain.cpp" line="4261"/>
         <source>WebSync application</source>
         <translation>WebSync alkalmazás</translation>
     </message>
@@ -10223,7 +10238,7 @@ Példa az archív könyvtár elérési útvonalára: c:/Archive/BelenusDB</trans
         <translation type="obsolete">Kérem adja meg az elvezett bérlet vonalkódját.</translation>
     </message>
     <message>
-        <location filename="wndmain.cpp" line="3474"/>
+        <location filename="wndmain.cpp" line="3442"/>
         <source>&lt;h2&gt;Belenus Software Application System&lt;/h2&gt;&lt;p&gt;Application version : %1&lt;br&gt;Database version : %2&lt;p&gt;Copyright 2013 Tamas Bikfalvi. All rights reserved.&lt;p&gt;Application Licence : %3&lt;p&gt;The application and all of its related products&lt;br&gt;is the property of KiwiSun Franchise.&lt;br&gt;For more information visit the &lt;a href=&quot;%4&quot;&gt;KiwiSun website&lt;/a&gt;</source>
         <translation>&lt;h2&gt;Belenus Szoftver Rendszer&lt;/h2&gt;&lt;p&gt;Alkalmazás verzió : %1&lt;br&gt;Adatbázis verzió : %2&lt;p&gt;Copyright 2013 Bikfalvi Tamás. Minden jog fenntartva.&lt;p&gt;Alkalmazás liszenszkulcs : %3&lt;p&gt;Az alkalmazás és minden hozzá kapcsolódó eszköz&lt;br&gt;a KiwiSun Franchise kizárólagos tulajdona.&lt;br&gt;További információkért látogasson el a &lt;a href=&quot;%4&quot;&gt;KiwiSun honlapjára&lt;/a&gt;</translation>
     </message>
@@ -10357,8 +10372,8 @@ This process may take long time and slow down the appliation.</oldsource>
 A folyamat hosszabb ideig is eltarthat és lelassíthatja az alkalmazást.</translation>
     </message>
     <message>
+        <location filename="wndmain.cpp" line="3741"/>
         <location filename="wndmain.cpp" line="3773"/>
-        <location filename="wndmain.cpp" line="3805"/>
         <source>Error occured when starting process:Advertisement.exe
 
 Error code: %1
@@ -10383,20 +10398,20 @@ Hibakód: %1
         <translation type="obsolete">Kérem vegye figyelembe, hogy újra kell indítani az alkalmazást a változások életbelépéséhez.</translation>
     </message>
     <message>
-        <location filename="wndmain.cpp" line="3867"/>
-        <location filename="wndmain.cpp" line="3896"/>
+        <location filename="wndmain.cpp" line="3835"/>
+        <location filename="wndmain.cpp" line="3864"/>
         <source>Disable HW Debug</source>
         <translation>HW nyomkövetés kikapcsolása</translation>
     </message>
     <message>
-        <location filename="wndmain.cpp" line="3872"/>
-        <location filename="wndmain.cpp" line="3892"/>
+        <location filename="wndmain.cpp" line="3840"/>
+        <location filename="wndmain.cpp" line="3860"/>
         <source>Enable HW Debug</source>
         <translation>HW nyomkövetés bekapcsolása</translation>
     </message>
     <message>
-        <location filename="wndmain.cpp" line="3876"/>
-        <location filename="wndmain.cpp" line="3887"/>
+        <location filename="wndmain.cpp" line="3844"/>
+        <location filename="wndmain.cpp" line="3855"/>
         <source>Reset communication</source>
         <translation>Kommunikáció újraindítása</translation>
     </message>
@@ -10455,41 +10470,41 @@ Do you want to save it and sell it now?</source>
 Ěl akarja menteni és utána eladni a bérletet?</translation>
     </message>
     <message>
-        <location filename="wndmain.cpp" line="2757"/>
-        <location filename="wndmain.cpp" line="2817"/>
+        <location filename="wndmain.cpp" line="2725"/>
+        <location filename="wndmain.cpp" line="2785"/>
         <source>Reset device|Add to wait list ...|Cancel</source>
         <translation>Géphasználat törlés|Várakozó sorba ...|Mégsem</translation>
     </message>
     <message>
-        <location filename="wndmain.cpp" line="2818"/>
+        <location filename="wndmain.cpp" line="2786"/>
         <source>This device already prepared with a time period.</source>
         <translation>Ez a gép már elő lett készítve készpénzes használatra.</translation>
     </message>
     <message>
-        <location filename="wndmain.cpp" line="2759"/>
-        <location filename="wndmain.cpp" line="2819"/>
+        <location filename="wndmain.cpp" line="2727"/>
+        <location filename="wndmain.cpp" line="2787"/>
         <source>To start the device with other conditions, please
 reset the device first with pushing the ESC button.</source>
         <translation>Ha más paraméterekkel akarja indítani a gépet,
 kérem az ESC gomb lenyomásával törölje a géphasználatot.</translation>
     </message>
     <message>
-        <location filename="wndmain.cpp" line="165"/>
+        <location filename="wndmain.cpp" line="161"/>
         <source>Set window position / size</source>
         <translation>Ablak pozíció / méret beállítás</translation>
     </message>
     <message>
-        <location filename="wndmain.cpp" line="169"/>
+        <location filename="wndmain.cpp" line="165"/>
         <source>Reset main window position</source>
         <translation>Fő ablak alaphelyzetbe állítása</translation>
     </message>
     <message>
-        <location filename="wndmain.cpp" line="173"/>
+        <location filename="wndmain.cpp" line="169"/>
         <source>Reset secondary window position</source>
         <translation>Másodlagos ablak alaphelyzetbe állítása</translation>
     </message>
     <message>
-        <location filename="wndmain.cpp" line="177"/>
+        <location filename="wndmain.cpp" line="173"/>
         <source>Reset advertisement windows position</source>
         <translation>Hírdetés ablakok alaphelyzetbe állítása</translation>
     </message>
@@ -10502,20 +10517,20 @@ kérem az ESC gomb lenyomásával törölje a géphasználatot.</translation>
         <translation type="obsolete">Feldolgozásra váró adatok száma: %1</translation>
     </message>
     <message>
-        <location filename="wndmain.cpp" line="656"/>
-        <location filename="wndmain.cpp" line="746"/>
+        <location filename="wndmain.cpp" line="624"/>
+        <location filename="wndmain.cpp" line="714"/>
         <source> Use opened cassa | Start new cassa with balance | Start new cassa </source>
         <translation> Nyitott kassza folytatása | Új kassza indítása előző egyenleggel | Új kassza indítása </translation>
     </message>
     <message>
-        <location filename="wndmain.cpp" line="657"/>
+        <location filename="wndmain.cpp" line="625"/>
         <source>The latest cassa opened on a different date.
 What would you like to do?</source>
         <translation>A legutóbbi kassza másik napon volt megnyitva.
 Mit szeretne csinálni?</translation>
     </message>
     <message>
-        <location filename="wndmain.cpp" line="659"/>
+        <location filename="wndmain.cpp" line="627"/>
         <source>The previously created and not closed cassa started to be used on a different date. If you continue to use that cassa, your daily report will include summary of more than one day.
 Click the &apos;Use opened cassa&apos; button if you want to use the opened cassa. In this case the start and the end date will be different of the cassa and the cassa daily report could be misleading.
 Click the &apos;Start new cassa with balance&apos; button if you want to use a new cassa but you want to use the balance of the old cassa as a starting balance. In this case the previous cassa balance will be reseted and a new cassa will be opened for you with balance of the previous cassa
@@ -10526,11 +10541,11 @@ Kattintson az &apos;Új kassza indítása előző egyenleggel&apos; gombra, amen
 Kattintson az &apos;Új kassza indítása&apos; gombra, ha új kasszát akar kezdeni. Ebben az esetben a kassza le lesz zárva az egyenlegnek megfelelő készpénz kivétellel és új kassza nyílik az Ön nevére.</translation>
     </message>
     <message>
-        <location filename="wndmain.cpp" line="647"/>
-        <location filename="wndmain.cpp" line="683"/>
-        <location filename="wndmain.cpp" line="735"/>
-        <location filename="wndmain.cpp" line="776"/>
-        <location filename="wndmain.cpp" line="817"/>
+        <location filename="wndmain.cpp" line="615"/>
+        <location filename="wndmain.cpp" line="651"/>
+        <location filename="wndmain.cpp" line="703"/>
+        <location filename="wndmain.cpp" line="744"/>
+        <location filename="wndmain.cpp" line="785"/>
         <source>Cassa continue with balance</source>
         <translation>Kassza folytatása előző egyenleggel</translation>
     </message>
@@ -10539,7 +10554,7 @@ Kattintson az &apos;Új kassza indítása&apos; gombra, ha új kasszát akar kez
         <translation type="obsolete">Nyitott kassza folytatása|Saját kassza használata</translation>
     </message>
     <message>
-        <location filename="wndmain.cpp" line="747"/>
+        <location filename="wndmain.cpp" line="715"/>
         <source>The latest cassa record still not closed:
 
 Owner: %1
@@ -10568,7 +10583,7 @@ Kattintson a &apos;Saját kassza használata&apos; gombra, ha Ön fogja használ
         <translation type="obsolete">Kassza folytatása|Új kassza indítása</translation>
     </message>
     <message>
-        <location filename="wndmain.cpp" line="829"/>
+        <location filename="wndmain.cpp" line="797"/>
         <source>The latest cassa record closed with balance:
 
 Owner: %1
@@ -10599,14 +10614,14 @@ Kattintson a &apos;Kassza folytatása&apos; gombra, ha korábban okkal nem vette
 Kattintson az &apos;Új kassza indítása&apos; gombra, ha új kasszát akar kezdeni. Ebben az esetben a kassza le lesz zárva az egyenlegnek megfelelő készpénz kivétellel és új kassza nyílik az Ön nevére.</translation>
     </message>
     <message>
-        <location filename="wndmain.cpp" line="947"/>
-        <location filename="wndmain.cpp" line="984"/>
+        <location filename="wndmain.cpp" line="915"/>
+        <location filename="wndmain.cpp" line="952"/>
         <source>Withdraw cash|Leave cash in cassa</source>
         <translation>Készpénz kivét|Készpénz kasszában marad</translation>
     </message>
     <message>
-        <location filename="wndmain.cpp" line="948"/>
-        <location filename="wndmain.cpp" line="985"/>
+        <location filename="wndmain.cpp" line="916"/>
+        <location filename="wndmain.cpp" line="953"/>
         <source>There are some cash left in your cassa.
 Current balance: %1
 
@@ -10618,8 +10633,8 @@ Jelenlegi egyenleg: %1
 Le akarja zárni a kasszát automatikus készpénz kivéttel?</translation>
     </message>
     <message>
-        <location filename="wndmain.cpp" line="951"/>
-        <location filename="wndmain.cpp" line="988"/>
+        <location filename="wndmain.cpp" line="919"/>
+        <location filename="wndmain.cpp" line="956"/>
         <source>You can decide if you want to leave the cash in the cassa or withdraw cash from the cassa.
 Click on the &apos;Withdraw cash&apos; button if you want to withdraw cash from cassa before closing it
 Click on the &apos;Leave cash in cassa&apos; if you want to leave the cash in the cassa before closing it</source>
@@ -10628,14 +10643,14 @@ Kattintson a &apos;Készpénz kivét&apos; gombra ha a kasszát automatikus kés
 Kattintson a &apos;Készpénz kasszában marad&apos; gombra, ha úgy zárja le a kasszát, hogy a készpénzt benne hagyja</translation>
     </message>
     <message>
-        <location filename="wndmain.cpp" line="2758"/>
+        <location filename="wndmain.cpp" line="2726"/>
         <source>This device already prepared with a patientcard.</source>
         <translation>Ez a gép már elő lett készítve bérletegységes használatra.</translation>
     </message>
     <message>
-        <location filename="wndmain.cpp" line="2720"/>
-        <location filename="wndmain.cpp" line="2728"/>
-        <location filename="wndmain.cpp" line="3222"/>
+        <location filename="wndmain.cpp" line="2688"/>
+        <location filename="wndmain.cpp" line="2696"/>
+        <location filename="wndmain.cpp" line="3190"/>
         <source>Request</source>
         <translation>Kérés</translation>
     </message>
@@ -10652,13 +10667,13 @@ Kattintson a &apos;Készpénz kasszában marad&apos; gombra, ha úgy zárja le a
         <translation type="obsolete">... reklám ablakok</translation>
     </message>
     <message>
-        <location filename="wndmain.cpp" line="181"/>
-        <location filename="wndmain.cpp" line="189"/>
+        <location filename="wndmain.cpp" line="177"/>
+        <location filename="wndmain.cpp" line="185"/>
         <source>Start</source>
         <translation>Indítás</translation>
     </message>
     <message>
-        <location filename="wndmain.cpp" line="185"/>
+        <location filename="wndmain.cpp" line="181"/>
         <source>Stop</source>
         <translation>Leállítás</translation>
     </message>
@@ -10667,46 +10682,46 @@ Kattintson a &apos;Készpénz kasszában marad&apos; gombra, ha úgy zárja le a
         <translation type="obsolete">Pozíció / méret beállítás</translation>
     </message>
     <message>
-        <location filename="wndmain.cpp" line="609"/>
+        <location filename="wndmain.cpp" line="577"/>
         <source>KiwiSun administrator logged in.
 Please note cassa is disabled!</source>
         <translation>KiwiSun adminisztrátor bejelentkezett.
 Kérem vegye figyelembe, hogy a pénztárműveletek le vannak tiltva!</translation>
     </message>
     <message>
-        <location filename="wndmain.cpp" line="1049"/>
+        <location filename="wndmain.cpp" line="1017"/>
         <source>Q -&gt; Exit application | F -&gt; pay device usage | S -&gt; start device | N -&gt; skip status | H -&gt; start cooling | T -&gt; device cleared | K -&gt; open shopping kart</source>
         <translation>Q -&gt; Kilépés a programból | F -&gt; géphasználat kifizetése | S -&gt; gép indítása | N -&gt; ugrás a következő státuszra | H -&gt; hűtés indítása | T -&gt; gép kitisztítva | K -&gt; kosár megnyitása</translation>
     </message>
     <message>
-        <location filename="wndmain.cpp" line="2720"/>
+        <location filename="wndmain.cpp" line="2688"/>
         <source>Please select the guest from the list</source>
         <translation>Kérem válassza ki a vendéget a listából</translation>
     </message>
     <message>
-        <location filename="wndmain.cpp" line="2728"/>
+        <location filename="wndmain.cpp" line="2696"/>
         <source>Please select the patientcard from the list</source>
         <translation>Kérem válassza ki a bérletet a listából</translation>
     </message>
     <message>
-        <location filename="wndmain.cpp" line="3222"/>
+        <location filename="wndmain.cpp" line="3190"/>
         <source>Please enter the new patientcard&apos;s barcode.</source>
         <translation>Kérem adja meg az új bérlet vonalkódját.</translation>
     </message>
     <message>
-        <location filename="wndmain.cpp" line="3271"/>
+        <location filename="wndmain.cpp" line="3239"/>
         <source>This patientcard already in use.
 Please select a non-active patientcard.</source>
         <translation>Ez a bérlet már használatban van.
 Kérem válasszon egy másik, inaktív bérletet.</translation>
     </message>
     <message>
-        <location filename="wndmain.cpp" line="3311"/>
+        <location filename="wndmain.cpp" line="3279"/>
         <source>Replace patientcard [%1]-&gt;[%2]</source>
         <translation>Elveszett bérlet csere [%1]-&gt;[%2]</translation>
     </message>
     <message>
-        <location filename="wndmain.cpp" line="3352"/>
+        <location filename="wndmain.cpp" line="3320"/>
         <source>Lost and replaced with card: %1</source>
         <translation>Elveszett és lecserélték erre: %1</translation>
     </message>
@@ -10731,7 +10746,7 @@ Társkártya: %2</translation>
         <translation type="obsolete">Társkártya kapcsolás [%1]&lt;-[%2]</translation>
     </message>
     <message>
-        <location filename="wndmain.cpp" line="3431"/>
+        <location filename="wndmain.cpp" line="3399"/>
         <source>Error occured when starting process:ReportViewer.exe
 
 Error code: %1
@@ -10752,7 +10767,7 @@ Hibakód: %1
 5 &gt; Ismeretlen hiba következett be.</translation>
     </message>
     <message>
-        <location filename="wndmain.cpp" line="3473"/>
+        <location filename="wndmain.cpp" line="3441"/>
         <source>About</source>
         <translation>Névjegy</translation>
     </message>
@@ -10771,14 +10786,14 @@ Kattintson az Ignore gombra, ha egy korábban elmentett,
 a vendéghez tartozó kezelést akar kiválasztani aktuálisnak.</translation>
     </message>
     <message>
-        <location filename="wndmain.cpp" line="1620"/>
+        <location filename="wndmain.cpp" line="1588"/>
         <source>At least one Panel is still working.
 Please stop them before closing the application.</source>
         <translation>Az összes gépnek alap állapotban kell lennie.
 Kérem állítsa le a gépeket, mielőtt kilépne az alkalmazásból.</translation>
     </message>
     <message>
-        <location filename="wndmain.cpp" line="1629"/>
+        <location filename="wndmain.cpp" line="1597"/>
         <source>Are you sure you want to close the application?</source>
         <translation>Biztos benne, hogy ki akar lépni az alkalmazásból?</translation>
     </message>
@@ -10789,9 +10804,9 @@ Do you want to synchronize database with server?</source>
 Akarja most szinkronizálni az adatbázist a szerverrel?</translation>
     </message>
     <message>
-        <location filename="wndmain.cpp" line="1769"/>
-        <location filename="wndmain.cpp" line="2029"/>
-        <location filename="wndmain.cpp" line="3157"/>
+        <location filename="wndmain.cpp" line="1737"/>
+        <location filename="wndmain.cpp" line="1997"/>
+        <location filename="wndmain.cpp" line="3125"/>
         <source>Information</source>
         <translation>Információ</translation>
     </message>
@@ -10804,7 +10819,7 @@ Akarja most szinkronizálni az adatbázist a szerverrel?</translation>
         <translation type="obsolete">A Belenus szerver nem elérhető.</translation>
     </message>
     <message>
-        <location filename="wndmain.cpp" line="1770"/>
+        <location filename="wndmain.cpp" line="1738"/>
         <source>This area is restricted for system administrators only!</source>
         <translation>A megadott szolgáltatás csak Rendszer adminisztrátorok számára elérhető!</translation>
     </message>
@@ -10813,7 +10828,7 @@ Akarja most szinkronizálni az adatbázist a szerverrel?</translation>
         <translation type="obsolete">Ki akarja választani aktuálisnak a létrehozott vendéget?</translation>
     </message>
     <message>
-        <location filename="wndmain.cpp" line="1943"/>
+        <location filename="wndmain.cpp" line="1911"/>
         <source>The device usage has to be payed.
 Please process the payment first.</source>
         <translation>A géphasználatot ki kell fizetni.
@@ -10824,7 +10839,7 @@ Kérem először fejezze be a pénztár műveletet.</translation>
         <translation type="obsolete">Ki akarja választani a létrehozott kezelést aktuálisnak?</translation>
     </message>
     <message>
-        <location filename="wndmain.cpp" line="2030"/>
+        <location filename="wndmain.cpp" line="1998"/>
         <source>Some of the changes you made will only be applied after the application is restarted.</source>
         <translation>A változtatások életbe léptetéséhez az alkalmazást újra kell indítani.</translation>
     </message>
@@ -10849,18 +10864,18 @@ Do you want to sell a patientcard for the actual patient?</source>
 El akar adni egy bérletet a vendégnek?</translation>
     </message>
     <message>
-        <location filename="wndmain.cpp" line="2553"/>
+        <location filename="wndmain.cpp" line="2521"/>
         <source>Do you want to jump to the next status of the device?</source>
         <translation>Biztos benne, hogy át akar ugrani a gép következő státuszára?</translation>
     </message>
     <message>
-        <location filename="wndmain.cpp" line="2655"/>
+        <location filename="wndmain.cpp" line="2623"/>
         <source>
 Due to there is no time left, the patientcard will be reseted and deactivated.</source>
         <translation>A bérleten nincs felhasználható idő, ezért a bérlet deaktiválásra kerül.</translation>
     </message>
     <message>
-        <location filename="wndmain.cpp" line="2658"/>
+        <location filename="wndmain.cpp" line="2626"/>
         <source>This patientcard has the following settings:
 
 Available units: %1
@@ -10923,14 +10938,14 @@ Do you want to select this patient as actual?</source>
 Ki akarja választani a vendéget aktuálisnak?</translation>
     </message>
     <message>
-        <location filename="wndmain.cpp" line="2090"/>
+        <location filename="wndmain.cpp" line="2058"/>
         <source>This patientcard has been assigned to a different patient.
 Are you sure you want to use this patientcard?</source>
         <translation>Ez a bérlet egy másik vendéghez van társítva.
 Biztos, hogy ezt a bérletet akarja használni?</translation>
     </message>
     <message>
-        <location filename="wndmain.cpp" line="2102"/>
+        <location filename="wndmain.cpp" line="2070"/>
         <source>There is no patient assigned to this patientcard.
 Do you want to assign this patientcard to the actual patient?</source>
         <translation>Ehhez a bérlethez nincs vendég társítva.
@@ -10965,11 +10980,11 @@ Ha más paraméterekkel akarja indítani a gépet,
 kérem az ESC gomb lenyomásával törölje a géphasználatot.</translation>
     </message>
     <message>
-        <location filename="wndmain.cpp" line="2183"/>
-        <location filename="wndmain.cpp" line="2412"/>
-        <location filename="wndmain.cpp" line="2713"/>
-        <location filename="wndmain.cpp" line="2913"/>
-        <location filename="wndmain.cpp" line="3204"/>
+        <location filename="wndmain.cpp" line="2151"/>
+        <location filename="wndmain.cpp" line="2380"/>
+        <location filename="wndmain.cpp" line="2681"/>
+        <location filename="wndmain.cpp" line="2881"/>
+        <location filename="wndmain.cpp" line="3172"/>
         <source>Cassa is disabled!
 
 Please relogin to enable cassa.</source>
@@ -10978,24 +10993,24 @@ Please relogin to enable cassa.</source>
 Kérem jelentkezzen ki és vissza a pénztárműveletek engedélyezéséhez.</translation>
     </message>
     <message>
-        <location filename="wndmain.cpp" line="2220"/>
-        <location filename="wndmain.cpp" line="2940"/>
+        <location filename="wndmain.cpp" line="2188"/>
+        <location filename="wndmain.cpp" line="2908"/>
         <source>Using panel</source>
         <translation>Géphasználat</translation>
     </message>
     <message>
-        <location filename="wndmain.cpp" line="2953"/>
+        <location filename="wndmain.cpp" line="2921"/>
         <source>Using device: %1</source>
         <oldsource>Using device: %1 - </oldsource>
         <translation>Géphasználat: %1</translation>
     </message>
     <message>
-        <location filename="wndmain.cpp" line="2998"/>
+        <location filename="wndmain.cpp" line="2966"/>
         <source>Selling product: %1</source>
         <translation>Termék eladás: %1</translation>
     </message>
     <message>
-        <location filename="wndmain.cpp" line="3158"/>
+        <location filename="wndmain.cpp" line="3126"/>
         <source>Deleting data attached to DEMO licence key has been finished.</source>
         <translation>A DEMO kulcshoz tartozó adatok törlése befejeződött.</translation>
     </message>
@@ -11037,7 +11052,7 @@ for the actually selected device.</source>
 az aktuálisan kiválasztott géphez.</translation>
     </message>
     <message>
-        <location filename="wndmain.cpp" line="938"/>
+        <location filename="wndmain.cpp" line="906"/>
         <source>Do you want to close your cassa?</source>
         <translation>Le akarja zárni a pénztárat?</translation>
     </message>
@@ -11090,7 +11105,7 @@ Meg akar adni egy regisztrált liszensz kulcsot és ellenőrizni azt a szerverre
 Fontos: a liszensz kulcs ellenőrzéséhez élő internet kapcsolat szükséges.</translation>
     </message>
     <message>
-        <location filename="wndmain.cpp" line="1875"/>
+        <location filename="wndmain.cpp" line="1843"/>
         <source>New Patient</source>
         <translation>Új vendég</translation>
     </message>
@@ -11117,8 +11132,8 @@ Akarja aktiválni most?</translation>
         <translation type="obsolete">Hozzá akarja rendelni ezt a bérletet az aktuális vendéghez?</translation>
     </message>
     <message>
-        <location filename="wndmain.cpp" line="2636"/>
-        <location filename="wndmain.cpp" line="3257"/>
+        <location filename="wndmain.cpp" line="2604"/>
+        <location filename="wndmain.cpp" line="3225"/>
         <source>This barcode has not found in the database.
 Do you want to register it for a new patientcard?</source>
         <translation>Ez a vonalkód nincs elmentve az adatbázisban.
