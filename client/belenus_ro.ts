@@ -3580,13 +3580,13 @@ Te rog, ia în considerare faptul că acestă modificare este ireversibilă!</tr
         <translation>&lt;Nu a fost selectat&gt;</translation>
     </message>
     <message>
-        <location filename="edit/dlgpatientcardrefill.cpp" line="182"/>
-        <location filename="edit/dlgpatientcardrefill.cpp" line="382"/>
+        <location filename="edit/dlgpatientcardrefill.cpp" line="184"/>
+        <location filename="edit/dlgpatientcardrefill.cpp" line="383"/>
         <source>Attention</source>
         <translation>Atenție</translation>
     </message>
     <message>
-        <location filename="edit/dlgpatientcardrefill.cpp" line="183"/>
+        <location filename="edit/dlgpatientcardrefill.cpp" line="185"/>
         <source>This patientcard attached to another card therefore it can not be refilled.
 
 Please refill the main patientcard with barcode: %1</source>
@@ -3595,32 +3595,32 @@ Please refill the main patientcard with barcode: %1</source>
 Te rog, reîncarcă cardul de pacient principal cu codul de bare: %1</translation>
     </message>
     <message>
-        <location filename="edit/dlgpatientcardrefill.cpp" line="190"/>
+        <location filename="edit/dlgpatientcardrefill.cpp" line="192"/>
         <source>Warning</source>
         <translation>Avertisment</translation>
     </message>
     <message>
-        <location filename="edit/dlgpatientcardrefill.cpp" line="191"/>
+        <location filename="edit/dlgpatientcardrefill.cpp" line="193"/>
         <source>You are not allowed to create System Service Patientcard.</source>
         <translation>Crearea cardului de pacient de serviciu sistem nu este permisă.</translation>
     </message>
     <message>
-        <location filename="edit/dlgpatientcardrefill.cpp" line="300"/>
+        <location filename="edit/dlgpatientcardrefill.cpp" line="301"/>
         <source>Barcode cannot be empty.</source>
         <translation>Codul de bare nu poate fi gol.</translation>
     </message>
     <message>
-        <location filename="edit/dlgpatientcardrefill.cpp" line="308"/>
+        <location filename="edit/dlgpatientcardrefill.cpp" line="309"/>
         <source>Invalid barcode. Barcode should be %1 character length.</source>
         <translation>Cod de bare incorect. Codul de bare ar trebui să aibă lungimea de %1 caractere.</translation>
     </message>
     <message>
-        <location filename="edit/dlgpatientcardrefill.cpp" line="321"/>
+        <location filename="edit/dlgpatientcardrefill.cpp" line="322"/>
         <source>Invalid barcode. This barcode already saved into database.</source>
         <translation>Cod de bare incorect. Acest cod de bare a fost deja salvat în baza de date.</translation>
     </message>
     <message>
-        <location filename="edit/dlgpatientcardrefill.cpp" line="331"/>
+        <location filename="edit/dlgpatientcardrefill.cpp" line="332"/>
         <source>Invalid Patientcard type.
 For active patientcard other type should be selected.
 If you want to connect the card to this type,
@@ -3631,12 +3631,12 @@ Dacă vrei să conectezi cardul la acest tip,
 dezactivează cardul.</translation>
     </message>
     <message>
-        <location filename="edit/dlgpatientcardrefill.cpp" line="342"/>
+        <location filename="edit/dlgpatientcardrefill.cpp" line="343"/>
         <source>Available units cannot be empty.</source>
         <translation>Unitățile disponibile nu pot fi goale.</translation>
     </message>
     <message>
-        <location filename="edit/dlgpatientcardrefill.cpp" line="349"/>
+        <location filename="edit/dlgpatientcardrefill.cpp" line="350"/>
         <source>Number of available units can not be less then 1.
 If you want to reset the number of available units
 deactivate the card.</source>
@@ -3645,14 +3645,14 @@ Dacă vrei să resetezi numărul unităților disponibile,
 dezactivează cardul.</translation>
     </message>
     <message>
-        <location filename="edit/dlgpatientcardrefill.cpp" line="356"/>
+        <location filename="edit/dlgpatientcardrefill.cpp" line="357"/>
         <source>Incorrect validation date.
 The patientcard with the selected units would not be used.</source>
         <translation>Data validării incorectă.
 Cardul de pacient cu unitățile selectate nu ar fi folosit.</translation>
     </message>
     <message>
-        <location filename="edit/dlgpatientcardrefill.cpp" line="383"/>
+        <location filename="edit/dlgpatientcardrefill.cpp" line="384"/>
         <source>Cassa is disabled!
 
 Please relogin to enable cassa.</source>
@@ -3661,13 +3661,13 @@ Please relogin to enable cassa.</source>
 Te rog, reautentifică-te pentru a activa casa.</translation>
     </message>
     <message>
-        <location filename="edit/dlgpatientcardrefill.cpp" line="427"/>
+        <location filename="edit/dlgpatientcardrefill.cpp" line="428"/>
         <source>Refill patientcard [%1]</source>
         <oldsource>Refill patientcard &lt;%1&gt;</oldsource>
         <translation type="unfinished">Reîncărcare card pacient &lt;%1&gt;</translation>
     </message>
     <message>
-        <location filename="edit/dlgpatientcardrefill.cpp" line="528"/>
+        <location filename="edit/dlgpatientcardrefill.cpp" line="529"/>
         <source>Error</source>
         <translation>Eroare</translation>
     </message>
@@ -3751,13 +3751,13 @@ Te rog, reautentifică-te pentru a activa casa.</translation>
     <message>
         <location filename="edit/dlgpatientcardsell.cpp" line="73"/>
         <location filename="edit/dlgpatientcardsell.cpp" line="91"/>
-        <location filename="edit/dlgpatientcardsell.cpp" line="632"/>
+        <location filename="edit/dlgpatientcardsell.cpp" line="633"/>
         <source>&lt;Not selected&gt;</source>
         <translation>&lt;Nu a fost selectat&gt;</translation>
     </message>
     <message>
         <location filename="edit/dlgpatientcardsell.cpp" line="108"/>
-        <location filename="edit/dlgpatientcardsell.cpp" line="440"/>
+        <location filename="edit/dlgpatientcardsell.cpp" line="441"/>
         <source>Attention</source>
         <translation>Atenție</translation>
     </message>
@@ -3769,42 +3769,42 @@ Please refill the card if you want to add additional units.</source>
 Te rog, reîncarcă cardul dacă vrei să adaugi unități suplimentare.</translation>
     </message>
     <message>
-        <location filename="edit/dlgpatientcardsell.cpp" line="174"/>
+        <location filename="edit/dlgpatientcardsell.cpp" line="176"/>
         <source>Reading card data failed or this card is not registered in database.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="edit/dlgpatientcardsell.cpp" line="309"/>
+        <location filename="edit/dlgpatientcardsell.cpp" line="310"/>
         <source>Warning</source>
         <translation>Avertisment</translation>
     </message>
     <message>
-        <location filename="edit/dlgpatientcardsell.cpp" line="310"/>
+        <location filename="edit/dlgpatientcardsell.cpp" line="311"/>
         <source>You are not allowed to create System Service Patientcard.</source>
         <translation>Crearea cardului de pacient de serviciu sistem nu este permisă.</translation>
     </message>
     <message>
-        <location filename="edit/dlgpatientcardsell.cpp" line="354"/>
+        <location filename="edit/dlgpatientcardsell.cpp" line="355"/>
         <source>Barcode cannot be empty.</source>
         <translation>Codul de bare nu poate fi gol.</translation>
     </message>
     <message>
-        <location filename="edit/dlgpatientcardsell.cpp" line="361"/>
+        <location filename="edit/dlgpatientcardsell.cpp" line="362"/>
         <source>Invalid barcode. Barcode should be %1 character length.</source>
         <translation>Cod de bare incorect. Codul de bare ar trebui să aibă lungimea de %1 caractere.</translation>
     </message>
     <message>
-        <location filename="edit/dlgpatientcardsell.cpp" line="373"/>
+        <location filename="edit/dlgpatientcardsell.cpp" line="374"/>
         <source>Invalid barcode. This barcode already saved into database.</source>
         <translation>Cod de bare incorect. Acest cod de bare a fost deja salvat în baza de date.</translation>
     </message>
     <message>
-        <location filename="edit/dlgpatientcardsell.cpp" line="382"/>
+        <location filename="edit/dlgpatientcardsell.cpp" line="383"/>
         <source>RFID must be set.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="edit/dlgpatientcardsell.cpp" line="390"/>
+        <location filename="edit/dlgpatientcardsell.cpp" line="391"/>
         <source>Invalid Patientcard type.
 For active patientcard other type should be selected.
 If you want to connect the card to this type,
@@ -3815,12 +3815,12 @@ Dacă vrei să conectezi cardul la acest tip,
 dezactivează cardul.</translation>
     </message>
     <message>
-        <location filename="edit/dlgpatientcardsell.cpp" line="401"/>
+        <location filename="edit/dlgpatientcardsell.cpp" line="402"/>
         <source>Available units cannot be empty.</source>
         <translation>Unitățile disponibile nu pot fi goale.</translation>
     </message>
     <message>
-        <location filename="edit/dlgpatientcardsell.cpp" line="408"/>
+        <location filename="edit/dlgpatientcardsell.cpp" line="409"/>
         <source>Number of available units can not be less then 1.
 If you want to reset the number of available units
 deactivate the card.</source>
@@ -3829,7 +3829,7 @@ Dacă vrei să resetezi numărul unităților disponibile,
 dezactivează cardul.</translation>
     </message>
     <message>
-        <location filename="edit/dlgpatientcardsell.cpp" line="415"/>
+        <location filename="edit/dlgpatientcardsell.cpp" line="416"/>
         <source>Incorrect validation date.
 If you want to reset the date of validation
 deactivate the card.</source>
@@ -3838,7 +3838,7 @@ Dacă vrei să resetezi numărul unităților disponibile,
 dezactivează cardul.</translation>
     </message>
     <message>
-        <location filename="edit/dlgpatientcardsell.cpp" line="441"/>
+        <location filename="edit/dlgpatientcardsell.cpp" line="442"/>
         <source>Cassa is disabled!
 
 Please relogin to enable cassa.</source>
@@ -3847,23 +3847,23 @@ Please relogin to enable cassa.</source>
 Te rog, reautentifică-te pentru a activa casa.</translation>
     </message>
     <message>
-        <location filename="edit/dlgpatientcardsell.cpp" line="485"/>
+        <location filename="edit/dlgpatientcardsell.cpp" line="486"/>
         <source>Sell patientcard [%1]</source>
         <oldsource>Sell patientcard &lt;%1&gt;</oldsource>
         <translation type="unfinished">Vânzare card pacient &lt;%1&gt;</translation>
     </message>
     <message>
-        <location filename="edit/dlgpatientcardsell.cpp" line="590"/>
+        <location filename="edit/dlgpatientcardsell.cpp" line="591"/>
         <source>Error</source>
         <translation>Eroare</translation>
     </message>
     <message>
-        <location filename="edit/dlgpatientcardsell.cpp" line="622"/>
+        <location filename="edit/dlgpatientcardsell.cpp" line="623"/>
         <source>New Patient</source>
         <translation>Pacient nou</translation>
     </message>
     <message>
-        <location filename="edit/dlgpatientcardsell.cpp" line="658"/>
+        <location filename="edit/dlgpatientcardsell.cpp" line="659"/>
         <source>Please read your RFID card!</source>
         <translation type="unfinished"></translation>
     </message>

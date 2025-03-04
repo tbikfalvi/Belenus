@@ -5295,7 +5295,7 @@ Kérem jelentkezzen ki és vissza a pénztárműveletek engedélyezéséhez.</tr
         <translation>&lt;Nincs kiválasztva&gt;</translation>
     </message>
     <message>
-        <location filename="edit/dlgpatientcardrefill.cpp" line="183"/>
+        <location filename="edit/dlgpatientcardrefill.cpp" line="185"/>
         <source>This patientcard attached to another card therefore it can not be refilled.
 
 Please refill the main patientcard with barcode: %1</source>
@@ -5307,32 +5307,32 @@ Please refill the main patientcard with barcode: %1</oldsource>
 Kérem töltse fel a fő kártyát a következő vonalkódot használva: %1</translation>
     </message>
     <message>
-        <location filename="edit/dlgpatientcardrefill.cpp" line="190"/>
+        <location filename="edit/dlgpatientcardrefill.cpp" line="192"/>
         <source>Warning</source>
         <translation>Figyelmeztetés</translation>
     </message>
     <message>
-        <location filename="edit/dlgpatientcardrefill.cpp" line="191"/>
+        <location filename="edit/dlgpatientcardrefill.cpp" line="193"/>
         <source>You are not allowed to create System Service Patientcard.</source>
         <translation>Nincs jogosultsága ahhoz, hogy szervíz bérletet hozzon létre.</translation>
     </message>
     <message>
-        <location filename="edit/dlgpatientcardrefill.cpp" line="300"/>
+        <location filename="edit/dlgpatientcardrefill.cpp" line="301"/>
         <source>Barcode cannot be empty.</source>
         <translation>A vonalkód megadása kötelező.</translation>
     </message>
     <message>
-        <location filename="edit/dlgpatientcardrefill.cpp" line="308"/>
+        <location filename="edit/dlgpatientcardrefill.cpp" line="309"/>
         <source>Invalid barcode. Barcode should be %1 character length.</source>
         <translation>Nem megfelelő vonalkód. A vonalkódnak %1 karakter hosszúnak kell lennie.</translation>
     </message>
     <message>
-        <location filename="edit/dlgpatientcardrefill.cpp" line="321"/>
+        <location filename="edit/dlgpatientcardrefill.cpp" line="322"/>
         <source>Invalid barcode. This barcode already saved into database.</source>
         <translation>Hibás vonalkód. Ez a vonalkód már regisztrálva van az adatbázisban.</translation>
     </message>
     <message>
-        <location filename="edit/dlgpatientcardrefill.cpp" line="331"/>
+        <location filename="edit/dlgpatientcardrefill.cpp" line="332"/>
         <source>Invalid Patientcard type.
 For active patientcard other type should be selected.
 If you want to connect the card to this type,
@@ -5343,12 +5343,12 @@ Ha a bérletet ehhez a bérlettípushoz akarja kötni,
 deaktiválja a bérletet.</translation>
     </message>
     <message>
-        <location filename="edit/dlgpatientcardrefill.cpp" line="342"/>
+        <location filename="edit/dlgpatientcardrefill.cpp" line="343"/>
         <source>Available units cannot be empty.</source>
         <translation>A felhasználható egységek száma nem lehet üres.</translation>
     </message>
     <message>
-        <location filename="edit/dlgpatientcardrefill.cpp" line="349"/>
+        <location filename="edit/dlgpatientcardrefill.cpp" line="350"/>
         <source>Number of available units can not be less then 1.
 If you want to reset the number of available units
 deactivate the card.</source>
@@ -5357,7 +5357,7 @@ Ha le akarja nullázni a kártya egységeinek számát,
 deaktiválja a bérletet.</translation>
     </message>
     <message>
-        <location filename="edit/dlgpatientcardrefill.cpp" line="356"/>
+        <location filename="edit/dlgpatientcardrefill.cpp" line="357"/>
         <source>Incorrect validation date.
 The patientcard with the selected units would not be used.</source>
         <translation>Nem megfelelő az érvényesség dátuma.
@@ -5372,13 +5372,13 @@ Ha érvénytelenné akarja tenni a kártyát,
 deaktiválja a bérletet.</translation>
     </message>
     <message>
-        <location filename="edit/dlgpatientcardrefill.cpp" line="182"/>
-        <location filename="edit/dlgpatientcardrefill.cpp" line="382"/>
+        <location filename="edit/dlgpatientcardrefill.cpp" line="184"/>
+        <location filename="edit/dlgpatientcardrefill.cpp" line="383"/>
         <source>Attention</source>
         <translation>Figyelmeztetés</translation>
     </message>
     <message>
-        <location filename="edit/dlgpatientcardrefill.cpp" line="383"/>
+        <location filename="edit/dlgpatientcardrefill.cpp" line="384"/>
         <source>Cassa is disabled!
 
 Please relogin to enable cassa.</source>
@@ -5387,12 +5387,12 @@ Please relogin to enable cassa.</source>
 Kérem jelentkezzen ki és vissza a pénztárműveletek engedélyezéséhez.</translation>
     </message>
     <message>
-        <location filename="edit/dlgpatientcardrefill.cpp" line="427"/>
+        <location filename="edit/dlgpatientcardrefill.cpp" line="428"/>
         <source>Refill patientcard [%1]</source>
         <translation>Bérlet feltöltés [%1]</translation>
     </message>
     <message>
-        <location filename="edit/dlgpatientcardrefill.cpp" line="528"/>
+        <location filename="edit/dlgpatientcardrefill.cpp" line="529"/>
         <source>Error</source>
         <translation>Hiba</translation>
     </message>
@@ -5492,7 +5492,7 @@ Kérem jelentkezzen ki és vissza a pénztárműveletek engedélyezéséhez.</tr
     <message>
         <location filename="edit/dlgpatientcardsell.cpp" line="73"/>
         <location filename="edit/dlgpatientcardsell.cpp" line="91"/>
-        <location filename="edit/dlgpatientcardsell.cpp" line="632"/>
+        <location filename="edit/dlgpatientcardsell.cpp" line="633"/>
         <source>&lt;Not selected&gt;</source>
         <translation>&lt;Nincs kiválasztva&gt;</translation>
     </message>
@@ -5504,42 +5504,42 @@ Please refill the card if you want to add additional units.</source>
 Kérem válassza a bérlet feltöltést ha további egységeket akar adni a bérletnek.</translation>
     </message>
     <message>
-        <location filename="edit/dlgpatientcardsell.cpp" line="174"/>
+        <location filename="edit/dlgpatientcardsell.cpp" line="176"/>
         <source>Reading card data failed or this card is not registered in database.</source>
         <translation>Nem sikerült a kártya beolvasása, vagy a kártya nincs regisztrálva az adatbázisban.</translation>
     </message>
     <message>
-        <location filename="edit/dlgpatientcardsell.cpp" line="309"/>
+        <location filename="edit/dlgpatientcardsell.cpp" line="310"/>
         <source>Warning</source>
         <translation>Figyelmeztetés</translation>
     </message>
     <message>
-        <location filename="edit/dlgpatientcardsell.cpp" line="310"/>
+        <location filename="edit/dlgpatientcardsell.cpp" line="311"/>
         <source>You are not allowed to create System Service Patientcard.</source>
         <translation>Nincs jogosultsága ahhoz, hogy szervíz bérletet hozzon létre.</translation>
     </message>
     <message>
-        <location filename="edit/dlgpatientcardsell.cpp" line="354"/>
+        <location filename="edit/dlgpatientcardsell.cpp" line="355"/>
         <source>Barcode cannot be empty.</source>
         <translation>A vonalkód megadása kötelező.</translation>
     </message>
     <message>
-        <location filename="edit/dlgpatientcardsell.cpp" line="361"/>
+        <location filename="edit/dlgpatientcardsell.cpp" line="362"/>
         <source>Invalid barcode. Barcode should be %1 character length.</source>
         <translation>Nem megfelelő vonalkód. A vonalkódnak %1 karakter hosszúnak kell lennie.</translation>
     </message>
     <message>
-        <location filename="edit/dlgpatientcardsell.cpp" line="373"/>
+        <location filename="edit/dlgpatientcardsell.cpp" line="374"/>
         <source>Invalid barcode. This barcode already saved into database.</source>
         <translation>Hibás vonalkód. Ez a vonalkód már regisztrálva van az adatbázisban.</translation>
     </message>
     <message>
-        <location filename="edit/dlgpatientcardsell.cpp" line="382"/>
+        <location filename="edit/dlgpatientcardsell.cpp" line="383"/>
         <source>RFID must be set.</source>
         <translation>Az RFID azonosító nem lehet üres.</translation>
     </message>
     <message>
-        <location filename="edit/dlgpatientcardsell.cpp" line="390"/>
+        <location filename="edit/dlgpatientcardsell.cpp" line="391"/>
         <source>Invalid Patientcard type.
 For active patientcard other type should be selected.
 If you want to connect the card to this type,
@@ -5550,12 +5550,12 @@ Ha a bérletet ehhez a bérlettípushoz akarja kötni,
 deaktiválja a bérletet.</translation>
     </message>
     <message>
-        <location filename="edit/dlgpatientcardsell.cpp" line="401"/>
+        <location filename="edit/dlgpatientcardsell.cpp" line="402"/>
         <source>Available units cannot be empty.</source>
         <translation>A felhasználható egységek száma nem lehet üres.</translation>
     </message>
     <message>
-        <location filename="edit/dlgpatientcardsell.cpp" line="408"/>
+        <location filename="edit/dlgpatientcardsell.cpp" line="409"/>
         <source>Number of available units can not be less then 1.
 If you want to reset the number of available units
 deactivate the card.</source>
@@ -5564,7 +5564,7 @@ Ha le akarja nullázni a kártya egységeinek számát,
 deaktiválja a bérletet.</translation>
     </message>
     <message>
-        <location filename="edit/dlgpatientcardsell.cpp" line="415"/>
+        <location filename="edit/dlgpatientcardsell.cpp" line="416"/>
         <source>Incorrect validation date.
 If you want to reset the date of validation
 deactivate the card.</source>
@@ -5573,23 +5573,23 @@ Ha érvénytelenné akarja tenni a kártyát,
 deaktiválja a bérletet.</translation>
     </message>
     <message>
-        <location filename="edit/dlgpatientcardsell.cpp" line="622"/>
+        <location filename="edit/dlgpatientcardsell.cpp" line="623"/>
         <source>New Patient</source>
         <translation>Új vendég</translation>
     </message>
     <message>
-        <location filename="edit/dlgpatientcardsell.cpp" line="658"/>
+        <location filename="edit/dlgpatientcardsell.cpp" line="659"/>
         <source>Please read your RFID card!</source>
         <translation>Kérem olvassa be az RFID kártyát!</translation>
     </message>
     <message>
         <location filename="edit/dlgpatientcardsell.cpp" line="108"/>
-        <location filename="edit/dlgpatientcardsell.cpp" line="440"/>
+        <location filename="edit/dlgpatientcardsell.cpp" line="441"/>
         <source>Attention</source>
         <translation>Figyelmeztetés</translation>
     </message>
     <message>
-        <location filename="edit/dlgpatientcardsell.cpp" line="441"/>
+        <location filename="edit/dlgpatientcardsell.cpp" line="442"/>
         <source>Cassa is disabled!
 
 Please relogin to enable cassa.</source>
@@ -5598,12 +5598,12 @@ Please relogin to enable cassa.</source>
 Kérem jelentkezzen ki és vissza a pénztárműveletek engedélyezéséhez.</translation>
     </message>
     <message>
-        <location filename="edit/dlgpatientcardsell.cpp" line="485"/>
+        <location filename="edit/dlgpatientcardsell.cpp" line="486"/>
         <source>Sell patientcard [%1]</source>
         <translation>Bérlet eladás [%1]</translation>
     </message>
     <message>
-        <location filename="edit/dlgpatientcardsell.cpp" line="590"/>
+        <location filename="edit/dlgpatientcardsell.cpp" line="591"/>
         <source>Error</source>
         <translation>Hiba</translation>
     </message>
