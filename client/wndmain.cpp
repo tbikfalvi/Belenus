@@ -131,14 +131,11 @@ cWndMain::cWndMain( QWidget *parent ) : QMainWindow( parent )
     m_bActionProcessing             = false;
     m_bProgressErrorVisible         = false;
     m_nProgressCounter              = 0;
-//    m_bBlnsHttpConnected            = false;
     m_nCommunicationErrorCounter    = 0;
     m_nCommResetStep                = 0;
-//    m_bBlnsHttpErrorVisible         = false;
     m_uiBlnsErrorAppeared           = 0;
     m_bClosingShift                 = false;
     m_bShoppingCartHasItem          = g_obGen.isShoppingCartHasItems();
-//    m_nHttpCommCounter              = 0;
     m_bMainWindowActive             = false;
     m_bResetAdWindows               = false;
     m_nCounterAdWindowReset         = 0;
@@ -157,7 +154,6 @@ cWndMain::cWndMain( QWidget *parent ) : QMainWindow( parent )
     frmLogin->setEnabled( false );
 
     frmDemo->setVisible( false );
-//    lblDemoMode->setStyleSheet( "QLabel {color: blue;}" );
 
     g_obGen.setSysTrayIconParent( this );
     g_obGen.setWindowMainWidget( this );
@@ -282,7 +278,6 @@ cWndMain::cWndMain( QWidget *parent ) : QMainWindow( parent )
         action_Panelgroups->setIcon( QIcon("./resources/40x40_panel.png") );
         action_Paneltypes->setIcon( QIcon("./resources/40x40_panel.png") );
         action_PanelStatuses->setIcon( QIcon( "./resources/40x40_device_settings.png" ) );
-//        action_ValidateSerialKey->setIcon( QIcon( "./resources/40x40_key.png" ) );
         action_ManageDatabase->setIcon( QIcon( "./resources/40x40_connect_db.png" ) );
         action_DistributionLists->setIcon( QIcon( "./resources/40x40_distlist.png" ) );
         action_EditEmails->setIcon( QIcon( "./resources/40x40_draftmail.png" ) );
@@ -291,7 +286,6 @@ cWndMain::cWndMain( QWidget *parent ) : QMainWindow( parent )
     menuProduct->setIcon( QIcon("./resources/40x40_product.png") );
     menuCassa->setIcon( QIcon( "./resources/40x40_cassa.png" ) );
 
-//    menuPatient->setIcon( QIcon("./resources/40x40_patient.png") );
     menuPatientCard->setIcon( QIcon("./resources/40x40_patientcard.png") );
         action_PCSaveToDatabase->setIcon( QIcon( "./resources/40x40_patientcardadd.png" ) );
         action_PCActivate->setIcon( QIcon("./resources/40x40_patientcard_sell.png") );
@@ -427,35 +421,9 @@ cWndMain::cWndMain( QWidget *parent ) : QMainWindow( parent )
 
     m_pbStatusRFID.setEnabled( false );
 
-    /*if( !g_poPrefs->isFapados() )
-    {
-        m_pbStatusHttp.setIcon( QIcon( "./resources/40x40_http_disabled.png" ) );
-        m_pbStatusHttp.setFlat( true );
-        m_pbStatusHttp.setText( "" );
-        m_pbStatusHttp.setIconSize( QSize(20,20) );
-        m_pbStatusHttp.setFixedSize( 22, 22 );
-
-        m_lblHttpCount.setStyleSheet( "QLabel {font-size:8px;}" );
-
-        connect( &m_pbStatusHttp, SIGNAL(clicked()), this, SLOT(on_BlnsHttpIconClicked()) );
-
-        m_pbStatusCommunicationSuspended.setIcon( QIcon( "./resources/40x40_minus.png" ) );
-        m_pbStatusCommunicationSuspended.setFlat( true );
-        m_pbStatusCommunicationSuspended.setText( "" );
-        m_pbStatusCommunicationSuspended.setIconSize( QSize(20,20) );
-        m_pbStatusCommunicationSuspended.setFixedSize( 22, 22 );
-    }*/
-
     statusbar->addPermanentWidget( &m_lblStatusLeft, 3 );
-//    statusbar->addPermanentWidget( &m_pbStatusCommunication, 0 );
     statusbar->addPermanentWidget( &m_pbStatusKeyboard, 0 );
     statusbar->addPermanentWidget( &m_pbStatusRFID, 0 );
-    /*if( !g_poPrefs->isFapados() )
-    {
-        statusbar->addPermanentWidget( &m_pbStatusHttp, 0 );
-        statusbar->addPermanentWidget( &m_pbStatusCommunicationSuspended, 0 );
-        statusbar->addPermanentWidget( &m_lblHttpCount );
-    }*/
     statusbar->addPermanentWidget( &m_lblStatusRight, 1 );
 
     g_poPrefs->setWindowMain( this );
