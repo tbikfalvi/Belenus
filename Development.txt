@@ -187,6 +187,10 @@ Version 2.1.2.1
 ===============
 - Hianyzo ikon a ReportViewer-ben
 
+Version 2.1.3.0
+===============
+HIBAJAVITAS: 
+
 Version 2.2.0.0
 ===============
 
