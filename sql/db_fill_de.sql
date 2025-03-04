@@ -2,8 +2,8 @@
 -- Belenus Szoftver Rendszer (c) Pagony Multimedia Studio Bt - 2013
 -- -----------------------------------------------------------------------------------
 -- Filename    : db_fill_de.sql
--- AppVersion  : 2.1.2.0
--- DbVersion   : 2.1.2.0
+-- AppVersion  : 2.1.3.0
+-- DbVersion   : 2.1.3.0
 -- Author      : Bikfalvi Tamas
 -- -----------------------------------------------------------------------------------
 -- Adatbazist default adatokkal feltolto SQL script
@@ -323,8 +323,10 @@ INSERT INTO `settings` (`settingId`, `identifier`, `value`) VALUES
  (NULL, 'LICENCE_LAST_VALIDATED', '2024-03-25 12:00:00'),
  (NULL, 'ABOUT_INFO_LINK', 'http://www.kiwisun.eu/elerhetosegeink.html'),
  (NULL, 'CURRENT_CASSA_ID', '0'),
- (NULL, 'APPLICATION_VERSION', '2_1_0_0'),
- (NULL, 'DATABASE_VERSION', '2_1_0_0'),
+ (NULL, 'APPLICATION_VERSION', '2_1_3_0'),
+ (NULL, 'WEBSYNC_VERSION', '2_1_3_0'),
+ (NULL, 'VIEWER_VERSION', '2_1_3_0'),
+ (NULL, 'DATABASE_VERSION', '2_1_3_0'),
  (NULL, 'LICENCE_CHECK', 56),
  (NULL, 'LICENCE_CHECK_COUNTER', 56),
  (NULL, 'LICENCE_WORKTIME', 336),

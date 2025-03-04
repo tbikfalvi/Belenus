@@ -133,8 +133,8 @@ void cDlgInputStart::on_ledInputStart_textChanged(QString )
 {
     if( m_bInitCalled ) return;
 
-    bool boIsANumber = false;
-    ledInputStart->text().toUInt( &boIsANumber );
+    bool boIsANumber = _isNumeric( ledInputStart->text() );
+//    ledInputStart->text().toUInt( &boIsANumber );
 
     if( boIsANumber )
     {
@@ -158,12 +158,14 @@ void cDlgInputStart::on_ledInputStart_textChanged(QString )
         m_bTime = false;
         pbTime->setEnabled( false );
     }
+
     if( ledInputStart->text().length() != g_poPrefs->getBarcodeLength() ||
         ledInputStart->text().contains(' ') )
     {
         m_bCard = false;
         pbCardcode->setEnabled( false );
     }
+
     if( ledInputStart->text().contains(' ') ||
         ledInputStart->text().length() < 4 ||
         ( g_poPrefs->isBarcodeLengthDifferent() && ledInputStart->text().length() == g_poPrefs->getBarcodeLength() ) )
@@ -171,6 +173,7 @@ void cDlgInputStart::on_ledInputStart_textChanged(QString )
         m_bProd = false;
         pbProduct->setEnabled( false );
     }
+
     if( ledInputStart->text().length() == 0 ||
         boIsANumber )
     {
@@ -320,4 +323,15 @@ bool cDlgInputStart::_IsServiceCard()
     }
 
     return bRet;
+}
+
+bool cDlgInputStart::_isNumeric(const QString& str)
+{
+    if (str.isEmpty()) return false;
+
+    for (int i = 0; i < str.length(); ++i)
+    {
+        if (!str[i].isDigit()) return false;
+    }
+    return true;
 }

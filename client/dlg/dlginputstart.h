@@ -29,6 +29,7 @@ private:
     int                          m_nTimer;
 
     bool    _IsServiceCard();
+    bool    _isNumeric(const QString& str);
 
 private slots:
     void on_pbProduct_clicked();
