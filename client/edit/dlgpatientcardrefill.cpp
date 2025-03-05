@@ -88,6 +88,8 @@ cDlgPatientCardRefill::cDlgPatientCardRefill( QWidget *p_poParent, cDBPatientCar
     slotRefreshWarningColors();
     slotEnableButtons();
 
+    cmbPanelGroup->setEnabled( false );
+
     if( g_poPrefs->isBarcodeHidden() && !g_obUser.isInGroup( cAccessGroup::ADMIN ) )
     {
         ledBarcode->setEchoMode( QLineEdit::Password );
@@ -227,12 +229,12 @@ void cDlgPatientCardRefill::on_cmbCardType_currentIndexChanged(int index)
     if( m_poPatientCardType->panelGroupId() > 0 )
     {
         cmbPanelGroup->setCurrentIndex( cmbPanelGroup->findData( m_poPatientCardType->panelGroupId() ) );
-        cmbPanelGroup->setEnabled( false );
+//        cmbPanelGroup->setEnabled( false );
     }
     else
     {
         cmbPanelGroup->setCurrentIndex( 0 );
-        cmbPanelGroup->setEnabled( true );
+//        cmbPanelGroup->setEnabled( true );
     }
 
     cCurrency   cPrice( QString::number(m_poPatientCardType->price()/100), cCurrency::CURR_GROSS, m_poPatientCardType->vatpercent() );
