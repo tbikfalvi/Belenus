@@ -169,6 +169,8 @@ CREATE TABLE `patients` (
   `isReturning`             tinyint(1)              DEFAULT 0,
   `uniqueId`                varchar(20)             DEFAULT NULL,
   `isCardy`                 tinyint(1)              NOT NULL DEFAULT 0,
+  `isNewsletter`            tinyint(1)              NOT NULL DEFAULT 0,
+  `isCardMail`              tinyint(1)              NOT NULL DEFAULT 0,
   `email`                   varchar(100)            DEFAULT NULL,
   `regularCustomer`         tinyint(1)              DEFAULT 0,
   `employee`                tinyint(1)              DEFAULT 0,

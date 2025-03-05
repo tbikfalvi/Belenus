@@ -2,6 +2,7 @@
 #define MAINWINDOW_H
 
 #include <QMainWindow>
+#include <QSystemTrayIcon>
 
 #include "../framework/qtframework.h"
 
@@ -41,12 +42,13 @@ private slots:
 
 private:
 
-    Ui::MainWindow  *ui;
-    int              m_nTimer;
-    teAction         m_teAction;
-    QString          m_qsFileName;
-    QString          m_qsDirDbBinaries;
-    QString          m_qsDirDbBackup;
+    Ui::MainWindow      *ui;
+    QSystemTrayIcon     *trayIcon;
+    int                  m_nTimer;
+    teAction             m_teAction;
+    QString              m_qsFileName;
+    QString              m_qsDirDbBinaries;
+    QString              m_qsDirDbBackup;
 };
 
 #endif // MAINWINDOW_H

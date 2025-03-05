@@ -85,6 +85,13 @@
            </widget>
           </item>
           <item>
+           <widget class="QRadioButton" name="rbGenderNone">
+            <property name="text">
+             <string>Prefer not to say</string>
+            </property>
+           </widget>
+          </item>
+          <item>
            <spacer name="horizontalSpacer_5">
             <property name="orientation">
              <enum>Qt::Horizontal</enum>
@@ -218,21 +225,14 @@
        <layout class="QHBoxLayout" name="horizontalLayout_9">
         <item>
          <layout class="QFormLayout" name="formLayout">
-          <item row="0" column="1">
-           <widget class="QCheckBox" name="chkCardyRegistered">
-            <property name="text">
-             <string>Registered at Cardy</string>
-            </property>
-           </widget>
-          </item>
-          <item row="1" column="0">
+          <item row="4" column="0">
            <widget class="QLabel" name="lblEmail">
             <property name="text">
              <string>E-Mail :</string>
             </property>
            </widget>
           </item>
-          <item row="1" column="1">
+          <item row="4" column="1">
            <widget class="QLineEdit" name="ledEmail">
             <property name="minimumSize">
              <size>
@@ -251,14 +251,14 @@
             </property>
            </widget>
           </item>
-          <item row="2" column="0">
+          <item row="5" column="0">
            <widget class="QLabel" name="lblMobile">
             <property name="text">
              <string>Phone :</string>
             </property>
            </widget>
           </item>
-          <item row="2" column="1">
+          <item row="5" column="1">
            <widget class="QLineEdit" name="ledPhone">
             <property name="minimumSize">
              <size>
@@ -274,20 +274,44 @@
             </property>
            </widget>
           </item>
-          <item row="3" column="0">
+          <item row="6" column="0">
            <widget class="QLabel" name="lblAddress">
             <property name="text">
              <string>Address :</string>
             </property>
            </widget>
           </item>
-          <item row="3" column="1">
+          <item row="6" column="1">
            <widget class="QTextEdit" name="teAddress">
             <property name="maximumSize">
              <size>
               <width>16777215</width>
               <height>80</height>
              </size>
+            </property>
+           </widget>
+          </item>
+          <item row="1" column="1">
+           <widget class="QCheckBox" name="chkNewsletter">
+            <property name="text">
+             <string>Newsletter</string>
+            </property>
+           </widget>
+          </item>
+          <item row="2" column="1">
+           <widget class="QCheckBox" name="chkCardEmail">
+            <property name="text">
+             <string>Card data email</string>
+            </property>
+            <property name="checkable">
+             <bool>true</bool>
+            </property>
+           </widget>
+          </item>
+          <item row="3" column="1">
+           <widget class="QCheckBox" name="chkCardyRegistered">
+            <property name="text">
+             <string>Registered at Cardy</string>
             </property>
            </widget>
           </item>

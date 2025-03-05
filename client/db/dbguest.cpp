@@ -39,6 +39,8 @@ void cDBGuest::init( const unsigned int p_uiId,
                      const bool p_bIsReturning,
                      const QString &p_qsUniqueId,
                      const bool p_bIsCardy,
+                     const bool p_bIsNewsletter,
+                     const bool p_bIsCardMail,
                      const QString &p_qsEmail,
                      const bool p_bRegularCustomer,
                      const bool p_bEmployee,
@@ -67,6 +69,8 @@ void cDBGuest::init( const unsigned int p_uiId,
     m_bIsReturning          = p_bIsReturning;
     m_qsUniqueId            = p_qsUniqueId;
     m_bIsCardy              = p_bIsCardy;
+    m_bIsNewsletter         = p_bIsNewsletter;
+    m_bIsCardMail           = p_bIsCardMail;
     m_qsEmail               = p_qsEmail;
     m_bRegularCustomer      = p_bRegularCustomer;
     m_bEmployee             = p_bEmployee;
@@ -98,6 +102,8 @@ void cDBGuest::init( const QSqlRecord &p_obRecord ) throw()
     int inIsReturningIdx        = p_obRecord.indexOf( "isReturning" );
     int inUniqueIdIdx           = p_obRecord.indexOf( "uniqueId" );
     int inIsCardyIdx            = p_obRecord.indexOf( "isCardy" );
+    int inIsNewsletterIdx       = p_obRecord.indexOf( "isNewsletter" );
+    int inIsCardMailIdx         = p_obRecord.indexOf( "isCardMail" );
     int inEmailIdx              = p_obRecord.indexOf( "email" );
     int inRegularCustomerIdx    = p_obRecord.indexOf( "regularCustomer" );
     int inEmployeeIdx           = p_obRecord.indexOf( "employee" );
@@ -125,6 +131,8 @@ void cDBGuest::init( const QSqlRecord &p_obRecord ) throw()
           p_obRecord.value( inIsReturningIdx ).toBool(),
           p_obRecord.value( inUniqueIdIdx ).toString(),
           p_obRecord.value( inIsCardyIdx ).toBool(),
+          p_obRecord.value( inIsNewsletterIdx ).toBool(),
+          p_obRecord.value( inIsCardMailIdx ).toBool(),
           p_obRecord.value( inEmailIdx ).toString(),
           p_obRecord.value( inRegularCustomerIdx ).toBool(),
           p_obRecord.value( inEmployeeIdx ).toBool(),
@@ -294,6 +302,8 @@ void cDBGuest::save() throw( cSevException )
     qsQuery += QString( "isReturning = %1, " ).arg( m_bIsReturning );
     qsQuery += QString( "uniqueId = \"%1\", " ).arg( m_qsUniqueId );
     qsQuery += QString( "isCardy = %1, " ).arg( m_bIsCardy );
+    qsQuery += QString( "isNewsletter = %1, " ).arg( m_bIsNewsletter );
+    qsQuery += QString( "isCardMail = %1, " ).arg( m_bIsCardMail );
     qsQuery += QString( "email = \"%1\", " ).arg( m_qsEmail );
     qsQuery += QString( "regularCustomer = %1, " ).arg( m_bRegularCustomer );
     qsQuery += QString( "employee = %1, " ).arg( m_bEmployee );
@@ -428,6 +438,26 @@ bool cDBGuest::isCardy() const throw()
 void cDBGuest::setIsCardy( const bool p_bIsCardy ) throw()
 {
     m_bIsCardy = p_bIsCardy;
+}
+
+bool cDBGuest::isNewsletter() const throw()
+{
+    return m_bIsNewsletter;
+}
+
+void cDBGuest::setIsNewsletter( const bool p_bIsNewsletter ) throw()
+{
+    m_bIsNewsletter = p_bIsNewsletter;
+}
+
+bool cDBGuest::isCardMail() const throw()
+{
+    return m_bIsCardMail;
+}
+
+void cDBGuest::setIsCardMail( const bool p_bIsCardMail ) throw()
+{
+    m_bIsCardMail = p_bIsCardMail;
 }
 
 QString cDBGuest::email() const throw()
