@@ -2094,7 +2094,7 @@ void dlgMain::_checkVersions()
     QString      qsAppVersion       = "";
     QString      qsDbVersion        = "";
 
-    poQuery = g_poDB->executeQTQuery( QString( "SELECT * FROM settings WHERE identifier=\"APPLICATION_VERSION\"" ) );
+    poQuery = g_poDB->executeQTQuery( QString( "SELECT * FROM settings WHERE identifier=\"WEBSYNC_VERSION\"" ) );
     poQuery->first();
     qsAppVersion = poQuery->value( 2 ).toString();
 
