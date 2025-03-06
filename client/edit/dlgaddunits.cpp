@@ -197,11 +197,11 @@ void cDlgAddUnits::on_pbAdd_clicked()
 
             m_poPatientCard->sendDataToWeb();
 
-            if( g_poPrefs->isCardyGoSync() )
-            {
-                g_obLogger(cSeverity::INFO) << "PatientCard units added" << EOM;
-                m_poPatientCard->sendAutoMail( AUTO_MAIL_ON_UNITCHANGE, AUTO_MAIL_DESTINATION_CARDY, QDate::currentDate().toString("yyyy-MM-dd"), 0, "" );
-            }
+//            if( g_poPrefs->isCardyGoSync() )
+//            {
+//                g_obLogger(cSeverity::INFO) << "PatientCard units added" << EOM;
+//                m_poPatientCard->sendAutoMail( AUTO_MAIL_ON_UNITCHANGE, AUTO_MAIL_DESTINATION_CARDY, QDate::currentDate().toString("yyyy-MM-dd"), 0, "" );
+//            }
             if( g_poPrefs->isAutoMailOnPCExpiration() )
             {
                 g_obLogger(cSeverity::INFO) << "PatientCard units added, send auto mail about expiration" << EOM;

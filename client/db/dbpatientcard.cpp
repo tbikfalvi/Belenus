@@ -814,6 +814,13 @@ void cDBPatientCard::sendAutoMail( const int p_nMailType,
         cDBGuest    obDBGuest;
 
         obDBGuest.load( uiPatientId );
+
+        if( !obDBGuest.isCardMail() )
+        {
+            g_obLogger(cSeverity::INFO) << "Patient doesn't want email about card data" << EOM;
+            return;
+        }
+
         qsPatientName   = obDBGuest.name();
         qsPatientEmail  = obDBGuest.email().trimmed();
 

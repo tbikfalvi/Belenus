@@ -1240,17 +1240,27 @@ void cFrmPanel::closeAttendance()
     formatInfoString();
 
     QString  qsQuery;
+    try
+    {
+        qsQuery = "UPDATE panels SET ";
 
-    qsQuery = "UPDATE panels SET ";
+        qsQuery += QString( "workTime = \"%1\", " ).arg( uiWorkTime );
+        qsQuery += QString( "cleanTime = \"%1\", " ).arg( uiCleanTime );
+        qsQuery += QString( "archive = \"%1\" " ).arg( "MOD" );
+        qsQuery += QString( " WHERE panelId = %1" ).arg( m_uiId );
 
-    qsQuery += QString( "workTime = \"%1\", " ).arg( uiWorkTime );
-    qsQuery += QString( "cleanTime = \"%1\", " ).arg( uiCleanTime );
-    qsQuery += QString( "archive = \"%1\" " ).arg( "MOD" );
-    qsQuery += QString( " WHERE panelId = %1" ).arg( m_uiId );
+        poQuery = g_poDB->executeQTQuery( qsQuery );
 
-    poQuery = g_poDB->executeQTQuery( qsQuery );
+        if( poQuery ) delete poQuery;
+    }
+    catch( cSevException &e )
+    {
+        g_obLogger(e.severity()) << e.what() << EOM;
+        g_obGen.showTrayError( e.what() );
+    }
 
-    if( poQuery ) delete poQuery;
+    int             nPatientHistoryType = PATIENTHISTORY_USEDDEVICEWITHCASH;
+    unsigned int    uiPatientCardId     = 0;
 
     if( m_vrPatientCards.size() > 0 )
     {
@@ -1259,6 +1269,7 @@ void cFrmPanel::closeAttendance()
             stUsedPatientCards  *stTemp = m_vrPatientCards.at(i);
             cDBPatientCard       obDBPatientCard;
 
+            uiPatientCardId = stTemp->uiPatientCardId;
             obDBPatientCard.load( stTemp->uiPatientCardId );
 
             // Szerviz csoportba tartozo kartyanal nem kell levonni az egyseget es idot
@@ -1284,14 +1295,14 @@ void cFrmPanel::closeAttendance()
 
                 if( g_poPrefs->isAutoMailOnPCUse() || (g_poPrefs->isCardyGoSync() && obDBPatientCard.isCardOwnerRegisteredOnCardy()) )
                 {
-                    int nDestination = AUTO_MAIL_DESTINATION_MAIL_CARDY;
+/*                    int nDestination = AUTO_MAIL_DESTINATION_MAIL_CARDY;
 
                     if( !g_poPrefs->isCardyGoSync() )           nDestination = AUTO_MAIL_DESTINATION_MAIL;
                     else if( !g_poPrefs->isAutoMailOnPCSell() ) nDestination = AUTO_MAIL_DESTINATION_CARDY;
-
+*/
                     g_obLogger(cSeverity::INFO) << "PatientCard used, send auto mail about usage" << EOM;
                     obDBPatientCard.sendAutoMail( AUTO_MAIL_ON_PCUSE,
-                                                  nDestination,
+                                                  AUTO_MAIL_DESTINATION_MAIL,
                                                   QDate::currentDate().toString("yyyy-MM-dd"),
                                                   stTemp->qslUnitIds.count(),
                                                   QDateTime::currentDateTime().toString("yyyy-MM-dd hh:mm") );
@@ -1310,6 +1321,32 @@ void cFrmPanel::closeAttendance()
             obDBPatientCardHistory.setActive( true );
 
             obDBPatientCardHistory.save();
+
+//            m_uiCurrentPatient  = obDBPatientCard.patientId();
+//            nPatientHistoryType = PATIENTHISTORY_USEDDEVICEWITHCARD;
+        }
+    }
+
+    if( m_uiCurrentPatient > 0 )
+    {
+        try
+        {
+            qsQuery = "INSERT INTO patienthistory SET ";
+
+            qsQuery += QString( "licenceId = \"%1\", " ).arg( g_poPrefs->getLicenceId() );
+            qsQuery += QString( "patientId = \"%1\", " ).arg( m_uiCurrentPatient );
+            qsQuery += QString( "patientHistoryTypeId = \"%1\", " ).arg( nPatientHistoryType );
+            qsQuery += QString( "panelId = \"%1\", " ).arg( m_uiId );
+            qsQuery += QString( "patientCardId = \"%1\" " ).arg( uiPatientCardId );
+
+            poQuery = g_poDB->executeQTQuery( qsQuery );
+
+            if( poQuery ) delete poQuery;
+        }
+        catch( cSevException &e )
+        {
+            g_obLogger(e.severity()) << e.what() << EOM;
+            g_obGen.showTrayError( e.what() );
         }
     }
 
