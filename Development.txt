@@ -197,4 +197,4 @@ Version 2.2.0.0
 - Vendegnel a ferfi es no mellett ki lehet valasztani, hogy nem akarja megadni a nemet
 - Vendegnel meg lehet adni, hogy kert-e hirlevelet, vagy ker-e emailt a berlet adatokrol
 - Ha vendeg ki van valasztva aktualisnak, akkor keszpenzes gephasznalatnal rogziti a patienthistory tablaba a vendeg es a panel azonositojat
-
+- A program indulaskor torli a mar lejart berletegysegeket
