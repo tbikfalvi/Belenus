@@ -189,7 +189,7 @@ void MainWindow::processBackup()
     QString qsCurrentPath = QDir::currentPath().replace( "\\", "/" );
 
     QString     qsProcess       = QString( "\"%1/mysqldump.exe\"" ).arg(m_qsDirDbBinaries);
-    QString     qsParameters    = QString( "-u belenus -pbelenus belenus > \"%1/belenus_backup_%2.sql\" ").arg(m_qsDirDbBackup).arg( QDateTime::currentDateTime().toString("yyyyMMddhhmmss") );
+    QString     qsParameters    = QString( "-u belenus -pbelenus belenus --skip-add-drop-table > \"%1/belenus_backup_%2.sql\" ").arg(m_qsDirDbBackup).arg( QDateTime::currentDateTime().toString("yyyyMMddhhmmss") );
     QString     qsCommand       = QString( "cmd /c %1 %2" ).arg( qsProcess ).arg( qsParameters );
 
     QDir    qdBackup( m_qsDirDbBackup );
