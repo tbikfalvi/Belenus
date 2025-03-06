@@ -1322,8 +1322,8 @@ void cFrmPanel::closeAttendance()
 
             obDBPatientCardHistory.save();
 
-//            m_uiCurrentPatient  = obDBPatientCard.patientId();
-//            nPatientHistoryType = PATIENTHISTORY_USEDDEVICEWITHCARD;
+            m_uiCurrentPatient  = obDBPatientCard.patientId();
+            nPatientHistoryType = PATIENTHISTORY_USEDDEVICEWITHCARD;
         }
     }
 

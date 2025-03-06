@@ -100,24 +100,24 @@
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="db/dbpatientcard.cpp" line="863"/>
-        <location filename="db/dbpatientcard.cpp" line="903"/>
+        <location filename="db/dbpatientcard.cpp" line="870"/>
+        <location filename="db/dbpatientcard.cpp" line="910"/>
         <source> units (</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="db/dbpatientcard.cpp" line="865"/>
-        <location filename="db/dbpatientcard.cpp" line="905"/>
+        <location filename="db/dbpatientcard.cpp" line="872"/>
+        <location filename="db/dbpatientcard.cpp" line="912"/>
         <source> minutes) (</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="db/dbpatientcard.cpp" line="909"/>
+        <location filename="db/dbpatientcard.cpp" line="916"/>
         <source>&lt;i&gt; (prepared for usage)&lt;/i&gt;&lt;br&gt;</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="db/dbpatientcard.cpp" line="915"/>
+        <location filename="db/dbpatientcard.cpp" line="922"/>
         <source>&lt;i&gt;There is no valid, useable unit on this card.&lt;/i&gt;</source>
         <translation type="unfinished"></translation>
     </message>
@@ -388,7 +388,12 @@ Please use the currently running application.
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="main.cpp" line="291"/>
+        <location filename="main.cpp" line="277"/>
+        <source>Delete obsolete data: </source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="main.cpp" line="299"/>
         <source>
 RFID communication enabled
 Checking RFID connection ... </source>
@@ -398,21 +403,21 @@ Checking RFID connection ...</oldsource>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="main.cpp" line="299"/>
+        <location filename="main.cpp" line="307"/>
         <source>CONNECTED
 
 </source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="main.cpp" line="303"/>
+        <location filename="main.cpp" line="311"/>
         <source>FAILED
 
 </source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="main.cpp" line="308"/>
+        <location filename="main.cpp" line="316"/>
         <source>
 RFID communication disabled
 
@@ -423,38 +428,39 @@ RFID communication disabled
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="main.cpp" line="319"/>
+        <location filename="main.cpp" line="327"/>
         <source>Checking hardware connection ... </source>
         <oldsource>Checking hardware connection ...</oldsource>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="main.cpp" line="330"/>
+        <location filename="main.cpp" line="338"/>
         <source>FAILED
 </source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="main.cpp" line="332"/>
-        <location filename="main.cpp" line="390"/>
+        <location filename="main.cpp" line="340"/>
+        <location filename="main.cpp" line="398"/>
         <source>Starting application in DEMO mode.
 </source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="main.cpp" line="342"/>
+        <location filename="main.cpp" line="350"/>
         <source>CONNECTED
 </source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="main.cpp" line="347"/>
+        <location filename="main.cpp" line="355"/>
         <source>Initializing hardware device ... </source>
         <translation type="unfinished"></translation>
     </message>
     <message>
         <location filename="main.cpp" line="274"/>
-        <location filename="main.cpp" line="351"/>
+        <location filename="main.cpp" line="282"/>
+        <location filename="main.cpp" line="359"/>
         <source>FINISHED
 </source>
         <translation type="unfinished"></translation>
@@ -476,43 +482,43 @@ RFID communication disabled
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="main.cpp" line="356"/>
+        <location filename="main.cpp" line="364"/>
         <source>Caption stored in hardware: %1
 </source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="main.cpp" line="359"/>
+        <location filename="main.cpp" line="367"/>
         <source>Number of hardware panels: %1
 </source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="main.cpp" line="362"/>
+        <location filename="main.cpp" line="370"/>
         <source>Checking hardware panels:
 </source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="main.cpp" line="369"/>
+        <location filename="main.cpp" line="377"/>
         <source>     Checking hardware panel -%1- </source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="main.cpp" line="374"/>
+        <location filename="main.cpp" line="382"/>
         <source> SUCCEEDED
 </source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="main.cpp" line="379"/>
-        <location filename="main.cpp" line="433"/>
+        <location filename="main.cpp" line="387"/>
+        <location filename="main.cpp" line="441"/>
         <source> FAILED
 </source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="main.cpp" line="440"/>
+        <location filename="main.cpp" line="448"/>
         <source>Database server application is not running.
 Belenus application can not be started without active database server.
 Please start WampServer application then restart Belenus application.</source>
@@ -1804,99 +1810,99 @@ This action can not be undone!</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="edit/dlgguestedit.cpp" line="263"/>
-        <location filename="edit/dlgguestedit.cpp" line="331"/>
+        <location filename="edit/dlgguestedit.cpp" line="266"/>
+        <location filename="edit/dlgguestedit.cpp" line="334"/>
         <source>Guest name cannot be empty.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="edit/dlgguestedit.cpp" line="269"/>
-        <location filename="edit/dlgguestedit.cpp" line="337"/>
+        <location filename="edit/dlgguestedit.cpp" line="272"/>
+        <location filename="edit/dlgguestedit.cpp" line="340"/>
         <source>Gender of the guest must be set.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="edit/dlgguestedit.cpp" line="275"/>
-        <location filename="edit/dlgguestedit.cpp" line="343"/>
+        <location filename="edit/dlgguestedit.cpp" line="278"/>
+        <location filename="edit/dlgguestedit.cpp" line="346"/>
         <source>E-Mail must be set for patients registered at Cardy.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="edit/dlgguestedit.cpp" line="281"/>
-        <location filename="edit/dlgguestedit.cpp" line="349"/>
+        <location filename="edit/dlgguestedit.cpp" line="284"/>
+        <location filename="edit/dlgguestedit.cpp" line="352"/>
         <source>E-Mail must be set for patients accepted to receive newsletter.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="edit/dlgguestedit.cpp" line="287"/>
-        <location filename="edit/dlgguestedit.cpp" line="355"/>
+        <location filename="edit/dlgguestedit.cpp" line="290"/>
+        <location filename="edit/dlgguestedit.cpp" line="358"/>
         <source>E-Mail must be set for patients wants to receive email with card data.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="edit/dlgguestedit.cpp" line="298"/>
-        <location filename="edit/dlgguestedit.cpp" line="366"/>
+        <location filename="edit/dlgguestedit.cpp" line="301"/>
+        <location filename="edit/dlgguestedit.cpp" line="369"/>
         <source>Email format is incorrect.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="edit/dlgguestedit.cpp" line="309"/>
-        <location filename="edit/dlgguestedit.cpp" line="376"/>
+        <location filename="edit/dlgguestedit.cpp" line="312"/>
+        <location filename="edit/dlgguestedit.cpp" line="379"/>
         <source>Warning</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="edit/dlgguestedit.cpp" line="437"/>
-        <location filename="edit/dlgguestedit.cpp" line="444"/>
+        <location filename="edit/dlgguestedit.cpp" line="440"/>
+        <location filename="edit/dlgguestedit.cpp" line="447"/>
         <source>Attention</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="edit/dlgguestedit.cpp" line="438"/>
+        <location filename="edit/dlgguestedit.cpp" line="441"/>
         <source>This patientcard has been lost and replaced
 and can not be used or sold again.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="edit/dlgguestedit.cpp" line="445"/>
+        <location filename="edit/dlgguestedit.cpp" line="448"/>
         <source>This patientcard is in use. Active patientcard can not be sold again.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="edit/dlgguestedit.cpp" line="458"/>
-        <location filename="edit/dlgguestedit.cpp" line="499"/>
-        <location filename="edit/dlgguestedit.cpp" line="526"/>
+        <location filename="edit/dlgguestedit.cpp" line="461"/>
+        <location filename="edit/dlgguestedit.cpp" line="502"/>
+        <location filename="edit/dlgguestedit.cpp" line="529"/>
         <source>Question</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="edit/dlgguestedit.cpp" line="459"/>
+        <location filename="edit/dlgguestedit.cpp" line="462"/>
         <source>This barcode has not found in the database.
 Do you want to register it for a new patientcard?</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="edit/dlgguestedit.cpp" line="500"/>
+        <location filename="edit/dlgguestedit.cpp" line="503"/>
         <source>Do you want to save changes then close the dialog?</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="edit/dlgguestedit.cpp" line="527"/>
+        <location filename="edit/dlgguestedit.cpp" line="530"/>
         <source>Are you sure you want to disjoin the selected card from patient?</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="edit/dlgguestedit.cpp" line="549"/>
+        <location filename="edit/dlgguestedit.cpp" line="552"/>
         <source>Information</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="edit/dlgguestedit.cpp" line="549"/>
+        <location filename="edit/dlgguestedit.cpp" line="552"/>
         <source>Not implemented yet.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="edit/dlgguestedit.cpp" line="622"/>
+        <location filename="edit/dlgguestedit.cpp" line="617"/>
         <source>Assigned patientcards:
 Barcode	Patientcard type</source>
         <translation type="unfinished"></translation>
@@ -3461,7 +3467,7 @@ Please relogin to enable cassa.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="edit/dlgpatientcardrefill.cpp" line="529"/>
+        <location filename="edit/dlgpatientcardrefill.cpp" line="534"/>
         <source>Error</source>
         <translation type="unfinished"></translation>
     </message>
@@ -3545,7 +3551,7 @@ Please relogin to enable cassa.</source>
     <message>
         <location filename="edit/dlgpatientcardsell.cpp" line="73"/>
         <location filename="edit/dlgpatientcardsell.cpp" line="91"/>
-        <location filename="edit/dlgpatientcardsell.cpp" line="633"/>
+        <location filename="edit/dlgpatientcardsell.cpp" line="638"/>
         <source>&lt;Not selected&gt;</source>
         <translation type="unfinished"></translation>
     </message>
@@ -3636,17 +3642,17 @@ Please relogin to enable cassa.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="edit/dlgpatientcardsell.cpp" line="591"/>
+        <location filename="edit/dlgpatientcardsell.cpp" line="596"/>
         <source>Error</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="edit/dlgpatientcardsell.cpp" line="623"/>
+        <location filename="edit/dlgpatientcardsell.cpp" line="628"/>
         <source>New Patient</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="edit/dlgpatientcardsell.cpp" line="659"/>
+        <location filename="edit/dlgpatientcardsell.cpp" line="664"/>
         <source>Please read your RFID card!</source>
         <translation type="unfinished"></translation>
     </message>
@@ -6477,30 +6483,30 @@ Please relogin to enable cassa.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="frmpanel.cpp" line="1455"/>
+        <location filename="frmpanel.cpp" line="1492"/>
         <source>Question</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="frmpanel.cpp" line="1456"/>
+        <location filename="frmpanel.cpp" line="1493"/>
         <source>Do you want to jump to the next status of the device?</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="frmpanel.cpp" line="1528"/>
-        <location filename="frmpanel.cpp" line="1536"/>
+        <location filename="frmpanel.cpp" line="1565"/>
+        <location filename="frmpanel.cpp" line="1573"/>
         <source>Warning</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="frmpanel.cpp" line="1529"/>
+        <location filename="frmpanel.cpp" line="1566"/>
         <source>This time period did not saved in the database
 for the actually selected device.
 Please select valid value from the list.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="frmpanel.cpp" line="1537"/>
+        <location filename="frmpanel.cpp" line="1574"/>
         <source>The selected device usage has been scheduled
 for a different device type.
 
@@ -8084,217 +8090,217 @@ removing cash</oldsource>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="dlgguestedit.ui" line="231"/>
+        <location filename="dlgguestedit.ui" line="314"/>
         <source>Registered at Cardy</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="dlgguestedit.ui" line="238"/>
+        <location filename="dlgguestedit.ui" line="231"/>
         <source>E-Mail :</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="dlgguestedit.ui" line="264"/>
+        <location filename="dlgguestedit.ui" line="257"/>
         <source>Phone :</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="dlgguestedit.ui" line="287"/>
+        <location filename="dlgguestedit.ui" line="280"/>
         <source>Address :</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="dlgguestedit.ui" line="304"/>
+        <location filename="dlgguestedit.ui" line="297"/>
         <source>Newsletter</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="dlgguestedit.ui" line="311"/>
+        <location filename="dlgguestedit.ui" line="304"/>
         <source>Card data email</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="dlgguestedit.ui" line="322"/>
+        <location filename="dlgguestedit.ui" line="325"/>
         <source>Notes :</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="dlgguestedit.ui" line="343"/>
+        <location filename="dlgguestedit.ui" line="346"/>
         <source> Assigned card(s) </source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="dlgguestedit.ui" line="349"/>
+        <location filename="dlgguestedit.ui" line="352"/>
         <source>Barcode(s) :</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="dlgguestedit.ui" line="385"/>
+        <location filename="dlgguestedit.ui" line="388"/>
         <source>Disjoin card</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="dlgguestedit.ui" line="404"/>
+        <location filename="dlgguestedit.ui" line="407"/>
         <source> Statistical data </source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="dlgguestedit.ui" line="412"/>
+        <location filename="dlgguestedit.ui" line="415"/>
         <source>Returning guest :</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="dlgguestedit.ui" line="426"/>
+        <location filename="dlgguestedit.ui" line="429"/>
         <source>Date of registration :</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="dlgguestedit.ui" line="482"/>
+        <location filename="dlgguestedit.ui" line="485"/>
         <source>Age :</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="dlgguestedit.ui" line="489"/>
+        <location filename="dlgguestedit.ui" line="492"/>
         <source>Not defined</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="dlgguestedit.ui" line="502"/>
+        <location filename="dlgguestedit.ui" line="505"/>
         <source>Under 18</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="dlgguestedit.ui" line="512"/>
+        <location filename="dlgguestedit.ui" line="515"/>
         <source>18 - 20</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="dlgguestedit.ui" line="522"/>
+        <location filename="dlgguestedit.ui" line="525"/>
         <source>21 - 30</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="dlgguestedit.ui" line="532"/>
+        <location filename="dlgguestedit.ui" line="535"/>
         <source>31 - 40</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="dlgguestedit.ui" line="542"/>
+        <location filename="dlgguestedit.ui" line="545"/>
         <source>41 - 50</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="dlgguestedit.ui" line="552"/>
+        <location filename="dlgguestedit.ui" line="555"/>
         <source>51 - 60</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="dlgguestedit.ui" line="562"/>
+        <location filename="dlgguestedit.ui" line="565"/>
         <source>Above 60</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="dlgguestedit.ui" line="455"/>
+        <location filename="dlgguestedit.ui" line="458"/>
         <source>Type of skin :</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="dlgguestedit.ui" line="596"/>
+        <location filename="dlgguestedit.ui" line="599"/>
         <source> Discount </source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="dlgguestedit.ui" line="610"/>
+        <location filename="dlgguestedit.ui" line="613"/>
         <source>Regular customer</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="dlgguestedit.ui" line="617"/>
+        <location filename="dlgguestedit.ui" line="620"/>
         <source>Employee</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="dlgguestedit.ui" line="624"/>
+        <location filename="dlgguestedit.ui" line="627"/>
         <source>KiwiSun service</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="dlgguestedit.ui" line="637"/>
+        <location filename="dlgguestedit.ui" line="640"/>
         <source>Private discount :</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="dlgguestedit.ui" line="647"/>
+        <location filename="dlgguestedit.ui" line="650"/>
         <source>fix value</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="dlgguestedit.ui" line="660"/>
+        <location filename="dlgguestedit.ui" line="663"/>
         <source>percent</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="dlgguestedit.ui" line="738"/>
+        <location filename="dlgguestedit.ui" line="741"/>
         <source>Sample :</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="dlgguestedit.ui" line="751"/>
+        <location filename="dlgguestedit.ui" line="754"/>
         <source>if total price is 10,000 $ then discounted price is</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="dlgguestedit.ui" line="758"/>
+        <location filename="dlgguestedit.ui" line="761"/>
         <source>10,000 $</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="dlgguestedit.ui" line="784"/>
+        <location filename="dlgguestedit.ui" line="787"/>
         <source>Edit</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="dlgguestedit.ui" line="712"/>
+        <location filename="dlgguestedit.ui" line="715"/>
         <source>Loyalty points :</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="dlgguestedit.ui" line="819"/>
+        <location filename="dlgguestedit.ui" line="822"/>
         <source>Ok</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="dlgguestedit.ui" line="835"/>
+        <location filename="dlgguestedit.ui" line="838"/>
         <source>Cancel</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="dlgguestedit.ui" line="867"/>
+        <location filename="dlgguestedit.ui" line="870"/>
         <source>Save</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="dlgguestedit.ui" line="896"/>
+        <location filename="dlgguestedit.ui" line="899"/>
         <source>Sell unactivated patientcard to guest.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="dlgguestedit.ui" line="899"/>
+        <location filename="dlgguestedit.ui" line="902"/>
         <source>Sell card</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="dlgguestedit.ui" line="915"/>
+        <location filename="dlgguestedit.ui" line="918"/>
         <source>Join existing card to guest</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="dlgguestedit.ui" line="918"/>
+        <location filename="dlgguestedit.ui" line="921"/>
         <source>Join card</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="dlgguestedit.ui" line="953"/>
+        <location filename="dlgguestedit.ui" line="956"/>
         <source>History</source>
         <translation type="unfinished"></translation>
     </message>

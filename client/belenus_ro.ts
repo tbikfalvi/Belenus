@@ -100,24 +100,24 @@
         <translation>Duminică</translation>
     </message>
     <message>
-        <location filename="db/dbpatientcard.cpp" line="863"/>
-        <location filename="db/dbpatientcard.cpp" line="903"/>
+        <location filename="db/dbpatientcard.cpp" line="870"/>
+        <location filename="db/dbpatientcard.cpp" line="910"/>
         <source> units (</source>
         <translation> unități (</translation>
     </message>
     <message>
-        <location filename="db/dbpatientcard.cpp" line="865"/>
-        <location filename="db/dbpatientcard.cpp" line="905"/>
+        <location filename="db/dbpatientcard.cpp" line="872"/>
+        <location filename="db/dbpatientcard.cpp" line="912"/>
         <source> minutes) (</source>
         <translation> minute) (</translation>
     </message>
     <message>
-        <location filename="db/dbpatientcard.cpp" line="909"/>
+        <location filename="db/dbpatientcard.cpp" line="916"/>
         <source>&lt;i&gt; (prepared for usage)&lt;/i&gt;&lt;br&gt;</source>
         <translation>&lt;i&gt; (pregătit pentru folosire)&lt;/i&gt;&lt;br&gt;</translation>
     </message>
     <message>
-        <location filename="db/dbpatientcard.cpp" line="915"/>
+        <location filename="db/dbpatientcard.cpp" line="922"/>
         <source>&lt;i&gt;There is no valid, useable unit on this card.&lt;/i&gt;</source>
         <translation>&lt;i&gt;Pe acest card nu există unități valabile, care ar putea fi folosite.&lt;/i&gt;</translation>
     </message>
@@ -462,14 +462,20 @@ Aplicația poate fi folosită numai în modul DEMO.
     </message>
     <message>
         <location filename="main.cpp" line="274"/>
-        <location filename="main.cpp" line="351"/>
+        <location filename="main.cpp" line="282"/>
+        <location filename="main.cpp" line="359"/>
         <source>FINISHED
 </source>
         <translation>FINALIZAT
 </translation>
     </message>
     <message>
-        <location filename="main.cpp" line="291"/>
+        <location filename="main.cpp" line="277"/>
+        <source>Delete obsolete data: </source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="main.cpp" line="299"/>
         <source>
 RFID communication enabled
 Checking RFID connection ... </source>
@@ -479,21 +485,21 @@ Checking RFID connection ...</oldsource>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="main.cpp" line="299"/>
+        <location filename="main.cpp" line="307"/>
         <source>CONNECTED
 
 </source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="main.cpp" line="303"/>
+        <location filename="main.cpp" line="311"/>
         <source>FAILED
 
 </source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="main.cpp" line="308"/>
+        <location filename="main.cpp" line="316"/>
         <source>
 RFID communication disabled
 
@@ -504,81 +510,81 @@ RFID communication disabled
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="main.cpp" line="319"/>
+        <location filename="main.cpp" line="327"/>
         <source>Checking hardware connection ... </source>
         <oldsource>Checking hardware connection ...</oldsource>
         <translation type="unfinished">Verificarea conexiunii hardware ...</translation>
     </message>
     <message>
-        <location filename="main.cpp" line="330"/>
+        <location filename="main.cpp" line="338"/>
         <source>FAILED
 </source>
         <translation>EȘUAT
 </translation>
     </message>
     <message>
-        <location filename="main.cpp" line="332"/>
-        <location filename="main.cpp" line="390"/>
+        <location filename="main.cpp" line="340"/>
+        <location filename="main.cpp" line="398"/>
         <source>Starting application in DEMO mode.
 </source>
         <translation>Pornirea aplicației în modul DEMO.
 </translation>
     </message>
     <message>
-        <location filename="main.cpp" line="342"/>
+        <location filename="main.cpp" line="350"/>
         <source>CONNECTED
 </source>
         <translation>CONECTAT
 </translation>
     </message>
     <message>
-        <location filename="main.cpp" line="347"/>
+        <location filename="main.cpp" line="355"/>
         <source>Initializing hardware device ... </source>
         <translation>Inițializare dispozitiv hardware ... </translation>
     </message>
     <message>
-        <location filename="main.cpp" line="356"/>
+        <location filename="main.cpp" line="364"/>
         <source>Caption stored in hardware: %1
 </source>
         <translation>Antet stocat în hardware: %1
 </translation>
     </message>
     <message>
-        <location filename="main.cpp" line="359"/>
+        <location filename="main.cpp" line="367"/>
         <source>Number of hardware panels: %1
 </source>
         <translation>Numărul de panouri hardware: %1
 </translation>
     </message>
     <message>
-        <location filename="main.cpp" line="362"/>
+        <location filename="main.cpp" line="370"/>
         <source>Checking hardware panels:
 </source>
         <translation>Verificare panouri hardware:
 </translation>
     </message>
     <message>
-        <location filename="main.cpp" line="369"/>
+        <location filename="main.cpp" line="377"/>
         <source>     Checking hardware panel -%1- </source>
         <translation>     Verificare panou hardware -%1- </translation>
     </message>
     <message>
-        <location filename="main.cpp" line="374"/>
+        <location filename="main.cpp" line="382"/>
         <source> SUCCEEDED
 </source>
         <translation> REUȘIT
 </translation>
     </message>
     <message>
-        <location filename="main.cpp" line="379"/>
-        <location filename="main.cpp" line="433"/>
+        <location filename="main.cpp" line="387"/>
+        <location filename="main.cpp" line="441"/>
         <source> FAILED
 </source>
         <translation> EȘUAT
 </translation>
     </message>
     <message>
-        <location filename="main.cpp" line="440"/>
+        <location filename="main.cpp" line="448"/>
         <source>Database server application is not running.
 Belenus application can not be started without active database server.
 Please start WampServer application then restart Belenus application.</source>
@@ -1942,101 +1948,101 @@ This action can not be undone!</source>
         <translation>Lista prezență</translation>
     </message>
     <message>
-        <location filename="edit/dlgguestedit.cpp" line="263"/>
-        <location filename="edit/dlgguestedit.cpp" line="331"/>
+        <location filename="edit/dlgguestedit.cpp" line="266"/>
+        <location filename="edit/dlgguestedit.cpp" line="334"/>
         <source>Guest name cannot be empty.</source>
         <translation>Numele oaspetelui nu poate fi gol.</translation>
     </message>
     <message>
-        <location filename="edit/dlgguestedit.cpp" line="269"/>
-        <location filename="edit/dlgguestedit.cpp" line="337"/>
+        <location filename="edit/dlgguestedit.cpp" line="272"/>
+        <location filename="edit/dlgguestedit.cpp" line="340"/>
         <source>Gender of the guest must be set.</source>
         <translation>Sexul oaspetelui trebuie setat.</translation>
     </message>
     <message>
-        <location filename="edit/dlgguestedit.cpp" line="275"/>
-        <location filename="edit/dlgguestedit.cpp" line="343"/>
+        <location filename="edit/dlgguestedit.cpp" line="278"/>
+        <location filename="edit/dlgguestedit.cpp" line="346"/>
         <source>E-Mail must be set for patients registered at Cardy.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="edit/dlgguestedit.cpp" line="281"/>
-        <location filename="edit/dlgguestedit.cpp" line="349"/>
+        <location filename="edit/dlgguestedit.cpp" line="284"/>
+        <location filename="edit/dlgguestedit.cpp" line="352"/>
         <source>E-Mail must be set for patients accepted to receive newsletter.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="edit/dlgguestedit.cpp" line="287"/>
-        <location filename="edit/dlgguestedit.cpp" line="355"/>
+        <location filename="edit/dlgguestedit.cpp" line="290"/>
+        <location filename="edit/dlgguestedit.cpp" line="358"/>
         <source>E-Mail must be set for patients wants to receive email with card data.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="edit/dlgguestedit.cpp" line="298"/>
-        <location filename="edit/dlgguestedit.cpp" line="366"/>
+        <location filename="edit/dlgguestedit.cpp" line="301"/>
+        <location filename="edit/dlgguestedit.cpp" line="369"/>
         <source>Email format is incorrect.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="edit/dlgguestedit.cpp" line="309"/>
-        <location filename="edit/dlgguestedit.cpp" line="376"/>
+        <location filename="edit/dlgguestedit.cpp" line="312"/>
+        <location filename="edit/dlgguestedit.cpp" line="379"/>
         <source>Warning</source>
         <translation>Avertisment</translation>
     </message>
     <message>
-        <location filename="edit/dlgguestedit.cpp" line="437"/>
-        <location filename="edit/dlgguestedit.cpp" line="444"/>
+        <location filename="edit/dlgguestedit.cpp" line="440"/>
+        <location filename="edit/dlgguestedit.cpp" line="447"/>
         <source>Attention</source>
         <translation>Atenție</translation>
     </message>
     <message>
-        <location filename="edit/dlgguestedit.cpp" line="438"/>
+        <location filename="edit/dlgguestedit.cpp" line="441"/>
         <source>This patientcard has been lost and replaced
 and can not be used or sold again.</source>
         <translation>Acest card pacient a fost pierdut și înlocuit
 și nu poate fi folosit sau vândut din nou.</translation>
     </message>
     <message>
-        <location filename="edit/dlgguestedit.cpp" line="445"/>
+        <location filename="edit/dlgguestedit.cpp" line="448"/>
         <source>This patientcard is in use. Active patientcard can not be sold again.</source>
         <translation>Acest card de pacient este în uz. Cardul de pacient activ nu poate fi vândut din nou.</translation>
     </message>
     <message>
-        <location filename="edit/dlgguestedit.cpp" line="458"/>
-        <location filename="edit/dlgguestedit.cpp" line="499"/>
-        <location filename="edit/dlgguestedit.cpp" line="526"/>
+        <location filename="edit/dlgguestedit.cpp" line="461"/>
+        <location filename="edit/dlgguestedit.cpp" line="502"/>
+        <location filename="edit/dlgguestedit.cpp" line="529"/>
         <source>Question</source>
         <translation>Întrebare</translation>
     </message>
     <message>
-        <location filename="edit/dlgguestedit.cpp" line="459"/>
+        <location filename="edit/dlgguestedit.cpp" line="462"/>
         <source>This barcode has not found in the database.
 Do you want to register it for a new patientcard?</source>
         <translation>Acest cod de bare nu a fost găsit în baza de date.
 Vrei să-l înregistrezi pentru un nou card de pacient?</translation>
     </message>
     <message>
-        <location filename="edit/dlgguestedit.cpp" line="500"/>
+        <location filename="edit/dlgguestedit.cpp" line="503"/>
         <source>Do you want to save changes then close the dialog?</source>
         <translation>Vrei să salvezi modificările și să închizi dialogul?</translation>
     </message>
     <message>
-        <location filename="edit/dlgguestedit.cpp" line="527"/>
+        <location filename="edit/dlgguestedit.cpp" line="530"/>
         <source>Are you sure you want to disjoin the selected card from patient?</source>
         <translation>Sigur vrei să disociezi cardul selectat de pacient?</translation>
     </message>
     <message>
-        <location filename="edit/dlgguestedit.cpp" line="549"/>
+        <location filename="edit/dlgguestedit.cpp" line="552"/>
         <source>Information</source>
         <translation>Informații</translation>
     </message>
     <message>
-        <location filename="edit/dlgguestedit.cpp" line="549"/>
+        <location filename="edit/dlgguestedit.cpp" line="552"/>
         <source>Not implemented yet.</source>
         <translation>Încă nu a fost implementat.</translation>
     </message>
     <message>
-        <location filename="edit/dlgguestedit.cpp" line="622"/>
+        <location filename="edit/dlgguestedit.cpp" line="617"/>
         <source>Assigned patientcards:
 Barcode	Patientcard type</source>
         <translation>Carduri de pacient alocate:
@@ -3679,7 +3685,7 @@ Te rog, reautentifică-te pentru a activa casa.</translation>
         <translation type="unfinished">Reîncărcare card pacient &lt;%1&gt;</translation>
     </message>
     <message>
-        <location filename="edit/dlgpatientcardrefill.cpp" line="529"/>
+        <location filename="edit/dlgpatientcardrefill.cpp" line="534"/>
         <source>Error</source>
         <translation>Eroare</translation>
     </message>
@@ -3763,7 +3769,7 @@ Te rog, reautentifică-te pentru a activa casa.</translation>
     <message>
         <location filename="edit/dlgpatientcardsell.cpp" line="73"/>
         <location filename="edit/dlgpatientcardsell.cpp" line="91"/>
-        <location filename="edit/dlgpatientcardsell.cpp" line="633"/>
+        <location filename="edit/dlgpatientcardsell.cpp" line="638"/>
         <source>&lt;Not selected&gt;</source>
         <translation>&lt;Nu a fost selectat&gt;</translation>
     </message>
@@ -3865,17 +3871,17 @@ Te rog, reautentifică-te pentru a activa casa.</translation>
         <translation type="unfinished">Vânzare card pacient &lt;%1&gt;</translation>
     </message>
     <message>
-        <location filename="edit/dlgpatientcardsell.cpp" line="591"/>
+        <location filename="edit/dlgpatientcardsell.cpp" line="596"/>
         <source>Error</source>
         <translation>Eroare</translation>
     </message>
     <message>
-        <location filename="edit/dlgpatientcardsell.cpp" line="623"/>
+        <location filename="edit/dlgpatientcardsell.cpp" line="628"/>
         <source>New Patient</source>
         <translation>Pacient nou</translation>
     </message>
     <message>
-        <location filename="edit/dlgpatientcardsell.cpp" line="659"/>
+        <location filename="edit/dlgpatientcardsell.cpp" line="664"/>
         <source>Please read your RFID card!</source>
         <translation type="unfinished"></translation>
     </message>
@@ -6864,23 +6870,23 @@ Te rog, reautentifică-te pentru a activa casa.</translation>
         <translation>Folosirea dispozitivului s-a oprit după %1 minute. Timp nefolosit: %2 minute.</translation>
     </message>
     <message>
-        <location filename="frmpanel.cpp" line="1455"/>
+        <location filename="frmpanel.cpp" line="1492"/>
         <source>Question</source>
         <translation>Întrebare</translation>
     </message>
     <message>
-        <location filename="frmpanel.cpp" line="1456"/>
+        <location filename="frmpanel.cpp" line="1493"/>
         <source>Do you want to jump to the next status of the device?</source>
         <translation>Vrei să stari la următoarea stare a dispozitivului?</translation>
     </message>
     <message>
-        <location filename="frmpanel.cpp" line="1528"/>
-        <location filename="frmpanel.cpp" line="1536"/>
+        <location filename="frmpanel.cpp" line="1565"/>
+        <location filename="frmpanel.cpp" line="1573"/>
         <source>Warning</source>
         <translation>Avertisment</translation>
     </message>
     <message>
-        <location filename="frmpanel.cpp" line="1529"/>
+        <location filename="frmpanel.cpp" line="1566"/>
         <source>This time period did not saved in the database
 for the actually selected device.
 Please select valid value from the list.</source>
@@ -6889,7 +6895,7 @@ pentru dispozitivul actual selectat.
 Te rog, selectează valoarea validă de pe listă.</translation>
     </message>
     <message>
-        <location filename="frmpanel.cpp" line="1537"/>
+        <location filename="frmpanel.cpp" line="1574"/>
         <source>The selected device usage has been scheduled
 for a different device type.
 
@@ -8659,217 +8665,217 @@ prin scoatere de numerar</translation>
         <translation> Date suplimentare </translation>
     </message>
     <message>
-        <location filename="dlgguestedit.ui" line="231"/>
+        <location filename="dlgguestedit.ui" line="314"/>
         <source>Registered at Cardy</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="dlgguestedit.ui" line="238"/>
+        <location filename="dlgguestedit.ui" line="231"/>
         <source>E-Mail :</source>
         <translation>E-mail :</translation>
     </message>
     <message>
-        <location filename="dlgguestedit.ui" line="264"/>
+        <location filename="dlgguestedit.ui" line="257"/>
         <source>Phone :</source>
         <translation>Telefon :</translation>
     </message>
     <message>
-        <location filename="dlgguestedit.ui" line="287"/>
+        <location filename="dlgguestedit.ui" line="280"/>
         <source>Address :</source>
         <translation>Adresă :</translation>
     </message>
     <message>
-        <location filename="dlgguestedit.ui" line="304"/>
+        <location filename="dlgguestedit.ui" line="297"/>
         <source>Newsletter</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="dlgguestedit.ui" line="311"/>
+        <location filename="dlgguestedit.ui" line="304"/>
         <source>Card data email</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="dlgguestedit.ui" line="322"/>
+        <location filename="dlgguestedit.ui" line="325"/>
         <source>Notes :</source>
         <translation>Note :</translation>
     </message>
     <message>
-        <location filename="dlgguestedit.ui" line="343"/>
+        <location filename="dlgguestedit.ui" line="346"/>
         <source> Assigned card(s) </source>
         <translation> Card(uri) alocat(e) </translation>
     </message>
     <message>
-        <location filename="dlgguestedit.ui" line="349"/>
+        <location filename="dlgguestedit.ui" line="352"/>
         <source>Barcode(s) :</source>
         <translation>Cod(uri) de bare :</translation>
     </message>
     <message>
-        <location filename="dlgguestedit.ui" line="385"/>
+        <location filename="dlgguestedit.ui" line="388"/>
         <source>Disjoin card</source>
         <translation>Disociere card</translation>
     </message>
     <message>
-        <location filename="dlgguestedit.ui" line="404"/>
+        <location filename="dlgguestedit.ui" line="407"/>
         <source> Statistical data </source>
         <translation> Date statistice </translation>
     </message>
     <message>
-        <location filename="dlgguestedit.ui" line="412"/>
+        <location filename="dlgguestedit.ui" line="415"/>
         <source>Returning guest :</source>
         <translation>Oaspete revenit :</translation>
     </message>
     <message>
-        <location filename="dlgguestedit.ui" line="426"/>
+        <location filename="dlgguestedit.ui" line="429"/>
         <source>Date of registration :</source>
         <translation>Data înregistrării :</translation>
     </message>
     <message>
-        <location filename="dlgguestedit.ui" line="455"/>
+        <location filename="dlgguestedit.ui" line="458"/>
         <source>Type of skin :</source>
         <translation>Tipul de piele :</translation>
     </message>
     <message>
-        <location filename="dlgguestedit.ui" line="482"/>
+        <location filename="dlgguestedit.ui" line="485"/>
         <source>Age :</source>
         <translation>Vârstă :</translation>
     </message>
     <message>
-        <location filename="dlgguestedit.ui" line="489"/>
+        <location filename="dlgguestedit.ui" line="492"/>
         <source>Not defined</source>
         <translation>Nedefinit</translation>
     </message>
     <message>
-        <location filename="dlgguestedit.ui" line="502"/>
+        <location filename="dlgguestedit.ui" line="505"/>
         <source>Under 18</source>
         <translation>Sub 18</translation>
     </message>
     <message>
-        <location filename="dlgguestedit.ui" line="512"/>
+        <location filename="dlgguestedit.ui" line="515"/>
         <source>18 - 20</source>
         <translation>18 - 20</translation>
     </message>
     <message>
-        <location filename="dlgguestedit.ui" line="522"/>
+        <location filename="dlgguestedit.ui" line="525"/>
         <source>21 - 30</source>
         <translation>21 - 30</translation>
     </message>
     <message>
-        <location filename="dlgguestedit.ui" line="532"/>
+        <location filename="dlgguestedit.ui" line="535"/>
         <source>31 - 40</source>
         <translation>31 - 40</translation>
     </message>
     <message>
-        <location filename="dlgguestedit.ui" line="542"/>
+        <location filename="dlgguestedit.ui" line="545"/>
         <source>41 - 50</source>
         <translation>41 - 50</translation>
     </message>
     <message>
-        <location filename="dlgguestedit.ui" line="552"/>
+        <location filename="dlgguestedit.ui" line="555"/>
         <source>51 - 60</source>
         <translation>51 - 60</translation>
     </message>
     <message>
-        <location filename="dlgguestedit.ui" line="562"/>
+        <location filename="dlgguestedit.ui" line="565"/>
         <source>Above 60</source>
         <translation>Peste 60</translation>
     </message>
     <message>
-        <location filename="dlgguestedit.ui" line="596"/>
+        <location filename="dlgguestedit.ui" line="599"/>
         <source> Discount </source>
         <translation> Reducere </translation>
     </message>
     <message>
-        <location filename="dlgguestedit.ui" line="610"/>
+        <location filename="dlgguestedit.ui" line="613"/>
         <source>Regular customer</source>
         <translation>Client fidel</translation>
     </message>
     <message>
-        <location filename="dlgguestedit.ui" line="617"/>
+        <location filename="dlgguestedit.ui" line="620"/>
         <source>Employee</source>
         <translation>Angajat</translation>
     </message>
     <message>
-        <location filename="dlgguestedit.ui" line="624"/>
+        <location filename="dlgguestedit.ui" line="627"/>
         <source>KiwiSun service</source>
         <translation>Serviciu KiwiSun</translation>
     </message>
     <message>
-        <location filename="dlgguestedit.ui" line="637"/>
+        <location filename="dlgguestedit.ui" line="640"/>
         <source>Private discount :</source>
         <translation>Reducere privată :</translation>
     </message>
     <message>
-        <location filename="dlgguestedit.ui" line="647"/>
+        <location filename="dlgguestedit.ui" line="650"/>
         <source>fix value</source>
         <translation>valoare fixă</translation>
     </message>
     <message>
-        <location filename="dlgguestedit.ui" line="660"/>
+        <location filename="dlgguestedit.ui" line="663"/>
         <source>percent</source>
         <translation>procent</translation>
     </message>
     <message>
-        <location filename="dlgguestedit.ui" line="712"/>
+        <location filename="dlgguestedit.ui" line="715"/>
         <source>Loyalty points :</source>
         <translation>Puncte de loialitate :</translation>
     </message>
     <message>
-        <location filename="dlgguestedit.ui" line="738"/>
+        <location filename="dlgguestedit.ui" line="741"/>
         <source>Sample :</source>
         <translation>Probă :</translation>
     </message>
     <message>
-        <location filename="dlgguestedit.ui" line="751"/>
+        <location filename="dlgguestedit.ui" line="754"/>
         <source>if total price is 10,000 $ then discounted price is</source>
         <translation>dacă prețul total este de 10.000 $, atunci prețul redus este</translation>
     </message>
     <message>
-        <location filename="dlgguestedit.ui" line="758"/>
+        <location filename="dlgguestedit.ui" line="761"/>
         <source>10,000 $</source>
         <translation>10.000 $</translation>
     </message>
     <message>
-        <location filename="dlgguestedit.ui" line="784"/>
+        <location filename="dlgguestedit.ui" line="787"/>
         <source>Edit</source>
         <translation>Editare</translation>
     </message>
     <message>
-        <location filename="dlgguestedit.ui" line="819"/>
+        <location filename="dlgguestedit.ui" line="822"/>
         <source>Ok</source>
         <translation>OK</translation>
     </message>
     <message>
-        <location filename="dlgguestedit.ui" line="835"/>
+        <location filename="dlgguestedit.ui" line="838"/>
         <source>Cancel</source>
         <translation>Anulează</translation>
     </message>
     <message>
-        <location filename="dlgguestedit.ui" line="867"/>
+        <location filename="dlgguestedit.ui" line="870"/>
         <source>Save</source>
         <translation>Salvează</translation>
     </message>
     <message>
-        <location filename="dlgguestedit.ui" line="896"/>
+        <location filename="dlgguestedit.ui" line="899"/>
         <source>Sell unactivated patientcard to guest.</source>
         <translation>Vânzare card pacient neactivat la oaspete.</translation>
     </message>
     <message>
-        <location filename="dlgguestedit.ui" line="899"/>
+        <location filename="dlgguestedit.ui" line="902"/>
         <source>Sell card</source>
         <translation>Card de vânzare</translation>
     </message>
     <message>
-        <location filename="dlgguestedit.ui" line="915"/>
+        <location filename="dlgguestedit.ui" line="918"/>
         <source>Join existing card to guest</source>
         <translation>Asociază card existent cu oaspete</translation>
     </message>
     <message>
-        <location filename="dlgguestedit.ui" line="918"/>
+        <location filename="dlgguestedit.ui" line="921"/>
         <source>Join card</source>
         <translation>Asociere card</translation>
     </message>
     <message>
-        <location filename="dlgguestedit.ui" line="953"/>
+        <location filename="dlgguestedit.ui" line="956"/>
         <source>History</source>
         <translation>Istorie</translation>
     </message>
