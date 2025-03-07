@@ -5,8 +5,6 @@
 //====================================================================================
 //
 // Filename    : wndmain.cpp
-// AppVersion  : 1.0
-// FileVersion : 1.0
 // Author      : Ballok Peter, Bikfalvi Tamas
 //
 //====================================================================================
@@ -77,6 +75,7 @@
 #include "edit/dlgcassaedit.h"
 #include "edit/dlgpatientcarduse.h"
 #include "edit/dlglicenceedit.h"
+#include "edit/dlgaddguest.h"
 
 //====================================================================================
 
@@ -1937,12 +1936,19 @@ void cWndMain::on_action_PatientSelect_triggered()
     cDlgInputStart     obDlgInputStart( this );
 
     obDlgInputStart.m_bPat = true;
+    obDlgInputStart.init();
+
     if( obDlgInputStart.exec() == QDialog::Accepted )
     {
         if( obDlgInputStart.m_bPat )
         {
             m_qsPatientNameFilter = obDlgInputStart.getEditText();
         }
+    }
+
+    if( m_qsPatientNameFilter.length() < 3 )
+    {
+        return;
     }
 
     m_dlgProgress->showProgress();
@@ -2040,6 +2046,7 @@ void cWndMain::on_action_UseDevice_triggered()
 
             if( g_obGuest.id() == 0 && obDBPatientCard.patientId() > 0 )
             {
+                g_obGuest.load( obDBPatientCard.patientId() );
                 /*cDBGuest  obDBGuest;
 
                 obDBGuest.load( obDBPatientCard.patientId() );
@@ -2085,12 +2092,25 @@ void cWndMain::on_action_UseDevice_triggered()
             mdiPanels->setMainProcessTime( obDlgPanelUse.panelUsePatientCardId(), obDlgPanelUse.panelUnitIds(), obDlgPanelUse.panelUseSecondsCard() );
 
             g_obGen.showPatientCardInformation( obDBPatientCard.barcode(), g_poPrefs->getCloseInfoWindowAfterSecs() );
-
-//            int nCount = obDlgPanelUse.countPatientCardUnitsLeft();
-//            mdiPanels->setTextInformation( tr( "%1 units left on the selected card" ).arg(nCount) );
         }
         if( obDlgPanelUse.panelUseSecondsCash() > 0 )
         {
+            if( g_obGuest.id() == 0 )
+            {
+                if( QMessageBox::question( this, tr("Question"),
+                                           tr("Do you want to add adhoc patient to patient database?\n\n"
+                                              "PLEASE ASK THE PATIENT if willing to add name and email address !"),
+                                           QMessageBox::Yes,QMessageBox::No ) == QMessageBox::Yes )
+                {
+                    cDlgAddGuest obDlgAddGuest( this );
+
+                    if( obDlgAddGuest.exec() == QDialog::Accepted )
+                    {
+                        g_obGuest.load( obDlgAddGuest.patientId() );
+                    }
+                }
+            }
+
             mdiPanels->setMainProcessTime( obDlgPanelUse.panelUseSecondsCash(), obDlgPanelUse.panelUsePrice() );
         }
     }

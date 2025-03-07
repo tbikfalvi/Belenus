@@ -4,8 +4,8 @@
 //
 //====================================================================================
 
-#define APPLICATION_VERSION_NUMBER  "2.1.3.0"
-#define DATABASE_VERSION_NUMBER     "2.1.3.0"
+#define APPLICATION_VERSION_NUMBER  "2.2.0.0"
+#define DATABASE_VERSION_NUMBER     "2.2.0.0"
 
 //====================================================================================
 
@@ -43,10 +43,6 @@
 
 QApplication            *apMainApp;
 cQTLogger                g_obLogger;
-//DatabaseWriter           g_obLogDBWriter;
-//GUIWriter                g_obLogGUIWriter;
-//ConsoleWriter            g_obLogConsoleWriter;
-//FileWriter               g_obLogFileWriter("client_%1_%2.log");
 FileWriter               g_obLogFileWriter("belenus_%1.log");
 cQTMySQLConnection      *g_poDB;
 cDBUser                  g_obUser;
@@ -276,6 +272,20 @@ int main( int argc, char *argv[] )
         g_poDB->executeQTQuery( QString( "DELETE FROM httpsendmail WHERE recipients = \"\" " ) );
 
         qsSpalsh += QObject::tr("FINISHED\n");
+        obSplash.showMessage(qsSpalsh,Qt::AlignLeft,QColor(59,44,75));
+
+        qsSpalsh += QObject::tr("Delete obsolete patientcard units: ");
+        obSplash.showMessage(qsSpalsh,Qt::AlignLeft,QColor(59,44,75));
+
+        if( g_poPrefs->isDBAllowDeleteObsoleteUnits() )
+        {
+            g_poDB->executeQTQuery( QString( "DELETE FROM patientcardunits WHERE validDateTo < DATE_SUB(NOW(), INTERVAL 7 DAY) " ) );
+            qsSpalsh += QObject::tr("FINISHED\n");
+        }
+        else
+        {
+            qsSpalsh += QObject::tr("DISABLED\n");
+        }
         obSplash.showMessage(qsSpalsh,Qt::AlignLeft,QColor(59,44,75));
 
         qsSpalsh += "-----------------------------------------------------\n";

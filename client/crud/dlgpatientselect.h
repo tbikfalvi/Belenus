@@ -23,6 +23,7 @@ public:
     QLineEdit   *ledUniqueId;
     QPushButton *pbSelect;
     QPushButton *pbCancel;
+    QLabel          *lblMessage;
 
     cDlgPatientSelect( QWidget *p_poParent = 0, QString p_qsNameFilter ="" );
     ~cDlgPatientSelect();

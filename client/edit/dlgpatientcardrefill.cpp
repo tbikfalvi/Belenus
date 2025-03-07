@@ -499,7 +499,7 @@ void cDlgPatientCardRefill::on_pbSell_clicked()
             }
 
             m_poPatientCard->sendDataToWeb();
-            if( g_poPrefs->isAutoMailOnPCSell() || (g_poPrefs->isCardyGoSync() && m_poPatientCard->isCardOwnerRegisteredOnCardy()) )
+            /*if( g_poPrefs->isAutoMailOnPCSell() || (g_poPrefs->isCardyGoSync() && m_poPatientCard->isCardOwnerRegisteredOnCardy()) )
             {
                 int nDestination = AUTO_MAIL_DESTINATION_MAIL_CARDY;
 
@@ -508,6 +508,11 @@ void cDlgPatientCardRefill::on_pbSell_clicked()
 
                 g_obLogger(cSeverity::INFO) << "PatientCard sold, send auto mail about sell" << EOM;
                 m_poPatientCard->sendAutoMail( AUTO_MAIL_ON_PCSELL, nDestination, QDate::currentDate().toString("yyyy-MM-dd"), 0, "" );
+            }*/
+            if( g_poPrefs->isAutoMailOnPCSell() )
+            {
+                g_obLogger(cSeverity::INFO) << "PatientCard sold, send auto mail about sell" << EOM;
+                m_poPatientCard->sendAutoMail( AUTO_MAIL_ON_PCSELL, AUTO_MAIL_DESTINATION_MAIL, QDate::currentDate().toString("yyyy-MM-dd"), 0, "" );
             }
             if( g_poPrefs->isAutoMailOnPCExpiration() )
             {

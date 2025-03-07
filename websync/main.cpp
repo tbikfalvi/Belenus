@@ -4,8 +4,8 @@
 //
 //====================================================================================
 
-#define APPLICATION_VERSION_NUMBER  "2.1.2.0"
-#define DATABASE_VERSION_NUMBER     "2.1.2.0"
+#define APPLICATION_VERSION_NUMBER  "2.2.0.0"
+#define DATABASE_VERSION_NUMBER     "2.2.0.0"
 
 //====================================================================================
 
@@ -23,8 +23,6 @@ QTranslator     *poTransQT;
 QApplication    *apMainApp;
 
 //====================================================================================
-#define APPLICATION_VERSION_NUMBER  "2.1.2.0"
-#define DATABASE_VERSION_NUMBER     "2.1.2.0"
 
 #include "../framework/qtlogger.h"
 #include "../framework/qtframework.h"

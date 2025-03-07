@@ -368,6 +368,8 @@ cDlgPreferences::cDlgPreferences( QWidget *p_poParent )
     chkSaturday->setChecked( qsBackupDays.contains(tr("Sat"), Qt::CaseInsensitive) );
     chkSunday->setChecked( qsBackupDays.contains(tr("Sun"), Qt::CaseInsensitive) );
 
+    chkDBAllowDeleteObsoleteUnit->setChecked( g_poPrefs->isDBAllowDeleteObsoleteUnits() );
+
     //---------------------------------------------------------------------------------------------------------------------------------------------------
     // Oldalak beallitasait feluliro modositasok
     //---------------------------------------------------------------------------------------------------------------------------------------------------
@@ -658,6 +660,7 @@ void cDlgPreferences::accept()
     g_poPrefs->setRFIDEnabled( chkRFIDEnabled->isChecked() );
     g_poPrefs->setRFIDComPort( spbRFIDCOM->value() );
 
+    g_poPrefs->setDBAllowDeleteObsoleteUnits( chkDBAllowDeleteObsoleteUnit->isChecked() );
 
 
     m_dlgProgress->showProgress();

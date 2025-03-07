@@ -13,7 +13,7 @@
 #include "mainwindow.h"
 #include "ui_mainwindow.h"
 
-MainWindow::MainWindow(QWidget *parent) : QMainWindow(parent), ui(new Ui::MainWindow)
+MainWindow::MainWindow(QWidget *parent, QString p_qsVersion) : QMainWindow(parent), ui(new Ui::MainWindow)
 {
     ui->setupUi(this);
 
@@ -24,11 +24,6 @@ MainWindow::MainWindow(QWidget *parent) : QMainWindow(parent), ui(new Ui::MainWi
     m_qsLogFileName             = "";
     m_dlgProgress               = new cDlgProgress( this );
     m_qsLanguage                = "hu";
-    m_bIsPatientCardTypesLoaded = false;
-    m_bIsPatientCardsLoaded     = false;
-    m_bIsProductTypesLoaded     = false;
-    m_bIsProductsLoaded         = false;
-    m_bIsUsersLoaded            = false;
 
     ui->ledPathDB->setText( m_qdExpCurrentDir.path() );
     ui->pageController->setCurrentIndex( m_nCurrentPage );
@@ -39,8 +34,7 @@ MainWindow::MainWindow(QWidget *parent) : QMainWindow(parent), ui(new Ui::MainWi
 
     ui->imgLogo->setPixmap( QPixmap(":/imgLogo/KiwiSun.png") );
 
-    connect( ui->rbTypeSolarium, SIGNAL(clicked()), this, SLOT(slotProgramTypeClicked()) );
-    connect( ui->rbTypeSensolite, SIGNAL(clicked()), this, SLOT(slotProgramTypeClicked()) );
+    setWindowTitle( tr( "Belenus database manager - v.%1" ).arg( p_qsVersion ) );
 
     _initializePage();
 }
@@ -630,14 +624,14 @@ void MainWindow::on_cmbLanguage_currentIndexChanged(int /*index*/)
 }
 void MainWindow::slotProgramTypeClicked()
 {
-    if( ui->rbTypeSolarium->isChecked() )
+/*    if( ui->rbTypeSolarium->isChecked() )
     {
         m_nProgramType = DBTool::KiwiSun;
     }
     else if( ui->rbTypeSensolite->isChecked() )
     {
         m_nProgramType = DBTool::Sensolite;
-    }
+    }*/
 }
 //====================================================================================
 // SYSTEM VERIFICATION

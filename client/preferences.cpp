@@ -107,6 +107,8 @@ void cPreferences::init()
     m_nWorkTimeCounter              = 336;
 
     m_bCardyGoSync                  = false;
+
+    m_bAllowDeleteObsoleteUnits     = false;
 }
 
 void cPreferences::loadSettings() throw (cSevException)
@@ -135,6 +137,9 @@ void cPreferences::loadSettings() throw (cSevException)
         m_uiComponent                   = loadSettingU( "GEN_PanelSystemID", 0 );
         m_bIsSecondaryWindowVisible     = loadSettingB( "GEN_IsSecondaryWindowVisible", false );
         m_nSecondsWaitOnSlpashScreen    = loadSettingI( "GEN_SecondsWaitOnSlpashScreen", 3 );
+
+        m_bAllowDeleteObsoleteUnits     = loadSettingB( "DB_AllowDeleteObsoleteUnits", false );
+
         int nLeft                       = loadSettingI( "EXTWIN_Left", 10 );
         int nTop                        = loadSettingI( "EXTWIN_Top", 10 );
         int nWidth                      = loadSettingI( "EXTWIN_Width", 600 );
@@ -269,6 +274,8 @@ void cPreferences::saveSettings() throw (cSevException)
         saveSettingB( "GEN_DBGlobalAutoSynchronization", m_bDBGlobalAutoSynchronize );
         saveSettingB( "GEN_IsSecondaryWindowVisible", m_bIsSecondaryWindowVisible );
         saveSettingI( "GEN_SecondsWaitOnSlpashScreen", m_nSecondsWaitOnSlpashScreen );
+
+        saveSettingB( "DB_AllowDeleteObsoleteUnits", m_bAllowDeleteObsoleteUnits );
 
         saveSettingI( "EXTWIN_Left", m_qpSecondaryPosition.x() );
         saveSettingI( "EXTWIN_Top", m_qpSecondaryPosition.y() );
@@ -1829,6 +1836,16 @@ void cPreferences::setCardyGoSync( bool p_bCardyGoSync )
 bool cPreferences::isCardyGoSync()
 {
     return m_bCardyGoSync;
+}
+
+void cPreferences::setDBAllowDeleteObsoleteUnits(bool p_bEnable)
+{
+    m_bAllowDeleteObsoleteUnits = p_bEnable;
+}
+
+bool cPreferences::isDBAllowDeleteObsoleteUnits()
+{
+    return m_bAllowDeleteObsoleteUnits;
 }
 
 

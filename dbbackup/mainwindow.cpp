@@ -20,14 +20,22 @@ MainWindow::MainWindow(QWidget *parent, QString p_qsVersion, teAction p_teAction
 
     ui->gbVersion->setTitle( QString(" v.%1 ").arg( p_qsVersion ) );
 
+    trayIcon = new QSystemTrayIcon(this);
+
+    trayIcon->setIcon( QIcon( ":/logo.png" ) );
+    trayIcon->setToolTip( tr("Belenus Database Manager") );
+    trayIcon->show();
+
     setControlsEnabled( false );
 
     //---------------------------------------------------------------
     // Initialize the variables
-    m_nTimer        = 0;
-    m_teAction      = p_teAction;
-    m_qsFileName    = p_qsFileName;
-    g_poDB          = new cQTMySQLConnection;
+    m_nTimer            = 0;
+    m_teAction          = p_teAction;
+    m_qsFileName        = p_qsFileName;
+    m_qsDirDbBinaries   = "";
+    m_qsDirDbBackup     = "";
+    g_poDB              = new cQTMySQLConnection;
 
     // remove binary logs to save time for db backup
     try
@@ -37,6 +45,64 @@ MainWindow::MainWindow(QWidget *parent, QString p_qsVersion, teAction p_teAction
     catch( cSevException &e )
     {
         g_obLogger(e.severity()) << e.what() << EOM;
+    }
+
+    try
+    {
+        g_poDB->setHostName( "localhost" );
+        g_poDB->setDatabaseName( "belenus" );
+        g_poDB->setUserName( "belenus" );
+        g_poDB->setPassword( "belenus" );
+        g_poDB->open();
+
+        m_qsDirDbBinaries = loadSetting( "BACKUP_DirDbBinaries", "C:/wamp/bin/mysql/mysql5.5.24/bin" );
+        m_qsDirDbBackup   = loadSetting( "BACKUP_DirDbBackup", "" );
+    }
+    catch( cSevException &e )
+    {
+        g_obLogger(e.severity()) << e.what() << EOM;
+    }
+
+    if( m_qsDirDbBinaries.isEmpty() )
+    {
+        // MessageBox megjelenítése
+        QMessageBox::warning(this, tr("Error"), tr("The binary folder for Wampserver MySQL can not be found in database!\nPlease define the location manually!") );
+
+        // Könyvtárválasztó dialógus megnyitása
+        QString selectedDir = QFileDialog::getExistingDirectory(0,
+                                                                tr( "Select the location of the MySQL binary folder" ),
+                                                                "C:/",
+                                                                QFileDialog::ShowDirsOnly | QFileDialog::DontResolveSymlinks);
+
+        // Ha választott a felhasználó, frissítjük a qsDir változót
+        if( !selectedDir.isEmpty() )
+        {
+            m_qsDirDbBinaries = selectedDir;
+        }
+    }
+
+    if( m_qsDirDbBackup.isEmpty() )
+    {
+        // MessageBox megjelenítése
+        QMessageBox::warning(this, tr("Error"), tr("The backup folder for Belenus can not be found in database!\nPlease define the location manually!") );
+
+        // Könyvtárválasztó dialógus megnyitása
+        QString selectedDir = QFileDialog::getExistingDirectory(0,
+                                                                tr( "Select the location of the backup folder" ),
+                                                                "C:/",
+                                                                QFileDialog::ShowDirsOnly | QFileDialog::DontResolveSymlinks);
+
+        // Ha választott a felhasználó, frissítjük a qsDir változót
+        if( !selectedDir.isEmpty() )
+        {
+            m_qsDirDbBackup = selectedDir;
+        }
+    }
+
+    if( m_qsDirDbBinaries.isEmpty() || m_qsDirDbBackup.isEmpty() )
+    {
+        QMessageBox::warning(this, tr("Error"), tr("The required folders are not set!\nExiting the application ...") );
+        m_teAction = ACT_FINISHED;
     }
 
     switch( m_teAction )
@@ -63,7 +129,12 @@ MainWindow::MainWindow(QWidget *parent, QString p_qsVersion, teAction p_teAction
             break;
         }
         default:
+        {
+            trayIcon->showMessage( tr("Belenus Database Manager"),
+                                   tr("Saving database process started."),
+                                   QSystemTrayIcon::Information, 2000 );
             m_nTimer = startTimer( 1000 );
+        }
     }
 }
 
@@ -81,23 +152,6 @@ void MainWindow::timerEvent(QTimerEvent *)
     killTimer( m_nTimer );
     m_nTimer = 0;
 
-    try
-    {
-        g_poDB->setHostName( "localhost" );
-        g_poDB->setDatabaseName( "belenus" );
-        g_poDB->setUserName( "belenus" );
-        g_poDB->setPassword( "belenus" );
-        g_poDB->open();
-
-        m_qsDirDbBinaries = loadSetting( "BACKUP_DirDbBinaries", "C:/wamp/bin/mysql/mysql5.5.24/bin" );
-        m_qsDirDbBackup   = loadSetting( "BACKUP_DirDbBackup", "" );
-    }
-    catch( cSevException &e )
-    {
-        g_obLogger(e.severity()) << e.what() << EOM;
-    }
-
-
     switch( m_teAction )
     {
         case ACT_BACKUP:
@@ -108,12 +162,18 @@ void MainWindow::timerEvent(QTimerEvent *)
 
         case ACT_RESTORE:
         {
+            trayIcon->showMessage( tr("Belenus Database Manager"),
+                                   tr("Restoring database process started."),
+                                   QSystemTrayIcon::Information, 2000 );
             processRestore();
             break;
         }
 
         case ACT_EXECUTE:
         {
+            trayIcon->showMessage( tr("Belenus Database Manager"),
+                                   tr("Executing database modification started."),
+                                   QSystemTrayIcon::Information, 2000 );
             processExecute();
             break;
         }

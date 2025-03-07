@@ -2,8 +2,7 @@
 -- Belenus Szoftver Rendszer (c) Pagony Multimedia Studio Bt - 2013
 -- -----------------------------------------------------------------------------------
 -- Filename    : db_fill_en.sql
--- AppVersion  : 2.1.3.0
--- DbVersion   : 2.1.3.0
+-- DbVersion   : 2.2.0.0
 -- Author      : Bikfalvi Tamas
 -- -----------------------------------------------------------------------------------
 -- Adatbazist default adatokkal feltolto SQL script
@@ -85,7 +84,8 @@ ALTER TABLE `genders` auto_increment=1;
 
 INSERT INTO `genders` (`genderId`, `licenceId`, `genderName` ) VALUES
  ('1', '0', 'Male'),
- ('2', '0', 'Female');
+ ('2', '0', 'Female'),
+ ('3', '0', 'Prefer not to say');
 
 -- -----------------------------------------------------------------------------------
 
@@ -96,8 +96,8 @@ ALTER TABLE `skinTypes` auto_increment=1;
 
 -- -----------------------------------------------------------------------------------
 
-INSERT INTO `patients` (`patientId`, `licenceId`, `companyId`, `created`, `name`, `gender`, `ageType`, `isReturning`, `uniqueId`, `isCardy`, `email`, `regularCustomer`, `employee`, `service`, `company`, `discountType`, `comment`, `loyaltyPoints`, `modified`, `active`, `archive`) VALUES
- ('0', '0', '0', '', '', '0', '0', '0', NULL, '0', NULL, '0', '0', '0', '0', '', NULL, 0, '', '0', 'ARC');
+INSERT INTO `patients` (`patientId`, `licenceId`, `companyId`, `created`, `name`, `gender`, `ageType`, `isReturning`, `uniqueId`, `isCardy`, `isNewsletter`, `isCardMail`, `email`, `regularCustomer`, `employee`, `service`, `company`, `discountType`, `comment`, `loyaltyPoints`, `modified`, `active`, `archive`) VALUES
+ ('0', '0', '0', '', '', '0', '0', '0', NULL, '0', '0', '0', NULL, '0', '0', '0', '0', '', NULL, 0, '', '0', 'ARC');
 UPDATE `patients` SET `patientId`=0 WHERE `patientId`=1;
 ALTER TABLE `patients` auto_increment=1;
 
@@ -323,10 +323,11 @@ INSERT INTO `settings` (`settingId`, `identifier`, `value`) VALUES
  (NULL, 'LICENCE_LAST_VALIDATED', '2024-03-25 12:00:00'),
  (NULL, 'ABOUT_INFO_LINK', 'http://www.kiwisun.eu/elerhetosegeink.html'),
  (NULL, 'CURRENT_CASSA_ID', '0'),
- (NULL, 'APPLICATION_VERSION', '2_1_3_0'),
- (NULL, 'WEBSYNC_VERSION', '2_1_3_0'),
- (NULL, 'VIEWER_VERSION', '2_1_3_0'),
- (NULL, 'DATABASE_VERSION', '2_1_3_0'),
+ (NULL, 'APPLICATION_VERSION', '2_2_0_0'),
+ (NULL, 'WEBSYNC_VERSION', '2_2_0_0'),
+ (NULL, 'VIEWER_VERSION', '2_2_0_0'),
+ (NULL, 'BACKUP_VERSION', '2_2_0_0'),
+ (NULL, 'DATABASE_VERSION', '2_2_0_0'),
  (NULL, 'LICENCE_CHECK', 56),
  (NULL, 'LICENCE_CHECK_COUNTER', 56),
  (NULL, 'LICENCE_WORKTIME', 336),
@@ -349,6 +350,7 @@ INSERT INTO `settings` (`settingId`, `identifier`, `value`) VALUES
  (NULL, "GEN_SecondsWaitOnSlpashScreen", 3 ),
  (NULL, "GEN_DateFormat", "yyyy-MM-dd" ),
  (NULL, "GEN_Component", 0 ),
+ (NULL, "DB_AllowDeleteObsoleteUnits", 0 ),
  (NULL, "EXTWIN_Left", 0 ),
  (NULL, "EXTWIN_Top", 0 ),
  (NULL, "EXTWIN_Width", 547 ),
