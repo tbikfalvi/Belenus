@@ -21,6 +21,7 @@ public:
         ACT_BACKUP = 0,
         ACT_RESTORE,
         ACT_EXECUTE,
+        ACT_UPDATE,
         ACT_FINISHED
     };
 
@@ -49,6 +50,10 @@ private:
     QString              m_qsFileName;
     QString              m_qsDirDbBinaries;
     QString              m_qsDirDbBackup;
+    QString              m_qsDBFilename;
+    QString              m_qsDBFilenameNew;
+
+    void    updateBackupFile();
 };
 
 #endif // MAINWINDOW_H

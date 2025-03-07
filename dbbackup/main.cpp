@@ -38,6 +38,11 @@ int main(int argc, char *argv[])
         teAction = MainWindow::ACT_EXECUTE;
         qsFileName = QString( argv[2] );
     }
+    else if( argc > 1 && strcmp(argv[1],"-update") == 0 )
+    {
+        teAction = MainWindow::ACT_UPDATE;
+        qsFileName = QString( argv[2] );
+    }
 
     MainWindow *wndMain = new MainWindow( 0, APPLICATION_VERSION_NUMBER, teAction, qsFileName );
 

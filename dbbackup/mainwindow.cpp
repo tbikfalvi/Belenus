@@ -5,6 +5,9 @@
 #include <QDateTime>
 #include <QDir>
 #include <QFileDialog>
+#include <QFile>
+#include <QTextStream>
+#include <QRegExp>
 
 #include "../framework/qtmysqlquerymodel.h"
 #include "mainwindow.h"
@@ -128,6 +131,13 @@ MainWindow::MainWindow(QWidget *parent, QString p_qsVersion, teAction p_teAction
             }
             break;
         }
+        case ACT_UPDATE:
+        {
+            ui->lblCaption->setText( tr("Update database file") );
+            ui->lblInfo->setText( tr("Please select desired database and click on Start") );
+            setControlsEnabled( true );
+            break;
+        }
         default:
         {
             trayIcon->showMessage( tr("Belenus Database Manager"),
@@ -178,18 +188,34 @@ void MainWindow::timerEvent(QTimerEvent *)
             break;
         }
 
+        case ACT_UPDATE:
+        {
+            // Mysql 5.5.24 dump utáni FOREIGN KEY javitas
+            trayIcon->showMessage( tr("Belenus Database Manager"),
+                                   tr("Database backup file correction for forward compatibility."),
+                                   QSystemTrayIcon::Information, 2000 );
+            updateBackupFile();
+            break;
+        }
+
         default:
+        {
+            trayIcon->showMessage( tr("Belenus Database Manager"),
+                                   tr("Process finished."),
+                                   QSystemTrayIcon::Information, 2000 );
             close();
+        }
     }
 }
 //-------------------------------------------------------------------------------------------------
 void MainWindow::processBackup()
 //-------------------------------------------------------------------------------------------------
 {
-    QString qsCurrentPath = QDir::currentPath().replace( "\\", "/" );
+//    QString qsCurrentPath = QDir::currentPath().replace( "\\", "/" );
+    QString     qsCurrentDateTime = QDateTime::currentDateTime().toString("yyyyMMddhhmmss");
 
     QString     qsProcess       = QString( "\"%1/mysqldump.exe\"" ).arg(m_qsDirDbBinaries);
-    QString     qsParameters    = QString( "-u belenus -pbelenus belenus > \"%1/belenus_backup_%2.sql\" ").arg(m_qsDirDbBackup).arg( QDateTime::currentDateTime().toString("yyyyMMddhhmmss") );
+    QString     qsParameters    = QString( "-u belenus -pbelenus belenus > \"%1/belenus_backup_%2.sql\"" ).arg(m_qsDirDbBackup).arg( qsCurrentDateTime );
     QString     qsCommand       = QString( "cmd /c %1 %2" ).arg( qsProcess ).arg( qsParameters );
 
     QDir    qdBackup( m_qsDirDbBackup );
@@ -220,7 +246,7 @@ void MainWindow::processBackup()
     }
 
     m_teAction = ACT_FINISHED;
-    m_nTimer = startTimer( 500 );
+    m_nTimer = startTimer( 3000 );
 }
 //-------------------------------------------------------------------------------------------------
 void MainWindow::processRestore()
@@ -434,3 +460,61 @@ QString MainWindow::loadSetting( QString p_Identifier, QString p_Default ) throw
 
     return value;
 }
+
+void MainWindow::updateBackupFile()
+{
+    QFile file( m_qsFileName );
+
+    if( !file.open( QIODevice::ReadOnly ) )
+    {
+        QMessageBox::warning( this, tr("Error"),
+                              tr("Unable to open the source file\n\n%1").arg( m_qsFileName ) );
+        m_teAction = ACT_FINISHED;
+        m_nTimer = startTimer( 500 );
+        return;
+    }
+
+    QString qsUpdatedFile = QString( "belenus_backup_%1_updated.sql" ).arg( QDateTime::currentDateTime().toString("yyyyMMddhhmmss") );
+
+    QFile outFile( qsUpdatedFile );
+
+    if( !outFile.open( QIODevice::WriteOnly ) )
+    {
+        QMessageBox::warning( this, tr("Error"),
+                              tr("Unable to open the destination file\n\n%1").arg( qsUpdatedFile ) );
+        m_teAction = ACT_FINISHED;
+        m_nTimer = startTimer( 500 );
+        return;
+    }
+
+    QTextStream in( &file );
+    QTextStream out( &outFile );
+
+    // Kereső kifejezés: (`xxx`)
+    QRegExp keyPattern( "\\(`([^`]+)`\\)" );
+
+    while( !in.atEnd() )
+    {
+        QString line = in.readLine();
+
+        // Ha a sor tartalmazza a "FOREIGN KEY"-t, de nincs benne a `licenceId`
+        if( line.contains("FOREIGN KEY") && !line.contains("`licenceId`") )
+        {
+            if( keyPattern.indexIn(line) != -1 )
+            {
+                QString columnId = keyPattern.cap(1); // Az első oszlop neve (xxx)
+                QString replacement = QString( "(`%1`,`licenceId`)" ).arg( columnId );
+                line.replace( keyPattern, replacement );
+            }
+        }
+
+        out << line << "\n";
+    }
+
+    file.close();
+    outFile.close();
+
+    m_teAction = ACT_FINISHED;
+    m_nTimer = startTimer( 500 );
+}
+
