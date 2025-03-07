@@ -225,6 +225,8 @@ cDlgGuestEdit::cDlgGuestEdit( QWidget *p_poParent, cDBGuest *p_poGuest, cDBPostp
     connect( chkEmployee, SIGNAL(toggled(bool)), this, SLOT(slotUpdateDiscountSample()) );
     connect( chkService, SIGNAL(toggled(bool)), this, SLOT(slotUpdateDiscountSample()) );
 
+    connect( ledEmail, SIGNAL(editingFinished()), this, SLOT(slotEmailEdited()) );
+
     slotEnableButtons();
     slotRefreshWarningColors();
 
@@ -291,10 +293,7 @@ void cDlgGuestEdit::on_pbSaveExit_clicked()
     }
     if( ledEmail->text().length() > 0 )
     {
-        // ^[a-z0-9!#$%&\'*+\=?^_`{|}~-]+(?:\.[a-z0-9!#$%&\'*+\=?^_`{|}~-]+)*@(?:[a-z0-9](?:[a-z0-9-]*[a-z0-9])?\.)+[a-z0-9](?:[a-z0-9-]*[a-z0-9])?
-        QRegExp qreEmail( "^[a-z0-9!#$%&\\'*+\\=?^_`{|}~-]+(?:\\.[a-z0-9!#$%&\\'*+\\=?^_`{|}~-]+)*@(?:[a-z0-9](?:[a-z0-9-]*[a-z0-9])?\\.)+[a-z0-9](?:[a-z0-9-]*[a-z0-9])?" );
-
-        if( !qreEmail.exactMatch( ledEmail->text() ) )
+        if( !_isEmailFormatOk() )
         {
             boCanBeSaved = false;
             if( qsErrorMessage.length() ) qsErrorMessage.append( "\n\n" );
@@ -359,10 +358,7 @@ void cDlgGuestEdit::on_pbSave_clicked()
     }
     if( ledEmail->text().length() > 0 )
     {
-        // ^[a-z0-9!#$%&\'*+\=?^_`{|}~-]+(?:\.[a-z0-9!#$%&\'*+\=?^_`{|}~-]+)*@(?:[a-z0-9](?:[a-z0-9-]*[a-z0-9])?\.)+[a-z0-9](?:[a-z0-9-]*[a-z0-9])?
-        QRegExp qreEmail( "^[a-z0-9!#$%&\\'*+\\=?^_`{|}~-]+(?:\\.[a-z0-9!#$%&\\'*+\\=?^_`{|}~-]+)*@(?:[a-z0-9](?:[a-z0-9-]*[a-z0-9])?\\.)+[a-z0-9](?:[a-z0-9-]*[a-z0-9])?" );
-
-        if( !qreEmail.exactMatch( ledEmail->text() ) )
+        if( !_isEmailFormatOk() )
         {
             boCanBeSaved = false;
             if( qsErrorMessage.length() ) qsErrorMessage.append( "\n\n" );
@@ -573,7 +569,7 @@ void cDlgGuestEdit::slotRefreshWarningColors()
         lblAge->setStyleSheet( "QLabel {font: bold; color: blue;}" );
 
 //    QMessageBox::information( this, tr( "Info" ), QString( "newsletter %1 <%2>" ).arg( chkNewsletter->checkState() ).arg( ledEmail->text() ) );
-    if( ( chkNewsletter->isChecked() || chkCardEmail->isChecked() ) && ledEmail->text().isEmpty() )
+    if( ( ( chkNewsletter->isChecked() || chkCardEmail->isChecked() ) && ledEmail->text().isEmpty() ) || ( !_isEmailFormatOk() && !ledEmail->text().isEmpty() ) )
     {
         lblEmail->setStyleSheet( "QLabel {font: bold; color: red;}" );
     }
@@ -601,6 +597,28 @@ void cDlgGuestEdit::slotEnableButtons()
     pbHistory->setEnabled( /*m_poGuest->id()>0*/false );
     pbDislink->setEnabled( ledBarcode->text().length()>0 );
 }
+//===========================================================================================================
+//
+//-----------------------------------------------------------------------------------------------------------
+void cDlgGuestEdit::slotEmailEdited()
+{
+    if( ledEmail->text().compare( m_poGuest->email() ) )
+    {
+        // email address changed
+        if( ledEmail->text().isEmpty() )
+        {
+            chkNewsletter->setChecked( false );
+            chkCardEmail->setChecked( false );
+        }
+        else
+        {
+            chkNewsletter->setChecked( true );
+            chkCardEmail->setChecked( true );
+        }
+    }
+    slotRefreshWarningColors();
+}
+
 //===========================================================================================================
 //  _fillPatientCardData
 //-----------------------------------------------------------------------------------------------------------
@@ -796,5 +814,20 @@ void cDlgGuestEdit::on_pbEditDiscount_clicked()
 unsigned int cDlgGuestEdit::guestId()
 {
     return m_poGuest->id();
+}
+
+bool cDlgGuestEdit::_isEmailFormatOk()
+{
+    bool    bRet = true;
+
+    // ^[a-z0-9!#$%&\'*+\=?^_`{|}~-]+(?:\.[a-z0-9!#$%&\'*+\=?^_`{|}~-]+)*@(?:[a-z0-9](?:[a-z0-9-]*[a-z0-9])?\.)+[a-z0-9](?:[a-z0-9-]*[a-z0-9])?
+    QRegExp qreEmail( "^[a-z0-9!#$%&\\'*+\\=?^_`{|}~-]+(?:\\.[a-z0-9!#$%&\\'*+\\=?^_`{|}~-]+)*@(?:[a-z0-9](?:[a-z0-9-]*[a-z0-9])?\\.)+[a-z0-9](?:[a-z0-9-]*[a-z0-9])?" );
+
+    if( !qreEmail.exactMatch( ledEmail->text() ) )
+    {
+        bRet = false;
+    }
+
+    return bRet;
 }
 

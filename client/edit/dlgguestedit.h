@@ -32,6 +32,7 @@ private slots:
     void on_pbSaveExit_clicked();
     void slotRefreshWarningColors();
     void slotEnableButtons();
+    void slotEmailEdited();
     void on_pbSellCard_clicked();
     void on_pbDislink_clicked();
     void on_pbAssignCard_clicked();
@@ -45,6 +46,7 @@ private:
     void _fillPatientCardData();
     bool _saveGuestData();
     QString _convertCurrency(const QString &text) const;
+    bool _isEmailFormatOk();
 
 };
 
