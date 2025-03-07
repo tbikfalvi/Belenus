@@ -12,6 +12,8 @@ USE `belenus`;
 ALTER TABLE `patients` ADD `isNewsletter` TINYINT NOT NULL DEFAULT '0' AFTER `isCardy`;
 ALTER TABLE `patients` ADD `isCardMail` TINYINT NOT NULL DEFAULT '0' AFTER `isNewsletter`;
 
+ALTER TABLE `patienthistory` ADD `patientHistoryTime` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP;
+
 INSERT INTO `settings` (`settingId`, `identifier`, `value`) VALUES (NULL, 'BACKUP_VERSION', '2_2_0_0');
 INSERT INTO `genders` (`genderId`, `licenceId`, `genderName` ) VALUES ('3', '0', 'Nem kívánja megadni');
 

@@ -558,6 +558,7 @@ CREATE TABLE `patientHistory` (
   `panelId`                 int(10) unsigned        NOT NULL,
   `patientCardTypeId`       int(10) unsigned        NOT NULL,
   `patientCardId`           int(10) unsigned        NOT NULL,
+  `patientHistoryTime`      timestamp               NOT NULL DEFAULT CURRENT_TIMESTAMP,
   PRIMARY KEY (`patientHistoryId`,`licenceId`),
   FOREIGN KEY (`patientId`) REFERENCES `patients` (`patientId`) ON UPDATE CASCADE ON DELETE RESTRICT,
   FOREIGN KEY (`patientHistoryTypeId`) REFERENCES `patientHistoryType` (`patientHistoryTypeId`) ON UPDATE CASCADE ON DELETE RESTRICT,
