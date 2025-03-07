@@ -2596,7 +2596,7 @@ is different :</string>
       <attribute name="title">
        <string>Database</string>
       </attribute>
-      <layout class="QVBoxLayout" name="verticalLayout_21">
+      <layout class="QVBoxLayout" name="verticalLayout_35">
        <item>
         <widget class="QGroupBox" name="gbDatabaseServer">
          <property name="title">
@@ -2828,6 +2828,22 @@ is different :</string>
              </layout>
             </item>
            </layout>
+          </item>
+         </layout>
+        </widget>
+       </item>
+       <item>
+        <widget class="QGroupBox" name="gbDatabaseManage">
+         <property name="title">
+          <string/>
+         </property>
+         <layout class="QVBoxLayout" name="verticalLayout_21">
+          <item>
+           <widget class="QCheckBox" name="chkDBAllowDeleteObsoleteUnit">
+            <property name="text">
+             <string>Allow obsolete patientcard units to be deleted automatically</string>
+            </property>
+           </widget>
           </item>
          </layout>
         </widget>

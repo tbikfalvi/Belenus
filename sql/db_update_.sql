@@ -15,6 +15,7 @@ ALTER TABLE `patients` ADD `isCardMail` TINYINT NOT NULL DEFAULT '0' AFTER `isNe
 ALTER TABLE `patienthistory` ADD `patientHistoryTime` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP;
 
 INSERT INTO `settings` (`settingId`, `identifier`, `value`) VALUES (NULL, 'BACKUP_VERSION', '2_2_0_0');
+INSERT INTO `settings` (`settingId`, `identifier`, `value`) VALUES (NULL, 'DB_AllowDeleteObsoleteUnits', 0);
 INSERT INTO `genders` (`genderId`, `licenceId`, `genderName` ) VALUES ('3', '0', 'Nem kívánja megadni');
 
 UPDATE patients SET isNewsletter=1, isCardMail=1 WHERE email<>"";

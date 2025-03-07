@@ -139,6 +139,8 @@ public:
     int             getPatientCardPartnerPriceVat() const;
     void            setBlnsHttpEnabled( bool p_bEnable );
     bool            isBlnsHttpEnabled();
+    void            setDBAllowDeleteObsoleteUnits( bool p_bEnable );
+    bool            isDBAllowDeleteObsoleteUnits();
 
     unsigned int    getPanelId( int p_nPanelIterator );
 
@@ -398,6 +400,7 @@ private:
     int             m_nWorkTime;
     int             m_nWorkTimeCounter;
     bool            m_bCardyGoSync;
+    bool            m_bAllowDeleteObsoleteUnits;
 
     void init();
 };

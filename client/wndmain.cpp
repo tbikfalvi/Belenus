@@ -1936,12 +1936,19 @@ void cWndMain::on_action_PatientSelect_triggered()
     cDlgInputStart     obDlgInputStart( this );
 
     obDlgInputStart.m_bPat = true;
+    obDlgInputStart.init();
+
     if( obDlgInputStart.exec() == QDialog::Accepted )
     {
         if( obDlgInputStart.m_bPat )
         {
             m_qsPatientNameFilter = obDlgInputStart.getEditText();
         }
+    }
+
+    if( m_qsPatientNameFilter.length() < 3 )
+    {
+        return;
     }
 
     m_dlgProgress->showProgress();

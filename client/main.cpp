@@ -274,12 +274,18 @@ int main( int argc, char *argv[] )
         qsSpalsh += QObject::tr("FINISHED\n");
         obSplash.showMessage(qsSpalsh,Qt::AlignLeft,QColor(59,44,75));
 
-        qsSpalsh += QObject::tr("Delete obsolete data: ");
+        qsSpalsh += QObject::tr("Delete obsolete patientcard units: ");
         obSplash.showMessage(qsSpalsh,Qt::AlignLeft,QColor(59,44,75));
 
-        g_poDB->executeQTQuery( QString( "DELETE FROM patientcardunits WHERE validDateTo < DATE_SUB(NOW(), INTERVAL 7 DAY) " ) );
-
-        qsSpalsh += QObject::tr("FINISHED\n");
+        if( g_poPrefs->isDBAllowDeleteObsoleteUnits() )
+        {
+            g_poDB->executeQTQuery( QString( "DELETE FROM patientcardunits WHERE validDateTo < DATE_SUB(NOW(), INTERVAL 7 DAY) " ) );
+            qsSpalsh += QObject::tr("FINISHED\n");
+        }
+        else
+        {
+            qsSpalsh += QObject::tr("DISABLED\n");
+        }
         obSplash.showMessage(qsSpalsh,Qt::AlignLeft,QColor(59,44,75));
 
         qsSpalsh += "-----------------------------------------------------\n";
