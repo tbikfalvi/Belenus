@@ -189,9 +189,10 @@ Version 2.1.2.1
 
 Version 2.1.3.0
 ===============
-HIBAJAVITAS: Termek vonalkod beirasnal a vendegek listaja nyilt meg, nem a termek eladas
-HIBAJAVITAS: Berlet eladasnal, feltoltesnel a gep csoport mostantol nem valtoztathato
+- HIBAJAVITAS: Termek vonalkod beirasnal a vendegek listaja nyilt meg, nem a termek eladas
+- HIBAJAVITAS: Berlet eladasnal, feltoltesnel a gep csoport mostantol nem valtoztathato
 
 Version 2.2.0.0
 ===============
-
+- Vendegnel a ferfi es no mellett ki lehet valasztani, hogy nem akarja megadni a nemet
+- Vendegnel meg lehet adni, hogy kert-e hirlevelet, vagy ker-e emailt a berlet adatokrol
