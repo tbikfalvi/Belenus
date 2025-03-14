@@ -10,14 +10,22 @@ class cDlgPanelSetting : public QDialog, private Ui::dlgPanelSetting
     Q_OBJECT
 
 public:
-    cDlgPanelSetting( QWidget *p_poParent = 0, cDBPanel *p_poPanels = NULL );
+    cDlgPanelSetting(QWidget *p_poParent = 0, unsigned int p_uiPanelId = 0 );
     virtual ~cDlgPanelSetting();
 
 protected:
-    cDBPanel *m_poPanels;
+    unsigned int     m_uiPanelId;
 
-public slots:
-    virtual void accept();
+private slots:
+    void on_pbOk_clicked();
+    void on_pbCancel_clicked();
+    void on_pbTime_clicked();
+    void on_pbChangeDir_clicked();
+    void on_pbEmptyImage_clicked();
+    void on_pbWTReset_clicked();
+    void on_pbCTReset_clicked();
+    void on_pbEnableSystemAdmin_clicked();
+    void on_pbEnableDeviceAdmin_clicked();
 };
 
 #endif // DLGPANELSETTING_H

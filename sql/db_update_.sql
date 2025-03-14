@@ -14,6 +14,9 @@ ALTER TABLE `patients` ADD `isCardMail` TINYINT NOT NULL DEFAULT '0' AFTER `isNe
 
 ALTER TABLE `patienthistory` ADD `patientHistoryTime` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP;
 
+ALTER TABLE `paneluses` ADD `panelIds` varchar(100) DEFAULT "" AFTER `licenceId`;
+DELETE FROM `paneluses` WHERE active = 0;
+
 ALTER TABLE `patienthistorytype` DROP PRIMARY KEY, ADD PRIMARY KEY(`patientHistoryTypeId`,`licenceId`);
 ALTER TABLE `productactiontype` DROP PRIMARY KEY, ADD PRIMARY KEY(`productActionTypeId`,`licenceId`);
 ALTER TABLE `producthistory` DROP PRIMARY KEY, ADD PRIMARY KEY(`productHistoryId`,`licenceId`);

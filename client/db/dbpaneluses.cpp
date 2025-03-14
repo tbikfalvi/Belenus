@@ -116,12 +116,6 @@ void cDBPanelUses::save() throw( cSevException )
     QSqlQuery  *poQuery = g_poDB->executeQTQuery( qsQuery );
     if( !m_uiId && poQuery ) m_uiId = poQuery->lastInsertId().toUInt();
     if( poQuery ) delete poQuery;
-/*
-    if( m_uiId > 0 && m_uiLicenceId != 1 )
-        g_obDBMirror.updateSynchronizationLevel( DB_PANEL_USE );
-    if( m_uiId > 0 && m_uiLicenceId == 0 )
-        g_obDBMirror.updateGlobalSyncLevel( DB_PANEL_USE );
-*/
 }
 
 void cDBPanelUses::remove() throw( cSevException )
@@ -130,20 +124,7 @@ void cDBPanelUses::remove() throw( cSevException )
 
     if( m_uiId )
     {
-        QString  qsQuery;
-
-        if( m_qsArchive == "NEW" )
-        {
-            qsQuery = "DELETE FROM panelUses ";
-        }
-        else
-        {
-            qsQuery = "UPDATE panelUses SET active=0, archive=\"MOD\" ";
-        }
-        qsQuery += QString( " WHERE panelUseId = %1" ).arg( m_uiId );
-
-        QSqlQuery  *poQuery = g_poDB->executeQTQuery( qsQuery );
-        if( poQuery ) delete poQuery;
+        g_poDB->executeQTQuery( QString( "DELETE FROM panelUses WHERE panelUseId = %1" ).arg( m_uiId ) );
     }
 }
 

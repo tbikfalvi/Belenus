@@ -428,6 +428,7 @@ CREATE TABLE `patientCardUnits` (
 CREATE TABLE `panelUses` (
   `panelUseId`              int(10) unsigned        NOT NULL AUTO_INCREMENT,
   `licenceId`               int(10) unsigned        NOT NULL,
+  `panelIds`                varchar(100) 			DEFAULT "",
   `panelId`                 int(10) unsigned        NOT NULL,
   `name`                    varchar(50)             NOT NULL,
   `useTime`                 int(11)                 NOT NULL,

@@ -76,6 +76,7 @@
 #include "edit/dlgpatientcarduse.h"
 #include "edit/dlglicenceedit.h"
 #include "edit/dlgaddguest.h"
+#include "edit/dlgpanelsetting.h"
 
 //====================================================================================
 
@@ -2877,7 +2878,7 @@ void cWndMain::on_action_DeviceSettings_triggered()
 
     m_dlgProgress->showProgress();
 
-    cDlgPanelSettings   obDlgEdit( this, mdiPanels->activePanelId() );
+    cDlgPanelSetting    obDlgEdit( this, mdiPanels->activePanelId() );
 
     m_dlgProgress->hideProgress();
 

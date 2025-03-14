@@ -6,16 +6,16 @@
    <rect>
     <x>0</x>
     <y>0</y>
-    <width>769</width>
-    <height>293</height>
+    <width>550</width>
+    <height>330</height>
    </rect>
   </property>
   <property name="windowTitle">
    <string>Panel Group</string>
   </property>
-  <layout class="QHBoxLayout" name="horizontalLayout_11">
+  <layout class="QHBoxLayout" name="horizontalLayout_4">
    <item>
-    <layout class="QVBoxLayout" name="verticalLayout_6">
+    <layout class="QVBoxLayout" name="verticalLayout_2">
      <item>
       <widget class="QGroupBox" name="gbTitle">
        <property name="title">
@@ -132,352 +132,315 @@
        <property name="title">
         <string/>
        </property>
-       <layout class="QVBoxLayout" name="verticalLayout_3">
+       <layout class="QHBoxLayout" name="horizontalLayout_7">
         <item>
-         <layout class="QHBoxLayout" name="horizontalLayout_4">
-          <item>
-           <widget class="QLabel" name="lblImagePath">
-            <property name="text">
-             <string>Image path :</string>
-            </property>
-           </widget>
-          </item>
-          <item>
-           <widget class="QLineEdit" name="ledImagePath"/>
-          </item>
-          <item>
-           <widget class="QPushButton" name="pbChangeDir">
-            <property name="toolTip">
-             <string>Change directory and filename of panel image.</string>
-            </property>
-            <property name="text">
-             <string>...</string>
-            </property>
-           </widget>
-          </item>
-          <item>
-           <widget class="QPushButton" name="pbEmptyImage">
-            <property name="minimumSize">
-             <size>
-              <width>0</width>
-              <height>30</height>
-             </size>
-            </property>
-            <property name="maximumSize">
-             <size>
-              <width>16777215</width>
-              <height>30</height>
-             </size>
-            </property>
-            <property name="toolTip">
-             <string>Remove image from panel.</string>
-            </property>
-            <property name="text">
-             <string>Remove image</string>
-            </property>
-           </widget>
-          </item>
-         </layout>
+         <widget class="QLabel" name="lblImagePath">
+          <property name="text">
+           <string>Image path :</string>
+          </property>
+         </widget>
+        </item>
+        <item>
+         <widget class="QLineEdit" name="ledImagePath"/>
+        </item>
+        <item>
+         <widget class="QPushButton" name="pbChangeDir">
+          <property name="minimumSize">
+           <size>
+            <width>30</width>
+            <height>0</height>
+           </size>
+          </property>
+          <property name="maximumSize">
+           <size>
+            <width>30</width>
+            <height>16777215</height>
+           </size>
+          </property>
+          <property name="toolTip">
+           <string>Change directory and filename of panel image.</string>
+          </property>
+          <property name="text">
+           <string>...</string>
+          </property>
+         </widget>
+        </item>
+        <item>
+         <widget class="QPushButton" name="pbEmptyImage">
+          <property name="minimumSize">
+           <size>
+            <width>0</width>
+            <height>30</height>
+           </size>
+          </property>
+          <property name="maximumSize">
+           <size>
+            <width>16777215</width>
+            <height>30</height>
+           </size>
+          </property>
+          <property name="toolTip">
+           <string>Remove image from panel.</string>
+          </property>
+          <property name="text">
+           <string>Remove image</string>
+          </property>
+         </widget>
         </item>
        </layout>
       </widget>
      </item>
      <item>
-      <layout class="QHBoxLayout" name="horizontalLayout_10">
-       <item>
-        <widget class="QGroupBox" name="gbTime">
-         <property name="title">
-          <string/>
-         </property>
-         <layout class="QVBoxLayout" name="verticalLayout_5">
+      <widget class="QGroupBox" name="gbTime">
+       <property name="title">
+        <string/>
+       </property>
+       <layout class="QGridLayout" name="gridLayout">
+        <item row="1" column="0">
+         <widget class="QLabel" name="lblMaxWorkTime">
+          <property name="text">
+           <string>Maximum work time (hour) :</string>
+          </property>
+         </widget>
+        </item>
+        <item row="0" column="1">
+         <layout class="QHBoxLayout" name="horizontalLayout_6">
           <item>
-           <layout class="QHBoxLayout" name="horizontalLayout_6">
-            <item>
-             <widget class="QLabel" name="lblWorkTime">
-              <property name="text">
-               <string>Work time (hh:mm:ss) :</string>
-              </property>
-             </widget>
-            </item>
-            <item>
-             <widget class="QLineEdit" name="ledWorkTimeHour">
-              <property name="minimumSize">
-               <size>
-                <width>35</width>
-                <height>0</height>
-               </size>
-              </property>
-              <property name="maximumSize">
-               <size>
-                <width>35</width>
-                <height>16777215</height>
-               </size>
-              </property>
-             </widget>
-            </item>
-            <item>
-             <widget class="QLineEdit" name="ledWorkTimeMin">
-              <property name="minimumSize">
-               <size>
-                <width>20</width>
-                <height>0</height>
-               </size>
-              </property>
-              <property name="maximumSize">
-               <size>
-                <width>20</width>
-                <height>16777215</height>
-               </size>
-              </property>
-             </widget>
-            </item>
-            <item>
-             <widget class="QLineEdit" name="ledWorkTimeSec">
-              <property name="minimumSize">
-               <size>
-                <width>20</width>
-                <height>0</height>
-               </size>
-              </property>
-              <property name="maximumSize">
-               <size>
-                <width>20</width>
-                <height>16777215</height>
-               </size>
-              </property>
-             </widget>
-            </item>
-            <item>
-             <widget class="QPushButton" name="pbWTReset">
-              <property name="minimumSize">
-               <size>
-                <width>0</width>
-                <height>30</height>
-               </size>
-              </property>
-              <property name="maximumSize">
-               <size>
-                <width>16777215</width>
-                <height>30</height>
-               </size>
-              </property>
-              <property name="toolTip">
-               <string>Reset the worktime of the device.</string>
-              </property>
-              <property name="text">
-               <string>Reset</string>
-              </property>
-             </widget>
-            </item>
-            <item>
-             <widget class="QPushButton" name="pbEnableDeviceAdmin">
-              <property name="minimumSize">
-               <size>
-                <width>30</width>
-                <height>30</height>
-               </size>
-              </property>
-              <property name="maximumSize">
-               <size>
-                <width>30</width>
-                <height>30</height>
-               </size>
-              </property>
-              <property name="toolTip">
-               <string>Enable to reset work time for Device Administrator.</string>
-              </property>
-              <property name="text">
-               <string/>
-              </property>
-             </widget>
-            </item>
-            <item>
-             <widget class="QLabel" name="lblMaxWorkTime">
-              <property name="text">
-               <string>Maximum work time (hour) :</string>
-              </property>
-             </widget>
-            </item>
-            <item>
-             <widget class="QLineEdit" name="ledMaxWorkTime">
-              <property name="minimumSize">
-               <size>
-                <width>50</width>
-                <height>0</height>
-               </size>
-              </property>
-              <property name="maximumSize">
-               <size>
-                <width>50</width>
-                <height>16777215</height>
-               </size>
-              </property>
-             </widget>
-            </item>
-            <item>
-             <spacer name="horizontalSpacer_6">
-              <property name="orientation">
-               <enum>Qt::Horizontal</enum>
-              </property>
-              <property name="sizeHint" stdset="0">
-               <size>
-                <width>40</width>
-                <height>20</height>
-               </size>
-              </property>
-             </spacer>
-            </item>
-           </layout>
-          </item>
-          <item>
-           <layout class="QHBoxLayout" name="horizontalLayout_8">
-            <item>
-             <widget class="QLabel" name="lblCleanTime">
-              <property name="text">
-               <string>Clean time (hh:mm:ss) :</string>
-              </property>
-             </widget>
-            </item>
-            <item>
-             <widget class="QLineEdit" name="ledCleanTimeHour">
-              <property name="minimumSize">
-               <size>
-                <width>35</width>
-                <height>0</height>
-               </size>
-              </property>
-              <property name="maximumSize">
-               <size>
-                <width>35</width>
-                <height>16777215</height>
-               </size>
-              </property>
-             </widget>
-            </item>
-            <item>
-             <widget class="QLineEdit" name="ledCleanTimeMin">
-              <property name="minimumSize">
-               <size>
-                <width>20</width>
-                <height>0</height>
-               </size>
-              </property>
-              <property name="maximumSize">
-               <size>
-                <width>20</width>
-                <height>16777215</height>
-               </size>
-              </property>
-             </widget>
-            </item>
-            <item>
-             <widget class="QLineEdit" name="ledCleanTimeSec">
-              <property name="minimumSize">
-               <size>
-                <width>20</width>
-                <height>0</height>
-               </size>
-              </property>
-              <property name="maximumSize">
-               <size>
-                <width>20</width>
-                <height>16777215</height>
-               </size>
-              </property>
-             </widget>
-            </item>
-            <item>
-             <widget class="QPushButton" name="pbCTReset">
-              <property name="minimumSize">
-               <size>
-                <width>0</width>
-                <height>30</height>
-               </size>
-              </property>
-              <property name="maximumSize">
-               <size>
-                <width>16777215</width>
-                <height>30</height>
-               </size>
-              </property>
-              <property name="toolTip">
-               <string>Reset the cleantime of the device.</string>
-              </property>
-              <property name="text">
-               <string>Reset</string>
-              </property>
-             </widget>
-            </item>
-            <item>
-             <widget class="QLabel" name="lblMaxCleanTime">
-              <property name="text">
-               <string>Maximum clean time (hour) :</string>
-              </property>
-             </widget>
-            </item>
-            <item>
-             <widget class="QLineEdit" name="ledMaxCleanTime">
-              <property name="minimumSize">
-               <size>
-                <width>50</width>
-                <height>0</height>
-               </size>
-              </property>
-              <property name="maximumSize">
-               <size>
-                <width>50</width>
-                <height>16777215</height>
-               </size>
-              </property>
-             </widget>
-            </item>
-            <item>
-             <spacer name="horizontalSpacer_9">
-              <property name="orientation">
-               <enum>Qt::Horizontal</enum>
-              </property>
-              <property name="sizeHint" stdset="0">
-               <size>
-                <width>40</width>
-                <height>20</height>
-               </size>
-              </property>
-             </spacer>
-            </item>
-           </layout>
-          </item>
-         </layout>
-        </widget>
-       </item>
-       <item>
-        <widget class="QGroupBox" name="gbAdmin">
-         <property name="title">
-          <string/>
-         </property>
-         <layout class="QHBoxLayout" name="horizontalLayout_9">
-          <item>
-           <widget class="QPushButton" name="pbEnableSystemAdmin">
+           <widget class="QLineEdit" name="ledWorkTimeHour">
             <property name="minimumSize">
              <size>
-              <width>60</width>
-              <height>60</height>
+              <width>35</width>
+              <height>0</height>
              </size>
             </property>
             <property name="maximumSize">
              <size>
-              <width>60</width>
-              <height>60</height>
+              <width>35</width>
+              <height>16777215</height>
              </size>
             </property>
-            <property name="text">
-             <string/>
+           </widget>
+          </item>
+          <item>
+           <widget class="QLineEdit" name="ledWorkTimeMin">
+            <property name="minimumSize">
+             <size>
+              <width>20</width>
+              <height>0</height>
+             </size>
+            </property>
+            <property name="maximumSize">
+             <size>
+              <width>20</width>
+              <height>16777215</height>
+             </size>
+            </property>
+           </widget>
+          </item>
+          <item>
+           <widget class="QLineEdit" name="ledWorkTimeSec">
+            <property name="minimumSize">
+             <size>
+              <width>20</width>
+              <height>0</height>
+             </size>
+            </property>
+            <property name="maximumSize">
+             <size>
+              <width>20</width>
+              <height>16777215</height>
+             </size>
             </property>
            </widget>
           </item>
          </layout>
-        </widget>
-       </item>
-      </layout>
+        </item>
+        <item row="2" column="1">
+         <layout class="QHBoxLayout" name="horizontalLayout_5">
+          <item>
+           <widget class="QLineEdit" name="ledCleanTimeHour">
+            <property name="minimumSize">
+             <size>
+              <width>35</width>
+              <height>0</height>
+             </size>
+            </property>
+            <property name="maximumSize">
+             <size>
+              <width>35</width>
+              <height>16777215</height>
+             </size>
+            </property>
+           </widget>
+          </item>
+          <item>
+           <widget class="QLineEdit" name="ledCleanTimeMin">
+            <property name="minimumSize">
+             <size>
+              <width>20</width>
+              <height>0</height>
+             </size>
+            </property>
+            <property name="maximumSize">
+             <size>
+              <width>20</width>
+              <height>16777215</height>
+             </size>
+            </property>
+           </widget>
+          </item>
+          <item>
+           <widget class="QLineEdit" name="ledCleanTimeSec">
+            <property name="minimumSize">
+             <size>
+              <width>20</width>
+              <height>0</height>
+             </size>
+            </property>
+            <property name="maximumSize">
+             <size>
+              <width>20</width>
+              <height>16777215</height>
+             </size>
+            </property>
+           </widget>
+          </item>
+         </layout>
+        </item>
+        <item row="3" column="0">
+         <widget class="QLabel" name="lblMaxCleanTime">
+          <property name="text">
+           <string>Maximum clean time (hour) :</string>
+          </property>
+         </widget>
+        </item>
+        <item row="1" column="1">
+         <widget class="QLineEdit" name="ledMaxWorkTime">
+          <property name="minimumSize">
+           <size>
+            <width>50</width>
+            <height>0</height>
+           </size>
+          </property>
+          <property name="maximumSize">
+           <size>
+            <width>50</width>
+            <height>16777215</height>
+           </size>
+          </property>
+         </widget>
+        </item>
+        <item row="3" column="1">
+         <widget class="QLineEdit" name="ledMaxCleanTime">
+          <property name="minimumSize">
+           <size>
+            <width>50</width>
+            <height>0</height>
+           </size>
+          </property>
+          <property name="maximumSize">
+           <size>
+            <width>50</width>
+            <height>16777215</height>
+           </size>
+          </property>
+         </widget>
+        </item>
+        <item row="0" column="2">
+         <widget class="QPushButton" name="pbWTReset">
+          <property name="minimumSize">
+           <size>
+            <width>0</width>
+            <height>30</height>
+           </size>
+          </property>
+          <property name="maximumSize">
+           <size>
+            <width>16777215</width>
+            <height>30</height>
+           </size>
+          </property>
+          <property name="toolTip">
+           <string>Reset the worktime of the device.</string>
+          </property>
+          <property name="text">
+           <string>Reset</string>
+          </property>
+         </widget>
+        </item>
+        <item row="2" column="0">
+         <widget class="QLabel" name="lblCleanTime">
+          <property name="text">
+           <string>Clean time (hh:mm:ss) :</string>
+          </property>
+         </widget>
+        </item>
+        <item row="0" column="3">
+         <widget class="QPushButton" name="pbEnableDeviceAdmin">
+          <property name="minimumSize">
+           <size>
+            <width>30</width>
+            <height>30</height>
+           </size>
+          </property>
+          <property name="maximumSize">
+           <size>
+            <width>30</width>
+            <height>30</height>
+           </size>
+          </property>
+          <property name="toolTip">
+           <string>Enable to reset work time for Device Administrator.</string>
+          </property>
+          <property name="text">
+           <string/>
+          </property>
+         </widget>
+        </item>
+        <item row="0" column="0">
+         <widget class="QLabel" name="lblWorkTime">
+          <property name="text">
+           <string>Work time (hh:mm:ss) :</string>
+          </property>
+         </widget>
+        </item>
+        <item row="2" column="2">
+         <widget class="QPushButton" name="pbCTReset">
+          <property name="minimumSize">
+           <size>
+            <width>0</width>
+            <height>30</height>
+           </size>
+          </property>
+          <property name="maximumSize">
+           <size>
+            <width>16777215</width>
+            <height>30</height>
+           </size>
+          </property>
+          <property name="toolTip">
+           <string>Reset the cleantime of the device.</string>
+          </property>
+          <property name="text">
+           <string>Reset</string>
+          </property>
+         </widget>
+        </item>
+        <item row="0" column="4">
+         <spacer name="horizontalSpacer_4">
+          <property name="orientation">
+           <enum>Qt::Horizontal</enum>
+          </property>
+          <property name="sizeHint" stdset="0">
+           <size>
+            <width>40</width>
+            <height>20</height>
+           </size>
+          </property>
+         </spacer>
+        </item>
+       </layout>
+      </widget>
      </item>
      <item>
       <spacer name="verticalSpacer_3">
@@ -499,7 +462,7 @@
      <item>
       <widget class="QPushButton" name="pbOk">
        <property name="enabled">
-        <bool>false</bool>
+        <bool>true</bool>
        </property>
        <property name="minimumSize">
         <size>
@@ -560,7 +523,54 @@
       </spacer>
      </item>
      <item>
+      <widget class="QPushButton" name="pbEnableSystemAdmin">
+       <property name="minimumSize">
+        <size>
+         <width>0</width>
+         <height>50</height>
+        </size>
+       </property>
+       <property name="maximumSize">
+        <size>
+         <width>16777215</width>
+         <height>40</height>
+        </size>
+       </property>
+       <property name="text">
+        <string/>
+       </property>
+      </widget>
+     </item>
+     <item>
+      <spacer name="verticalSpacer_4">
+       <property name="orientation">
+        <enum>Qt::Vertical</enum>
+       </property>
+       <property name="sizeType">
+        <enum>QSizePolicy::Fixed</enum>
+       </property>
+       <property name="sizeHint" stdset="0">
+        <size>
+         <width>20</width>
+         <height>20</height>
+        </size>
+       </property>
+      </spacer>
+     </item>
+     <item>
       <widget class="QPushButton" name="pbTime">
+       <property name="minimumSize">
+        <size>
+         <width>0</width>
+         <height>30</height>
+        </size>
+       </property>
+       <property name="maximumSize">
+        <size>
+         <width>16777215</width>
+         <height>30</height>
+        </size>
+       </property>
        <property name="text">
         <string>Time intervals</string>
        </property>
