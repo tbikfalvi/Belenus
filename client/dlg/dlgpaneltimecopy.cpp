@@ -82,7 +82,7 @@ void cDlgPanelTypeCopy::on_pbCopyTimes_clicked()
 
             cDBPanelUses    obDbPanelUse;
 
-            obDbPanelUse.setPanelId( qslPanel.at(0).toUInt() );
+//            obDbPanelUse.setPanelId( qslPanel.at(0).toUInt() );
             obDbPanelUse.setName( qslPanelUse.at(0) );
             obDbPanelUse.setUseTime( qslPanelUse.at(1).toInt() );
             obDbPanelUse.setUsePrice( qslPanelUse.at(2).toDouble()*100 );
