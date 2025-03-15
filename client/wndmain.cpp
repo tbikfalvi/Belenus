@@ -2878,7 +2878,7 @@ void cWndMain::on_action_DeviceSettings_triggered()
 
     m_dlgProgress->showProgress();
 
-    cDlgPanelSetting    obDlgEdit( this, mdiPanels->activePanelId() );
+    cDlgPanelSetting obDlgEdit( this, mdiPanels->activePanelId() );
 
     m_dlgProgress->hideProgress();
 

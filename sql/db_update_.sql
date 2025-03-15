@@ -16,6 +16,7 @@ ALTER TABLE `patienthistory` ADD `patientHistoryTime` timestamp NOT NULL DEFAULT
 
 ALTER TABLE `paneluses` ADD `panelIds` varchar(100) DEFAULT "" AFTER `licenceId`;
 DELETE FROM `paneluses` WHERE active = 0;
+UPDATE `paneluses` SET panelIds = panelId;
 
 ALTER TABLE `patienthistorytype` DROP PRIMARY KEY, ADD PRIMARY KEY(`patientHistoryTypeId`,`licenceId`);
 ALTER TABLE `productactiontype` DROP PRIMARY KEY, ADD PRIMARY KEY(`productActionTypeId`,`licenceId`);

@@ -101,7 +101,7 @@ void cDBPanelUses::save() throw( cSevException )
     }
     qsQuery += " panelUses SET ";
     qsQuery += QString( "licenceId = %1, " ).arg( m_uiLicenceId );
-    qsQuery += QString( "panelIds = %1, " ).arg( m_qsPanelIds );
+    qsQuery += QString( "panelIds = \"%1\", " ).arg( m_qsPanelIds );
     qsQuery += QString( "name = \"%1\", " ).arg( m_qsName );
     qsQuery += QString( "useTime = %1, " ).arg( m_uiUseTime );
     qsQuery += QString( "usePrice = %1, " ).arg( m_uiUsePrice );

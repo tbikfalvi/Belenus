@@ -5,6 +5,9 @@
 #include "belenus.h"
 #include "dlgpanelsetting.h"
 
+#include "../crud/dlgpaneltimecopy.h"
+
+
 cDlgPanelSetting::cDlgPanelSetting( QWidget *p_poParent, unsigned int p_uiPanelId ) : QDialog( p_poParent )
 {
     cTracer obTrace( "cDlgPanelSetting::cDlgPanelSetting" );
@@ -216,7 +219,6 @@ void cDlgPanelSetting::on_pbCancel_clicked()
 
 void cDlgPanelSetting::on_pbTime_clicked()
 {
-
 }
 
 void cDlgPanelSetting::on_pbChangeDir_clicked()
