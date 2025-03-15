@@ -5,7 +5,7 @@
 #include "belenus.h"
 #include "dlgpanelsetting.h"
 
-#include "../crud/dlgpaneltimecopy.h"
+#include "../crud/dlgpaneltimes.h"
 
 
 cDlgPanelSetting::cDlgPanelSetting( QWidget *p_poParent, unsigned int p_uiPanelId ) : QDialog( p_poParent )
