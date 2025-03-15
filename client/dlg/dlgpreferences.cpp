@@ -369,6 +369,7 @@ cDlgPreferences::cDlgPreferences( QWidget *p_poParent )
     chkSunday->setChecked( qsBackupDays.contains(tr("Sun"), Qt::CaseInsensitive) );
 
     chkDBAllowDeleteObsoleteUnit->setChecked( g_poPrefs->isDBAllowDeleteObsoleteUnits() );
+    ledObsoleteDays->setText( QString::number( g_poPrefs->getObsolateUnitsDays() ) );
 
     //---------------------------------------------------------------------------------------------------------------------------------------------------
     // Oldalak beallitasait feluliro modositasok
@@ -661,7 +662,7 @@ void cDlgPreferences::accept()
     g_poPrefs->setRFIDComPort( spbRFIDCOM->value() );
 
     g_poPrefs->setDBAllowDeleteObsoleteUnits( chkDBAllowDeleteObsoleteUnit->isChecked() );
-
+    g_poPrefs->setObsoleteUnitsDays( ledObsoleteDays->text().toInt() );
 
     m_dlgProgress->showProgress();
         g_poPrefs->saveSettings();

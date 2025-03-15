@@ -3680,6 +3680,7 @@ INSERT INTO `settings` (`settingId`, `identifier`, `value`) VALUES
  (NULL, "GEN_DateFormat", "yyyy-MM-dd" ),
  (NULL, "GEN_Component", 0 ),
  (NULL, "DB_AllowDeleteObsoleteUnits", 0 ),
+ (NULL, "DB_ObsolateUnitsDays", 30 ),
  (NULL, "EXTWIN_Left", 0 ),
  (NULL, "EXTWIN_Top", 0 ),
  (NULL, "EXTWIN_Width", 547 ),

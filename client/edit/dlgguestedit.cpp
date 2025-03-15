@@ -69,9 +69,6 @@ cDlgGuestEdit::cDlgGuestEdit( QWidget *p_poParent, cDBGuest *p_poGuest, cDBPostp
     chkEmployee->setEnabled( g_obUser.isInGroup( cAccessGroup::ADMIN ) );
     chkRegularCustomer->setEnabled( g_obUser.isInGroup( cAccessGroup::ADMIN ) );
 
-    chkCardyRegistered->setEnabled( false );
-    chkCardyRegistered->setVisible( false );
-
     m_poPatientCard = new cDBPatientCard();
 
     m_poGuest = p_poGuest;
@@ -128,7 +125,7 @@ cDlgGuestEdit::cDlgGuestEdit( QWidget *p_poParent, cDBGuest *p_poGuest, cDBPostp
         QDate   qdRegistration( QDate::fromString(m_poGuest->dateCreated().left(10),"yyyy-MM-dd") );
         ledMembership->setText( m_poGuest->membership() );
         ledUniqueId->setText( m_poGuest->uniqueId() );
-//        chkCardyRegistered->setChecked( m_poGuest->isCardy() );
+        chkCardyRegistered->setChecked( m_poGuest->isCardy() );
         chkNewsletter->setChecked( m_poGuest->isNewsletter() );
         chkCardEmail->setChecked( m_poGuest->isCardMail() );
         ledEmail->setText( m_poGuest->email() );
@@ -578,14 +575,14 @@ void cDlgGuestEdit::slotRefreshWarningColors()
         lblEmail->setStyleSheet( "QLabel {font: bold; color: blue;}" );
     }
 
-/*    if( chkCardyRegistered->isChecked() && ledEmail->text().length() < 1 )
+    if( chkCardyRegistered->isChecked() && ledEmail->text().length() < 1 )
     {
         lblEmail->setStyleSheet( "QLabel {font: bold; color: red;}" );
     }
     else if( ledEmail->text().length() == 0 )
     {
         lblEmail->setStyleSheet( "QLabel {font: bold; color: blue;}" );
-    }*/
+    }
 }
 //===========================================================================================================
 //

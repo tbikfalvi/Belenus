@@ -109,6 +109,7 @@ void cPreferences::init()
     m_bCardyGoSync                  = false;
 
     m_bAllowDeleteObsoleteUnits     = false;
+    m_nObsolateUnitsDays            = 30;
 }
 
 void cPreferences::loadSettings() throw (cSevException)
@@ -139,6 +140,7 @@ void cPreferences::loadSettings() throw (cSevException)
         m_nSecondsWaitOnSlpashScreen    = loadSettingI( "GEN_SecondsWaitOnSlpashScreen", 3 );
 
         m_bAllowDeleteObsoleteUnits     = loadSettingB( "DB_AllowDeleteObsoleteUnits", false );
+        m_nObsolateUnitsDays            = loadSettingI( "DB_ObsolateUnitsDays", 30 );
 
         int nLeft                       = loadSettingI( "EXTWIN_Left", 10 );
         int nTop                        = loadSettingI( "EXTWIN_Top", 10 );
@@ -276,6 +278,7 @@ void cPreferences::saveSettings() throw (cSevException)
         saveSettingI( "GEN_SecondsWaitOnSlpashScreen", m_nSecondsWaitOnSlpashScreen );
 
         saveSettingB( "DB_AllowDeleteObsoleteUnits", m_bAllowDeleteObsoleteUnits );
+        saveSettingI( "DB_ObsolateUnitsDays", m_nObsolateUnitsDays );
 
         saveSettingI( "EXTWIN_Left", m_qpSecondaryPosition.x() );
         saveSettingI( "EXTWIN_Top", m_qpSecondaryPosition.y() );
@@ -1848,5 +1851,13 @@ bool cPreferences::isDBAllowDeleteObsoleteUnits()
     return m_bAllowDeleteObsoleteUnits;
 }
 
+void cPreferences::setObsoleteUnitsDays( const int p_nObsolateUnitsDays )
+{
+    m_nObsolateUnitsDays = p_nObsolateUnitsDays;
+}
 
+int cPreferences::getObsolateUnitsDays() const
+{
+    return m_nObsolateUnitsDays;
+}
 

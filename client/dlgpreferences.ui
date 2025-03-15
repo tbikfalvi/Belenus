@@ -23,7 +23,7 @@
    <item>
     <widget class="QTabWidget" name="tbwPreferences">
      <property name="currentIndex">
-      <number>0</number>
+      <number>8</number>
      </property>
      <widget class="QWidget" name="tab_General">
       <attribute name="title">
@@ -2837,13 +2837,56 @@ is different :</string>
          <property name="title">
           <string/>
          </property>
-         <layout class="QVBoxLayout" name="verticalLayout_21">
+         <layout class="QHBoxLayout" name="horizontalLayout_43">
           <item>
            <widget class="QCheckBox" name="chkDBAllowDeleteObsoleteUnit">
             <property name="text">
-             <string>Allow obsolete patientcard units to be deleted automatically</string>
+             <string>Allow obsolete patientcard units to be deleted automatically. </string>
             </property>
            </widget>
+          </item>
+          <item>
+           <widget class="QLabel" name="lblObsolateDays">
+            <property name="text">
+             <string>Obsolete units older than </string>
+            </property>
+           </widget>
+          </item>
+          <item>
+           <widget class="QLineEdit" name="ledObsoleteDays">
+            <property name="minimumSize">
+             <size>
+              <width>30</width>
+              <height>0</height>
+             </size>
+            </property>
+            <property name="maximumSize">
+             <size>
+              <width>30</width>
+              <height>16777215</height>
+             </size>
+            </property>
+           </widget>
+          </item>
+          <item>
+           <widget class="QLabel" name="lblObsoleteDays2">
+            <property name="text">
+             <string>days can be deleted.</string>
+            </property>
+           </widget>
+          </item>
+          <item>
+           <spacer name="horizontalSpacer_34">
+            <property name="orientation">
+             <enum>Qt::Horizontal</enum>
+            </property>
+            <property name="sizeHint" stdset="0">
+             <size>
+              <width>40</width>
+              <height>20</height>
+             </size>
+            </property>
+           </spacer>
           </item>
          </layout>
         </widget>

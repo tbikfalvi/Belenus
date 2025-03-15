@@ -279,8 +279,16 @@ int main( int argc, char *argv[] )
 
         if( g_poPrefs->isDBAllowDeleteObsoleteUnits() )
         {
-            g_poDB->executeQTQuery( QString( "DELETE FROM patientcardunits WHERE validDateTo < DATE_SUB(NOW(), INTERVAL 7 DAY) " ) );
+            g_poDB->executeQTQuery( QString( "DELETE FROM patientcardunits WHERE validDateTo < DATE_SUB(NOW(), INTERVAL %1 DAY) " ).arg( g_poPrefs->getObsolateUnitsDays() ) );
             qsSpalsh += QObject::tr("FINISHED\n");
+
+            QSqlQuery *poQuery = g_poDB->executeQTQuery( QString( "SELECT ROW_COUNT()" ) );
+            if( poQuery->first() )
+            {
+                qsSpalsh += QObject::tr("   Number of deleted units: %1").arg( poQuery->value( 0 ).toInt() );
+                qsSpalsh += QObject::tr("\n");
+                obSplash.showMessage(qsSpalsh,Qt::AlignLeft,QColor(59,44,75));
+            }
         }
         else
         {

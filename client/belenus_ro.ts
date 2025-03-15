@@ -463,7 +463,7 @@ Aplicația poate fi folosită numai în modul DEMO.
     <message>
         <location filename="main.cpp" line="274"/>
         <location filename="main.cpp" line="283"/>
-        <location filename="main.cpp" line="365"/>
+        <location filename="main.cpp" line="373"/>
         <source>FINISHED
 </source>
         <translation>FINALIZAT
@@ -476,13 +476,26 @@ Aplicația poate fi folosită numai în modul DEMO.
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="main.cpp" line="287"/>
+        <location filename="main.cpp" line="288"/>
+        <source>   Number of deleted units: %1</source>
+        <oldsource>   Number of deleted units: %1
+</oldsource>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="main.cpp" line="289"/>
+        <source>
+</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="main.cpp" line="295"/>
         <source>DISABLED
 </source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="main.cpp" line="305"/>
+        <location filename="main.cpp" line="313"/>
         <source>
 RFID communication enabled
 Checking RFID connection ... </source>
@@ -492,21 +505,21 @@ Checking RFID connection ...</oldsource>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="main.cpp" line="313"/>
+        <location filename="main.cpp" line="321"/>
         <source>CONNECTED
 
 </source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="main.cpp" line="317"/>
+        <location filename="main.cpp" line="325"/>
         <source>FAILED
 
 </source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="main.cpp" line="322"/>
+        <location filename="main.cpp" line="330"/>
         <source>
 RFID communication disabled
 
@@ -517,81 +530,81 @@ RFID communication disabled
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="main.cpp" line="333"/>
+        <location filename="main.cpp" line="341"/>
         <source>Checking hardware connection ... </source>
         <oldsource>Checking hardware connection ...</oldsource>
         <translation type="unfinished">Verificarea conexiunii hardware ...</translation>
     </message>
     <message>
-        <location filename="main.cpp" line="344"/>
+        <location filename="main.cpp" line="352"/>
         <source>FAILED
 </source>
         <translation>EȘUAT
 </translation>
     </message>
     <message>
-        <location filename="main.cpp" line="346"/>
-        <location filename="main.cpp" line="404"/>
+        <location filename="main.cpp" line="354"/>
+        <location filename="main.cpp" line="412"/>
         <source>Starting application in DEMO mode.
 </source>
         <translation>Pornirea aplicației în modul DEMO.
 </translation>
     </message>
     <message>
-        <location filename="main.cpp" line="356"/>
+        <location filename="main.cpp" line="364"/>
         <source>CONNECTED
 </source>
         <translation>CONECTAT
 </translation>
     </message>
     <message>
-        <location filename="main.cpp" line="361"/>
+        <location filename="main.cpp" line="369"/>
         <source>Initializing hardware device ... </source>
         <translation>Inițializare dispozitiv hardware ... </translation>
     </message>
     <message>
-        <location filename="main.cpp" line="370"/>
+        <location filename="main.cpp" line="378"/>
         <source>Caption stored in hardware: %1
 </source>
         <translation>Antet stocat în hardware: %1
 </translation>
     </message>
     <message>
-        <location filename="main.cpp" line="373"/>
+        <location filename="main.cpp" line="381"/>
         <source>Number of hardware panels: %1
 </source>
         <translation>Numărul de panouri hardware: %1
 </translation>
     </message>
     <message>
-        <location filename="main.cpp" line="376"/>
+        <location filename="main.cpp" line="384"/>
         <source>Checking hardware panels:
 </source>
         <translation>Verificare panouri hardware:
 </translation>
     </message>
     <message>
-        <location filename="main.cpp" line="383"/>
+        <location filename="main.cpp" line="391"/>
         <source>     Checking hardware panel -%1- </source>
         <translation>     Verificare panou hardware -%1- </translation>
     </message>
     <message>
-        <location filename="main.cpp" line="388"/>
+        <location filename="main.cpp" line="396"/>
         <source> SUCCEEDED
 </source>
         <translation> REUȘIT
 </translation>
     </message>
     <message>
-        <location filename="main.cpp" line="393"/>
-        <location filename="main.cpp" line="447"/>
+        <location filename="main.cpp" line="401"/>
+        <location filename="main.cpp" line="455"/>
         <source> FAILED
 </source>
         <translation> EȘUAT
 </translation>
     </message>
     <message>
-        <location filename="main.cpp" line="454"/>
+        <location filename="main.cpp" line="462"/>
         <source>Database server application is not running.
 Belenus application can not be started without active database server.
 Please start WampServer application then restart Belenus application.</source>
@@ -600,17 +613,17 @@ Aplicația Belenus nu poate fi pornită fără server bază de date activ..
 Te rog, pornește aplicația WampServer și apoi repornește aplicația Belenus.</translation>
     </message>
     <message>
-        <location filename="preferences.cpp" line="161"/>
+        <location filename="preferences.cpp" line="163"/>
         <source> NOT STERILE </source>
         <translation> NESTERIL </translation>
     </message>
     <message>
-        <location filename="preferences.cpp" line="162"/>
+        <location filename="preferences.cpp" line="164"/>
         <source> TUBE REPLACEMENT NEEDED </source>
         <translation> TUBUL TREBUIE ÎNLOCUIT </translation>
     </message>
     <message>
-        <location filename="preferences.cpp" line="163"/>
+        <location filename="preferences.cpp" line="165"/>
         <source> TUBE CLEAN-UP NEEDED </source>
         <translation> TUBUL TREBUIE CURĂȚAT </translation>
     </message>
@@ -1993,101 +2006,101 @@ This action can not be undone!</source>
         <translation>Lista prezență</translation>
     </message>
     <message>
-        <location filename="edit/dlgguestedit.cpp" line="268"/>
-        <location filename="edit/dlgguestedit.cpp" line="333"/>
+        <location filename="edit/dlgguestedit.cpp" line="265"/>
+        <location filename="edit/dlgguestedit.cpp" line="330"/>
         <source>Guest name cannot be empty.</source>
         <translation>Numele oaspetelui nu poate fi gol.</translation>
     </message>
     <message>
-        <location filename="edit/dlgguestedit.cpp" line="274"/>
-        <location filename="edit/dlgguestedit.cpp" line="339"/>
+        <location filename="edit/dlgguestedit.cpp" line="271"/>
+        <location filename="edit/dlgguestedit.cpp" line="336"/>
         <source>Gender of the guest must be set.</source>
         <translation>Sexul oaspetelui trebuie setat.</translation>
     </message>
     <message>
-        <location filename="edit/dlgguestedit.cpp" line="280"/>
-        <location filename="edit/dlgguestedit.cpp" line="345"/>
+        <location filename="edit/dlgguestedit.cpp" line="277"/>
+        <location filename="edit/dlgguestedit.cpp" line="342"/>
         <source>E-Mail must be set for patients registered at Cardy.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="edit/dlgguestedit.cpp" line="286"/>
-        <location filename="edit/dlgguestedit.cpp" line="351"/>
+        <location filename="edit/dlgguestedit.cpp" line="283"/>
+        <location filename="edit/dlgguestedit.cpp" line="348"/>
         <source>E-Mail must be set for patients accepted to receive newsletter.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="edit/dlgguestedit.cpp" line="292"/>
-        <location filename="edit/dlgguestedit.cpp" line="357"/>
+        <location filename="edit/dlgguestedit.cpp" line="289"/>
+        <location filename="edit/dlgguestedit.cpp" line="354"/>
         <source>E-Mail must be set for patients wants to receive email with card data.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="edit/dlgguestedit.cpp" line="300"/>
-        <location filename="edit/dlgguestedit.cpp" line="365"/>
+        <location filename="edit/dlgguestedit.cpp" line="297"/>
+        <location filename="edit/dlgguestedit.cpp" line="362"/>
         <source>Email format is incorrect.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="edit/dlgguestedit.cpp" line="311"/>
-        <location filename="edit/dlgguestedit.cpp" line="375"/>
+        <location filename="edit/dlgguestedit.cpp" line="308"/>
+        <location filename="edit/dlgguestedit.cpp" line="372"/>
         <source>Warning</source>
         <translation>Avertisment</translation>
     </message>
     <message>
-        <location filename="edit/dlgguestedit.cpp" line="436"/>
-        <location filename="edit/dlgguestedit.cpp" line="443"/>
+        <location filename="edit/dlgguestedit.cpp" line="433"/>
+        <location filename="edit/dlgguestedit.cpp" line="440"/>
         <source>Attention</source>
         <translation>Atenție</translation>
     </message>
     <message>
-        <location filename="edit/dlgguestedit.cpp" line="437"/>
+        <location filename="edit/dlgguestedit.cpp" line="434"/>
         <source>This patientcard has been lost and replaced
 and can not be used or sold again.</source>
         <translation>Acest card pacient a fost pierdut și înlocuit
 și nu poate fi folosit sau vândut din nou.</translation>
     </message>
     <message>
-        <location filename="edit/dlgguestedit.cpp" line="444"/>
+        <location filename="edit/dlgguestedit.cpp" line="441"/>
         <source>This patientcard is in use. Active patientcard can not be sold again.</source>
         <translation>Acest card de pacient este în uz. Cardul de pacient activ nu poate fi vândut din nou.</translation>
     </message>
     <message>
-        <location filename="edit/dlgguestedit.cpp" line="457"/>
-        <location filename="edit/dlgguestedit.cpp" line="498"/>
-        <location filename="edit/dlgguestedit.cpp" line="525"/>
+        <location filename="edit/dlgguestedit.cpp" line="454"/>
+        <location filename="edit/dlgguestedit.cpp" line="495"/>
+        <location filename="edit/dlgguestedit.cpp" line="522"/>
         <source>Question</source>
         <translation>Întrebare</translation>
     </message>
     <message>
-        <location filename="edit/dlgguestedit.cpp" line="458"/>
+        <location filename="edit/dlgguestedit.cpp" line="455"/>
         <source>This barcode has not found in the database.
 Do you want to register it for a new patientcard?</source>
         <translation>Acest cod de bare nu a fost găsit în baza de date.
 Vrei să-l înregistrezi pentru un nou card de pacient?</translation>
     </message>
     <message>
-        <location filename="edit/dlgguestedit.cpp" line="499"/>
+        <location filename="edit/dlgguestedit.cpp" line="496"/>
         <source>Do you want to save changes then close the dialog?</source>
         <translation>Vrei să salvezi modificările și să închizi dialogul?</translation>
     </message>
     <message>
-        <location filename="edit/dlgguestedit.cpp" line="526"/>
+        <location filename="edit/dlgguestedit.cpp" line="523"/>
         <source>Are you sure you want to disjoin the selected card from patient?</source>
         <translation>Sigur vrei să disociezi cardul selectat de pacient?</translation>
     </message>
     <message>
-        <location filename="edit/dlgguestedit.cpp" line="548"/>
+        <location filename="edit/dlgguestedit.cpp" line="545"/>
         <source>Information</source>
         <translation>Informații</translation>
     </message>
     <message>
-        <location filename="edit/dlgguestedit.cpp" line="548"/>
+        <location filename="edit/dlgguestedit.cpp" line="545"/>
         <source>Not implemented yet.</source>
         <translation>Încă nu a fost implementat.</translation>
     </message>
     <message>
-        <location filename="edit/dlgguestedit.cpp" line="635"/>
+        <location filename="edit/dlgguestedit.cpp" line="632"/>
         <source>Assigned patientcards:
 Barcode	Patientcard type</source>
         <translation>Carduri de pacient alocate:
@@ -4484,13 +4497,13 @@ sau reîncarcă cardul de pacient înainte de utilizare.</translation>
     </message>
     <message>
         <location filename="dlg/dlgpreferences.cpp" line="84"/>
-        <location filename="dlg/dlgpreferences.cpp" line="690"/>
+        <location filename="dlg/dlgpreferences.cpp" line="691"/>
         <source>Visible</source>
         <translation>Vizibil</translation>
     </message>
     <message>
         <location filename="dlg/dlgpreferences.cpp" line="89"/>
-        <location filename="dlg/dlgpreferences.cpp" line="696"/>
+        <location filename="dlg/dlgpreferences.cpp" line="697"/>
         <source>Hidden</source>
         <translation>Ascuns</translation>
     </message>
@@ -4550,23 +4563,23 @@ sau reîncarcă cardul de pacient înainte de utilizare.</translation>
         <translation>Duminică</translation>
     </message>
     <message>
-        <location filename="dlg/dlgpreferences.cpp" line="467"/>
+        <location filename="dlg/dlgpreferences.cpp" line="468"/>
         <source>Attention</source>
         <translation>Atenție</translation>
     </message>
     <message>
-        <location filename="dlg/dlgpreferences.cpp" line="468"/>
+        <location filename="dlg/dlgpreferences.cpp" line="469"/>
         <source>Decimal symbol and Digit grouping symbol can not be the same.</source>
         <translation>Separatorul zecimal și separatorul pentru mii nu poate fi identic.</translation>
     </message>
     <message>
-        <location filename="dlg/dlgpreferences.cpp" line="474"/>
-        <location filename="dlg/dlgpreferences.cpp" line="897"/>
+        <location filename="dlg/dlgpreferences.cpp" line="475"/>
+        <location filename="dlg/dlgpreferences.cpp" line="898"/>
         <source>Question</source>
         <translation>Întrebare</translation>
     </message>
     <message>
-        <location filename="dlg/dlgpreferences.cpp" line="475"/>
+        <location filename="dlg/dlgpreferences.cpp" line="476"/>
         <source>Are you sure want to increase the length of the barcode of the patientcard?
 
 Please note that the barcodes will be supplemented with additional &apos;0&apos; characters at the beginning of the barcode for every patientcards, where the barcode is shorter than %1 characters.</source>
@@ -4575,12 +4588,12 @@ Please note that the barcodes will be supplemented with additional &apos;0&apos;
 Te rog, ia în considerare faptul că, pentru fiecare card de pacient. la codurile de bare vor fi adăugate &apos;0&apos; caractere suplimentare la începutul codului de bare, în situațiile în care codul de bare este mai scurt de %1 caractere.</translation>
     </message>
     <message>
-        <location filename="dlg/dlgpreferences.cpp" line="487"/>
+        <location filename="dlg/dlgpreferences.cpp" line="488"/>
         <source> Cut the beginning | Cut the end | Abort  </source>
         <translation> Taie începutul | Taie sfârșitul | Întrerupe  </translation>
     </message>
     <message>
-        <location filename="dlg/dlgpreferences.cpp" line="488"/>
+        <location filename="dlg/dlgpreferences.cpp" line="489"/>
         <source>Are you sure you want to decrease the length of the barcode of the patientcard?
 
 Please note that all of the patientcards will be affectedwhere the length of the barcode is longer than %1 characters</source>
@@ -4589,245 +4602,245 @@ Please note that all of the patientcards will be affectedwhere the length of the
 Te rog, ia în considerare faptul că toate cardurile de pacient vor fi afectate, în situațiile în care codul de bare este mai lung de %1 caractere</translation>
     </message>
     <message>
-        <location filename="dlg/dlgpreferences.cpp" line="492"/>
+        <location filename="dlg/dlgpreferences.cpp" line="493"/>
         <source>If you select &apos;Cut the beginning&apos; the first %1 characters will be removed from the beginning of the barcode
 If you select &apos;Cut the end&apos; the last %1 characters willbe removed at the end of the barcode</source>
         <translation>Dacă selectezi &apos;Taie începutul&apos;, primele %1 caractere vor fi înlăturate de la începtul codului de bare
 Dacă selectezi &apos;Taie sfârșitul&apos;, primele %1 caractere vor fi eliminate de la sfârșitul codului de bare</translation>
     </message>
     <message>
-        <location filename="dlg/dlgpreferences.cpp" line="518"/>
-        <location filename="dlg/dlgpreferences.cpp" line="525"/>
-        <location filename="dlg/dlgpreferences.cpp" line="533"/>
-        <location filename="dlg/dlgpreferences.cpp" line="907"/>
-        <location filename="dlg/dlgpreferences.cpp" line="996"/>
-        <location filename="dlg/dlgpreferences.cpp" line="1042"/>
-        <location filename="dlg/dlgpreferences.cpp" line="1059"/>
+        <location filename="dlg/dlgpreferences.cpp" line="519"/>
+        <location filename="dlg/dlgpreferences.cpp" line="526"/>
+        <location filename="dlg/dlgpreferences.cpp" line="534"/>
+        <location filename="dlg/dlgpreferences.cpp" line="908"/>
+        <location filename="dlg/dlgpreferences.cpp" line="997"/>
+        <location filename="dlg/dlgpreferences.cpp" line="1043"/>
+        <location filename="dlg/dlgpreferences.cpp" line="1060"/>
         <source>Warning</source>
         <translation>Avertisment</translation>
     </message>
     <message>
-        <location filename="dlg/dlgpreferences.cpp" line="519"/>
+        <location filename="dlg/dlgpreferences.cpp" line="520"/>
         <source>&apos;Not sterile&apos; text can not be empty.</source>
         <translation>Textul &apos;Nesteril&apos; nu poate fi gol.</translation>
     </message>
     <message>
-        <location filename="dlg/dlgpreferences.cpp" line="526"/>
+        <location filename="dlg/dlgpreferences.cpp" line="527"/>
         <source>&apos;Tube replacement needed&apos; text can not be empty.</source>
         <translation>Textul &apos;Este nevoie de tub de înlocuire&apos; nu poate fi gol.</translation>
     </message>
     <message>
-        <location filename="dlg/dlgpreferences.cpp" line="534"/>
+        <location filename="dlg/dlgpreferences.cpp" line="535"/>
         <source>&apos;Device clean needed&apos; text can not be empty.</source>
         <translation>Textul &apos;Este nevoie de curățarea dispozitivului&apos; nu poate fi gol.</translation>
     </message>
     <message>
-        <location filename="dlg/dlgpreferences.cpp" line="648"/>
+        <location filename="dlg/dlgpreferences.cpp" line="649"/>
         <source> Mon</source>
         <translation> Luni</translation>
     </message>
     <message>
-        <location filename="dlg/dlgpreferences.cpp" line="649"/>
+        <location filename="dlg/dlgpreferences.cpp" line="650"/>
         <source> Tue</source>
         <translation> Marți</translation>
     </message>
     <message>
-        <location filename="dlg/dlgpreferences.cpp" line="650"/>
+        <location filename="dlg/dlgpreferences.cpp" line="651"/>
         <source> Wed</source>
         <translation> Miercuri</translation>
     </message>
     <message>
-        <location filename="dlg/dlgpreferences.cpp" line="651"/>
+        <location filename="dlg/dlgpreferences.cpp" line="652"/>
         <source> Thu</source>
         <translation> Joi</translation>
     </message>
     <message>
-        <location filename="dlg/dlgpreferences.cpp" line="652"/>
+        <location filename="dlg/dlgpreferences.cpp" line="653"/>
         <source> Fri</source>
         <translation> Vineri</translation>
     </message>
     <message>
-        <location filename="dlg/dlgpreferences.cpp" line="653"/>
+        <location filename="dlg/dlgpreferences.cpp" line="654"/>
         <source> Sat</source>
         <translation> Sâmbătă</translation>
     </message>
     <message>
-        <location filename="dlg/dlgpreferences.cpp" line="654"/>
+        <location filename="dlg/dlgpreferences.cpp" line="655"/>
         <source> Sun</source>
         <translation> Duminică</translation>
     </message>
     <message>
-        <location filename="dlg/dlgpreferences.cpp" line="680"/>
+        <location filename="dlg/dlgpreferences.cpp" line="681"/>
         <source>Information</source>
         <translation>Informații</translation>
     </message>
     <message>
-        <location filename="dlg/dlgpreferences.cpp" line="681"/>
+        <location filename="dlg/dlgpreferences.cpp" line="682"/>
         <source>Some of the changes you made will only be applied after the application is restarted.</source>
         <translation>Unele modificări efectuate vor fi aplicate numai după repornirea aplicației.</translation>
     </message>
     <message>
-        <location filename="dlg/dlgpreferences.cpp" line="716"/>
-        <location filename="dlg/dlgpreferences.cpp" line="723"/>
+        <location filename="dlg/dlgpreferences.cpp" line="717"/>
+        <location filename="dlg/dlgpreferences.cpp" line="724"/>
         <source>(%1 + %2 % VAT)</source>
         <translation>(%1 + %2 % TVA)</translation>
     </message>
     <message>
-        <location filename="dlg/dlgpreferences.cpp" line="752"/>
-        <location filename="dlg/dlgpreferences.cpp" line="766"/>
+        <location filename="dlg/dlgpreferences.cpp" line="753"/>
+        <location filename="dlg/dlgpreferences.cpp" line="767"/>
         <source>Select Directory</source>
         <translation>Selectează directorul</translation>
     </message>
     <message>
-        <location filename="dlg/dlgpreferences.cpp" line="779"/>
-        <location filename="dlg/dlgpreferences.cpp" line="783"/>
-        <location filename="dlg/dlgpreferences.cpp" line="787"/>
+        <location filename="dlg/dlgpreferences.cpp" line="780"/>
+        <location filename="dlg/dlgpreferences.cpp" line="784"/>
+        <location filename="dlg/dlgpreferences.cpp" line="788"/>
         <source>Not defined</source>
         <translation>Nedefinit</translation>
     </message>
     <message>
-        <location filename="dlg/dlgpreferences.cpp" line="780"/>
+        <location filename="dlg/dlgpreferences.cpp" line="781"/>
         <source>Younger than 18</source>
         <translation>Sub 18 ani</translation>
     </message>
     <message>
-        <location filename="dlg/dlgpreferences.cpp" line="781"/>
+        <location filename="dlg/dlgpreferences.cpp" line="782"/>
         <source>Above 60</source>
         <translation>Peste 60</translation>
     </message>
     <message>
-        <location filename="dlg/dlgpreferences.cpp" line="784"/>
+        <location filename="dlg/dlgpreferences.cpp" line="785"/>
         <source>Male</source>
         <translation>Bărbat</translation>
     </message>
     <message>
-        <location filename="dlg/dlgpreferences.cpp" line="785"/>
+        <location filename="dlg/dlgpreferences.cpp" line="786"/>
         <source>Female</source>
         <translation>Femeie</translation>
     </message>
     <message>
-        <location filename="dlg/dlgpreferences.cpp" line="789"/>
+        <location filename="dlg/dlgpreferences.cpp" line="790"/>
         <source>Service cards</source>
         <translation>Carduri servicii</translation>
     </message>
     <message>
-        <location filename="dlg/dlgpreferences.cpp" line="791"/>
+        <location filename="dlg/dlgpreferences.cpp" line="792"/>
         <source>Service card, only for service usage.</source>
         <translation>Card servicii, numai pentru utilizare serviciu.</translation>
     </message>
     <message>
-        <location filename="dlg/dlgpreferences.cpp" line="793"/>
+        <location filename="dlg/dlgpreferences.cpp" line="794"/>
         <source>&lt;No group associated&gt;</source>
         <translation>&lt;Nu există niciun grup asociat&gt;</translation>
     </message>
     <message>
-        <location filename="dlg/dlgpreferences.cpp" line="795"/>
+        <location filename="dlg/dlgpreferences.cpp" line="796"/>
         <source>Using solarium</source>
         <translation>Folosirea solarului</translation>
     </message>
     <message>
-        <location filename="dlg/dlgpreferences.cpp" line="796"/>
+        <location filename="dlg/dlgpreferences.cpp" line="797"/>
         <source>Selling patientcard</source>
         <translation>Vânzare card pacient</translation>
     </message>
     <message>
-        <location filename="dlg/dlgpreferences.cpp" line="797"/>
+        <location filename="dlg/dlgpreferences.cpp" line="798"/>
         <source>Filling patientcard</source>
         <translation>Încărcare card pacient</translation>
     </message>
     <message>
-        <location filename="dlg/dlgpreferences.cpp" line="798"/>
+        <location filename="dlg/dlgpreferences.cpp" line="799"/>
         <source>Selling product</source>
         <translation>Vânzare produs</translation>
     </message>
     <message>
-        <location filename="dlg/dlgpreferences.cpp" line="799"/>
+        <location filename="dlg/dlgpreferences.cpp" line="800"/>
         <source>Replacing lost patientcard</source>
         <translation>Înlocuire card pacient pierdut</translation>
     </message>
     <message>
-        <location filename="dlg/dlgpreferences.cpp" line="800"/>
+        <location filename="dlg/dlgpreferences.cpp" line="801"/>
         <source>Assign patientcard</source>
         <translation>Alocare card pacient</translation>
     </message>
     <message>
-        <location filename="dlg/dlgpreferences.cpp" line="801"/>
         <location filename="dlg/dlgpreferences.cpp" line="802"/>
+        <location filename="dlg/dlgpreferences.cpp" line="803"/>
         <source>Other</source>
         <translation>Alt</translation>
     </message>
     <message>
-        <location filename="dlg/dlgpreferences.cpp" line="803"/>
+        <location filename="dlg/dlgpreferences.cpp" line="804"/>
         <source>Storage action</source>
         <translation>Acțiune depozitare</translation>
     </message>
     <message>
-        <location filename="dlg/dlgpreferences.cpp" line="804"/>
+        <location filename="dlg/dlgpreferences.cpp" line="805"/>
         <source>Casssa expense</source>
         <translation>Cheltuială casă</translation>
     </message>
     <message>
-        <location filename="dlg/dlgpreferences.cpp" line="806"/>
+        <location filename="dlg/dlgpreferences.cpp" line="807"/>
         <source>Add product to storage</source>
         <translation>Adaugă produs la depozit</translation>
     </message>
     <message>
-        <location filename="dlg/dlgpreferences.cpp" line="807"/>
+        <location filename="dlg/dlgpreferences.cpp" line="808"/>
         <source>Product disposal</source>
         <translation>Eliminare produs</translation>
     </message>
     <message>
-        <location filename="dlg/dlgpreferences.cpp" line="808"/>
+        <location filename="dlg/dlgpreferences.cpp" line="809"/>
         <source>Product donate</source>
         <translation>Donare produs</translation>
     </message>
     <message>
-        <location filename="dlg/dlgpreferences.cpp" line="810"/>
+        <location filename="dlg/dlgpreferences.cpp" line="811"/>
         <source>Cash</source>
         <translation>Numerar</translation>
     </message>
     <message>
-        <location filename="dlg/dlgpreferences.cpp" line="811"/>
+        <location filename="dlg/dlgpreferences.cpp" line="812"/>
         <source>Credit card</source>
         <translation>Card de credit</translation>
     </message>
     <message>
-        <location filename="dlg/dlgpreferences.cpp" line="813"/>
+        <location filename="dlg/dlgpreferences.cpp" line="814"/>
         <source>Guest entered into database</source>
         <translation>Oaspete introdus în baza de date</translation>
     </message>
     <message>
-        <location filename="dlg/dlgpreferences.cpp" line="814"/>
+        <location filename="dlg/dlgpreferences.cpp" line="815"/>
         <source>Purchase patientcard</source>
         <translation>Achiziționează card de pacient</translation>
     </message>
     <message>
-        <location filename="dlg/dlgpreferences.cpp" line="815"/>
+        <location filename="dlg/dlgpreferences.cpp" line="816"/>
         <source>Refill patientcard</source>
         <translation>Reîncarcare card pacient</translation>
     </message>
     <message>
-        <location filename="dlg/dlgpreferences.cpp" line="816"/>
+        <location filename="dlg/dlgpreferences.cpp" line="817"/>
         <source>Purchase product</source>
         <translation>Achiziționare produs</translation>
     </message>
     <message>
-        <location filename="dlg/dlgpreferences.cpp" line="817"/>
+        <location filename="dlg/dlgpreferences.cpp" line="818"/>
         <source>Using device with card</source>
         <translation>Folosirea dispozitivului cu cardul</translation>
     </message>
     <message>
-        <location filename="dlg/dlgpreferences.cpp" line="818"/>
+        <location filename="dlg/dlgpreferences.cpp" line="819"/>
         <source>Using device with cash</source>
         <translation>Folosirea dispozitivului cu numerar</translation>
     </message>
     <message>
-        <location filename="dlg/dlgpreferences.cpp" line="823"/>
+        <location filename="dlg/dlgpreferences.cpp" line="824"/>
         <source>(example %1)</source>
         <translation>(exemplu %1)</translation>
     </message>
     <message>
-        <location filename="dlg/dlgpreferences.cpp" line="898"/>
+        <location filename="dlg/dlgpreferences.cpp" line="899"/>
         <source>You just enabled the http synchronization but the WebSync application is not running.
 
 Do you want to start this application now?</source>
@@ -4836,7 +4849,7 @@ Do you want to start this application now?</source>
 Vrei să pornești această aplicație acum?</translation>
     </message>
     <message>
-        <location filename="dlg/dlgpreferences.cpp" line="908"/>
+        <location filename="dlg/dlgpreferences.cpp" line="909"/>
         <source>Error occured when starting process:WebSync.exe
 
 Error code: %1
@@ -4857,29 +4870,29 @@ Cod eroare: %1
 5 &gt; A intervenit o eroare necunoscută.</translation>
     </message>
     <message>
-        <location filename="dlg/dlgpreferences.cpp" line="942"/>
+        <location filename="dlg/dlgpreferences.cpp" line="943"/>
         <source>Error</source>
         <translation>Eroare</translation>
     </message>
     <message>
-        <location filename="dlg/dlgpreferences.cpp" line="943"/>
+        <location filename="dlg/dlgpreferences.cpp" line="944"/>
         <source>Values of the Password and Retype Password fields are not the same</source>
         <translation>Valoarea câmpului Parolă și cea a câmpului Retastează parola nu este identică</translation>
     </message>
     <message>
-        <location filename="dlg/dlgpreferences.cpp" line="997"/>
+        <location filename="dlg/dlgpreferences.cpp" line="998"/>
         <source>The password you entered is not valid
 to modify device admin password.</source>
         <translation>Parola introdusă nu este valabilă
 pentru modificarea parolei de administrator dispozitiv.</translation>
     </message>
     <message>
-        <location filename="dlg/dlgpreferences.cpp" line="1043"/>
+        <location filename="dlg/dlgpreferences.cpp" line="1044"/>
         <source>You are not allowed to modify application expiration day.</source>
         <translation>Modificarea datei expirării aplicației nu este permisă.</translation>
     </message>
     <message>
-        <location filename="dlg/dlgpreferences.cpp" line="1060"/>
+        <location filename="dlg/dlgpreferences.cpp" line="1061"/>
         <source>The password you entered is not valid
 to modify application expiration day.</source>
         <translation>Parola introdusă nu este valabilă
@@ -7018,43 +7031,43 @@ Please relogin to enable cassa.</source>
 Te rog, reautentifică-te pentru a activa casa.</translation>
     </message>
     <message>
-        <location filename="frmpanel.cpp" line="650"/>
+        <location filename="frmpanel.cpp" line="651"/>
         <source>PAUSED</source>
         <translation>OPRIT</translation>
     </message>
     <message>
-        <location filename="frmpanel.cpp" line="745"/>
+        <location filename="frmpanel.cpp" line="746"/>
         <source>Panel Not Found in Database</source>
         <translation>Panoul nu a fost găsit în baza de date</translation>
     </message>
     <message>
-        <location filename="frmpanel.cpp" line="918"/>
+        <location filename="frmpanel.cpp" line="919"/>
         <source>Cash to pay: </source>
         <translation>Numerar de plată: </translation>
     </message>
     <message>
-        <location filename="frmpanel.cpp" line="1212"/>
+        <location filename="frmpanel.cpp" line="1213"/>
         <source>Device usage stopped after %1 minutes. Unused time: %2 minutes.</source>
         <translation>Folosirea dispozitivului s-a oprit după %1 minute. Timp nefolosit: %2 minute.</translation>
     </message>
     <message>
-        <location filename="frmpanel.cpp" line="1492"/>
+        <location filename="frmpanel.cpp" line="1493"/>
         <source>Question</source>
         <translation>Întrebare</translation>
     </message>
     <message>
-        <location filename="frmpanel.cpp" line="1493"/>
+        <location filename="frmpanel.cpp" line="1494"/>
         <source>Do you want to jump to the next status of the device?</source>
         <translation>Vrei să stari la următoarea stare a dispozitivului?</translation>
     </message>
     <message>
-        <location filename="frmpanel.cpp" line="1565"/>
-        <location filename="frmpanel.cpp" line="1573"/>
+        <location filename="frmpanel.cpp" line="1566"/>
+        <location filename="frmpanel.cpp" line="1574"/>
         <source>Warning</source>
         <translation>Avertisment</translation>
     </message>
     <message>
-        <location filename="frmpanel.cpp" line="1566"/>
+        <location filename="frmpanel.cpp" line="1567"/>
         <source>This time period did not saved in the database
 for the actually selected device.
 Please select valid value from the list.</source>
@@ -7063,7 +7076,7 @@ pentru dispozitivul actual selectat.
 Te rog, selectează valoarea validă de pe listă.</translation>
     </message>
     <message>
-        <location filename="frmpanel.cpp" line="1574"/>
+        <location filename="frmpanel.cpp" line="1575"/>
         <source>The selected device usage has been scheduled
 for a different device type.
 
@@ -11379,7 +11392,18 @@ este diferit :</translation>
     </message>
     <message>
         <location filename="dlgpreferences.ui" line="2844"/>
-        <source>Allow obsolete patientcard units to be deleted automatically</source>
+        <source>Allow obsolete patientcard units to be deleted automatically. </source>
+        <oldsource>Allow obsolete patientcard units to be deleted automatically</oldsource>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="dlgpreferences.ui" line="2851"/>
+        <source>Obsolete units older than </source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="dlgpreferences.ui" line="2874"/>
+        <source>days can be deleted.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>

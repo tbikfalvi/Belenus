@@ -24,6 +24,8 @@ ALTER TABLE `producthistory` DROP PRIMARY KEY, ADD PRIMARY KEY(`productHistoryId
 
 INSERT INTO `settings` (`settingId`, `identifier`, `value`) VALUES (NULL, 'BACKUP_VERSION', '2_2_0_0');
 INSERT INTO `settings` (`settingId`, `identifier`, `value`) VALUES (NULL, 'DB_AllowDeleteObsoleteUnits', 0);
+INSERT INTO `settings` (`settingId`, `identifier`, `value`) VALUES (NULL, 'DB_ObsolateUnitsDays', 30 );
+
 INSERT INTO `genders` (`genderId`, `licenceId`, `genderName` ) VALUES ('3', '0', 'Nem kívánja megadni');
 
 UPDATE patients SET isNewsletter=1, isCardMail=1 WHERE email<>"";

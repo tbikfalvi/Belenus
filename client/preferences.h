@@ -286,6 +286,10 @@ public:
     void            setCardyGoSync( bool p_bCardyGoSync );
     bool            isCardyGoSync();
 
+    void            setObsoleteUnitsDays( const int p_nObsolateUnitsDays );
+    int             getObsolateUnitsDays() const;
+
+
 //void            setXXX( const QString &p_qsXXX );
 //QString         getXXX() const;
 //void            setXXX( const int p_nXXX );
@@ -401,6 +405,7 @@ private:
     int             m_nWorkTimeCounter;
     bool            m_bCardyGoSync;
     bool            m_bAllowDeleteObsoleteUnits;
+    int             m_nObsolateUnitsDays;
 
     void init();
 };
