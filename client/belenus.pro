@@ -122,6 +122,7 @@ HEADERS = belenus.h \
     crud/dlgwaitlistinfo.h \
     crud/dlgdistlist.h \
     crud/dlgemails.h \
+    crud/dlgpaneltimes.h \
     db/dbreasontovisit.h \
     db/dbpatientcard.h \
     db/dbpatientcardtype.h \
@@ -281,6 +282,7 @@ SOURCES = main.cpp \
     crud/dlgwaitlistinfo.cpp \
     crud/dlgdistlist.cpp \
     crud/dlgemails.cpp \
+    crud/dlgpaneltimes.cpp \
     db/dbreasontovisit.cpp \
     db/dbpatientcard.cpp \
     db/dbpatientcardtype.cpp \

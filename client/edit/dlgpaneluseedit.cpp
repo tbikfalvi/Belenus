@@ -12,7 +12,7 @@ cDlgPanelUseEdit::cDlgPanelUseEdit(QWidget *p_poParent, cDBPanelUses *p_poPanelU
     setupUi( this );
 
     setWindowTitle( tr( "Device uses" ) );
-    setWindowIcon( QIcon("./resources/40x40_device_settings.png") );
+    setWindowIcon( QIcon("./resources/40x40_device_time.png") );
 
     pbSave->setIcon( QIcon("./resources/40x40_ok.png") );
     pbCancel->setIcon( QIcon("./resources/40x40_cancel.png") );
@@ -103,9 +103,28 @@ void cDlgPanelUseEdit::on_pbSave_clicked()
         QMessageBox::critical( this, tr( "Error" ), tr( "Price of usage must be greater than zero." ), QMessageBox::Ok );
     }
 
+    QStringList qslPanels;
+
+    foreach( QListWidgetItem *item, listPanels->selectedItems() )
+    {
+        QString text = item->text();
+
+        QRegExp rx("\\((\\d+)\\)"); // Keres egy (szám) mintát
+
+        if( rx.indexIn(text) != -1 )
+        {
+            qslPanels.append( rx.cap(1) ); // Az első zárójelek közötti számot adjuk hozzá
+        }
+    }
+    if( qslPanels.isEmpty() )
+    {
+        QMessageBox::warning( this, tr( "Warning" ), tr( "This device usage will not be displayed on any device." ), QMessageBox::Ok );
+    }
+
     if( boCanBeSaved )
     {
         m_poPanelUses->setLicenceId( g_poPrefs->getLicenceId() );
+        m_poPanelUses->setPanelIds( qslPanels.join(",") );
         m_poPanelUses->setName( ledUseName->text() );
         m_poPanelUses->setUseTime( ledUseTime->text().toInt() );
         m_poPanelUses->setUsePrice( cPrice.currencyValue().toInt() );

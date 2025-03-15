@@ -1,4 +1,4 @@
-<installer version="2.1.3.0">
+<installer version="2.2.0.0">
 
     <files>
 
@@ -64,6 +64,7 @@
         <file src="%CURRENT_DIR%/resources/40x40_device_pause.png" dst="%INSTALL_DIR%/resources/40x40_device_pause.png" />
         <file src="%CURRENT_DIR%/resources/40x40_device_settings.png" dst="%INSTALL_DIR%/resources/40x40_device_settings.png" />
         <file src="%CURRENT_DIR%/resources/40x40_device_start.png" dst="%INSTALL_DIR%/resources/40x40_device_start.png" />
+        <file src="%CURRENT_DIR%/resources/40x40_device_time.png" dst="%INSTALL_DIR%/resources/40x40_device_time.png" />
         <file src="%CURRENT_DIR%/resources/40x40_directory.png" dst="%INSTALL_DIR%/resources/40x40_directory.png" />
         <file src="%CURRENT_DIR%/resources/40x40_discount.png" dst="%INSTALL_DIR%/resources/40x40_discount.png" />
         <file src="%CURRENT_DIR%/resources/40x40_down.png" dst="%INSTALL_DIR%/resources/40x40_down.png" />

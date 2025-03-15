@@ -572,7 +572,7 @@
         </size>
        </property>
        <property name="text">
-        <string>Time intervals</string>
+        <string>Device usages</string>
        </property>
       </widget>
      </item>

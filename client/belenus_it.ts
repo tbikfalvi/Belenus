@@ -191,32 +191,32 @@
         <location filename="general.cpp" line="692"/>
         <location filename="general.cpp" line="699"/>
         <location filename="general.cpp" line="706"/>
-        <location filename="wndmain.cpp" line="3490"/>
+        <location filename="wndmain.cpp" line="3511"/>
         <source>Information</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
         <location filename="general.cpp" line="86"/>
-        <location filename="wndmain.cpp" line="3494"/>
+        <location filename="wndmain.cpp" line="3515"/>
         <source>Warning</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
         <location filename="general.cpp" line="90"/>
-        <location filename="wndmain.cpp" line="3498"/>
+        <location filename="wndmain.cpp" line="3519"/>
         <source>Attention</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
         <location filename="general.cpp" line="94"/>
-        <location filename="wndmain.cpp" line="3502"/>
+        <location filename="wndmain.cpp" line="3523"/>
         <source>Error</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
         <location filename="general.cpp" line="98"/>
         <location filename="general.cpp" line="186"/>
-        <location filename="wndmain.cpp" line="3506"/>
+        <location filename="wndmain.cpp" line="3527"/>
         <source>Question</source>
         <translation type="unfinished"></translation>
     </message>
@@ -2324,46 +2324,46 @@ Number of repaired patientcards: %1</source>
 <context>
     <name>cDlgPanelSetting</name>
     <message>
-        <location filename="edit/dlgpanelsetting.cpp" line="14"/>
+        <location filename="edit/dlgpanelsetting.cpp" line="17"/>
         <source>Panel settings</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="edit/dlgpanelsetting.cpp" line="144"/>
-        <location filename="edit/dlgpanelsetting.cpp" line="151"/>
+        <location filename="edit/dlgpanelsetting.cpp" line="149"/>
         <location filename="edit/dlgpanelsetting.cpp" line="156"/>
-        <location filename="edit/dlgpanelsetting.cpp" line="164"/>
+        <location filename="edit/dlgpanelsetting.cpp" line="161"/>
         <location filename="edit/dlgpanelsetting.cpp" line="169"/>
+        <location filename="edit/dlgpanelsetting.cpp" line="174"/>
         <source>Error</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="edit/dlgpanelsetting.cpp" line="144"/>
+        <location filename="edit/dlgpanelsetting.cpp" line="149"/>
         <source>Title of panel can not be empty.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="edit/dlgpanelsetting.cpp" line="151"/>
+        <location filename="edit/dlgpanelsetting.cpp" line="156"/>
         <source>Maximum worktime of panel can not be empty.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="edit/dlgpanelsetting.cpp" line="156"/>
+        <location filename="edit/dlgpanelsetting.cpp" line="161"/>
         <source>Maximum worktime has to be greater than zero.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="edit/dlgpanelsetting.cpp" line="164"/>
+        <location filename="edit/dlgpanelsetting.cpp" line="169"/>
         <source>Maximum cleantime of panel can not be empty.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="edit/dlgpanelsetting.cpp" line="169"/>
+        <location filename="edit/dlgpanelsetting.cpp" line="174"/>
         <source>Maximum cleantime has to be greater than zero.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="edit/dlgpanelsetting.cpp" line="222"/>
+        <location filename="edit/dlgpanelsetting.cpp" line="229"/>
         <source>Select image file</source>
         <translation type="unfinished"></translation>
     </message>
@@ -2681,6 +2681,67 @@ Please define a different one.</source>
     </message>
 </context>
 <context>
+    <name>cDlgPanelTimes</name>
+    <message>
+        <location filename="crud/dlgpaneltimes.cpp" line="12"/>
+        <source>Panel times</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="crud/dlgpaneltimes.cpp" line="38"/>
+        <source>Id</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="crud/dlgpaneltimes.cpp" line="39"/>
+        <source>LicenceId</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="crud/dlgpaneltimes.cpp" line="40"/>
+        <location filename="crud/dlgpaneltimes.cpp" line="56"/>
+        <source>Name</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="crud/dlgpaneltimes.cpp" line="41"/>
+        <location filename="crud/dlgpaneltimes.cpp" line="57"/>
+        <source>Time length</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="crud/dlgpaneltimes.cpp" line="42"/>
+        <location filename="crud/dlgpaneltimes.cpp" line="58"/>
+        <source>Price</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="crud/dlgpaneltimes.cpp" line="43"/>
+        <source>Archive</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="crud/dlgpaneltimes.cpp" line="99"/>
+        <source>New paneluse</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="crud/dlgpaneltimes.cpp" line="119"/>
+        <source>Edit paneluse</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="crud/dlgpaneltimes.cpp" line="139"/>
+        <source>Question</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="crud/dlgpaneltimes.cpp" line="140"/>
+        <source>Are you sure you want to delete this paneluse?</source>
+        <translation type="unfinished"></translation>
+    </message>
+</context>
+<context>
     <name>cDlgPanelTypeCopy</name>
     <message>
         <location filename="dlg/dlgpaneltimecopy.cpp" line="14"/>
@@ -2929,53 +2990,63 @@ Do you want to save it and sell it now?</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="edit/dlgpaneluseedit.cpp" line="48"/>
-        <location filename="edit/dlgpaneluseedit.cpp" line="55"/>
-        <location filename="edit/dlgpaneluseedit.cpp" line="60"/>
-        <location filename="edit/dlgpaneluseedit.cpp" line="65"/>
+        <location filename="edit/dlgpaneluseedit.cpp" line="67"/>
         <location filename="edit/dlgpaneluseedit.cpp" line="74"/>
         <location filename="edit/dlgpaneluseedit.cpp" line="79"/>
         <location filename="edit/dlgpaneluseedit.cpp" line="84"/>
+        <location filename="edit/dlgpaneluseedit.cpp" line="93"/>
+        <location filename="edit/dlgpaneluseedit.cpp" line="98"/>
+        <location filename="edit/dlgpaneluseedit.cpp" line="103"/>
         <source>Error</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="edit/dlgpaneluseedit.cpp" line="48"/>
+        <location filename="edit/dlgpaneluseedit.cpp" line="67"/>
         <source>Name can not be empty.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="edit/dlgpaneluseedit.cpp" line="55"/>
+        <location filename="edit/dlgpaneluseedit.cpp" line="74"/>
         <source>Use time can not be empty.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="edit/dlgpaneluseedit.cpp" line="60"/>
+        <location filename="edit/dlgpaneluseedit.cpp" line="79"/>
         <source>Use time value is invalid.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="edit/dlgpaneluseedit.cpp" line="65"/>
+        <location filename="edit/dlgpaneluseedit.cpp" line="84"/>
         <source>Use time must be greater than zero.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="edit/dlgpaneluseedit.cpp" line="74"/>
+        <location filename="edit/dlgpaneluseedit.cpp" line="93"/>
         <source>Use price can not be empty.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="edit/dlgpaneluseedit.cpp" line="79"/>
+        <location filename="edit/dlgpaneluseedit.cpp" line="98"/>
         <source>Use price value is invalid.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="edit/dlgpaneluseedit.cpp" line="84"/>
+        <location filename="edit/dlgpaneluseedit.cpp" line="103"/>
         <source>Price of usage must be greater than zero.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="edit/dlgpaneluseedit.cpp" line="109"/>
+        <location filename="edit/dlgpaneluseedit.cpp" line="121"/>
+        <source>Warning</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="edit/dlgpaneluseedit.cpp" line="121"/>
+        <source>This device usage will not be displayed on any device.</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="edit/dlgpaneluseedit.cpp" line="146"/>
         <source>(%1 + %2 % VAT)</source>
         <translation type="unfinished"></translation>
     </message>
@@ -6649,38 +6720,38 @@ Only %1 panels will be displayed.</source>
 <context>
     <name>cWndMain</name>
     <message>
-        <location filename="wndmain.cpp" line="161"/>
+        <location filename="wndmain.cpp" line="162"/>
         <source>Set window position / size</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="wndmain.cpp" line="165"/>
+        <location filename="wndmain.cpp" line="166"/>
         <source>Reset main window position</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="wndmain.cpp" line="169"/>
+        <location filename="wndmain.cpp" line="170"/>
         <source>Reset secondary window position</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="wndmain.cpp" line="173"/>
+        <location filename="wndmain.cpp" line="174"/>
         <source>Reset advertisement windows position</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="wndmain.cpp" line="177"/>
-        <location filename="wndmain.cpp" line="185"/>
+        <location filename="wndmain.cpp" line="178"/>
+        <location filename="wndmain.cpp" line="186"/>
         <source>Start</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="wndmain.cpp" line="181"/>
+        <location filename="wndmain.cpp" line="182"/>
         <source>Stop</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="wndmain.cpp" line="504"/>
+        <location filename="wndmain.cpp" line="507"/>
         <source>You are not allowed to log in to application!
 
 Application&apos;s licence key is invalid or expired.
@@ -6688,63 +6759,63 @@ Please contact you franchise provider!</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="wndmain.cpp" line="522"/>
+        <location filename="wndmain.cpp" line="525"/>
         <source>Password</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="wndmain.cpp" line="523"/>
+        <location filename="wndmain.cpp" line="526"/>
         <source>Your password is empty. Please change it to a valid password.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="wndmain.cpp" line="538"/>
+        <location filename="wndmain.cpp" line="541"/>
         <source>Incorrect User Name and/or Password. Please try again.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="wndmain.cpp" line="577"/>
+        <location filename="wndmain.cpp" line="580"/>
         <source>KiwiSun administrator logged in.
 Please note cassa is disabled!</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="wndmain.cpp" line="602"/>
-        <location filename="wndmain.cpp" line="612"/>
-        <location filename="wndmain.cpp" line="648"/>
-        <location filename="wndmain.cpp" line="658"/>
-        <location filename="wndmain.cpp" line="690"/>
-        <location filename="wndmain.cpp" line="700"/>
-        <location filename="wndmain.cpp" line="774"/>
-        <location filename="wndmain.cpp" line="783"/>
-        <location filename="wndmain.cpp" line="822"/>
-        <location filename="wndmain.cpp" line="831"/>
+        <location filename="wndmain.cpp" line="605"/>
+        <location filename="wndmain.cpp" line="615"/>
+        <location filename="wndmain.cpp" line="651"/>
+        <location filename="wndmain.cpp" line="661"/>
+        <location filename="wndmain.cpp" line="693"/>
+        <location filename="wndmain.cpp" line="703"/>
+        <location filename="wndmain.cpp" line="777"/>
+        <location filename="wndmain.cpp" line="786"/>
+        <location filename="wndmain.cpp" line="825"/>
+        <location filename="wndmain.cpp" line="834"/>
         <source>Cash left in cassa.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="wndmain.cpp" line="615"/>
-        <location filename="wndmain.cpp" line="651"/>
-        <location filename="wndmain.cpp" line="703"/>
-        <location filename="wndmain.cpp" line="744"/>
-        <location filename="wndmain.cpp" line="785"/>
+        <location filename="wndmain.cpp" line="618"/>
+        <location filename="wndmain.cpp" line="654"/>
+        <location filename="wndmain.cpp" line="706"/>
+        <location filename="wndmain.cpp" line="747"/>
+        <location filename="wndmain.cpp" line="788"/>
         <source>Cassa continue with balance</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="wndmain.cpp" line="624"/>
-        <location filename="wndmain.cpp" line="714"/>
+        <location filename="wndmain.cpp" line="627"/>
+        <location filename="wndmain.cpp" line="717"/>
         <source> Use opened cassa | Start new cassa with balance | Start new cassa </source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="wndmain.cpp" line="625"/>
+        <location filename="wndmain.cpp" line="628"/>
         <source>The latest cassa opened on a different date.
 What would you like to do?</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="wndmain.cpp" line="627"/>
+        <location filename="wndmain.cpp" line="630"/>
         <source>The previously created and not closed cassa started to be used on a different date. If you continue to use that cassa, your daily report will include summary of more than one day.
 Click the &apos;Use opened cassa&apos; button if you want to use the opened cassa. In this case the start and the end date will be different of the cassa and the cassa daily report could be misleading.
 Click the &apos;Start new cassa with balance&apos; button if you want to use a new cassa but you want to use the balance of the old cassa as a starting balance. In this case the previous cassa balance will be reseted and a new cassa will be opened for you with balance of the previous cassa
@@ -6752,7 +6823,7 @@ Click the &apos;Start new cassa&apos; button if you want to use a new cassa. In 
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="wndmain.cpp" line="715"/>
+        <location filename="wndmain.cpp" line="718"/>
         <source>The latest cassa record still not closed:
 
 Owner: %1
@@ -6762,7 +6833,7 @@ What would you like to do?</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="wndmain.cpp" line="719"/>
+        <location filename="wndmain.cpp" line="722"/>
         <source>Cassa still not closed means the cassa owner did not closed his/her cassa and possibly would like to continue the work with the cassa.
 But it is possible that the cassa owner forgot to close his/her cassa.
 You can decide how to start your work:
@@ -6772,18 +6843,18 @@ Click the &apos;Start new cassa&apos; button if you want to use a new cassa. In 
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="wndmain.cpp" line="741"/>
-        <location filename="wndmain.cpp" line="750"/>
+        <location filename="wndmain.cpp" line="744"/>
+        <location filename="wndmain.cpp" line="753"/>
         <source>Cassa left in open.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="wndmain.cpp" line="796"/>
+        <location filename="wndmain.cpp" line="799"/>
         <source> Reopen cassa | Start new cassa with balance | Start new cassa </source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="wndmain.cpp" line="797"/>
+        <location filename="wndmain.cpp" line="800"/>
         <source>The latest cassa record closed with balance:
 
 Owner: %1
@@ -6794,7 +6865,7 @@ Do you want to continue this cassa?
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="wndmain.cpp" line="801"/>
+        <location filename="wndmain.cpp" line="804"/>
         <source>Cassa closed with balance means that previously the owner closed the cassa but there are cash left in cassa. The default action when closing the cassa is to withdraw money from the cassa therefore the cassa balance will be zero.
 Click the &apos;Reopen cassa&apos; if previously the cassa closed with reason without money withdraw and now you want to use that cassa again.
 Click the &apos;Start new cassa with balance&apos; button if you want to use a new cassa but you want to use the balance of the old cassa as a starting balance. In this case the previous cassa balance will be reseted and a new cassa will be opened for you with balance of the previous cassa
@@ -6802,17 +6873,17 @@ Click the &apos;Start new cassa&apos; button if you want to use a new cassa. In 
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="wndmain.cpp" line="824"/>
+        <location filename="wndmain.cpp" line="827"/>
         <source>Start cassa with balance</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="wndmain.cpp" line="857"/>
+        <location filename="wndmain.cpp" line="860"/>
         <source> Reopen cassa | Start new cassa </source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="wndmain.cpp" line="858"/>
+        <location filename="wndmain.cpp" line="861"/>
         <source>The latest cassa record used:
 
 from %1 to %2
@@ -6821,44 +6892,44 @@ Do you want to continue this cassa?</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="wndmain.cpp" line="861"/>
+        <location filename="wndmain.cpp" line="864"/>
         <source>It is possible to use your latest cassa with reopening it for example if you closed it previously for security reasons.
 Click the &apos;Reopen cassa&apos; if you want to use your previously closed cassa.
 Click the &apos;Start new cassa&apos; if you don&apos;t want to use the previously closed cassa. In this case a new cassa will be opened for you.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="wndmain.cpp" line="905"/>
-        <location filename="wndmain.cpp" line="1596"/>
-        <location filename="wndmain.cpp" line="1764"/>
-        <location filename="wndmain.cpp" line="1885"/>
-        <location filename="wndmain.cpp" line="2065"/>
-        <location filename="wndmain.cpp" line="2077"/>
-        <location filename="wndmain.cpp" line="2101"/>
-        <location filename="wndmain.cpp" line="2541"/>
-        <location filename="wndmain.cpp" line="2554"/>
-        <location filename="wndmain.cpp" line="2624"/>
-        <location filename="wndmain.cpp" line="2646"/>
-        <location filename="wndmain.cpp" line="2669"/>
-        <location filename="wndmain.cpp" line="3245"/>
-        <location filename="wndmain.cpp" line="4203"/>
+        <location filename="wndmain.cpp" line="908"/>
+        <location filename="wndmain.cpp" line="1600"/>
+        <location filename="wndmain.cpp" line="1768"/>
+        <location filename="wndmain.cpp" line="1889"/>
+        <location filename="wndmain.cpp" line="2069"/>
+        <location filename="wndmain.cpp" line="2081"/>
+        <location filename="wndmain.cpp" line="2105"/>
+        <location filename="wndmain.cpp" line="2545"/>
+        <location filename="wndmain.cpp" line="2558"/>
+        <location filename="wndmain.cpp" line="2628"/>
+        <location filename="wndmain.cpp" line="2650"/>
+        <location filename="wndmain.cpp" line="2673"/>
+        <location filename="wndmain.cpp" line="3266"/>
+        <location filename="wndmain.cpp" line="4224"/>
         <source>Question</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="wndmain.cpp" line="906"/>
+        <location filename="wndmain.cpp" line="909"/>
         <source>Do you want to close your cassa?</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="wndmain.cpp" line="915"/>
-        <location filename="wndmain.cpp" line="952"/>
+        <location filename="wndmain.cpp" line="918"/>
+        <location filename="wndmain.cpp" line="955"/>
         <source>Withdraw cash|Leave cash in cassa</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="wndmain.cpp" line="916"/>
-        <location filename="wndmain.cpp" line="953"/>
+        <location filename="wndmain.cpp" line="919"/>
+        <location filename="wndmain.cpp" line="956"/>
         <source>There are some cash left in your cassa.
 Current balance: %1
 
@@ -6867,78 +6938,78 @@ Do you want to close the cassa with automatic cash withdawal?
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="wndmain.cpp" line="919"/>
-        <location filename="wndmain.cpp" line="956"/>
+        <location filename="wndmain.cpp" line="922"/>
+        <location filename="wndmain.cpp" line="959"/>
         <source>You can decide if you want to leave the cash in the cassa or withdraw cash from the cassa.
 Click on the &apos;Withdraw cash&apos; button if you want to withdraw cash from cassa before closing it
 Click on the &apos;Leave cash in cassa&apos; if you want to leave the cash in the cassa before closing it</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="wndmain.cpp" line="927"/>
-        <location filename="wndmain.cpp" line="964"/>
-        <location filename="wndmain.cpp" line="976"/>
+        <location filename="wndmain.cpp" line="930"/>
+        <location filename="wndmain.cpp" line="967"/>
+        <location filename="wndmain.cpp" line="979"/>
         <source>Automatic cassa close.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="wndmain.cpp" line="1017"/>
+        <location filename="wndmain.cpp" line="1020"/>
         <source>Q -&gt; Exit application | F -&gt; pay device usage | S -&gt; start device | N -&gt; skip status | H -&gt; start cooling | T -&gt; device cleared | K -&gt; open shopping kart</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="wndmain.cpp" line="1220"/>
+        <location filename="wndmain.cpp" line="1223"/>
         <source>Belenus </source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="wndmain.cpp" line="1237"/>
+        <location filename="wndmain.cpp" line="1240"/>
         <source> &lt;=&gt; Current patient: [</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="wndmain.cpp" line="1243"/>
+        <location filename="wndmain.cpp" line="1246"/>
         <source> &lt;=&gt; NO PATIENT SELECTED</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="wndmain.cpp" line="1261"/>
+        <location filename="wndmain.cpp" line="1264"/>
         <source>SPACE -&gt; Enter time/barcode ...</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="wndmain.cpp" line="1266"/>
-        <location filename="wndmain.cpp" line="1271"/>
-        <location filename="wndmain.cpp" line="1276"/>
-        <location filename="wndmain.cpp" line="1281"/>
+        <location filename="wndmain.cpp" line="1269"/>
+        <location filename="wndmain.cpp" line="1274"/>
+        <location filename="wndmain.cpp" line="1279"/>
+        <location filename="wndmain.cpp" line="1284"/>
         <source> | ENTER -&gt; %1</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="wndmain.cpp" line="1475"/>
+        <location filename="wndmain.cpp" line="1479"/>
         <source>Communication stopped with hardware controller</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="wndmain.cpp" line="4102"/>
-        <location filename="wndmain.cpp" line="4158"/>
+        <location filename="wndmain.cpp" line="4123"/>
+        <location filename="wndmain.cpp" line="4179"/>
         <source>The application runs in DEMO mode.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="wndmain.cpp" line="4103"/>
-        <location filename="wndmain.cpp" line="4159"/>
+        <location filename="wndmain.cpp" line="4124"/>
+        <location filename="wndmain.cpp" line="4180"/>
         <source>Please note, in DEMO mode you are not able to control the real hardware devices (solarium machines etc.) from the application. Every action related to hardware devices are virtual.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="wndmain.cpp" line="4113"/>
+        <location filename="wndmain.cpp" line="4134"/>
         <source>The licence key of the application is not registered.
 Please contact your franchise provider to register and activate your licence!</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="wndmain.cpp" line="4121"/>
+        <location filename="wndmain.cpp" line="4142"/>
         <source>The licence key of the application is not validated.
 Please make sure your internet connection is active,
 the WebSync application is running and http connection is enabled.
@@ -6948,28 +7019,28 @@ please contact your franchise provider to activate your licence!</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="wndmain.cpp" line="4136"/>
+        <location filename="wndmain.cpp" line="4157"/>
         <source>The application&apos;s licence validity EXPIRED</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="wndmain.cpp" line="4137"/>
+        <location filename="wndmain.cpp" line="4158"/>
         <source>The licence key of the application is invalid or expired. Please contact your franchise provider to activate your licence!</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="wndmain.cpp" line="4140"/>
+        <location filename="wndmain.cpp" line="4161"/>
         <source>The licence key of the application is invalid or expired.
 Please contact your franchise provider to activate your licence!</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="wndmain.cpp" line="4145"/>
+        <location filename="wndmain.cpp" line="4166"/>
         <source>Error</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="wndmain.cpp" line="4146"/>
+        <location filename="wndmain.cpp" line="4167"/>
         <source>Licence state can not be read from database.
 Please contact your franchise provider to activate your licence!
 
@@ -6977,171 +7048,171 @@ The application now terminates ...</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="wndmain.cpp" line="503"/>
-        <location filename="wndmain.cpp" line="1910"/>
-        <location filename="wndmain.cpp" line="3260"/>
-        <location filename="wndmain.cpp" line="3419"/>
-        <location filename="wndmain.cpp" line="3761"/>
-        <location filename="wndmain.cpp" line="3793"/>
-        <location filename="wndmain.cpp" line="4072"/>
-        <location filename="wndmain.cpp" line="4112"/>
-        <location filename="wndmain.cpp" line="4120"/>
-        <location filename="wndmain.cpp" line="4213"/>
-        <location filename="wndmain.cpp" line="4233"/>
-        <location filename="wndmain.cpp" line="4357"/>
+        <location filename="wndmain.cpp" line="506"/>
+        <location filename="wndmain.cpp" line="1914"/>
+        <location filename="wndmain.cpp" line="3281"/>
+        <location filename="wndmain.cpp" line="3440"/>
+        <location filename="wndmain.cpp" line="3782"/>
+        <location filename="wndmain.cpp" line="3814"/>
+        <location filename="wndmain.cpp" line="4093"/>
+        <location filename="wndmain.cpp" line="4133"/>
+        <location filename="wndmain.cpp" line="4141"/>
+        <location filename="wndmain.cpp" line="4234"/>
+        <location filename="wndmain.cpp" line="4254"/>
+        <location filename="wndmain.cpp" line="4378"/>
         <source>Warning</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="wndmain.cpp" line="383"/>
+        <location filename="wndmain.cpp" line="386"/>
         <source>Belenus Software System - %1</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="wndmain.cpp" line="1539"/>
+        <location filename="wndmain.cpp" line="1543"/>
         <source>Reading card data failed or this card is not registered in database.</source>
         <oldsource>This card is not registered in database.</oldsource>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="wndmain.cpp" line="1587"/>
-        <location filename="wndmain.cpp" line="2171"/>
-        <location filename="wndmain.cpp" line="2400"/>
-        <location filename="wndmain.cpp" line="2608"/>
-        <location filename="wndmain.cpp" line="2701"/>
-        <location filename="wndmain.cpp" line="2901"/>
-        <location filename="wndmain.cpp" line="3192"/>
-        <location filename="wndmain.cpp" line="3229"/>
+        <location filename="wndmain.cpp" line="1591"/>
+        <location filename="wndmain.cpp" line="2175"/>
+        <location filename="wndmain.cpp" line="2404"/>
+        <location filename="wndmain.cpp" line="2612"/>
+        <location filename="wndmain.cpp" line="2705"/>
+        <location filename="wndmain.cpp" line="2922"/>
+        <location filename="wndmain.cpp" line="3213"/>
+        <location filename="wndmain.cpp" line="3250"/>
         <source>Attention</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="wndmain.cpp" line="1588"/>
+        <location filename="wndmain.cpp" line="1592"/>
         <source>At least one Panel is still working.
 Please stop them before closing the application.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="wndmain.cpp" line="1597"/>
+        <location filename="wndmain.cpp" line="1601"/>
         <source>Are you sure you want to close the application?</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="wndmain.cpp" line="1737"/>
-        <location filename="wndmain.cpp" line="2004"/>
-        <location filename="wndmain.cpp" line="3146"/>
+        <location filename="wndmain.cpp" line="1741"/>
+        <location filename="wndmain.cpp" line="2008"/>
+        <location filename="wndmain.cpp" line="3167"/>
         <source>Information</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="wndmain.cpp" line="1738"/>
+        <location filename="wndmain.cpp" line="1742"/>
         <source>This area is restricted for system administrators only!</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="wndmain.cpp" line="1765"/>
+        <location filename="wndmain.cpp" line="1769"/>
         <source>Are you sure you want to close the current shift?</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="wndmain.cpp" line="1843"/>
+        <location filename="wndmain.cpp" line="1847"/>
         <source>New Patient</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="wndmain.cpp" line="1886"/>
+        <location filename="wndmain.cpp" line="1890"/>
         <source>Do you want to prepare the device from the waiting queue?</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="wndmain.cpp" line="1911"/>
+        <location filename="wndmain.cpp" line="1915"/>
         <source>The device usage has to be payed.
 Please process the payment first.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="wndmain.cpp" line="2005"/>
+        <location filename="wndmain.cpp" line="2009"/>
         <source>Some of the changes you made will only be applied after the application is restarted.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="wndmain.cpp" line="2066"/>
+        <location filename="wndmain.cpp" line="2070"/>
         <source>This patientcard has been assigned to a different patient.
 Are you sure you want to use this patientcard?</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="wndmain.cpp" line="2078"/>
+        <location filename="wndmain.cpp" line="2082"/>
         <source>There is no patient assigned to this patientcard.
 Do you want to assign this patientcard to the actual patient?</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="wndmain.cpp" line="2102"/>
+        <location filename="wndmain.cpp" line="2106"/>
         <source>Do you want to add adhoc patient to patient database?
 
 PLEASE ASK THE PATIENT if willing to add name and email address !</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="wndmain.cpp" line="2172"/>
-        <location filename="wndmain.cpp" line="2401"/>
-        <location filename="wndmain.cpp" line="2702"/>
-        <location filename="wndmain.cpp" line="2902"/>
-        <location filename="wndmain.cpp" line="3193"/>
+        <location filename="wndmain.cpp" line="2176"/>
+        <location filename="wndmain.cpp" line="2405"/>
+        <location filename="wndmain.cpp" line="2706"/>
+        <location filename="wndmain.cpp" line="2923"/>
+        <location filename="wndmain.cpp" line="3214"/>
         <source>Cassa is disabled!
 
 Please relogin to enable cassa.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="wndmain.cpp" line="2209"/>
-        <location filename="wndmain.cpp" line="2929"/>
+        <location filename="wndmain.cpp" line="2213"/>
+        <location filename="wndmain.cpp" line="2950"/>
         <source>Using panel</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="wndmain.cpp" line="2221"/>
+        <location filename="wndmain.cpp" line="2225"/>
         <source>Using device later</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="wndmain.cpp" line="2245"/>
+        <location filename="wndmain.cpp" line="2249"/>
         <source>Enter comment</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="wndmain.cpp" line="2542"/>
+        <location filename="wndmain.cpp" line="2546"/>
         <source>Do you want to jump to the next status of the device?</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="wndmain.cpp" line="2555"/>
+        <location filename="wndmain.cpp" line="2559"/>
         <source>Do you want to start the device cooling process?</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="wndmain.cpp" line="2609"/>
-        <location filename="wndmain.cpp" line="3230"/>
+        <location filename="wndmain.cpp" line="2613"/>
+        <location filename="wndmain.cpp" line="3251"/>
         <source>This patientcard has been lost and replaced
 and can not be used or sold again.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="wndmain.cpp" line="2625"/>
-        <location filename="wndmain.cpp" line="3246"/>
+        <location filename="wndmain.cpp" line="2629"/>
+        <location filename="wndmain.cpp" line="3267"/>
         <source>This barcode has not found in the database.
 Do you want to register it for a new patientcard?</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="wndmain.cpp" line="2644"/>
+        <location filename="wndmain.cpp" line="2648"/>
         <source>
 Due to there is no time left, the patientcard will be reseted and deactivated.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="wndmain.cpp" line="2647"/>
+        <location filename="wndmain.cpp" line="2651"/>
         <source>This patientcard has the following settings:
 
 Available units: %1
@@ -7151,89 +7222,89 @@ Do you want to refill the patientcard now?%3</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="wndmain.cpp" line="2670"/>
+        <location filename="wndmain.cpp" line="2674"/>
         <source>This patientcard still can be used.
 Do you want to refill anyway?</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="wndmain.cpp" line="2709"/>
-        <location filename="wndmain.cpp" line="2717"/>
-        <location filename="wndmain.cpp" line="3211"/>
+        <location filename="wndmain.cpp" line="2713"/>
+        <location filename="wndmain.cpp" line="2721"/>
+        <location filename="wndmain.cpp" line="3232"/>
         <source>Request</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="wndmain.cpp" line="2709"/>
+        <location filename="wndmain.cpp" line="2713"/>
         <source>Please select the guest from the list</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="wndmain.cpp" line="2717"/>
+        <location filename="wndmain.cpp" line="2721"/>
         <source>Please select the patientcard from the list</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="wndmain.cpp" line="2746"/>
-        <location filename="wndmain.cpp" line="2806"/>
+        <location filename="wndmain.cpp" line="2750"/>
+        <location filename="wndmain.cpp" line="2810"/>
         <source>Reset device|Add to wait list ...|Cancel</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="wndmain.cpp" line="2747"/>
+        <location filename="wndmain.cpp" line="2751"/>
         <source>This device already prepared with a patientcard.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="wndmain.cpp" line="2748"/>
-        <location filename="wndmain.cpp" line="2808"/>
+        <location filename="wndmain.cpp" line="2752"/>
+        <location filename="wndmain.cpp" line="2812"/>
         <source>To start the device with other conditions, please
 reset the device first with pushing the ESC button.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="wndmain.cpp" line="2807"/>
+        <location filename="wndmain.cpp" line="2811"/>
         <source>This device already prepared with a time period.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="wndmain.cpp" line="2942"/>
+        <location filename="wndmain.cpp" line="2963"/>
         <source>Using device: %1</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="wndmain.cpp" line="2987"/>
+        <location filename="wndmain.cpp" line="3008"/>
         <source>Selling product: %1</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="wndmain.cpp" line="3147"/>
+        <location filename="wndmain.cpp" line="3168"/>
         <source>Deleting data attached to DEMO licence key has been finished.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="wndmain.cpp" line="3211"/>
+        <location filename="wndmain.cpp" line="3232"/>
         <source>Please enter the new patientcard&apos;s barcode.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="wndmain.cpp" line="3260"/>
+        <location filename="wndmain.cpp" line="3281"/>
         <source>This patientcard already in use.
 Please select a non-active patientcard.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="wndmain.cpp" line="3300"/>
+        <location filename="wndmain.cpp" line="3321"/>
         <source>Replace patientcard [%1]-&gt;[%2]</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="wndmain.cpp" line="3341"/>
+        <location filename="wndmain.cpp" line="3362"/>
         <source>Lost and replaced with card: %1</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="wndmain.cpp" line="3420"/>
+        <location filename="wndmain.cpp" line="3441"/>
         <source>Error occured when starting process:ReportViewer.exe
 
 Error code: %1
@@ -7246,18 +7317,18 @@ Error code: %1
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="wndmain.cpp" line="3462"/>
+        <location filename="wndmain.cpp" line="3483"/>
         <source>About</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="wndmain.cpp" line="3463"/>
+        <location filename="wndmain.cpp" line="3484"/>
         <source>&lt;h2&gt;Belenus Software Application System&lt;/h2&gt;&lt;p&gt;Application version : %1&lt;br&gt;Database version : %2&lt;p&gt;Copyright 2013 Tamas Bikfalvi. All rights reserved.&lt;p&gt;Application Licence : %3&lt;p&gt;The application and all of its related products&lt;br&gt;is the property of KiwiSun Franchise.&lt;br&gt;For more information visit the &lt;a href=&quot;%4&quot;&gt;KiwiSun website&lt;/a&gt;</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="wndmain.cpp" line="3762"/>
-        <location filename="wndmain.cpp" line="3794"/>
+        <location filename="wndmain.cpp" line="3783"/>
+        <location filename="wndmain.cpp" line="3815"/>
         <source>Error occured when starting process:Advertisement.exe
 
 Error code: %1
@@ -7270,31 +7341,31 @@ Error code: %1
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="wndmain.cpp" line="3833"/>
-        <location filename="wndmain.cpp" line="3842"/>
+        <location filename="wndmain.cpp" line="3854"/>
+        <location filename="wndmain.cpp" line="3863"/>
         <source>Send custom e-mail</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="wndmain.cpp" line="3856"/>
-        <location filename="wndmain.cpp" line="3885"/>
+        <location filename="wndmain.cpp" line="3877"/>
+        <location filename="wndmain.cpp" line="3906"/>
         <source>Disable HW Debug</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="wndmain.cpp" line="3861"/>
-        <location filename="wndmain.cpp" line="3881"/>
+        <location filename="wndmain.cpp" line="3882"/>
+        <location filename="wndmain.cpp" line="3902"/>
         <source>Enable HW Debug</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="wndmain.cpp" line="3865"/>
-        <location filename="wndmain.cpp" line="3876"/>
+        <location filename="wndmain.cpp" line="3886"/>
+        <location filename="wndmain.cpp" line="3897"/>
         <source>Reset communication</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="wndmain.cpp" line="4073"/>
+        <location filename="wndmain.cpp" line="4094"/>
         <source>The version numbers in the database do not match those in the application.
 
 There is a possibility that the application may not function properly.
@@ -7305,15 +7376,15 @@ Version numbers stored in database: AP_%3 - DB_%4
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="wndmain.cpp" line="4204"/>
+        <location filename="wndmain.cpp" line="4225"/>
         <source>The http synchronization is enabled but the WebSync application is not running.
 
 Do you want to start this application now?</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="wndmain.cpp" line="4214"/>
-        <location filename="wndmain.cpp" line="4358"/>
+        <location filename="wndmain.cpp" line="4235"/>
+        <location filename="wndmain.cpp" line="4379"/>
         <source>Error occured when starting process:WebSync.exe
 
 Error code: %1
@@ -7326,7 +7397,7 @@ Error code: %1
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="wndmain.cpp" line="4234"/>
+        <location filename="wndmain.cpp" line="4255"/>
         <source>The path of the application and the path of the archive directory is located on the same base directory.
 For safety point of view it is recommended to separate archive directory from the application environment.
 Please select a different directory path for &apos;archive&apos; and manually move the content of the archive directory to the newly selected directory!
@@ -7336,17 +7407,17 @@ Example for archive path: c:/Archive/BelenusDB</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="wndmain.cpp" line="4269"/>
+        <location filename="wndmain.cpp" line="4290"/>
         <source>Windows</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="wndmain.cpp" line="4277"/>
+        <location filename="wndmain.cpp" line="4298"/>
         <source>Advertisements</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="wndmain.cpp" line="4282"/>
+        <location filename="wndmain.cpp" line="4303"/>
         <source>WebSync application</source>
         <translation type="unfinished"></translation>
     </message>
@@ -9186,8 +9257,8 @@ Do you want to save them as new into the database?</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="dlgpanelsetting.ui" line="563"/>
-        <source>Time intervals</source>
+        <location filename="dlgpanelsetting.ui" line="575"/>
+        <source>Device usages</source>
         <translation type="unfinished"></translation>
     </message>
 </context>
@@ -9420,42 +9491,47 @@ Do you want to save them as new into the database?</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="dlgpaneluseedit.ui" line="20"/>
+        <location filename="dlgpaneluseedit.ui" line="22"/>
         <source> Device usage parameters </source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="dlgpaneluseedit.ui" line="26"/>
+        <location filename="dlgpaneluseedit.ui" line="28"/>
         <source>Name :</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="dlgpaneluseedit.ui" line="36"/>
+        <location filename="dlgpaneluseedit.ui" line="38"/>
         <source>Time (min):</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="dlgpaneluseedit.ui" line="76"/>
+        <location filename="dlgpaneluseedit.ui" line="78"/>
         <source>Price :</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="dlgpaneluseedit.ui" line="101"/>
+        <location filename="dlgpaneluseedit.ui" line="103"/>
         <source>$</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="dlgpaneluseedit.ui" line="121"/>
+        <location filename="dlgpaneluseedit.ui" line="123"/>
         <source>( net + VAT % )</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="dlgpaneluseedit.ui" line="135"/>
+        <location filename="dlgpaneluseedit.ui" line="148"/>
+        <source> Applies to devices </source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="dlgpaneluseedit.ui" line="181"/>
         <source>Save</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="dlgpaneluseedit.ui" line="148"/>
+        <location filename="dlgpaneluseedit.ui" line="194"/>
         <source>Cancel</source>
         <translation type="unfinished"></translation>
     </message>
@@ -11923,591 +11999,601 @@ Do you still want to send your mail?</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="wndmain.ui" line="269"/>
+        <location filename="wndmain.ui" line="271"/>
         <source>&amp;Tools</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="wndmain.ui" line="280"/>
+        <location filename="wndmain.ui" line="282"/>
         <source>&amp;Action</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="wndmain.ui" line="284"/>
+        <location filename="wndmain.ui" line="286"/>
         <source>Device</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="wndmain.ui" line="298"/>
+        <location filename="wndmain.ui" line="300"/>
         <source>PatientCard</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="wndmain.ui" line="308"/>
+        <location filename="wndmain.ui" line="310"/>
         <source>Product</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="wndmain.ui" line="314"/>
-        <location filename="wndmain.ui" line="669"/>
+        <location filename="wndmain.ui" line="316"/>
+        <location filename="wndmain.ui" line="673"/>
         <source>Cassa</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="wndmain.ui" line="320"/>
+        <location filename="wndmain.ui" line="322"/>
         <source>E-Mail</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="wndmain.ui" line="337"/>
+        <location filename="wndmain.ui" line="339"/>
         <source>&amp;Reports</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="wndmain.ui" line="359"/>
-        <location filename="wndmain.ui" line="410"/>
-        <location filename="wndmain.ui" line="440"/>
-        <location filename="wndmain.ui" line="463"/>
-        <location filename="wndmain.ui" line="491"/>
+        <location filename="wndmain.ui" line="361"/>
+        <location filename="wndmain.ui" line="412"/>
+        <location filename="wndmain.ui" line="444"/>
+        <location filename="wndmain.ui" line="467"/>
+        <location filename="wndmain.ui" line="495"/>
         <source>toolBar</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="wndmain.ui" line="385"/>
+        <location filename="wndmain.ui" line="387"/>
         <source>toolBar_2</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="wndmain.ui" line="511"/>
+        <location filename="wndmain.ui" line="515"/>
         <source>E&amp;xit</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="wndmain.ui" line="516"/>
+        <location filename="wndmain.ui" line="520"/>
         <source>&amp;Preferences ...</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="wndmain.ui" line="521"/>
+        <location filename="wndmain.ui" line="525"/>
         <source>&amp;Logs ...</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="wndmain.ui" line="526"/>
+        <location filename="wndmain.ui" line="530"/>
         <source>Log &amp;Out</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="wndmain.ui" line="531"/>
+        <location filename="wndmain.ui" line="535"/>
         <source>&amp;Users ...</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="wndmain.ui" line="536"/>
+        <location filename="wndmain.ui" line="540"/>
         <source>&amp;Hardware test ...</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="wndmain.ui" line="541"/>
+        <location filename="wndmain.ui" line="545"/>
         <source>P&amp;anel types ...</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="wndmain.ui" line="546"/>
+        <location filename="wndmain.ui" line="550"/>
         <source>Start Device</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="wndmain.ui" line="549"/>
+        <location filename="wndmain.ui" line="553"/>
         <source>Start Current Device</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="wndmain.ui" line="554"/>
+        <location filename="wndmain.ui" line="558"/>
         <source>Reset Device</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="wndmain.ui" line="557"/>
+        <location filename="wndmain.ui" line="561"/>
         <source>Reset Current Device</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="wndmain.ui" line="562"/>
+        <location filename="wndmain.ui" line="566"/>
         <source>Device settings</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="wndmain.ui" line="565"/>
+        <location filename="wndmain.ui" line="569"/>
         <source>Current Device Settings</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="wndmain.ui" line="570"/>
+        <location filename="wndmain.ui" line="574"/>
         <source>Patients ...</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="wndmain.ui" line="578"/>
+        <location filename="wndmain.ui" line="582"/>
         <source>Create new patient ...</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="wndmain.ui" line="581"/>
+        <location filename="wndmain.ui" line="585"/>
         <source>PatNew</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="wndmain.ui" line="584"/>
+        <location filename="wndmain.ui" line="588"/>
         <source>Create new patient</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="wndmain.ui" line="589"/>
+        <location filename="wndmain.ui" line="593"/>
         <source>Select actual patient...</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="wndmain.ui" line="592"/>
+        <location filename="wndmain.ui" line="596"/>
         <source>Select actual patient</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="wndmain.ui" line="597"/>
-        <location filename="wndmain.ui" line="600"/>
+        <location filename="wndmain.ui" line="601"/>
+        <location filename="wndmain.ui" line="604"/>
         <source>Deselect actual patient</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="wndmain.ui" line="605"/>
+        <location filename="wndmain.ui" line="609"/>
         <source>Cards ...</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="wndmain.ui" line="608"/>
+        <location filename="wndmain.ui" line="612"/>
         <source>Patient cards</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="wndmain.ui" line="613"/>
+        <location filename="wndmain.ui" line="617"/>
         <source>Use device later ...</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="wndmain.ui" line="616"/>
+        <location filename="wndmain.ui" line="620"/>
         <source>Use later</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="wndmain.ui" line="619"/>
+        <location filename="wndmain.ui" line="623"/>
         <source>Use device later with defined time period or with patient card</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="wndmain.ui" line="624"/>
+        <location filename="wndmain.ui" line="628"/>
         <source>Use by time or patientcard ...</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="wndmain.ui" line="627"/>
+        <location filename="wndmain.ui" line="631"/>
         <source>Use device</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="wndmain.ui" line="630"/>
+        <location filename="wndmain.ui" line="634"/>
         <source>Use device with defined time period or with patientcard</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="wndmain.ui" line="635"/>
+        <location filename="wndmain.ui" line="639"/>
         <source>Panel statuses ...</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="wndmain.ui" line="640"/>
+        <location filename="wndmain.ui" line="644"/>
         <source>Card types ...</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="wndmain.ui" line="643"/>
+        <location filename="wndmain.ui" line="647"/>
         <source>Patientcard types</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="wndmain.ui" line="648"/>
+        <location filename="wndmain.ui" line="652"/>
         <source>Save to database ...</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="wndmain.ui" line="653"/>
+        <location filename="wndmain.ui" line="657"/>
         <source>Activate existing ...</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="wndmain.ui" line="658"/>
+        <location filename="wndmain.ui" line="662"/>
         <source>Accounting ...</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="wndmain.ui" line="661"/>
+        <location filename="wndmain.ui" line="665"/>
         <source>Main accounting</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="wndmain.ui" line="666"/>
+        <location filename="wndmain.ui" line="670"/>
         <source>Cassa ...</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="wndmain.ui" line="674"/>
+        <location filename="wndmain.ui" line="678"/>
         <source>Skip status</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="wndmain.ui" line="677"/>
+        <location filename="wndmain.ui" line="681"/>
         <source>Skip actual status and step to next status</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="wndmain.ui" line="682"/>
+        <location filename="wndmain.ui" line="686"/>
         <source>Sell / refill patientcard</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="wndmain.ui" line="685"/>
+        <location filename="wndmain.ui" line="689"/>
         <source>Sell inactive or refill active patientcard</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="wndmain.ui" line="690"/>
+        <location filename="wndmain.ui" line="694"/>
         <source>Validate Serial key ...</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="wndmain.ui" line="695"/>
+        <location filename="wndmain.ui" line="699"/>
         <source>Edit actual ...</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="wndmain.ui" line="698"/>
+        <location filename="wndmain.ui" line="702"/>
         <source>Edit actual patient</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="wndmain.ui" line="703"/>
+        <location filename="wndmain.ui" line="707"/>
         <source>PayCash</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="wndmain.ui" line="706"/>
+        <location filename="wndmain.ui" line="710"/>
         <source>Pay cash usage of panel</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="wndmain.ui" line="711"/>
+        <location filename="wndmain.ui" line="715"/>
         <source>Companies ...</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="wndmain.ui" line="716"/>
+        <location filename="wndmain.ui" line="720"/>
         <source>Health Insurance Funds ...</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="wndmain.ui" line="721"/>
+        <location filename="wndmain.ui" line="725"/>
         <source>Region, Zip, City ...</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="wndmain.ui" line="726"/>
+        <location filename="wndmain.ui" line="730"/>
         <source>Patients</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="wndmain.ui" line="729"/>
+        <location filename="wndmain.ui" line="733"/>
         <source>Report of patients</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="wndmain.ui" line="734"/>
+        <location filename="wndmain.ui" line="738"/>
         <source>Cassa history</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="wndmain.ui" line="737"/>
+        <location filename="wndmain.ui" line="741"/>
         <source>History of cassa actions</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="wndmain.ui" line="742"/>
+        <location filename="wndmain.ui" line="746"/>
         <source>Patientcard uses</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="wndmain.ui" line="745"/>
+        <location filename="wndmain.ui" line="749"/>
         <source>List of patientcard uses</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="wndmain.ui" line="750"/>
+        <location filename="wndmain.ui" line="754"/>
         <source>Edit Licence information</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="wndmain.ui" line="753"/>
+        <location filename="wndmain.ui" line="757"/>
         <source>Edit Licence information such as Studio name, address, contact person etc.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="wndmain.ui" line="758"/>
+        <location filename="wndmain.ui" line="762"/>
         <source>Patientcards</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="wndmain.ui" line="761"/>
+        <location filename="wndmain.ui" line="765"/>
         <source>List of active patientcards</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="wndmain.ui" line="766"/>
+        <location filename="wndmain.ui" line="770"/>
         <source>Discounts ...</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="wndmain.ui" line="769"/>
+        <location filename="wndmain.ui" line="773"/>
         <source>Different type of discounts</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="wndmain.ui" line="774"/>
+        <location filename="wndmain.ui" line="778"/>
         <source>Obsolete Patientcards</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="wndmain.ui" line="777"/>
+        <location filename="wndmain.ui" line="781"/>
         <source>List of patientcards will be obsolete in the near future.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="wndmain.ui" line="782"/>
+        <location filename="wndmain.ui" line="786"/>
         <source>Empty demo database ...</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="wndmain.ui" line="785"/>
+        <location filename="wndmain.ui" line="789"/>
         <source>Delete all data attached to demo licence key.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="wndmain.ui" line="790"/>
+        <location filename="wndmain.ui" line="794"/>
         <source>Guests ...</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="wndmain.ui" line="793"/>
+        <location filename="wndmain.ui" line="797"/>
         <source>Guests</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="wndmain.ui" line="798"/>
+        <location filename="wndmain.ui" line="802"/>
         <source>Product Types ...</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="wndmain.ui" line="803"/>
+        <location filename="wndmain.ui" line="807"/>
         <source>Products ...</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="wndmain.ui" line="808"/>
+        <location filename="wndmain.ui" line="812"/>
         <source>Product Action Types ...</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="wndmain.ui" line="813"/>
+        <location filename="wndmain.ui" line="817"/>
         <source>Sell Product</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="wndmain.ui" line="818"/>
+        <location filename="wndmain.ui" line="822"/>
         <source>Shopping cart</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="wndmain.ui" line="823"/>
+        <location filename="wndmain.ui" line="827"/>
         <source>Cassa action storno</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="wndmain.ui" line="828"/>
+        <location filename="wndmain.ui" line="832"/>
         <source>Payment methods</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="wndmain.ui" line="831"/>
+        <location filename="wndmain.ui" line="835"/>
         <source>Manage payment methods</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="wndmain.ui" line="836"/>
+        <location filename="wndmain.ui" line="840"/>
         <source>Report viewer</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="wndmain.ui" line="839"/>
+        <location filename="wndmain.ui" line="843"/>
         <source>Start independent Report Viewer application</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="wndmain.ui" line="844"/>
+        <location filename="wndmain.ui" line="848"/>
         <source>Clear device</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="wndmain.ui" line="847"/>
+        <location filename="wndmain.ui" line="851"/>
         <source>The device has been cleaned and ready to use</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="wndmain.ui" line="856"/>
+        <location filename="wndmain.ui" line="860"/>
         <source>About ...</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="wndmain.ui" line="859"/>
+        <location filename="wndmain.ui" line="863"/>
         <source>Application information</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="wndmain.ui" line="864"/>
+        <location filename="wndmain.ui" line="868"/>
         <source>Assign patientcards</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="wndmain.ui" line="869"/>
+        <location filename="wndmain.ui" line="873"/>
         <source>Device groups</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="wndmain.ui" line="872"/>
+        <location filename="wndmain.ui" line="876"/>
         <source>Groups for devices</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="wndmain.ui" line="877"/>
-        <location filename="wndmain.ui" line="880"/>
+        <location filename="wndmain.ui" line="881"/>
+        <location filename="wndmain.ui" line="884"/>
         <source>Manage database</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="wndmain.ui" line="885"/>
+        <location filename="wndmain.ui" line="889"/>
         <source>Manage device panels</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="wndmain.ui" line="890"/>
-        <location filename="wndmain.ui" line="893"/>
+        <location filename="wndmain.ui" line="894"/>
+        <location filename="wndmain.ui" line="897"/>
         <source>Manage skin types</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="wndmain.ui" line="898"/>
+        <location filename="wndmain.ui" line="902"/>
         <source>Import ...</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="wndmain.ui" line="901"/>
+        <location filename="wndmain.ui" line="905"/>
         <source>Import data from text files</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="wndmain.ui" line="906"/>
+        <location filename="wndmain.ui" line="910"/>
         <source>Export ...</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="wndmain.ui" line="909"/>
+        <location filename="wndmain.ui" line="913"/>
         <source>Export data to tab separated text file</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="wndmain.ui" line="914"/>
+        <location filename="wndmain.ui" line="918"/>
         <source>Advertisement windows</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="wndmain.ui" line="917"/>
+        <location filename="wndmain.ui" line="921"/>
         <source>Manage advertisement windows</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="wndmain.ui" line="922"/>
+        <location filename="wndmain.ui" line="926"/>
         <source>Patientcard information</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="wndmain.ui" line="925"/>
+        <location filename="wndmain.ui" line="929"/>
         <source>Show details about selected patientcard</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="wndmain.ui" line="930"/>
+        <location filename="wndmain.ui" line="934"/>
         <source>Replace lost card</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="wndmain.ui" line="933"/>
+        <location filename="wndmain.ui" line="937"/>
         <source>Replace lost patientcard with a new card and inactivate the lost card</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="wndmain.ui" line="938"/>
+        <location filename="wndmain.ui" line="942"/>
         <source>Close shift</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="wndmain.ui" line="941"/>
+        <location filename="wndmain.ui" line="945"/>
         <source>Logout from application with closing cassa and current shift</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="wndmain.ui" line="946"/>
+        <location filename="wndmain.ui" line="950"/>
         <source>Distribution lists</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="wndmain.ui" line="951"/>
+        <location filename="wndmain.ui" line="955"/>
         <source>Send ...</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="wndmain.ui" line="956"/>
+        <location filename="wndmain.ui" line="960"/>
         <source>Load ...</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="wndmain.ui" line="961"/>
+        <location filename="wndmain.ui" line="965"/>
         <source>WaitingPatients</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="wndmain.ui" line="964"/>
+        <location filename="wndmain.ui" line="968"/>
         <source>List of guests waiting</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="wndmain.ui" line="969"/>
+        <location filename="wndmain.ui" line="973"/>
         <source>Edit emails ...</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="wndmain.ui" line="974"/>
+        <location filename="wndmain.ui" line="978"/>
         <source>Cool device</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="wndmain.ui" line="977"/>
+        <location filename="wndmain.ui" line="981"/>
         <source>Start device cooling</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="wndmain.ui" line="986"/>
+        <source>Device Usages</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="wndmain.ui" line="989"/>
+        <source>Device usages</source>
         <translation type="unfinished"></translation>
     </message>
 </context>

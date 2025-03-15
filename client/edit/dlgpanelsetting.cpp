@@ -82,7 +82,7 @@ cDlgPanelSetting::cDlgPanelSetting( QWidget *p_poParent, unsigned int p_uiPanelI
     pbOk->setIcon( QIcon("./resources/40x40_ok.png") );
     pbCancel->setIcon( QIcon("./resources/40x40_cancel.png") );
 
-    pbTime->setIcon( QIcon("./resources/40x40_clock.png") );
+    pbTime->setIcon( QIcon("./resources/40x40_device_time.png") );
 
     m_uiPanelId         = p_uiPanelId;
 
@@ -219,6 +219,9 @@ void cDlgPanelSetting::on_pbCancel_clicked()
 
 void cDlgPanelSetting::on_pbTime_clicked()
 {
+    cDlgPanelTimes    cDlgPanelTimes( this );
+
+    cDlgPanelTimes.exec();
 }
 
 void cDlgPanelSetting::on_pbChangeDir_clicked()

@@ -64,6 +64,7 @@
 #include "crud/dlgdistlist.h"
 #include "crud/dlgwaitlistinfo.h"
 #include "crud/dlgemails.h"
+#include "crud/dlgpaneltimes.h"
 
 //====================================================================================
 
@@ -243,6 +244,7 @@ cWndMain::cWndMain( QWidget *parent ) : QMainWindow( parent )
     action_DeviceReset->setIcon( QIcon( "./resources/40x40_stop.png" ) );
 
     action_DeviceSettings->setIcon( QIcon( "./resources/40x40_device_settings.png" ) );
+    action_DeviceTimes->setIcon( QIcon( "./resources/40x40_device_time.png" ) );
 
     action_PatientcardInformation->setIcon( QIcon("./resources/40x40_patientcard_info.png") );
     action_PatientCardAssign->setIcon( QIcon("./resources/40x40_patientcard_assign.png") );
@@ -336,6 +338,7 @@ cWndMain::cWndMain( QWidget *parent ) : QMainWindow( parent )
     action_DeviceCool->setEnabled( false );
     action_DeviceReset->setEnabled( false );
     action_DeviceSettings->setEnabled( false );
+    action_DeviceTimes->setEnabled( false );
 
     action_PatientcardInformation->setEnabled( false );
     action_PatientCardAssign->setEnabled( false );
@@ -1368,6 +1371,7 @@ action_Logs->setVisible( false );
 
     toolBarDeviceUse->setEnabled( bIsUserLoggedIn );
         action_DeviceSettings->setEnabled( bIsUserLoggedIn && !mdiPanels->isPanelWorking(mdiPanels->activePanel()) );
+        action_DeviceTimes->setEnabled( bIsUserLoggedIn && g_obUser.isInGroup(cAccessGroup::ADMIN) );
 
     toolBarCassa->setEnabled( bIsUserLoggedIn );
         action_PayCash->setEnabled( bIsUserLoggedIn && mdiPanels->isHasToPay() );
@@ -2892,6 +2896,23 @@ void cWndMain::on_action_DeviceSettings_triggered()
     slotMainWindowActivated();
 }
 //====================================================================================
+void cWndMain::on_action_DeviceTimes_triggered()
+{
+    cTracer obTrace( "cWndMain::on_action_DeviceTimes_triggered" );
+
+    m_bMainWindowActive = false;
+
+    m_dlgProgress->showProgress();
+
+    cDlgPanelTimes obDlgPanelTimes( this );
+
+    m_dlgProgress->hideProgress();
+
+    obDlgPanelTimes.exec();
+
+    slotMainWindowActivated();
+}
+//====================================================================================
 void cWndMain::on_action_PayCash_triggered()
 {
     cTracer obTrace( "cWndMain::on_action_PayCash_triggered" );
@@ -4373,5 +4394,4 @@ void cWndMain::slotWindowPosition()
 
     obDlgWindowPosition.exec();
 }
-
 

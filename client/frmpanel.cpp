@@ -609,9 +609,10 @@ bool cFrmPanel::isTimeIntervallValid(const int p_inLength)
     QSqlQuery   *poQuery;
     bool         bRet = false;
 
-    poQuery = g_poDB->executeQTQuery( QString( "SELECT * FROM panelUses WHERE panelId=%1 AND useTime=%2" ).arg(m_uiId).arg(p_inLength) );
+    poQuery = g_poDB->executeQTQuery( QString( "SELECT * FROM panelUses WHERE panelIds LIKE '\%%1\%' AND useTime=%2" ).arg(m_uiId).arg(p_inLength) );
     if( poQuery->first() )
     {
+        g_obLogger(cSeverity::DEBUG) << "No record found" << EOM;
         bRet = true;
     }
     if( poQuery ) delete poQuery;
