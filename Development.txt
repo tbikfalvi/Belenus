@@ -199,3 +199,6 @@ Version 2.2.0.0
 - Ha vendeg ki van valasztva aktualisnak, akkor keszpenzes gephasznalatnal rogziti a patienthistory tablaba a vendeg es a panel azonositojat
 - A program indulaskor torli a mar lejart berletegysegeket, ha a beallitasoknal engedelyezve van
 - Ha csak keszpenzzel inditjuk a gep hasznalatot, a program rakerdez, hogy az alkalmi vendeg adatait, nev, email cim rogzitse-e a program
+- A gep hasznalati idoket most mar kulon ablakban lehet kezelni egyszerubben
+- Megvaltozott a gep beallitasok ablaka
+
