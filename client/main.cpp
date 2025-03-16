@@ -296,6 +296,8 @@ int main( int argc, char *argv[] )
         }
         obSplash.showMessage(qsSpalsh,Qt::AlignLeft,QColor(59,44,75));
 
+        // DELETE FROM `patientcardhistories` WHERE modified < DATE_SUB(NOW(), INTERVAL 365 DAY);
+
         qsSpalsh += QObject::tr("Deleting old log files: ");
         obSplash.showMessage(qsSpalsh,Qt::AlignLeft,QColor(59,44,75));
 
