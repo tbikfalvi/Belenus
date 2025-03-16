@@ -153,14 +153,14 @@
      <number>2</number>
     </property>
     <property name="currentIndex">
-     <number>1</number>
+     <number>0</number>
     </property>
     <widget class="QWidget" name="page">
      <widget class="QLabel" name="lblTitle1">
       <property name="geometry">
        <rect>
         <x>9</x>
-        <y>9</y>
+        <y>110</y>
         <width>432</width>
         <height>38</height>
        </rect>
@@ -183,7 +183,7 @@
       <property name="geometry">
        <rect>
         <x>9</x>
-        <y>69</y>
+        <y>200</y>
         <width>432</width>
         <height>28</height>
        </rect>
@@ -204,7 +204,7 @@
       <property name="geometry">
        <rect>
         <x>9</x>
-        <y>119</y>
+        <y>250</y>
         <width>432</width>
         <height>42</height>
        </rect>
@@ -225,7 +225,7 @@
       <property name="geometry">
        <rect>
         <x>9</x>
-        <y>183</y>
+        <y>310</y>
         <width>190</width>
         <height>16</height>
        </rect>
@@ -239,7 +239,15 @@
        <string>Select language for the application</string>
       </property>
      </widget>
-     <widget class="QWidget" name="">
+     <widget class="QWidget" name="layoutWidget">
+      <property name="geometry">
+       <rect>
+        <x>0</x>
+        <y>0</y>
+        <width>100</width>
+        <height>30</height>
+       </rect>
+      </property>
       <layout class="QHBoxLayout" name="horizontalLayout1">
        <property name="bottomMargin">
         <number>0</number>
