@@ -289,6 +289,11 @@ public:
     void            setObsoleteUnitsDays( const int p_nObsolateUnitsDays );
     int             getObsolateUnitsDays() const;
 
+    void            setLogFilesDeleteAllowed( bool p_bLogFilesDeleteAllowed );
+    bool            isLogFilesDeleteAllowed();
+    void            setDeleteLogFilesMonths( const int p_nDeleteLogFilesMonths );
+    int             getDeleteLogFilesMonths() const;
+
 
 //void            setXXX( const QString &p_qsXXX );
 //QString         getXXX() const;
@@ -406,6 +411,8 @@ private:
     bool            m_bCardyGoSync;
     bool            m_bAllowDeleteObsoleteUnits;
     int             m_nObsolateUnitsDays;
+    int             m_nDeleteLogFilesMonths;
+    bool            m_bLogFilesDeleteAllowed;
 
     void init();
 };

@@ -110,6 +110,9 @@ void cPreferences::init()
 
     m_bAllowDeleteObsoleteUnits     = false;
     m_nObsolateUnitsDays            = 30;
+
+    m_bLogFilesDeleteAllowed        = false;
+    m_nDeleteLogFilesMonths         = 3;
 }
 
 void cPreferences::loadSettings() throw (cSevException)
@@ -141,6 +144,9 @@ void cPreferences::loadSettings() throw (cSevException)
 
         m_bAllowDeleteObsoleteUnits     = loadSettingB( "DB_AllowDeleteObsoleteUnits", false );
         m_nObsolateUnitsDays            = loadSettingI( "DB_ObsolateUnitsDays", 30 );
+
+        m_bLogFilesDeleteAllowed        = loadSettingB( "FILE_AllowDeleteLogFiles", false );
+        m_nDeleteLogFilesMonths         = loadSettingI( "FILE_DeleteLogFilesMonts", 3 );
 
         int nLeft                       = loadSettingI( "EXTWIN_Left", 10 );
         int nTop                        = loadSettingI( "EXTWIN_Top", 10 );
@@ -279,6 +285,9 @@ void cPreferences::saveSettings() throw (cSevException)
 
         saveSettingB( "DB_AllowDeleteObsoleteUnits", m_bAllowDeleteObsoleteUnits );
         saveSettingI( "DB_ObsolateUnitsDays", m_nObsolateUnitsDays );
+
+        saveSettingB( "FILE_AllowDeleteLogFiles", m_bLogFilesDeleteAllowed );
+        saveSettingI( "FILE_DeleteLogFilesMonts", m_nDeleteLogFilesMonths );
 
         saveSettingI( "EXTWIN_Left", m_qpSecondaryPosition.x() );
         saveSettingI( "EXTWIN_Top", m_qpSecondaryPosition.y() );
@@ -1859,5 +1868,25 @@ void cPreferences::setObsoleteUnitsDays( const int p_nObsolateUnitsDays )
 int cPreferences::getObsolateUnitsDays() const
 {
     return m_nObsolateUnitsDays;
+}
+
+void cPreferences::setLogFilesDeleteAllowed( bool p_bLogFilesDeleteAllowed )
+{
+    m_bLogFilesDeleteAllowed = p_bLogFilesDeleteAllowed;
+}
+
+bool cPreferences::isLogFilesDeleteAllowed()
+{
+    return m_bLogFilesDeleteAllowed;
+}
+
+void cPreferences::setDeleteLogFilesMonths( const int p_nDeleteLogFilesMonths )
+{
+    m_nDeleteLogFilesMonths = p_nDeleteLogFilesMonths;
+}
+
+int cPreferences::getDeleteLogFilesMonths() const
+{
+    return m_nDeleteLogFilesMonths;
 }
 

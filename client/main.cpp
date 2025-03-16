@@ -286,9 +286,24 @@ int main( int argc, char *argv[] )
             if( poQuery->first() )
             {
                 qsSpalsh += QObject::tr("   Number of deleted units: %1").arg( poQuery->value( 0 ).toInt() );
-                qsSpalsh += QObject::tr("\n");
+                qsSpalsh += "\n";
                 obSplash.showMessage(qsSpalsh,Qt::AlignLeft,QColor(59,44,75));
             }
+        }
+        else
+        {
+            qsSpalsh += QObject::tr("DISABLED\n");
+        }
+        obSplash.showMessage(qsSpalsh,Qt::AlignLeft,QColor(59,44,75));
+
+        qsSpalsh += QObject::tr("Deleting old log files: ");
+        obSplash.showMessage(qsSpalsh,Qt::AlignLeft,QColor(59,44,75));
+
+        if( g_poPrefs->isLogFilesDeleteAllowed() )
+        {
+            int nFilesDeleted = g_obGen.deleteOldLogFiles( g_poPrefs->getDeleteLogFilesMonths() );
+            qsSpalsh += QObject::tr("FINISHED with deleting %1 files").arg( nFilesDeleted );
+            qsSpalsh += "\n";
         }
         else
         {

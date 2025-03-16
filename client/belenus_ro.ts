@@ -463,7 +463,7 @@ Aplicația poate fi folosită numai în modul DEMO.
     <message>
         <location filename="main.cpp" line="274"/>
         <location filename="main.cpp" line="283"/>
-        <location filename="main.cpp" line="373"/>
+        <location filename="main.cpp" line="388"/>
         <source>FINISHED
 </source>
         <translation>FINALIZAT
@@ -483,19 +483,26 @@ Aplicația poate fi folosită numai în modul DEMO.
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="main.cpp" line="289"/>
-        <source>
-</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
         <location filename="main.cpp" line="295"/>
+        <location filename="main.cpp" line="310"/>
         <source>DISABLED
 </source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="main.cpp" line="313"/>
+        <location filename="main.cpp" line="299"/>
+        <source>Deleting old log files: </source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="main.cpp" line="305"/>
+        <source>FINISHED with deleting %1 files</source>
+        <oldsource>FINISHED with deleting %1 files
+</oldsource>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="main.cpp" line="328"/>
         <source>
 RFID communication enabled
 Checking RFID connection ... </source>
@@ -505,21 +512,21 @@ Checking RFID connection ...</oldsource>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="main.cpp" line="321"/>
+        <location filename="main.cpp" line="336"/>
         <source>CONNECTED
 
 </source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="main.cpp" line="325"/>
+        <location filename="main.cpp" line="340"/>
         <source>FAILED
 
 </source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="main.cpp" line="330"/>
+        <location filename="main.cpp" line="345"/>
         <source>
 RFID communication disabled
 
@@ -530,81 +537,81 @@ RFID communication disabled
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="main.cpp" line="341"/>
+        <location filename="main.cpp" line="356"/>
         <source>Checking hardware connection ... </source>
         <oldsource>Checking hardware connection ...</oldsource>
         <translation type="unfinished">Verificarea conexiunii hardware ...</translation>
     </message>
     <message>
-        <location filename="main.cpp" line="352"/>
+        <location filename="main.cpp" line="367"/>
         <source>FAILED
 </source>
         <translation>EȘUAT
 </translation>
     </message>
     <message>
-        <location filename="main.cpp" line="354"/>
-        <location filename="main.cpp" line="412"/>
+        <location filename="main.cpp" line="369"/>
+        <location filename="main.cpp" line="427"/>
         <source>Starting application in DEMO mode.
 </source>
         <translation>Pornirea aplicației în modul DEMO.
 </translation>
     </message>
     <message>
-        <location filename="main.cpp" line="364"/>
+        <location filename="main.cpp" line="379"/>
         <source>CONNECTED
 </source>
         <translation>CONECTAT
 </translation>
     </message>
     <message>
-        <location filename="main.cpp" line="369"/>
+        <location filename="main.cpp" line="384"/>
         <source>Initializing hardware device ... </source>
         <translation>Inițializare dispozitiv hardware ... </translation>
     </message>
     <message>
-        <location filename="main.cpp" line="378"/>
+        <location filename="main.cpp" line="393"/>
         <source>Caption stored in hardware: %1
 </source>
         <translation>Antet stocat în hardware: %1
 </translation>
     </message>
     <message>
-        <location filename="main.cpp" line="381"/>
+        <location filename="main.cpp" line="396"/>
         <source>Number of hardware panels: %1
 </source>
         <translation>Numărul de panouri hardware: %1
 </translation>
     </message>
     <message>
-        <location filename="main.cpp" line="384"/>
+        <location filename="main.cpp" line="399"/>
         <source>Checking hardware panels:
 </source>
         <translation>Verificare panouri hardware:
 </translation>
     </message>
     <message>
-        <location filename="main.cpp" line="391"/>
+        <location filename="main.cpp" line="406"/>
         <source>     Checking hardware panel -%1- </source>
         <translation>     Verificare panou hardware -%1- </translation>
     </message>
     <message>
-        <location filename="main.cpp" line="396"/>
+        <location filename="main.cpp" line="411"/>
         <source> SUCCEEDED
 </source>
         <translation> REUȘIT
 </translation>
     </message>
     <message>
-        <location filename="main.cpp" line="401"/>
-        <location filename="main.cpp" line="455"/>
+        <location filename="main.cpp" line="416"/>
+        <location filename="main.cpp" line="470"/>
         <source> FAILED
 </source>
         <translation> EȘUAT
 </translation>
     </message>
     <message>
-        <location filename="main.cpp" line="462"/>
+        <location filename="main.cpp" line="477"/>
         <source>Database server application is not running.
 Belenus application can not be started without active database server.
 Please start WampServer application then restart Belenus application.</source>
@@ -613,17 +620,17 @@ Aplicația Belenus nu poate fi pornită fără server bază de date activ..
 Te rog, pornește aplicația WampServer și apoi repornește aplicația Belenus.</translation>
     </message>
     <message>
-        <location filename="preferences.cpp" line="163"/>
+        <location filename="preferences.cpp" line="169"/>
         <source> NOT STERILE </source>
         <translation> NESTERIL </translation>
     </message>
     <message>
-        <location filename="preferences.cpp" line="164"/>
+        <location filename="preferences.cpp" line="170"/>
         <source> TUBE REPLACEMENT NEEDED </source>
         <translation> TUBUL TREBUIE ÎNLOCUIT </translation>
     </message>
     <message>
-        <location filename="preferences.cpp" line="165"/>
+        <location filename="preferences.cpp" line="171"/>
         <source> TUBE CLEAN-UP NEEDED </source>
         <translation> TUBUL TREBUIE CURĂȚAT </translation>
     </message>
@@ -4496,90 +4503,96 @@ sau reîncarcă cardul de pacient înainte de utilizare.</translation>
         <translation>&amp;Anulează</translation>
     </message>
     <message>
-        <location filename="dlg/dlgpreferences.cpp" line="84"/>
-        <location filename="dlg/dlgpreferences.cpp" line="691"/>
+        <location filename="dlg/dlgpreferences.cpp" line="87"/>
+        <location filename="dlg/dlgpreferences.cpp" line="704"/>
         <source>Visible</source>
         <translation>Vizibil</translation>
     </message>
     <message>
-        <location filename="dlg/dlgpreferences.cpp" line="89"/>
-        <location filename="dlg/dlgpreferences.cpp" line="697"/>
+        <location filename="dlg/dlgpreferences.cpp" line="92"/>
+        <location filename="dlg/dlgpreferences.cpp" line="710"/>
         <source>Hidden</source>
         <translation>Ascuns</translation>
     </message>
     <message>
-        <location filename="dlg/dlgpreferences.cpp" line="277"/>
+        <location filename="dlg/dlgpreferences.cpp" line="280"/>
         <source>Licence will be checked in %1 hours</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="dlg/dlgpreferences.cpp" line="281"/>
+        <location filename="dlg/dlgpreferences.cpp" line="284"/>
         <source>Licence will be checked in %1 minutes</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="dlg/dlgpreferences.cpp" line="287"/>
+        <location filename="dlg/dlgpreferences.cpp" line="290"/>
         <source>Remaining work hours: %1</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="dlg/dlgpreferences.cpp" line="291"/>
+        <location filename="dlg/dlgpreferences.cpp" line="294"/>
         <source>Remaining work minutes: %1</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="dlg/dlgpreferences.cpp" line="363"/>
+        <location filename="dlg/dlgpreferences.cpp" line="366"/>
         <source>Mon</source>
         <translation>Luni</translation>
     </message>
     <message>
-        <location filename="dlg/dlgpreferences.cpp" line="364"/>
+        <location filename="dlg/dlgpreferences.cpp" line="367"/>
         <source>Tue</source>
         <translation>Marți</translation>
     </message>
     <message>
-        <location filename="dlg/dlgpreferences.cpp" line="365"/>
+        <location filename="dlg/dlgpreferences.cpp" line="368"/>
         <source>Wed</source>
         <translation>Miercuri</translation>
     </message>
     <message>
-        <location filename="dlg/dlgpreferences.cpp" line="366"/>
+        <location filename="dlg/dlgpreferences.cpp" line="369"/>
         <source>Thu</source>
         <translation>Joi</translation>
     </message>
     <message>
-        <location filename="dlg/dlgpreferences.cpp" line="367"/>
+        <location filename="dlg/dlgpreferences.cpp" line="370"/>
         <source>Fri</source>
         <translation>Vineri</translation>
     </message>
     <message>
-        <location filename="dlg/dlgpreferences.cpp" line="368"/>
+        <location filename="dlg/dlgpreferences.cpp" line="371"/>
         <source>Sat</source>
         <translation>Sâmbătă</translation>
     </message>
     <message>
-        <location filename="dlg/dlgpreferences.cpp" line="369"/>
+        <location filename="dlg/dlgpreferences.cpp" line="372"/>
         <source>Sun</source>
         <translation>Duminică</translation>
     </message>
     <message>
-        <location filename="dlg/dlgpreferences.cpp" line="468"/>
+        <location filename="dlg/dlgpreferences.cpp" line="471"/>
+        <location filename="dlg/dlgpreferences.cpp" line="478"/>
         <source>Attention</source>
         <translation>Atenție</translation>
     </message>
     <message>
-        <location filename="dlg/dlgpreferences.cpp" line="469"/>
+        <location filename="dlg/dlgpreferences.cpp" line="472"/>
+        <source>The specified number of months for deleting log files retrospectively cannot be less than one.</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="dlg/dlgpreferences.cpp" line="479"/>
         <source>Decimal symbol and Digit grouping symbol can not be the same.</source>
         <translation>Separatorul zecimal și separatorul pentru mii nu poate fi identic.</translation>
     </message>
     <message>
-        <location filename="dlg/dlgpreferences.cpp" line="475"/>
-        <location filename="dlg/dlgpreferences.cpp" line="898"/>
+        <location filename="dlg/dlgpreferences.cpp" line="485"/>
+        <location filename="dlg/dlgpreferences.cpp" line="911"/>
         <source>Question</source>
         <translation>Întrebare</translation>
     </message>
     <message>
-        <location filename="dlg/dlgpreferences.cpp" line="476"/>
+        <location filename="dlg/dlgpreferences.cpp" line="486"/>
         <source>Are you sure want to increase the length of the barcode of the patientcard?
 
 Please note that the barcodes will be supplemented with additional &apos;0&apos; characters at the beginning of the barcode for every patientcards, where the barcode is shorter than %1 characters.</source>
@@ -4588,12 +4601,12 @@ Please note that the barcodes will be supplemented with additional &apos;0&apos;
 Te rog, ia în considerare faptul că, pentru fiecare card de pacient. la codurile de bare vor fi adăugate &apos;0&apos; caractere suplimentare la începutul codului de bare, în situațiile în care codul de bare este mai scurt de %1 caractere.</translation>
     </message>
     <message>
-        <location filename="dlg/dlgpreferences.cpp" line="488"/>
+        <location filename="dlg/dlgpreferences.cpp" line="498"/>
         <source> Cut the beginning | Cut the end | Abort  </source>
         <translation> Taie începutul | Taie sfârșitul | Întrerupe  </translation>
     </message>
     <message>
-        <location filename="dlg/dlgpreferences.cpp" line="489"/>
+        <location filename="dlg/dlgpreferences.cpp" line="499"/>
         <source>Are you sure you want to decrease the length of the barcode of the patientcard?
 
 Please note that all of the patientcards will be affectedwhere the length of the barcode is longer than %1 characters</source>
@@ -4602,245 +4615,253 @@ Please note that all of the patientcards will be affectedwhere the length of the
 Te rog, ia în considerare faptul că toate cardurile de pacient vor fi afectate, în situațiile în care codul de bare este mai lung de %1 caractere</translation>
     </message>
     <message>
-        <location filename="dlg/dlgpreferences.cpp" line="493"/>
+        <location filename="dlg/dlgpreferences.cpp" line="503"/>
         <source>If you select &apos;Cut the beginning&apos; the first %1 characters will be removed from the beginning of the barcode
 If you select &apos;Cut the end&apos; the last %1 characters willbe removed at the end of the barcode</source>
         <translation>Dacă selectezi &apos;Taie începutul&apos;, primele %1 caractere vor fi înlăturate de la începtul codului de bare
 Dacă selectezi &apos;Taie sfârșitul&apos;, primele %1 caractere vor fi eliminate de la sfârșitul codului de bare</translation>
     </message>
     <message>
-        <location filename="dlg/dlgpreferences.cpp" line="519"/>
-        <location filename="dlg/dlgpreferences.cpp" line="526"/>
-        <location filename="dlg/dlgpreferences.cpp" line="534"/>
-        <location filename="dlg/dlgpreferences.cpp" line="908"/>
-        <location filename="dlg/dlgpreferences.cpp" line="997"/>
-        <location filename="dlg/dlgpreferences.cpp" line="1043"/>
-        <location filename="dlg/dlgpreferences.cpp" line="1060"/>
+        <location filename="dlg/dlgpreferences.cpp" line="529"/>
+        <location filename="dlg/dlgpreferences.cpp" line="536"/>
+        <location filename="dlg/dlgpreferences.cpp" line="544"/>
+        <location filename="dlg/dlgpreferences.cpp" line="921"/>
+        <location filename="dlg/dlgpreferences.cpp" line="1010"/>
+        <location filename="dlg/dlgpreferences.cpp" line="1056"/>
+        <location filename="dlg/dlgpreferences.cpp" line="1073"/>
         <source>Warning</source>
         <translation>Avertisment</translation>
     </message>
     <message>
-        <location filename="dlg/dlgpreferences.cpp" line="520"/>
+        <location filename="dlg/dlgpreferences.cpp" line="530"/>
         <source>&apos;Not sterile&apos; text can not be empty.</source>
         <translation>Textul &apos;Nesteril&apos; nu poate fi gol.</translation>
     </message>
     <message>
-        <location filename="dlg/dlgpreferences.cpp" line="527"/>
+        <location filename="dlg/dlgpreferences.cpp" line="537"/>
         <source>&apos;Tube replacement needed&apos; text can not be empty.</source>
         <translation>Textul &apos;Este nevoie de tub de înlocuire&apos; nu poate fi gol.</translation>
     </message>
     <message>
-        <location filename="dlg/dlgpreferences.cpp" line="535"/>
+        <location filename="dlg/dlgpreferences.cpp" line="545"/>
         <source>&apos;Device clean needed&apos; text can not be empty.</source>
         <translation>Textul &apos;Este nevoie de curățarea dispozitivului&apos; nu poate fi gol.</translation>
     </message>
     <message>
-        <location filename="dlg/dlgpreferences.cpp" line="649"/>
+        <location filename="dlg/dlgpreferences.cpp" line="659"/>
         <source> Mon</source>
         <translation> Luni</translation>
     </message>
     <message>
-        <location filename="dlg/dlgpreferences.cpp" line="650"/>
+        <location filename="dlg/dlgpreferences.cpp" line="660"/>
         <source> Tue</source>
         <translation> Marți</translation>
     </message>
     <message>
-        <location filename="dlg/dlgpreferences.cpp" line="651"/>
+        <location filename="dlg/dlgpreferences.cpp" line="661"/>
         <source> Wed</source>
         <translation> Miercuri</translation>
     </message>
     <message>
-        <location filename="dlg/dlgpreferences.cpp" line="652"/>
+        <location filename="dlg/dlgpreferences.cpp" line="662"/>
         <source> Thu</source>
         <translation> Joi</translation>
     </message>
     <message>
-        <location filename="dlg/dlgpreferences.cpp" line="653"/>
+        <location filename="dlg/dlgpreferences.cpp" line="663"/>
         <source> Fri</source>
         <translation> Vineri</translation>
     </message>
     <message>
-        <location filename="dlg/dlgpreferences.cpp" line="654"/>
+        <location filename="dlg/dlgpreferences.cpp" line="664"/>
         <source> Sat</source>
         <translation> Sâmbătă</translation>
     </message>
     <message>
-        <location filename="dlg/dlgpreferences.cpp" line="655"/>
+        <location filename="dlg/dlgpreferences.cpp" line="665"/>
         <source> Sun</source>
         <translation> Duminică</translation>
     </message>
     <message>
-        <location filename="dlg/dlgpreferences.cpp" line="681"/>
+        <location filename="dlg/dlgpreferences.cpp" line="694"/>
         <source>Information</source>
         <translation>Informații</translation>
     </message>
     <message>
-        <location filename="dlg/dlgpreferences.cpp" line="682"/>
+        <location filename="dlg/dlgpreferences.cpp" line="695"/>
         <source>Some of the changes you made will only be applied after the application is restarted.</source>
         <translation>Unele modificări efectuate vor fi aplicate numai după repornirea aplicației.</translation>
     </message>
     <message>
-        <location filename="dlg/dlgpreferences.cpp" line="717"/>
-        <location filename="dlg/dlgpreferences.cpp" line="724"/>
+        <location filename="dlg/dlgpreferences.cpp" line="730"/>
+        <location filename="dlg/dlgpreferences.cpp" line="737"/>
         <source>(%1 + %2 % VAT)</source>
         <translation>(%1 + %2 % TVA)</translation>
     </message>
     <message>
-        <location filename="dlg/dlgpreferences.cpp" line="753"/>
-        <location filename="dlg/dlgpreferences.cpp" line="767"/>
+        <location filename="dlg/dlgpreferences.cpp" line="766"/>
+        <location filename="dlg/dlgpreferences.cpp" line="780"/>
         <source>Select Directory</source>
         <translation>Selectează directorul</translation>
     </message>
     <message>
-        <location filename="dlg/dlgpreferences.cpp" line="780"/>
-        <location filename="dlg/dlgpreferences.cpp" line="784"/>
-        <location filename="dlg/dlgpreferences.cpp" line="788"/>
+        <location filename="dlg/dlgpreferences.cpp" line="793"/>
+        <location filename="dlg/dlgpreferences.cpp" line="797"/>
+        <location filename="dlg/dlgpreferences.cpp" line="801"/>
         <source>Not defined</source>
         <translation>Nedefinit</translation>
     </message>
     <message>
-        <location filename="dlg/dlgpreferences.cpp" line="781"/>
+        <location filename="dlg/dlgpreferences.cpp" line="794"/>
         <source>Younger than 18</source>
         <translation>Sub 18 ani</translation>
     </message>
     <message>
-        <location filename="dlg/dlgpreferences.cpp" line="782"/>
+        <location filename="dlg/dlgpreferences.cpp" line="795"/>
         <source>Above 60</source>
         <translation>Peste 60</translation>
     </message>
     <message>
-        <location filename="dlg/dlgpreferences.cpp" line="785"/>
+        <location filename="dlg/dlgpreferences.cpp" line="798"/>
         <source>Male</source>
         <translation>Bărbat</translation>
     </message>
     <message>
-        <location filename="dlg/dlgpreferences.cpp" line="786"/>
+        <location filename="dlg/dlgpreferences.cpp" line="799"/>
         <source>Female</source>
         <translation>Femeie</translation>
     </message>
     <message>
-        <location filename="dlg/dlgpreferences.cpp" line="790"/>
+        <location filename="dlg/dlgpreferences.cpp" line="803"/>
         <source>Service cards</source>
         <translation>Carduri servicii</translation>
     </message>
     <message>
-        <location filename="dlg/dlgpreferences.cpp" line="792"/>
+        <location filename="dlg/dlgpreferences.cpp" line="805"/>
         <source>Service card, only for service usage.</source>
         <translation>Card servicii, numai pentru utilizare serviciu.</translation>
     </message>
     <message>
-        <location filename="dlg/dlgpreferences.cpp" line="794"/>
+        <location filename="dlg/dlgpreferences.cpp" line="807"/>
         <source>&lt;No group associated&gt;</source>
         <translation>&lt;Nu există niciun grup asociat&gt;</translation>
     </message>
     <message>
-        <location filename="dlg/dlgpreferences.cpp" line="796"/>
+        <location filename="dlg/dlgpreferences.cpp" line="809"/>
         <source>Using solarium</source>
         <translation>Folosirea solarului</translation>
     </message>
     <message>
-        <location filename="dlg/dlgpreferences.cpp" line="797"/>
+        <location filename="dlg/dlgpreferences.cpp" line="810"/>
         <source>Selling patientcard</source>
         <translation>Vânzare card pacient</translation>
     </message>
     <message>
-        <location filename="dlg/dlgpreferences.cpp" line="798"/>
+        <location filename="dlg/dlgpreferences.cpp" line="811"/>
         <source>Filling patientcard</source>
         <translation>Încărcare card pacient</translation>
     </message>
     <message>
-        <location filename="dlg/dlgpreferences.cpp" line="799"/>
+        <location filename="dlg/dlgpreferences.cpp" line="812"/>
         <source>Selling product</source>
         <translation>Vânzare produs</translation>
     </message>
     <message>
-        <location filename="dlg/dlgpreferences.cpp" line="800"/>
+        <location filename="dlg/dlgpreferences.cpp" line="813"/>
         <source>Replacing lost patientcard</source>
         <translation>Înlocuire card pacient pierdut</translation>
     </message>
     <message>
-        <location filename="dlg/dlgpreferences.cpp" line="801"/>
+        <location filename="dlg/dlgpreferences.cpp" line="814"/>
         <source>Assign patientcard</source>
         <translation>Alocare card pacient</translation>
     </message>
     <message>
-        <location filename="dlg/dlgpreferences.cpp" line="802"/>
-        <location filename="dlg/dlgpreferences.cpp" line="803"/>
-        <source>Other</source>
-        <translation>Alt</translation>
+        <location filename="dlg/dlgpreferences.cpp" line="815"/>
+        <source>Selling patientcard online</source>
+        <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="dlg/dlgpreferences.cpp" line="804"/>
+        <location filename="dlg/dlgpreferences.cpp" line="816"/>
+        <source>Filling patientcard online</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Other</source>
+        <translation type="obsolete">Alt</translation>
+    </message>
+    <message>
+        <location filename="dlg/dlgpreferences.cpp" line="817"/>
         <source>Storage action</source>
         <translation>Acțiune depozitare</translation>
     </message>
     <message>
-        <location filename="dlg/dlgpreferences.cpp" line="805"/>
+        <location filename="dlg/dlgpreferences.cpp" line="818"/>
         <source>Casssa expense</source>
         <translation>Cheltuială casă</translation>
     </message>
     <message>
-        <location filename="dlg/dlgpreferences.cpp" line="807"/>
+        <location filename="dlg/dlgpreferences.cpp" line="820"/>
         <source>Add product to storage</source>
         <translation>Adaugă produs la depozit</translation>
     </message>
     <message>
-        <location filename="dlg/dlgpreferences.cpp" line="808"/>
+        <location filename="dlg/dlgpreferences.cpp" line="821"/>
         <source>Product disposal</source>
         <translation>Eliminare produs</translation>
     </message>
     <message>
-        <location filename="dlg/dlgpreferences.cpp" line="809"/>
+        <location filename="dlg/dlgpreferences.cpp" line="822"/>
         <source>Product donate</source>
         <translation>Donare produs</translation>
     </message>
     <message>
-        <location filename="dlg/dlgpreferences.cpp" line="811"/>
+        <location filename="dlg/dlgpreferences.cpp" line="824"/>
         <source>Cash</source>
         <translation>Numerar</translation>
     </message>
     <message>
-        <location filename="dlg/dlgpreferences.cpp" line="812"/>
+        <location filename="dlg/dlgpreferences.cpp" line="825"/>
         <source>Credit card</source>
         <translation>Card de credit</translation>
     </message>
     <message>
-        <location filename="dlg/dlgpreferences.cpp" line="814"/>
+        <location filename="dlg/dlgpreferences.cpp" line="827"/>
         <source>Guest entered into database</source>
         <translation>Oaspete introdus în baza de date</translation>
     </message>
     <message>
-        <location filename="dlg/dlgpreferences.cpp" line="815"/>
+        <location filename="dlg/dlgpreferences.cpp" line="828"/>
         <source>Purchase patientcard</source>
         <translation>Achiziționează card de pacient</translation>
     </message>
     <message>
-        <location filename="dlg/dlgpreferences.cpp" line="816"/>
+        <location filename="dlg/dlgpreferences.cpp" line="829"/>
         <source>Refill patientcard</source>
         <translation>Reîncarcare card pacient</translation>
     </message>
     <message>
-        <location filename="dlg/dlgpreferences.cpp" line="817"/>
+        <location filename="dlg/dlgpreferences.cpp" line="830"/>
         <source>Purchase product</source>
         <translation>Achiziționare produs</translation>
     </message>
     <message>
-        <location filename="dlg/dlgpreferences.cpp" line="818"/>
+        <location filename="dlg/dlgpreferences.cpp" line="831"/>
         <source>Using device with card</source>
         <translation>Folosirea dispozitivului cu cardul</translation>
     </message>
     <message>
-        <location filename="dlg/dlgpreferences.cpp" line="819"/>
+        <location filename="dlg/dlgpreferences.cpp" line="832"/>
         <source>Using device with cash</source>
         <translation>Folosirea dispozitivului cu numerar</translation>
     </message>
     <message>
-        <location filename="dlg/dlgpreferences.cpp" line="824"/>
+        <location filename="dlg/dlgpreferences.cpp" line="837"/>
         <source>(example %1)</source>
         <translation>(exemplu %1)</translation>
     </message>
     <message>
-        <location filename="dlg/dlgpreferences.cpp" line="899"/>
+        <location filename="dlg/dlgpreferences.cpp" line="912"/>
         <source>You just enabled the http synchronization but the WebSync application is not running.
 
 Do you want to start this application now?</source>
@@ -4849,7 +4870,7 @@ Do you want to start this application now?</source>
 Vrei să pornești această aplicație acum?</translation>
     </message>
     <message>
-        <location filename="dlg/dlgpreferences.cpp" line="909"/>
+        <location filename="dlg/dlgpreferences.cpp" line="922"/>
         <source>Error occured when starting process:WebSync.exe
 
 Error code: %1
@@ -4870,29 +4891,29 @@ Cod eroare: %1
 5 &gt; A intervenit o eroare necunoscută.</translation>
     </message>
     <message>
-        <location filename="dlg/dlgpreferences.cpp" line="943"/>
+        <location filename="dlg/dlgpreferences.cpp" line="956"/>
         <source>Error</source>
         <translation>Eroare</translation>
     </message>
     <message>
-        <location filename="dlg/dlgpreferences.cpp" line="944"/>
+        <location filename="dlg/dlgpreferences.cpp" line="957"/>
         <source>Values of the Password and Retype Password fields are not the same</source>
         <translation>Valoarea câmpului Parolă și cea a câmpului Retastează parola nu este identică</translation>
     </message>
     <message>
-        <location filename="dlg/dlgpreferences.cpp" line="998"/>
+        <location filename="dlg/dlgpreferences.cpp" line="1011"/>
         <source>The password you entered is not valid
 to modify device admin password.</source>
         <translation>Parola introdusă nu este valabilă
 pentru modificarea parolei de administrator dispozitiv.</translation>
     </message>
     <message>
-        <location filename="dlg/dlgpreferences.cpp" line="1044"/>
+        <location filename="dlg/dlgpreferences.cpp" line="1057"/>
         <source>You are not allowed to modify application expiration day.</source>
         <translation>Modificarea datei expirării aplicației nu este permisă.</translation>
     </message>
     <message>
-        <location filename="dlg/dlgpreferences.cpp" line="1061"/>
+        <location filename="dlg/dlgpreferences.cpp" line="1074"/>
         <source>The password you entered is not valid
 to modify application expiration day.</source>
         <translation>Parola introdusă nu este valabilă
@@ -10849,560 +10870,561 @@ Vrei să le salvezi ca noi în baza de date?</translation>
     </message>
     <message>
         <location filename="dlgpreferences.ui" line="62"/>
-        <source>&amp;Console Log Level:</source>
-        <translation>&amp;Nivel jurnal consolă:</translation>
+        <source>&amp;File Log Level:</source>
+        <oldsource>&amp;Console Log Level:</oldsource>
+        <translation type="unfinished">&amp;Nivel jurnal consolă:</translation>
     </message>
     <message>
-        <location filename="dlgpreferences.ui" line="93"/>
-        <location filename="dlgpreferences.ui" line="169"/>
-        <location filename="dlgpreferences.ui" line="245"/>
-        <location filename="dlgpreferences.ui" line="321"/>
+        <location filename="dlgpreferences.ui" line="84"/>
         <source>NONE</source>
         <translation>NICIUNUL</translation>
     </message>
     <message>
-        <location filename="dlgpreferences.ui" line="144"/>
         <source>&amp;DB Log Level:</source>
-        <translation>&amp;Nivel jurnal bază de date:</translation>
+        <translation type="obsolete">&amp;Nivel jurnal bază de date:</translation>
     </message>
     <message>
-        <location filename="dlgpreferences.ui" line="220"/>
         <source>&amp;GUI Log Level:</source>
-        <translation>&amp;Nivel jurnal interfață grafică cu utilizatorul:</translation>
+        <translation type="obsolete">&amp;Nivel jurnal interfață grafică cu utilizatorul:</translation>
     </message>
     <message>
-        <location filename="dlgpreferences.ui" line="296"/>
-        <source>&amp;File Log Level:</source>
-        <translation>&amp;Nivel jurnal interfață grafică cu utilizatorul:</translation>
-    </message>
-    <message>
-        <location filename="dlgpreferences.ui" line="358"/>
+        <location filename="dlgpreferences.ui" line="121"/>
         <source>Application Settings</source>
         <translation>Setările aplicației</translation>
     </message>
     <message>
-        <location filename="dlgpreferences.ui" line="370"/>
+        <location filename="dlgpreferences.ui" line="133"/>
         <source>&amp;Language :</source>
         <translation>&amp;Limba :</translation>
     </message>
     <message>
-        <location filename="dlgpreferences.ui" line="404"/>
+        <location filename="dlgpreferences.ui" line="167"/>
         <source>Date format :</source>
         <translation>Formatul de dată :</translation>
     </message>
     <message>
-        <location filename="dlgpreferences.ui" line="414"/>
+        <location filename="dlgpreferences.ui" line="177"/>
         <source>yyyy-MM-dd</source>
         <translation>aaaa-LL-zz</translation>
     </message>
     <message>
-        <location filename="dlgpreferences.ui" line="419"/>
+        <location filename="dlgpreferences.ui" line="182"/>
         <source>MM-dd-yyyy</source>
         <translation>LL-zz-aaaa</translation>
     </message>
     <message>
-        <location filename="dlgpreferences.ui" line="424"/>
+        <location filename="dlgpreferences.ui" line="187"/>
         <source>dd-MM-yyyy</source>
         <translation>zz-LL-aaaa</translation>
     </message>
     <message>
-        <location filename="dlgpreferences.ui" line="432"/>
+        <location filename="dlgpreferences.ui" line="195"/>
         <source>(example: %1)</source>
         <translation>(exemplu: %1)</translation>
     </message>
     <message>
-        <location filename="dlgpreferences.ui" line="454"/>
+        <location filename="dlgpreferences.ui" line="217"/>
         <source>Default country : </source>
         <translation>Țara implicită : </translation>
     </message>
     <message>
-        <location filename="dlgpreferences.ui" line="488"/>
+        <location filename="dlgpreferences.ui" line="251"/>
         <source>Kiwisun web address :</source>
         <translation>Adresa paginii web KiwiSun :</translation>
     </message>
     <message>
-        <location filename="dlgpreferences.ui" line="501"/>
+        <location filename="dlgpreferences.ui" line="264"/>
         <source> Loading page </source>
         <translation> Încărcare pagină </translation>
     </message>
     <message>
-        <location filename="dlgpreferences.ui" line="509"/>
+        <location filename="dlgpreferences.ui" line="272"/>
         <source>Wait</source>
         <translation>Așteaptă</translation>
     </message>
     <message>
-        <location filename="dlgpreferences.ui" line="538"/>
+        <location filename="dlgpreferences.ui" line="301"/>
         <source>seconds after each information message displayed.</source>
         <translation>secunde înante de afișarea fiecărui mesaj de informații.</translation>
     </message>
     <message>
-        <location filename="dlgpreferences.ui" line="563"/>
+        <location filename="dlgpreferences.ui" line="325"/>
+        <source>Delete log files after</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="dlgpreferences.ui" line="354"/>
+        <source>months.</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="dlgpreferences.ui" line="379"/>
         <source> Minimal version </source>
         <translation> Versiunea minimă </translation>
     </message>
     <message>
-        <location filename="dlgpreferences.ui" line="569"/>
+        <location filename="dlgpreferences.ui" line="385"/>
         <source>MINIMAL VERSION - Only the minimal features are enabled to be used in the application </source>
         <translation>VERSIUNEA MINIMĂ - Numai funcțiile minime sunt activate pentru a fi utilizate în aplicație </translation>
     </message>
     <message>
-        <location filename="dlgpreferences.ui" line="593"/>
+        <location filename="dlgpreferences.ui" line="409"/>
         <source>Appearance</source>
         <translation>Prezentare</translation>
     </message>
     <message>
-        <location filename="dlgpreferences.ui" line="599"/>
+        <location filename="dlgpreferences.ui" line="415"/>
         <source> Main window </source>
         <translation> Fereastra principală </translation>
     </message>
     <message>
-        <location filename="dlgpreferences.ui" line="607"/>
-        <location filename="dlgpreferences.ui" line="808"/>
+        <location filename="dlgpreferences.ui" line="423"/>
+        <location filename="dlgpreferences.ui" line="624"/>
         <source>Background color: </source>
         <translation>Culoarea fundalului: </translation>
     </message>
     <message>
-        <location filename="dlgpreferences.ui" line="626"/>
-        <location filename="dlgpreferences.ui" line="827"/>
-        <location filename="dlgpreferences.ui" line="866"/>
+        <location filename="dlgpreferences.ui" line="442"/>
+        <location filename="dlgpreferences.ui" line="643"/>
+        <location filename="dlgpreferences.ui" line="682"/>
         <source>Choose ...</source>
         <translation>Alege ...</translation>
     </message>
     <message>
-        <location filename="dlgpreferences.ui" line="660"/>
+        <location filename="dlgpreferences.ui" line="476"/>
         <source> Secondary window  </source>
         <translation> Fereastra secundară  </translation>
     </message>
     <message>
-        <location filename="dlgpreferences.ui" line="687"/>
+        <location filename="dlgpreferences.ui" line="503"/>
         <source>Visible</source>
         <translation>Vizibil</translation>
     </message>
     <message>
-        <location filename="dlgpreferences.ui" line="715"/>
+        <location filename="dlgpreferences.ui" line="531"/>
         <source> Caption settins  </source>
         <translation> Setări antet  </translation>
     </message>
     <message>
-        <location filename="dlgpreferences.ui" line="721"/>
+        <location filename="dlgpreferences.ui" line="537"/>
         <source>Window caption is visible</source>
         <translation>Antetul ferestrei este vizibil</translation>
     </message>
     <message>
-        <location filename="dlgpreferences.ui" line="746"/>
+        <location filename="dlgpreferences.ui" line="562"/>
         <source>Background ...</source>
         <translation>Culoarea fundalului ...</translation>
     </message>
     <message>
-        <location filename="dlgpreferences.ui" line="771"/>
+        <location filename="dlgpreferences.ui" line="587"/>
         <source>Text ...</source>
         <translation>Text ...</translation>
     </message>
     <message>
-        <location filename="dlgpreferences.ui" line="800"/>
+        <location filename="dlgpreferences.ui" line="616"/>
         <source> Window settings </source>
         <translation> Setări ferestre </translation>
     </message>
     <message>
-        <location filename="dlgpreferences.ui" line="847"/>
+        <location filename="dlgpreferences.ui" line="663"/>
         <source>Frame color: </source>
         <translation>Culoarea cadru: </translation>
     </message>
     <message>
-        <location filename="dlgpreferences.ui" line="916"/>
+        <location filename="dlgpreferences.ui" line="732"/>
         <source> Panels </source>
         <translation> Panouri </translation>
     </message>
     <message>
-        <location filename="dlgpreferences.ui" line="930"/>
+        <location filename="dlgpreferences.ui" line="746"/>
         <source>Number of &amp;panels in a row:</source>
         <translation>Numărul &amp;panourilor într-un rând:</translation>
     </message>
     <message>
-        <location filename="dlgpreferences.ui" line="965"/>
+        <location filename="dlgpreferences.ui" line="781"/>
         <source>    Device usage is visible on main window</source>
         <translation>    Utilizarea dispozitivului este vizibil în fereastra principală</translation>
     </message>
     <message>
-        <location filename="dlgpreferences.ui" line="989"/>
+        <location filename="dlgpreferences.ui" line="805"/>
         <source>Panel settings ...</source>
         <translation>Setări panou ...</translation>
     </message>
     <message>
-        <location filename="dlgpreferences.ui" line="1020"/>
+        <location filename="dlgpreferences.ui" line="836"/>
         <source> If device is stopped by guest ... </source>
         <translation> Dacă dispozitivul este oprit de oaspete ... </translation>
     </message>
     <message>
-        <location filename="dlgpreferences.ui" line="1026"/>
+        <location filename="dlgpreferences.ui" line="842"/>
         <source>the STOP sign will be visible on the Status line</source>
         <translation>semnul STOP va fi vizibil pe linia de Stare</translation>
     </message>
     <message>
-        <location filename="dlgpreferences.ui" line="1033"/>
+        <location filename="dlgpreferences.ui" line="849"/>
         <source>the STOP sign will be visible under the Status line</source>
         <translation>semnul STOP va fi vizibil sub linia de Stare</translation>
     </message>
     <message>
-        <location filename="dlgpreferences.ui" line="1057"/>
+        <location filename="dlgpreferences.ui" line="873"/>
         <source>Device</source>
         <translation>Dispozitiv</translation>
     </message>
     <message>
-        <location filename="dlgpreferences.ui" line="1063"/>
+        <location filename="dlgpreferences.ui" line="879"/>
         <source> Device ledger </source>
         <translation> Registrul dispozitivului </translation>
     </message>
     <message>
-        <location filename="dlgpreferences.ui" line="1071"/>
+        <location filename="dlgpreferences.ui" line="887"/>
         <source>VAT percent for device usage :</source>
         <translation>Procent TVA pentru folosirea dispozitivului :</translation>
     </message>
     <message>
-        <location filename="dlgpreferences.ui" line="1112"/>
+        <location filename="dlgpreferences.ui" line="928"/>
         <source> Settings </source>
         <translation> Setări </translation>
     </message>
     <message>
-        <location filename="dlgpreferences.ui" line="1120"/>
+        <location filename="dlgpreferences.ui" line="936"/>
         <source>Password for device admin :</source>
         <translation>Parola administratorului dispozitivului :</translation>
     </message>
     <message>
-        <location filename="dlgpreferences.ui" line="1144"/>
+        <location filename="dlgpreferences.ui" line="960"/>
         <source>Retype password :</source>
         <translation>Retastează parola :</translation>
     </message>
     <message>
-        <location filename="dlgpreferences.ui" line="1173"/>
+        <location filename="dlgpreferences.ui" line="989"/>
         <source>Device admin can ...</source>
         <translation>Administratorul dispozitivului poate ...</translation>
     </message>
     <message>
-        <location filename="dlgpreferences.ui" line="1183"/>
+        <location filename="dlgpreferences.ui" line="999"/>
         <source>reset worktime of device</source>
         <translation>reseta timpul de operare al dispozitivului</translation>
     </message>
     <message>
-        <location filename="dlgpreferences.ui" line="1198"/>
+        <location filename="dlgpreferences.ui" line="1014"/>
         <source>set application expiration date to </source>
         <translation>seta data expirării aplicației la </translation>
     </message>
     <message>
-        <location filename="dlgpreferences.ui" line="1240"/>
+        <location filename="dlgpreferences.ui" line="1056"/>
         <source> Status text </source>
         <translation> Text stare </translation>
     </message>
     <message>
-        <location filename="dlgpreferences.ui" line="1246"/>
+        <location filename="dlgpreferences.ui" line="1062"/>
         <source>Display the defined text when ...</source>
         <translation>Afișează textul definit când ...</translation>
     </message>
     <message>
-        <location filename="dlgpreferences.ui" line="1255"/>
+        <location filename="dlgpreferences.ui" line="1071"/>
         <source>the device is not sterile :</source>
         <translation>dispozitivul nu este steril :</translation>
     </message>
     <message>
-        <location filename="dlgpreferences.ui" line="1267"/>
-        <location filename="dlgpreferences.ui" line="1288"/>
-        <location filename="dlgpreferences.ui" line="1309"/>
+        <location filename="dlgpreferences.ui" line="1083"/>
+        <location filename="dlgpreferences.ui" line="1104"/>
+        <location filename="dlgpreferences.ui" line="1125"/>
         <source>Visible on secondary window</source>
         <translation>Vizibul în fereastra secundară</translation>
     </message>
     <message>
-        <location filename="dlgpreferences.ui" line="1276"/>
+        <location filename="dlgpreferences.ui" line="1092"/>
         <source>tube replacement is needed :</source>
         <translation>tubul trebuie înlocuit:</translation>
     </message>
     <message>
-        <location filename="dlgpreferences.ui" line="1297"/>
+        <location filename="dlgpreferences.ui" line="1113"/>
         <source>device clean is needed :</source>
         <translation>dispozitivul trebuie curățat :</translation>
     </message>
     <message>
-        <location filename="dlgpreferences.ui" line="1337"/>
+        <location filename="dlgpreferences.ui" line="1153"/>
         <source>Patientcard</source>
         <translation>Card de pacient</translation>
     </message>
     <message>
-        <location filename="dlgpreferences.ui" line="1343"/>
+        <location filename="dlgpreferences.ui" line="1159"/>
         <source> Barcode </source>
         <translation> Cod de bare </translation>
     </message>
     <message>
-        <location filename="dlgpreferences.ui" line="1349"/>
+        <location filename="dlgpreferences.ui" line="1165"/>
         <source>Barcode length:</source>
         <translation>Lungimea codului de bare:</translation>
     </message>
     <message>
-        <location filename="dlgpreferences.ui" line="1392"/>
+        <location filename="dlgpreferences.ui" line="1208"/>
         <source>Barcode prefix:</source>
         <translation>Prefixul codului de bare:</translation>
     </message>
     <message>
-        <location filename="dlgpreferences.ui" line="1419"/>
+        <location filename="dlgpreferences.ui" line="1235"/>
         <source>Product barcode length
 is different :</source>
         <translation>Lungimea codului de bare al produsului
 este diferit :</translation>
     </message>
     <message>
-        <location filename="dlgpreferences.ui" line="1434"/>
+        <location filename="dlgpreferences.ui" line="1250"/>
         <source>Hidden for general users: </source>
         <translation>Ascuns pentru utilizatorii generali: </translation>
     </message>
     <message>
-        <location filename="dlgpreferences.ui" line="1451"/>
+        <location filename="dlgpreferences.ui" line="1267"/>
         <source> In case of loss </source>
         <translation> În caz de pierdere </translation>
     </message>
     <message>
-        <location filename="dlgpreferences.ui" line="1459"/>
+        <location filename="dlgpreferences.ui" line="1275"/>
         <source>Price of replace lost patientcard :</source>
         <translation>Prețul înlocuirii cadrului de pacient pierdut :</translation>
     </message>
     <message>
-        <location filename="dlgpreferences.ui" line="1499"/>
-        <location filename="dlgpreferences.ui" line="1602"/>
+        <location filename="dlgpreferences.ui" line="1315"/>
+        <location filename="dlgpreferences.ui" line="1418"/>
         <source>including</source>
         <translation>include</translation>
     </message>
     <message>
-        <location filename="dlgpreferences.ui" line="1522"/>
-        <location filename="dlgpreferences.ui" line="1625"/>
+        <location filename="dlgpreferences.ui" line="1338"/>
+        <location filename="dlgpreferences.ui" line="1441"/>
         <source>VAT</source>
         <translation>TVA</translation>
     </message>
     <message>
-        <location filename="dlgpreferences.ui" line="1542"/>
-        <location filename="dlgpreferences.ui" line="1645"/>
+        <location filename="dlgpreferences.ui" line="1358"/>
+        <location filename="dlgpreferences.ui" line="1461"/>
         <source>TextLabel</source>
         <translation>EtichetăText</translation>
     </message>
     <message>
-        <location filename="dlgpreferences.ui" line="1554"/>
+        <location filename="dlgpreferences.ui" line="1370"/>
         <source> Partner patientcard </source>
         <translation> Card de pacient al partenerului </translation>
     </message>
     <message>
-        <location filename="dlgpreferences.ui" line="1562"/>
+        <location filename="dlgpreferences.ui" line="1378"/>
         <source>Price of assigning partner card to activated card :</source>
         <translation>Prețul alocării cardului de partener la cardul activat :</translation>
     </message>
     <message>
-        <location filename="dlgpreferences.ui" line="1657"/>
+        <location filename="dlgpreferences.ui" line="1473"/>
         <source> When patientcard identified for usage ... </source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="dlgpreferences.ui" line="1665"/>
+        <location filename="dlgpreferences.ui" line="1481"/>
         <source>Show owner&apos;s last visit information</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="dlgpreferences.ui" line="1675"/>
+        <location filename="dlgpreferences.ui" line="1491"/>
         <source>on main window</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="dlgpreferences.ui" line="1688"/>
+        <location filename="dlgpreferences.ui" line="1504"/>
         <source>on secondary window</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="dlgpreferences.ui" line="1712"/>
+        <location filename="dlgpreferences.ui" line="1528"/>
         <source>and close the information window after</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="dlgpreferences.ui" line="1735"/>
+        <location filename="dlgpreferences.ui" line="1551"/>
         <source>seconds (0 means the window remains opened)</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="dlgpreferences.ui" line="1774"/>
+        <location filename="dlgpreferences.ui" line="1590"/>
         <source>Cassa</source>
         <translation>Casă</translation>
     </message>
     <message>
-        <location filename="dlgpreferences.ui" line="1780"/>
+        <location filename="dlgpreferences.ui" line="1596"/>
         <source>Automatically close cassa when user log out</source>
         <translation>Închide automat casa la deautentificarea utilizatorului</translation>
     </message>
     <message>
-        <location filename="dlgpreferences.ui" line="1783"/>
+        <location filename="dlgpreferences.ui" line="1599"/>
         <source>Auto close cassa</source>
         <translation>Închidere automată a casei</translation>
     </message>
     <message>
-        <location filename="dlgpreferences.ui" line="1808"/>
+        <location filename="dlgpreferences.ui" line="1624"/>
         <source>Automatically add cash withdrawal</source>
         <translation>Adaugă automat retragere de numerar</translation>
     </message>
     <message>
-        <location filename="dlgpreferences.ui" line="1817"/>
+        <location filename="dlgpreferences.ui" line="1633"/>
         <source>Automatically create new cassa when date has been changed</source>
         <translation>Creează automat casă nouă la schimbarea datei</translation>
     </message>
     <message>
-        <location filename="dlgpreferences.ui" line="1847"/>
+        <location filename="dlgpreferences.ui" line="1663"/>
         <source>With the previous cassa balance</source>
         <translation>Cu balanța anterioară a casei</translation>
     </message>
     <message>
-        <location filename="dlgpreferences.ui" line="1857"/>
+        <location filename="dlgpreferences.ui" line="1673"/>
         <source>with empty cassa</source>
         <translation>cu casa goală</translation>
     </message>
     <message>
-        <location filename="dlgpreferences.ui" line="1868"/>
+        <location filename="dlgpreferences.ui" line="1684"/>
         <source> Currency settings </source>
         <translation> Setări valută </translation>
     </message>
     <message>
-        <location filename="dlgpreferences.ui" line="1874"/>
+        <location filename="dlgpreferences.ui" line="1690"/>
         <source>Full name :</source>
         <translation>Numele integral :</translation>
     </message>
     <message>
-        <location filename="dlgpreferences.ui" line="1901"/>
+        <location filename="dlgpreferences.ui" line="1717"/>
         <source>Short name :</source>
         <translation>Numele prescurtat :</translation>
     </message>
     <message>
-        <location filename="dlgpreferences.ui" line="1924"/>
+        <location filename="dlgpreferences.ui" line="1740"/>
         <source>Decimal symbol :</source>
         <translation>Separator zecimal :</translation>
     </message>
     <message>
-        <location filename="dlgpreferences.ui" line="1947"/>
+        <location filename="dlgpreferences.ui" line="1763"/>
         <source>Digit grouping symbol :</source>
         <translation>Separator pentru mii :</translation>
     </message>
     <message>
-        <location filename="dlgpreferences.ui" line="1987"/>
+        <location filename="dlgpreferences.ui" line="1803"/>
         <source>Notification</source>
         <translation>Notificare</translation>
     </message>
     <message>
-        <location filename="dlgpreferences.ui" line="1993"/>
+        <location filename="dlgpreferences.ui" line="1809"/>
         <source> Send automatic email when ... </source>
         <translation> Trimite e-mail automat când ... </translation>
     </message>
     <message>
-        <location filename="dlgpreferences.ui" line="1999"/>
+        <location filename="dlgpreferences.ui" line="1815"/>
         <source>patientcard sold to studio patient</source>
         <translation>cardul de pacient este vândut unui pacient al studioului</translation>
     </message>
     <message>
-        <location filename="dlgpreferences.ui" line="2006"/>
+        <location filename="dlgpreferences.ui" line="1822"/>
         <source>patientcard has been used</source>
         <translation>cardul de pacient a fost folosit</translation>
     </message>
     <message>
-        <location filename="dlgpreferences.ui" line="2015"/>
+        <location filename="dlgpreferences.ui" line="1831"/>
         <source>patientcard will be expire in </source>
         <translation>cardul de pacient va expira în </translation>
     </message>
     <message>
-        <location filename="dlgpreferences.ui" line="2038"/>
+        <location filename="dlgpreferences.ui" line="1854"/>
         <source>days</source>
         <translation>zile</translation>
     </message>
     <message>
-        <location filename="dlgpreferences.ui" line="2060"/>
+        <location filename="dlgpreferences.ui" line="1876"/>
         <source>number of units of patientcard has changed</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="dlgpreferences.ui" line="2092"/>
+        <location filename="dlgpreferences.ui" line="1908"/>
         <source>Please note automatic mail only be sent to patients with registered e-mail address!</source>
         <translation>Te rog să ai în vedere faptul că e-mailul automat poate fi trimis numai pacienților cu adresa de e-mail înregistrată!</translation>
     </message>
     <message>
-        <location filename="dlgpreferences.ui" line="2105"/>
+        <location filename="dlgpreferences.ui" line="1921"/>
         <source> CardyGo integration </source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="dlgpreferences.ui" line="2111"/>
+        <location filename="dlgpreferences.ui" line="1927"/>
         <source>Synchronize with CardyGo</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="dlgpreferences.ui" line="2143"/>
+        <location filename="dlgpreferences.ui" line="1959"/>
         <source>Please note CardyGo integration works only for patients with registered e-mail address!</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="dlgpreferences.ui" line="2170"/>
+        <location filename="dlgpreferences.ui" line="1986"/>
         <source>Server</source>
         <translation>Server</translation>
     </message>
     <message>
-        <location filename="dlgpreferences.ui" line="2179"/>
+        <location filename="dlgpreferences.ui" line="1995"/>
         <source> Http server settings </source>
         <translation> Setări server HTTP </translation>
     </message>
     <message>
-        <location filename="dlgpreferences.ui" line="2185"/>
+        <location filename="dlgpreferences.ui" line="2001"/>
         <source>Server address :</source>
         <translation>Adresa serverului :</translation>
     </message>
     <message>
-        <location filename="dlgpreferences.ui" line="2205"/>
+        <location filename="dlgpreferences.ui" line="2021"/>
         <source> Actions </source>
         <translation> Acțiuni </translation>
     </message>
     <message>
-        <location filename="dlgpreferences.ui" line="2216"/>
+        <location filename="dlgpreferences.ui" line="2032"/>
         <source>Enable synchronization</source>
         <translation>Permite sincronizarea</translation>
     </message>
     <message>
-        <location filename="dlgpreferences.ui" line="2265"/>
+        <location filename="dlgpreferences.ui" line="2081"/>
         <source> Licence check settings </source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="dlgpreferences.ui" line="2273"/>
+        <location filename="dlgpreferences.ui" line="2089"/>
         <source>Checking licence validity after </source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="dlgpreferences.ui" line="2296"/>
+        <location filename="dlgpreferences.ui" line="2112"/>
         <source>work hours</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="dlgpreferences.ui" line="2307"/>
+        <location filename="dlgpreferences.ui" line="2123"/>
         <source>Maximum work hours without licence check</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="dlgpreferences.ui" line="2332"/>
+        <location filename="dlgpreferences.ui" line="2148"/>
         <source>Licence will be checked in %1 hours</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="dlgpreferences.ui" line="2365"/>
+        <location filename="dlgpreferences.ui" line="2181"/>
         <source>Remaining work hours: %1</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="dlgpreferences.ui" line="2844"/>
+        <location filename="dlgpreferences.ui" line="2660"/>
         <source>Allow obsolete patientcard units to be deleted automatically. </source>
         <oldsource>Allow obsolete patientcard units to be deleted automatically</oldsource>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="dlgpreferences.ui" line="2851"/>
+        <location filename="dlgpreferences.ui" line="2667"/>
         <source>Obsolete units older than </source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="dlgpreferences.ui" line="2874"/>
+        <location filename="dlgpreferences.ui" line="2690"/>
         <source>days can be deleted.</source>
         <translation type="unfinished"></translation>
     </message>
@@ -11411,7 +11433,7 @@ este diferit :</translation>
         <translation type="obsolete">Testează conexiunea</translation>
     </message>
     <message>
-        <location filename="dlgpreferences.ui" line="2240"/>
+        <location filename="dlgpreferences.ui" line="2056"/>
         <source>Auto start WebSync application</source>
         <translation>Pornește automat aplicația WebSync</translation>
     </message>
@@ -11428,164 +11450,164 @@ este diferit :</translation>
         <translation type="obsolete">Lungimea mesajului HTTP este afișată în secunde :</translation>
     </message>
     <message>
-        <location filename="dlgpreferences.ui" line="2389"/>
+        <location filename="dlgpreferences.ui" line="2205"/>
         <source>Hardware</source>
         <translation>Hardware</translation>
     </message>
     <message>
-        <location filename="dlgpreferences.ui" line="2395"/>
+        <location filename="dlgpreferences.ui" line="2211"/>
         <source> Communication </source>
         <translation> Comunicare </translation>
     </message>
     <message>
-        <location filename="dlgpreferences.ui" line="2401"/>
+        <location filename="dlgpreferences.ui" line="2217"/>
         <source>Through serial port</source>
         <translation>Prin portul serial</translation>
     </message>
     <message>
-        <location filename="dlgpreferences.ui" line="2413"/>
+        <location filename="dlgpreferences.ui" line="2229"/>
         <source>COM Port:</source>
         <translation>Port COM:</translation>
     </message>
     <message>
-        <location filename="dlgpreferences.ui" line="2420"/>
-        <location filename="dlgpreferences.ui" line="2552"/>
+        <location filename="dlgpreferences.ui" line="2236"/>
+        <location filename="dlgpreferences.ui" line="2368"/>
         <source>COM</source>
         <translation>COM</translation>
     </message>
     <message>
-        <location filename="dlgpreferences.ui" line="2451"/>
+        <location filename="dlgpreferences.ui" line="2267"/>
         <source> Force application to ... </source>
         <translation> Forțează aplicația să ... </translation>
     </message>
     <message>
-        <location filename="dlgpreferences.ui" line="2459"/>
+        <location filename="dlgpreferences.ui" line="2275"/>
         <source>send current time value to modul</source>
         <translation>trimite valoarea actuală de timp la modul</translation>
     </message>
     <message>
-        <location filename="dlgpreferences.ui" line="2498"/>
+        <location filename="dlgpreferences.ui" line="2314"/>
         <source>seconds from beginning of preparation time.</source>
         <translation>secunde de la începerea timpului de pregătire.</translation>
     </message>
     <message>
-        <location filename="dlgpreferences.ui" line="2520"/>
+        <location filename="dlgpreferences.ui" line="2336"/>
         <source>check modul buttons state</source>
         <translation>verifică starea butoanelor de modul</translation>
     </message>
     <message>
-        <location filename="dlgpreferences.ui" line="2530"/>
+        <location filename="dlgpreferences.ui" line="2346"/>
         <source> RFID device </source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="dlgpreferences.ui" line="2538"/>
+        <location filename="dlgpreferences.ui" line="2354"/>
         <source>RFID device connected and enabled</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="dlgpreferences.ui" line="2545"/>
+        <location filename="dlgpreferences.ui" line="2361"/>
         <source>on COM Port:</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="dlgpreferences.ui" line="2597"/>
+        <location filename="dlgpreferences.ui" line="2413"/>
         <source>Database</source>
         <translation>Baza de date</translation>
     </message>
     <message>
-        <location filename="dlgpreferences.ui" line="2603"/>
+        <location filename="dlgpreferences.ui" line="2419"/>
         <source> Database server </source>
         <translation> Server-ul bazei de date </translation>
     </message>
     <message>
-        <location filename="dlgpreferences.ui" line="2611"/>
+        <location filename="dlgpreferences.ui" line="2427"/>
         <source>Location of binaries :</source>
         <translation>Locația binarelor :</translation>
     </message>
     <message>
-        <location filename="dlgpreferences.ui" line="2631"/>
-        <location filename="dlgpreferences.ui" line="2667"/>
+        <location filename="dlgpreferences.ui" line="2447"/>
+        <location filename="dlgpreferences.ui" line="2483"/>
         <source>...</source>
         <translation>...</translation>
     </message>
     <message>
-        <location filename="dlgpreferences.ui" line="2643"/>
+        <location filename="dlgpreferences.ui" line="2459"/>
         <source> Database backup </source>
         <translation> Copie de siguranță a bazei de date </translation>
     </message>
     <message>
-        <location filename="dlgpreferences.ui" line="2651"/>
+        <location filename="dlgpreferences.ui" line="2467"/>
         <source>Backup location :</source>
         <translation>Locația copiei de siguranță a bazei de date :</translation>
     </message>
     <message>
-        <location filename="dlgpreferences.ui" line="2676"/>
+        <location filename="dlgpreferences.ui" line="2492"/>
         <source>Force to backup database on exit (activated only once)</source>
         <translation>Forțează copierea de siguranță a bazei de date la ieșire (activat numai o singură dată)</translation>
     </message>
     <message>
-        <location filename="dlgpreferences.ui" line="2683"/>
+        <location filename="dlgpreferences.ui" line="2499"/>
         <source>Enable automatic database backup if confirmed</source>
         <translation>Permite copierea de siguranță automată a bazei de date dacă se confirmă</translation>
     </message>
     <message>
-        <location filename="dlgpreferences.ui" line="2710"/>
+        <location filename="dlgpreferences.ui" line="2526"/>
         <source>after every exit</source>
         <translation>după fiecare ieșire</translation>
     </message>
     <message>
-        <location filename="dlgpreferences.ui" line="2717"/>
+        <location filename="dlgpreferences.ui" line="2533"/>
         <source>after exit if cassa is closed</source>
         <translation>după ieșire, dacă casa este închisă</translation>
     </message>
     <message>
-        <location filename="dlgpreferences.ui" line="2724"/>
+        <location filename="dlgpreferences.ui" line="2540"/>
         <source>after exit on the last day of the week</source>
         <translation>după ieșire, în ultima zi a săptămânii</translation>
     </message>
     <message>
-        <location filename="dlgpreferences.ui" line="2731"/>
+        <location filename="dlgpreferences.ui" line="2547"/>
         <source>after exit on the last day of the month</source>
         <translation>după ieșire, în ultima zi a lunii</translation>
     </message>
     <message>
-        <location filename="dlgpreferences.ui" line="2738"/>
+        <location filename="dlgpreferences.ui" line="2554"/>
         <source>after exit on the selected day(s)</source>
         <translation>după ieșire, în ziua (zilele) selectată (selectate)</translation>
     </message>
     <message>
-        <location filename="dlgpreferences.ui" line="2747"/>
+        <location filename="dlgpreferences.ui" line="2563"/>
         <source>Monday</source>
         <translation>Luni</translation>
     </message>
     <message>
-        <location filename="dlgpreferences.ui" line="2757"/>
+        <location filename="dlgpreferences.ui" line="2573"/>
         <source>Tuesday</source>
         <translation>Marți</translation>
     </message>
     <message>
-        <location filename="dlgpreferences.ui" line="2764"/>
+        <location filename="dlgpreferences.ui" line="2580"/>
         <source>Wednesday</source>
         <translation>Miercuri</translation>
     </message>
     <message>
-        <location filename="dlgpreferences.ui" line="2771"/>
+        <location filename="dlgpreferences.ui" line="2587"/>
         <source>Thursday</source>
         <translation>Joi</translation>
     </message>
     <message>
-        <location filename="dlgpreferences.ui" line="2778"/>
+        <location filename="dlgpreferences.ui" line="2594"/>
         <source>Friday</source>
         <translation>Vineri</translation>
     </message>
     <message>
-        <location filename="dlgpreferences.ui" line="2802"/>
+        <location filename="dlgpreferences.ui" line="2618"/>
         <source>Saturday</source>
         <translation>Sâmbătă</translation>
     </message>
     <message>
-        <location filename="dlgpreferences.ui" line="2809"/>
+        <location filename="dlgpreferences.ui" line="2625"/>
         <source>Sunday</source>
         <translation>Duminică</translation>
     </message>
