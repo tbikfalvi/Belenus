@@ -201,4 +201,4 @@ Version 2.2.0.0
 - Ha csak keszpenzzel inditjuk a gep hasznalatot, a program rakerdez, hogy az alkalmi vendeg adatait, nev, email cim rogzitse-e a program
 - A gep hasznalati idoket most mar kulon ablakban lehet kezelni egyszerubben
 - Megvaltozott a gep beallitasok ablaka
-
+- Regi log file-okat torli a rendszer
