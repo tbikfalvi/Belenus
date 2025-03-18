@@ -4,8 +4,8 @@
 //
 //====================================================================================
 
-#define APPLICATION_VERSION_NUMBER  "2.1.3.0"
-#define DATABASE_VERSION_NUMBER     "2.1.3.0"
+#define APPLICATION_VERSION_NUMBER  "2.2.0.0"
+#define DATABASE_VERSION_NUMBER     "2.2.0.0"
 
 //====================================================================================
 
@@ -43,10 +43,6 @@
 
 QApplication            *apMainApp;
 cQTLogger                g_obLogger;
-//DatabaseWriter           g_obLogDBWriter;
-//GUIWriter                g_obLogGUIWriter;
-//ConsoleWriter            g_obLogConsoleWriter;
-//FileWriter               g_obLogFileWriter("client_%1_%2.log");
 FileWriter               g_obLogFileWriter("belenus_%1.log");
 cQTMySQLConnection      *g_poDB;
 cDBUser                  g_obUser;
@@ -276,6 +272,45 @@ int main( int argc, char *argv[] )
         g_poDB->executeQTQuery( QString( "DELETE FROM httpsendmail WHERE recipients = \"\" " ) );
 
         qsSpalsh += QObject::tr("FINISHED\n");
+        obSplash.showMessage(qsSpalsh,Qt::AlignLeft,QColor(59,44,75));
+
+        qsSpalsh += QObject::tr("Delete obsolete patientcard units: ");
+        obSplash.showMessage(qsSpalsh,Qt::AlignLeft,QColor(59,44,75));
+
+        if( g_poPrefs->isDBAllowDeleteObsoleteUnits() )
+        {
+            g_poDB->executeQTQuery( QString( "DELETE FROM patientcardunits WHERE validDateTo < DATE_SUB(NOW(), INTERVAL %1 DAY) " ).arg( g_poPrefs->getObsolateUnitsDays() ) );
+            qsSpalsh += QObject::tr("FINISHED\n");
+
+            QSqlQuery *poQuery = g_poDB->executeQTQuery( QString( "SELECT ROW_COUNT()" ) );
+            if( poQuery->first() )
+            {
+                qsSpalsh += QObject::tr("   Number of deleted units: %1").arg( poQuery->value( 0 ).toInt() );
+                qsSpalsh += "\n";
+                obSplash.showMessage(qsSpalsh,Qt::AlignLeft,QColor(59,44,75));
+            }
+        }
+        else
+        {
+            qsSpalsh += QObject::tr("DISABLED\n");
+        }
+        obSplash.showMessage(qsSpalsh,Qt::AlignLeft,QColor(59,44,75));
+
+        // DELETE FROM `patientcardhistories` WHERE modified < DATE_SUB(NOW(), INTERVAL 365 DAY);
+
+        qsSpalsh += QObject::tr("Deleting old log files: ");
+        obSplash.showMessage(qsSpalsh,Qt::AlignLeft,QColor(59,44,75));
+
+        if( g_poPrefs->isLogFilesDeleteAllowed() )
+        {
+            int nFilesDeleted = g_obGen.deleteOldLogFiles( g_poPrefs->getDeleteLogFilesMonths() );
+            qsSpalsh += QObject::tr("FINISHED with deleting %1 files").arg( nFilesDeleted );
+            qsSpalsh += "\n";
+        }
+        else
+        {
+            qsSpalsh += QObject::tr("DISABLED\n");
+        }
         obSplash.showMessage(qsSpalsh,Qt::AlignLeft,QColor(59,44,75));
 
         qsSpalsh += "-----------------------------------------------------\n";

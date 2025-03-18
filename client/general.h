@@ -64,6 +64,8 @@ public:
     bool             isArchiveOnDifferentPath();
     void             setWindowMainWidget( QWidget *poWindow );
     void             setWindowSecondaryWidget( QWidget *poWindow );
+    int              deleteOldLogFiles( int p_nDeleteLogFileMonths );
+
 
     QSystemTrayIcon *m_stIcon;
 

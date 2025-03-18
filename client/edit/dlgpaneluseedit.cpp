@@ -4,7 +4,7 @@
 #include "dlgpaneluseedit.h"
 #include "belenus.h"
 
-cDlgPanelUseEdit::cDlgPanelUseEdit( QWidget *p_poParent, cDBPanelUses *p_poPanelUses, unsigned int p_inPanelId )
+cDlgPanelUseEdit::cDlgPanelUseEdit(QWidget *p_poParent, cDBPanelUses *p_poPanelUses )
     : QDialog( p_poParent )
 {
     cTracer obTrace( "cDlgPanelUseEdit::cDlgPanelUseEdit" );
@@ -12,7 +12,7 @@ cDlgPanelUseEdit::cDlgPanelUseEdit( QWidget *p_poParent, cDBPanelUses *p_poPanel
     setupUi( this );
 
     setWindowTitle( tr( "Device uses" ) );
-    setWindowIcon( QIcon("./resources/40x40_device_settings.png") );
+    setWindowIcon( QIcon("./resources/40x40_device_time.png") );
 
     pbSave->setIcon( QIcon("./resources/40x40_ok.png") );
     pbCancel->setIcon( QIcon("./resources/40x40_cancel.png") );
@@ -20,7 +20,6 @@ cDlgPanelUseEdit::cDlgPanelUseEdit( QWidget *p_poParent, cDBPanelUses *p_poPanel
     lblCurrency->setText( g_poPrefs->getCurrencyShort() );
 
     m_poPanelUses   = p_poPanelUses;
-    m_inPanelId     = p_inPanelId;
 
     if( m_poPanelUses )
     {
@@ -29,12 +28,32 @@ cDlgPanelUseEdit::cDlgPanelUseEdit( QWidget *p_poParent, cDBPanelUses *p_poPanel
 
         cCurrency   cPrice( m_poPanelUses->usePrice() );
         ledUsePrice->setText( cPrice.currencyString() );
+
+        QString     qsQuery  = QString( "SELECT panelId, title FROM panels WHERE panelId>0" );
+        QSqlQuery   *poQuery = g_poDB->executeQTQuery( qsQuery );
+
+        while( poQuery->next() )
+        {
+            listPanels->addItem( QString("(%1) %2").arg(poQuery->value(0).toString()).arg(poQuery->value(1).toString()) );
+
+            if( m_poPanelUses->panelIds().contains( poQuery->value(0).toString() ) )
+            {
+                listPanels->setItemSelected( listPanels->item( listPanels->count()-1 ), true );
+            }
+        }
     }
+
+    connect( listPanels, SIGNAL(itemSelectionChanged()), this, SLOT(updateButtonCopy()) );
+
     on_ledUsePrice_textEdited("");
+
+    QPoint  qpDlgSize = g_poPrefs->getDialogSize( "PanelUseEdit", QPoint(550,200) );
+    resize( qpDlgSize.x(), qpDlgSize.y() );
 }
 
 cDlgPanelUseEdit::~cDlgPanelUseEdit()
 {
+    g_poPrefs->setDialogSize( "PanelUseEdit", QPoint( width(), height() ) );
 }
 
 void cDlgPanelUseEdit::on_pbSave_clicked()
@@ -84,10 +103,28 @@ void cDlgPanelUseEdit::on_pbSave_clicked()
         QMessageBox::critical( this, tr( "Error" ), tr( "Price of usage must be greater than zero." ), QMessageBox::Ok );
     }
 
+    QStringList qslPanels;
+
+    foreach( QListWidgetItem *item, listPanels->selectedItems() )
+    {
+        QString text = item->text();
+
+        QRegExp rx("\\((\\d+)\\)"); // Keres egy (szám) mintát
+
+        if( rx.indexIn(text) != -1 )
+        {
+            qslPanels.append( rx.cap(1) ); // Az első zárójelek közötti számot adjuk hozzá
+        }
+    }
+    if( qslPanels.isEmpty() )
+    {
+        QMessageBox::warning( this, tr( "Warning" ), tr( "This device usage will not be displayed on any device." ), QMessageBox::Ok );
+    }
+
     if( boCanBeSaved )
     {
         m_poPanelUses->setLicenceId( g_poPrefs->getLicenceId() );
-        m_poPanelUses->setPanelId( m_inPanelId );
+        m_poPanelUses->setPanelIds( qslPanels.join(",") );
         m_poPanelUses->setName( ledUseName->text() );
         m_poPanelUses->setUseTime( ledUseTime->text().toInt() );
         m_poPanelUses->setUsePrice( cPrice.currencyValue().toInt() );

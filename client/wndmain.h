@@ -247,6 +247,7 @@ private slots:
     void slotAdWindowsStop();
     void slotWebSyncStart();
     void slotWindowPosition();
+    void on_action_DeviceTimes_triggered();
 };
 
 #endif

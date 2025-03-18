@@ -42,9 +42,9 @@ cDlgPreferences::cDlgPreferences( QWidget *p_poParent )
     // General page
     //---------------------------------------------------------------------------------------------------------------------------------------------------
 
-    sliConsoleLogLevel->setValue( 1 );
-    sliDBLogLevel->setValue( 1 );
-    sliGUILogLevel->setValue( 2 );
+//    sliConsoleLogLevel->setValue( 1 );
+//    sliDBLogLevel->setValue( 1 );
+//    sliGUILogLevel->setValue( 2 );
     sliFileLogLevel->setValue( g_poPrefs->getLogLevel() );
 
     m_inLangIdx = g_obLanguage.setLanguageCombo( cmbAppLang );
@@ -66,6 +66,9 @@ cDlgPreferences::cDlgPreferences( QWidget *p_poParent )
 
     chkFapad->setEnabled( g_obUser.isInGroup( cAccessGroup::SYSTEM ) );
     chkFapad->setChecked( g_poPrefs->isFapados() );
+
+    chkDeleteLogFilesMonths->setChecked( g_poPrefs->isLogFilesDeleteAllowed() );
+    ledDeleteLogFilesMonths->setText( QString::number( g_poPrefs->getDeleteLogFilesMonths() ) );
 
     //---------------------------------------------------------------------------------------------------------------------------------------------------
     // Appereance page
@@ -368,6 +371,9 @@ cDlgPreferences::cDlgPreferences( QWidget *p_poParent )
     chkSaturday->setChecked( qsBackupDays.contains(tr("Sat"), Qt::CaseInsensitive) );
     chkSunday->setChecked( qsBackupDays.contains(tr("Sun"), Qt::CaseInsensitive) );
 
+    chkDBAllowDeleteObsoleteUnit->setChecked( g_poPrefs->isDBAllowDeleteObsoleteUnits() );
+    ledObsoleteDays->setText( QString::number( g_poPrefs->getObsolateUnitsDays() ) );
+
     //---------------------------------------------------------------------------------------------------------------------------------------------------
     // Oldalak beallitasait feluliro modositasok
     //---------------------------------------------------------------------------------------------------------------------------------------------------
@@ -379,7 +385,7 @@ cDlgPreferences::cDlgPreferences( QWidget *p_poParent )
         tbwPreferences->setTabEnabled( 5, g_obUser.isInGroup( cAccessGroup::SYSTEM ) );
     }
 
-    lblConsoleLogLevel->setVisible( false );
+/*    lblConsoleLogLevel->setVisible( false );
     lblConsoleLogLevelValue->setVisible( false );
     sliConsoleLogLevel->setVisible( false );
 
@@ -390,7 +396,7 @@ cDlgPreferences::cDlgPreferences( QWidget *p_poParent )
     lblGUILogLevel->setVisible( false );
     lblGUILogLevelValue->setVisible( false );
     sliGUILogLevel->setVisible( false );
-
+*/
     chkAutoMailPCUnitChange->setVisible( false );
     chkAutoMailPCUnitChange->setEnabled( false );
 }
@@ -409,7 +415,7 @@ void cDlgPreferences::timerEvent(QTimerEvent *)
 
     setCursor( Qt::ArrowCursor);
 }
-
+/*
 void cDlgPreferences::on_sliConsoleLogLevel_valueChanged( int p_inValue )
 {
     lblConsoleLogLevelValue->setText( cSeverity::toStr( (cSeverity::teSeverity)p_inValue ) );
@@ -423,7 +429,7 @@ void cDlgPreferences::on_sliDBLogLevel_valueChanged( int p_inValue )
 void cDlgPreferences::on_sliGUILogLevel_valueChanged( int p_inValue )
 {
     lblGUILogLevelValue->setText( cSeverity::toStr( (cSeverity::teSeverity)p_inValue ) );
-}
+}*/
 
 void cDlgPreferences::on_sliFileLogLevel_valueChanged( int p_inValue )
 {
@@ -460,6 +466,13 @@ void cDlgPreferences::on_spbBarcodeLen_valueChanged( int p_inValue )
 
 void cDlgPreferences::accept()
 {
+    if( ledDeleteLogFilesMonths->text().toInt() < 1 )
+    {
+        QMessageBox::warning( this, tr("Attention"),
+                              tr("The specified number of months for deleting log files retrospectively cannot be less than one.") );
+        return;
+    }
+
     if( ledSeparatorDecimal->text().compare( ledSeparatorThousand->text() ) == 0 )
     {
         QMessageBox::warning( this, tr("Attention"),
@@ -658,7 +671,11 @@ void cDlgPreferences::accept()
     g_poPrefs->setRFIDEnabled( chkRFIDEnabled->isChecked() );
     g_poPrefs->setRFIDComPort( spbRFIDCOM->value() );
 
+    g_poPrefs->setDBAllowDeleteObsoleteUnits( chkDBAllowDeleteObsoleteUnit->isChecked() );
+    g_poPrefs->setObsoleteUnitsDays( ledObsoleteDays->text().toInt() );
 
+    g_poPrefs->setLogFilesDeleteAllowed( chkDeleteLogFilesMonths->isChecked() );
+    g_poPrefs->setDeleteLogFilesMonths( ledDeleteLogFilesMonths->text().toInt() );
 
     m_dlgProgress->showProgress();
         g_poPrefs->saveSettings();
@@ -795,8 +812,8 @@ void cDlgPreferences::_updateDatabaseLanguage()
     g_poDB->executeQTQuery( QString("UPDATE ledgerTypes SET name=\"%1\" WHERE ledgerTypeId=4 ").arg( tr("Selling product") ) );
     g_poDB->executeQTQuery( QString("UPDATE ledgerTypes SET name=\"%1\" WHERE ledgerTypeId=5 ").arg( tr("Replacing lost patientcard") ) );
     g_poDB->executeQTQuery( QString("UPDATE ledgerTypes SET name=\"%1\" WHERE ledgerTypeId=6 ").arg( tr("Assign patientcard") ) );
-    g_poDB->executeQTQuery( QString("UPDATE ledgerTypes SET name=\"%1\" WHERE ledgerTypeId=7 ").arg( tr("Other") ) );
-    g_poDB->executeQTQuery( QString("UPDATE ledgerTypes SET name=\"%1\" WHERE ledgerTypeId=8 ").arg( tr("Other") ) );
+    g_poDB->executeQTQuery( QString("UPDATE ledgerTypes SET name=\"%1\" WHERE ledgerTypeId=7 ").arg( tr("Selling patientcard online") ) );
+    g_poDB->executeQTQuery( QString("UPDATE ledgerTypes SET name=\"%1\" WHERE ledgerTypeId=8 ").arg( tr("Filling patientcard online") ) );
     g_poDB->executeQTQuery( QString("UPDATE ledgerTypes SET name=\"%1\" WHERE ledgerTypeId=9 ").arg( tr("Storage action") ) );
     g_poDB->executeQTQuery( QString("UPDATE ledgerTypes SET name=\"%1\" WHERE ledgerTypeId=10 ").arg( tr("Casssa expense") ) );
 

@@ -38,15 +38,14 @@ cDlgPatientSelect::cDlgPatientSelect(QWidget *p_poParent , QString p_qsNameFilte
     ledEmail->setObjectName( QString::fromUtf8( "ledEmail" ) );
     horizontalLayoutTop->addWidget( ledEmail );
 
+    lblMessage = new QLabel( this );
+    lblMessage->setObjectName( QString::fromUtf8( "lblMessage" ) );
+    lblMessage->setStyleSheet( "QLabel {font: bold; color: blue;}" );
+    lblMessage->setText( "" );
+    horizontalLayoutTop->addWidget( lblMessage );
+
     horizontalSpacerTop = new QSpacerItem( 13, 20, QSizePolicy::Expanding, QSizePolicy::Minimum );
     horizontalLayoutTop->addItem( horizontalSpacerTop );
-/*    lblUniqueId = new QLabel( this );
-    lblUniqueId->setObjectName( QString::fromUtf8( "lblUniqueId" ) );
-    lblUniqueId->setText( tr("Unique identifier: ") );
-    horizontalLayoutTop->addWidget( lblUniqueId );
-    ledUniqueId = new QLineEdit( this );
-    ledUniqueId->setObjectName( QString::fromUtf8( "ledUniqueId" ) );
-    horizontalLayoutTop->addWidget( ledUniqueId );*/
     verticalLayout->insertLayout( 0, horizontalLayoutTop );
 
     pbSelect = new QPushButton( tr( "Select" ), this );
@@ -72,7 +71,6 @@ cDlgPatientSelect::cDlgPatientSelect(QWidget *p_poParent , QString p_qsNameFilte
 
     connect( ledName, SIGNAL(textChanged(QString)), this, SLOT(refreshTable()) );
     connect( ledEmail, SIGNAL(textChanged(QString)), this, SLOT(refreshTable()) );
-//    connect( ledUniqueId, SIGNAL(textChanged(QString)), this, SLOT(refreshTable()) );
     connect( pbSelect, SIGNAL(clicked(bool)), this, SLOT(on_pbSelect_clicked()) );
 }
 
@@ -147,6 +145,17 @@ void cDlgPatientSelect::refreshTable()
         m_qsQuery = "SELECT patientId AS id, name, genderName, ageTypeName, email FROM patients, genders, ageTypes WHERE genders.genderId=patients.gender AND agetypes.ageTypeId=ageType AND patientId>0 AND active=1";
     }
 
+    if( ledName->text().length() < 3 )
+    {
+        lblMessage->setText( tr("   >> Please enter part of the guest's name! <<") );
+
+        m_qsQuery += " AND ";
+        m_qsQuery += QString( "patients.name = 'ilyen_allat_nem_letezik'" );
+        cDlgCrud::refreshTable();
+        return;
+    }
+    lblMessage->setText( "" );
+
     QString stTemp;
 
     stTemp = ledName->text();
@@ -161,13 +170,6 @@ void cDlgPatientSelect::refreshTable()
         m_qsQuery += " AND ";
         m_qsQuery += QString( "email LIKE '\%%1\%'" ).arg( stTemp );
     }
-//    stTemp = ledUniqueId->text();
-//    if( stTemp != "" )
-//    {
-//        m_qsQuery += " AND ";
-//        m_qsQuery += QString( "uniqueId LIKE '\%%1\%'" ).arg( stTemp );
-//    }
-
     cDlgCrud::refreshTable();
 }
 

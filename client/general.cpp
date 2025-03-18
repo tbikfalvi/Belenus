@@ -732,30 +732,48 @@ void cGeneral::setWindowSecondaryWidget( QWidget *poWindow )
 {
     m_poWindowSecondary = poWindow;
 }
-
 //====================================================================================
-//QString cGeneral::convertCurrency( int p_nCurrencyValue, QString p_qsCurrency )
-//====================================================================================
-/*{
-    QString qsValue = QString::number( p_nCurrencyValue );
-    QString qsRet = "";
+int cGeneral::deleteOldLogFiles(int p_nDeleteLogFileMonths)
+//------------------------------------------------------------------------------------
+{
+    int nFilesDeleted = 0;
 
-    if( qsValue.length() > 3 )
+    QDir logDir = QDir( QCoreApplication::applicationDirPath() ); // Log fájlok mappája
+    QStringList logFiles = logDir.entryList( QStringList() << "belenus_*.log", QDir::Files );
+
+    // Küszöb dátum: ennyi hónapnál régebbi fájlokat törlünk
+    QDate thresholdDate = QDate::currentDate().addMonths( -p_nDeleteLogFileMonths );
+
+    QRegExp rx("^belenus_(\\d{8})\\.log$"); // Regexp a dátum kiszedésére
+
+    foreach( QString fileName, logFiles )
     {
-        while( qsValue.length() > 3 )
+        if( rx.indexIn(fileName) != -1 )
         {
-            qsRet.insert( 0, qsValue.right(3) );
-            qsRet.insert( 0, g_poPrefs->getCurrencySeparator() );
-            qsValue.truncate( qsValue.length()-3 );
+            QString dateString = rx.cap(1); // Pl. "20250316"
+            QDate fileDate = QDate::fromString(dateString, "yyyyMMdd");
+
+            if( fileDate.isValid() && fileDate < thresholdDate )
+            {
+                QString filePath = logDir.filePath( fileName );
+                if( QFile::remove(filePath) )
+                {
+                    nFilesDeleted++;
+                    g_obLogger(cSeverity::DEBUG) << "Log file deleted: [" << filePath << "]" << EOM;
+                }
+                else
+                {
+                    g_obLogger(cSeverity::WARNING) << "Log file delete failed: [" << filePath << "]" << EOM;
+                }
+            }
         }
     }
-    qsRet.insert( 0, qsValue );
-    qsRet += " " + p_qsCurrency;
-
-    return qsRet;
-}*/
+    return nFilesDeleted;
+}
 //*********************************************************************************************************************
+//
 // Class cCurrency
+//
 //*********************************************************************************************************************
 cCurrency::cCurrency(const QString &p_qsCurrencyString, currType p_ctCurrencyType, int p_nVat)
 {

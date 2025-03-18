@@ -567,7 +567,7 @@ void cDlgExportImport::_importPanelUses()
             cCurrency cPrice( obFiles.at(i).toElement().attribute("price"), cCurrency::CURR_GROSS, 0 );
 
             obDBPanelUses.setLicenceId( g_poPrefs->getLicenceId() );
-            obDBPanelUses.setPanelId( 1 );
+            //obDBPanelUses.setPanelId( 1 );
             obDBPanelUses.setName( obFiles.at(i).toElement().attribute("name") );
             obDBPanelUses.setUseTime( obFiles.at(i).toElement().attribute("minute").toInt() );
             obDBPanelUses.setUsePrice( cPrice.currencyValue().toInt() );

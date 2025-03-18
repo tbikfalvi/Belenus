@@ -435,7 +435,7 @@ void cDlgPanelSettings::newClicked( bool )
     cDBPanelUses *poPanelUse = new cDBPanelUses;
     poPanelUse->createNew();
 
-    cDlgPanelUseEdit  obDlgEdit( this, poPanelUse, m_uiPanelId );
+    cDlgPanelUseEdit  obDlgEdit( this, poPanelUse );
     obDlgEdit.setWindowTitle( tr( "New paneluse" ) );
     if( obDlgEdit.exec() == QDialog::Accepted )
     {
@@ -455,7 +455,7 @@ void cDlgPanelSettings::editClicked( bool )
         poPanelUse = new cDBPanelUses;
         poPanelUse->load( m_uiSelectedId );
 
-        cDlgPanelUseEdit  obDlgEdit( this, poPanelUse, m_uiPanelId );
+        cDlgPanelUseEdit  obDlgEdit( this, poPanelUse );
         obDlgEdit.setWindowTitle( tr("Edit paneluse") );
         if( obDlgEdit.exec() == QDialog::Accepted )
         {

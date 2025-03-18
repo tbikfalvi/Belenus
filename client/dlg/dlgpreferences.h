@@ -34,9 +34,9 @@ private slots:
     void on_pbSecondaryWindow_toggled(bool checked);
     void on_pbPanelSettings_clicked();
     void on_chkAutoCloseCassa_clicked();
-    void on_sliConsoleLogLevel_valueChanged( int p_inValue );
+/*    void on_sliConsoleLogLevel_valueChanged( int p_inValue );
     void on_sliDBLogLevel_valueChanged( int p_inValue );
-    void on_sliGUILogLevel_valueChanged( int p_inValue );
+    void on_sliGUILogLevel_valueChanged( int p_inValue );*/
     void on_sliFileLogLevel_valueChanged( int p_inValue );
     void on_btnMainBackground_clicked( bool p_boClicked );
     void on_spbBarcodeLen_valueChanged( int p_inValue );

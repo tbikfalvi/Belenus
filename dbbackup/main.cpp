@@ -11,7 +11,7 @@
 #include "../framework/logger/FileWriter.h"
 #include "../language/language.h"
 
-#define APPLICATION_VERSION_NUMBER  "2.1.2.0"
+#define APPLICATION_VERSION_NUMBER  "2.2.0.0"
 
 QApplication            *apMainApp;
 cQTLogger                g_obLogger;
@@ -36,6 +36,11 @@ int main(int argc, char *argv[])
     else if( argc > 1 && strcmp(argv[1],"-execute") == 0 )
     {
         teAction = MainWindow::ACT_EXECUTE;
+        qsFileName = QString( argv[2] );
+    }
+    else if( argc > 1 && strcmp(argv[1],"-update") == 0 )
+    {
+        teAction = MainWindow::ACT_UPDATE;
         qsFileName = QString( argv[2] );
     }
 

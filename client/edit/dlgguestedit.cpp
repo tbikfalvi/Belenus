@@ -78,6 +78,7 @@ cDlgGuestEdit::cDlgGuestEdit( QWidget *p_poParent, cDBGuest *p_poGuest, cDBPostp
         ledName->setText( m_poGuest->name() );
         if( m_poGuest->gender() == 1 )              rbGenderMale->setChecked(true);
         else if( m_poGuest->gender() == 2 )         rbGenderFemale->setChecked(true);
+        else if( m_poGuest->gender() == 3 )         rbGenderNone->setChecked(true);
         if( m_poGuest->dateBirth().length() > 0 )
         {
             deBirthDate->setDate( QDate::fromString(m_poGuest->dateBirth(),"yyyy-MM-dd") );
@@ -125,6 +126,8 @@ cDlgGuestEdit::cDlgGuestEdit( QWidget *p_poParent, cDBGuest *p_poGuest, cDBPostp
         ledMembership->setText( m_poGuest->membership() );
         ledUniqueId->setText( m_poGuest->uniqueId() );
         chkCardyRegistered->setChecked( m_poGuest->isCardy() );
+        chkNewsletter->setChecked( m_poGuest->isNewsletter() );
+        chkCardEmail->setChecked( m_poGuest->isCardMail() );
         ledEmail->setText( m_poGuest->email() );
         ledPhone->setText( m_poGuest->mobile() );
         teAddress->setText( m_poGuest->address() );
@@ -188,6 +191,7 @@ cDlgGuestEdit::cDlgGuestEdit( QWidget *p_poParent, cDBGuest *p_poGuest, cDBPostp
                 ledName->setEnabled( false );
                 rbGenderFemale->setEnabled( false );
                 rbGenderMale->setEnabled( false );
+                rbGenderNone->setEnabled( false );
                 ledEmail->setEnabled( false );
                 rbAge0->setEnabled( false );
                 rbAge1->setEnabled( false );
@@ -206,14 +210,19 @@ cDlgGuestEdit::cDlgGuestEdit( QWidget *p_poParent, cDBGuest *p_poGuest, cDBPostp
 
     connect( ledName, SIGNAL(textEdited(QString)), this, SLOT(slotRefreshWarningColors()) );
     connect( chkCardyRegistered, SIGNAL(toggled(bool)), this, SLOT(slotRefreshWarningColors()) );
+    connect( chkNewsletter, SIGNAL(toggled(bool)), this, SLOT(slotRefreshWarningColors()) );
+    connect( chkCardEmail, SIGNAL(toggled(bool)), this, SLOT(slotRefreshWarningColors()) );
     connect( ledEmail, SIGNAL(textEdited(QString)), this, SLOT(slotRefreshWarningColors()) );
     connect( rbGenderMale, SIGNAL(toggled(bool)), this, SLOT(slotRefreshWarningColors()) );
     connect( rbGenderFemale, SIGNAL(toggled(bool)), this, SLOT(slotRefreshWarningColors()) );
+    connect( rbGenderNone, SIGNAL(toggled(bool)), this, SLOT(slotRefreshWarningColors()) );
     connect( rbAge0, SIGNAL(toggled(bool)), this, SLOT(slotRefreshWarningColors()) );
 
     connect( chkRegularCustomer, SIGNAL(toggled(bool)), this, SLOT(slotUpdateDiscountSample()) );
     connect( chkEmployee, SIGNAL(toggled(bool)), this, SLOT(slotUpdateDiscountSample()) );
     connect( chkService, SIGNAL(toggled(bool)), this, SLOT(slotUpdateDiscountSample()) );
+
+    connect( ledEmail, SIGNAL(editingFinished()), this, SLOT(slotEmailEdited()) );
 
     slotEnableButtons();
     slotRefreshWarningColors();
@@ -255,7 +264,7 @@ void cDlgGuestEdit::on_pbSaveExit_clicked()
         if( qsErrorMessage.length() ) qsErrorMessage.append( "\n\n" );
         qsErrorMessage.append( tr( "Guest name cannot be empty." ) );
     }
-    if( !rbGenderMale->isChecked() && !rbGenderFemale->isChecked() )
+    if( !rbGenderMale->isChecked() && !rbGenderFemale->isChecked() && !rbGenderNone->isChecked() )
     {
         boCanBeSaved = false;
         if( qsErrorMessage.length() ) qsErrorMessage.append( "\n\n" );
@@ -267,12 +276,21 @@ void cDlgGuestEdit::on_pbSaveExit_clicked()
         if( qsErrorMessage.length() ) qsErrorMessage.append( "\n\n" );
         qsErrorMessage.append( tr( "E-Mail must be set for patients registered at Cardy." ) );
     }
+    if( chkNewsletter->isChecked() && ledEmail->text().length() < 1 )
+    {
+        boCanBeSaved = false;
+        if( qsErrorMessage.length() ) qsErrorMessage.append( "\n\n" );
+        qsErrorMessage.append( tr( "E-Mail must be set for patients accepted to receive newsletter." ) );
+    }
+    if( chkCardEmail->isChecked() && ledEmail->text().length() < 1 )
+    {
+        boCanBeSaved = false;
+        if( qsErrorMessage.length() ) qsErrorMessage.append( "\n\n" );
+        qsErrorMessage.append( tr( "E-Mail must be set for patients wants to receive email with card data." ) );
+    }
     if( ledEmail->text().length() > 0 )
     {
-        // ^[a-z0-9!#$%&\'*+\=?^_`{|}~-]+(?:\.[a-z0-9!#$%&\'*+\=?^_`{|}~-]+)*@(?:[a-z0-9](?:[a-z0-9-]*[a-z0-9])?\.)+[a-z0-9](?:[a-z0-9-]*[a-z0-9])?
-        QRegExp qreEmail( "^[a-z0-9!#$%&\\'*+\\=?^_`{|}~-]+(?:\\.[a-z0-9!#$%&\\'*+\\=?^_`{|}~-]+)*@(?:[a-z0-9](?:[a-z0-9-]*[a-z0-9])?\\.)+[a-z0-9](?:[a-z0-9-]*[a-z0-9])?" );
-
-        if( !qreEmail.exactMatch( ledEmail->text() ) )
+        if( !_isEmailFormatOk() )
         {
             boCanBeSaved = false;
             if( qsErrorMessage.length() ) qsErrorMessage.append( "\n\n" );
@@ -311,7 +329,7 @@ void cDlgGuestEdit::on_pbSave_clicked()
         if( qsErrorMessage.length() ) qsErrorMessage.append( "\n\n" );
         qsErrorMessage.append( tr( "Guest name cannot be empty." ) );
     }
-    if( !rbGenderMale->isChecked() && !rbGenderFemale->isChecked() )
+    if( !rbGenderMale->isChecked() && !rbGenderFemale->isChecked() && !rbGenderNone->isChecked() )
     {
         boCanBeSaved = false;
         if( qsErrorMessage.length() ) qsErrorMessage.append( "\n\n" );
@@ -323,12 +341,21 @@ void cDlgGuestEdit::on_pbSave_clicked()
         if( qsErrorMessage.length() ) qsErrorMessage.append( "\n\n" );
         qsErrorMessage.append( tr( "E-Mail must be set for patients registered at Cardy." ) );
     }
+    if( chkNewsletter->isChecked() && ledEmail->text().length() < 1 )
+    {
+        boCanBeSaved = false;
+        if( qsErrorMessage.length() ) qsErrorMessage.append( "\n\n" );
+        qsErrorMessage.append( tr( "E-Mail must be set for patients accepted to receive newsletter." ) );
+    }
+    if( chkCardEmail->isChecked() && ledEmail->text().length() < 1 )
+    {
+        boCanBeSaved = false;
+        if( qsErrorMessage.length() ) qsErrorMessage.append( "\n\n" );
+        qsErrorMessage.append( tr( "E-Mail must be set for patients wants to receive email with card data." ) );
+    }
     if( ledEmail->text().length() > 0 )
     {
-        // ^[a-z0-9!#$%&\'*+\=?^_`{|}~-]+(?:\.[a-z0-9!#$%&\'*+\=?^_`{|}~-]+)*@(?:[a-z0-9](?:[a-z0-9-]*[a-z0-9])?\.)+[a-z0-9](?:[a-z0-9-]*[a-z0-9])?
-        QRegExp qreEmail( "^[a-z0-9!#$%&\\'*+\\=?^_`{|}~-]+(?:\\.[a-z0-9!#$%&\\'*+\\=?^_`{|}~-]+)*@(?:[a-z0-9](?:[a-z0-9-]*[a-z0-9])?\\.)+[a-z0-9](?:[a-z0-9-]*[a-z0-9])?" );
-
-        if( !qreEmail.exactMatch( ledEmail->text() ) )
+        if( !_isEmailFormatOk() )
         {
             boCanBeSaved = false;
             if( qsErrorMessage.length() ) qsErrorMessage.append( "\n\n" );
@@ -532,11 +559,21 @@ void cDlgGuestEdit::slotRefreshWarningColors()
     if( ledName->text().length() == 0 )
         lblName->setStyleSheet( "QLabel {font: bold; color: red;}" );
 
-    if( !rbGenderMale->isChecked() && !rbGenderFemale->isChecked() )
+    if( !rbGenderMale->isChecked() && !rbGenderFemale->isChecked() && !rbGenderNone->isChecked() )
         lblGender->setStyleSheet( "QLabel {font: bold; color: red;}" );
 
     if( rbAge0->isChecked() )
         lblAge->setStyleSheet( "QLabel {font: bold; color: blue;}" );
+
+//    QMessageBox::information( this, tr( "Info" ), QString( "newsletter %1 <%2>" ).arg( chkNewsletter->checkState() ).arg( ledEmail->text() ) );
+    if( ( ( chkNewsletter->isChecked() || chkCardEmail->isChecked() ) && ledEmail->text().isEmpty() ) || ( !_isEmailFormatOk() && !ledEmail->text().isEmpty() ) )
+    {
+        lblEmail->setStyleSheet( "QLabel {font: bold; color: red;}" );
+    }
+    else if( ledEmail->text().length() == 0 )
+    {
+        lblEmail->setStyleSheet( "QLabel {font: bold; color: blue;}" );
+    }
 
     if( chkCardyRegistered->isChecked() && ledEmail->text().length() < 1 )
     {
@@ -557,6 +594,28 @@ void cDlgGuestEdit::slotEnableButtons()
     pbHistory->setEnabled( /*m_poGuest->id()>0*/false );
     pbDislink->setEnabled( ledBarcode->text().length()>0 );
 }
+//===========================================================================================================
+//
+//-----------------------------------------------------------------------------------------------------------
+void cDlgGuestEdit::slotEmailEdited()
+{
+    if( ledEmail->text().compare( m_poGuest->email() ) )
+    {
+        // email address changed
+        if( ledEmail->text().isEmpty() )
+        {
+            chkNewsletter->setChecked( false );
+            chkCardEmail->setChecked( false );
+        }
+        else
+        {
+            chkNewsletter->setChecked( true );
+            chkCardEmail->setChecked( true );
+        }
+    }
+    slotRefreshWarningColors();
+}
+
 //===========================================================================================================
 //  _fillPatientCardData
 //-----------------------------------------------------------------------------------------------------------
@@ -667,9 +726,13 @@ bool cDlgGuestEdit::_saveGuestData()
             m_poGuest->setGender( 1 );
         else if( rbGenderFemale->isChecked() )
             m_poGuest->setGender( 2 );
+        else if( rbGenderNone->isChecked() )
+            m_poGuest->setGender( 3 );
         m_poGuest->setDateBirth( deBirthDate->date().toString("yyyy-MM-dd") );
         m_poGuest->setMembership( ledMembership->text() );
         m_poGuest->setIsCardy( chkCardyRegistered->isChecked() );
+        m_poGuest->setIsNewsletter( chkNewsletter->isChecked() );
+        m_poGuest->setIsCardMail( chkCardEmail->isChecked() );
         m_poGuest->setEmail( ledEmail->text() );
         m_poGuest->setMobile( ledPhone->text() );
         m_poGuest->setAddress( teAddress->toPlainText() );
@@ -748,5 +811,20 @@ void cDlgGuestEdit::on_pbEditDiscount_clicked()
 unsigned int cDlgGuestEdit::guestId()
 {
     return m_poGuest->id();
+}
+
+bool cDlgGuestEdit::_isEmailFormatOk()
+{
+    bool    bRet = true;
+
+    // ^[a-z0-9!#$%&\'*+\=?^_`{|}~-]+(?:\.[a-z0-9!#$%&\'*+\=?^_`{|}~-]+)*@(?:[a-z0-9](?:[a-z0-9-]*[a-z0-9])?\.)+[a-z0-9](?:[a-z0-9-]*[a-z0-9])?
+    QRegExp qreEmail( "^[a-z0-9!#$%&\\'*+\\=?^_`{|}~-]+(?:\\.[a-z0-9!#$%&\\'*+\\=?^_`{|}~-]+)*@(?:[a-z0-9](?:[a-z0-9-]*[a-z0-9])?\\.)+[a-z0-9](?:[a-z0-9-]*[a-z0-9])?" );
+
+    if( !qreEmail.exactMatch( ledEmail->text() ) )
+    {
+        bRet = false;
+    }
+
+    return bRet;
 }
 

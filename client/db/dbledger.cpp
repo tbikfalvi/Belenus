@@ -258,11 +258,11 @@ void cDBLedger::revoke() throw( cSevException )
             obDBPatientCard.save();
             obDBPatientCard.sendDataToWeb();
 
-            if( g_poPrefs->isCardyGoSync() && obDBPatientCard.isCardOwnerRegisteredOnCardy() )
-            {
-                g_obLogger(cSeverity::INFO) << "PatientCard units revoked, update Cardy data" << EOM;
-                obDBPatientCard.sendAutoMail( AUTO_MAIL_ON_PCSELL, AUTO_MAIL_DESTINATION_CARDY, QDate::currentDate().toString("yyyy-MM-dd"), 0, "" );
-            }
+//            if( g_poPrefs->isCardyGoSync() && obDBPatientCard.isCardOwnerRegisteredOnCardy() )
+//            {
+//                g_obLogger(cSeverity::INFO) << "PatientCard units revoked, update Cardy data" << EOM;
+//                obDBPatientCard.sendAutoMail( AUTO_MAIL_ON_PCSELL, AUTO_MAIL_DESTINATION_CARDY, QDate::currentDate().toString("yyyy-MM-dd"), 0, "" );
+//            }
         }
         catch( cSevException &e )
         {
