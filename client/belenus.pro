@@ -70,7 +70,9 @@ FORMS = ../framework/dlgcrud.ui \
     dlgWindowPosition.ui \
     dlgInformation.ui \
     dlgemailsedit.ui \
+    dlgaddguest.ui \
     dlgaddunits.ui \
+    dlgpanelsetting.ui \
     dlgremoveunits.ui
 
 HEADERS = belenus.h \
@@ -120,6 +122,7 @@ HEADERS = belenus.h \
     crud/dlgwaitlistinfo.h \
     crud/dlgdistlist.h \
     crud/dlgemails.h \
+    crud/dlgpaneltimes.h \
     db/dbreasontovisit.h \
     db/dbpatientcard.h \
     db/dbpatientcardtype.h \
@@ -204,8 +207,10 @@ HEADERS = belenus.h \
     edit/dlgadvertisementedit.h \
     edit/dlgdistlistedit.h \
     edit/dlgemailsedit.h \
+    edit/dlgaddguest.h \
     edit/dlgaddunits.h \
     edit/dlgremoveunits.h \
+    edit/dlgpanelsetting.h \
     report/dlgpreview.h \
     report/reppatientcards.h \
     report/reppatientcardsobs.h \
@@ -277,6 +282,7 @@ SOURCES = main.cpp \
     crud/dlgwaitlistinfo.cpp \
     crud/dlgdistlist.cpp \
     crud/dlgemails.cpp \
+    crud/dlgpaneltimes.cpp \
     db/dbreasontovisit.cpp \
     db/dbpatientcard.cpp \
     db/dbpatientcardtype.cpp \
@@ -362,8 +368,10 @@ SOURCES = main.cpp \
     edit/dlgadvertisementedit.cpp \
     edit/dlgdistlistedit.cpp \
     edit/dlgemailsedit.cpp \
+    edit/dlgaddguest.cpp \
     edit/dlgaddunits.cpp \
     edit/dlgremoveunits.cpp \
+    edit/dlgpanelsetting.cpp \
     report/reppatientcards.cpp \
     report/reppatientcardsobs.cpp \
     report/dlgpreview.cpp \

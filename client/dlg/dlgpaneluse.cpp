@@ -272,14 +272,14 @@ void cDlgPanelUse::_fillUiItems()
     cmbTimeIntervall->addItem( tr("<No time intervall selected>"), 0 );
     m_qslPanelUseTimes.append( QString("0|0") );
 
-    qsQuery = QString( "SELECT * FROM paneluses WHERE panelId=%1 ORDER BY useTime " ).arg( m_uiPanelId );
+    qsQuery = QString( "SELECT panelUseId, name, useTime, usePrice FROM paneluses WHERE panelIds LIKE '\%%1\%' ORDER BY useTime " ).arg( m_uiPanelId );
     poQuery = g_poDB->executeQTQuery( qsQuery );
     while( poQuery->next() )
     {
-        cCurrency   cPrice( poQuery->value(5).toInt() );
+        cCurrency   cPrice( poQuery->value(3).toInt() );
 
-        cmbTimeIntervall->addItem( QString( "%1 (%2 %3) " ).arg( poQuery->value(4).toInt() ).arg( poQuery->value(3).toString() ).arg( cPrice.currencyFullStringShort() ), poQuery->value(0).toUInt() );
-        m_qslPanelUseTimes.append( QString("%1|%2").arg( poQuery->value(4).toInt()*60 ).arg( poQuery->value(5).toInt() ) );
+        cmbTimeIntervall->addItem( QString( "%1 (%2 %3) " ).arg( poQuery->value(2).toInt() ).arg( poQuery->value(1).toString() ).arg( cPrice.currencyFullStringShort() ), poQuery->value(0).toUInt() );
+        m_qslPanelUseTimes.append( QString("%1|%2").arg( poQuery->value(2).toInt()*60 ).arg( poQuery->value(3).toInt() ) );
     }
 
     calculateTotalTimeValue();

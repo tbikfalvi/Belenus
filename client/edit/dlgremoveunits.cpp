@@ -156,11 +156,11 @@ void cDlgRemoveUnits::on_pbRemove_clicked()
 
         m_poPatientCard->sendDataToWeb();
 
-        if( g_poPrefs->isCardyGoSync() )
+        /*if( g_poPrefs->isCardyGoSync() )
         {
             g_obLogger(cSeverity::INFO) << "PatientCard units removed" << EOM;
             m_poPatientCard->sendAutoMail( AUTO_MAIL_ON_UNITCHANGE, AUTO_MAIL_DESTINATION_CARDY, QDate::currentDate().toString("yyyy-MM-dd"), 0, "" );
-        }
+        }*/
     }
     catch( cSevException &e )
     {

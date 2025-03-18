@@ -10,12 +10,11 @@ class cDlgPanelUseEdit : public QDialog, private Ui::dlgPanelUseEdit
     Q_OBJECT
 
 public:
-    cDlgPanelUseEdit( QWidget *p_poParent = 0, cDBPanelUses *p_poPanelUses = NULL, unsigned int p_inPanelId = 0 );
+    cDlgPanelUseEdit( QWidget *p_poParent = 0, cDBPanelUses *p_poPanelUses = NULL );
     virtual ~cDlgPanelUseEdit();
 
 protected:
     cDBPanelUses   *m_poPanelUses;
-    int             m_inPanelId;
 
 private slots:
     void on_pbSave_clicked();

@@ -1,9 +1,8 @@
 -- -----------------------------------------------------------------------------------
--- Belenus Szoftver Rendszer (c) Pagony Multimedia Studio Bt - 2013
+-- Belenus Szoftver Rendszer (c) Bikfalvi Tamas - 2025
 -- -----------------------------------------------------------------------------------
 -- Filename    : db_create.sql
--- AppVersion  : 2.1.3.0
--- DbVersion   : 2.1.3.0
+-- DbVersion   : 2.2.0.0
 -- -----------------------------------------------------------------------------------
 -- Adatbazist letrehozo SQL script
 -- -----------------------------------------------------------------------------------
@@ -169,6 +168,8 @@ CREATE TABLE `patients` (
   `isReturning`             tinyint(1)              DEFAULT 0,
   `uniqueId`                varchar(20)             DEFAULT NULL,
   `isCardy`                 tinyint(1)              NOT NULL DEFAULT 0,
+  `isNewsletter`            tinyint(1)              NOT NULL DEFAULT 0,
+  `isCardMail`              tinyint(1)              NOT NULL DEFAULT 0,
   `email`                   varchar(100)            DEFAULT NULL,
   `regularCustomer`         tinyint(1)              DEFAULT 0,
   `employee`                tinyint(1)              DEFAULT 0,
@@ -427,6 +428,7 @@ CREATE TABLE `patientCardUnits` (
 CREATE TABLE `panelUses` (
   `panelUseId`              int(10) unsigned        NOT NULL AUTO_INCREMENT,
   `licenceId`               int(10) unsigned        NOT NULL,
+  `panelIds`                varchar(100) 			DEFAULT "",
   `panelId`                 int(10) unsigned        NOT NULL,
   `name`                    varchar(50)             NOT NULL,
   `useTime`                 int(11)                 NOT NULL,
@@ -557,6 +559,7 @@ CREATE TABLE `patientHistory` (
   `panelId`                 int(10) unsigned        NOT NULL,
   `patientCardTypeId`       int(10) unsigned        NOT NULL,
   `patientCardId`           int(10) unsigned        NOT NULL,
+  `patientHistoryTime`      timestamp               NOT NULL DEFAULT CURRENT_TIMESTAMP,
   PRIMARY KEY (`patientHistoryId`,`licenceId`),
   FOREIGN KEY (`patientId`) REFERENCES `patients` (`patientId`) ON UPDATE CASCADE ON DELETE RESTRICT,
   FOREIGN KEY (`patientHistoryTypeId`) REFERENCES `patientHistoryType` (`patientHistoryTypeId`) ON UPDATE CASCADE ON DELETE RESTRICT,

@@ -58,6 +58,15 @@
 #define AUTO_MAIL_DESTINATION_MAIL_CARDY    3
 
 //====================================================================================
+
+#define PATIENTHISTORY_SAVEDTODATABASE      1
+#define PATIENTHISTORY_PURCHASEDCARD        2
+#define PATIENTHISTORY_REFILLEDCARD         3
+#define PATIENTHISTORY_PURCHASEDPRODUCT     4
+#define PATIENTHISTORY_USEDDEVICEWITHCARD   5
+#define PATIENTHISTORY_USEDDEVICEWITHCASH   6
+
+//====================================================================================
 extern QApplication            *apMainApp;
 extern cDBUser                  g_obUser;
 extern cPreferences            *g_poPrefs;

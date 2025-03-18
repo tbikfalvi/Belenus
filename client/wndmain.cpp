@@ -5,8 +5,6 @@
 //====================================================================================
 //
 // Filename    : wndmain.cpp
-// AppVersion  : 1.0
-// FileVersion : 1.0
 // Author      : Ballok Peter, Bikfalvi Tamas
 //
 //====================================================================================
@@ -66,6 +64,7 @@
 #include "crud/dlgdistlist.h"
 #include "crud/dlgwaitlistinfo.h"
 #include "crud/dlgemails.h"
+#include "crud/dlgpaneltimes.h"
 
 //====================================================================================
 
@@ -77,6 +76,8 @@
 #include "edit/dlgcassaedit.h"
 #include "edit/dlgpatientcarduse.h"
 #include "edit/dlglicenceedit.h"
+#include "edit/dlgaddguest.h"
+#include "edit/dlgpanelsetting.h"
 
 //====================================================================================
 
@@ -243,6 +244,7 @@ cWndMain::cWndMain( QWidget *parent ) : QMainWindow( parent )
     action_DeviceReset->setIcon( QIcon( "./resources/40x40_stop.png" ) );
 
     action_DeviceSettings->setIcon( QIcon( "./resources/40x40_device_settings.png" ) );
+    action_DeviceTimes->setIcon( QIcon( "./resources/40x40_device_time.png" ) );
 
     action_PatientcardInformation->setIcon( QIcon("./resources/40x40_patientcard_info.png") );
     action_PatientCardAssign->setIcon( QIcon("./resources/40x40_patientcard_assign.png") );
@@ -336,6 +338,7 @@ cWndMain::cWndMain( QWidget *parent ) : QMainWindow( parent )
     action_DeviceCool->setEnabled( false );
     action_DeviceReset->setEnabled( false );
     action_DeviceSettings->setEnabled( false );
+    action_DeviceTimes->setEnabled( false );
 
     action_PatientcardInformation->setEnabled( false );
     action_PatientCardAssign->setEnabled( false );
@@ -1368,6 +1371,7 @@ action_Logs->setVisible( false );
 
     toolBarDeviceUse->setEnabled( bIsUserLoggedIn );
         action_DeviceSettings->setEnabled( bIsUserLoggedIn && !mdiPanels->isPanelWorking(mdiPanels->activePanel()) );
+        action_DeviceTimes->setEnabled( bIsUserLoggedIn && g_obUser.isInGroup(cAccessGroup::ADMIN) );
 
     toolBarCassa->setEnabled( bIsUserLoggedIn );
         action_PayCash->setEnabled( bIsUserLoggedIn && mdiPanels->isHasToPay() );
@@ -1937,12 +1941,19 @@ void cWndMain::on_action_PatientSelect_triggered()
     cDlgInputStart     obDlgInputStart( this );
 
     obDlgInputStart.m_bPat = true;
+    obDlgInputStart.init();
+
     if( obDlgInputStart.exec() == QDialog::Accepted )
     {
         if( obDlgInputStart.m_bPat )
         {
             m_qsPatientNameFilter = obDlgInputStart.getEditText();
         }
+    }
+
+    if( m_qsPatientNameFilter.length() < 3 )
+    {
+        return;
     }
 
     m_dlgProgress->showProgress();
@@ -2040,6 +2051,7 @@ void cWndMain::on_action_UseDevice_triggered()
 
             if( g_obGuest.id() == 0 && obDBPatientCard.patientId() > 0 )
             {
+                g_obGuest.load( obDBPatientCard.patientId() );
                 /*cDBGuest  obDBGuest;
 
                 obDBGuest.load( obDBPatientCard.patientId() );
@@ -2085,12 +2097,25 @@ void cWndMain::on_action_UseDevice_triggered()
             mdiPanels->setMainProcessTime( obDlgPanelUse.panelUsePatientCardId(), obDlgPanelUse.panelUnitIds(), obDlgPanelUse.panelUseSecondsCard() );
 
             g_obGen.showPatientCardInformation( obDBPatientCard.barcode(), g_poPrefs->getCloseInfoWindowAfterSecs() );
-
-//            int nCount = obDlgPanelUse.countPatientCardUnitsLeft();
-//            mdiPanels->setTextInformation( tr( "%1 units left on the selected card" ).arg(nCount) );
         }
         if( obDlgPanelUse.panelUseSecondsCash() > 0 )
         {
+            if( g_obGuest.id() == 0 )
+            {
+                if( QMessageBox::question( this, tr("Question"),
+                                           tr("Do you want to add adhoc patient to patient database?\n\n"
+                                              "PLEASE ASK THE PATIENT if willing to add name and email address !"),
+                                           QMessageBox::Yes,QMessageBox::No ) == QMessageBox::Yes )
+                {
+                    cDlgAddGuest obDlgAddGuest( this );
+
+                    if( obDlgAddGuest.exec() == QDialog::Accepted )
+                    {
+                        g_obGuest.load( obDlgAddGuest.patientId() );
+                    }
+                }
+            }
+
             mdiPanels->setMainProcessTime( obDlgPanelUse.panelUseSecondsCash(), obDlgPanelUse.panelUsePrice() );
         }
     }
@@ -2857,7 +2882,7 @@ void cWndMain::on_action_DeviceSettings_triggered()
 
     m_dlgProgress->showProgress();
 
-    cDlgPanelSettings   obDlgEdit( this, mdiPanels->activePanelId() );
+    cDlgPanelSetting obDlgEdit( this, mdiPanels->activePanelId() );
 
     m_dlgProgress->hideProgress();
 
@@ -2867,6 +2892,23 @@ void cWndMain::on_action_DeviceSettings_triggered()
         g_obLogger(cSeverity::DEBUG) << QString::number( mdiPanels->activePanel() ) << EOM;
         m_dlgSecondaryWindow->refreshTitle( mdiPanels->activePanel() );
     }
+
+    slotMainWindowActivated();
+}
+//====================================================================================
+void cWndMain::on_action_DeviceTimes_triggered()
+{
+    cTracer obTrace( "cWndMain::on_action_DeviceTimes_triggered" );
+
+    m_bMainWindowActive = false;
+
+    m_dlgProgress->showProgress();
+
+    cDlgPanelTimes obDlgPanelTimes( this );
+
+    m_dlgProgress->hideProgress();
+
+    obDlgPanelTimes.exec();
 
     slotMainWindowActivated();
 }
@@ -4352,5 +4394,4 @@ void cWndMain::slotWindowPosition()
 
     obDlgWindowPosition.exec();
 }
-
 

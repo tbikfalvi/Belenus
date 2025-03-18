@@ -2,6 +2,7 @@
 #define MAINWINDOW_H
 
 #include <QMainWindow>
+#include <QSystemTrayIcon>
 
 #include "../framework/qtframework.h"
 
@@ -20,6 +21,7 @@ public:
         ACT_BACKUP = 0,
         ACT_RESTORE,
         ACT_EXECUTE,
+        ACT_UPDATE,
         ACT_FINISHED
     };
 
@@ -41,12 +43,17 @@ private slots:
 
 private:
 
-    Ui::MainWindow  *ui;
-    int              m_nTimer;
-    teAction         m_teAction;
-    QString          m_qsFileName;
-    QString          m_qsDirDbBinaries;
-    QString          m_qsDirDbBackup;
+    Ui::MainWindow      *ui;
+    QSystemTrayIcon     *trayIcon;
+    int                  m_nTimer;
+    teAction             m_teAction;
+    QString              m_qsFileName;
+    QString              m_qsDirDbBinaries;
+    QString              m_qsDirDbBackup;
+    QString              m_qsDBFilename;
+    QString              m_qsDBFilenameNew;
+
+    void    updateBackupFile();
 };
 
 #endif // MAINWINDOW_H

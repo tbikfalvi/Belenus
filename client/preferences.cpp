@@ -107,6 +107,12 @@ void cPreferences::init()
     m_nWorkTimeCounter              = 336;
 
     m_bCardyGoSync                  = false;
+
+    m_bAllowDeleteObsoleteUnits     = false;
+    m_nObsolateUnitsDays            = 30;
+
+    m_bLogFilesDeleteAllowed        = false;
+    m_nDeleteLogFilesMonths         = 3;
 }
 
 void cPreferences::loadSettings() throw (cSevException)
@@ -135,6 +141,13 @@ void cPreferences::loadSettings() throw (cSevException)
         m_uiComponent                   = loadSettingU( "GEN_PanelSystemID", 0 );
         m_bIsSecondaryWindowVisible     = loadSettingB( "GEN_IsSecondaryWindowVisible", false );
         m_nSecondsWaitOnSlpashScreen    = loadSettingI( "GEN_SecondsWaitOnSlpashScreen", 3 );
+
+        m_bAllowDeleteObsoleteUnits     = loadSettingB( "DB_AllowDeleteObsoleteUnits", false );
+        m_nObsolateUnitsDays            = loadSettingI( "DB_ObsolateUnitsDays", 30 );
+
+        m_bLogFilesDeleteAllowed        = loadSettingB( "FILE_AllowDeleteLogFiles", false );
+        m_nDeleteLogFilesMonths         = loadSettingI( "FILE_DeleteLogFilesMonts", 3 );
+
         int nLeft                       = loadSettingI( "EXTWIN_Left", 10 );
         int nTop                        = loadSettingI( "EXTWIN_Top", 10 );
         int nWidth                      = loadSettingI( "EXTWIN_Width", 600 );
@@ -269,6 +282,12 @@ void cPreferences::saveSettings() throw (cSevException)
         saveSettingB( "GEN_DBGlobalAutoSynchronization", m_bDBGlobalAutoSynchronize );
         saveSettingB( "GEN_IsSecondaryWindowVisible", m_bIsSecondaryWindowVisible );
         saveSettingI( "GEN_SecondsWaitOnSlpashScreen", m_nSecondsWaitOnSlpashScreen );
+
+        saveSettingB( "DB_AllowDeleteObsoleteUnits", m_bAllowDeleteObsoleteUnits );
+        saveSettingI( "DB_ObsolateUnitsDays", m_nObsolateUnitsDays );
+
+        saveSettingB( "FILE_AllowDeleteLogFiles", m_bLogFilesDeleteAllowed );
+        saveSettingI( "FILE_DeleteLogFilesMonts", m_nDeleteLogFilesMonths );
 
         saveSettingI( "EXTWIN_Left", m_qpSecondaryPosition.x() );
         saveSettingI( "EXTWIN_Top", m_qpSecondaryPosition.y() );
@@ -1831,5 +1850,43 @@ bool cPreferences::isCardyGoSync()
     return m_bCardyGoSync;
 }
 
+void cPreferences::setDBAllowDeleteObsoleteUnits(bool p_bEnable)
+{
+    m_bAllowDeleteObsoleteUnits = p_bEnable;
+}
 
+bool cPreferences::isDBAllowDeleteObsoleteUnits()
+{
+    return m_bAllowDeleteObsoleteUnits;
+}
+
+void cPreferences::setObsoleteUnitsDays( const int p_nObsolateUnitsDays )
+{
+    m_nObsolateUnitsDays = p_nObsolateUnitsDays;
+}
+
+int cPreferences::getObsolateUnitsDays() const
+{
+    return m_nObsolateUnitsDays;
+}
+
+void cPreferences::setLogFilesDeleteAllowed( bool p_bLogFilesDeleteAllowed )
+{
+    m_bLogFilesDeleteAllowed = p_bLogFilesDeleteAllowed;
+}
+
+bool cPreferences::isLogFilesDeleteAllowed()
+{
+    return m_bLogFilesDeleteAllowed;
+}
+
+void cPreferences::setDeleteLogFilesMonths( const int p_nDeleteLogFilesMonths )
+{
+    m_nDeleteLogFilesMonths = p_nDeleteLogFilesMonths;
+}
+
+int cPreferences::getDeleteLogFilesMonths() const
+{
+    return m_nDeleteLogFilesMonths;
+}
 

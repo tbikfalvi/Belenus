@@ -2,6 +2,8 @@
 #include <QTranslator>
 #include "mainwindow.h"
 
+#define APPLICATION_VERSION_NUMBER  "2.2.0.0"
+
 QTranslator     *poTransTool;
 QTranslator     *poTransQT;
 QApplication    *apMainApp;
@@ -24,8 +26,8 @@ int main(int argc, char *argv[])
 
     apMainApp->setWindowIcon( QIcon(":/icons/DBTool.ico") );
 
-    MainWindow w;
-    w.show();
+    MainWindow *wndMain = new MainWindow( 0, APPLICATION_VERSION_NUMBER );
+    wndMain->show();
 
     return apMainApp->exec();
 }

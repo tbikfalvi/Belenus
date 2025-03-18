@@ -37,6 +37,10 @@ public:
     void            setUniqueId( const QString &p_qsUniqueId )                      throw();
     bool            isCardy() const                                                 throw();
     void            setIsCardy( const bool p_bIsCardy )                             throw();
+    bool            isNewsletter() const                                            throw();
+    void            setIsNewsletter( const bool p_bIsNewsletter )                   throw();
+    bool            isCardMail() const                                              throw();
+    void            setIsCardMail( const bool p_bIsCardMail )                       throw();
     QString         email() const                                                   throw();
     void            setEmail( const QString &p_qsEmail )                            throw();
     bool            regularCustomer() const                                         throw();
@@ -80,6 +84,8 @@ private:
     bool            m_bIsReturning;
     QString         m_qsUniqueId;
     bool            m_bIsCardy;
+    bool            m_bIsNewsletter;
+    bool            m_bIsCardMail;
     QString         m_qsEmail;
     bool            m_bRegularCustomer;
     bool            m_bEmployee;
@@ -97,7 +103,7 @@ private:
     bool            m_bActive;
     QString         m_qsArchive;
 
-    void init(const unsigned int p_uiId = 0,
+    void init( const unsigned int p_uiId = 0,
                const unsigned int p_uiLicenceId = 0,
                const unsigned int p_uiCompanyId = 0,
                const QString &p_qsDateCreated = "",
@@ -107,6 +113,8 @@ private:
                const bool p_bIsReturning = false,
                const QString &p_qsUniqueId = "",
                const bool p_bIsCardy = false,
+               const bool p_bIsNewsletter = false,
+               const bool p_bIsCardMail = false,
                const QString &p_qsEmail = "",
                const bool p_bRegularCustomer = false,
                const bool p_bEmployee = false,

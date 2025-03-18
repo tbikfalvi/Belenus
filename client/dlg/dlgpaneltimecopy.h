@@ -1,5 +1,5 @@
-#ifndef DLGSERIALREG_H
-#define DLGSERIALREG_H
+#ifndef DLGPANELTIMECOPY_H
+#define DLGPANELTIMECOPY_H
 
 #include "../belenus.h"
 #include "ui_dlgpaneltypecopy.h"
