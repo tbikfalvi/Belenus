@@ -142,7 +142,7 @@ MainWindow::MainWindow(QWidget *parent, QString p_qsVersion, teAction p_teAction
         {
             trayIcon->showMessage( tr("Belenus Database Manager"),
                                    tr("Saving database process started."),
-                                   QSystemTrayIcon::Information, 2000 );
+                                   QSystemTrayIcon::Information, 1000 );
             m_nTimer = startTimer( 1000 );
         }
     }
@@ -174,7 +174,7 @@ void MainWindow::timerEvent(QTimerEvent *)
         {
             trayIcon->showMessage( tr("Belenus Database Manager"),
                                    tr("Restoring database process started."),
-                                   QSystemTrayIcon::Information, 2000 );
+                                   QSystemTrayIcon::Information, 1000 );
             processRestore();
             break;
         }
@@ -183,7 +183,7 @@ void MainWindow::timerEvent(QTimerEvent *)
         {
             trayIcon->showMessage( tr("Belenus Database Manager"),
                                    tr("Executing database modification started."),
-                                   QSystemTrayIcon::Information, 2000 );
+                                   QSystemTrayIcon::Information, 1000 );
             processExecute();
             break;
         }
@@ -193,7 +193,7 @@ void MainWindow::timerEvent(QTimerEvent *)
             // Mysql 5.5.24 dump utáni FOREIGN KEY javitas
             trayIcon->showMessage( tr("Belenus Database Manager"),
                                    tr("Database backup file correction for forward compatibility."),
-                                   QSystemTrayIcon::Information, 2000 );
+                                   QSystemTrayIcon::Information, 1000 );
             updateBackupFile();
             break;
         }
@@ -202,7 +202,7 @@ void MainWindow::timerEvent(QTimerEvent *)
         {
             trayIcon->showMessage( tr("Belenus Database Manager"),
                                    tr("Process finished."),
-                                   QSystemTrayIcon::Information, 2000 );
+                                   QSystemTrayIcon::Information, 1000 );
             close();
         }
     }
