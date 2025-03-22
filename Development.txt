@@ -202,3 +202,7 @@ Version 2.2.0.0
 - A gep hasznalati idoket most mar kulon ablakban lehet kezelni egyszerubben
 - Megvaltozott a gep beallitasok ablaka
 - Regi log file-okat torli a rendszer
+
+Version 2.2.1.0
+===============
+- HIBAJAVITAS: a varakozo listabol valo inditas nem mukodott megfeleloen, nem lehetett inditani
