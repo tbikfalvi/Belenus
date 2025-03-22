@@ -206,14 +206,14 @@ void cDlgProduct::refreshTable()
     if( stTemp != "" )
     {
         m_qsQuery += " AND ";
-        m_qsQuery += QString( "name LIKE '\%%1\%'" ).arg( stTemp );
+        m_qsQuery += QString( "name LIKE '%" + stTemp + "%'" );
     }
 
     stTemp = ledFilterBarcode->text();
     if( stTemp != "" )
     {
         m_qsQuery += " AND ";
-        m_qsQuery += QString( "barcode LIKE '\%%1\%'" ).arg( stTemp );
+        m_qsQuery += QString( "barcode LIKE '%" + stTemp + "%'" );
     }
 
     stTemp = ledFilterMinCount->text();

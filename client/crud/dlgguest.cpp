@@ -150,7 +150,7 @@ void cDlgGuest::refreshTable()
 
     if( ledFilterName->text().length() )
     {
-        m_qsQuery += QString( " AND name LIKE '\%%1\%'" ).arg( ledFilterName->text() );
+        m_qsQuery += QString( " AND name LIKE '%" + ledFilterName->text() + "%'" );
     }
 
     int nFilterId;

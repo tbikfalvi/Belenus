@@ -129,7 +129,7 @@ void cDlgPatientCardType::refreshTable()
     if( stTemp != "" )
     {
         m_qsQuery += " AND ";
-        m_qsQuery += QString( "name LIKE '\%%1\%'" ).arg( stTemp );
+        m_qsQuery += QString( "name LIKE '%" + stTemp + "%'" );
     }
 
     stTemp = ledFilterUnits->text();
