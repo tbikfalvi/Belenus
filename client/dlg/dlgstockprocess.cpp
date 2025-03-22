@@ -62,7 +62,7 @@ void dlgStockProcess::on_ledBarcode_editingFinished()
     if( ledBarcode->text().length() == 0 )
         return;
 
-    m_qsFilter = QString( "WHERE barcode LIKE '\%%1\%'" ).arg( ledBarcode->text() );
+    m_qsFilter = QString( "WHERE barcode LIKE '%" + ledBarcode->text() + "%'" );
     _fillProductCombo();
 }
 
@@ -73,7 +73,7 @@ void dlgStockProcess::on_ledName_editingFinished()
     if( ledName->text().length() == 0 )
         return;
 
-    m_qsFilter = QString( "WHERE name LIKE '\%%1\%'" ).arg( ledName->text() );
+    m_qsFilter = QString( "WHERE name LIKE '%" + ledName->text() + "%'" );
     _fillProductCombo();
 }
 

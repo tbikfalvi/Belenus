@@ -43,7 +43,7 @@ void cDlgSelectMailRecipient::_refreshList()
     if( stTemp != "" )
     {
         qsQuery += " AND ";
-        qsQuery += QString( "(name LIKE '\%%1\%' OR email LIKE '\%%1\%') " ).arg( stTemp );
+        qsQuery += QString( "(name LIKE '%" + stTemp + "%' OR email LIKE '%" + stTemp + "%') " );
     }
 
     poQuery = g_poDB->executeQTQuery( qsQuery );
@@ -59,7 +59,7 @@ void cDlgSelectMailRecipient::_refreshList()
     if( stTemp != "" )
     {
         qsQuery += " AND ";
-        qsQuery += QString( "name LIKE '\%%1\%'" ).arg( stTemp );
+        qsQuery += QString( "name LIKE '%" + stTemp + "%'" );
     }
 
     poQuery = g_poDB->executeQTQuery( qsQuery );

@@ -146,6 +146,12 @@ cDlgGuestEdit::cDlgGuestEdit( QWidget *p_poParent, cDBGuest *p_poGuest, cDBPostp
                 cmbSkinType->setCurrentIndex( cmbSkinType->count()-1 );
         }
 
+        poQuery = g_poDB->executeQuery( QString( "" ) );
+        while( poQuery->next() )
+        {
+            listHistory->addItem( QString( "" ) );
+        }
+
         cDBDiscount obDBDiscount;
 
         try

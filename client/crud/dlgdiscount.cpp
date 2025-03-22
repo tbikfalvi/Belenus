@@ -137,11 +137,11 @@ void cDlgDiscount::refreshTable()
     }
     else if( rbFilterGuest->isChecked() )
     {
-        m_qsQuery += QString( " AND patientId>0 AND name LIKE '\%%1\%'" ).arg( ledFilterName->text() );
+        m_qsQuery += QString( " AND patientId>0 AND name LIKE '%" + ledFilterName->text() + "%'" );
     }
     else if( rbFilterProduct->isChecked() )
     {
-        m_qsQuery += QString( " AND productId>0 AND name LIKE '\%%1\%'" ).arg( ledFilterName->text() );
+        m_qsQuery += QString( " AND productId>0 AND name LIKE '%" + ledFilterName->text() + "%'" );
     }
 
     cDlgCrud::refreshTable();

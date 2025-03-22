@@ -213,152 +213,6 @@ cDlgProductSell::~cDlgProductSell()
     g_poPrefs->setDialogSize( "ProductSell", QPoint( width(), height() ) );
 }
 
-/*void cDlgProductSell::setupTableView()
-{
-    cTracer obTracer( "cDlgProductSell::setupTableView" );
-
-    refreshTable();
-
-    cDlgCrud::setupTableView();
-
-    if( g_obUser.isInGroup( cAccessGroup::ROOT ) )
-    {
-        m_poModel->setHeaderData( 0, Qt::Horizontal, tr( "Id" ) );
-        m_poModel->setHeaderData( 1, Qt::Horizontal, tr( "LicenceId" ) );
-        m_poModel->setHeaderData( 2, Qt::Horizontal, tr( "Name" ) );
-        m_poModel->setHeaderData( 3, Qt::Horizontal, tr( "Barcode" ) );
-        m_poModel->setHeaderData( 4, Qt::Horizontal, tr( "Sum price" ) );
-        m_poModel->setHeaderData( 5, Qt::Horizontal, tr( "VAT percent" ) );
-        m_poModel->setHeaderData( 6, Qt::Horizontal, tr( "Product count" ) );
-        m_poModel->setHeaderData( 7, Qt::Horizontal, tr( "Active" ) );
-        m_poModel->setHeaderData( 8, Qt::Horizontal, tr( "Archive" ) );
-
-        tbvCrud->resizeColumnToContents( 0 );
-        tbvCrud->resizeColumnToContents( 1 );
-        tbvCrud->resizeColumnToContents( 2 );
-        tbvCrud->resizeColumnToContents( 3 );
-        tbvCrud->resizeColumnToContents( 4 );
-        tbvCrud->resizeColumnToContents( 5 );
-        tbvCrud->resizeColumnToContents( 6 );
-        tbvCrud->resizeColumnToContents( 7 );
-        tbvCrud->resizeColumnToContents( 8 );
-
-        tbvCrud->sortByColumn( 2, Qt::AscendingOrder );
-    }
-    else
-    {
-        m_poModel->setHeaderData( 1, Qt::Horizontal, tr( "Name" ) );
-        m_poModel->setHeaderData( 2, Qt::Horizontal, tr( "Barcode" ) );
-        m_poModel->setHeaderData( 3, Qt::Horizontal, tr( "Sum price" ) );
-        m_poModel->setHeaderData( 4, Qt::Horizontal, tr( "VAT percent" ) );
-        m_poModel->setHeaderData( 5, Qt::Horizontal, tr( "Product count" ) );
-
-        tbvCrud->resizeColumnToContents( 1 );
-        tbvCrud->resizeColumnToContents( 2 );
-        tbvCrud->resizeColumnToContents( 3 );
-        tbvCrud->resizeColumnToContents( 4 );
-        tbvCrud->resizeColumnToContents( 5 );
-
-        tbvCrud->sortByColumn( 1, Qt::AscendingOrder );
-    }
-}
-
-void cDlgProductSell::refreshTable()
-{
-    cTracer obTracer( "cDlgProductSell::refreshTable" );
-
-    if( g_obUser.isInGroup( cAccessGroup::ROOT ) )
-    {
-        m_qsQuery = "SELECT productId, licenceId, name, barcode, (netPriceSell/100) as netPriceSell, vatpercentSell, productCount, active, archive FROM products WHERE productId>0";
-    }
-    else
-    {
-        m_qsQuery = "SELECT productId AS id, name, barcode, (netPriceSell/100) as netPriceSell, vatpercentSell, productCount FROM products WHERE active=1 AND productId>0";
-    }
-
-    if( ledBarcode->text().length() > 0 )
-    {
-        m_qsQuery += " AND ";
-        m_qsQuery += QString( "barcode LIKE '\%%1\%'" ).arg( ledBarcode->text() );
-    }
-
-    if( ledFilterName->text().length() > 0 )
-    {
-        m_qsQuery += " AND ";
-        m_qsQuery += QString( "name LIKE '\%%1\%'" ).arg( ledFilterName->text() );
-    }
-
-    cDlgCrud::refreshTable();
-}
-
-void cDlgProductSell::enableButtons()
-{
-    cTracer obTracer( "cDlgProductSell::enableButtons" );
-
-    if( m_uiSelectedId )
-    {
-        m_obProduct.load( m_uiSelectedId );
-    }
-    else
-    {
-        m_obProduct.createNew();
-    }
-
-    ledName->setText( m_obProduct.name() );
-    ledItemCount->setText( QString::number( (m_obProduct.productCount()>0?1:0) ) );
-    _calculateTotalPrice();
-
-    enablePayment();
-}
-
-void cDlgProductSell::enablePayment()
-{
-    cTracer obTrace( "cDlgProductSell::enablePayment" );
-
-    if( m_uiSelectedId && ledItemCount->text().toInt() > 0 )
-    {
-        pbPayment->setEnabled( true );
-        pbToCart->setEnabled( true );
-    }
-    else
-    {
-        pbPayment->setEnabled( false );
-        pbToCart->setEnabled( false );
-    }
-}
-
-void cDlgProductSell::newClicked( bool ) {}
-void cDlgProductSell::editClicked( bool ) {}
-void cDlgProductSell::deleteClicked( bool ) {}
-
-void cDlgProductSell::on_pbItemCountIncrease_clicked()
-{
-    cTracer obTrace( "cDlgProductSell::on_pbItemCountIncrease_clicked" );
-
-    int nCount = ledItemCount->text().toInt();
-
-    if( nCount < m_obProduct.productCount() )
-    {
-        nCount++;
-        ledItemCount->setText( QString::number( nCount ) );
-        _calculateTotalPrice();
-    }
-}
-
-void cDlgProductSell::on_pbItemCountDecrease_clicked()
-{
-    cTracer obTrace( "cDlgProductSell::on_pbItemCountDecrease_clicked" );
-
-    int nCount = ledItemCount->text().toInt();
-
-    if( nCount > 1 )
-    {
-        nCount--;
-        ledItemCount->setText( QString::number( nCount ) );
-        _calculateTotalPrice();
-    }
-}
-*/
 void cDlgProductSell::on_pbPayment_clicked()
 {
     cTracer obTrace( "cDlgProductSell::on_pbPayment_clicked" );
@@ -492,13 +346,13 @@ void cDlgProductSell::on_pbRefresh_clicked()
     if( ledBarcode->text().length() > 0 )
     {
         m_qsQuery += " AND ";
-        m_qsQuery += QString( "barcode LIKE '\%%1\%'" ).arg( ledBarcode->text() );
+        m_qsQuery += QString( "barcode LIKE '%" + ledBarcode->text() + "%'" );
     }
 
     if( ledFilterName->text().length() > 0 )
     {
         m_qsQuery += " AND ";
-        m_qsQuery += QString( "name LIKE '\%%1\%'" ).arg( ledFilterName->text() );
+        m_qsQuery += QString( "name LIKE '%" + ledFilterName->text() + "%'" );
     }
 
     m_qsQuery += " ORDER BY name ";
