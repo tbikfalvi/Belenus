@@ -272,7 +272,7 @@ void cDlgPanelUse::_fillUiItems()
     cmbTimeIntervall->addItem( tr("<No time intervall selected>"), 0 );
     m_qslPanelUseTimes.append( QString("0|0") );
 
-    qsQuery = QString( "SELECT panelUseId, name, useTime, usePrice FROM paneluses WHERE panelIds LIKE '\%%1\%' ORDER BY useTime " ).arg( m_uiPanelId );
+    qsQuery = QString( "SELECT panelUseId, name, useTime, usePrice FROM paneluses WHERE panelIds LIKE '%" + QString::number(m_uiPanelId) + "%' ORDER BY useTime " );
     poQuery = g_poDB->executeQTQuery( qsQuery );
     while( poQuery->next() )
     {

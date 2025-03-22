@@ -1818,16 +1818,45 @@ void cWndMain::on_action_Guests_triggered()
 {
     cTracer obTrace( "cWndMain::on_action_Guests_triggered" );
 
-    m_bMainWindowActive = false;
+    unsigned int uiPatientId = 0;
+    if( _isOnlyOnePatientMatch( m_qsPatientNameFilter, uiPatientId ) )
+    {
+        m_qsPatientNameFilter   = "";
 
-    m_dlgProgress->showProgress();
+        cDBGuest  *poGuest = NULL;
 
-    cDlgGuest  obDlgGuest( this, m_qsPatientNameFilter );
-    m_qsPatientNameFilter = "";
+        try
+        {
+            poGuest = new cDBGuest;
+            poGuest->load( uiPatientId );
 
-    m_dlgProgress->hideProgress();
+            cDlgGuestEdit  obDlgEdit( this, poGuest );
+            obDlgEdit.setWindowTitle( poGuest->name() );
+            obDlgEdit.exec();
 
-    obDlgGuest.exec();
+            if( poGuest ) delete poGuest;
+        }
+        catch( cSevException &e )
+        {
+            if( poGuest ) delete poGuest;
+            g_obLogger(e.severity()) << e.what() << EOM;
+            g_obGen.showTrayError( e.what() );
+        }
+        updateTitle();
+    }
+    else
+    {
+        m_bMainWindowActive = false;
+
+        m_dlgProgress->showProgress();
+
+        cDlgGuest  obDlgGuest( this, m_qsPatientNameFilter );
+        m_qsPatientNameFilter = "";
+
+        m_dlgProgress->hideProgress();
+
+        obDlgGuest.exec();
+    }
 
     slotMainWindowActivated();
 }
@@ -1956,18 +1985,15 @@ void cWndMain::on_action_PatientSelect_triggered()
         return;
     }
 
-    m_dlgProgress->showProgress();
+    unsigned int uiPatientId = 0;
 
-    cDlgPatientSelect  obDlgPatientSelect( this, m_qsPatientNameFilter );
-    m_qsPatientNameFilter   = "";
-
-    m_dlgProgress->hideProgress();
-
-    if( obDlgPatientSelect.exec() == QDialog::Accepted )
+    if( _isOnlyOnePatientMatch( m_qsPatientNameFilter, uiPatientId ) )
     {
+        m_qsPatientNameFilter   = "";
         try
         {
-            g_obGuest.load( obDlgPatientSelect.selectedPatientId() );
+            g_obGuest.load( uiPatientId );
+            g_obGen.showTrayInfo( tr( "Actual guest is: %1" ).arg( g_obGuest.name() ) );
         }
         catch( cSevException &e )
         {
@@ -1975,6 +2001,29 @@ void cWndMain::on_action_PatientSelect_triggered()
             g_obGen.showTrayError( e.what() );
         }
         updateTitle();
+    }
+    else
+    {
+        m_dlgProgress->showProgress();
+
+        cDlgPatientSelect  obDlgPatientSelect( this, m_qsPatientNameFilter );
+        m_qsPatientNameFilter   = "";
+
+        m_dlgProgress->hideProgress();
+
+        if( obDlgPatientSelect.exec() == QDialog::Accepted )
+        {
+            try
+            {
+                g_obGuest.load( obDlgPatientSelect.selectedPatientId() );
+            }
+            catch( cSevException &e )
+            {
+                g_obLogger(e.severity()) << e.what() << EOM;
+                g_obGen.showTrayError( e.what() );
+            }
+            updateTitle();
+        }
     }
 
     slotMainWindowActivated();
@@ -2102,17 +2151,34 @@ void cWndMain::on_action_UseDevice_triggered()
         {
             if( g_obGuest.id() == 0 )
             {
-                if( QMessageBox::question( this, tr("Question"),
-                                           tr("Do you want to add adhoc patient to patient database?\n\n"
-                                              "PLEASE ASK THE PATIENT if willing to add name and email address !"),
-                                           QMessageBox::Yes,QMessageBox::No ) == QMessageBox::Yes )
+                // Keszpenzes hasznalat, de nincs vendeg kivalasztva
+                switch( customMsgBox( this, MSG_QUESTION,
+                                      tr( " &Add as new patient | &Select existing patient | &Continue "),
+                                      tr( "Do you want to add adhoc patient to patient database?\n\n"
+                                          "PLEASE ASK THE PATIENT if willing to add name and email address!\n"
+                                          "If the patient already saved in the database, you can select by name."),
+                                      tr( "Click the 'Add as new patient' if the guest agreed to add his/her name.\n"
+                                          "Click the 'Select existing patient' if guest data already in database and you want to find it by name.\n"
+                                          "Click the 'Continue' if you don't want to take record adhoc guest visit.") ) )
                 {
-                    cDlgAddGuest obDlgAddGuest( this );
-
-                    if( obDlgAddGuest.exec() == QDialog::Accepted )
+                    case 1:
                     {
-                        g_obGuest.load( obDlgAddGuest.patientId() );
+                        cDlgAddGuest obDlgAddGuest( this );
+
+                        if( obDlgAddGuest.exec() == QDialog::Accepted )
+                        {
+                            g_obGuest.load( obDlgAddGuest.patientId() );
+                        }
+                        break;
                     }
+                    case 2:
+                    {
+                        on_action_PatientSelect_triggered();
+                        break;
+                    }
+                    case 3:
+                    default:
+                        break;
                 }
             }
 
@@ -3950,104 +4016,10 @@ void cWndMain::on_KeyboardDisabled()
     m_bActionProcessing = true;
     m_pbStatusKeyboard.setIcon( QIcon( "./resources/40x40_keyboard_locked.png" ) );
 }
-/*
-void cWndMain::_updateAllPatientcardToWeb()
-{
-    m_dlgProgress->showProgress();
 
-    QSqlQuery *poQuery = g_poDB->executeQTQuery( "SELECT patientCardId "
-                                                 "FROM patientcards WHERE "
-                                                 "active = 1");
 
-    m_dlgProgress->showProgressBar( poQuery->size() );
-
-    while( poQuery->next() )
-    {
-        try
-        {
-            cDBPatientCard  obDBPatientCard;
-
-            obDBPatientCard.load( poQuery->value(0).toUInt() );
-            obDBPatientCard.sendDataToWeb( false );
-            m_dlgProgress->stepProgressBar();
-        }
-        catch( cSevException &e )
-        {
-            g_obLogger(e.severity()) << e.what() << EOM;
-        g_obGen.showTrayError( e.what() );
-        }
-    }
-
-    m_dlgProgress->hideProgress();
-}
-
-void cWndMain::_removeAllPatientcardFromWeb()
-{
-    m_dlgProgress->showProgress();
-
-    QSqlQuery *poQuery = g_poDB->executeQTQuery( "SELECT patientCardId "
-                                                 "FROM patientcards WHERE "
-                                                 "active = 0 AND "
-                                                 "patientCardId>1 AND "
-                                                 "barcode<>\"\" ");
-
-    m_dlgProgress->showProgressBar( poQuery->size() );
-
-    while( poQuery->next() )
-    {
-        try
-        {
-            cDBPatientCard  obDBPatientCard;
-
-            obDBPatientCard.load( poQuery->value(0).toUInt() );
-            g_poBlnsHttp->sendPatientCardData( obDBPatientCard.barcode(), "", false );
-            m_dlgProgress->stepProgressBar();
-        }
-        catch( cSevException &e )
-        {
-            g_obLogger(e.severity()) << e.what() << EOM;
-        g_obGen.showTrayError( e.what() );
-        }
-    }
-
-    m_dlgProgress->hideProgress();
-}
-
-void cWndMain::_removePatientcardFromWeb()
-{
-    cDlgInputStart  obDlgInputStart( this );
-
-    obDlgInputStart.m_bCard = true;
-    obDlgInputStart.init();
-
-    if( obDlgInputStart.exec() == QDialog::Accepted )
-    {
-        try
-        {
-            cDBPatientCard  obDBPatientCard;
-
-            obDBPatientCard.load( obDlgInputStart.getEditText() );
-            g_poBlnsHttp->sendPatientCardData( obDBPatientCard.barcode(), "" );
-        }
-        catch( cSevException &e )
-        {
-            g_obLogger(e.severity()) << e.what() << EOM;
-        g_obGen.showTrayError( e.what() );
-        }
-    }
-}
-*/
 void cWndMain::_setStatusText(QString p_qsText, bool p_bError)
 {
-/*    if( m_bBlnsHttpErrorVisible )
-    {
-        if( (QDateTime::currentDateTime().toTime_t()-m_uiBlnsErrorAppeared) < (unsigned int)(g_poPrefs->getBlnsHttpMessageWaitTime()*1000) )
-        {
-            return;
-        }
-        m_bBlnsHttpErrorVisible = false;
-    }*/
-
     if( p_bError )
     {
         m_lblStatusLeft.setStyleSheet( "QLabel {font: bold; color: red;}" );
@@ -4059,17 +4031,7 @@ void cWndMain::_setStatusText(QString p_qsText, bool p_bError)
 
     m_lblStatusLeft .setText( p_qsText );
 }
-/*
-void cWndMain::_processHttpActions()
-{
-    if( g_poPrefs->isBlnsHttpEnabled() )
-    {
-        m_dlgProgress->showProgress();
-        m_dlgProgress->showProgressBar( g_poBlnsHttp->getNumberOfWaitingRecords() );
-        g_poBlnsHttp->processWaitingCardData();
-    }
-}
-*/
+
 void cWndMain::_checkVersions()
 {
     QSqlQuery   *poQuery            = NULL;
@@ -4269,6 +4231,43 @@ void cWndMain::on_BlnsHttpProcessStopped()
                                .arg( m_lblHttpCount.text() ) );
 }
 */
+
+//============================================================================================================================
+bool cWndMain::_isOnlyOnePatientMatch(QString p_qsNameFilter, unsigned int &p_uiPatientId )
+//----------------------------------------------------------------------------------------------------------------------------
+{
+    bool    bRet = false;
+
+    QString qsQuery = QString("SELECT patientId FROM patients WHERE name LIKE '%" + p_qsNameFilter + "%' ");
+
+    try
+    {
+        QSqlQuery* poQuery = g_poDB->executeQTQuery(qsQuery);
+
+        if (!poQuery->first()) // Nincs találat
+        {
+            delete poQuery;
+            return false;
+        }
+
+        p_uiPatientId = poQuery->value(0).toUInt();
+
+        if (poQuery->next()) // Van még egy találat? Ha igen, akkor nem egyedi
+        {
+            delete poQuery;
+            return false;
+        }
+
+        bRet = true; // Pontosan egy találat volt
+
+        delete poQuery; // Fontos, hogy felszabadítsuk a memóriát
+    }
+    catch( cSevException &e )
+    {
+    }
+
+    return bRet;
+}
 
 //============================================================================================================================
 void cWndMain::slotMainWindowActivated()

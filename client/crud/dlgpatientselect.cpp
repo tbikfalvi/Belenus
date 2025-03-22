@@ -162,13 +162,13 @@ void cDlgPatientSelect::refreshTable()
     if( stTemp != "" )
     {
         m_qsQuery += " AND ";
-        m_qsQuery += QString( "name LIKE '\%%1\%'" ).arg( stTemp );
+        m_qsQuery += QString( "name LIKE '%" + stTemp + "%'" );
     }
     stTemp = ledEmail->text();
     if( stTemp != "" )
     {
         m_qsQuery += " AND ";
-        m_qsQuery += QString( "email LIKE '\%%1\%'" ).arg( stTemp );
+        m_qsQuery += QString( "email LIKE '%" + stTemp + "%'" );
     }
     cDlgCrud::refreshTable();
 }

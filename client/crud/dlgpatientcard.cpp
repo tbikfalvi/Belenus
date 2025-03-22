@@ -238,14 +238,14 @@ void cDlgPatientCard::refreshTable( QString p_qsCondition )
     if( stTemp != "" )
     {
         m_qsQuery += " AND ";
-        m_qsQuery += QString( "barcode LIKE '\%%1\%'" ).arg( stTemp );
+        m_qsQuery += QString( "barcode LIKE '%" + stTemp + "%'" );
     }
 
     stTemp = ledOwner->text();
     if( stTemp != "" )
     {
         m_qsQuery += " AND ";
-        m_qsQuery += QString( "patients.name LIKE '\%%1\%'" ).arg( stTemp );
+        m_qsQuery += QString( "patients.name LIKE '%" + stTemp + "%'" );
     }
 
     if( chkRFID->isChecked() )

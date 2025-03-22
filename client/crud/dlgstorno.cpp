@@ -128,14 +128,8 @@ void cDlgStorno::refreshTable()
     if( stTemp != "" )
     {
         m_qsQuery += " AND ";
-        m_qsQuery += QString( "comment LIKE '\%%1\%'" ).arg( stTemp );
+        m_qsQuery += QString( "comment LIKE '%" + stTemp + "%'" );
     }
-//    stTemp = ledUniqueId->text();
-//    if( stTemp != "" )
-//    {
-//        m_qsQuery += " AND ";
-//        m_qsQuery += QString( "uniqueId LIKE '\%%1\%'" ).arg( stTemp );
-//    }
 
     cDlgCrud::refreshTable();
 }

@@ -105,7 +105,7 @@ QString cCommRFID::readRFID()
 bool cCommRFID::_portOpen()
 //------------------------------------------------------------------------------------
 {
-    cTracer obTrace( "cCommRFID::portOpen" );
+//    cTracer obTrace( "cCommRFID::portOpen" );
 
     if( m_nCommPort < 1 ) return false;
 

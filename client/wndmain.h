@@ -138,6 +138,7 @@ private:
     void _checkIsWebSyncNeeded();
     void _setTrayIconMenu();
     void _checkArchiveDir();
+    bool _isOnlyOnePatientMatch(QString p_qsNameFilter, unsigned int &p_uiPatientId );
 
 public slots:
     void processDeviceUsePayment( unsigned int p_uiPanelId, unsigned int p_uiLedgerId, int p_nPaymentType );

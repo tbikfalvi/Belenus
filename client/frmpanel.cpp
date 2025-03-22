@@ -606,16 +606,24 @@ void cFrmPanel::setMainProcessTime( const unsigned int p_uiPatientCardId, const 
 //====================================================================================
 bool cFrmPanel::isTimeIntervallValid(const int p_inLength)
 {
-    QSqlQuery   *poQuery;
-    bool         bRet = false;
+    g_obLogger(cSeverity::DEBUG) << "Check usage time for panel <" << m_uiId << "> and with " << p_inLength << " minutes" << EOM;
 
-    poQuery = g_poDB->executeQTQuery( QString( "SELECT * FROM panelUses WHERE panelIds LIKE '\%%1\%' AND useTime=%2" ).arg(m_uiId).arg(p_inLength) );
+    bool        bRet = false;
+    QString     qsQuery = QString( "SELECT * FROM panelUses WHERE panelIds LIKE '%" + QString::number(m_uiId) + "%' AND useTime=%1;" ).arg( p_inLength );
+
+    g_obLogger(cSeverity::DEBUG) << "SQL <" << qsQuery << ">" << EOM;
+
+    QSqlQuery *poQuery = g_poDB->executeQTQuery( qsQuery );
     if( poQuery->first() )
     {
-        g_obLogger(cSeverity::DEBUG) << "No record found" << EOM;
+        g_obLogger(cSeverity::DEBUG) << "Record found" << EOM;
         bRet = true;
     }
-    if( poQuery ) delete poQuery;
+    else
+    {
+        g_obLogger(cSeverity::DEBUG) << "No record found" << EOM;
+    }
+    delete poQuery;
 
     return bRet;
 }
