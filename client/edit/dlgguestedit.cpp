@@ -146,10 +146,15 @@ cDlgGuestEdit::cDlgGuestEdit( QWidget *p_poParent, cDBGuest *p_poGuest, cDBPostp
                 cmbSkinType->setCurrentIndex( cmbSkinType->count()-1 );
         }
 
-        poQuery = g_poDB->executeQuery( QString( "" ) );
+        poQuery = g_poDB->executeQTQuery( QString( "SELECT name, patienthistorytime FROM patienthistory, patienthistorytype "
+                                                   "WHERE patienthistory.patientHistoryTypeId=patienthistorytype.patientHistoryTypeId "
+                                                   "AND patienthistory.patientId=%1" ).arg( m_poGuest->id() ) );
         while( poQuery->next() )
         {
-            listHistory->addItem( QString( "" ) );
+            QString qsAction    = poQuery->value(0).toString();
+            QString qsDate      = poQuery->value(1).toDate().toString( "dd-MM-yyyy" );
+
+            listHistory->addItem( QString( qsAction + "\t" + qsDate ) );
         }
 
         cDBDiscount obDBDiscount;
