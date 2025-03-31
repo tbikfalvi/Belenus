@@ -206,3 +206,7 @@ Version 2.2.0.0
 Version 2.2.1.0
 ===============
 - HIBAJAVITAS: a varakozo listabol valo inditas nem mukodott megfeleloen, nem lehetett inditani
+
+Version 2.2.1.1
+===============
+- HIBAJAVITAS: a varakozo listabol valo inditas az elso gepnel nem mukodott megfeleloen, %-os hiba javitva
