@@ -928,4 +928,19 @@
         </execute>
     </version>    
 	
+	<version current="2.2.1.0" next="2.2.1.1">
+        <uncompress>
+            <file path="%DOWNLOAD_DIR%" name="Update_2_2_1_1.zip" />
+        </uncompress>
+        <backup>
+            <file path="%INSTALL_DIR%" directory="" name="belenus.exe" move="yes" />
+        </backup>
+        <update>
+            <file src="%DOWNLOAD_DIR%/belenus.exe" dst="%INSTALL_DIR%/belenus.exe" />
+        </update>
+        <execute>
+            <application home="%CURRENT_DIR%" name="DBBackup.exe" params='-execute "%DOWNLOAD_DIR%/sql/db_update_2_2_1_1.sql"' />
+        </execute>
+    </version>    
+	
 </Process>
