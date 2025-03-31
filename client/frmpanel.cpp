@@ -609,7 +609,7 @@ bool cFrmPanel::isTimeIntervallValid(const int p_inLength)
     g_obLogger(cSeverity::DEBUG) << "Check usage time for panel <" << m_uiId << "> and with " << p_inLength << " minutes" << EOM;
 
     bool        bRet = false;
-    QString     qsQuery = QString( "SELECT * FROM panelUses WHERE panelIds LIKE '%" + QString::number(m_uiId) + "%' AND useTime=%1;" ).arg( p_inLength );
+    QString     qsQuery = QString( "SELECT * FROM panelUses WHERE panelIds LIKE '%" + QString::number(m_uiId) + "%' AND useTime=" + QString::number(p_inLength) + ";" );
 
     g_obLogger(cSeverity::DEBUG) << "SQL <" << qsQuery << ">" << EOM;
 
