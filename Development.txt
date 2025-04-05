@@ -210,3 +210,7 @@ Version 2.2.1.0
 Version 2.2.1.1
 ===============
 - HIBAJAVITAS: a varakozo listabol valo inditas az elso gepnel nem mukodott megfeleloen, %-os hiba javitva
+
+Version 2.2.2.0
+===============
+- KIEGESZITES: a vendeg adatszerkeszto ablakban latszanak a vendeg esemenyek
