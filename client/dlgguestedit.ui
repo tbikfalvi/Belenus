@@ -7,7 +7,7 @@
     <x>0</x>
     <y>0</y>
     <width>1088</width>
-    <height>623</height>
+    <height>734</height>
    </rect>
   </property>
   <property name="maximumSize">
@@ -21,7 +21,7 @@
   </property>
   <layout class="QHBoxLayout" name="horizontalLayout_9">
    <item>
-    <layout class="QVBoxLayout" name="verticalLayout_7">
+    <layout class="QVBoxLayout" name="verticalLayout_8">
      <item>
       <widget class="QGroupBox" name="gbIdentification">
        <property name="title">
@@ -222,98 +222,120 @@
        <property name="title">
         <string> Additional data </string>
        </property>
-       <layout class="QHBoxLayout" name="horizontalLayout_8">
+       <layout class="QVBoxLayout" name="verticalLayout_7">
         <item>
-         <layout class="QFormLayout" name="formLayout">
-          <item row="4" column="0">
-           <widget class="QLabel" name="lblEmail">
-            <property name="text">
-             <string>E-Mail :</string>
-            </property>
-           </widget>
+         <layout class="QHBoxLayout" name="horizontalLayout_8">
+          <item>
+           <layout class="QFormLayout" name="formLayout">
+            <item row="4" column="0">
+             <widget class="QLabel" name="lblEmail">
+              <property name="text">
+               <string>E-Mail :</string>
+              </property>
+             </widget>
+            </item>
+            <item row="4" column="1">
+             <widget class="QLineEdit" name="ledEmail">
+              <property name="minimumSize">
+               <size>
+                <width>200</width>
+                <height>0</height>
+               </size>
+              </property>
+              <property name="maximumSize">
+               <size>
+                <width>200</width>
+                <height>16777215</height>
+               </size>
+              </property>
+              <property name="maxLength">
+               <number>100</number>
+              </property>
+             </widget>
+            </item>
+            <item row="5" column="0">
+             <widget class="QLabel" name="lblMobile">
+              <property name="text">
+               <string>Phone :</string>
+              </property>
+             </widget>
+            </item>
+            <item row="5" column="1">
+             <widget class="QLineEdit" name="ledPhone">
+              <property name="minimumSize">
+               <size>
+                <width>200</width>
+                <height>0</height>
+               </size>
+              </property>
+              <property name="maximumSize">
+               <size>
+                <width>200</width>
+                <height>16777215</height>
+               </size>
+              </property>
+             </widget>
+            </item>
+            <item row="6" column="0">
+             <widget class="QLabel" name="lblAddress">
+              <property name="text">
+               <string>Address :</string>
+              </property>
+             </widget>
+            </item>
+            <item row="6" column="1">
+             <widget class="QTextEdit" name="teAddress">
+              <property name="maximumSize">
+               <size>
+                <width>16777215</width>
+                <height>80</height>
+               </size>
+              </property>
+             </widget>
+            </item>
+            <item row="1" column="1">
+             <widget class="QCheckBox" name="chkNewsletter">
+              <property name="text">
+               <string>Newsletter</string>
+              </property>
+             </widget>
+            </item>
+            <item row="2" column="1">
+             <widget class="QCheckBox" name="chkCardEmail">
+              <property name="text">
+               <string>Card data email</string>
+              </property>
+              <property name="checkable">
+               <bool>true</bool>
+              </property>
+             </widget>
+            </item>
+            <item row="3" column="1">
+             <widget class="QCheckBox" name="chkCardyRegistered">
+              <property name="text">
+               <string>Registered at Cardy</string>
+              </property>
+             </widget>
+            </item>
+           </layout>
           </item>
-          <item row="4" column="1">
-           <widget class="QLineEdit" name="ledEmail">
-            <property name="minimumSize">
-             <size>
-              <width>200</width>
-              <height>0</height>
-             </size>
-            </property>
-            <property name="maximumSize">
-             <size>
-              <width>200</width>
-              <height>16777215</height>
-             </size>
-            </property>
-            <property name="maxLength">
-             <number>100</number>
-            </property>
-           </widget>
-          </item>
-          <item row="5" column="0">
-           <widget class="QLabel" name="lblMobile">
-            <property name="text">
-             <string>Phone :</string>
-            </property>
-           </widget>
-          </item>
-          <item row="5" column="1">
-           <widget class="QLineEdit" name="ledPhone">
-            <property name="minimumSize">
-             <size>
-              <width>200</width>
-              <height>0</height>
-             </size>
-            </property>
-            <property name="maximumSize">
-             <size>
-              <width>200</width>
-              <height>16777215</height>
-             </size>
-            </property>
-           </widget>
-          </item>
-          <item row="6" column="0">
-           <widget class="QLabel" name="lblAddress">
-            <property name="text">
-             <string>Address :</string>
-            </property>
-           </widget>
-          </item>
-          <item row="6" column="1">
-           <widget class="QTextEdit" name="teAddress">
-            <property name="maximumSize">
-             <size>
-              <width>16777215</width>
-              <height>80</height>
-             </size>
-            </property>
-           </widget>
-          </item>
-          <item row="1" column="1">
-           <widget class="QCheckBox" name="chkNewsletter">
-            <property name="text">
-             <string>Newsletter</string>
-            </property>
-           </widget>
-          </item>
-          <item row="2" column="1">
-           <widget class="QCheckBox" name="chkCardEmail">
-            <property name="text">
-             <string>Card data email</string>
-            </property>
-            <property name="checkable">
-             <bool>true</bool>
-            </property>
-           </widget>
-          </item>
-          <item row="3" column="1">
-           <widget class="QCheckBox" name="chkCardyRegistered">
-            <property name="text">
-             <string>Registered at Cardy</string>
-            </property>
-           </widget>
+          <item>
+           <layout class="QVBoxLayout" name="verticalLayout_6">
+            <item>
+             <widget class="QLabel" name="lblPatientHistory">
+              <property name="text">
+               <string>Patient history</string>
+              </property>
+             </widget>
+            </item>
+            <item>
+             <widget class="QListWidget" name="listHistory">
+              <property name="selectionMode">
+               <enum>QAbstractItemView::NoSelection</enum>
+              </property>
+             </widget>
+            </item>
+           </layout>
           </item>
          </layout>
         </item>
@@ -328,24 +350,6 @@
           </item>
           <item>
            <widget class="QTextEdit" name="teComment"/>
-          </item>
-         </layout>
-        </item>
-        <item>
-         <layout class="QVBoxLayout" name="verticalLayout_6">
-          <item>
-           <widget class="QLabel" name="lblPatientHistory">
-            <property name="text">
-             <string>Patient history</string>
-            </property>
-           </widget>
-          </item>
-          <item>
-           <widget class="QListWidget" name="listHistory">
-            <property name="selectionMode">
-             <enum>QAbstractItemView::NoSelection</enum>
-            </property>
-           </widget>
           </item>
          </layout>
         </item>
@@ -824,8 +828,8 @@
        </property>
        <property name="sizeHint" stdset="0">
         <size>
-         <width>20</width>
-         <height>18</height>
+         <width>982</width>
+         <height>13</height>
         </size>
        </property>
       </spacer>
@@ -1005,6 +1009,23 @@
   <tabstop>ledName</tabstop>
   <tabstop>rbGenderMale</tabstop>
   <tabstop>rbGenderFemale</tabstop>
+  <tabstop>rbGenderNone</tabstop>
+  <tabstop>deBirthDate</tabstop>
+  <tabstop>ledMembership</tabstop>
+  <tabstop>ledUniqueId</tabstop>
+  <tabstop>chkNewsletter</tabstop>
+  <tabstop>chkCardEmail</tabstop>
+  <tabstop>chkCardyRegistered</tabstop>
+  <tabstop>ledEmail</tabstop>
+  <tabstop>ledPhone</tabstop>
+  <tabstop>teAddress</tabstop>
+  <tabstop>listHistory</tabstop>
+  <tabstop>teComment</tabstop>
+  <tabstop>ledBarcode</tabstop>
+  <tabstop>pbDislink</tabstop>
+  <tabstop>chkReturning</tabstop>
+  <tabstop>ledDateOfRegistration</tabstop>
+  <tabstop>cmbSkinType</tabstop>
   <tabstop>rbAge0</tabstop>
   <tabstop>rbAge1</tabstop>
   <tabstop>rbAge2</tabstop>
@@ -1013,14 +1034,13 @@
   <tabstop>rbAge5</tabstop>
   <tabstop>rbAge6</tabstop>
   <tabstop>rbAge7</tabstop>
-  <tabstop>ledBarcode</tabstop>
-  <tabstop>pbDislink</tabstop>
   <tabstop>chkRegularCustomer</tabstop>
   <tabstop>chkEmployee</tabstop>
   <tabstop>chkService</tabstop>
   <tabstop>rbDiscountValue</tabstop>
   <tabstop>rbDiscountPercent</tabstop>
   <tabstop>ledDiscount</tabstop>
+  <tabstop>ledLoyaltyPoints</tabstop>
   <tabstop>pbEditDiscount</tabstop>
   <tabstop>pbSaveExit</tabstop>
   <tabstop>pbCancel</tabstop>

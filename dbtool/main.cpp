@@ -2,7 +2,7 @@
 #include <QTranslator>
 #include "mainwindow.h"
 
-#define APPLICATION_VERSION_NUMBER  "2.2.0.0"
+#define APPLICATION_VERSION_NUMBER  "2.2.2.0"
 
 QTranslator     *poTransTool;
 QTranslator     *poTransQT;

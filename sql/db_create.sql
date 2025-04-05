@@ -2,7 +2,7 @@
 -- Belenus Szoftver Rendszer (c) Bikfalvi Tamas - 2025
 -- -----------------------------------------------------------------------------------
 -- Filename    : db_create.sql
--- DbVersion   : 2.2.0.0
+-- DbVersion   : 2.2.2.0
 -- -----------------------------------------------------------------------------------
 -- Adatbazist letrehozo SQL script
 -- -----------------------------------------------------------------------------------
@@ -557,6 +557,7 @@ CREATE TABLE `patientHistory` (
   `patientHistoryTypeId`    int(10) unsigned        NOT NULL,
   `productId`               int(10) unsigned        NOT NULL,
   `panelId`                 int(10) unsigned        NOT NULL,
+  `panelTime`               int(10) unsigned        NOT NULL,
   `patientCardTypeId`       int(10) unsigned        NOT NULL,
   `patientCardId`           int(10) unsigned        NOT NULL,
   `patientHistoryTime`      timestamp               NOT NULL DEFAULT CURRENT_TIMESTAMP,

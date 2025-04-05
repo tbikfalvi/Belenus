@@ -1083,4 +1083,30 @@
         </execute>
     </version>    
 	
+	<version current="2.2.1.1" next="2.2.2.0">
+        <download>
+            <file path="http://download.bikfalvi.hu/belenus/official/Update_2_2_2_0.zip" />
+        </download>
+        <uncompress>
+            <file path="%DOWNLOAD_DIR%" name="Update_2_2_2_0.zip" />
+        </uncompress>
+        <backup>
+            <file path="%INSTALL_DIR%" directory="" name="belenus.exe" move="yes" />
+            <file path="%INSTALL_DIR%" directory="" name="DBBackup.exe" move="yes" />
+            <file path="%INSTALL_DIR%" directory="" name="ReportViewer.exe" move="yes" />
+            <file path="%INSTALL_DIR%" directory="" name="websync.exe" move="yes" />
+        </backup>
+        <update>
+            <file src="%DOWNLOAD_DIR%/belenus.exe" dst="%INSTALL_DIR%/belenus.exe" />
+            <file src="%DOWNLOAD_DIR%/DBBackup.exe" dst="%INSTALL_DIR%/DBBackup.exe" />
+            <file src="%DOWNLOAD_DIR%/ReportViewer.exe" dst="%INSTALL_DIR%/ReportViewer.exe" />
+            <file src="%DOWNLOAD_DIR%/websync.exe" dst="%INSTALL_DIR%/websync.exe" />
+            <file src="%DOWNLOAD_DIR%/lang/belenus_hu.qm" dst="%INSTALL_DIR%/lang/belenus_hu.qm" />
+            <file src="%DOWNLOAD_DIR%/DBBackup.exe" dst="%CURRENT_DIR%/DBBackup.exe" />
+        </update>
+        <execute>
+            <application home="%CURRENT_DIR%" name="DBBackup.exe" params='-execute "%DOWNLOAD_DIR%/sql/db_update_2_2_2_0.sql"' />
+        </execute>
+    </version>    
+	
 </Process>
