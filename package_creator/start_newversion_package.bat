@@ -7,6 +7,12 @@ echo.
 SET dirCurrent=%cd%
 echo Current directory is: %dirCurrent%
 echo.
+echo Deleting previous files
+del *.inf
+del *.sql
+del *.xml
+del *.zip
+echo.
 :enter_new_version
 echo.
 echo Please enter the version number
