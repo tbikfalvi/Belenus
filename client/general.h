@@ -65,7 +65,13 @@ public:
     void             setWindowMainWidget( QWidget *poWindow );
     void             setWindowSecondaryWidget( QWidget *poWindow );
     int              deleteOldLogFiles( int p_nDeleteLogFileMonths );
-
+    void             saveGuestActivity(unsigned int p_uiPatientId,
+                                       int p_nPatientHistoryType,
+                                       unsigned int p_uiPanelId = 0,
+                                       int p_nDeviceTime = 0,
+                                       unsigned int p_uiPatientCardId = 0,
+                                       unsigned int p_uiProductId = 0
+                                       );
 
     QSystemTrayIcon *m_stIcon;
 

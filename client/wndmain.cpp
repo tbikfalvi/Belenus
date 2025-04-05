@@ -2232,6 +2232,16 @@ void cWndMain::on_action_UseDeviceLater_triggered()
             inPrice = obDlgPanelUse.panelUsePrice();
         }
 
+        g_obLogger(cSeverity::DEBUG) << "Device prepare for later use with card Id: "
+                                     << uiPatientCardId
+                                     << " Units: "
+                                     << qsUnitIds
+                                     << " Minutes: "
+                                     << inLengthCash
+                                     << " Price: "
+                                     << inPrice
+                                     << EOM;
+
         unsigned int uiShoppingCartItemId = 0;
 
         if( inPrice > 0 )
@@ -2360,7 +2370,10 @@ void cWndMain::on_action_UseDeviceLater_triggered()
             g_obGen.showTrayError( e.what() );
         }
 
-        g_obGen.showPatientCardInformation( obDlgPanelUse.panelUsePatientCardBarcode(), g_poPrefs->getCloseInfoWindowAfterSecs() );
+        if( uiPatientCardId > 0 )
+        {
+            g_obGen.showPatientCardInformation( qsBarcode, g_poPrefs->getCloseInfoWindowAfterSecs() );
+        }
     }
 
     slotMainWindowActivated();

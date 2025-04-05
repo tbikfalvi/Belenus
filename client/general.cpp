@@ -770,6 +770,40 @@ int cGeneral::deleteOldLogFiles(int p_nDeleteLogFileMonths)
     }
     return nFilesDeleted;
 }
+//====================================================================================
+void cGeneral::saveGuestActivity(unsigned int p_uiPatientId,
+                                 int p_nPatientHistoryType,
+                                 unsigned int p_uiPanelId,
+                                 int p_nDeviceTime,
+                                 unsigned int p_uiPatientCardId,
+                                 unsigned int p_uiProductId)
+//------------------------------------------------------------------------------------
+{
+    try
+    {
+        QString qsQuery = "INSERT INTO patienthistory SET ";
+
+        qsQuery += QString( "licenceId = \"%1\", " ).arg( g_poPrefs->getLicenceId() );
+        qsQuery += QString( "patientId = \"%1\", " ).arg( p_uiPatientId );
+        qsQuery += QString( "patientHistoryTypeId = \"%1\", " ).arg( p_nPatientHistoryType );
+        qsQuery += QString( "panelId = \"%1\", " ).arg( p_uiPanelId );
+        qsQuery += QString( "panelTime = \"%1\", " ).arg( p_nDeviceTime );
+        qsQuery += QString( "patientCardId = \"%1\", " ).arg( p_uiPatientCardId );
+        qsQuery += QString( "productId = \"%1\" " ).arg( p_uiProductId );
+
+        QSqlQuery *poQuery = g_poDB->executeQTQuery( qsQuery );
+
+        if( poQuery ) delete poQuery;
+    }
+    catch( cSevException &e )
+    {
+        g_obLogger(e.severity()) << e.what() << EOM;
+        g_obGen.showTrayError( e.what() );
+    }
+
+}
+
+
 //*********************************************************************************************************************
 //
 // Class cCurrency

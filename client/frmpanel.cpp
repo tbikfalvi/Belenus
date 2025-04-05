@@ -1338,25 +1338,7 @@ void cFrmPanel::closeAttendance()
 
     if( m_uiCurrentPatient > 0 )
     {
-        try
-        {
-            qsQuery = "INSERT INTO patienthistory SET ";
-
-            qsQuery += QString( "licenceId = \"%1\", " ).arg( g_poPrefs->getLicenceId() );
-            qsQuery += QString( "patientId = \"%1\", " ).arg( m_uiCurrentPatient );
-            qsQuery += QString( "patientHistoryTypeId = \"%1\", " ).arg( nPatientHistoryType );
-            qsQuery += QString( "panelId = \"%1\", " ).arg( m_uiId );
-            qsQuery += QString( "patientCardId = \"%1\" " ).arg( uiPatientCardId );
-
-            poQuery = g_poDB->executeQTQuery( qsQuery );
-
-            if( poQuery ) delete poQuery;
-        }
-        catch( cSevException &e )
-        {
-            g_obLogger(e.severity()) << e.what() << EOM;
-            g_obGen.showTrayError( e.what() );
-        }
+        g_obGen.saveGuestActivity( m_uiCurrentPatient, nPatientHistoryType, m_uiId, m_pDBLedgerDevice->timeReal(), uiPatientCardId );
     }
 
     g_obLogger(cSeverity::INFO) << "Device action finished Id ["

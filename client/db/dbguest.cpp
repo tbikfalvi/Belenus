@@ -326,7 +326,11 @@ void cDBGuest::save() throw( cSevException )
     }
 
     QSqlQuery  *poQuery = g_poDB->executeQTQuery( qsQuery );
-    if( !m_uiId && poQuery ) m_uiId = poQuery->lastInsertId().toUInt();
+    if( !m_uiId && poQuery )
+    {
+        m_uiId = poQuery->lastInsertId().toUInt();
+        g_obGen.saveGuestActivity( m_uiId, PATIENTHISTORY_SAVEDTODATABASE );
+    }
     if( poQuery ) delete poQuery;
 }
 //====================================================================================

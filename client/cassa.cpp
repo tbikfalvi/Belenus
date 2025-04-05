@@ -295,6 +295,16 @@ unsigned int cCassa::cassaProcessPatientCardSell( const cDBPatientCard &p_DBPati
     obDBLedger.setActive( true );
     obDBLedger.save();
 
+    unsigned int uiPatientId = p_DBPatientCard.getCardOwner();
+
+    if( uiPatientId > 0 )
+    {
+        if( p_bNewCard )
+            g_obGen.saveGuestActivity( uiPatientId, PATIENTHISTORY_PURCHASEDCARD, 0,  0, p_DBPatientCard.id() );
+        else
+            g_obGen.saveGuestActivity( uiPatientId, PATIENTHISTORY_REFILLEDCARD, 0,  0, p_DBPatientCard.id() );
+    }
+
 //    if( (p_obDBShoppingCart.cash()+p_obDBShoppingCart.voucher()) > 0 )
 //    {
         cassaAddMoneyAction( p_obDBShoppingCart.cash()+p_obDBShoppingCart.voucher(), p_obDBShoppingCart.card(), obDBLedger.id(), qsComment );
@@ -427,6 +437,11 @@ void cCassa::cassaProcessProductSell( const cDBShoppingCart &p_obDBShoppingCart,
     obDBLedger.setTotalPrice( p_obDBShoppingCart.itemSumPrice() );
     obDBLedger.setComment( qsComment );
     obDBLedger.save();
+
+    if( g_obGuest.id() > 0 )
+    {
+        g_obGen.saveGuestActivity( g_obGuest.id(), PATIENTHISTORY_PURCHASEDPRODUCT, 0, 0, 0, p_obDBShoppingCart.productId() );
+    }
 
     cassaAddMoneyAction( p_obDBShoppingCart.cash()+p_obDBShoppingCart.voucher(), p_obDBShoppingCart.card(), obDBLedger.id(), qsComment );
 

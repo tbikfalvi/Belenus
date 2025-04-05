@@ -987,3 +987,35 @@ bool cDBPatientCard::isCardOwnerRegisteredOnCardy() throw()
     return bRet;
 }
 
+unsigned int cDBPatientCard::getCardOwner() const throw()
+{
+    unsigned int uiPatientId = 0;
+
+    try
+    {
+        if( m_uiPatientId > 0 )
+        {
+            uiPatientId = m_uiPatientId;
+        }
+        else
+        {
+            QSqlQuery  *poQuery = g_poDB->executeQTQuery( QString( "SELECT patientId FROM connectpatientwithcard WHERE patientCardId=%1 " ).arg( m_uiId ) );
+
+            if( poQuery->size() > 0 )
+            {
+                poQuery->first();
+                uiPatientId = poQuery->value( 0 ).toUInt();
+            }
+        }
+    }
+    catch( cSevException &e )
+    {
+        g_obLogger(e.severity()) << e.what() << EOM;
+        g_obGen.showTrayError( e.what() );
+    }
+
+    return uiPatientId;
+}
+
+
+
