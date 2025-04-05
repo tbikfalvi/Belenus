@@ -146,15 +146,69 @@ cDlgGuestEdit::cDlgGuestEdit( QWidget *p_poParent, cDBGuest *p_poGuest, cDBPostp
                 cmbSkinType->setCurrentIndex( cmbSkinType->count()-1 );
         }
 
-        poQuery = g_poDB->executeQTQuery( QString( "SELECT name, patienthistorytime FROM patienthistory, patienthistorytype "
-                                                   "WHERE patienthistory.patientHistoryTypeId=patienthistorytype.patientHistoryTypeId "
-                                                   "AND patienthistory.patientId=%1" ).arg( m_poGuest->id() ) );
+        QString qsQuery = QString( "SELECT "
+                                   "patienthistorytime, "                   // poQuery->value(0)
+                                   "patienthistorytype.name, "              // poQuery->value(1)
+                                   "patienthistory.patientHistoryTypeId, "  // poQuery->value(2)
+                                   "patientcards.barcode, "                 // poQuery->value(3)
+                                   "paneltime, "                            // poQuery->value(4)
+                                   "products.name "                         // poQuery->value(5)
+                                   "FROM " );
+        qsQuery += QString( "patienthistory, patienthistorytype, patientcards, products WHERE " );
+        qsQuery += QString( "patienthistory.patientHistoryTypeId = patienthistorytype.patientHistoryTypeId AND " );
+        qsQuery += QString( "patienthistory.patientcardid=patientcards.patientcardid AND " );
+        qsQuery += QString( "patienthistory.productid=products.productid AND " );
+        qsQuery += QString( "patienthistory.patientid=%1" ).arg( m_poGuest->id() );
+
+        poQuery = g_poDB->executeQTQuery( qsQuery );
         while( poQuery->next() )
         {
-            QString qsAction    = poQuery->value(0).toString();
-            QString qsDate      = poQuery->value(1).toDate().toString( "dd-MM-yyyy" );
+            QString qsDate      = poQuery->value(0).toDate().toString( g_poPrefs->getDateFormat() );
+            QString qsAction    = poQuery->value(1).toString();
+            int nTypeId         = poQuery->value(2).toInt();
+            QString qsBarcode   = poQuery->value(3).toString();
+            int nTime           = poQuery->value(4).toInt()/60;
+            QString qsProduct   = poQuery->value(5).toString();
 
-            listHistory->addItem( QString( qsAction + "\t" + qsDate ) );
+            QString qsText      = qsDate;
+
+            switch( nTypeId )
+            {
+                case PATIENTHISTORY_PURCHASEDCARD:
+                case PATIENTHISTORY_REFILLEDCARD:
+                    qsText += "\t" + qsBarcode;
+                    break;
+                case PATIENTHISTORY_PURCHASEDPRODUCT:
+                    qsText += "\t" + qsProduct;
+                    break;
+                case PATIENTHISTORY_USEDDEVICEWITHCARD:
+                case PATIENTHISTORY_USEDDEVICEWITHCASH:
+                    qsText += "\t" + QString::number( nTime ) + tr( " mins" );
+                    break;
+                default:
+                    break;
+            }
+
+            QListWidgetItem* listItem = new QListWidgetItem( qsText );
+
+            switch (nTypeId)
+            {
+                case PATIENTHISTORY_PURCHASEDCARD:
+                case PATIENTHISTORY_REFILLEDCARD:
+                    listItem->setIcon(QIcon("./resources/40x40_patientcard.png"));
+                    break;
+                case PATIENTHISTORY_USEDDEVICEWITHCARD:
+                case PATIENTHISTORY_USEDDEVICEWITHCASH:
+                    listItem->setIcon(QIcon("./resources/40x40_device.png"));
+                    break;
+                case PATIENTHISTORY_PURCHASEDPRODUCT:
+                    listItem->setIcon(QIcon("./resources/40x40_product.png"));
+                    break;
+                default:
+                    break;
+            }
+            listItem->setToolTip( qsAction );
+            listHistory->addItem( listItem );
         }
 
         cDBDiscount obDBDiscount;
