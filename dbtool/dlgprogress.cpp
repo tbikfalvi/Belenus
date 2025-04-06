@@ -54,6 +54,7 @@ void cDlgProgress::hideProgress()
 void cDlgProgress::setMaxValue(int p_nMaxValue)
 //====================================================================================
 {
+    progressBar->setValue( 0 );
     progressBar->setMaximum( p_nMaxValue );
 }
 //====================================================================================

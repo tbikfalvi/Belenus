@@ -2,12 +2,18 @@
 #include <QTranslator>
 #include "mainwindow.h"
 
+#include "../framework/qtlogger.h"
+#include "../framework/qtframework.h"
+#include "../framework/logger/FileWriter.h"
+
 #define APPLICATION_VERSION_NUMBER  "2.2.2.0"
 
-QTranslator     *poTransTool;
-QTranslator     *poTransQT;
-QApplication    *apMainApp;
-QString          g_qsCurrentPath;
+QTranslator         *poTransTool;
+QTranslator         *poTransQT;
+QApplication        *apMainApp;
+cQTLogger            g_obLogger;
+QString              g_qsCurrentPath;
+cQTMySQLConnection  *g_poDB;
 
 int main(int argc, char *argv[])
 {
