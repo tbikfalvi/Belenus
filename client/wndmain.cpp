@@ -1035,7 +1035,7 @@ void cWndMain::keyPressEvent( QKeyEvent *p_poEvent )
             m_bCtrlPressed = false;
             _setStatusText( m_qsStatusText );
             on_KeyboardDisabled();
-            on_action_DeviceStart_triggered();
+            on_action_DeviceStart_triggered();  // keyboard enabled
         }
         else if( p_poEvent->key() == Qt::Key_T && action_DeviceClear->isEnabled() )
         {
@@ -1043,7 +1043,7 @@ void cWndMain::keyPressEvent( QKeyEvent *p_poEvent )
             m_bCtrlPressed = false;
             _setStatusText( m_qsStatusText );
             on_KeyboardDisabled();
-            on_action_DeviceClear_triggered();
+            on_action_DeviceClear_triggered();  // keyboard enabled
         }
         else if( p_poEvent->key() == Qt::Key_F && action_PayCash->isEnabled() )
         {
@@ -1051,7 +1051,7 @@ void cWndMain::keyPressEvent( QKeyEvent *p_poEvent )
             m_bCtrlPressed = false;
             _setStatusText( m_qsStatusText );
             on_KeyboardDisabled();
-            on_action_PayCash_triggered();
+            on_action_PayCash_triggered();      // keyboard enabled
         }
         else if( p_poEvent->key() == Qt::Key_K && action_ShoppingCart->isEnabled() )
         {
@@ -1059,7 +1059,7 @@ void cWndMain::keyPressEvent( QKeyEvent *p_poEvent )
             m_bCtrlPressed = false;
             _setStatusText( m_qsStatusText );
             on_KeyboardDisabled();
-            on_action_ShoppingCart_triggered();
+            on_action_ShoppingCart_triggered(); // keyboard enabled
         }
         else if( p_poEvent->key() == Qt::Key_N && action_DeviceSkipStatus->isEnabled() )
         {
@@ -1067,7 +1067,7 @@ void cWndMain::keyPressEvent( QKeyEvent *p_poEvent )
             m_bCtrlPressed = false;
             _setStatusText( m_qsStatusText );
             on_KeyboardDisabled();
-            on_action_DeviceSkipStatus_triggered();
+            on_action_DeviceSkipStatus_triggered(); // keyboard enabled
         }
         else if( p_poEvent->key() == Qt::Key_H && action_DeviceCool->isEnabled() )
         {
@@ -1075,7 +1075,7 @@ void cWndMain::keyPressEvent( QKeyEvent *p_poEvent )
             m_bCtrlPressed = false;
             _setStatusText( m_qsStatusText );
             on_KeyboardDisabled();
-            on_action_DeviceCool_triggered();
+            on_action_DeviceCool_triggered();   // keyboard enabled
         }
         else if( p_poEvent->key() == Qt::Key_F12 )
         {
@@ -1096,25 +1096,25 @@ void cWndMain::keyPressEvent( QKeyEvent *p_poEvent )
                 case cDBApplicationAction::APPACT_DEVICE_PAYCASH:
                     _setStatusText( m_qsStatusText );
                     on_KeyboardDisabled();
-                    on_action_PayCash_triggered();
+                    on_action_PayCash_triggered();  // keyboard enabled
                     break;
 
                 case cDBApplicationAction::APPACT_DEVICE_START:
                     _setStatusText( m_qsStatusText );
                     on_KeyboardDisabled();
-                    on_action_DeviceStart_triggered();
+                    on_action_DeviceStart_triggered();  // keyboard enabled
                     break;
 
                 case cDBApplicationAction::APPACT_DEVICE_SKIP:
                     _setStatusText( m_qsStatusText );
                     on_KeyboardDisabled();
-                    on_action_DeviceSkipStatus_triggered();
+                    on_action_DeviceSkipStatus_triggered();// keyboard enabled
                     break;
 
                 case cDBApplicationAction::APPACT_DEVICE_CLEAN:
                     _setStatusText( m_qsStatusText );
                     on_KeyboardDisabled();
-                    on_action_DeviceClear_triggered();
+                    on_action_DeviceClear_triggered();  // keyboard enabled
                     break;
             }
         }
@@ -1131,23 +1131,23 @@ void cWndMain::keyPressEvent( QKeyEvent *p_poEvent )
                 if( obDlgInputStart.m_bCard )
                 {
                     on_KeyboardDisabled();
-                    processInputPatientCard( obDlgInputStart.getEditText() );
+                    processInputPatientCard( obDlgInputStart.getEditText() );// keyboard enabled
                 }
                 else if( obDlgInputStart.m_bProd )
                 {
                     on_KeyboardDisabled();
-                    processInputProduct( obDlgInputStart.getEditText() );
+                    processInputProduct( obDlgInputStart.getEditText() );   // keyboard enabled
                 }
                 else if( obDlgInputStart.m_bTime )
                 {
                     on_KeyboardDisabled();
-                    processInputTimePeriod( obDlgInputStart.getEditText().toInt() );
+                    processInputTimePeriod( obDlgInputStart.getEditText().toInt() );    // keyboard enabled
                 }
                 else if( obDlgInputStart.m_bPat )
                 {
                     on_KeyboardDisabled();
                     m_qsPatientNameFilter = obDlgInputStart.getEditText();
-                    on_action_Guests_triggered();
+                    on_action_Guests_triggered();   // keyboard enabled
                 }
             }
 
@@ -1164,7 +1164,7 @@ void cWndMain::keyPressEvent( QKeyEvent *p_poEvent )
         {
             g_obLogger(cSeverity::INFO) << "User pressed SPACE" << EOM;
             on_KeyboardDisabled();
-            on_action_UseDevice_triggered();
+            on_action_UseDevice_triggered();    // keyboard enabled
         }
     }
 
@@ -1535,7 +1535,7 @@ void cWndMain::timerEvent(QTimerEvent *)
                 obDBPatientCard.loadRFID( qsRFID );
 
                 on_KeyboardDisabled();
-                processInputPatientCard( obDBPatientCard.barcode(), qsRFID );
+                processInputPatientCard( obDBPatientCard.barcode(), qsRFID );   // keyboard enabled
             }
             catch( cSevException &e )
             {
@@ -1858,6 +1858,7 @@ void cWndMain::on_action_Guests_triggered()
         obDlgGuest.exec();
     }
 
+    on_KeyboardEnabled();
     slotMainWindowActivated();
 }
 //====================================================================================
@@ -1930,7 +1931,10 @@ void cWndMain::on_action_DeviceStart_triggered()
     cTracer obTrace( "cWndMain::on_action_DeviceStart_triggered" );
 
     if( !action_DeviceStart->isEnabled() )
+    {
+        on_KeyboardEnabled();
         return;
+    }
 
     if( mdiPanels->isDeviceStopped() )
     {
@@ -1943,6 +1947,7 @@ void cWndMain::on_action_DeviceStart_triggered()
             QMessageBox::warning( this, tr("Warning"),
                                   tr("The device usage has to be payed.\n"
                                      "Please process the payment first.") );
+            on_KeyboardEnabled();
             return;
         }
 
@@ -3001,6 +3006,7 @@ void cWndMain::on_action_PayCash_triggered()
         QMessageBox::warning( this, tr("Attention"),
                               tr("Cassa is disabled!\n\n"
                                  "Please relogin to enable cassa.") );
+        on_KeyboardEnabled();
         return;
     }
 

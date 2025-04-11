@@ -214,3 +214,7 @@ Version 2.2.1.1
 Version 2.2.2.0
 ===============
 - KIEGESZITES: a vendeg adatszerkeszto ablakban latszanak a vendeg esemenyek
+
+Version 2.2.2.1
+===============
+- HIBAJAVITAS: billentyuzet hasznalat javitas
