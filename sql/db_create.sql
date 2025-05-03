@@ -890,6 +890,7 @@ CREATE TABLE `advertisements` (
 CREATE TABLE `waitlist` (
   `waitlistId`              int(10) unsigned        NOT NULL AUTO_INCREMENT,
   `licenceId`               int(10) unsigned        NOT NULL,
+  `guestId`                 int(10) unsigned        NOT NULL,
   `patientCardId`           int(10) unsigned        NOT NULL,
   `ledgerId`                int(10) unsigned        NOT NULL,
   `shoppingCartItemId`      int(10) unsigned        NOT NULL,

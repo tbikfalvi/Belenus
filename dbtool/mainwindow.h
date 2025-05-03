@@ -70,6 +70,7 @@ private:
     bool            _isSystemVerificationOk();
     void            _processDeactivatePatientcards();
     void            _processDeleteDeactivatedPatientcards();
+    void            _processDeleteLedgerEntries();
 
     Ui::MainWindow  *ui;
 

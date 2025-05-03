@@ -1880,7 +1880,7 @@ void cWndMain::on_action_PatientNew_triggered()
 
     obDlgEdit.exec();
 
-    /*if( poGuest->id() > 0 )
+    if( poGuest->id() > 0 )
     {
         if( QMessageBox::question( this, tr("Question"),
                                    tr("Do you want to select the created patient as actual?"),
@@ -1888,7 +1888,7 @@ void cWndMain::on_action_PatientNew_triggered()
         {
             g_obGuest.load( poGuest->id() );
         }
-    }*/
+    }
 
     delete poGuest;
 
@@ -2121,14 +2121,16 @@ void cWndMain::on_action_UseDevice_triggered()
             else if( obDBPatientCard.patientId() != g_obGuest.id() && g_obGuest.id() > 0 && obDBPatientCard.patientId() > 0 )
             {
                 if( QMessageBox::question( this, tr("Question"),
-                                           tr("This patientcard has been assigned to a different patient.\n"
-                                              "Are you sure you want to use this patientcard?"),
+                                           tr("The actual guest is different than the owner of the selected patientcard.\n"
+                                              "If you continue with this patientcard, the actual guest will be changed.\n\n"
+                                              "Are you sure you want to use this patientcard and change the actual guest?"),
                                            QMessageBox::Yes,QMessageBox::No ) == QMessageBox::No )
                 {
                     on_KeyboardEnabled();                    
                     slotMainWindowActivated();
                     return;
                 }
+                g_obGuest.load( obDBPatientCard.patientId() );
             }
             else if( g_obGuest.id() > 0 && obDBPatientCard.patientId() == 0 )
             {
@@ -2223,9 +2225,15 @@ void cWndMain::on_action_UseDeviceLater_triggered()
         unsigned int    uiLedgerId      = 0;
         int             inPayType       = 0;
         unsigned int    uiPanelTypeId   = obDlgPanelUse.panelTypeId();
+        unsigned int    uiGuestId       = 0;
 
         if( obDlgPanelUse.panelUsePatientCardId() > 0 && obDlgPanelUse.panelUseSecondsCard() > 0 )
         {
+            cDBPatientCard  obDBPatientCard;
+
+            obDBPatientCard.load( obDlgPanelUse.panelUsePatientCardId() );
+
+            uiGuestId = obDBPatientCard.patientId();
             uiPatientCardId = obDlgPanelUse.panelUsePatientCardId();
             qsBarcode = obDlgPanelUse.panelUsePatientCardBarcode();
             qsUnitIds = obDlgPanelUse.panelUnitIds().join( "|" );
@@ -2233,6 +2241,39 @@ void cWndMain::on_action_UseDeviceLater_triggered()
         }
         if( obDlgPanelUse.panelUseSecondsCash() > 0 )
         {
+            if( g_obGuest.id() == 0 && uiGuestId == 0 )
+            {
+                // Keszpenzes hasznalat, de nincs vendeg kivalasztva
+                switch( customMsgBox( this, MSG_QUESTION,
+                                      tr( " &Add as new patient | &Select existing patient | &Continue "),
+                                      tr( "Do you want to add adhoc patient to patient database?\n\n"
+                                          "PLEASE ASK THE PATIENT if willing to add name and email address!\n"
+                                          "If the patient already saved in the database, you can select by name."),
+                                      tr( "Click the 'Add as new patient' if the guest agreed to add his/her name.\n"
+                                          "Click the 'Select existing patient' if guest data already in database and you want to find it by name.\n"
+                                          "Click the 'Continue' if you don't want to take record adhoc guest visit.") ) )
+                {
+                    case 1:
+                    {
+                        cDlgAddGuest obDlgAddGuest( this );
+
+                        if( obDlgAddGuest.exec() == QDialog::Accepted )
+                        {
+                            g_obGuest.load( obDlgAddGuest.patientId() );
+                        }
+                        break;
+                    }
+                    case 2:
+                    {
+                        on_action_PatientSelect_triggered();
+                        break;
+                    }
+                    case 3:
+                    default:
+                        break;
+                }
+            }
+            uiGuestId = g_obGuest.id();
             inLengthCash = obDlgPanelUse.panelUseSecondsCash();
             inPrice = obDlgPanelUse.panelUsePrice();
         }
@@ -2340,6 +2381,7 @@ void cWndMain::on_action_UseDeviceLater_triggered()
             cDBWaitlist obDBWaitlist;
 
             obDBWaitlist.setLicenceId( g_poPrefs->getLicenceId() );
+            obDBWaitlist.setGuestId( uiGuestId );
             obDBWaitlist.setPatientCardId( uiPatientCardId );
             obDBWaitlist.setLedgerId( uiLedgerId );
             obDBWaitlist.setShoppingCartItemId( uiShoppingCartItemId );
@@ -2352,6 +2394,11 @@ void cWndMain::on_action_UseDeviceLater_triggered()
             obDBWaitlist.setUsePrice( inPrice );
             obDBWaitlist.setComment( qsComment );
             obDBWaitlist.save();
+
+            if( g_obGuest.id() > 0 )
+            {
+                on_action_PatientEmpty_triggered();
+            }
 
             QStringList qslUnitIds = qsUnitIds.split( '|' );
 
