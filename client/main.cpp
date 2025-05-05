@@ -185,60 +185,6 @@ int main( int argc, char *argv[] )
             qsSpalsh += "\n";
         }
 
-//------------------------------------------------------------------------------------------------------------------------------------------------
-// itt kezdodik az eredeti liszensz kiolvasos resz
-/*
-        Sleep(1000);
-
-        int         nId = 0;
-        QString     qsSerial = QObject::tr("NO_SERIAL_DETECTED");
-
-        QSqlQuery *poQuery = g_poDB->executeQTQuery( QString( "SELECT * FROM licences" ) );
-        if( poQuery->last() )
-        {
-            nId = poQuery->value( 0 ).toInt();
-            qsSerial = poQuery->value( 1 ).toString();
-        }
-        if( poQuery ) delete poQuery;
-
-        g_obLogger(cSeverity::INFO) << "Licence is: " << qsSerial << EOM;
-        g_poPrefs->setLicenceId( nId );
-
-        if( nId < 2 )
-            qsSpalsh += QObject::tr("DEMO");
-        else
-            qsSpalsh += QObject::tr("OK");
-        qsSpalsh += "\n";
-        obSplash.showMessage(qsSpalsh,Qt::AlignLeft,QColor(59,44, 75));
-
-        Sleep( g_poPrefs->getSecondsWaitOnSlpashScreen()*1000 );
-
-        qsSpalsh += QObject::tr("Serial: %1\n").arg(qsSerial);
-        obSplash.showMessage(qsSpalsh,Qt::AlignLeft,QColor(59,44,75));
-
-        g_obLicenceManager.initialize();
-
-        int     nDaysRemain = g_obLicenceManager.daysRemain();
-
-//        qsSpalsh += QObject::tr("Days remains: %1\n").arg( nDaysRemain );
-//        obSplash.showMessage(qsSpalsh,Qt::AlignLeft,QColor(59,44,75));
-
-        if( nDaysRemain < cLicenceManager::EXPIRE_MAX_DAYS || g_obLicenceManager.ltLicenceType() == cLicenceManager::LTYPE_REGISTERED )
-        {
-            qsSpalsh += QObject::tr("\nVALIDATE YOUR APPLICATION\nWITH YOUR FRANCHISE PROVIDER\n\n");
-            obSplash.showMessage(qsSpalsh,Qt::AlignLeft,QColor(59,44,75));
-
-            if( nDaysRemain < 1 )
-            {
-                qsSpalsh += QObject::tr("The application validity has been expired.\n"
-                                        "The application can be used only in DEMO mode.\n\n");
-                obSplash.showMessage(qsSpalsh,Qt::AlignLeft,QColor(59,44,75));
-            }
-        }
-*/
-//------------------------------------------------------------------------------------------------------------------------------------------------
-
-
         Sleep( g_poPrefs->getSecondsWaitOnSlpashScreen()*1000 );
 
         //-------------------------------------------------------------------------------

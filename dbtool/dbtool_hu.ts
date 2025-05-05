@@ -271,64 +271,73 @@
         <translation>Bejelentkezés</translation>
     </message>
     <message>
-        <location filename="mainwindow.ui" line="488"/>
+        <location filename="mainwindow.ui" line="482"/>
         <source>Select database modification process</source>
         <translation>Adatbázis kezelő folyamat kiválasztása</translation>
     </message>
     <message>
-        <location filename="mainwindow.ui" line="517"/>
+        <location filename="mainwindow.ui" line="516"/>
         <source>Deactivate patientcards that are no longer valid</source>
         <translation>Érvénytelenné vált bérletek deaktiválása</translation>
     </message>
     <message>
-        <location filename="mainwindow.ui" line="543"/>
+        <location filename="mainwindow.ui" line="506"/>
         <source>Patientcard related processes</source>
         <translation>Bérletekkel kapcsolatos folyamatok</translation>
     </message>
     <message>
-        <location filename="mainwindow.ui" line="559"/>
         <source>Delete inactive patientcard types that is not assigned to any patientcard</source>
-        <translation>nemkell</translation>
+        <translation type="obsolete">nemkell</translation>
     </message>
     <message>
-        <location filename="mainwindow.ui" line="611"/>
+        <location filename="mainwindow.ui" line="531"/>
         <source>The validity expired before the date :</source>
         <translation>Az érvényesség lejárt a következő dátum előtt :</translation>
     </message>
     <message>
-        <location filename="mainwindow.ui" line="625"/>
+        <location filename="mainwindow.ui" line="545"/>
         <source>Delete deactivated patientcards</source>
         <translation>Deaktivált bérletek törlése</translation>
     </message>
     <message>
-        <location filename="mainwindow.ui" line="657"/>
+        <location filename="mainwindow.ui" line="569"/>
+        <source>Delete ledger entries and cassa actions before the date :</source>
+        <translation>Könyvelési és pénztár bejegyzések törlése a következő dátum előtt :</translation>
+    </message>
+    <message>
+        <location filename="mainwindow.ui" line="603"/>
+        <source>Delete patientcard units become obsolete before the date :</source>
+        <translation>A következő dátum előtt lejárt érvényességű bérlet egységek törlése :</translation>
+    </message>
+    <message>
+        <location filename="mainwindow.ui" line="684"/>
         <source>Execute process</source>
         <translation>Folyamat indítása</translation>
     </message>
     <message>
-        <location filename="mainwindow.ui" line="674"/>
+        <location filename="mainwindow.ui" line="701"/>
         <source>Please note that database operations may take an extended period of time, during which the database management system may become temporarily unavailable to Belenus Applications.
 Only proceed if no other applications are currently active.</source>
         <translation>Kérem vegye figyelembe, hogy az adatbázis műveletek hosszabb ideig is eltarthatnak és ezalatt az adatbázis kezelő rendszer elérhetetlenné válhat a Belenus Alkalmazások számára.
 Csak akkor indítsa el a folyamatot, ha más alkalmazások nem aktívak.</translation>
     </message>
     <message>
-        <location filename="mainwindow.ui" line="700"/>
+        <location filename="mainwindow.ui" line="727"/>
         <source>Execute</source>
         <translation>Indítás</translation>
     </message>
     <message>
-        <location filename="mainwindow.ui" line="745"/>
+        <location filename="mainwindow.ui" line="772"/>
         <source>  &lt;&lt; Previous  </source>
         <translation>  &lt;&lt; Előző  </translation>
     </message>
     <message>
-        <location filename="mainwindow.ui" line="764"/>
+        <location filename="mainwindow.ui" line="791"/>
         <source>  Next &gt;&gt;  </source>
         <translation>  Következő &gt;&gt;  </translation>
     </message>
     <message>
-        <location filename="mainwindow.ui" line="798"/>
+        <location filename="mainwindow.ui" line="825"/>
         <source>Exit</source>
         <translation>Kilépés</translation>
     </message>
@@ -341,97 +350,121 @@ Csak akkor indítsa el a folyamatot, ha más alkalmazások nem aktívak.</transl
         <translation type="obsolete">Belenus adatbázis kezelő - v.%1d</translation>
     </message>
     <message>
-        <location filename="mainwindow.cpp" line="54"/>
+        <location filename="mainwindow.cpp" line="62"/>
         <source>Belenus database manager - v.</source>
         <translation>Belenus adatbázis kezelő - v.</translation>
     </message>
     <message>
-        <location filename="mainwindow.cpp" line="94"/>
-        <location filename="mainwindow.cpp" line="121"/>
+        <location filename="mainwindow.cpp" line="104"/>
+        <location filename="mainwindow.cpp" line="131"/>
         <source>Question</source>
         <translation>Kérdés</translation>
     </message>
     <message>
-        <location filename="mainwindow.cpp" line="94"/>
+        <location filename="mainwindow.cpp" line="104"/>
         <source>Do you want to authenticate with another user account?</source>
         <translation>Azonosítani akarja magát egy másik felhasználóval?</translation>
     </message>
     <message>
-        <location filename="mainwindow.cpp" line="122"/>
+        <location filename="mainwindow.cpp" line="132"/>
         <source>Are you sure you want to close the application?</source>
         <translation>Biztos benne, hogy ki akar lépni az alkalmazásból?</translation>
     </message>
     <message>
-        <location filename="mainwindow.cpp" line="200"/>
+        <location filename="mainwindow.cpp" line="210"/>
         <source>Password is incorrect</source>
         <translation>A jelszó nem megfelelő</translation>
     </message>
     <message>
-        <location filename="mainwindow.cpp" line="205"/>
+        <location filename="mainwindow.cpp" line="215"/>
         <source>Error</source>
         <translation>Hiba</translation>
     </message>
     <message>
-        <location filename="mainwindow.cpp" line="205"/>
+        <location filename="mainwindow.cpp" line="215"/>
         <source>Unable to retrieve user information from database!</source>
         <translation>Nem sikerült a felhasználói adatokat beolvasni az adatbázisból!</translation>
     </message>
     <message>
-        <location filename="mainwindow.cpp" line="217"/>
+        <location filename="mainwindow.cpp" line="227"/>
         <source>Select Directory</source>
         <translation>Könyvtár választás</translation>
     </message>
     <message>
-        <location filename="mainwindow.cpp" line="392"/>
+        <location filename="mainwindow.cpp" line="439"/>
         <source>Deactivating patientcards expired before </source>
         <translation>Bérletek deaktiválása, melyek lejártak a következő dátum előtt </translation>
     </message>
     <message>
-        <location filename="mainwindow.cpp" line="399"/>
-        <location filename="mainwindow.cpp" line="448"/>
+        <location filename="mainwindow.cpp" line="446"/>
+        <location filename="mainwindow.cpp" line="495"/>
+        <location filename="mainwindow.cpp" line="690"/>
         <source>Retrieving affected records</source>
         <translation>Érintett adatok összegyűjtése</translation>
     </message>
     <message>
-        <location filename="mainwindow.cpp" line="405"/>
-        <location filename="mainwindow.cpp" line="454"/>
+        <location filename="mainwindow.cpp" line="452"/>
+        <location filename="mainwindow.cpp" line="501"/>
+        <location filename="mainwindow.cpp" line="610"/>
+        <location filename="mainwindow.cpp" line="696"/>
         <source>Number of affected records: </source>
         <translation>Érintett adatok száma: </translation>
     </message>
     <message>
-        <location filename="mainwindow.cpp" line="410"/>
+        <location filename="mainwindow.cpp" line="457"/>
         <source>Deactivate records ...</source>
         <translation>Adatok deaktiválása ...</translation>
     </message>
     <message>
-        <location filename="mainwindow.cpp" line="429"/>
+        <location filename="mainwindow.cpp" line="476"/>
         <source>Deactivation process finished</source>
         <translation>A deaktiválási folyamat befejeződött</translation>
     </message>
     <message>
-        <location filename="mainwindow.cpp" line="436"/>
+        <location filename="mainwindow.cpp" line="483"/>
         <source>Deleting deactivated patientcards</source>
         <translation>Deaktivált bérletek törlése</translation>
     </message>
     <message>
-        <location filename="mainwindow.cpp" line="459"/>
+        <location filename="mainwindow.cpp" line="506"/>
         <source>Delete records ...</source>
         <translation>Adatok törlése ...</translation>
     </message>
     <message>
-        <location filename="mainwindow.cpp" line="516"/>
+        <location filename="mainwindow.cpp" line="563"/>
+        <location filename="mainwindow.cpp" line="676"/>
         <source>Deletion process finished.</source>
         <translation>Törlési folyamat befejeződött.</translation>
     </message>
     <message>
-        <location filename="mainwindow.cpp" line="517"/>
+        <location filename="mainwindow.cpp" line="564"/>
         <source>Skipped: </source>
         <translation>Kihagyva: </translation>
     </message>
     <message>
-        <location filename="mainwindow.cpp" line="518"/>
+        <location filename="mainwindow.cpp" line="565"/>
         <source>Deleted: </source>
         <translation>Törölve: </translation>
+    </message>
+    <message>
+        <location filename="mainwindow.cpp" line="572"/>
+        <source>Deleting ledger entries</source>
+        <translation>Könyvelési bejegyzések törlése</translation>
+    </message>
+    <message>
+        <location filename="mainwindow.cpp" line="683"/>
+        <source>Deleting patientcard units expired before </source>
+        <translation>Lejárt érvényességű bérlet egységek törlése a megadott dátum előtt </translation>
+    </message>
+    <message>
+        <location filename="mainwindow.cpp" line="701"/>
+        <source>Deleting records ...</source>
+        <translation>Adatok törlése ...</translation>
+    </message>
+    <message>
+        <location filename="mainwindow.cpp" line="716"/>
+        <source>Delete process finished</source>
+        <translation>Törlési folyamat befejeződött.</translation>
     </message>
     <message>
         <source>Exporting Patientcard types</source>
@@ -490,7 +523,7 @@ Csak akkor indítsa el a folyamatot, ha más alkalmazások nem aktívak.</transl
         <translation type="obsolete">Jelszó ellenőrzés sikertelen</translation>
     </message>
     <message>
-        <location filename="mainwindow.cpp" line="200"/>
+        <location filename="mainwindow.cpp" line="210"/>
         <source>Warning</source>
         <translation>Figyelmeztetés</translation>
     </message>
@@ -650,7 +683,7 @@ Kérem válasszon ki egy megfelelő állományt és kezdje újra a folyamatot.</
         <translation type="obsolete">A kapcsolódás a Belenus adatbázishoz sikerült</translation>
     </message>
     <message>
-        <location filename="mainwindow.cpp" line="293"/>
+        <location filename="mainwindow.cpp" line="309"/>
         <source>License code: %1 [%2]</source>
         <translation>Liszensz kulcs: %1 [%2]</translation>
     </message>
@@ -687,6 +720,11 @@ Kérem válasszon ki egy megfelelő állományt és kezdje újra a folyamatot.</
         <location filename="dlgprogress.ui" line="64"/>
         <source>Actions processed: %v / %m</source>
         <translation>Beavatkozás végrehajtva: %v / %m</translation>
+    </message>
+    <message>
+        <location filename="dlgprogress.ui" line="77"/>
+        <source>Steps processed: %v / %m</source>
+        <translation>Lépés végrehajtva: %v / %m</translation>
     </message>
 </context>
 </TS>

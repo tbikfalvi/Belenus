@@ -68,9 +68,11 @@ private:
     void            _initializePage();
     void            _connectDatabase();
     bool            _isSystemVerificationOk();
+    void            _logProcessInfo( QString p_qsText );
     void            _processDeactivatePatientcards();
     void            _processDeleteDeactivatedPatientcards();
     void            _processDeleteLedgerEntries();
+    void            _processDeleteObsoletePatientcardUnits();
 
     Ui::MainWindow  *ui;
 
@@ -97,6 +99,7 @@ private slots:
     void on_rbDeactivatePatientCards_clicked();
     void on_rbDeleteLedgerEntries_clicked();
     void on_pbExecuteProcess_clicked();
+    void on_rbDeleteObsoletePCUnits_clicked();
 };
 
 #endif // MAINWINDOW_H

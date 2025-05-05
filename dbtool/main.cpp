@@ -6,12 +6,13 @@
 #include "../framework/qtframework.h"
 #include "../framework/logger/FileWriter.h"
 
-#define APPLICATION_VERSION_NUMBER  "2.2.2.0"
+#define APPLICATION_VERSION_NUMBER  "2.3.0.0"
 
 QTranslator         *poTransTool;
 QTranslator         *poTransQT;
 QApplication        *apMainApp;
 cQTLogger            g_obLogger;
+FileWriter           g_obLogFileWriter("dbtool_%1.log");
 QString              g_qsCurrentPath;
 cQTMySQLConnection  *g_poDB;
 
@@ -31,6 +32,11 @@ int main(int argc, char *argv[])
     apMainApp->installTranslator( poTransQT );
 
     apMainApp->setWindowIcon( QIcon(":/icons/DBTool.ico") );
+
+    g_obLogger.attachWriter("file", &g_obLogFileWriter);
+    g_obLogger.setMinimumSeverity("file", cSeverity::DEBUG);
+
+    g_obLogger(cSeverity::INFO) << "Belenus Database Manager started." << EOM;
 
     MainWindow *wndMain = new MainWindow( 0, APPLICATION_VERSION_NUMBER );
     wndMain->show();
