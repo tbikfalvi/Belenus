@@ -69,9 +69,14 @@ private:
     void            _connectDatabase();
     bool            _isSystemVerificationOk();
     void            _logProcessInfo( QString p_qsText );
+    void            _calculateRelatedRecords();
+    void            _calculateDeactivatePatientcards();
     void            _processDeactivatePatientcards();
+    void            _calculateDeleteDeactivatedPatientcards();
     void            _processDeleteDeactivatedPatientcards();
+    void            _calculateDeleteLedgerEntries();
     void            _processDeleteLedgerEntries();
+    void            _calculateDeleteObsoletePatientcardUnits();
     void            _processDeleteObsoletePatientcardUnits();
 
     Ui::MainWindow  *ui;
