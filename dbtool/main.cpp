@@ -34,7 +34,7 @@ int main(int argc, char *argv[])
     apMainApp->setWindowIcon( QIcon(":/icons/DBTool.ico") );
 
     g_obLogger.attachWriter("file", &g_obLogFileWriter);
-    g_obLogger.setMinimumSeverity("file", cSeverity::DEBUG);
+    g_obLogger.setMinimumSeverity("file", cSeverity::ERROR);
 
     g_obLogger(cSeverity::INFO) << "Belenus Database Manager started." << EOM;
 

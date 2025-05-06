@@ -511,17 +511,31 @@
            </widget>
           </item>
           <item>
-           <widget class="QRadioButton" name="rbDeactivatePatientCards">
-            <property name="text">
-             <string>Deactivate patientcards that are no longer valid</string>
-            </property>
-            <property name="checked">
-             <bool>false</bool>
-            </property>
-            <property name="autoExclusive">
-             <bool>false</bool>
-            </property>
-           </widget>
+           <layout class="QHBoxLayout" name="horizontalLayout_9">
+            <item>
+             <widget class="QRadioButton" name="rbDeactivatePatientCards">
+              <property name="text">
+               <string>Deactivate patientcards that are no longer valid</string>
+              </property>
+              <property name="checked">
+               <bool>false</bool>
+              </property>
+             </widget>
+            </item>
+            <item>
+             <spacer name="horizontalSpacer_7">
+              <property name="orientation">
+               <enum>Qt::Horizontal</enum>
+              </property>
+              <property name="sizeHint" stdset="0">
+               <size>
+                <width>40</width>
+                <height>20</height>
+               </size>
+              </property>
+             </spacer>
+            </item>
+           </layout>
           </item>
           <item>
            <layout class="QHBoxLayout" name="horizontalLayout_6">
@@ -562,48 +576,11 @@
            </layout>
           </item>
           <item>
-           <layout class="QHBoxLayout" name="horizontalLayout_7">
-            <item>
-             <widget class="QRadioButton" name="rbDeleteLedgerEntries">
-              <property name="text">
-               <string>Delete ledger entries and cassa actions before the date :</string>
-              </property>
-              <property name="autoExclusive">
-               <bool>false</bool>
-              </property>
-             </widget>
-            </item>
-            <item>
-             <widget class="QDateEdit" name="qdLedgerDate">
-              <property name="calendarPopup">
-               <bool>true</bool>
-              </property>
-             </widget>
-            </item>
-            <item>
-             <spacer name="horizontalSpacer_5">
-              <property name="orientation">
-               <enum>Qt::Horizontal</enum>
-              </property>
-              <property name="sizeHint" stdset="0">
-               <size>
-                <width>40</width>
-                <height>20</height>
-               </size>
-              </property>
-             </spacer>
-            </item>
-           </layout>
-          </item>
-          <item>
            <layout class="QHBoxLayout" name="horizontalLayout_8">
             <item>
              <widget class="QRadioButton" name="rbDeleteObsoletePCUnits">
               <property name="text">
                <string>Delete patientcard units become obsolete before the date :</string>
-              </property>
-              <property name="autoExclusive">
-               <bool>false</bool>
               </property>
              </widget>
             </item>
@@ -630,6 +607,54 @@
            </layout>
           </item>
           <item>
+           <widget class="QLabel" name="lblTitle4_3">
+            <property name="font">
+             <font>
+              <pointsize>12</pointsize>
+              <weight>50</weight>
+              <bold>false</bold>
+             </font>
+            </property>
+            <property name="text">
+             <string>Ledger and cassa related processes</string>
+            </property>
+            <property name="wordWrap">
+             <bool>true</bool>
+            </property>
+           </widget>
+          </item>
+          <item>
+           <layout class="QHBoxLayout" name="horizontalLayout_7">
+            <item>
+             <widget class="QRadioButton" name="rbDeleteLedgerEntries">
+              <property name="text">
+               <string>Delete ledger entries and cassa actions before the date :</string>
+              </property>
+             </widget>
+            </item>
+            <item>
+             <widget class="QDateEdit" name="qdLedgerDate">
+              <property name="calendarPopup">
+               <bool>true</bool>
+              </property>
+             </widget>
+            </item>
+            <item>
+             <spacer name="horizontalSpacer_5">
+              <property name="orientation">
+               <enum>Qt::Horizontal</enum>
+              </property>
+              <property name="sizeHint" stdset="0">
+               <size>
+                <width>40</width>
+                <height>20</height>
+               </size>
+              </property>
+             </spacer>
+            </item>
+           </layout>
+          </item>
+          <item>
            <spacer name="verticalSpacer_2">
             <property name="orientation">
              <enum>Qt::Vertical</enum>
@@ -637,7 +662,7 @@
             <property name="sizeHint" stdset="0">
              <size>
               <width>20</width>
-              <height>221</height>
+              <height>191</height>
              </size>
             </property>
            </spacer>
@@ -845,6 +870,26 @@ Only proceed if no other applications are currently active.</string>
   </widget>
  </widget>
  <layoutdefault spacing="6" margin="11"/>
+ <tabstops>
+  <tabstop>cmbLanguage</tabstop>
+  <tabstop>cmbName</tabstop>
+  <tabstop>ledPassword</tabstop>
+  <tabstop>pbLogin</tabstop>
+  <tabstop>pbPrev</tabstop>
+  <tabstop>pbNext</tabstop>
+  <tabstop>pbStartExit</tabstop>
+  <tabstop>rbDeactivatePatientCards</tabstop>
+  <tabstop>qdPatientCardValid</tabstop>
+  <tabstop>chkDeleteDeactivatedPatientCards</tabstop>
+  <tabstop>rbDeleteObsoletePCUnits</tabstop>
+  <tabstop>qdObsoleteDate</tabstop>
+  <tabstop>rbDeleteLedgerEntries</tabstop>
+  <tabstop>qdLedgerDate</tabstop>
+  <tabstop>ledPathDB</tabstop>
+  <tabstop>pbExpSelectDir</tabstop>
+  <tabstop>pbExecuteProcess</tabstop>
+  <tabstop>listProgress</tabstop>
+ </tabstops>
  <resources>
   <include location="DBTool.qrc"/>
  </resources>
