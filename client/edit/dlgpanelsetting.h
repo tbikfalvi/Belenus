@@ -26,6 +26,7 @@ private slots:
     void on_pbCTReset_clicked();
     void on_pbEnableSystemAdmin_clicked();
     void on_pbEnableDeviceAdmin_clicked();
+    void slotRefreshWarningColors();
 };
 
 #endif // DLGPANELSETTING_H

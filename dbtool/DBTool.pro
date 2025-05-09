@@ -16,11 +16,23 @@ RESOURCES   += DBTool.qrc
 TRANSLATIONS = dbtool_hu.ts
 RC_FILE      = DBTool.rc
 
-SOURCES     += main.cpp \
+SOURCES     += ../framework/dbconnection.cpp \
+               ../framework/qtmysqlconnection.cpp \
+               ../framework/qtmysqlquerymodel.cpp \
+               ../framework/qtlogger.cpp \
+               ../framework/logger/FileWriter.cpp \
+               ../framework/tracer.cpp \
+               main.cpp \
                mainwindow.cpp \
                dlgprogress.cpp
 
-HEADERS     += mainwindow.h \
+HEADERS      = ../framework/dbconnection.h \
+               ../framework/qtmysqlconnection.h \
+               ../framework/qtmysqlquerymodel.h \
+               ../framework/qtlogger.h \
+               ../framework/logger/FileWriter.h \
+               ../framework/tracer.h \
+               mainwindow.h \
                dlgprogress.h
 
 FORMS       += mainwindow.ui \

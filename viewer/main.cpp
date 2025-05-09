@@ -1,10 +1,10 @@
 //====================================================================================
 //
-// Belenus Report Viewer alkalmazas (v) Pagony Multimedia Studio Bt - 2010
+// Belenus Report Viewer alkalmazas (c) Bikfalvi Tamas
 //
 //====================================================================================
 
-#define APPLICATION_VERSION_NUMBER  "2.2.2.0"
+#define APPLICATION_VERSION_NUMBER  "2.3.0.0"
 
 //====================================================================================
 

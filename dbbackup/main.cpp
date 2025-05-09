@@ -1,3 +1,13 @@
+//====================================================================================
+//
+// Belenus Database Backup alkalmazas (c) Bikfalvi Tamas
+//
+//====================================================================================
+
+#define APPLICATION_VERSION_NUMBER  "2.3.0.0"
+
+//====================================================================================
+
 #include <QApplication>
 #include <QTranslator>
 #include <QDir>
@@ -5,13 +15,15 @@
 #include <QSettings>
 #include <QMessageBox>
 
+//====================================================================================
+
 #include "mainwindow.h"
 #include "../framework/qtlogger.h"
 #include "../framework/qtframework.h"
 #include "../framework/logger/FileWriter.h"
 #include "../language/language.h"
 
-#define APPLICATION_VERSION_NUMBER  "2.2.2.0"
+//====================================================================================
 
 QApplication            *apMainApp;
 cQTLogger                g_obLogger;
@@ -19,6 +31,7 @@ FileWriter               g_obLogFileWriter("dbbackup_%1.log");
 cQTMySQLConnection      *g_poDB;
 cLanguage                g_obLanguage;
 
+//====================================================================================
 int main(int argc, char *argv[])
 {
     apMainApp = new QApplication(argc, argv);

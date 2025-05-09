@@ -287,7 +287,7 @@ unsigned int cReportLedger::_reportPartPanelUse()
     addTableCell();
     addTableCell( tr("Amount"), "center bold" );
 
-    poQueryResult = g_poDB->executeQTQuery( "SELECT panelGroupId, name FROM panelgroups WHERE panelGroupId>0" );
+    poQueryResult = g_poDB->executeQTQuery( "SELECT panelGroupId, name FROM panelgroups" );
 
     while( poQueryResult->next() )
     {
@@ -298,7 +298,14 @@ unsigned int cReportLedger::_reportPartPanelUse()
         QString         queryName           = poQueryResult->value(1).toString();
 
         addTableRow();
-        addTableCell( queryName );
+        if( queryPanelGroupId == 0 )
+        {
+            addTableCell( tr("Not assigned to panelgroup") );
+        }
+        else
+        {
+            addTableCell( queryName );
+        }
 
         int             nPricePanel  = _sumPanelUse( m_qslCassaIds.join(","), queryPanelGroupId );
         uiPricePanelTotal += nPricePanel;

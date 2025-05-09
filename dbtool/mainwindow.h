@@ -1,6 +1,7 @@
 #ifndef MAINWINDOW_H
 #define MAINWINDOW_H
-
+ 
+#include "../framework/qtframework.h"
 #include <QMainWindow>
 #include <QDialog>
 #include <QString>
@@ -12,122 +13,17 @@
 
 #include "dlgprogress.h"
 
-extern QTranslator  *poTransTool;
-extern QTranslator  *poTransQT;
-extern QApplication *apMainApp;
-extern QString       g_qsCurrentPath;
+extern QTranslator          *poTransTool;
+extern QTranslator          *poTransQT;
+extern QApplication         *apMainApp;
+extern QString               g_qsCurrentPath;
+extern cQTMySQLConnection   *g_poDB;
 
 //====================================================================================
-// BERLETTIPUS structure
-//====================================================================================
-typedef struct _typ_berlettipus
-{
-   int   nID;
-   int   nNewID;
-   int   nAr;
-   int   nEgyseg;
-   char  strNev[50];
-   int   nErvTolEv;
-   int   nErvTolHo;
-   int   nErvTolNap;
-   int   nErvIgEv;
-   int   nErvIgHo;
-   int   nErvIgNap;
-   int   nErvNapok;
-   char  bSzolariumHaszn;
-   int   nEgysegIdo;
-} typ_berlettipus;
 
-//====================================================================================
-// BERLET structure
-//====================================================================================
-typedef struct _typ_berlet
-{
-   char  strVonalkod[20];
-   char  strMegjegyzes[50];
-   int   nBerletTipus;
-   int   nEgyseg;
-   int   nErvEv;
-   int   nErvHo;
-   int   nErvNap;
-   int   nPin;
-} typ_berlet;
-//====================================================================================
-//    BERLETHASZNALAT structure
-//====================================================================================
-typedef struct _typ_berlethasznalat
-{
-   char  strVonalkod[20];
-   int   nEv;
-   int   nHo;
-   int   nNap;
-   int   nOra;
-   int   nPerc;
-   int   nEgyseg;
-} typ_berlethasznalat;
-//====================================================================================
-//    TERMEK structure
-//====================================================================================
-typedef struct _typ_termek
-{
-   int   nID;
-   int   nNewID;
-   char  strVonalkod[20];
-   char  strNev[100];
-   int   nAr;
-   int   nDarab;
-   int   nArBeszerzes;
-} typ_termek;
-//====================================================================================
-//    TERMEKTIPUS structure
-//====================================================================================
-typedef struct _typ_termektipus
-{
-   int   nID;
-   int   nNewID;
-   char  strNev[100];
-} typ_termektipus;
-//====================================================================================
-//    TERMEKTIPUSASSIGN structure
-//====================================================================================
-typedef struct _typ_termektipusassign
-{
-   int  nTermekID;
-   int  nTTipusID;
-} typ_termektipusassign;
-//====================================================================================
-//  USER structure
-//====================================================================================
-typedef struct _typ_user
-{
-   int      nID;
-   char     strAzonosito[20];
-   char     strLoginNev[20];
-   char     strNevCsalad[100];
-   char     strJelszo[20];
-   char     strMegjegyzes[1000];
-   int      nUserLevel;
-} typ_user;
-//====================================================================================
-typedef struct _typ_szoliadat
-{
-   char           strNev[50];
-   bool           bInfraSzolarium;
-   int            nIdoVetkozes;
-   int            nIdoUtohutes;
-   int            nIdoSzauna;
-   int            nKedvezmenyIdoStart;
-   int            nKedvezmenyIdoStop;
-   int            nCsoUzemora;         // Cso üzemóra másodpercben
-} typ_szoliadat;
-//====================================================================================
-
-const int   CONST_PAGE_START        = 0;
-const int   CONST_PAGE_VERIFICATION = 1;
-const int   CONST_PAGE_IMPORT       = 2;
-const int   CONST_PAGE_PREPROC_PCT  = 3;
-const int   CONST_PAGE_PREPROC_PC   = 4;
-const int   CONST_PAGE_EXPORT       = 5;
+const int   CONST_PAGE_START            = 0;
+const int   CONST_PAGE_SELECT_PROCESS   = 1;
+const int   CONST_PAGE_EXECUTE_PROCESS  = 2;
 
 //====================================================================================
 
@@ -136,19 +32,30 @@ namespace Ui { class MainWindow; }
 //====================================================================================
 //
 //====================================================================================
-class DBTool
-{
-public:
-    enum prgType
-    {
-        KiwiSun = 1,
-        Sensolite
-    };
-};
 
 class MainWindow : public QMainWindow
 {
     Q_OBJECT
+
+    enum authType
+    {
+        AUTH_NEEDED = 0,
+        AUTH_OK,
+        AUTH_USER_NOTFOUND,
+        AUTH_PASSWORD_INCORRECT,
+        AUTH_CONNECTION_FAILED,
+        AUTH_ERROR
+    };
+
+    enum groupUser
+    {
+        GROUP_MIN = 0,
+        GROUP_USER,
+        GROUP_ADMIN,
+        GROUP_SYSTEM,
+        GROUP_ROOT,
+        GROUP_MAX
+    };
 
 public:
     explicit MainWindow(QWidget *parent = 0, QString p_qsVersion = "");
@@ -158,106 +65,48 @@ protected:
     void closeEvent( QCloseEvent *p_poEvent );
 
 private:
-    void                            _initializePage();
-    bool                            _isSystemVerificationOk();
+    void            _initializePage();
+    void            _connectDatabase();
+    bool            _isSystemVerificationOk();
+    void            _logProcessInfo( QString p_qsText );
+    void            _calculateRelatedRecords();
+    void            _calculateDeactivatePatientcards();
+    void            _processDeactivatePatientcards();
+    void            _calculateDeleteDeactivatedPatientcards();
+    void            _processDeleteDeactivatedPatientcards();
+    void            _calculateDeleteObsoletePatientcardUnits();
+    void            _processDeleteObsoletePatientcardUnits();
+    void            _calculateDeleteLedgerEntries();
+    void            _processDeleteLedgerEntries();
+    void            _calculateDeleteDeviceLedger();
+    void            _processDeleteDeviceLedger();
+    void            _calculateDeleteCassa();
+    void            _processDeleteCassa();
 
-    void                            _loadDevices();
-    void                            _loadPatientCardTypes();
-    void                            _loadPatientCards();
-    void                            _loadProductTypes();
-    void                            _loadProducts();
-    void                            _loadProductAssign();
-    void                            _loadUsers();
-    void                            _EnCode( char *str, int size );
-    void                            _DeCode( char *str, int size );
-    void                            _loadPatientCardTypeImport();
-    int                             _getPatientCardTypeId();
-    int                             _getTimeLeft(int p_nBerletTipus, int p_nEgyseg );
-    void                            _exportToBelenusPatientCardTypes();
-    void                            _exportToBelenusPatientCards();
-    void                            _exportToBelenusProductTypes();
-    void                            _exportToBelenusProducts();
-    void                            _exportToBelenusUsers();
+    Ui::MainWindow  *ui;
 
-    int                             _getPatientCardTypeNewId( int p_nID );
-    int                             _getPatientCardTypeUnitPrice( int p_nID );
-    int                             _getPatientCardTypeUnitTime( int p_nID );
-    int                             _getProductTypeNewId( int p_nID );
-    int                             _getProductNewId( int p_nID );
+    QString         m_qsRPSW;
 
-    void                            _logAction( QString p_qsLogMessage );
+    int             m_enGroup;
+    unsigned int    m_uiUserId;
 
-    void                            _fillListPatientCardTypes();
+    QDir             m_qdExpCurrentDir;
+    int              m_nCurrentPage;
 
-    void                            _checkExportSelection();
+    QString          m_qsLanguage;
+    int              m_nLicenceId;
 
-    Ui::MainWindow                  *ui;
-
-    QDir                             m_qdExpCurrentDir;
-    int                              m_nProgramType;
-
-    int                              m_nCountItems;
-    int                              m_nCountPCT;
-    int                              m_nCountPC;
-    int                              m_nCountPT;
-    int                              m_nCountP;
-    int                              m_nCountPA;
-    int                              m_nCountU;
-
-    int                              m_nCurrentPage;
-
-    QString                          m_qsLanguage;
-
-    QVector<typ_berlet>              m_qvPatientCards;
-    QVector<typ_berlettipus>         m_qvPatientCardTypes;
-    QVector<typ_termektipus>         m_qvProductTypes;
-    QVector<typ_termek>              m_qvProducts;
-    QVector<typ_termektipusassign>   m_qvProductAssigns;
-    QVector<typ_user>                m_qvUsers;
-
-    bool                             m_bIsPatientCardTypesLoaded;
-    bool                             m_bIsPatientCardsLoaded;
-    bool                             m_bIsProductTypesLoaded;
-    bool                             m_bIsProductsLoaded;
-    bool                             m_bIsUsersLoaded;
-
-    QString                          m_qsPCFileName;
-    QString                          m_qsPCTFileName;
-    QString                          m_qsPTFileName;
-    QString                          m_qsPFileName;
-    QString                          m_qsPAFileName;
-    QString                          m_qsUFileName;
-
-    char                             m_strPatiencardTypeVersion[10];
-    int                              m_nLicenceId;
-
-    QSqlDatabase                    *m_poDB;
-    cDlgProgress                    *m_dlgProgress;
-
-    QString                          m_qsLogFileName;
+    cDlgProgress    *m_dlgProgress;
 
 private slots:
-    void slotProgramTypeClicked();
-    void on_pbExportProcess_clicked();
-    void on_pbPExportConnect_clicked();
-    void on_pbImportDB_clicked();
     void on_pbExpSelectDir_clicked();
     void on_pbNext_clicked();
     void on_pbPrev_clicked();
-    void on_pbCancel_clicked();
     void on_pbStartExit_clicked();
     void on_cmbLanguage_currentIndexChanged(int index);
     void on_pbLogin_clicked();
-    void on_pbCheckSVDatFiles_clicked();
-    void on_pbSaveUnitTimeGeneral_clicked();
-    void on_listPatientCardTypes_itemDoubleClicked(QListWidgetItem *item);
-    void on_pbSaveUnitTime_clicked();
-    void on_ledBarcodeLength_textEdited(const QString &arg1);
-    void on_chkPExportPCT_toggled(bool checked);
-    void on_chkPExportPC_toggled(bool checked);
-    void on_chkPExportPT_toggled(bool checked);
-    void on_chkPExportP_toggled(bool checked);
-    void on_chkPExportUser_toggled(bool checked);
+    void on_pbExecuteProcess_clicked();
+    void on_rbDefault_toggled(bool checked);
 };
 
 #endif // MAINWINDOW_H
