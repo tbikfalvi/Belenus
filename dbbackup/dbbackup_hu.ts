@@ -20,7 +20,7 @@
     </message>
     <message>
         <location filename="mainwindow.ui" line="161"/>
-        <location filename="mainwindow.cpp" line="386"/>
+        <location filename="mainwindow.cpp" line="412"/>
         <source>Please wait until the process finish.</source>
         <translation>Kérem várjon amíg a folyamat befejeződik.</translation>
     </message>
@@ -35,130 +35,168 @@
         <translation>Indítás</translation>
     </message>
     <message>
-        <location filename="mainwindow.cpp" line="112"/>
+        <location filename="mainwindow.cpp" line="115"/>
         <source>Restore database</source>
         <translation>Adatbázis helyreállítás</translation>
     </message>
     <message>
-        <location filename="mainwindow.cpp" line="113"/>
-        <location filename="mainwindow.cpp" line="122"/>
+        <location filename="mainwindow.cpp" line="116"/>
+        <location filename="mainwindow.cpp" line="125"/>
+        <location filename="mainwindow.cpp" line="137"/>
         <source>Please select desired database and click on Start</source>
         <translation>Kérem válassza ki a kívánt adatbázis állományt és kattintson az Indítás gombra</translation>
     </message>
     <message>
-        <location filename="mainwindow.cpp" line="119"/>
+        <location filename="mainwindow.cpp" line="122"/>
         <source>Update database</source>
         <translation>Adatbázis frissítés</translation>
     </message>
     <message>
-        <location filename="mainwindow.cpp" line="69"/>
-        <location filename="mainwindow.cpp" line="87"/>
-        <location filename="mainwindow.cpp" line="104"/>
-        <location filename="mainwindow.cpp" line="208"/>
-        <location filename="mainwindow.cpp" line="246"/>
-        <location filename="mainwindow.cpp" line="258"/>
-        <location filename="mainwindow.cpp" line="273"/>
-        <location filename="mainwindow.cpp" line="292"/>
-        <location filename="mainwindow.cpp" line="302"/>
-        <location filename="mainwindow.cpp" line="330"/>
-        <location filename="mainwindow.cpp" line="391"/>
+        <location filename="mainwindow.cpp" line="72"/>
+        <location filename="mainwindow.cpp" line="90"/>
+        <location filename="mainwindow.cpp" line="107"/>
+        <location filename="mainwindow.cpp" line="234"/>
+        <location filename="mainwindow.cpp" line="272"/>
+        <location filename="mainwindow.cpp" line="284"/>
+        <location filename="mainwindow.cpp" line="299"/>
+        <location filename="mainwindow.cpp" line="318"/>
+        <location filename="mainwindow.cpp" line="328"/>
+        <location filename="mainwindow.cpp" line="356"/>
+        <location filename="mainwindow.cpp" line="417"/>
+        <location filename="mainwindow.cpp" line="470"/>
+        <location filename="mainwindow.cpp" line="483"/>
         <source>Error</source>
         <translation>Hiba</translation>
     </message>
     <message>
-        <location filename="mainwindow.cpp" line="26"/>
-        <location filename="mainwindow.cpp" line="133"/>
-        <location filename="mainwindow.cpp" line="165"/>
-        <location filename="mainwindow.cpp" line="174"/>
+        <location filename="mainwindow.cpp" line="29"/>
+        <location filename="mainwindow.cpp" line="143"/>
+        <location filename="mainwindow.cpp" line="175"/>
+        <location filename="mainwindow.cpp" line="184"/>
+        <location filename="mainwindow.cpp" line="194"/>
+        <location filename="mainwindow.cpp" line="203"/>
         <source>Belenus Database Manager</source>
         <translation>Belenus Adatbázis Kezelő</translation>
     </message>
     <message>
-        <location filename="mainwindow.cpp" line="69"/>
+        <location filename="mainwindow.cpp" line="72"/>
         <source>The binary folder for Wampserver MySQL can not be found in database!
 Please define the location manually!</source>
         <translation>A Wampserver MySQL könyvtár nem található az adatbázisban!
 Kérem válassza ki a könyvtárat manuálisan!</translation>
     </message>
     <message>
-        <location filename="mainwindow.cpp" line="73"/>
+        <location filename="mainwindow.cpp" line="76"/>
         <source>Select the location of the MySQL binary folder</source>
         <translation>Adja meg a MySQL könyvtár elérhetőségét</translation>
     </message>
     <message>
-        <location filename="mainwindow.cpp" line="87"/>
+        <location filename="mainwindow.cpp" line="90"/>
         <source>The backup folder for Belenus can not be found in database!
 Please define the location manually!</source>
         <translation>A Belenus archiv könyvtár nem található az adatbázisban!
 Kérem válassza ki a könyvtárat manuálisan!</translation>
     </message>
     <message>
-        <location filename="mainwindow.cpp" line="91"/>
+        <location filename="mainwindow.cpp" line="94"/>
         <source>Select the location of the backup folder</source>
         <translation>Adja meg az archív könyvtár elérhetőségét</translation>
     </message>
     <message>
-        <location filename="mainwindow.cpp" line="104"/>
+        <location filename="mainwindow.cpp" line="107"/>
         <source>The required folders are not set!
 Exiting the application ...</source>
         <translation>A szükséges könyvtárak nem lettek beállítva!
 Az alkalmazás leáll ...</translation>
     </message>
     <message>
-        <location filename="mainwindow.cpp" line="134"/>
+        <location filename="mainwindow.cpp" line="136"/>
+        <source>Update database file</source>
+        <translation>Adatbázis állomány frissítés</translation>
+    </message>
+    <message>
+        <location filename="mainwindow.cpp" line="144"/>
         <source>Saving database process started.</source>
         <oldsource>Updating database process started.</oldsource>
         <translation>Adatbázis mentési folyamat elindult.</translation>
     </message>
     <message>
-        <location filename="mainwindow.cpp" line="166"/>
+        <location filename="mainwindow.cpp" line="176"/>
         <source>Restoring database process started.</source>
         <translation>Adatbázis helyreállítási folyamat elindult.</translation>
     </message>
     <message>
-        <location filename="mainwindow.cpp" line="175"/>
+        <location filename="mainwindow.cpp" line="185"/>
         <source>Executing database modification started.</source>
         <translation>Adatbázis módosítási folyamat elindult.</translation>
     </message>
     <message>
-        <location filename="mainwindow.cpp" line="209"/>
-        <location filename="mainwindow.cpp" line="259"/>
-        <location filename="mainwindow.cpp" line="274"/>
-        <location filename="mainwindow.cpp" line="303"/>
-        <location filename="mainwindow.cpp" line="331"/>
+        <location filename="mainwindow.cpp" line="195"/>
+        <source>Database backup file correction for forward compatibility.</source>
+        <translation>Adatbázis állomány javítása kompatibilitáshoz</translation>
+    </message>
+    <message>
+        <location filename="mainwindow.cpp" line="204"/>
+        <source>Process finished.</source>
+        <translation>Folyamat befejeződött.</translation>
+    </message>
+    <message>
+        <location filename="mainwindow.cpp" line="235"/>
+        <location filename="mainwindow.cpp" line="285"/>
+        <location filename="mainwindow.cpp" line="300"/>
+        <location filename="mainwindow.cpp" line="329"/>
+        <location filename="mainwindow.cpp" line="357"/>
         <source>Unable to execute the following command:
 %1</source>
         <translation>Nem sikerült végrehajtani a következő folyamatot:
 %1</translation>
     </message>
     <message>
-        <location filename="mainwindow.cpp" line="217"/>
+        <location filename="mainwindow.cpp" line="243"/>
         <source>Warning</source>
         <translation>Figyelmeztetés</translation>
     </message>
     <message>
-        <location filename="mainwindow.cpp" line="218"/>
+        <location filename="mainwindow.cpp" line="244"/>
         <source>Location of the MySQL archive application is not set.
 Please check your settings.</source>
         <translation>A MySQL archiváló alkalmazás elérési útvonala nincs megadva.
 Kérem ellenőrizze a beállításokat.</translation>
     </message>
     <message>
-        <location filename="mainwindow.cpp" line="247"/>
+        <location filename="mainwindow.cpp" line="273"/>
         <source>Unable to create temporary file: dbrecreate.sql</source>
         <translation>Nem sikerült létrehozni a dbrecreate.sql ideiglenes állományt</translation>
     </message>
     <message>
-        <location filename="mainwindow.cpp" line="293"/>
+        <location filename="mainwindow.cpp" line="319"/>
         <source>Unable to create temporary file: dbreactivate.sql</source>
         <translation>Nem sikerült létrehozni a dbreactivate.sql ideiglenes állományt</translation>
     </message>
     <message>
-        <location filename="mainwindow.cpp" line="392"/>
+        <location filename="mainwindow.cpp" line="418"/>
         <source>The selected file not exists or not readable
 
 %1</source>
         <translation>A kiválaszott állomány nem létezik, vagy nem olvasható
+
+%1</translation>
+    </message>
+    <message>
+        <location filename="mainwindow.cpp" line="471"/>
+        <source>Unable to open the source file
+
+%1</source>
+        <translation>Nem lehet megnyitni az alábbi állományt
+
+%1</translation>
+    </message>
+    <message>
+        <location filename="mainwindow.cpp" line="484"/>
+        <source>Unable to open the destination file
+
+%1</source>
+        <translation>Nem lehet megnyitni a cél állományt
 
 %1</translation>
     </message>

@@ -427,118 +427,118 @@ Csak akkor indítsa el a folyamatot, ha más alkalmazások nem aktívak.</transl
         <translation>Könyvtár választás</translation>
     </message>
     <message>
-        <location filename="mainwindow.cpp" line="451"/>
-        <location filename="mainwindow.cpp" line="561"/>
-        <location filename="mainwindow.cpp" line="709"/>
-        <location filename="mainwindow.cpp" line="807"/>
-        <location filename="mainwindow.cpp" line="928"/>
-        <location filename="mainwindow.cpp" line="1040"/>
+        <location filename="mainwindow.cpp" line="457"/>
+        <location filename="mainwindow.cpp" line="567"/>
+        <location filename="mainwindow.cpp" line="715"/>
+        <location filename="mainwindow.cpp" line="813"/>
+        <location filename="mainwindow.cpp" line="934"/>
+        <location filename="mainwindow.cpp" line="1046"/>
         <source>minute</source>
         <translation>perc</translation>
     </message>
     <message>
-        <location filename="mainwindow.cpp" line="451"/>
-        <location filename="mainwindow.cpp" line="561"/>
-        <location filename="mainwindow.cpp" line="709"/>
-        <location filename="mainwindow.cpp" line="807"/>
-        <location filename="mainwindow.cpp" line="928"/>
-        <location filename="mainwindow.cpp" line="1040"/>
+        <location filename="mainwindow.cpp" line="457"/>
+        <location filename="mainwindow.cpp" line="567"/>
+        <location filename="mainwindow.cpp" line="715"/>
+        <location filename="mainwindow.cpp" line="813"/>
+        <location filename="mainwindow.cpp" line="934"/>
+        <location filename="mainwindow.cpp" line="1046"/>
         <source>minutes</source>
         <translation>perc</translation>
     </message>
     <message>
-        <location filename="mainwindow.cpp" line="453"/>
         <location filename="mainwindow.cpp" line="459"/>
-        <location filename="mainwindow.cpp" line="563"/>
+        <location filename="mainwindow.cpp" line="465"/>
         <location filename="mainwindow.cpp" line="569"/>
-        <location filename="mainwindow.cpp" line="711"/>
+        <location filename="mainwindow.cpp" line="575"/>
         <location filename="mainwindow.cpp" line="717"/>
-        <location filename="mainwindow.cpp" line="809"/>
+        <location filename="mainwindow.cpp" line="723"/>
         <location filename="mainwindow.cpp" line="815"/>
-        <location filename="mainwindow.cpp" line="930"/>
+        <location filename="mainwindow.cpp" line="821"/>
         <location filename="mainwindow.cpp" line="936"/>
-        <location filename="mainwindow.cpp" line="1042"/>
+        <location filename="mainwindow.cpp" line="942"/>
         <location filename="mainwindow.cpp" line="1048"/>
+        <location filename="mainwindow.cpp" line="1054"/>
         <source>second</source>
         <translation>másodperc</translation>
     </message>
     <message>
-        <location filename="mainwindow.cpp" line="453"/>
         <location filename="mainwindow.cpp" line="459"/>
-        <location filename="mainwindow.cpp" line="563"/>
+        <location filename="mainwindow.cpp" line="465"/>
         <location filename="mainwindow.cpp" line="569"/>
-        <location filename="mainwindow.cpp" line="711"/>
+        <location filename="mainwindow.cpp" line="575"/>
         <location filename="mainwindow.cpp" line="717"/>
-        <location filename="mainwindow.cpp" line="809"/>
+        <location filename="mainwindow.cpp" line="723"/>
         <location filename="mainwindow.cpp" line="815"/>
-        <location filename="mainwindow.cpp" line="930"/>
+        <location filename="mainwindow.cpp" line="821"/>
         <location filename="mainwindow.cpp" line="936"/>
-        <location filename="mainwindow.cpp" line="1042"/>
+        <location filename="mainwindow.cpp" line="942"/>
         <location filename="mainwindow.cpp" line="1048"/>
+        <location filename="mainwindow.cpp" line="1054"/>
         <source>seconds</source>
         <translation>másodperc</translation>
     </message>
     <message>
-        <location filename="mainwindow.cpp" line="462"/>
+        <location filename="mainwindow.cpp" line="468"/>
         <source>Deactivating patientcards expired before </source>
         <translation>Bérletek deaktiválása, melyek lejártak a következő dátum előtt </translation>
     </message>
     <message>
-        <location filename="mainwindow.cpp" line="464"/>
+        <location filename="mainwindow.cpp" line="470"/>
         <source>Estimated deactivation time: </source>
         <translation>Becsült deaktiválási idő: </translation>
     </message>
     <message>
-        <location filename="mainwindow.cpp" line="471"/>
-        <location filename="mainwindow.cpp" line="581"/>
-        <location filename="mainwindow.cpp" line="729"/>
-        <location filename="mainwindow.cpp" line="827"/>
-        <location filename="mainwindow.cpp" line="948"/>
-        <location filename="mainwindow.cpp" line="1060"/>
+        <location filename="mainwindow.cpp" line="477"/>
+        <location filename="mainwindow.cpp" line="587"/>
+        <location filename="mainwindow.cpp" line="735"/>
+        <location filename="mainwindow.cpp" line="833"/>
+        <location filename="mainwindow.cpp" line="954"/>
+        <location filename="mainwindow.cpp" line="1066"/>
         <source>Process started</source>
         <translation>Folyamat elindult</translation>
     </message>
     <message>
-        <location filename="mainwindow.cpp" line="484"/>
+        <location filename="mainwindow.cpp" line="490"/>
         <source>Deactivating records</source>
         <translation>Adatok deaktiválása</translation>
     </message>
     <message>
-        <location filename="mainwindow.cpp" line="520"/>
-        <location filename="mainwindow.cpp" line="678"/>
-        <location filename="mainwindow.cpp" line="776"/>
-        <location filename="mainwindow.cpp" line="897"/>
-        <location filename="mainwindow.cpp" line="1009"/>
-        <location filename="mainwindow.cpp" line="1121"/>
+        <location filename="mainwindow.cpp" line="526"/>
+        <location filename="mainwindow.cpp" line="684"/>
+        <location filename="mainwindow.cpp" line="782"/>
+        <location filename="mainwindow.cpp" line="903"/>
+        <location filename="mainwindow.cpp" line="1015"/>
+        <location filename="mainwindow.cpp" line="1127"/>
         <source>Process finished (mm:ss.t) %1</source>
         <translation>A folyamat befejeződött (pp:mm.t) %1</translation>
     </message>
     <message>
-        <location filename="mainwindow.cpp" line="572"/>
+        <location filename="mainwindow.cpp" line="578"/>
         <source>Deleting deactivated patientcards (except those linked to other entries in database)</source>
         <translation>Deaktivált bérletek törlése (azokat kivéve, melyek más adatokhoz kapcsoltak)</translation>
     </message>
     <message>
-        <location filename="mainwindow.cpp" line="600"/>
+        <location filename="mainwindow.cpp" line="606"/>
         <source>Sorting records</source>
         <translation>Adatok kiválogatása</translation>
     </message>
     <message>
-        <location filename="mainwindow.cpp" line="641"/>
-        <location filename="mainwindow.cpp" line="741"/>
-        <location filename="mainwindow.cpp" line="846"/>
-        <location filename="mainwindow.cpp" line="962"/>
-        <location filename="mainwindow.cpp" line="1080"/>
+        <location filename="mainwindow.cpp" line="647"/>
+        <location filename="mainwindow.cpp" line="747"/>
+        <location filename="mainwindow.cpp" line="852"/>
+        <location filename="mainwindow.cpp" line="968"/>
+        <location filename="mainwindow.cpp" line="1086"/>
         <source>Deleting records</source>
         <translation>Adatok törlése</translation>
     </message>
     <message>
-        <location filename="mainwindow.cpp" line="681"/>
+        <location filename="mainwindow.cpp" line="687"/>
         <source>Records skipped: </source>
         <translation>Törlésből kihagyott adatok: </translation>
     </message>
     <message>
-        <location filename="mainwindow.cpp" line="682"/>
+        <location filename="mainwindow.cpp" line="688"/>
         <source>Records deleted: </source>
         <translation>Törölt adatok: </translation>
     </message>
@@ -547,7 +547,7 @@ Csak akkor indítsa el a folyamatot, ha más alkalmazások nem aktívak.</transl
         <translation type="obsolete">Bérletek deaktiválásának végrehajtása</translation>
     </message>
     <message>
-        <location filename="mainwindow.cpp" line="478"/>
+        <location filename="mainwindow.cpp" line="484"/>
         <source>Retrieving record ids</source>
         <translation>Adatok egyedi azonosítóinak gyűjtése</translation>
     </message>
@@ -556,19 +556,19 @@ Csak akkor indítsa el a folyamatot, ha más alkalmazások nem aktívak.</transl
         <translation type="obsolete">A deaktiválási folyamat befejeződött %1</translation>
     </message>
     <message>
-        <location filename="mainwindow.cpp" line="574"/>
-        <location filename="mainwindow.cpp" line="722"/>
-        <location filename="mainwindow.cpp" line="820"/>
-        <location filename="mainwindow.cpp" line="941"/>
-        <location filename="mainwindow.cpp" line="1053"/>
+        <location filename="mainwindow.cpp" line="580"/>
+        <location filename="mainwindow.cpp" line="728"/>
+        <location filename="mainwindow.cpp" line="826"/>
+        <location filename="mainwindow.cpp" line="947"/>
+        <location filename="mainwindow.cpp" line="1059"/>
         <source>Estimated delete time: </source>
         <translation>Becsült törlési idő: </translation>
     </message>
     <message>
-        <location filename="mainwindow.cpp" line="593"/>
-        <location filename="mainwindow.cpp" line="735"/>
-        <location filename="mainwindow.cpp" line="836"/>
-        <location filename="mainwindow.cpp" line="1068"/>
+        <location filename="mainwindow.cpp" line="599"/>
+        <location filename="mainwindow.cpp" line="741"/>
+        <location filename="mainwindow.cpp" line="842"/>
+        <location filename="mainwindow.cpp" line="1074"/>
         <source>Retrieving affected records</source>
         <translation>Érintett adatok összegyűjtése</translation>
     </message>
@@ -577,19 +577,19 @@ Csak akkor indítsa el a folyamatot, ha más alkalmazások nem aktívak.</transl
         <translation type="obsolete">Törlési folyamat befejeződött %1</translation>
     </message>
     <message>
-        <location filename="mainwindow.cpp" line="818"/>
+        <location filename="mainwindow.cpp" line="824"/>
         <source>Deleting ledger entries before date </source>
         <oldsource>Deleting ledger and cassa entries before </oldsource>
         <translation>Könyvelési bejegyzések törlése a következő dátum előtt </translation>
     </message>
     <message>
-        <location filename="mainwindow.cpp" line="939"/>
+        <location filename="mainwindow.cpp" line="945"/>
         <source>Deleting device ledger entries before date </source>
         <oldsource>Deleting device ledger before </oldsource>
         <translation>Gépekkel kapcsolatos könyvelési bejegyzések törlése a következő dátum előtt </translation>
     </message>
     <message>
-        <location filename="mainwindow.cpp" line="1051"/>
+        <location filename="mainwindow.cpp" line="1057"/>
         <source>Deleting cassa entries before date </source>
         <oldsource>Deleting cassa before </oldsource>
         <translation>Pénztár bejegyzések törlése a következő dátum előtt </translation>
@@ -599,12 +599,12 @@ Csak akkor indítsa el a folyamatot, ha más alkalmazások nem aktívak.</transl
         <translation type="obsolete">Könyvelési és pénztár bejegyzések törlése</translation>
     </message>
     <message>
-        <location filename="mainwindow.cpp" line="463"/>
-        <location filename="mainwindow.cpp" line="573"/>
-        <location filename="mainwindow.cpp" line="721"/>
-        <location filename="mainwindow.cpp" line="819"/>
-        <location filename="mainwindow.cpp" line="940"/>
-        <location filename="mainwindow.cpp" line="1052"/>
+        <location filename="mainwindow.cpp" line="469"/>
+        <location filename="mainwindow.cpp" line="579"/>
+        <location filename="mainwindow.cpp" line="727"/>
+        <location filename="mainwindow.cpp" line="825"/>
+        <location filename="mainwindow.cpp" line="946"/>
+        <location filename="mainwindow.cpp" line="1058"/>
         <source>Number of affected records: </source>
         <translation>Érintett adatok száma: </translation>
     </message>
@@ -637,7 +637,7 @@ Csak akkor indítsa el a folyamatot, ha más alkalmazások nem aktívak.</transl
         <translation type="obsolete">Törölve: </translation>
     </message>
     <message>
-        <location filename="mainwindow.cpp" line="720"/>
+        <location filename="mainwindow.cpp" line="726"/>
         <source>Deleting patientcard units expired before </source>
         <translation>Lejárt érvényességű bérlet egységek törlése a megadott dátum előtt </translation>
     </message>
@@ -866,7 +866,7 @@ Kérem válasszon ki egy megfelelő állományt és kezdje újra a folyamatot.</
         <translation type="obsolete">A kapcsolódás a Belenus adatbázishoz sikerült</translation>
     </message>
     <message>
-        <location filename="mainwindow.cpp" line="294"/>
+        <location filename="mainwindow.cpp" line="300"/>
         <source>License code: %1 [%2]</source>
         <translation>Liszensz kulcs: %1 [%2]</translation>
     </message>

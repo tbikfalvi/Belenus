@@ -154,88 +154,88 @@
         <translation>Prozess Starten</translation>
     </message>
     <message>
-        <location filename="mainwindow.cpp" line="282"/>
-        <location filename="mainwindow.cpp" line="299"/>
-        <location filename="mainwindow.cpp" line="340"/>
-        <location filename="mainwindow.cpp" line="382"/>
+        <location filename="mainwindow.cpp" line="284"/>
+        <location filename="mainwindow.cpp" line="301"/>
+        <location filename="mainwindow.cpp" line="342"/>
+        <location filename="mainwindow.cpp" line="384"/>
         <source>Select Directory</source>
         <translation>Bitte wählen Sie den Speicherot aus</translation>
     </message>
     <message>
-        <location filename="mainwindow.cpp" line="415"/>
+        <location filename="mainwindow.cpp" line="417"/>
         <source>installation</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="mainwindow.cpp" line="419"/>
+        <location filename="mainwindow.cpp" line="421"/>
         <source>Checking components</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="mainwindow.cpp" line="424"/>
+        <location filename="mainwindow.cpp" line="426"/>
         <source>Update system environment variables</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="mainwindow.cpp" line="429"/>
+        <location filename="mainwindow.cpp" line="431"/>
         <source>Create directories</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="mainwindow.cpp" line="435"/>
+        <location filename="mainwindow.cpp" line="437"/>
         <source>Create and copy files for Belenus Update application</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="mainwindow.cpp" line="462"/>
+        <location filename="mainwindow.cpp" line="464"/>
         <source>Install database</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="mainwindow.cpp" line="472"/>
+        <location filename="mainwindow.cpp" line="474"/>
         <source>Install client</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="mainwindow.cpp" line="486"/>
+        <location filename="mainwindow.cpp" line="488"/>
         <source>uninstall</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="mainwindow.cpp" line="490"/>
+        <location filename="mainwindow.cpp" line="492"/>
         <source>Question</source>
         <translation>Anfrage</translation>
     </message>
     <message>
-        <location filename="mainwindow.cpp" line="491"/>
+        <location filename="mainwindow.cpp" line="493"/>
         <source>Are you sure you want to uninstall Belenus Application System and all of it&apos;s components?
 All of the data will be deleted from the computer.</source>
         <translation>Sind Sie sicher, dass Sie Belenus Application System und alle seine Komponenten deinstallieren?
 Sämtliche Daten werden vom Computer gelöscht.</translation>
     </message>
     <message>
-        <location filename="mainwindow.cpp" line="556"/>
+        <location filename="mainwindow.cpp" line="558"/>
         <source>Information</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="mainwindow.cpp" line="552"/>
-        <location filename="mainwindow.cpp" line="557"/>
+        <location filename="mainwindow.cpp" line="554"/>
+        <location filename="mainwindow.cpp" line="559"/>
         <source>The %1 process finished.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="mainwindow.cpp" line="452"/>
+        <location filename="mainwindow.cpp" line="454"/>
         <source>Install database server ... please wait</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="mainwindow.cpp" line="488"/>
+        <location filename="mainwindow.cpp" line="490"/>
         <source>Uninstall Belenus Application System.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="mainwindow.cpp" line="562"/>
+        <location filename="mainwindow.cpp" line="564"/>
         <source>Error occured during installing Belenus Application System.
 Please contact Belenus software support.
 
@@ -243,14 +243,14 @@ Error code: %1</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="mainwindow.cpp" line="1152"/>
-        <location filename="mainwindow.cpp" line="1166"/>
-        <location filename="mainwindow.cpp" line="1777"/>
+        <location filename="mainwindow.cpp" line="1160"/>
+        <location filename="mainwindow.cpp" line="1174"/>
+        <location filename="mainwindow.cpp" line="1785"/>
         <source>Attention</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="mainwindow.cpp" line="1153"/>
+        <location filename="mainwindow.cpp" line="1161"/>
         <source>Please make sure the WampServer icon appeared on taskbar
 and it&apos;s color is green.
 This grants that the database server is up and running
@@ -260,7 +260,7 @@ Click OK button to continue.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="mainwindow.cpp" line="1167"/>
+        <location filename="mainwindow.cpp" line="1175"/>
         <source>Error occured during installation.
 
 %1
@@ -270,69 +270,69 @@ contact Belenus software support.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="mainwindow.cpp" line="1325"/>
+        <location filename="mainwindow.cpp" line="1333"/>
         <source>Create database users</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="mainwindow.cpp" line="1342"/>
+        <location filename="mainwindow.cpp" line="1350"/>
         <source>Create database</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="mainwindow.cpp" line="1356"/>
+        <location filename="mainwindow.cpp" line="1364"/>
         <source>Create Belenus database user</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="mainwindow.cpp" line="1385"/>
+        <location filename="mainwindow.cpp" line="1393"/>
         <source>Create database structure</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="mainwindow.cpp" line="1399"/>
+        <location filename="mainwindow.cpp" line="1407"/>
         <source>Fill database with default data</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="mainwindow.cpp" line="1413"/>
+        <location filename="mainwindow.cpp" line="1421"/>
         <source>Create devices in database</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="mainwindow.cpp" line="1748"/>
+        <location filename="mainwindow.cpp" line="1756"/>
         <source>KiwiSun device</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="mainwindow.cpp" line="1770"/>
+        <location filename="mainwindow.cpp" line="1778"/>
         <source>Copy client files</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="mainwindow.cpp" line="1778"/>
+        <location filename="mainwindow.cpp" line="1786"/>
         <source>Unable to empty the specified directory.
 %1
 Please manually delete the directory if copying new files fails.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="mainwindow.cpp" line="1794"/>
+        <location filename="mainwindow.cpp" line="1802"/>
         <source>Create shortcuts and language file</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="mainwindow.cpp" line="1922"/>
+        <location filename="mainwindow.cpp" line="1930"/>
         <source>Belenus Application System</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="mainwindow.cpp" line="1938"/>
+        <location filename="mainwindow.cpp" line="1946"/>
         <source>System error</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="mainwindow.cpp" line="1939"/>
+        <location filename="mainwindow.cpp" line="1947"/>
         <source>Unable to create directory:
 
 %1</source>
@@ -355,21 +355,21 @@ Fehlercode: ErrLogCreateFail
 [%1]</translation>
     </message>
     <message>
-        <location filename="mainwindow.cpp" line="583"/>
-        <location filename="mainwindow.cpp" line="599"/>
-        <location filename="mainwindow.cpp" line="615"/>
-        <location filename="mainwindow.cpp" line="631"/>
-        <location filename="mainwindow.cpp" line="686"/>
-        <location filename="mainwindow.cpp" line="835"/>
-        <location filename="mainwindow.cpp" line="869"/>
-        <location filename="mainwindow.cpp" line="896"/>
-        <location filename="mainwindow.cpp" line="956"/>
-        <location filename="mainwindow.cpp" line="982"/>
+        <location filename="mainwindow.cpp" line="586"/>
+        <location filename="mainwindow.cpp" line="603"/>
+        <location filename="mainwindow.cpp" line="620"/>
+        <location filename="mainwindow.cpp" line="637"/>
+        <location filename="mainwindow.cpp" line="694"/>
+        <location filename="mainwindow.cpp" line="843"/>
+        <location filename="mainwindow.cpp" line="877"/>
+        <location filename="mainwindow.cpp" line="904"/>
+        <location filename="mainwindow.cpp" line="964"/>
+        <location filename="mainwindow.cpp" line="990"/>
         <source>Warning</source>
         <translation>Belehrung</translation>
     </message>
     <message>
-        <location filename="mainwindow.cpp" line="687"/>
+        <location filename="mainwindow.cpp" line="695"/>
         <source>The following directory can not be created:
 
 %1
@@ -382,8 +382,8 @@ Please create the directory manually and restart process.</source>
 Bitte erstellen Sie das Verzeichnis manuell und den Prozess neu zu starten.</translation>
     </message>
     <message>
-        <location filename="mainwindow.cpp" line="830"/>
-        <location filename="mainwindow.cpp" line="1828"/>
+        <location filename="mainwindow.cpp" line="838"/>
+        <location filename="mainwindow.cpp" line="1836"/>
         <source>Error occured during parsing file:
 &apos;%1&apos;
 
@@ -394,8 +394,8 @@ Error in line %2: %3</source>
 Fehler in Folge %2: %3</translation>
     </message>
     <message>
-        <location filename="mainwindow.cpp" line="836"/>
-        <location filename="mainwindow.cpp" line="870"/>
+        <location filename="mainwindow.cpp" line="844"/>
+        <location filename="mainwindow.cpp" line="878"/>
         <source>Unable to copy updater files.
 Please check the error report file:
 
@@ -407,7 +407,7 @@ Bitte überprüfen Sie das Fehlerberichtsdatei.
 </translation>
     </message>
     <message>
-        <location filename="mainwindow.cpp" line="897"/>
+        <location filename="mainwindow.cpp" line="905"/>
         <source>Unable to copy updater file.
 Please check the error report file:
 
@@ -419,12 +419,12 @@ Bitte überprüfen Sie das Fehlerberichtsdatei.
 </translation>
     </message>
     <message>
-        <location filename="mainwindow.cpp" line="584"/>
-        <location filename="mainwindow.cpp" line="600"/>
-        <location filename="mainwindow.cpp" line="616"/>
-        <location filename="mainwindow.cpp" line="632"/>
-        <location filename="mainwindow.cpp" line="957"/>
-        <location filename="mainwindow.cpp" line="983"/>
+        <location filename="mainwindow.cpp" line="587"/>
+        <location filename="mainwindow.cpp" line="604"/>
+        <location filename="mainwindow.cpp" line="621"/>
+        <location filename="mainwindow.cpp" line="638"/>
+        <location filename="mainwindow.cpp" line="965"/>
+        <location filename="mainwindow.cpp" line="991"/>
         <source>Error occured when starting process:
 
 %1
