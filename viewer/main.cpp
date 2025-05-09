@@ -1,6 +1,6 @@
 //====================================================================================
 //
-// Belenus Report Viewer alkalmazas (v) Pagony Multimedia Studio Bt - 2010
+// Belenus Report Viewer alkalmazas (c) Bikfalvi Tamas
 //
 //====================================================================================
 

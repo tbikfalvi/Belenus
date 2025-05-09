@@ -1,12 +1,24 @@
+//====================================================================================
+//
+// Belenus Database Manager alkalmazas (c) Bikfalvi Tamas
+//
+//====================================================================================
+
+#define APPLICATION_VERSION_NUMBER  "2.3.0.0"
+
+//====================================================================================
+
 #include <QtGui/QApplication>
 #include <QTranslator>
 #include "mainwindow.h"
+
+//====================================================================================
 
 #include "../framework/qtlogger.h"
 #include "../framework/qtframework.h"
 #include "../framework/logger/FileWriter.h"
 
-#define APPLICATION_VERSION_NUMBER  "2.3.0.0"
+//====================================================================================
 
 QTranslator         *poTransTool;
 QTranslator         *poTransQT;
@@ -34,7 +46,7 @@ int main(int argc, char *argv[])
     apMainApp->setWindowIcon( QIcon(":/icons/DBTool.ico") );
 
     g_obLogger.attachWriter("file", &g_obLogFileWriter);
-    g_obLogger.setMinimumSeverity("file", cSeverity::ERROR);
+    g_obLogger.setMinimumSeverity("file", cSeverity::INFO);
 
     g_obLogger(cSeverity::INFO) << "Belenus Database Manager started." << EOM;
 

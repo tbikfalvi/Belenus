@@ -24,7 +24,7 @@ cRegistry        g_obReg;
 //=================================================================================================
 //
 //-------------------------------------------------------------------------------------------------
-MainWindow::MainWindow(QWidget *parent) : QMainWindow(parent), ui(new Ui::MainWindow)
+MainWindow::MainWindow(QWidget *parent, QString p_qsAppVersion) : QMainWindow(parent), ui(new Ui::MainWindow)
 {
     ui->setupUi(this);
 
@@ -64,6 +64,8 @@ MainWindow::MainWindow(QWidget *parent) : QMainWindow(parent), ui(new Ui::MainWi
     _logProcess( QString("----------------------------------------------------------------------------------------") );
 
     // Initialize GUI components
+    ui->lblVersion->setText( QString( "v." ) + p_qsAppVersion );
+
     ui->cmbLanguage->addItem( "English (en)" );
     ui->cmbLanguage->addItem( "Magyar (hu)" );
     ui->cmbLanguage->addItem( "Deutsch (de)" );

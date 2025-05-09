@@ -49,15 +49,8 @@ MainWindow::MainWindow(QWidget *parent, QString p_qsVersion) : QMainWindow(paren
     ui->imgCheckPswFail->setVisible( true );
     ui->imgCheckPswOk->setVisible( false );
 
-    ui->qdPatientCardValid->setDate( QDate::currentDate() );
-
-    QDate today = QDate::currentDate();
-    QDate targetMonthStart = QDate(today.year(), today.month(), 1).addMonths(-2);  // aktuális hónap első napja - 2 hónap
-    QDate monthEnd = targetMonthStart.addMonths(1).addDays(-1);  // az adott hónap utolsó napja
-
-    ui->qdLedgerDate->setDate( monthEnd );
-
-    ui->qdObsoleteDate->setDate( QDate::currentDate().addMonths(-1) );
+    ui->rbDefault->setVisible( false );
+    ui->qdFilterDate->setDate( QDate::currentDate() );
 
     setWindowTitle( tr( "Belenus database manager - v." ) + p_qsVersion );
 
@@ -233,6 +226,12 @@ void MainWindow::on_pbExpSelectDir_clicked()
     }
 }
 //=========================================================================================================================================
+void MainWindow::on_rbDefault_toggled(bool checked)
+//-----------------------------------------------------------------------------------------------------------------------------------------
+{
+    ui->pbNext->setEnabled( !checked );
+}
+//=========================================================================================================================================
 void MainWindow::_initializePage()
 //-----------------------------------------------------------------------------------------------------------------------------------------
 {
@@ -260,16 +259,7 @@ void MainWindow::_initializePage()
             ui->pbNext->setEnabled( false );
             ui->pbNext->setVisible( true );
 
-            ui->rbDeactivatePatientCards->setChecked( false );
-            ui->qdPatientCardValid->setEnabled( false );
-            ui->chkDeleteDeactivatedPatientCards->setEnabled( false );
-            ui->chkDeleteDeactivatedPatientCards->setChecked( false );
-
-            ui->rbDeleteLedgerEntries->setChecked( false );
-            ui->qdLedgerDate->setEnabled( false );
-
-            ui->rbDeleteObsoletePCUnits->setChecked( false );
-            ui->qdObsoleteDate->setEnabled( false );
+            ui->rbDefault->setChecked( true );
             break;
         }
         case CONST_PAGE_EXECUTE_PROCESS:
@@ -367,50 +357,7 @@ void MainWindow::on_cmbLanguage_currentIndexChanged(int /*index*/)
 // PAGE PROCESS SELECTION
 //
 //=========================================================================================================================================
-void MainWindow::on_rbDeactivatePatientCards_clicked()
-//-----------------------------------------------------------------------------------------------------------------------------------------
-{
-    ui->rbDeactivatePatientCards->setChecked( true );
-    ui->rbDeleteLedgerEntries->setChecked( false );
-    ui->rbDeleteObsoletePCUnits->setChecked( false );
 
-    ui->qdPatientCardValid->setEnabled( true );
-    ui->chkDeleteDeactivatedPatientCards->setEnabled( true );
-    ui->qdLedgerDate->setEnabled( false );
-    ui->qdObsoleteDate->setEnabled( false );
-
-    ui->pbNext->setEnabled( true );
-}
-//=========================================================================================================================================
-void MainWindow::on_rbDeleteLedgerEntries_clicked()
-//-----------------------------------------------------------------------------------------------------------------------------------------
-{
-    ui->rbDeactivatePatientCards->setChecked( false );
-    ui->rbDeleteLedgerEntries->setChecked( true );
-    ui->rbDeleteObsoletePCUnits->setChecked( false );
-
-    ui->qdPatientCardValid->setEnabled( false );
-    ui->chkDeleteDeactivatedPatientCards->setEnabled( false );
-    ui->qdLedgerDate->setEnabled( true );
-    ui->qdObsoleteDate->setEnabled( false );
-
-    ui->pbNext->setEnabled( true );
-}
-//=========================================================================================================================================
-void MainWindow::on_rbDeleteObsoletePCUnits_clicked()
-//-----------------------------------------------------------------------------------------------------------------------------------------
-{
-    ui->rbDeactivatePatientCards->setChecked( false );
-    ui->rbDeleteLedgerEntries->setChecked( false );
-    ui->rbDeleteObsoletePCUnits->setChecked( true );
-
-    ui->qdPatientCardValid->setEnabled( false );
-    ui->chkDeleteDeactivatedPatientCards->setEnabled( false );
-    ui->qdLedgerDate->setEnabled( false );
-    ui->qdObsoleteDate->setEnabled( true );
-
-    ui->pbNext->setEnabled( true );
-}
 //=========================================================================================================================================
 //
 // PAGE PROCESS EXECUTION
@@ -422,18 +369,26 @@ void MainWindow::_calculateRelatedRecords()
     if( ui->rbDeactivatePatientCards->isChecked() )
     {
         _calculateDeactivatePatientcards();
-        if( ui->chkDeleteDeactivatedPatientCards->isChecked() )
-        {
-            _calculateDeleteDeactivatedPatientcards();
-        }
+    }
+    else if( ui->rbDeleteDeactivatedPatientcards->isChecked() )
+    {
+        _calculateDeleteDeactivatedPatientcards();
+    }
+    else if( ui->rbDeleteObsoletePCUnits->isChecked() )
+    {
+        _calculateDeleteObsoletePatientcardUnits();
     }
     else if( ui->rbDeleteLedgerEntries->isChecked() )
     {
         _calculateDeleteLedgerEntries();
     }
-    else if( ui->rbDeleteObsoletePCUnits->isChecked() )
+    else if( ui->rbDeleteDeviceLedgerEntries->isChecked() )
     {
-        _calculateDeleteObsoletePatientcardUnits();
+        _calculateDeleteDeviceLedger();
+    }
+    else if( ui->rbDeleteCassaEntries->isChecked() )
+    {
+        _calculateDeleteCassa();
     }
 }
 //=========================================================================================================================================
@@ -446,18 +401,26 @@ void MainWindow::on_pbExecuteProcess_clicked()
     if( ui->rbDeactivatePatientCards->isChecked() )
     {
         _processDeactivatePatientcards();
-        if( ui->chkDeleteDeactivatedPatientCards->isChecked() )
-        {
-            _processDeleteDeactivatedPatientcards();
-        }
+    }
+    else if( ui->rbDeleteDeactivatedPatientcards->isChecked() )
+    {
+        _processDeleteDeactivatedPatientcards();
+    }
+    else if( ui->rbDeleteObsoletePCUnits->isChecked() )
+    {
+        _processDeleteObsoletePatientcardUnits();
     }
     else if( ui->rbDeleteLedgerEntries->isChecked() )
     {
         _processDeleteLedgerEntries();
     }
-    else if( ui->rbDeleteObsoletePCUnits->isChecked() )
+    else if( ui->rbDeleteDeviceLedgerEntries->isChecked() )
     {
-        _processDeleteObsoletePatientcardUnits();
+        _processDeleteDeviceLedger();
+    }
+    else if( ui->rbDeleteCassaEntries->isChecked() )
+    {
+        _processDeleteCassa();
     }
 }
 
@@ -471,7 +434,7 @@ void MainWindow::_calculateDeactivatePatientcards()
 {
     int nCount = 0;
 
-    QString qsSelect = QString( "SELECT COUNT(patientCardId) FROM patientcards WHERE validDateTo < \"%1\" AND active = 1 ").arg( ui->qdPatientCardValid->date().toString("yyyy-MM-dd") );
+    QString qsSelect = QString( "SELECT COUNT(patientCardId) FROM patientcards WHERE validDateTo < \"%1\" AND active = 1 ").arg( ui->qdFilterDate->date().toString("yyyy-MM-dd") );
     QSqlQuery oSelect(qsSelect);
 
     if( oSelect.next() )
@@ -502,7 +465,7 @@ void MainWindow::_calculateDeactivatePatientcards()
                         .arg((estSeconds == 1) ? tr("second") : tr("seconds"));
     }
 
-    ui->listProgress->addItem( tr( "Deactivating patientcards expired before " ) + ui->qdPatientCardValid->date().toString( "yyyy-MM-dd" ) );
+    ui->listProgress->addItem( tr( "Deactivating patientcards expired before " ) + ui->qdFilterDate->date().toString( "yyyy-MM-dd" ) );
     ui->listProgress->addItem( tr( "Number of affected records: " ) + QString::number( nCount ) );
     ui->listProgress->addItem( tr( "Estimated deactivation time: " ) + estTimeString);
 }
@@ -511,9 +474,9 @@ void MainWindow::_processDeactivatePatientcards()
 //-----------------------------------------------------------------------------------------------------------------------------------------
 {
     ui->listProgress->addItem( "" );
-    _logProcessInfo( tr( "Executing patientcards deactivation" ) );
+    _logProcessInfo( tr( "Process started" ) );
 
-    QString qsSelect = QString( "SELECT patientCardId FROM patientcards WHERE validDateTo < \"%1\" AND active = 1 ").arg( ui->qdPatientCardValid->date().toString("yyyy-MM-dd") );
+    QString qsSelect = QString( "SELECT patientCardId FROM patientcards WHERE validDateTo < \"%1\" AND active = 1 ").arg( ui->qdFilterDate->date().toString("yyyy-MM-dd") );
     QSqlQuery oSelect(qsSelect);
 
     QStringList cardIds;
@@ -522,10 +485,9 @@ void MainWindow::_processDeactivatePatientcards()
     while( oSelect.next() )
         cardIds.append( oSelect.value(0).toString() );
 
-    _logProcessInfo( tr( "Number of affected records: " ) + QString::number( cardIds.size() ) );
     m_dlgProgress->setMaxValue( cardIds.size() );
 
-    _logProcessInfo( tr( "Deactivate records ..." ) );
+    _logProcessInfo( tr( "Deactivating records" ) );
     m_dlgProgress->show();
 
     // ⏱ Időmérés indítása
@@ -561,7 +523,7 @@ void MainWindow::_processDeactivatePatientcards()
 
     QString timeString = QString("%1:%2.%3").arg(minutes, 2, 10, QChar('0')).arg(seconds, 2, 10, QChar('0')).arg(tenths);
 
-    _logProcessInfo( tr( "Deactivation process finished in %1" ).arg( timeString ) );
+    _logProcessInfo( tr( "Process finished (mm:ss.t) %1" ).arg( timeString ) );
 
     m_dlgProgress->hide();
 }
@@ -571,7 +533,7 @@ void MainWindow::_calculateDeleteDeactivatedPatientcards()
 {
     int nCount = 0;
 
-    QString qsSelect1 = QString( "SELECT COUNT(patientCardId) FROM patientcards WHERE validDateTo < \"%1\" AND active = 1 ").arg( ui->qdPatientCardValid->date().toString("yyyy-MM-dd") );
+    QString qsSelect1 = QString( "SELECT COUNT(patientCardId) FROM patientcards WHERE validDateTo < \"%1\" AND active = 1 ").arg( ui->qdFilterDate->date().toString("yyyy-MM-dd") );
     QSqlQuery oSelect1(qsSelect1);
 
     if( oSelect1.next() )
@@ -613,7 +575,7 @@ void MainWindow::_calculateDeleteDeactivatedPatientcards()
                         .arg((estSeconds == 1) ? tr("second") : tr("seconds"));
     }
 
-    ui->listProgress->addItem( tr( "Deleting deactivated patientcards" ) );
+    ui->listProgress->addItem( tr( "Deleting deactivated patientcards (except those linked to other entries in database)" ) );
     ui->listProgress->addItem( tr( "Number of affected records: " ) + QString::number( nCount ) );
     ui->listProgress->addItem( tr( "Estimated delete time: " ) + estTimeString);
 }
@@ -622,7 +584,7 @@ void MainWindow::_processDeleteDeactivatedPatientcards()
 //-----------------------------------------------------------------------------------------------------------------------------------------
 {
     ui->listProgress->addItem( "" );
-    _logProcessInfo( tr( "Deleting deactivated patientcards" ) );
+    _logProcessInfo( tr( "Process started" ) );
 
     QString qsSelect = QString( "SELECT patientCardId FROM patientcards WHERE "
                                 "patientCardId > 1 AND "
@@ -638,12 +600,10 @@ void MainWindow::_processDeleteDeactivatedPatientcards()
     while (oSelect.next())
         cardIds.append( oSelect.value(0).toString() );
 
-    _logProcessInfo( tr("Number of affected records: " ) + QString::number( cardIds.size() ) );
-
     int stepsPerCard = 5;
     m_dlgProgress->setMaxValue( cardIds.size() * stepsPerCard );
 
-    _logProcessInfo( tr("Delete records ..." ) );
+    _logProcessInfo( tr("Sorting records" ) );
     m_dlgProgress->show();
 
     // ⏱ Időmérés indítása
@@ -684,6 +644,7 @@ void MainWindow::_processDeleteDeactivatedPatientcards()
         }
     }
 
+    _logProcessInfo( tr("Deleting records" ) );
     const int batchSize = 100;
     for( int i = 0; i < deletableCardIds.size(); i += batchSize )
     {
@@ -713,99 +674,32 @@ void MainWindow::_processDeleteDeactivatedPatientcards()
         nDeleted += batch.size();
     }
 
-/*    unsigned int nSkipped = 0;
-    unsigned int nDeleted = 0;
-
-    for (int i = 0; i < cardIds.size(); ++i)
-    {
-        unsigned int     uiId               = cardIds[i];
-        QSqlQuery       *poQuery            = NULL;
-        bool             bAssignedCardExists= false;
-        bool             bLedgerConnected   = false;
-
-        poQuery = g_poDB->executeQTQuery( QString( "SELECT * FROM patientCards WHERE parentCardId = %1" ).arg( uiId ) );
-        if( poQuery->next() )
-        {
-            bAssignedCardExists = true;
-        }
-
-        poQuery = g_poDB->executeQTQuery( QString( "SELECT * FROM ledger WHERE patientCardId = %1" ).arg( uiId ) );
-        if( poQuery->next() )
-        {
-            bLedgerConnected = true;
-        }
-
-        if( bAssignedCardExists || bLedgerConnected )
-        {
-            nSkipped++;
-            for (int s = 0; s < stepsPerCard; ++s)
-            {
-                m_dlgProgress->stepValue();
-                QCoreApplication::processEvents();
-            }
-            continue;
-        }
-
-        QStringList deleteQueries;
-        deleteQueries << QString("DELETE FROM connectPatientWithCard WHERE patientCardId=%1").arg(uiId);
-        deleteQueries << QString("DELETE FROM patientCardHistories WHERE patientCardId=%1").arg(uiId);
-        deleteQueries << QString("DELETE FROM patientCardUnits WHERE patientCardId=%1").arg(uiId);
-        deleteQueries << QString("DELETE FROM patientHistory WHERE patientCardId=%1").arg(uiId);
-        deleteQueries << QString("DELETE FROM patientCards WHERE patientCardId=%1").arg(uiId);
-
-        for (int nDelQ = 0; nDelQ < deleteQueries.size(); ++nDelQ)
-        {
-            QString query = deleteQueries.at(nDelQ);
-            g_poDB->executeQTQuery(query);
-            m_dlgProgress->stepValue();
-            QCoreApplication::processEvents();
-        }
-
-        nDeleted++;
-        m_dlgProgress->stepValue();
-        QCoreApplication::processEvents();
-    }
-*/
-
     int elapsedMs = timer.elapsed();
     int minutes = elapsedMs / (1000 * 60);
     int seconds = (elapsedMs / 1000) % 60;
-    int tenths  = (elapsedMs % 1000) / 100;  // tizedmásodperc (0–9)
+    int tenths  = (elapsedMs % 1000) / 100;
 
     QString timeString = QString("%1:%2.%3").arg(minutes, 2, 10, QChar('0')).arg(seconds, 2, 10, QChar('0')).arg(tenths);
 
-    _logProcessInfo( tr( "Delete process finished in %1" ).arg( timeString ) );
+    _logProcessInfo( tr( "Process finished (mm:ss.t) %1" ).arg( timeString ) );
 
     m_dlgProgress->hide();
-    _logProcessInfo(tr("Skipped: ") + QString::number(nSkipped));
-    _logProcessInfo(tr("Deleted: ") + QString::number(nDeleted));
+    _logProcessInfo(tr("Records skipped: ") + QString::number(nSkipped));
+    _logProcessInfo(tr("Records deleted: ") + QString::number(nDeleted));
 }
 //=========================================================================================================================================
-void MainWindow::_calculateDeleteLedgerEntries()
+void MainWindow::_calculateDeleteObsoletePatientcardUnits()
 //-----------------------------------------------------------------------------------------------------------------------------------------
 {
     int progressMax = 0;
 
-    // Ledger rekordok összegyűjtése
-    QSqlQuery *poQuery = g_poDB->executeQTQuery( QString( "SELECT COUNT(ledgerId) FROM ledger WHERE ledgerTime < \"%1\" AND ledgerId > 0" )
-                                                          .arg(ui->qdLedgerDate->date().toString("yyyy-MM-dd")));
+    QSqlQuery *poQuery = g_poDB->executeQTQuery( QString( "SELECT COUNT(patientCardUnitId) FROM patientcardunits WHERE validDateTo < \"%1\" ").arg( ui->qdFilterDate->date().toString("yyyy-MM-dd") ) );
 
-    if( poQuery->next() )
-        progressMax += poQuery->value(0).toInt() * 4;
-
-    poQuery = g_poDB->executeQTQuery( QString( "SELECT COUNT(*) FROM ledgerdevice WHERE ledgerTime < \"%1\" AND ledgerDeviceId > 0" )
-                                               .arg( ui->qdLedgerDate->date().toString("yyyy-MM-dd") ) );
     if( poQuery->next() )
         progressMax += poQuery->value(0).toInt();
 
-    // Cassa rekordok lekérdezése
-    poQuery = g_poDB->executeQTQuery( QString( "SELECT COUNT(cassaId) FROM cassa WHERE startDateTime < \"%1\" AND stopDateTime < \"%1\" AND cassaId > 0" )
-                                      .arg(ui->qdLedgerDate->date().toString("yyyy-MM-dd")));
-    if( poQuery->next() )
-        progressMax += poQuery->value(0).toInt() * 3;
-
     //*************************************
-    const double avgMsPerRecord = 24.5;
+    const double avgMsPerRecord = 0.5;
     //*************************************
 
     int estimatedMs = static_cast<int>(progressMax * avgMsPerRecord);
@@ -829,16 +723,114 @@ void MainWindow::_calculateDeleteLedgerEntries()
                         .arg((estSeconds == 1) ? tr("second") : tr("seconds"));
     }
 
-    ui->listProgress->addItem( tr("Deleting ledger and cassa entries before ") + ui->qdLedgerDate->date().toString("yyyy-MM-dd") );
-    ui->listProgress->addItem( tr("Number of affected records: " ) + QString::number( progressMax ) );
-    ui->listProgress->addItem( tr( "Estimated delete time: " ) + estTimeString);
+    ui->listProgress->addItem( tr( "Deleting patientcard units expired before " ) + ui->qdFilterDate->date().toString("yyyy-MM-dd") );
+    ui->listProgress->addItem( tr( "Number of affected records: " ) + QString::number( progressMax ) );
+    ui->listProgress->addItem( tr( "Estimated delete time: " ) + estTimeString );
 }
+//=========================================================================================================================================
+void MainWindow::_processDeleteObsoletePatientcardUnits()
+//-----------------------------------------------------------------------------------------------------------------------------------------
+{
+    ui->listProgress->addItem("");
+    _logProcessInfo(tr("Process started"));
 
+    QSqlQuery *poQuery = g_poDB->executeQTQuery( QString( "SELECT patientCardUnitId FROM patientcardunits WHERE validDateTo < \"%1\"" ).arg( ui->qdFilterDate->date().toString("yyyy-MM-dd") ) );
+
+    QList<int> cardIds;
+
+    _logProcessInfo( tr( "Retrieving affected records" ) );
+    while( poQuery->next() )
+    {
+        cardIds.append( poQuery->value(0).toInt() );
+    }
+
+    _logProcessInfo( tr( "Deleting records" ) );
+    m_dlgProgress->setMaxValue( cardIds.size() );
+    m_dlgProgress->show();
+
+    QTime timer;
+    timer.start();
+
+    const int batchSize = 100;
+    for( int i = 0; i < cardIds.size(); i += batchSize )
+    {
+        QStringList batchIds;
+        int currentBatchSize = qMin( batchSize, cardIds.size() - i );
+
+        for( int j = 0; j < currentBatchSize; ++j )
+        {
+            batchIds << QString::number(cardIds[i + j]);
+        }
+
+        QString query = QString("DELETE FROM patientcardunits WHERE patientCardUnitId IN (%1)").arg(batchIds.join(","));
+
+        g_poDB->executeQTQuery(query);
+
+        for( int j = 0; j < currentBatchSize; ++j )
+        {
+            m_dlgProgress->stepValue();
+            QCoreApplication::processEvents(); // GUI frissítés
+        }
+    }
+
+    int elapsedMs = timer.elapsed();
+    QString timeString = QString("%1:%2.%3")
+        .arg(elapsedMs / 60000, 2, 10, QChar('0'))
+        .arg((elapsedMs / 1000) % 60, 2, 10, QChar('0'))
+        .arg((elapsedMs % 1000) / 100);
+
+    _logProcessInfo( tr( "Process finished (mm:ss.t) %1" ).arg( timeString ) );
+
+    m_dlgProgress->hide();
+    ui->listProgress->addItem("");
+}
+//=========================================================================================================================================
+void MainWindow::_calculateDeleteLedgerEntries()
+//-----------------------------------------------------------------------------------------------------------------------------------------
+{
+    int progressMax = 0;
+
+    // Ledger rekordok összegyűjtése
+    QSqlQuery *poQuery = g_poDB->executeQTQuery( QString( "SELECT COUNT(ledgerId) FROM ledger WHERE ledgerTime < \"%1\" AND ledgerId > 0" )
+                                                          .arg(ui->qdFilterDate->date().toString("yyyy-MM-dd")));
+    if( poQuery->next() )
+        progressMax += poQuery->value(0).toInt() * 4;
+
+    //*************************************
+    const double avgMsPerRecord = 0.5;
+    //*************************************
+
+    int estimatedMs = static_cast<int>(progressMax * avgMsPerRecord);
+    int estMinutes = estimatedMs / (1000 * 60);
+    int estSeconds = (estimatedMs / 1000) % 60;
+
+    // Szöveges idő formázása
+    QString estTimeString;
+    if (estMinutes > 0)
+    {
+        estTimeString = QString("%1 %2 %3 %4")
+                        .arg(estMinutes)
+                        .arg((estMinutes == 1) ? tr("minute") : tr("minutes"))
+                        .arg(estSeconds)
+                        .arg((estSeconds == 1) ? tr("second") : tr("seconds"));
+    }
+    else
+    {
+        estTimeString = QString("%1 %2")
+                        .arg(estSeconds)
+                        .arg((estSeconds == 1) ? tr("second") : tr("seconds"));
+    }
+
+    ui->listProgress->addItem( tr( "Deleting ledger entries before date " ) + ui->qdFilterDate->date().toString("yyyy-MM-dd") );
+    ui->listProgress->addItem( tr( "Number of affected records: " ) + QString::number( progressMax ) );
+    ui->listProgress->addItem( tr( "Estimated delete time: " ) + estTimeString );
+}
 //=========================================================================================================================================
 void MainWindow::_processDeleteLedgerEntries()
 //-----------------------------------------------------------------------------------------------------------------------------------------
 {
-    _logProcessInfo( tr("Deleting ledger and cassa entries") );
+    ui->listProgress->addItem( "" );
+    _logProcessInfo( tr( "Process started" ) );
 
     QTime timer;
 
@@ -847,32 +839,17 @@ void MainWindow::_processDeleteLedgerEntries()
         QList<unsigned int> ledgerIds;
         int progressMax = 0;
 
+        _logProcessInfo( tr("Retrieving affected records" ) );
+
         // Ledger rekordok összegyüjtése
         QSqlQuery *poQuery = g_poDB->executeQTQuery( QString("SELECT ledgerId FROM ledger WHERE ledgerTime < \"%1\" AND ledgerId > 0")
-                                                            .arg(ui->qdLedgerDate->date().toString("yyyy-MM-dd")));
+                                                            .arg(ui->qdFilterDate->date().toString("yyyy-MM-dd")));
         while( poQuery->next() )
             ledgerIds.append(poQuery->value(0).toUInt());
 
         progressMax += ledgerIds.size() * 4;
 
-        // LedgerDevice számolás
-        poQuery = g_poDB->executeQTQuery( QString("SELECT COUNT(*) FROM ledgerdevice WHERE ledgerTime < \"%1\" AND ledgerDeviceId > 0")
-                                                 .arg(ui->qdLedgerDate->date().toString("yyyy-MM-dd")));
-        if (poQuery->next())
-            progressMax += poQuery->value(0).toInt();
-
-        // Cassa ID-k
-        poQuery = g_poDB->executeQTQuery( QString("SELECT cassaId FROM cassa WHERE startDateTime < \"%1\" AND stopDateTime < \"%1\" AND cassaId > 0")
-                                                 .arg(ui->qdLedgerDate->date().toString("yyyy-MM-dd")));
-
-        QStringList qslCassaIds;
-        while (poQuery->next())
-            qslCassaIds << poQuery->value(0).toString();
-
-        progressMax += qslCassaIds.size() * 3;
-
-        _logProcessInfo(tr("Number of affected records: ") + QString::number(progressMax));
-
+        _logProcessInfo( tr("Deleting records" ) );
         m_dlgProgress->setMaxValue(progressMax);
         m_dlgProgress->show();
 
@@ -907,10 +884,96 @@ void MainWindow::_processDeleteLedgerEntries()
                 }
             }
         }
+    }
+    catch (cSevException &e)
+    {
+        g_obLogger(e.severity()) << e.what() << EOM;
+    }
+
+    int elapsedMs = timer.elapsed();
+    int minutes = elapsedMs / (1000 * 60);
+    int seconds = (elapsedMs / 1000) % 60;
+    int tenths  = (elapsedMs % 1000) / 100;
+
+    QString timeString = QString("%1:%2.%3")
+        .arg(minutes, 2, 10, QChar('0'))
+        .arg(seconds, 2, 10, QChar('0'))
+        .arg(tenths);
+
+    _logProcessInfo( tr( "Process finished (mm:ss.t) %1" ).arg( timeString ) );
+
+    m_dlgProgress->hide();
+    ui->listProgress->addItem("");
+}
+//=========================================================================================================================================
+void MainWindow::_calculateDeleteDeviceLedger()
+//-----------------------------------------------------------------------------------------------------------------------------------------
+{
+    int progressMax = 0;
+
+    // Ledgerdevice rekordok lekérdezése
+    QSqlQuery *poQuery = g_poDB->executeQTQuery( QString( "SELECT COUNT(*) FROM ledgerdevice WHERE ledgerTime < \"%1\" AND ledgerDeviceId > 0" )
+                                               .arg( ui->qdFilterDate->date().toString("yyyy-MM-dd") ) );
+    if( poQuery->next() )
+        progressMax += poQuery->value(0).toInt();
+
+    //*************************************
+    const double avgMsPerRecord = 0.5;
+    //*************************************
+
+    int estimatedMs = static_cast<int>(progressMax * avgMsPerRecord);
+    int estMinutes = estimatedMs / (1000 * 60);
+    int estSeconds = (estimatedMs / 1000) % 60;
+
+    // Szöveges idő formázása
+    QString estTimeString;
+    if (estMinutes > 0)
+    {
+        estTimeString = QString("%1 %2 %3 %4")
+                        .arg(estMinutes)
+                        .arg((estMinutes == 1) ? tr("minute") : tr("minutes"))
+                        .arg(estSeconds)
+                        .arg((estSeconds == 1) ? tr("second") : tr("seconds"));
+    }
+    else
+    {
+        estTimeString = QString("%1 %2")
+                        .arg(estSeconds)
+                        .arg((estSeconds == 1) ? tr("second") : tr("seconds"));
+    }
+
+    ui->listProgress->addItem( tr( "Deleting device ledger entries before date " ) + ui->qdFilterDate->date().toString("yyyy-MM-dd") );
+    ui->listProgress->addItem( tr( "Number of affected records: " ) + QString::number( progressMax ) );
+    ui->listProgress->addItem( tr( "Estimated delete time: " ) + estTimeString);
+}
+//=========================================================================================================================================
+void MainWindow::_processDeleteDeviceLedger()
+//-----------------------------------------------------------------------------------------------------------------------------------------
+{
+    ui->listProgress->addItem( "" );
+    _logProcessInfo( tr( "Process started" ) );
+
+    QTime timer;
+
+    try
+    {
+        int progressMax = 0;
+
+        // LedgerDevice számolás
+        QSqlQuery *poQuery = g_poDB->executeQTQuery( QString("SELECT COUNT(*) FROM ledgerdevice WHERE ledgerTime < \"%1\" AND ledgerDeviceId > 0")
+                                                 .arg(ui->qdFilterDate->date().toString("yyyy-MM-dd")));
+        if (poQuery->next())
+            progressMax += poQuery->value(0).toInt();
+
+        _logProcessInfo( tr("Deleting records" ) );
+        m_dlgProgress->setMaxValue(progressMax);
+        m_dlgProgress->show();
+
+        timer.start();
 
         // LedgerDevice törlés batch-ben
         poQuery = g_poDB->executeQTQuery( QString( "SELECT ledgerDeviceId FROM ledgerdevice WHERE ledgerTime < \"%1\" AND ledgerDeviceId > 0" )
-                                                 .arg(ui->qdLedgerDate->date().toString("yyyy-MM-dd")));
+                                                 .arg(ui->qdFilterDate->date().toString("yyyy-MM-dd")));
         QStringList ledgerDeviceIds;
         while (poQuery->next())
             ledgerDeviceIds << poQuery->value(0).toString();
@@ -933,8 +996,101 @@ void MainWindow::_processDeleteLedgerEntries()
                 QCoreApplication::processEvents();
             }
         }
+    }
+    catch (cSevException &e)
+    {
+        g_obLogger(e.severity()) << e.what() << EOM;
+    }
+
+    int elapsedMs = timer.elapsed();
+    int minutes = elapsedMs / (1000 * 60);
+    int seconds = (elapsedMs / 1000) % 60;
+    int tenths  = (elapsedMs % 1000) / 100;
+
+    QString timeString = QString("%1:%2.%3")
+        .arg(minutes, 2, 10, QChar('0'))
+        .arg(seconds, 2, 10, QChar('0'))
+        .arg(tenths);
+
+    _logProcessInfo( tr( "Process finished (mm:ss.t) %1" ).arg( timeString ) );
+
+    m_dlgProgress->hide();
+    ui->listProgress->addItem("");
+}
+//=========================================================================================================================================
+void MainWindow::_calculateDeleteCassa()
+//-----------------------------------------------------------------------------------------------------------------------------------------
+{
+    int progressMax = 0;
+
+    // Cassa rekordok lekérdezése
+    QSqlQuery *poQuery = g_poDB->executeQTQuery( QString( "SELECT COUNT(cassaId) FROM cassa WHERE startDateTime < \"%1\" AND stopDateTime < \"%1\" AND cassaId > 0" )
+                                      .arg(ui->qdFilterDate->date().toString("yyyy-MM-dd")));
+    if( poQuery->next() )
+        progressMax += poQuery->value(0).toInt() * 3;
+
+    //*************************************
+    const double avgMsPerRecord = 0.5;
+    //*************************************
+
+    int estimatedMs = static_cast<int>(progressMax * avgMsPerRecord);
+    int estMinutes = estimatedMs / (1000 * 60);
+    int estSeconds = (estimatedMs / 1000) % 60;
+
+    // Szöveges idő formázása
+    QString estTimeString;
+    if (estMinutes > 0)
+    {
+        estTimeString = QString("%1 %2 %3 %4")
+                        .arg(estMinutes)
+                        .arg((estMinutes == 1) ? tr("minute") : tr("minutes"))
+                        .arg(estSeconds)
+                        .arg((estSeconds == 1) ? tr("second") : tr("seconds"));
+    }
+    else
+    {
+        estTimeString = QString("%1 %2")
+                        .arg(estSeconds)
+                        .arg((estSeconds == 1) ? tr("second") : tr("seconds"));
+    }
+
+    ui->listProgress->addItem( tr( "Deleting cassa entries before date " ) + ui->qdFilterDate->date().toString("yyyy-MM-dd") );
+    ui->listProgress->addItem( tr( "Number of affected records: " ) + QString::number( progressMax ) );
+    ui->listProgress->addItem( tr( "Estimated delete time: " ) + estTimeString);
+}
+//=========================================================================================================================================
+void MainWindow::_processDeleteCassa()
+//-----------------------------------------------------------------------------------------------------------------------------------------
+{
+    ui->listProgress->addItem( "" );
+    _logProcessInfo( tr( "Process started" ) );
+
+    QTime timer;
+
+    try
+    {
+        int progressMax = 0;
+
+        _logProcessInfo( tr("Retrieving affected records" ) );
+
+        // Cassa ID-k
+        QSqlQuery *poQuery = g_poDB->executeQTQuery( QString("SELECT cassaId FROM cassa WHERE startDateTime < \"%1\" AND stopDateTime < \"%1\" AND cassaId > 0")
+                                                 .arg(ui->qdFilterDate->date().toString("yyyy-MM-dd")));
+
+        QStringList qslCassaIds;
+        while (poQuery->next())
+            qslCassaIds << poQuery->value(0).toString();
+
+        progressMax += qslCassaIds.size() * 3;
+
+        _logProcessInfo( tr("Deleting records" ) );
+        m_dlgProgress->setMaxValue(progressMax);
+        m_dlgProgress->show();
+
+        timer.start();
 
         // Cassa törlés batch-ben
+        const int batchSize = 100;
         for (int i = 0; i < qslCassaIds.size(); i += batchSize)
         {
             QStringList batch;
@@ -968,81 +1124,10 @@ void MainWindow::_processDeleteLedgerEntries()
         .arg(seconds, 2, 10, QChar('0'))
         .arg(tenths);
 
-    _logProcessInfo(tr("Delete process finished in %1").arg(timeString));
+    _logProcessInfo( tr( "Process finished (mm:ss.t) %1" ).arg( timeString ) );
 
     m_dlgProgress->hide();
     ui->listProgress->addItem("");
 }
 
-
-//=========================================================================================================================================
-void MainWindow::_calculateDeleteObsoletePatientcardUnits()
-//-----------------------------------------------------------------------------------------------------------------------------------------
-{
-    int nCount = 0;
-
-    QString qsSelect = QString( "SELECT COUNT(patientCardUnitId) FROM patientcardunits WHERE validDateTo < \"%1\" ").arg( ui->qdObsoleteDate->date().toString("yyyy-MM-dd") );
-    QSqlQuery oSelect(qsSelect);
-
-    if( oSelect.next() )
-        nCount = oSelect.value(0).toInt();
-
-    ui->listProgress->addItem( tr("Deleting patientcard units expired before ") + ui->qdObsoleteDate->date().toString("yyyy-MM-dd") );
-    ui->listProgress->addItem( tr("Number of affected records: " ) + QString::number( nCount ) );
-    ui->listProgress->addItem( "" );
-}
-//=========================================================================================================================================
-void MainWindow::_processDeleteObsoletePatientcardUnits()
-//-----------------------------------------------------------------------------------------------------------------------------------------
-{
-    _logProcessInfo( tr("Deleting patientcard units expired before ") + ui->qdObsoleteDate->date().toString("yyyy-MM-dd") );
-
-    QString qsSelect = QString( "SELECT patientCardUnitId FROM patientcardunits WHERE validDateTo < \"%1\" ").arg( ui->qdObsoleteDate->date().toString("yyyy-MM-dd") );
-    QSqlQuery oSelect(qsSelect);
-
-    QList<int> cardIds;
-
-    _logProcessInfo( tr("Retrieving affected records" ) );
-    while( oSelect.next() )
-    {
-        cardIds.append(oSelect.value(0).toInt());
-    }
-
-    _logProcessInfo( tr("Number of affected records: " ) + QString::number( cardIds.size() ) );
-    m_dlgProgress->setMaxValue( cardIds.size() );
-
-    int nUpdated = 0;
-
-    _logProcessInfo( tr("Deleting records ..." ) );
-    m_dlgProgress->show();
-
-    // ⏱ Időmérés indítása
-    QTime timer;
-    timer.start();
-
-    for (int i = 0; i < cardIds.size(); ++i )
-    {
-        int nCardId = cardIds[i];
-
-        QString qsDelete = QString( "DELETE FROM patientcardunits WHERE patientCardUnitId=%1").arg(nCardId);
-
-        QSqlQuery oDelete( qsDelete );
-        ++nUpdated;
-
-        m_dlgProgress->stepValue();
-        QCoreApplication::processEvents(); // hogy a GUI frissüljön
-    }
-
-    int elapsedMs = timer.elapsed();
-    int minutes = elapsedMs / (1000 * 60);
-    int seconds = (elapsedMs / 1000) % 60;
-    int tenths  = (elapsedMs % 1000) / 100;  // tizedmásodperc (0–9)
-
-    QString timeString = QString("%1:%2.%3").arg(minutes, 2, 10, QChar('0')).arg(seconds, 2, 10, QChar('0')).arg(tenths);
-
-    _logProcessInfo( tr( "Delete process finished in %1" ).arg( timeString ) );
-
-    m_dlgProgress->hide();
-    ui->listProgress->addItem( "" );
-}
 

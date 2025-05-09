@@ -1338,7 +1338,8 @@ void cWndMain::updateToolbar()
             action_DeviceCool->setEnabled( bIsUserLoggedIn && (!mdiPanels->isPanelWorking(mdiPanels->activePanel()) || mdiPanels->isDeviceStopped() ) && mdiPanels->isDeviceHasCoolingProcess() );
 //            action_DeviceReset->setEnabled( bIsUserLoggedIn && mdiPanels->isMainProcess() );
             action_DeviceReset->setEnabled( bIsUserLoggedIn && mdiPanels->isStatusCanBeStopped(mdiPanels->activePanel()) );
-            action_ManageDatabase->setEnabled( bIsUserLoggedIn && g_obUser.isInGroup(cAccessGroup::ADMIN) && !mdiPanels->isPanelWorking() );
+//            action_ManageDatabase->setEnabled( bIsUserLoggedIn && g_obUser.isInGroup(cAccessGroup::ADMIN) && !mdiPanels->isPanelWorking() );
+            action_ManageDatabase->setEnabled( false );
             action_ManageDevicePanels->setEnabled( bIsUserLoggedIn && g_obUser.isInGroup(cAccessGroup::SYSTEM) );
         menuPatientCard->setEnabled( bIsUserLoggedIn );
             action_PatientcardInformation->setEnabled( bIsUserLoggedIn );
@@ -1378,7 +1379,8 @@ action_Logs->setVisible( false );
 
     action_PatientSelect->setVisible( !(g_obGuest.id()>0) );
     action_PatientEmpty->setVisible( g_obGuest.id()>0 );
-    action_ManageDatabase->setVisible( bIsUserLoggedIn && g_obUser.isInGroup(cAccessGroup::ADMIN) );
+//    action_ManageDatabase->setVisible( bIsUserLoggedIn && g_obUser.isInGroup(cAccessGroup::ADMIN) );
+    action_ManageDatabase->setVisible( false );
     action_ManageDevicePanels->setVisible( bIsUserLoggedIn && g_obUser.isInGroup(cAccessGroup::SYSTEM) );
 
     m_pbStatusKeyboard.setEnabled( bIsUserLoggedIn );
@@ -3691,12 +3693,12 @@ int cWndMain::customMsgBox(QWidget */*parent*/, msgBoxType msgtype, QString butt
 
 void cWndMain::on_action_ManageDatabase_triggered()
 {    
-    m_bMainWindowActive = false;
+/*    m_bMainWindowActive = false;
 
     cDlgManageDatabase  obDlgManageDatabase(this);
 
     obDlgManageDatabase.exec();
-
+*/
     slotMainWindowActivated();
 }
 

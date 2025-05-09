@@ -74,10 +74,14 @@ private:
     void            _processDeactivatePatientcards();
     void            _calculateDeleteDeactivatedPatientcards();
     void            _processDeleteDeactivatedPatientcards();
-    void            _calculateDeleteLedgerEntries();
-    void            _processDeleteLedgerEntries();
     void            _calculateDeleteObsoletePatientcardUnits();
     void            _processDeleteObsoletePatientcardUnits();
+    void            _calculateDeleteLedgerEntries();
+    void            _processDeleteLedgerEntries();
+    void            _calculateDeleteDeviceLedger();
+    void            _processDeleteDeviceLedger();
+    void            _calculateDeleteCassa();
+    void            _processDeleteCassa();
 
     Ui::MainWindow  *ui;
 
@@ -101,10 +105,8 @@ private slots:
     void on_pbStartExit_clicked();
     void on_cmbLanguage_currentIndexChanged(int index);
     void on_pbLogin_clicked();
-    void on_rbDeactivatePatientCards_clicked();
-    void on_rbDeleteLedgerEntries_clicked();
     void on_pbExecuteProcess_clicked();
-    void on_rbDeleteObsoletePCUnits_clicked();
+    void on_rbDefault_toggled(bool checked);
 };
 
 #endif // MAINWINDOW_H
