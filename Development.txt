@@ -218,3 +218,11 @@ Version 2.2.2.0
 Version 2.2.2.1
 ===============
 - HIBAJAVITAS: billentyuzet hasznalat javitas
+
+Version 2.3.0.0
+===============
+- FEJLESZTES: adatbazis kezelo kikerult a DBTool alkalmazasba, optimalizalva lett
+- KIEGESZITES: napi es fokonyvbe a gepcsoportos bevetel kimutatas resz azt is kezeli, ha gep nincs csoportositva
+- HIBAJAVITAS: alkalmi vendeg adatrogzites varakozo listanal is mukodik most mar
+- HIBAJAVITAS: aktualis vendeg es masik berlet hasznalat megteveszto uzenet javitva
+
