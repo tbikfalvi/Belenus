@@ -123,12 +123,24 @@ cDlgPanelSetting::cDlgPanelSetting( QWidget *p_poParent, unsigned int p_uiPanelI
         poQueryType = g_poDB->executeQTQuery( QString( "SELECT panelGroupId, name FROM panelGroups WHERE active=1" ) );
         while( poQueryType->next() )
         {
-            cmbPanelGroup->addItem( poQueryType->value( 1 ).toString(), poQueryType->value( 0 ) );
+            QString qsName = poQueryType->value( 1 ).toString();
+
+            if( poQueryType->value( 0 ).toUInt() == 0 )
+            {
+                qsName = tr( "Not assigned to panelgroup" );
+            }
+
+            cmbPanelGroup->addItem( qsName, poQueryType->value( 0 ) );
             if( poQueryType->value( 0 ).toUInt() == obDBPanel.panelGroupId() )
                 cmbPanelGroup->setCurrentIndex( cmbPanelGroup->count()-1 );
         }
         if( poQueryType ) delete poQueryType;
     }
+
+    connect( ledTitle, SIGNAL(textEdited(QString)), this, SLOT(slotRefreshWarningColors()) );
+    connect( cmbPanelGroup, SIGNAL(currentIndexChanged(int)), this, SLOT(slotRefreshWarningColors()) );
+
+    slotRefreshWarningColors();
 
     QPoint  qpDlgSize = g_poPrefs->getDialogSize( "PanelSetting", QPoint(550,330) );
     resize( qpDlgSize.x(), qpDlgSize.y() );
@@ -222,6 +234,23 @@ void cDlgPanelSetting::on_pbTime_clicked()
     cDlgPanelTimes    cDlgPanelTimes( this );
 
     cDlgPanelTimes.exec();
+}
+
+//===========================================================================================================
+//  slotRefreshWarningColors
+//-----------------------------------------------------------------------------------------------------------
+//  A dialog-ban talalhato label-ek adat-fuggo atszinezeseert felelos procedura
+//-----------------------------------------------------------------------------------------------------------
+void cDlgPanelSetting::slotRefreshWarningColors()
+{
+    lblTitle->setStyleSheet( "QLabel {font: normal;}" );
+    lblGroup->setStyleSheet( "QLabel {font: normal;}" );
+
+    if( ledTitle->text().length() == 0 )
+        lblTitle->setStyleSheet( "QLabel {font: bold; color: red;}" );
+
+    if( cmbPanelGroup->currentIndex() == 0 )
+        lblGroup->setStyleSheet( "QLabel {font: bold; color: blue;}" );
 }
 
 void cDlgPanelSetting::on_pbChangeDir_clicked()

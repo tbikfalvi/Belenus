@@ -1584,6 +1584,7 @@ void cFrmPanel::setUsageFromWaitingQueue()
                 setPaymentMethod( obDBWaitlist.PayType() );
                 cashPayed( obDBWaitlist.LedgerId() );
             }
+            m_uiCurrentPatient = obDBWaitlist.guestId();
             obDBWaitlist.remove();
 
             emit signalSelectedFromWaitingQueue();

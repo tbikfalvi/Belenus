@@ -383,7 +383,7 @@ unsigned int cReportDaily::_reportPartPanelUse()
     }
     addTableCell( tr("Amount"), "center bold" );
 
-    poQueryResult = g_poDB->executeQTQuery( "SELECT panelGroupId, name FROM panelgroups WHERE panelGroupId>0" );
+    poQueryResult = g_poDB->executeQTQuery( "SELECT panelGroupId, name FROM panelgroups" );
 
     while( poQueryResult->next() )
     {
@@ -394,7 +394,14 @@ unsigned int cReportDaily::_reportPartPanelUse()
         QString         queryName           = poQueryResult->value(1).toString();
 
         addTableRow();
-        addTableCell( queryName );
+        if( queryPanelGroupId == 0 )
+        {
+            addTableCell( tr("Not assigned to panelgroup") );
+        }
+        else
+        {
+            addTableCell( queryName );
+        }
 
         for( int i=0; i<m_qslCassaIds.count(); i++ )
         {

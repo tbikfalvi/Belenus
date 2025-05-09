@@ -1,15 +1,29 @@
+//====================================================================================
+//
+// Belenus Install alkalmazas (c) Bikfalvi Tamas
+//
+//====================================================================================
+
+#define APPLICATION_VERSION_NUMBER  "2.3.0.0"
+
+//====================================================================================
 
 #include <QApplication>
 #include <QTranslator>
 #include <QDir>
 
+//====================================================================================
+
 #include "mainwindow.h"
+
+//====================================================================================
 
 QTranslator     *poTransStartup;
 QTranslator     *poTransQT;
 QApplication    *apMainApp;
 QString         g_qsCurrentPath;
 
+//====================================================================================
 int main(int argc, char *argv[])
 {
     apMainApp = new QApplication(argc, argv);

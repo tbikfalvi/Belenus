@@ -27,6 +27,7 @@ cDBWaitlist::~cDBWaitlist()
 
 void cDBWaitlist::init(const unsigned int p_uiId,
                        const unsigned int p_uiLicenceId,
+                       const unsigned int p_uiGuestId,
                        const unsigned int p_uiPatientCardId,
                        const unsigned int p_uiLedgerId,
                        const unsigned int p_uiShoppingCartItemId,
@@ -43,6 +44,7 @@ void cDBWaitlist::init(const unsigned int p_uiId,
 {
     m_uiId                  = p_uiId;
     m_uiLicenceId           = p_uiLicenceId;
+    m_uiGuestId             = p_uiGuestId;
     m_uiPatientCardId       = p_uiPatientCardId;
     m_uiLedgerId            = p_uiLedgerId;
     m_uiShoppingCartItemId  = p_uiShoppingCartItemId;
@@ -62,6 +64,7 @@ void cDBWaitlist::init( const QSqlRecord &p_obRecord ) throw()
 {
     int inIdIdx                 = p_obRecord.indexOf( "waitlistId" );
     int inLicenceIdIdx          = p_obRecord.indexOf( "licenceId" );
+    int inGuestIdIdx            = p_obRecord.indexOf( "guestId" );
     int inPatientCardIdIdx      = p_obRecord.indexOf( "patientCardId" );
     int inLedgerIdIdx           = p_obRecord.indexOf( "ledgerId" );
     int inShoppingCartItemIdIdx = p_obRecord.indexOf( "shoppingCartItemId" );
@@ -78,6 +81,7 @@ void cDBWaitlist::init( const QSqlRecord &p_obRecord ) throw()
 
     init( p_obRecord.value( inIdIdx ).toUInt(),
           p_obRecord.value( inLicenceIdIdx ).toUInt(),
+          p_obRecord.value( inGuestIdIdx ).toUInt(),
           p_obRecord.value( inPatientCardIdIdx ).toUInt(),
           p_obRecord.value( inLedgerIdIdx ).toUInt(),
           p_obRecord.value( inShoppingCartItemIdIdx ).toUInt(),
@@ -122,6 +126,7 @@ void cDBWaitlist::save() throw( cSevException )
     }
     qsQuery += " waitlist SET ";
     qsQuery += QString( "licenceId = \"%1\", " ).arg( m_uiLicenceId );
+    qsQuery += QString( "guestId = \"%1\", " ).arg( m_uiGuestId );
     qsQuery += QString( "patientCardId = \"%1\", " ).arg( m_uiPatientCardId );
     qsQuery += QString( "ledgerId = \"%1\", " ).arg( m_uiLedgerId );
     qsQuery += QString( "shoppingCartItemId = \"%1\", " ).arg( m_uiShoppingCartItemId );
@@ -180,6 +185,16 @@ unsigned int cDBWaitlist::licenceId() const throw()
 void cDBWaitlist::setLicenceId( const unsigned int p_uiLicenceId ) throw()
 {
     m_uiLicenceId = p_uiLicenceId;
+}
+
+unsigned int cDBWaitlist::guestId() const throw()
+{
+    return m_uiGuestId;
+}
+
+void cDBWaitlist::setGuestId( const unsigned int p_uiGuestId ) throw()
+{
+    m_uiGuestId = p_uiGuestId;
 }
 
 unsigned int cDBWaitlist::PatientCardId() const throw()

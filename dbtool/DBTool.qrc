@@ -13,5 +13,6 @@
         <file>imgButton/checkdb.png</file>
         <file>imgButton/ok.png</file>
         <file>imgButton/fail.png</file>
+        <file>imgButton/key.png</file>
     </qresource>
 </RCC>

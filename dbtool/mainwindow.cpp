@@ -10,22 +10,32 @@
 #include <QDate>
 #include <QTranslator>
 
+#include "../framework/qtmysqlquerymodel.h"
 #include "mainwindow.h"
 #include "ui_mainwindow.h"
 
+//=========================================================================================================================================
 MainWindow::MainWindow(QWidget *parent, QString p_qsVersion) : QMainWindow(parent), ui(new Ui::MainWindow)
+//-----------------------------------------------------------------------------------------------------------------------------------------
 {
     ui->setupUi(this);
 
     m_nCurrentPage              = CONST_PAGE_START;
     m_qdExpCurrentDir           = "C:/KiwiSun/Belenus/";
-    m_nProgramType              = DBTool::KiwiSun;
-    m_poDB                      = NULL;
-    m_qsLogFileName             = "";
+
     m_dlgProgress               = new cDlgProgress( this );
     m_qsLanguage                = "hu";
 
+    m_qsRPSW                    = "7c01fcbe9cab6ae14c98c76cf943a7b2be6a7922";
+
+    //------------------------------------------------------------------------------------------------
+    // ezekre egyelore nincs szukseg
     ui->ledPathDB->setText( m_qdExpCurrentDir.path() );
+    ui->ledPathDB->setEnabled( false );
+    ui->ledPathDB->setVisible( false );
+    ui->pbExpSelectDir->setVisible( false );
+    //------------------------------------------------------------------------------------------------
+
     ui->pageController->setCurrentIndex( m_nCurrentPage );
 
     // Initialize GUI components
@@ -34,18 +44,82 @@ MainWindow::MainWindow(QWidget *parent, QString p_qsVersion) : QMainWindow(paren
 
     ui->imgLogo->setPixmap( QPixmap(":/imgLogo/KiwiSun.png") );
 
-    setWindowTitle( tr( "Belenus database manager - v.%1" ).arg( p_qsVersion ) );
+    ui->imgConnectDbFail->setVisible( true );
+    ui->imgConnectDbOk->setVisible( false );
+    ui->imgCheckPswFail->setVisible( true );
+    ui->imgCheckPswOk->setVisible( false );
+
+    ui->rbDefault->setVisible( false );
+    ui->qdFilterDate->setDate( QDate::currentDate() );
+
+    setWindowTitle( tr( "Belenus database manager - v." ) + p_qsVersion );
+
+    connect( ui->cmbName, SIGNAL(returnPressed()), this, SLOT(on_pbLogin_clicked()) );
+    connect( ui->ledPassword, SIGNAL(returnPressed()), this, SLOT(on_pbLogin_clicked()) );
+
+    _connectDatabase();
+
+    cQTMySQLQueryModel *m_poModel = new cQTMySQLQueryModel( this );
+    m_poModel->setQuery( "SELECT CONCAT(name,\" (\",realName,\")\") AS n FROM users WHERE active = 1 ORDER BY name" );
+    ui->cmbName->setModel( m_poModel );
 
     _initializePage();
 }
-
+//=========================================================================================================================================
 MainWindow::~MainWindow()
+//-----------------------------------------------------------------------------------------------------------------------------------------
 {
     delete m_dlgProgress;
     delete ui;
-}
 
+    g_obLogger(cSeverity::INFO) << "Belenus Database Manager stopped." << EOM;
+}
+//=========================================================================================================================================
+void MainWindow::on_pbNext_clicked()
+//-----------------------------------------------------------------------------------------------------------------------------------------
+{
+    if( m_nCurrentPage < CONST_PAGE_EXECUTE_PROCESS )
+        m_nCurrentPage++;
+
+    ui->pbPrev->setEnabled( m_nCurrentPage > CONST_PAGE_START );
+    ui->pbNext->setEnabled( m_nCurrentPage < CONST_PAGE_EXECUTE_PROCESS );
+
+    ui->pageController->setCurrentIndex( m_nCurrentPage );
+
+    _initializePage();
+}
+//=========================================================================================================================================
+void MainWindow::on_pbPrev_clicked()
+//-----------------------------------------------------------------------------------------------------------------------------------------
+{
+    if( m_nCurrentPage == CONST_PAGE_SELECT_PROCESS )
+    {
+        if( QMessageBox::question( this, tr("Question"), tr("Do you want to authenticate with another user account?"),
+                                   QMessageBox::Yes | QMessageBox::No, QMessageBox::No ) == QMessageBox::No )
+        {
+            return;
+        }
+    }
+
+    if( m_nCurrentPage > CONST_PAGE_START )
+        m_nCurrentPage--;
+
+    ui->pbPrev->setEnabled( m_nCurrentPage > CONST_PAGE_START );
+    ui->pbNext->setEnabled( m_nCurrentPage < CONST_PAGE_EXECUTE_PROCESS );
+
+    ui->pageController->setCurrentIndex( m_nCurrentPage );
+
+    _initializePage();
+}
+//=========================================================================================================================================
+void MainWindow::on_pbStartExit_clicked()
+//-----------------------------------------------------------------------------------------------------------------------------------------
+{
+    close();
+}
+//=========================================================================================================================================
 void MainWindow::closeEvent( QCloseEvent *p_poEvent )
+//-----------------------------------------------------------------------------------------------------------------------------------------
 {
     if( QMessageBox::question( this, tr("Question"),
                                tr("Are you sure you want to close the application?"),
@@ -58,98 +132,90 @@ void MainWindow::closeEvent( QCloseEvent *p_poEvent )
         p_poEvent->ignore();
     }
 }
-
-
-void MainWindow::on_pbNext_clicked()
+//=========================================================================================================================================
+void MainWindow::on_pbLogin_clicked()
+//-----------------------------------------------------------------------------------------------------------------------------------------
 {
-    if( m_nCurrentPage < CONST_PAGE_EXPORT )
-        m_nCurrentPage++;
+    string  stName = ui->cmbName->currentText().toStdString();
+    stName = stName.substr( 0, stName.find( '(' ) - 1 );
+    authType    atRet = AUTH_ERROR;
+    QByteArray  obPwdHash = QCryptographicHash::hash( ui->ledPassword->text().toAscii(), QCryptographicHash::Sha1 );
 
-    ui->pbPrev->setEnabled( m_nCurrentPage > CONST_PAGE_START );
-    ui->pbNext->setEnabled( m_nCurrentPage < CONST_PAGE_EXPORT );
+    m_enGroup = GROUP_MIN;
 
-    ui->pageController->setCurrentIndex( m_nCurrentPage );
-
-    _initializePage();
-}
-
-void MainWindow::on_pbPrev_clicked()
-{
-    if( m_nCurrentPage > CONST_PAGE_START )
-        m_nCurrentPage--;
-
-    ui->pbPrev->setEnabled( m_nCurrentPage > CONST_PAGE_START );
-    ui->pbNext->setEnabled( m_nCurrentPage < CONST_PAGE_EXPORT );
-
-    ui->pageController->setCurrentIndex( m_nCurrentPage );
-
-    // Enable Cancel button
-    ui->pbCancel->setEnabled( true );
-    // Disable Start/Exit button
-    ui->pbStartExit->setEnabled( false );
-}
-
-void MainWindow::_initializePage()
-{
-    switch( m_nCurrentPage )
+    if( QString::fromStdString(stName).compare( "root" ) == 0 )
     {
-        case CONST_PAGE_START:
+        if( m_qsRPSW.compare( QString( obPwdHash.toHex() ) ) == 0 )
         {
-            break;
+            atRet = AUTH_OK;
+            m_enGroup = GROUP_ROOT;
         }
-        case CONST_PAGE_VERIFICATION:
+        else
         {
-            ui->ledSystemPassword->setText( "" );
-            ui->ledPathDB->setText( m_qdExpCurrentDir.absolutePath() );
-            ui->pbExpSelectDir->setEnabled( false );
-            ui->pbCheckSVDatFiles->setEnabled( false );
-            ui->pbPExportConnect->setEnabled( false );
-            ui->ledSystemPassword->setFocus();
-            ui->imgCheckPswFail->setVisible( false );
-            ui->imgCheckPswOk->setVisible( false );
-            ui->lblCheckPswInfo->setVisible( false );
-            ui->imgCheckDbFail->setVisible( false );
-            ui->imgCheckDbOk->setVisible( false );
-            ui->lblCheckDbInfo->setVisible( false );
-            ui->imgConnectDbFail->setVisible( false );
-            ui->imgConnectDbOk->setVisible( false );
-            ui->lblConnectDbInfo->setVisible( false );
-            ui->pbNext->setEnabled( false );
-            break;
-        }
-        case CONST_PAGE_IMPORT:
-        {
-            ui->listResultImport->clear();
-            ui->pbNext->setEnabled( false );
-            break;
-        }
-        case CONST_PAGE_PREPROC_PCT:
-        {
-            ui->ledPCTUnitTimeGeneral->setText( "" );
-            ui->listPatientCardTypes->clear();
-            _fillListPatientCardTypes();
-            ui->ledPCTName->setText( "" );
-            ui->ledPCTUnitTime->setText( "" );
-            ui->pbNext->setEnabled( false );
-            break;
-        }
-        case CONST_PAGE_PREPROC_PC:
-        {
-            ui->ledBarcodeLength->setFocus();
-            ui->ledBarcodeLength->selectAll();
-            ui->pbNext->setEnabled( false );
-            break;
-        }
-        case CONST_PAGE_EXPORT:
-        {
-            _checkExportSelection();
-            ui->pbNext->setEnabled( false );
-            break;
+            atRet = AUTH_PASSWORD_INCORRECT;
         }
     }
-}
+    else
+    {
+        try
+        {
+            QSqlQuery *poQuery = g_poDB->executeQTQuery( "SELECT * FROM users WHERE name = \"" + QString::fromStdString(stName) + "\"" );
 
+            if( poQuery->size() != 1 )
+            {
+                atRet = AUTH_USER_NOTFOUND;
+            }
+            else
+            {
+                poQuery->first();
+                if( poQuery->value(4).toString().compare( QString( obPwdHash.toHex() ) ) == 0 )
+                {
+                    atRet = AUTH_OK;
+                    m_enGroup = poQuery->value(5).toInt();
+                    m_uiUserId = poQuery->value(0).toUInt();
+                }
+                else
+                {
+                    atRet = AUTH_PASSWORD_INCORRECT;
+                }
+            }
+        }
+        catch( cSevException &e )
+        {
+            atRet = AUTH_CONNECTION_FAILED;
+        }
+    }
+
+    switch( atRet )
+    {
+        case AUTH_OK:
+            ui->pbNext->setEnabled( true );
+            ui->imgCheckPswFail->setVisible( false );
+            ui->imgCheckPswOk->setVisible( true );
+            ui->cmbName->setEnabled( false );
+            ui->ledPassword->setEnabled( false );
+            ui->pbLogin->setEnabled( false );
+            ui->pbNext->setFocus();
+            break;
+
+        case AUTH_PASSWORD_INCORRECT:
+            ui->pbNext->setEnabled( false );
+            QMessageBox::warning( this, tr("Warning"), tr("Password is incorrect") );
+            break;
+
+        case AUTH_CONNECTION_FAILED:
+            ui->pbNext->setEnabled( false );
+            QMessageBox::critical( this, tr("Error"), tr("Unable to retrieve user information from database!") );
+            break;
+
+        default:
+            ui->pbNext->setEnabled( false );
+            break;
+    }
+}
+//=========================================================================================================================================
 void MainWindow::on_pbExpSelectDir_clicked()
+//-----------------------------------------------------------------------------------------------------------------------------------------
 {
     QString qsDirectory = QFileDialog::getExistingDirectory(this, tr("Select Directory"), m_qdExpCurrentDir.absolutePath() );
 
@@ -159,449 +225,113 @@ void MainWindow::on_pbExpSelectDir_clicked()
         ui->ledPathDB->setText( qsDirectory );
     }
 }
-
-
-
-int MainWindow::_getPatientCardTypeId()
+//=========================================================================================================================================
+void MainWindow::on_rbDefault_toggled(bool checked)
+//-----------------------------------------------------------------------------------------------------------------------------------------
 {
-    int nRet = 0;
-
-    for( int i=0; i<m_qvPatientCardTypes.size(); i++ )
-    {
-        if( m_qvPatientCardTypes.at(i).nID > nRet )
-            nRet = m_qvPatientCardTypes.at(i).nID;
-    }
-
-    return ++nRet;
+    ui->pbNext->setEnabled( !checked );
 }
-
-
-
-
-int MainWindow::_getTimeLeft(int p_nBerletTipus, int p_nEgyseg )
+//=========================================================================================================================================
+void MainWindow::_initializePage()
+//-----------------------------------------------------------------------------------------------------------------------------------------
 {
-    int nRet = 0;
-
-    int nBerletTypeCount = m_qvPatientCardTypes.size();
-
-    for( int i=0; i<nBerletTypeCount; i++ )
+    switch( m_nCurrentPage )
     {
-        if( m_qvPatientCardTypes.at(i).nID == p_nBerletTipus )
+        case CONST_PAGE_START:
         {
-            if( m_qvPatientCardTypes.at(i).nEgysegIdo > 0 )
-            {
-                nRet = m_qvPatientCardTypes.at(i).nEgysegIdo * p_nEgyseg * 60;
-            }
-            else
-            {
-                nRet = ui->ledPCTUnitTimeGeneral->text().toInt() * p_nEgyseg * 60;
-            }
+            ui->cmbName->setEnabled( true );
+            ui->ledPassword->setEnabled( true );
+            ui->pbLogin->setEnabled( true );
+            ui->imgCheckPswFail->setVisible( true );
+            ui->imgCheckPswOk->setVisible( false );
+            ui->pbPrev->setEnabled( false );
+            ui->pbPrev->setVisible( false );
+            ui->pbNext->setEnabled( false );
+            ui->pbNext->setVisible( true );
+            ui->ledPassword->setText( "" );
+            ui->cmbName->setFocus();
+            break;
+        }
+        case CONST_PAGE_SELECT_PROCESS:
+        {
+            ui->pbPrev->setEnabled( true );
+            ui->pbPrev->setVisible( true );
+            ui->pbNext->setEnabled( false );
+            ui->pbNext->setVisible( true );
+
+            ui->rbDefault->setChecked( true );
+            break;
+        }
+        case CONST_PAGE_EXECUTE_PROCESS:
+        {
+            ui->pbPrev->setEnabled( true );
+            ui->pbPrev->setVisible( true );
+            ui->pbNext->setEnabled( false );
+            ui->pbNext->setVisible( false );
+            ui->lblNotificationBeforeProcess->setVisible( true );
+            ui->pbExecuteProcess->setEnabled( true );
+            ui->listProgress->clear();
+            _calculateRelatedRecords();
             break;
         }
     }
-
-    return nRet;
 }
-
-void MainWindow::_exportToBelenusPatientCardTypes()
+//=========================================================================================================================================
+void MainWindow::_connectDatabase()
+//-----------------------------------------------------------------------------------------------------------------------------------------
 {
-    int nBerletTypeCount = m_qvPatientCardTypes.size();
+    g_poDB = new cQTMySQLConnection;
+    g_poDB->setHostName( "localhost" );
+    g_poDB->setDatabaseName( "belenus" );
+    g_poDB->setUserName( "belenus" );
+    g_poDB->setPassword( "belenus" );
+    g_poDB->open();
 
-    _logAction( "Export to database Patientcard types:" );
-    ui->listExport->addItem( tr("Exporting Patientcard types") );
-    update();
-
-    for( int i=0; i<nBerletTypeCount; i++ )
+    if( g_poDB->isOpen() )
     {
-        if( m_qvPatientCardTypes.at(i).nEgysegIdo < 1 )
-        {
-            m_qvPatientCardTypes[i].nEgysegIdo = ui->ledPCTUnitTimeGeneral->text().toInt();
-        }
+        ui->imgConnectDbFail->setVisible( false );
+        ui->imgConnectDbOk->setVisible( true );
 
-        QString qsSQLCommand = QString( "INSERT INTO `patientCardTypes` (`patientCardTypeId`, `licenceId`, `name`, `price`, `vatpercent`, `units`, `validDateFrom`, `validDateTo`, `validDays`, `unitTime`, `active`, `archive`) VALUES ( " );
+        QSqlQuery *poQuery = g_poDB->executeQTQuery( "SELECT * FROM licences" );
 
-        qsSQLCommand += QString( "%1, " ).arg( m_qvPatientCardTypes.at(i).nID+1 );
-        qsSQLCommand += QString( "%1, " ).arg( m_nLicenceId );
-        qsSQLCommand += QString( "'%1', " ).arg( m_qvPatientCardTypes.at(i).strNev );
-//        qsSQLCommand += QString( "%1, " ).arg( m_qvPatientCardTypes.at(i).nAr * 100 );
-        qsSQLCommand += QString( "%1, " ).arg( m_qvPatientCardTypes.at(i).nAr );
-        qsSQLCommand += QString( "0, " );
-        qsSQLCommand += QString( "%1, " ).arg( m_qvPatientCardTypes.at(i).nEgyseg );
-        qsSQLCommand += QString( "'%1-%2-%3', " ).arg( m_qvPatientCardTypes.at(i).nErvTolEv ).arg( m_qvPatientCardTypes.at(i).nErvTolHo ).arg( m_qvPatientCardTypes.at(i).nErvTolNap );
-        qsSQLCommand += QString( "'%1-%2-%3', " ).arg( m_qvPatientCardTypes.at(i).nErvIgEv ).arg( m_qvPatientCardTypes.at(i).nErvIgHo ).arg( m_qvPatientCardTypes.at(i).nErvIgNap );
-        qsSQLCommand += QString( "%1, " ).arg( m_qvPatientCardTypes.at(i).nErvNapok );
-        qsSQLCommand += QString( "%1, " ).arg( m_qvPatientCardTypes.at(i).nEgysegIdo );
-        qsSQLCommand += QString( "1, 'ARC');" );
+        poQuery->last();
+        m_nLicenceId = poQuery->value(0).toInt();
 
-        _logAction( qsSQLCommand );
-
-        QSqlQuery query = m_poDB->exec( qsSQLCommand );
-        m_qvPatientCardTypes[i].nNewID = query.lastInsertId().toInt();
-
-        qsSQLCommand = QString( "INSERT INTO `patientcardtypeenabled` (`licenceId`, `patientCardTypeId`, `validWeekDays`, `start`, `stop`, `modified`, `archive`) VALUES ( " );
-        qsSQLCommand += QString( "%1, " ).arg( m_nLicenceId );
-        qsSQLCommand += QString( "%1, " ).arg( m_qvPatientCardTypes.at(i).nID+1 );
-        qsSQLCommand += QString( "'127', " );
-        qsSQLCommand += QString( "'00:00:00', " );
-        qsSQLCommand += QString( "'23:59:00', " );
-        qsSQLCommand += QString( "0, 'ARC');" );
-
-        m_poDB->exec( qsSQLCommand );
-        m_dlgProgress->stepValue();
+        ui->imgDatabase->setToolTip( tr("License code: %1 [%2]").arg(poQuery->value(1).toString()).arg(m_nLicenceId) );
+    }
+    else
+    {
+        ui->imgConnectDbFail->setVisible( true );
+        ui->imgConnectDbOk->setVisible( false );
+        ui->imgDatabase->setToolTip( "" );
     }
 
-    ui->listExport->addItem( tr("Exporting Patientcard types FINISHED") );
-    update();
-
-    _logAction( "Export finished\n" );
+    ui->pbNext->setEnabled( _isSystemVerificationOk() );
 }
-
-void MainWindow::_exportToBelenusPatientCards()
+//=========================================================================================================================================
+bool MainWindow::_isSystemVerificationOk()
+//-----------------------------------------------------------------------------------------------------------------------------------------
 {
-    _logAction( "Export to database Patientcards:" );
-
-    ui->listExport->addItem( tr("Exporting Patientcards") );
-    update();
-
-    int nBerletCount = m_qvPatientCards.size();
-
-    for( int i=0; i<nBerletCount; i++ )
-    {
-        QDate obDateValid( m_qvPatientCards.at(i).nErvEv, m_qvPatientCards.at(i).nErvHo, m_qvPatientCards.at(i).nErvNap );
-
-        if( m_qvPatientCards.at(i).nEgyseg < 1 || obDateValid <= QDate::currentDate() )
-        {
-            m_dlgProgress->stepValue();
-
-            for( int j=0; j<m_qvPatientCards.at(i).nEgyseg; j++ )
-                m_dlgProgress->stepValue();
-
-            continue;
-        }
-
-        QString qsBarcode = m_qvPatientCards.at(i).strVonalkod;
-
-        while ( qsBarcode.length() < ui->ledBarcodeLength->text().toInt() )
-        {
-            qsBarcode = QString( "0%1" ).arg(qsBarcode);
-        }
-
-        QString qsSQLCommand = QString( "INSERT INTO `patientCards` ( `licenceId`, `patientCardTypeId`, `patientId`, `barcode`, `comment`, `units`, `timeLeft`, `validDateFrom`, `validDateTo`, `pincode`, `active`, `archive`) VALUES ( " );
-
-        qsSQLCommand += QString( "%1, " ).arg( m_nLicenceId );
-        qsSQLCommand += QString( "%1, " ).arg( _getPatientCardTypeNewId( m_qvPatientCards.at(i).nBerletTipus ) );
-        qsSQLCommand += QString( "0, " );
-        qsSQLCommand += QString( "'%1', " ).arg( qsBarcode );
-        qsSQLCommand += QString( "'%1', " ).arg( m_qvPatientCards.at(i).strMegjegyzes );
-        qsSQLCommand += QString( "%1, " ).arg( m_qvPatientCards.at(i).nEgyseg );
-        qsSQLCommand += QString( "%1, " ).arg( _getTimeLeft(m_qvPatientCards.at(i).nBerletTipus, m_qvPatientCards.at(i).nEgyseg) );
-        qsSQLCommand += QString( "'%1-%2-%3', " ).arg( m_qvPatientCards.at(i).nErvEv-1 ).arg( m_qvPatientCards.at(i).nErvHo ).arg( m_qvPatientCards.at(i).nErvNap );
-        qsSQLCommand += QString( "'%1-%2-%3', " ).arg( m_qvPatientCards.at(i).nErvEv ).arg( m_qvPatientCards.at(i).nErvHo ).arg( m_qvPatientCards.at(i).nErvNap );
-        qsSQLCommand += QString( "NULL, 1, 'ARC' );" );
-
-        _logAction( qsSQLCommand );
-
-        QSqlQuery query = m_poDB->exec( qsSQLCommand );
-
-        unsigned int uiPatientcardId = query.lastInsertId().toInt();
-        unsigned int uiPatientCardUnitPrice = _getPatientCardTypeUnitPrice( m_qvPatientCards.at(i).nBerletTipus );
-
-        for( int j=0; j<m_qvPatientCards.at(i).nEgyseg; j++ )
-        {
-            qsSQLCommand = QString( "INSERT INTO `patientcardunits` (`licenceId` ,`patientCardId` ,`ledgerId` ,`panelId` ,`unitTime` ,`unitPrice` ,`validDateFrom` ,`validDateTo` ,`dateTimeUsed` ,`active` ,`archive` ) VALUES ( " );
-
-            qsSQLCommand += QString( "%1, " ).arg( m_nLicenceId );
-            qsSQLCommand += QString( "%1, " ).arg( uiPatientcardId );
-            qsSQLCommand += QString( "0, " );
-            qsSQLCommand += QString( "0, " );
-            qsSQLCommand += QString( "%1, " ).arg( _getPatientCardTypeUnitTime( m_qvPatientCards.at(i).nBerletTipus ) );
-            qsSQLCommand += QString( "%1, " ).arg( uiPatientCardUnitPrice );
-            qsSQLCommand += QString( "'2013-01-01', " );
-            qsSQLCommand += QString( "'%1-%2-%3', " ).arg( m_qvPatientCards.at(i).nErvEv ).arg( m_qvPatientCards.at(i).nErvHo ).arg( m_qvPatientCards.at(i).nErvNap );
-            qsSQLCommand += QString( "CURRENT_TIMESTAMP, 1, 'ARC' );" );
-
-            _logAction( qsSQLCommand );
-
-            query = m_poDB->exec( qsSQLCommand );
-
-            m_dlgProgress->stepValue();
-        }
-/*
-        qsSQLCommand = QString( "INSERT INTO `ledger` (`licenceId`, `parentId` , `ledgerTypeId` , `ledgerDeviceId` , `paymentMethodId` , `userId` , `productId` , `patientCardTypeId` , `patientCardId` , `panelId` , `patientId` , `name` , `netPrice` , `discount` , `vatpercent` , `totalPrice` , `ledgerTime` , `comment` , `modified` , `active` , `archive` ) VALUES ( " );
-
-        qsSQLCommand += QString( "%1, " ).arg( m_nLicenceId );
-        qsSQLCommand += QString( "0, " );
-        qsSQLCommand += QString( "2, " );
-        qsSQLCommand += QString( "0, " );
-        qsSQLCommand += QString( "1, " );
-        qsSQLCommand += QString( "2, " );
-        qsSQLCommand += QString( "0, " );
-        qsSQLCommand += QString( "0, " );
-        qsSQLCommand += QString( "%1, " ).arg( uiPatientcardId );
-        qsSQLCommand += QString( "0, " );
-        qsSQLCommand += QString( "0, " );
-        qsSQLCommand += QString( "'%1', " ).arg( qsBarcode );
-        qsSQLCommand += QString( "'%1', " ).arg( _getPatientCardTypeUnitPrice( m_qvPatientCards.at(i).nBerletTipus ) );
-        qsSQLCommand += QString( "0, " );
-        qsSQLCommand += QString( "0, " );
-        qsSQLCommand += QString( "'%1', " ).arg( _getPatientCardTypeUnitPrice( m_qvPatientCards.at(i).nBerletTipus ) );
-        qsSQLCommand += QString( "'%1-%2-%3', " ).arg( m_qvPatientCards.at(i).nErvEv-1 ).arg( m_qvPatientCards.at(i).nErvHo ).arg( m_qvPatientCards.at(i).nErvNap );
-        qsSQLCommand += QString( "NULL ,  '',  '1',  'ARC' );" );
-
-        _logAction( qsSQLCommand );
-
-        query = m_poDB->exec( qsSQLCommand );
-*/
-        m_dlgProgress->stepValue();
-    }
-
-    ui->listExport->addItem( tr("Exporting Patientcards FINISHED") );
-    _logAction( "Export finished\n" );
-    update();
+    return ( ui->imgCheckPswOk->isVisible() && ui->imgConnectDbOk->isVisible() );
 }
-
-void MainWindow::_exportToBelenusProductTypes()
+//=========================================================================================================================================
+void MainWindow::_logProcessInfo(QString p_qsText)
+//-----------------------------------------------------------------------------------------------------------------------------------------
 {
-    int nProductTypeCount = m_qvProductTypes.size();
-
-    ui->listExport->addItem( tr("Exporting Product types") );
-    _logAction( "Export to database Product types:" );
-    update();
-
-    for( int i=0; i<nProductTypeCount; i++ )
-    {
-        QString qsSQLCommand = QString( "INSERT INTO `productTypes` (`licenceId`, `name`, `active`, `archive`) VALUES ( " );
-
-        qsSQLCommand += QString( "%1, " ).arg( m_nLicenceId );
-        qsSQLCommand += QString( "'%1', " ).arg( m_qvProductTypes.at(i).strNev );
-        qsSQLCommand += QString( "1, 'ARC' );" );
-
-        _logAction( qsSQLCommand );
-
-        QSqlQuery query = m_poDB->exec( qsSQLCommand );
-        m_qvProductTypes[i].nNewID = query.lastInsertId().toInt();
-        m_dlgProgress->stepValue();
-    }
-
-    ui->listExport->addItem( tr("Exporting Product types FINISHED") );
-    _logAction( "Export finished\n" );
-    update();
+    ui->listProgress->addItem( p_qsText );
+    g_obLogger(cSeverity::INFO) << p_qsText << EOM;
 }
 
-void MainWindow::_exportToBelenusProducts()
-{
-    int nProductCount = m_qvProducts.size();
 
-    ui->listExport->addItem( tr("Exporting Products") );
-    _logAction( "Export to database Products:" );
-    update();
+//=========================================================================================================================================
+//
+// PAGE START
+//
+//=========================================================================================================================================
 
-    for( int i=0; i<nProductCount; i++ )
-    {
-        QString qsSQLCommand;
-        QSqlQuery query;
-
-        qsSQLCommand = QString( "INSERT INTO `producthistory` ( `productHistoryId`, `licenceId`, `productId`, `ledgerId`, `productActionTypeId`, `userId`, `productItemCount`, `netPrice`, `vatpercent`, `actionDateTime`, `modified`, `active`, `archive` ) VALUES ( "
-                                "NULL , '0', '1', '0', '1', '1', '%1', '0', '0', CURRENT_TIMESTAMP, CURRENT_TIMESTAMP, '1', 'ARC' );" ).arg( m_qvProducts.at(i).nDarab );
-        _logAction( qsSQLCommand );
-        query = m_poDB->exec( qsSQLCommand );
-
-        qsSQLCommand = QString( "INSERT INTO `products` (`licenceId`, `name`, `barcode`, `netPriceBuy`, `vatpercentBuy`, `netPriceSell`, `vatpercentSell`, `productCount`, `modified`, `active`, `archive`) VALUES ( " );
-
-        qsSQLCommand += QString( "%1, " ).arg( m_nLicenceId );
-        qsSQLCommand += QString( "'%1', " ).arg( m_qvProducts.at(i).strNev );
-        qsSQLCommand += QString( "'%1', " ).arg( m_qvProducts.at(i).strVonalkod );
-//        qsSQLCommand += QString( "%1, " ).arg( m_qvProducts.at(i).nArBeszerzes * 100 );
-        qsSQLCommand += QString( "%1, " ).arg( m_qvProducts.at(i).nArBeszerzes );
-        qsSQLCommand += QString( "0, " );
-//        qsSQLCommand += QString( "%1, " ).arg( m_qvProducts.at(i).nAr * 100 );
-        qsSQLCommand += QString( "%1, " ).arg( m_qvProducts.at(i).nAr );
-        qsSQLCommand += QString( "0, " );
-        qsSQLCommand += QString( "%1, " ).arg( m_qvProducts.at(i).nDarab );
-        qsSQLCommand += QString( "0, 1, 'ARC');" );
-
-        _logAction( qsSQLCommand );
-
-        query = m_poDB->exec( qsSQLCommand );
-        m_qvProducts[i].nNewID = query.lastInsertId().toInt();
-        m_dlgProgress->stepValue();
-    }
-
-    int nProductAssign = m_qvProductAssigns.size();
-
-    ui->listExport->addItem( tr("Exporting Products FINISHED") );
-    ui->listExport->addItem( tr("Exporting Product types / Product connections") );
-    update();
-
-    _logAction( "Export to database Product assigns:" );
-
-    for( int i=0; i<nProductAssign; i++ )
-    {
-        QString qsSQLCommand = QString( "INSERT INTO  `connectproductwithtype` (`productTypeId` ,`productId` ,`licenceId`) VALUES ( " );
-
-        qsSQLCommand += QString( "%1, " ).arg( _getProductTypeNewId(m_qvProductAssigns.at(i).nTTipusID) );
-        qsSQLCommand += QString( "%1, " ).arg( _getProductNewId(m_qvProductAssigns.at(i).nTermekID) );
-        qsSQLCommand += QString( "%1 ); " ).arg( m_nLicenceId );
-
-        ////ui->listLog->addItem( qsSQLCommand );
-        _logAction( qsSQLCommand );
-
-        m_poDB->exec( qsSQLCommand );
-        m_dlgProgress->stepValue();
-    }
-
-    ui->listExport->addItem( tr("Exporting Product types / Product connections FINISHED") );
-    _logAction( "Export finished\n" );
-    update();
-}
-
-void MainWindow::_exportToBelenusUsers()
-{
-    int nUSerCount = m_qvUsers.size();
-
-    ui->listExport->addItem( tr("Exporting Application users") );
-    _logAction( "Export to database Users:" );
-    update();
-
-    for( int i=0; i<nUSerCount; i++ )
-    {
-        QString qsPassword;
-
-        if( QString(m_qvUsers.at(i).strJelszo).length() == 0 )
-        {
-            qsPassword = "da39a3ee5e6b4b0d3255bfef95601890afd80709";
-        }
-        else
-        {
-            QByteArray  obPwdHash = QCryptographicHash::hash( QString( m_qvUsers.at(i).strJelszo ).toAscii(), QCryptographicHash::Sha1 );
-            qsPassword = QString( obPwdHash.toHex() );
-        }
-        QString qsSQLCommand = QString( "INSERT INTO `users` (`licenceId`, `name`, `realName`, `password`, `accgroup`, `active`, `comment`, `archive`) VALUES ( " );
-
-        qsSQLCommand += QString( "%1, " ).arg( m_nLicenceId );
-        qsSQLCommand += QString( "'%1', " ).arg( m_qvUsers.at(i).strLoginNev );
-        qsSQLCommand += QString( "'%1', " ).arg( m_qvUsers.at(i).strNevCsalad );
-        qsSQLCommand += QString( "'%1', 1, 1, " ).arg( qsPassword );
-        qsSQLCommand += QString( "'%1', " ).arg( m_qvUsers.at(i).strMegjegyzes );
-        qsSQLCommand += QString( "'ARC');" );
-
-        ////ui->listLog->addItem( qsSQLCommand );
-        _logAction( qsSQLCommand );
-
-        m_poDB->exec( qsSQLCommand );
-        m_dlgProgress->stepValue();
-    }
-
-    ui->listExport->addItem( tr("Exporting Application users FINISHED") );
-    _logAction( "Export finished\n" );
-    update();
-}
-
-int MainWindow::_getPatientCardTypeNewId( int p_nID )
-{
-    int nRet = 0;
-    int nCount = m_qvPatientCardTypes.size();
-
-    for( int i=0; i<nCount; i++ )
-    {
-        if( m_qvPatientCardTypes.at(i).nID == p_nID )
-        {
-            nRet = m_qvPatientCardTypes.at(i).nNewID;
-            break;
-        }
-    }
-    return nRet;
-}
-
-int MainWindow::_getPatientCardTypeUnitPrice( int p_nID )
-{
-    int nRet = 0;
-    int nCount = m_qvPatientCardTypes.size();
-
-    for( int i=0; i<nCount; i++ )
-    {
-        if( m_qvPatientCardTypes.at(i).nID == p_nID )
-        {
-//            nRet = ( m_qvPatientCardTypes.at(i).nAr * 100 ) / m_qvPatientCardTypes.at(i).nEgyseg;
-            nRet = ( m_qvPatientCardTypes.at(i).nAr ) / m_qvPatientCardTypes.at(i).nEgyseg;
-            break;
-        }
-    }
-    return nRet;
-}
-
-int MainWindow::_getPatientCardTypeUnitTime( int p_nID )
-{
-    int nRet = 0;
-    int nCount = m_qvPatientCardTypes.size();
-
-    for( int i=0; i<nCount; i++ )
-    {
-        if( m_qvPatientCardTypes.at(i).nID == p_nID )
-        {
-            nRet = m_qvPatientCardTypes.at(i).nEgysegIdo;
-            break;
-        }
-    }
-    return nRet;
-}
-
-int MainWindow::_getProductTypeNewId( int p_nID )
-{
-    int nRet = 0;
-    int nCount = m_qvProductTypes.size();
-
-    for( int i=0; i<nCount; i++ )
-    {
-        if( m_qvProductTypes.at(i).nID == p_nID )
-        {
-            nRet = m_qvProductTypes.at(i).nNewID;
-            break;
-        }
-    }
-    return nRet;
-}
-
-int MainWindow::_getProductNewId( int p_nID )
-{
-    int nRet = 0;
-    int nCount = m_qvProducts.size();
-
-    for( int i=0; i<nCount; i++ )
-    {
-        if( m_qvProducts.at(i).nID == p_nID )
-        {
-            nRet = m_qvProducts.at(i).nNewID;
-            break;
-        }
-    }
-    return nRet;
-}
-
-void MainWindow::_logAction(QString p_qsLogMessage)
-{
-    QFile   qfFileLog( m_qsLogFileName );
-
-    qfFileLog.open( QIODevice::Append | QIODevice::Text );
-    qfFileLog.write( QString("%1\n").arg(p_qsLogMessage).toStdString().c_str() );
-    qfFileLog.close();
-}
-
-void MainWindow::on_pbCancel_clicked()
-{
-    close();
-}
-
-void MainWindow::on_pbStartExit_clicked()
-{
-    close();
-}
-
-//====================================================================================
-// START
-//====================================================================================
+//=========================================================================================================================================
 void MainWindow::on_cmbLanguage_currentIndexChanged(int /*index*/)
-//====================================================================================
+//-----------------------------------------------------------------------------------------------------------------------------------------
 {
     m_qsLanguage = ui->cmbLanguage->itemText( ui->cmbLanguage->currentIndex() ).right(3).left(2);
 
@@ -622,860 +352,782 @@ void MainWindow::on_cmbLanguage_currentIndexChanged(int /*index*/)
 
     ui->retranslateUi( this );
 }
-void MainWindow::slotProgramTypeClicked()
-{
-/*    if( ui->rbTypeSolarium->isChecked() )
-    {
-        m_nProgramType = DBTool::KiwiSun;
-    }
-    else if( ui->rbTypeSensolite->isChecked() )
-    {
-        m_nProgramType = DBTool::Sensolite;
-    }*/
-}
-//====================================================================================
-// SYSTEM VERIFICATION
-//====================================================================================
-void MainWindow::on_pbLogin_clicked()
-//====================================================================================
-{
-    QByteArray  obPwdHash = QCryptographicHash::hash( ui->ledSystemPassword->text().toAscii(), QCryptographicHash::Sha1 );
+//=========================================================================================================================================
+//
+// PAGE PROCESS SELECTION
+//
+//=========================================================================================================================================
 
-    if( QString( obPwdHash.toHex() ).compare( "a382329cfe97ae74677649d1f7fc03986b27cf3f" ) == 0 )
+//=========================================================================================================================================
+//
+// PAGE PROCESS EXECUTION
+//
+//=========================================================================================================================================
+void MainWindow::_calculateRelatedRecords()
+//-----------------------------------------------------------------------------------------------------------------------------------------
+{
+    if( ui->rbDeactivatePatientCards->isChecked() )
     {
-        ui->pbExpSelectDir->setEnabled( true );
-        ui->pbCheckSVDatFiles->setEnabled( true );
-        ui->pbPExportConnect->setEnabled( true );
-        ui->lblCheckPswInfo->setText( tr("Password verification succeeded") );
-        ui->imgCheckPswFail->setVisible( false );
-        ui->imgCheckPswOk->setVisible( true );
-        ui->lblCheckPswInfo->setVisible( true );
+        _calculateDeactivatePatientcards();
+    }
+    else if( ui->rbDeleteDeactivatedPatientcards->isChecked() )
+    {
+        _calculateDeleteDeactivatedPatientcards();
+    }
+    else if( ui->rbDeleteObsoletePCUnits->isChecked() )
+    {
+        _calculateDeleteObsoletePatientcardUnits();
+    }
+    else if( ui->rbDeleteLedgerEntries->isChecked() )
+    {
+        _calculateDeleteLedgerEntries();
+    }
+    else if( ui->rbDeleteDeviceLedgerEntries->isChecked() )
+    {
+        _calculateDeleteDeviceLedger();
+    }
+    else if( ui->rbDeleteCassaEntries->isChecked() )
+    {
+        _calculateDeleteCassa();
+    }
+}
+//=========================================================================================================================================
+void MainWindow::on_pbExecuteProcess_clicked()
+//-----------------------------------------------------------------------------------------------------------------------------------------
+{
+    ui->lblNotificationBeforeProcess->setVisible( false );
+    ui->pbExecuteProcess->setEnabled( false );
+
+    if( ui->rbDeactivatePatientCards->isChecked() )
+    {
+        _processDeactivatePatientcards();
+    }
+    else if( ui->rbDeleteDeactivatedPatientcards->isChecked() )
+    {
+        _processDeleteDeactivatedPatientcards();
+    }
+    else if( ui->rbDeleteObsoletePCUnits->isChecked() )
+    {
+        _processDeleteObsoletePatientcardUnits();
+    }
+    else if( ui->rbDeleteLedgerEntries->isChecked() )
+    {
+        _processDeleteLedgerEntries();
+    }
+    else if( ui->rbDeleteDeviceLedgerEntries->isChecked() )
+    {
+        _processDeleteDeviceLedger();
+    }
+    else if( ui->rbDeleteCassaEntries->isChecked() )
+    {
+        _processDeleteCassa();
+    }
+}
+
+//=========================================================================================================================================
+//
+// Processes
+//
+//=========================================================================================================================================
+void MainWindow::_calculateDeactivatePatientcards()
+//-----------------------------------------------------------------------------------------------------------------------------------------
+{
+    int nCount = 0;
+
+    QString qsSelect = QString( "SELECT COUNT(patientCardId) FROM patientcards WHERE validDateTo < \"%1\" AND active = 1 ").arg( ui->qdFilterDate->date().toString("yyyy-MM-dd") );
+    QSqlQuery oSelect(qsSelect);
+
+    if( oSelect.next() )
+        nCount = oSelect.value(0).toInt();
+
+    //*************************************
+    const double avgMsPerRecord = 0.73;
+    //*************************************
+
+    int estimatedMs = static_cast<int>(nCount * avgMsPerRecord);
+    int estMinutes = estimatedMs / (1000 * 60);
+    int estSeconds = (estimatedMs / 1000) % 60;
+
+    // Szöveges idő formázása
+    QString estTimeString;
+    if (estMinutes > 0)
+    {
+        estTimeString = QString("%1 %2 %3 %4")
+                        .arg(estMinutes)
+                        .arg((estMinutes == 1) ? tr("minute") : tr("minutes"))
+                        .arg(estSeconds)
+                        .arg((estSeconds == 1) ? tr("second") : tr("seconds"));
     }
     else
     {
-        ui->ledSystemPassword->setText( "" );
-        ui->pbExpSelectDir->setEnabled( false );
-        ui->pbCheckSVDatFiles->setEnabled( false );
-        ui->pbPExportConnect->setEnabled( false );
-        ui->lblCheckPswInfo->setText( tr("Password verification failed") );
-        ui->imgCheckPswFail->setVisible( true );
-        ui->imgCheckPswOk->setVisible( false );
-        ui->lblCheckPswInfo->setVisible( true );
-
-        QMessageBox::warning( this, tr("Warning"),
-                              tr("The password you entered is not match with the\n"
-                                 "requested System Administrator password.\n"
-                                 "Please contact your System Administrator.") );
+        estTimeString = QString("%1 %2")
+                        .arg(estSeconds)
+                        .arg((estSeconds == 1) ? tr("second") : tr("seconds"));
     }
+
+    ui->listProgress->addItem( tr( "Deactivating patientcards expired before " ) + ui->qdFilterDate->date().toString( "yyyy-MM-dd" ) );
+    ui->listProgress->addItem( tr( "Number of affected records: " ) + QString::number( nCount ) );
+    ui->listProgress->addItem( tr( "Estimated deactivation time: " ) + estTimeString);
 }
-//====================================================================================
-void MainWindow::on_pbCheckSVDatFiles_clicked()
-//====================================================================================
+//=========================================================================================================================================
+void MainWindow::_processDeactivatePatientcards()
+//-----------------------------------------------------------------------------------------------------------------------------------------
 {
-    QString qsToolTip   = "";
-    bool    bIsOk       = true;
+    ui->listProgress->addItem( "" );
+    _logProcessInfo( tr( "Process started" ) );
 
-    m_qsPCTFileName = QString( "%1/brlttpsfsv.dat" ).arg( ui->ledPathDB->text() ).replace( "/", "\\" );
-    m_qsPCFileName  = QString( "%1/brltfsv.dat" ).arg( ui->ledPathDB->text() ).replace( "/", "\\" );
-    m_qsPTFileName  = QString( "%1/trmktpsfsv.dat" ).arg( ui->ledPathDB->text() ).replace( "/", "\\" );
-    m_qsPFileName   = QString( "%1/trmkfsv.dat" ).arg( ui->ledPathDB->text() ).replace( "/", "\\" );
-    m_qsPAFileName  = QString( "%1/trmktpssgfsv.dat" ).arg( ui->ledPathDB->text() ).replace( "/", "\\" );
-    m_qsUFileName   = QString( "%1/srfsv.dat" ).arg( ui->ledPathDB->text() ).replace( "/", "\\" );
+    QString qsSelect = QString( "SELECT patientCardId FROM patientcards WHERE validDateTo < \"%1\" AND active = 1 ").arg( ui->qdFilterDate->date().toString("yyyy-MM-dd") );
+    QSqlQuery oSelect(qsSelect);
 
-    if( !QFile::exists( m_qsPCTFileName ) )
+    QStringList cardIds;
+
+    _logProcessInfo( tr( "Retrieving record ids" ) );
+    while( oSelect.next() )
+        cardIds.append( oSelect.value(0).toString() );
+
+    m_dlgProgress->setMaxValue( cardIds.size() );
+
+    _logProcessInfo( tr( "Deactivating records" ) );
+    m_dlgProgress->show();
+
+    // ⏱ Időmérés indítása
+    QTime timer;
+    timer.start();
+
+    const int batchSize = 100;
+    for( int i = 0; i < cardIds.size(); i += batchSize )
     {
-        bIsOk = false;
-        qsToolTip.append( tr("%1 file does not exists\n").arg( m_qsPCTFileName ) );
-    }
-    if( !QFile::exists( m_qsPCFileName ) )
-    {
-        bIsOk = false;
-        qsToolTip.append( tr("%1 file does not exists\n").arg( m_qsPCFileName ) );
-    }
-    if( !QFile::exists( m_qsPTFileName ) )
-    {
-        bIsOk = false;
-        qsToolTip.append( tr("%1 file does not exists\n").arg( m_qsPTFileName ) );
-    }
-    if( !QFile::exists( m_qsPFileName ) )
-    {
-        bIsOk = false;
-        qsToolTip.append( tr("%1 file does not exists\n").arg( m_qsPFileName ) );
-    }
-    if( !QFile::exists( m_qsPAFileName ) )
-    {
-        bIsOk = false;
-        qsToolTip.append( tr("%1 file does not exists\n").arg( m_qsPAFileName ) );
-    }
-    if( !QFile::exists( m_qsUFileName ) )
-    {
-        bIsOk = false;
-        qsToolTip.append( tr("%1 file does not exists\n").arg( m_qsUFileName ) );
-    }
+        QStringList batch;
+        for (int j = 0; j < batchSize && (i + j) < cardIds.size(); ++j)
+            batch << cardIds.at(i + j);
 
-    if( bIsOk )
-    {
-        ui->lblCheckDbInfo->setText( tr("Database files are exists and checked successfully.") );
-        ui->lblCheckDbInfo->setToolTip( "" );
-        ui->imgCheckDbFail->setVisible( false );
-        ui->imgCheckDbOk->setVisible( true );
-        ui->lblCheckDbInfo->setVisible( true );
-    }
-    else
-    {
-        ui->lblCheckDbInfo->setText( tr("Database files are missing or corrupt.") );
-        ui->lblCheckDbInfo->setToolTip( qsToolTip );
-        ui->imgCheckDbFail->setVisible( true );
-        ui->imgCheckDbOk->setVisible( false );
-        ui->lblCheckDbInfo->setVisible( true );
-    }
+        QString qsUpdate = QString( "UPDATE patientcards SET "
+                                    "patientCardTypeId=0, parentCardId=0, patientId=0, comment=\"\", units=0, "
+                                    "amount=0, timeLeft=0, validDateFrom=\"0000-00-00\", validDateTo=\"0000-00-00\", "
+                                    "pincode=NULL, modified=\"0000-00-00 00:00:00\", active=0, archive=\"ARC\" "
+                                    "WHERE patientCardId IN (%1) ").arg( batch.join(",") );
 
-    ui->pbNext->setEnabled( _isSystemVerificationOk() );
-}
-//====================================================================================
-bool MainWindow::_isSystemVerificationOk()
-//====================================================================================
-{
-    return ( ui->imgCheckPswOk->isVisible() && ui->imgCheckDbOk->isVisible() && ui->imgConnectDbOk->isVisible() );
-}
-//====================================================================================
-void MainWindow::on_pbPExportConnect_clicked()
-//====================================================================================
-{
-    m_poDB = new QSqlDatabase( QSqlDatabase::addDatabase( "QMYSQL" ) );
+        g_poDB->executeQTQuery( qsUpdate );
 
-    m_poDB->setHostName( "localhost" );
-    m_poDB->setDatabaseName( "belenus" );
-    m_poDB->setUserName( "belenus" );
-    m_poDB->setPassword( "belenus" );
-
-    if( m_poDB->open() )
-    {
-        ui->lblConnectDbInfo->setText( tr("Connection with Belenus database established") );
-        ui->imgConnectDbFail->setVisible( false );
-        ui->imgConnectDbOk->setVisible( true );
-        ui->lblConnectDbInfo->setVisible( true );
-
-        QSqlQuery qsQuery = m_poDB->exec( "SELECT * FROM licences" );
-
-        qsQuery.last();
-        m_nLicenceId = qsQuery.value(0).toInt();
-
-        ui->lblConnectDbInfo->setToolTip( tr("License code: %1 [%2]").arg(qsQuery.value(1).toString()).arg(m_nLicenceId) );
-    }
-    else
-    {
-        ui->lblConnectDbInfo->setText( tr("Unable to connect to Belenus database") );
-        ui->imgConnectDbFail->setVisible( true );
-        ui->imgConnectDbOk->setVisible( false );
-        ui->lblConnectDbInfo->setVisible( true );
-        ui->lblConnectDbInfo->setToolTip( "" );
-    }
-
-    ui->pbNext->setEnabled( _isSystemVerificationOk() );
-}
-//====================================================================================
-// DATABASE IMPORT
-//====================================================================================
-void MainWindow::on_pbImportDB_clicked()
-//====================================================================================
-{
-    ui->listResultImport->clear();
-
-    m_qsLogFileName = QString("c:/belenus_dbtool_%1.log").arg(QDateTime::currentDateTime().toString("yyyyMMdd_hhmm"));
-
-    _logAction( tr("Filenames of patientcard and patientcard types data:") );
-    _logAction( m_qsPCTFileName );
-    _logAction( m_qsPCFileName );
-    _logAction( m_qsPTFileName );
-    _logAction( m_qsPFileName );
-    _logAction( m_qsUFileName );
-
-    m_bIsPatientCardTypesLoaded = false;
-    m_bIsPatientCardsLoaded     = false;
-    m_bIsProductTypesLoaded     = false;
-    m_bIsProductsLoaded         = false;
-    m_bIsUsersLoaded            = false;
-
-    _loadPatientCardTypes();
-    _loadPatientCards();
-    _loadProductTypes();
-    _loadProducts();
-    _loadProductAssign();
-    _loadUsers();
-    _loadDevices();
-
-    if( m_bIsPatientCardTypesLoaded &&
-        m_bIsPatientCardsLoaded &&
-        m_bIsProductTypesLoaded &&
-        m_bIsProductsLoaded &&
-        m_bIsUsersLoaded )
-    {
-        ui->pbNext->setEnabled( true );
-    }
-}
-//====================================================================================
-void MainWindow::_loadDevices()
-//====================================================================================
-{
-    FILE           *file = NULL;
-    QString         qsSolInfo = "";
-
-    setCursor( Qt::WaitCursor);
-
-    for( int i=0; i<20; i++ )
-    {
-        QString         qsFileName = "";
-        typ_szoliadat   stTemp;
-
-        qsFileName = QString( "%1/sdfsv%2.dat" ).arg( ui->ledPathDB->text() ).arg(i).replace( "/", "\\" );
-
-        _logAction( tr("Load device file: %1").arg(qsFileName) );
-
-        file = fopen( qsFileName.toStdString().c_str(), "rb" );
-        if( file != NULL )
+        for (int k = 0; k < batch.size(); ++k)
         {
-            _logAction( tr("Read device data") );
-            memset( m_strPatiencardTypeVersion, 0, 10 );
-            fread( m_strPatiencardTypeVersion, 10, 1, file );
-            fread( stTemp.strNev, 50, 1, file );
-            fread( &stTemp.bInfraSzolarium, 1, 1, file );
-            fread( &stTemp.nIdoVetkozes, 4, 1, file );
-            fread( &stTemp.nIdoUtohutes, 4, 1, file );
-            fread( &stTemp.nIdoSzauna, 4, 1, file );
-            fread( &stTemp.nKedvezmenyIdoStart, 4, 1, file );
-            fread( &stTemp.nKedvezmenyIdoStop, 4, 1, file );
-            fread( &stTemp.nCsoUzemora, 4, 1, file );
-            fclose( file );
+            m_dlgProgress->stepValue();
+            QCoreApplication::processEvents(); // hogy a GUI frissüljön
+        }
+    }
 
-            _DeCode( stTemp.strNev, 50 );
+    int elapsedMs = timer.elapsed();
+    int minutes = elapsedMs / (1000 * 60);
+    int seconds = (elapsedMs / 1000) % 60;
+    int tenths  = (elapsedMs % 1000) / 100;
 
-            QString qsUseTime = "";
+    QString timeString = QString("%1:%2.%3").arg(minutes, 2, 10, QChar('0')).arg(seconds, 2, 10, QChar('0')).arg(tenths);
 
-            qsUseTime.append( QString::number(stTemp.nCsoUzemora/3600) );
-            qsUseTime.append( ":" );
-            qsUseTime.append( QString::number((stTemp.nCsoUzemora%3600)/60) );
-            qsUseTime.append( ":" );
-            qsUseTime.append( QString::number((stTemp.nCsoUzemora%3600)%60) );
+    _logProcessInfo( tr( "Process finished (mm:ss.t) %1" ).arg( timeString ) );
 
-            qsSolInfo.append( QString( "%1\t%2\n" ).arg( qsUseTime ).arg( stTemp.strNev ) );
+    m_dlgProgress->hide();
+}
+//=========================================================================================================================================
+void MainWindow::_calculateDeleteDeactivatedPatientcards()
+//-----------------------------------------------------------------------------------------------------------------------------------------
+{
+    int nCount = 0;
+
+    QString qsSelect1 = QString( "SELECT COUNT(patientCardId) FROM patientcards WHERE validDateTo < \"%1\" AND active = 1 ").arg( ui->qdFilterDate->date().toString("yyyy-MM-dd") );
+    QSqlQuery oSelect1(qsSelect1);
+
+    if( oSelect1.next() )
+        nCount += oSelect1.value(0).toInt();
+
+    QString qsSelect2 = QString( "SELECT COUNT(patientCardId) FROM patientcards WHERE "
+                                "patientCardId > 1 AND "
+                                "patientCardTypeId = 0 AND "
+                                "patientId = 0 AND "
+                                "(pincode IS NULL OR pincode = \"\") AND "
+                                "active = 0" );
+    QSqlQuery oSelect2(qsSelect2);
+
+    if( oSelect2.next() )
+        nCount += oSelect2.value(0).toInt();
+
+    //*************************************
+    const double avgMsPerRecord = 7.1;
+    //*************************************
+
+    int estimatedMs = static_cast<int>(nCount * avgMsPerRecord);
+    int estMinutes = estimatedMs / (1000 * 60);
+    int estSeconds = (estimatedMs / 1000) % 60;
+
+    // Szöveges idő formázása
+    QString estTimeString;
+    if (estMinutes > 0)
+    {
+        estTimeString = QString("%1 %2 %3 %4")
+                        .arg(estMinutes)
+                        .arg((estMinutes == 1) ? tr("minute") : tr("minutes"))
+                        .arg(estSeconds)
+                        .arg((estSeconds == 1) ? tr("second") : tr("seconds"));
+    }
+    else
+    {
+        estTimeString = QString("%1 %2")
+                        .arg(estSeconds)
+                        .arg((estSeconds == 1) ? tr("second") : tr("seconds"));
+    }
+
+    ui->listProgress->addItem( tr( "Deleting deactivated patientcards (except those linked to other entries in database)" ) );
+    ui->listProgress->addItem( tr( "Number of affected records: " ) + QString::number( nCount ) );
+    ui->listProgress->addItem( tr( "Estimated delete time: " ) + estTimeString);
+}
+//=========================================================================================================================================
+void MainWindow::_processDeleteDeactivatedPatientcards()
+//-----------------------------------------------------------------------------------------------------------------------------------------
+{
+    ui->listProgress->addItem( "" );
+    _logProcessInfo( tr( "Process started" ) );
+
+    QString qsSelect = QString( "SELECT patientCardId FROM patientcards WHERE "
+                                "patientCardId > 1 AND "
+                                "patientCardTypeId = 0 AND "
+                                "patientId = 0 AND "
+                                "(pincode IS NULL OR pincode = \"\") AND "
+                                "active = 0" );
+
+    QSqlQuery oSelect(qsSelect);
+    QStringList cardIds;
+
+    _logProcessInfo( tr("Retrieving affected records" ) );
+    while (oSelect.next())
+        cardIds.append( oSelect.value(0).toString() );
+
+    int stepsPerCard = 5;
+    m_dlgProgress->setMaxValue( cardIds.size() * stepsPerCard );
+
+    _logProcessInfo( tr("Sorting records" ) );
+    m_dlgProgress->show();
+
+    // ⏱ Időmérés indítása
+    QTime timer;
+    timer.start();
+
+    unsigned int    nSkipped = 0;
+    unsigned int    nDeleted = 0;
+    QStringList     deletableCardIds;
+
+    for( int i = 0; i < cardIds.size(); ++i )
+    {
+        unsigned int uiId = cardIds[i].toUInt();
+        QSqlQuery* poQuery = NULL;
+        bool bAssignedCardExists = false;
+        bool bLedgerConnected = false;
+
+        poQuery = g_poDB->executeQTQuery( QString( "SELECT 1 FROM patientCards WHERE parentCardId = %1" ).arg( uiId ) );
+        if( poQuery->next() )
+            bAssignedCardExists = true;
+
+        poQuery = g_poDB->executeQTQuery( QString( "SELECT 1 FROM ledger WHERE patientCardId = %1" ).arg( uiId ) );
+        if( poQuery->next() )
+            bLedgerConnected = true;
+
+        if( bAssignedCardExists || bLedgerConnected )
+        {
+            nSkipped++;
+            for( int s = 0; s < stepsPerCard; ++s )
+            {
+                m_dlgProgress->stepValue();
+                QCoreApplication::processEvents();
+            }
         }
         else
         {
-            _logAction( tr("File not found, exiting ...") );
-            break;
+            deletableCardIds << QString::number( uiId );
         }
     }
-    QMessageBox::information( this, tr("Information"), qsSolInfo );
 
-    setCursor( Qt::ArrowCursor);
-}
-//====================================================================================
-void MainWindow::_loadPatientCardTypes()
-//====================================================================================
-{
-    FILE           *file = NULL;
-    unsigned int   nCount = 0;
-
-    setCursor( Qt::WaitCursor);
-
-    m_qvPatientCardTypes.clear();
-    m_nCountPCT = 0;
-
-    file = fopen( m_qsPCTFileName.toStdString().c_str(), "rb" );
-    if( file != NULL )
+    _logProcessInfo( tr("Deleting records" ) );
+    const int batchSize = 100;
+    for( int i = 0; i < deletableCardIds.size(); i += batchSize )
     {
-        memset( m_strPatiencardTypeVersion, 0, 10 );
-        fread( m_strPatiencardTypeVersion, 10, 1, file );
-        nCount = 0;
-        fread( &nCount, 4, 1, file );
-        ui->listResultImport->addItem( tr("Count of patientcard types to be imported: %1").arg(nCount) );
-        _logAction( tr("Count of patientcard types to be imported: %1").arg(nCount) );
-        m_nCountPCT += nCount;
-        if( nCount > 0 )
+        QStringList batch;
+        for( int j = 0; j < batchSize && (i + j) < deletableCardIds.size(); ++j )
+            batch << deletableCardIds.at(i + j);
+
+        QString ids = batch.join(",");
+
+        QStringList deleteQueries;
+        deleteQueries << QString("DELETE FROM connectPatientWithCard WHERE patientCardId IN (%1)").arg(ids);
+        deleteQueries << QString("DELETE FROM patientCardHistories WHERE patientCardId IN (%1)").arg(ids);
+        deleteQueries << QString("DELETE FROM patientCardUnits WHERE patientCardId IN (%1)").arg(ids);
+        deleteQueries << QString("DELETE FROM patientHistory WHERE patientCardId IN (%1)").arg(ids);
+        deleteQueries << QString("DELETE FROM patientCards WHERE patientCardId IN (%1)").arg(ids);
+
+        for( int q = 0; q < deleteQueries.size(); ++q )
         {
-            typ_berlettipus stTemp;
-            for( unsigned int i=0; i<nCount; i++ )
+            g_poDB->executeQTQuery( deleteQueries.at(q) );
+            for (int k = 0; k < batch.size(); ++k)
             {
-                fread( &stTemp.nID, 4, 1, file );
-                stTemp.nNewID = 0;
-                fread( &stTemp.nAr, 4, 1, file );
-                fread( &stTemp.nEgyseg, 4, 1, file );
-                fread( stTemp.strNev, 50, 1, file );
-                fread( &stTemp.nErvTolEv, 4, 1, file );
-                fread( &stTemp.nErvTolHo, 4, 1, file );
-                fread( &stTemp.nErvTolNap, 4, 1, file );
-                fread( &stTemp.nErvIgEv, 4, 1, file );
-                fread( &stTemp.nErvIgHo, 4, 1, file );
-                fread( &stTemp.nErvIgNap, 4, 1, file );
-                fread( &stTemp.nErvNapok, 4, 1, file );
-                fread( &stTemp.bSzolariumHaszn, 1, 1, file );
-                if( m_nProgramType == DBTool::Sensolite )
+                m_dlgProgress->stepValue();
+                QCoreApplication::processEvents();
+            }
+        }
+
+        nDeleted += batch.size();
+    }
+
+    int elapsedMs = timer.elapsed();
+    int minutes = elapsedMs / (1000 * 60);
+    int seconds = (elapsedMs / 1000) % 60;
+    int tenths  = (elapsedMs % 1000) / 100;
+
+    QString timeString = QString("%1:%2.%3").arg(minutes, 2, 10, QChar('0')).arg(seconds, 2, 10, QChar('0')).arg(tenths);
+
+    _logProcessInfo( tr( "Process finished (mm:ss.t) %1" ).arg( timeString ) );
+
+    m_dlgProgress->hide();
+    _logProcessInfo(tr("Records skipped: ") + QString::number(nSkipped));
+    _logProcessInfo(tr("Records deleted: ") + QString::number(nDeleted));
+}
+//=========================================================================================================================================
+void MainWindow::_calculateDeleteObsoletePatientcardUnits()
+//-----------------------------------------------------------------------------------------------------------------------------------------
+{
+    int progressMax = 0;
+
+    QSqlQuery *poQuery = g_poDB->executeQTQuery( QString( "SELECT COUNT(patientCardUnitId) FROM patientcardunits WHERE validDateTo < \"%1\" ").arg( ui->qdFilterDate->date().toString("yyyy-MM-dd") ) );
+
+    if( poQuery->next() )
+        progressMax += poQuery->value(0).toInt();
+
+    //*************************************
+    const double avgMsPerRecord = 0.5;
+    //*************************************
+
+    int estimatedMs = static_cast<int>(progressMax * avgMsPerRecord);
+    int estMinutes = estimatedMs / (1000 * 60);
+    int estSeconds = (estimatedMs / 1000) % 60;
+
+    // Szöveges idő formázása
+    QString estTimeString;
+    if (estMinutes > 0)
+    {
+        estTimeString = QString("%1 %2 %3 %4")
+                        .arg(estMinutes)
+                        .arg((estMinutes == 1) ? tr("minute") : tr("minutes"))
+                        .arg(estSeconds)
+                        .arg((estSeconds == 1) ? tr("second") : tr("seconds"));
+    }
+    else
+    {
+        estTimeString = QString("%1 %2")
+                        .arg(estSeconds)
+                        .arg((estSeconds == 1) ? tr("second") : tr("seconds"));
+    }
+
+    ui->listProgress->addItem( tr( "Deleting patientcard units expired before " ) + ui->qdFilterDate->date().toString("yyyy-MM-dd") );
+    ui->listProgress->addItem( tr( "Number of affected records: " ) + QString::number( progressMax ) );
+    ui->listProgress->addItem( tr( "Estimated delete time: " ) + estTimeString );
+}
+//=========================================================================================================================================
+void MainWindow::_processDeleteObsoletePatientcardUnits()
+//-----------------------------------------------------------------------------------------------------------------------------------------
+{
+    ui->listProgress->addItem("");
+    _logProcessInfo(tr("Process started"));
+
+    QSqlQuery *poQuery = g_poDB->executeQTQuery( QString( "SELECT patientCardUnitId FROM patientcardunits WHERE validDateTo < \"%1\"" ).arg( ui->qdFilterDate->date().toString("yyyy-MM-dd") ) );
+
+    QList<int> cardIds;
+
+    _logProcessInfo( tr( "Retrieving affected records" ) );
+    while( poQuery->next() )
+    {
+        cardIds.append( poQuery->value(0).toInt() );
+    }
+
+    _logProcessInfo( tr( "Deleting records" ) );
+    m_dlgProgress->setMaxValue( cardIds.size() );
+    m_dlgProgress->show();
+
+    QTime timer;
+    timer.start();
+
+    const int batchSize = 100;
+    for( int i = 0; i < cardIds.size(); i += batchSize )
+    {
+        QStringList batchIds;
+        int currentBatchSize = qMin( batchSize, cardIds.size() - i );
+
+        for( int j = 0; j < currentBatchSize; ++j )
+        {
+            batchIds << QString::number(cardIds[i + j]);
+        }
+
+        QString query = QString("DELETE FROM patientcardunits WHERE patientCardUnitId IN (%1)").arg(batchIds.join(","));
+
+        g_poDB->executeQTQuery(query);
+
+        for( int j = 0; j < currentBatchSize; ++j )
+        {
+            m_dlgProgress->stepValue();
+            QCoreApplication::processEvents(); // GUI frissítés
+        }
+    }
+
+    int elapsedMs = timer.elapsed();
+    QString timeString = QString("%1:%2.%3")
+        .arg(elapsedMs / 60000, 2, 10, QChar('0'))
+        .arg((elapsedMs / 1000) % 60, 2, 10, QChar('0'))
+        .arg((elapsedMs % 1000) / 100);
+
+    _logProcessInfo( tr( "Process finished (mm:ss.t) %1" ).arg( timeString ) );
+
+    m_dlgProgress->hide();
+    ui->listProgress->addItem("");
+}
+//=========================================================================================================================================
+void MainWindow::_calculateDeleteLedgerEntries()
+//-----------------------------------------------------------------------------------------------------------------------------------------
+{
+    int progressMax = 0;
+
+    // Ledger rekordok összegyűjtése
+    QSqlQuery *poQuery = g_poDB->executeQTQuery( QString( "SELECT COUNT(ledgerId) FROM ledger WHERE ledgerTime < \"%1\" AND ledgerId > 0" )
+                                                          .arg(ui->qdFilterDate->date().toString("yyyy-MM-dd")));
+    if( poQuery->next() )
+        progressMax += poQuery->value(0).toInt() * 4;
+
+    //*************************************
+    const double avgMsPerRecord = 0.5;
+    //*************************************
+
+    int estimatedMs = static_cast<int>(progressMax * avgMsPerRecord);
+    int estMinutes = estimatedMs / (1000 * 60);
+    int estSeconds = (estimatedMs / 1000) % 60;
+
+    // Szöveges idő formázása
+    QString estTimeString;
+    if (estMinutes > 0)
+    {
+        estTimeString = QString("%1 %2 %3 %4")
+                        .arg(estMinutes)
+                        .arg((estMinutes == 1) ? tr("minute") : tr("minutes"))
+                        .arg(estSeconds)
+                        .arg((estSeconds == 1) ? tr("second") : tr("seconds"));
+    }
+    else
+    {
+        estTimeString = QString("%1 %2")
+                        .arg(estSeconds)
+                        .arg((estSeconds == 1) ? tr("second") : tr("seconds"));
+    }
+
+    ui->listProgress->addItem( tr( "Deleting ledger entries before date " ) + ui->qdFilterDate->date().toString("yyyy-MM-dd") );
+    ui->listProgress->addItem( tr( "Number of affected records: " ) + QString::number( progressMax ) );
+    ui->listProgress->addItem( tr( "Estimated delete time: " ) + estTimeString );
+}
+//=========================================================================================================================================
+void MainWindow::_processDeleteLedgerEntries()
+//-----------------------------------------------------------------------------------------------------------------------------------------
+{
+    ui->listProgress->addItem( "" );
+    _logProcessInfo( tr( "Process started" ) );
+
+    QTime timer;
+
+    try
+    {
+        QList<unsigned int> ledgerIds;
+        int progressMax = 0;
+
+        _logProcessInfo( tr("Retrieving affected records" ) );
+
+        // Ledger rekordok összegyüjtése
+        QSqlQuery *poQuery = g_poDB->executeQTQuery( QString("SELECT ledgerId FROM ledger WHERE ledgerTime < \"%1\" AND ledgerId > 0")
+                                                            .arg(ui->qdFilterDate->date().toString("yyyy-MM-dd")));
+        while( poQuery->next() )
+            ledgerIds.append(poQuery->value(0).toUInt());
+
+        progressMax += ledgerIds.size() * 4;
+
+        _logProcessInfo( tr("Deleting records" ) );
+        m_dlgProgress->setMaxValue(progressMax);
+        m_dlgProgress->show();
+
+        timer.start();
+
+        // Batch ledger feldolgozás (100-asával)
+        for (int i = 0; i < ledgerIds.size(); i += 100)
+        {
+            QStringList batchIds;
+            for (int j = i; j < i + 100 && j < ledgerIds.size(); ++j)
+            {
+                batchIds << QString::number(ledgerIds.at(j));
+            }
+
+            QString ids = batchIds.join(",");
+
+            QStringList updateQueries;
+            updateQueries << QString("UPDATE patientCardUnits SET ledgerId = 0 WHERE ledgerId IN (%1)").arg(ids);
+            updateQueries << QString("UPDATE productHistory SET ledgerId = 0 WHERE ledgerId IN (%1)").arg(ids);
+            updateQueries << QString("UPDATE cassaHistory SET ledgerId = 0 WHERE ledgerId IN (%1)").arg(ids);
+            updateQueries << QString("DELETE FROM ledger WHERE ledgerId IN (%1)").arg(ids);
+
+            for (int q = 0; q < updateQueries.size(); ++q)
+            {
+                g_poDB->executeQTQuery(updateQueries.at(q));
+
+                // A batch minden rekordja érintett, így mindegyikhez stepValue-t hívunk
+                for (int k = 0; k < batchIds.size(); ++k)
                 {
-                    fread( &stTemp.nEgysegIdo, 4, 1, file );
+                    m_dlgProgress->stepValue();
+                    QCoreApplication::processEvents();
                 }
-                else
-                {
-                    stTemp.nEgysegIdo = 0;
-                }
-
-                _DeCode( stTemp.strNev, 50 );
-
-                if( m_nProgramType == DBTool::KiwiSun )
-                    stTemp.nAr = stTemp.nAr * 100;
-
-                m_qvPatientCardTypes.append( stTemp );
             }
         }
-        fclose( file );
-        ui->listResultImport->addItem( tr("Importing %1 patientcard types finished.").arg(m_qvPatientCardTypes.size()) );
-        _logAction( tr("Importing %1 patientcard types finished.").arg(m_qvPatientCardTypes.size()) );
-        m_bIsPatientCardTypesLoaded = true;
+    }
+    catch (cSevException &e)
+    {
+        g_obLogger(e.severity()) << e.what() << EOM;
+    }
+
+    int elapsedMs = timer.elapsed();
+    int minutes = elapsedMs / (1000 * 60);
+    int seconds = (elapsedMs / 1000) % 60;
+    int tenths  = (elapsedMs % 1000) / 100;
+
+    QString timeString = QString("%1:%2.%3")
+        .arg(minutes, 2, 10, QChar('0'))
+        .arg(seconds, 2, 10, QChar('0'))
+        .arg(tenths);
+
+    _logProcessInfo( tr( "Process finished (mm:ss.t) %1" ).arg( timeString ) );
+
+    m_dlgProgress->hide();
+    ui->listProgress->addItem("");
+}
+//=========================================================================================================================================
+void MainWindow::_calculateDeleteDeviceLedger()
+//-----------------------------------------------------------------------------------------------------------------------------------------
+{
+    int progressMax = 0;
+
+    // Ledgerdevice rekordok lekérdezése
+    QSqlQuery *poQuery = g_poDB->executeQTQuery( QString( "SELECT COUNT(*) FROM ledgerdevice WHERE ledgerTime < \"%1\" AND ledgerDeviceId > 0" )
+                                               .arg( ui->qdFilterDate->date().toString("yyyy-MM-dd") ) );
+    if( poQuery->next() )
+        progressMax += poQuery->value(0).toInt();
+
+    //*************************************
+    const double avgMsPerRecord = 0.5;
+    //*************************************
+
+    int estimatedMs = static_cast<int>(progressMax * avgMsPerRecord);
+    int estMinutes = estimatedMs / (1000 * 60);
+    int estSeconds = (estimatedMs / 1000) % 60;
+
+    // Szöveges idő formázása
+    QString estTimeString;
+    if (estMinutes > 0)
+    {
+        estTimeString = QString("%1 %2 %3 %4")
+                        .arg(estMinutes)
+                        .arg((estMinutes == 1) ? tr("minute") : tr("minutes"))
+                        .arg(estSeconds)
+                        .arg((estSeconds == 1) ? tr("second") : tr("seconds"));
     }
     else
     {
-        ui->listResultImport->addItem( tr( "Error occured during opening brlttpsfsv.dat file." ) );
+        estTimeString = QString("%1 %2")
+                        .arg(estSeconds)
+                        .arg((estSeconds == 1) ? tr("second") : tr("seconds"));
     }
 
-    setCursor( Qt::ArrowCursor);
+    ui->listProgress->addItem( tr( "Deleting device ledger entries before date " ) + ui->qdFilterDate->date().toString("yyyy-MM-dd") );
+    ui->listProgress->addItem( tr( "Number of affected records: " ) + QString::number( progressMax ) );
+    ui->listProgress->addItem( tr( "Estimated delete time: " ) + estTimeString);
 }
-
-//====================================================================================
-void MainWindow::_loadPatientCards()
-//====================================================================================
+//=========================================================================================================================================
+void MainWindow::_processDeleteDeviceLedger()
+//-----------------------------------------------------------------------------------------------------------------------------------------
 {
-    FILE           *file = NULL;
-//FILE           *filemod = NULL;
-FILE *filetxt = NULL;
-    unsigned int    nCount = 0;
-    char            m_strPatiencardVersion[10];
+    ui->listProgress->addItem( "" );
+    _logProcessInfo( tr( "Process started" ) );
 
-    setCursor( Qt::WaitCursor);
+    QTime timer;
 
-    m_qvPatientCards.clear();
-    m_nCountPC = 0;
-
-    file = fopen( m_qsPCFileName.toStdString().c_str(), "rb" );
-//filemod = fopen( QString("c:\\mod_brltfsv.dat").toStdString().c_str(), "wb" );
-filetxt = fopen( QString("c:\\brltfsv.txt").toStdString().c_str(), "wt" );
-    if( file != NULL )
+    try
     {
-        memset( m_strPatiencardVersion, 0, 10 );
-        fread( m_strPatiencardVersion, 10, 1, file );
-//fwrite( m_strPatiencardVersion, 10, 1, filemod );
-        //ledVersionPCDAT->setText( QString::fromStdString(m_strPatiencardVersion) );
+        int progressMax = 0;
 
-        nCount = 0;
-        fread( &nCount, 4, 1, file );
-//fwrite( &nCount, 4, 1, filemod );
-        ui->listResultImport->addItem( tr("Count of patientcards to be imported: %1").arg(nCount) );
-        _logAction( tr("Count of patientcards to be imported: %1").arg(nCount) );
-        m_nCountPC += nCount;
-        if( nCount > 0 )
+        // LedgerDevice számolás
+        QSqlQuery *poQuery = g_poDB->executeQTQuery( QString("SELECT COUNT(*) FROM ledgerdevice WHERE ledgerTime < \"%1\" AND ledgerDeviceId > 0")
+                                                 .arg(ui->qdFilterDate->date().toString("yyyy-MM-dd")));
+        if (poQuery->next())
+            progressMax += poQuery->value(0).toInt();
+
+        _logProcessInfo( tr("Deleting records" ) );
+        m_dlgProgress->setMaxValue(progressMax);
+        m_dlgProgress->show();
+
+        timer.start();
+
+        // LedgerDevice törlés batch-ben
+        poQuery = g_poDB->executeQTQuery( QString( "SELECT ledgerDeviceId FROM ledgerdevice WHERE ledgerTime < \"%1\" AND ledgerDeviceId > 0" )
+                                                 .arg(ui->qdFilterDate->date().toString("yyyy-MM-dd")));
+        QStringList ledgerDeviceIds;
+        while (poQuery->next())
+            ledgerDeviceIds << poQuery->value(0).toString();
+
+        const int batchSize = 100;
+        for (int i = 0; i < ledgerDeviceIds.size(); i += batchSize)
         {
-            typ_berlet   stTemp;
-            for( unsigned int i=0; i<nCount; i++ )
+            QStringList batch;
+            for (int j = 0; j < batchSize && (i + j) < ledgerDeviceIds.size(); ++j)
+                batch << ledgerDeviceIds.at(i + j);
+
+            QString cond = QString("ledgerDeviceId IN (%1)").arg(batch.join(","));
+            QString deleteQuery = QString("DELETE FROM ledgerdevice WHERE %1").arg(cond);
+
+            g_poDB->executeQTQuery(deleteQuery);
+
+            for (int k = 0; k < batch.size(); ++k)
             {
-                fread( stTemp.strVonalkod, 20, 1, file );
-                fread( stTemp.strMegjegyzes, 50, 1, file );
-                fread( &stTemp.nBerletTipus, 4, 1, file );
-                fread( &stTemp.nEgyseg, 4, 1, file );
-                fread( &stTemp.nErvEv, 4, 1, file );
-                fread( &stTemp.nErvHo, 4, 1, file );
-                fread( &stTemp.nErvNap, 4, 1, file );
-                fread( &stTemp.nPin, 4, 1, file );
-/*
-int nErvEv = 0;
-if( stTemp.nErvEv < 2014 && stTemp.nEgyseg > 0 )
-{
-    nErvEv = stTemp.nErvEv + 1;
-}
-else
-{
-    nErvEv = stTemp.nErvEv;
-}
-fwrite( stTemp.strVonalkod, 20, 1, filemod );
-fwrite( stTemp.strMegjegyzes, 50, 1, filemod );
-fwrite( &stTemp.nBerletTipus, 4, 1, filemod );
-fwrite( &stTemp.nEgyseg, 4, 1, filemod );
-fwrite( &nErvEv, 4, 1, filemod );
-fwrite( &stTemp.nErvHo, 4, 1, filemod );
-fwrite( &stTemp.nErvNap, 4, 1, filemod );
-fwrite( &stTemp.nPin, 4, 1, filemod );
-*/
-                _DeCode( stTemp.strVonalkod, 20 );
-                _DeCode( stTemp.strMegjegyzes, 50 );
-QString qsLine = "";
-qsLine.append( QString("%1\t").arg( stTemp.strVonalkod ) );
-qsLine.append( QString("%1\t").arg( stTemp.strMegjegyzes ) );
-qsLine.append( QString("%1\t").arg( stTemp.nBerletTipus ) );
-qsLine.append( QString("%1\t").arg( stTemp.nEgyseg ) );
-qsLine.append( QString("%1\t").arg( stTemp.nErvEv ) );
-qsLine.append( QString("%1\t").arg( stTemp.nErvHo ) );
-qsLine.append( QString("%1\t").arg( stTemp.nErvNap ) );
-fputs( qsLine.toStdString().c_str(), filetxt );
-fputs( "\n", filetxt );
-                m_qvPatientCards.append( stTemp );
-
-                m_nCountPC += stTemp.nEgyseg;
+                m_dlgProgress->stepValue();
+                QCoreApplication::processEvents();
             }
         }
-        fclose( file );
-//fclose( filemod );
-fclose( filetxt );
-        ui->listResultImport->addItem( tr("Importing %1 patientcards finished.").arg(m_qvPatientCards.size()) );
-        _logAction( tr("Importing %1 patientcards finished.").arg(m_qvPatientCards.size()) );
-        m_bIsPatientCardsLoaded = true;
+    }
+    catch (cSevException &e)
+    {
+        g_obLogger(e.severity()) << e.what() << EOM;
+    }
+
+    int elapsedMs = timer.elapsed();
+    int minutes = elapsedMs / (1000 * 60);
+    int seconds = (elapsedMs / 1000) % 60;
+    int tenths  = (elapsedMs % 1000) / 100;
+
+    QString timeString = QString("%1:%2.%3")
+        .arg(minutes, 2, 10, QChar('0'))
+        .arg(seconds, 2, 10, QChar('0'))
+        .arg(tenths);
+
+    _logProcessInfo( tr( "Process finished (mm:ss.t) %1" ).arg( timeString ) );
+
+    m_dlgProgress->hide();
+    ui->listProgress->addItem("");
+}
+//=========================================================================================================================================
+void MainWindow::_calculateDeleteCassa()
+//-----------------------------------------------------------------------------------------------------------------------------------------
+{
+    int progressMax = 0;
+
+    // Cassa rekordok lekérdezése
+    QSqlQuery *poQuery = g_poDB->executeQTQuery( QString( "SELECT COUNT(cassaId) FROM cassa WHERE startDateTime < \"%1\" AND stopDateTime < \"%1\" AND cassaId > 0" )
+                                      .arg(ui->qdFilterDate->date().toString("yyyy-MM-dd")));
+    if( poQuery->next() )
+        progressMax += poQuery->value(0).toInt() * 3;
+
+    //*************************************
+    const double avgMsPerRecord = 0.5;
+    //*************************************
+
+    int estimatedMs = static_cast<int>(progressMax * avgMsPerRecord);
+    int estMinutes = estimatedMs / (1000 * 60);
+    int estSeconds = (estimatedMs / 1000) % 60;
+
+    // Szöveges idő formázása
+    QString estTimeString;
+    if (estMinutes > 0)
+    {
+        estTimeString = QString("%1 %2 %3 %4")
+                        .arg(estMinutes)
+                        .arg((estMinutes == 1) ? tr("minute") : tr("minutes"))
+                        .arg(estSeconds)
+                        .arg((estSeconds == 1) ? tr("second") : tr("seconds"));
     }
     else
     {
-        ui->listResultImport->addItem( tr( "Error occured during opening brltfsv.dat file." ) );
+        estTimeString = QString("%1 %2")
+                        .arg(estSeconds)
+                        .arg((estSeconds == 1) ? tr("second") : tr("seconds"));
     }
 
-    setCursor( Qt::ArrowCursor);
+    ui->listProgress->addItem( tr( "Deleting cassa entries before date " ) + ui->qdFilterDate->date().toString("yyyy-MM-dd") );
+    ui->listProgress->addItem( tr( "Number of affected records: " ) + QString::number( progressMax ) );
+    ui->listProgress->addItem( tr( "Estimated delete time: " ) + estTimeString);
 }
-//====================================================================================
-void MainWindow::_loadProductTypes()
-//====================================================================================
+//=========================================================================================================================================
+void MainWindow::_processDeleteCassa()
+//-----------------------------------------------------------------------------------------------------------------------------------------
 {
-    FILE           *file = NULL;
-    unsigned int    nCount = 0;
-    char            m_strVersion[10];
+    ui->listProgress->addItem( "" );
+    _logProcessInfo( tr( "Process started" ) );
 
-    setCursor( Qt::WaitCursor);
+    QTime timer;
 
-    m_qvProductTypes.clear();
-    m_nCountPT = 0;
-
-    file = fopen( m_qsPTFileName.toStdString().c_str(), "rb" );
-    if( file != NULL )
+    try
     {
-        memset( m_strVersion, 0, 10 );
-        fread( m_strVersion, 10, 1, file );
+        int progressMax = 0;
 
-        nCount = 0;
-        fread( &nCount, 4, 1, file );
-        ui->listResultImport->addItem( tr("Count of product types to be imported: %1").arg(nCount) );
-        _logAction( tr("Count of product types to be imported: %1").arg(nCount) );
-        m_nCountPT += nCount;
-        if( nCount > 0 )
+        _logProcessInfo( tr("Retrieving affected records" ) );
+
+        // Cassa ID-k
+        QSqlQuery *poQuery = g_poDB->executeQTQuery( QString("SELECT cassaId FROM cassa WHERE startDateTime < \"%1\" AND stopDateTime < \"%1\" AND cassaId > 0")
+                                                 .arg(ui->qdFilterDate->date().toString("yyyy-MM-dd")));
+
+        QStringList qslCassaIds;
+        while (poQuery->next())
+            qslCassaIds << poQuery->value(0).toString();
+
+        progressMax += qslCassaIds.size() * 3;
+
+        _logProcessInfo( tr("Deleting records" ) );
+        m_dlgProgress->setMaxValue(progressMax);
+        m_dlgProgress->show();
+
+        timer.start();
+
+        // Cassa törlés batch-ben
+        const int batchSize = 100;
+        for (int i = 0; i < qslCassaIds.size(); i += batchSize)
         {
-            typ_termektipus stTemp;
-            for( unsigned int i=0; i<nCount; i++ )
-            {
-                fread( &stTemp.nID, 4, 1, file );
-                stTemp.nNewID = 0;
-                fread( stTemp.strNev, 100, 1, file );
-                _DeCode( stTemp.strNev, 100 );
+            QStringList batch;
+            for (int j = 0; j < batchSize && (i + j) < qslCassaIds.size(); ++j)
+                batch << qslCassaIds.at(i + j);
 
-                ////ui->listLog->addItem( QString( "[%1] \'%2\'" ).arg(stTemp.nID).arg(stTemp.strNev) );
+            QString ids = batch.join(",");
 
-                m_qvProductTypes.append( stTemp );
-            }
+            g_poDB->executeQTQuery(QString("DELETE FROM cassaHistory WHERE cassaId IN (%1)").arg(ids));
+            for (int k = 0; k < batch.size(); ++k) { m_dlgProgress->stepValue(); QCoreApplication::processEvents(); }
+
+            g_poDB->executeQTQuery(QString("DELETE FROM cassadenominations WHERE cassaId IN (%1)").arg(ids));
+            for (int k = 0; k < batch.size(); ++k) { m_dlgProgress->stepValue(); QCoreApplication::processEvents(); }
+
+            g_poDB->executeQTQuery(QString("DELETE FROM cassa WHERE cassaId IN (%1)").arg(ids));
+            for (int k = 0; k < batch.size(); ++k) { m_dlgProgress->stepValue(); QCoreApplication::processEvents(); }
         }
-
-        fclose( file );
-        ui->listResultImport->addItem( tr("Importing %1 product types finished.").arg(m_qvProductTypes.size()) );
-        _logAction( tr("Importing %1 product types finished.").arg(m_qvProductTypes.size()) );
-        m_bIsProductTypesLoaded = true;
     }
-    else
+    catch (cSevException &e)
     {
-        ui->listResultImport->addItem( tr( "Error occured during opening trmktpsfsv.dat file." ) );
+        g_obLogger(e.severity()) << e.what() << EOM;
     }
 
-    setCursor( Qt::ArrowCursor);
+    int elapsedMs = timer.elapsed();
+    int minutes = elapsedMs / (1000 * 60);
+    int seconds = (elapsedMs / 1000) % 60;
+    int tenths  = (elapsedMs % 1000) / 100;
+
+    QString timeString = QString("%1:%2.%3")
+        .arg(minutes, 2, 10, QChar('0'))
+        .arg(seconds, 2, 10, QChar('0'))
+        .arg(tenths);
+
+    _logProcessInfo( tr( "Process finished (mm:ss.t) %1" ).arg( timeString ) );
+
+    m_dlgProgress->hide();
+    ui->listProgress->addItem("");
 }
-//====================================================================================
-void MainWindow::_loadProducts()
-//====================================================================================
-{
-    FILE           *file = NULL;
-    unsigned int    nCount = 0;
-    char            m_strVersion[10];
 
-    setCursor( Qt::WaitCursor);
 
-    m_qvProducts.clear();
-    m_nCountP = 0;
-
-    file = fopen( m_qsPFileName.toStdString().c_str(), "rb" );
-    if( file != NULL )
-    {
-        memset( m_strVersion, 0, 10 );
-        fread( m_strVersion, 10, 1, file );
-
-        nCount = 0;
-        fread( &nCount, 4, 1, file );
-        ui->listResultImport->addItem( tr("Count of products to be imported: %1").arg(nCount) );
-        _logAction( tr("Count of products to be imported: %1").arg(nCount) );
-        m_nCountP += nCount;
-        if( nCount > 0 )
-        {
-            typ_termek stTemp;
-            for( unsigned int i=0; i<nCount; i++ )
-            {
-                fread( &stTemp.nID, 4, 1, file );
-                stTemp.nNewID = 0;
-                fread( stTemp.strVonalkod, 20, 1, file );
-                fread( stTemp.strNev, 100, 1, file );
-                fread( &stTemp.nAr, 4, 1, file );
-                fread( &stTemp.nDarab, 4, 1, file );
-                fread( &stTemp.nArBeszerzes, 4, 1, file );
-
-                _DeCode( stTemp.strVonalkod, 20 );
-                _DeCode( stTemp.strNev, 100 );
-
-                if( m_nProgramType == DBTool::KiwiSun )
-                {
-                    stTemp.nAr          = stTemp.nAr * 100;
-                    stTemp.nArBeszerzes = stTemp.nArBeszerzes * 100;
-                }
-
-                ////ui->listLog->addItem( QString( "[%1] \'%2\' \'%3\' [%4] [%5] [%6]" ).arg(stTemp.nID).arg(stTemp.strVonalkod).arg(stTemp.strNev).arg(stTemp.nAr).arg(stTemp.nDarab).arg(stTemp.nArBeszerzes) );
-
-                m_qvProducts.append( stTemp );
-            }
-        }
-
-        fclose( file );
-        ui->listResultImport->addItem( tr("Importing %1 products finished.").arg(m_qvProducts.size()) );
-        _logAction( tr("Importing %1 products finished.").arg(m_qvProducts.size()) );
-        m_bIsProductsLoaded = true;
-    }
-    else
-    {
-        ui->listResultImport->addItem( tr( "Error occured during opening trmkfsv.dat file." ) );
-    }
-
-    setCursor( Qt::ArrowCursor);
-}
-//====================================================================================
-void MainWindow::_loadProductAssign()
-//====================================================================================
-{
-    FILE           *file = NULL;
-    unsigned int    nCount = 0;
-    char            m_strVersion[10];
-
-    setCursor( Qt::WaitCursor);
-
-    m_qvProductAssigns.clear();
-    m_nCountPA = 0;
-
-    file = fopen( m_qsPAFileName.toStdString().c_str(), "rb" );
-    if( file != NULL )
-    {
-        memset( m_strVersion, 0, 10 );
-        fread( m_strVersion, 10, 1, file );
-
-        nCount = 0;
-        fread( &nCount, 4, 1, file );
-        ui->listResultImport->addItem( tr("Count of product assigns to be imported: %1").arg(nCount) );
-        _logAction( tr("Count of product assigns to be imported: %1").arg(nCount) );
-        m_nCountPA += nCount;
-        if( nCount > 0 )
-        {
-            typ_termektipusassign stTemp;
-            for( unsigned int i=0; i<nCount; i++ )
-            {
-                fread( &stTemp.nTermekID, 4, 1, file );
-                fread( &stTemp.nTTipusID, 4, 1, file );
-
-                ////ui->listLog->addItem( QString( "[%1] [%2]" ).arg(stTemp.nTermekID).arg(stTemp.nTTipusID) );
-
-                m_qvProductAssigns.append( stTemp );
-            }
-        }
-
-        fclose( file );
-        ui->listResultImport->addItem( tr("Importing %1 product assigns finished.").arg(m_qvProductAssigns.size()) );
-        _logAction( tr("Importing %1 product assigns finished.").arg(m_qvProductAssigns.size()) );
-    }
-    else
-    {
-        ui->listResultImport->addItem( tr( "Error occured during opening trmktpssgfsv.dat file." ) );
-    }
-
-    setCursor( Qt::ArrowCursor);
-}
-//====================================================================================
-void MainWindow::_loadUsers()
-//====================================================================================
-{
-    FILE           *file = NULL;
-    unsigned int    nCount = 0;
-    char            m_strVersion[10];
-
-    setCursor( Qt::WaitCursor);
-
-    m_qvUsers.clear();
-    m_nCountU = 0;
-
-    file = fopen( m_qsUFileName.toStdString().c_str(), "rb" );
-    if( file != NULL )
-    {
-        memset( m_strVersion, 0, 10 );
-        fread( m_strVersion, 10, 1, file );
-
-        nCount = 0;
-        fread( &nCount, 4, 1, file );
-        ui->listResultImport->addItem( tr("Count of users to be imported: %1").arg(nCount) );
-        _logAction( tr("Count of users to be imported: %1").arg(nCount) );
-        m_nCountU += nCount;
-        if( nCount > 0 )
-        {
-            typ_user stTemp;
-            for( unsigned int i=0; i<nCount; i++ )
-            {
-                fread( &stTemp.nID, 4, 1, file );
-                fread( stTemp.strAzonosito, 20, 1, file );
-                fread( stTemp.strLoginNev, 20, 1, file );
-                fread( stTemp.strNevCsalad, 100, 1, file );
-                fread( stTemp.strJelszo, 20, 1, file );
-                fread( stTemp.strMegjegyzes, 1000, 1, file );
-                fread( &stTemp.nUserLevel, 4, 1, file );
-
-                _DeCode( stTemp.strAzonosito, 20 );
-                _DeCode( stTemp.strLoginNev, 20 );
-                _DeCode( stTemp.strNevCsalad, 100 );
-                _DeCode( stTemp.strJelszo, 20 );
-                _DeCode( stTemp.strMegjegyzes, 1000 );
-
-                //ui->listLog->addItem( QString( "\'%1\' \'%2\' \'%3\' \'%4\' \'%5\' [%6]" ).arg(stTemp.strAzonosito).arg(stTemp.strLoginNev).arg(stTemp.strNevCsalad).arg(stTemp.strJelszo).arg(stTemp.strMegjegyzes).arg(stTemp.nUserLevel) );
-
-                m_qvUsers.append( stTemp );
-            }
-        }
-
-        fclose( file );
-        ui->listResultImport->addItem( tr("Importing %1 users finished.").arg(m_qvUsers.size()) );
-        _logAction( tr("Importing %1 users finished.").arg(m_qvUsers.size()) );
-        m_bIsUsersLoaded = true;
-    }
-    else
-    {
-        ui->listResultImport->addItem( tr( "Error occured during opening srfsv.dat file." ) );
-    }
-
-    setCursor( Qt::ArrowCursor);
-}
-//====================================================================================
-void MainWindow::_EnCode( char *str, int size )
-//====================================================================================
-{
-   for(int i=0;i<size;i++)
-   {
-      str[i] ^= 11;
-   }
-}
-//====================================================================================
-void MainWindow::_DeCode( char *str, int size )
-//====================================================================================
-{
-   for(int i=0;i<size;i++)
-   {
-      str[i] ^= 11;
-   }
-}
-//====================================================================================
-// PREPROCESS PATIENTCARD TYPE
-//====================================================================================
-void MainWindow::_fillListPatientCardTypes()
-//====================================================================================
-{
-    setCursor( Qt::WaitCursor);
-
-    ui->listPatientCardTypes->clear();
-    for( int i=0; i<m_qvPatientCardTypes.count(); i++ )
-    {
-        ui->listPatientCardTypes->addItem( tr("%1\t%2 eur\t%3 minutes").arg( QString(m_qvPatientCardTypes.at(i).strNev) ).arg( m_qvPatientCardTypes.at(i).nAr ).arg( m_qvPatientCardTypes.at(i).nEgysegIdo ) );
-    }
-
-    setCursor( Qt::ArrowCursor);
-}
-//====================================================================================
-void MainWindow::on_pbSaveUnitTimeGeneral_clicked()
-//====================================================================================
-{
-    for( int i=0; i<m_qvPatientCardTypes.count(); i++ )
-    {
-        m_qvPatientCardTypes[i].nEgysegIdo = ui->ledPCTUnitTimeGeneral->text().toInt();
-    }
-    _fillListPatientCardTypes();
-
-    if( ui->ledPCTUnitTimeGeneral->text().toInt() > 0 )
-    {
-        ui->pbNext->setEnabled( true );
-    }
-}
-//====================================================================================
-void MainWindow::on_listPatientCardTypes_itemDoubleClicked(QListWidgetItem *item)
-//====================================================================================
-{
-    QStringList qslItem = item->text().split( '\t' );
-
-    QString qsUnitTime = qslItem.at(2);
-
-    ui->ledPCTName->setText( qslItem.at(0) );
-    ui->ledPCTUnitTime->setText( qsUnitTime.remove( tr(" minutes") ) );
-}
-//====================================================================================
-void MainWindow::on_pbSaveUnitTime_clicked()
-//====================================================================================
-{
-    int nSelected = ui->listPatientCardTypes->currentRow();
-
-    if( nSelected < m_qvPatientCardTypes.count() )
-    {
-        m_qvPatientCardTypes[ nSelected ].nEgysegIdo = ui->ledPCTUnitTime->text().toInt();
-    }
-
-    QListWidgetItem *item = ui->listPatientCardTypes->currentItem();
-
-    item->setText( tr("%1\t%2 eur\t%3 minutes").arg( QString(m_qvPatientCardTypes.at(nSelected).strNev) ).arg( m_qvPatientCardTypes.at(nSelected).nAr ).arg( m_qvPatientCardTypes.at(nSelected).nEgysegIdo ) );
-}
-//====================================================================================
-// PREPROCESS PATIENTCARDS
-//====================================================================================
-void MainWindow::on_ledBarcodeLength_textEdited(const QString &/*arg1*/)
-//====================================================================================
-{
-    ui->pbNext->setEnabled( ui->ledBarcodeLength->text().toInt() > 0 );
-}
-//====================================================================================
-// EXPORT
-//====================================================================================
-void MainWindow::on_chkPExportPCT_toggled(bool checked)
-//====================================================================================
-{
-    ui->chkPExportPC->setChecked( checked );
-    _checkExportSelection();
-}
-//====================================================================================
-void MainWindow::on_chkPExportPC_toggled(bool checked)
-//====================================================================================
-{
-    ui->chkPExportPCT->setChecked( checked );
-    _checkExportSelection();
-}
-//====================================================================================
-void MainWindow::on_chkPExportPT_toggled(bool checked)
-//====================================================================================
-{
-    ui->chkPExportP->setChecked( checked );
-    _checkExportSelection();
-}
-//====================================================================================
-void MainWindow::on_chkPExportP_toggled(bool checked)
-//====================================================================================
-{
-    ui->chkPExportPT->setChecked( checked );
-    _checkExportSelection();
-}
-//====================================================================================
-void MainWindow::on_chkPExportUser_toggled(bool /*checked*/)
-//====================================================================================
-{
-    _checkExportSelection();
-}
-//====================================================================================
-void MainWindow::_checkExportSelection()
-//====================================================================================
-{
-    if( ui->chkPExportPCT->isChecked() ||
-        ui->chkPExportPC->isChecked() ||
-        ui->chkPExportPT->isChecked() ||
-        ui->chkPExportP->isChecked() ||
-        ui->chkPExportUser->isChecked() )
-    {
-        ui->pbExportProcess->setEnabled( true );
-    }
-    else
-    {
-        ui->pbExportProcess->setEnabled( false );
-    }
-}
-//====================================================================================
-void MainWindow::on_pbExportProcess_clicked()
-//====================================================================================
-{
-    if( m_poDB->isOpen() )
-    {
-        setCursor( Qt::WaitCursor);
-
-        ui->chkPExportPCT->setEnabled( false );
-        ui->chkPExportPC->setEnabled( false );
-        ui->chkPExportPT->setEnabled( false );
-        ui->chkPExportP->setEnabled( false );
-        ui->chkPExportUser->setEnabled( false );
-        ui->pbExportProcess->setEnabled( false );
-        ui->pbCancel->setEnabled( false );
-        ui->pbPrev->setEnabled( false );
-
-        m_nCountItems = 0;
-
-        if( ui->chkPExportPCT->isChecked() )
-        {
-            m_nCountItems += m_nCountPCT;
-            m_nCountItems += m_nCountPC;
-        }
-        if( ui->chkPExportPT->isChecked() )
-        {
-            m_nCountItems += m_nCountPT;
-            m_nCountItems += m_nCountP;
-            m_nCountItems += m_nCountPA;
-        }
-        if( ui->chkPExportUser->isChecked() )
-        {
-            m_nCountItems += m_nCountU;
-        }
-
-        m_dlgProgress->setMaxValue( m_nCountItems );
-
-        hide();
-        m_dlgProgress->showProgress();
-
-        if( ui->chkPExportPCT->isChecked() )
-        {
-            _exportToBelenusPatientCardTypes();
-        }
-
-        if( ui->chkPExportPC->isChecked() )
-        {
-            _exportToBelenusPatientCards();
-        }
-
-        if( ui->chkPExportPT->isChecked() )
-        {
-            _exportToBelenusProductTypes();
-        }
-
-        if( ui->chkPExportP->isChecked() )
-        {
-            _exportToBelenusProducts();
-        }
-
-        if( ui->chkPExportUser->isChecked() )
-        {
-            _exportToBelenusUsers();
-        }
-
-        m_poDB->close();
-        m_dlgProgress->hideProgress();
-        show();
-
-        setCursor( Qt::ArrowCursor);
-
-        ui->listExport->addItem( tr("Export process finished") );
-        ui->listExport->addItem( tr("Connection to Belenus database closed") );
-        update();
-
-        ui->pbStartExit->setEnabled( true );
-    }
-    ui->pbExportProcess->setEnabled( false );
-    if( m_poDB != NULL ) delete m_poDB;
-
-    m_poDB = NULL;
-}
-//====================================================================================

@@ -15,6 +15,11 @@ public:
     void    hideProgress();
     void    setMaxValue( int p_nMaxValue );
     void    stepValue();
+    void    showStepProgress();
+    void    hideStepProgress();
+    void    setStepsMaxValue( int p_nMaxValue );
+    void    stepStepsValue();
+    void    resetStepsValue();
 
 protected:
 
