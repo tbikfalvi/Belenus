@@ -226,3 +226,7 @@ Version 2.3.0.0
 - HIBAJAVITAS: alkalmi vendeg adatrogzites varakozo listanal is mukodik most mar
 - HIBAJAVITAS: aktualis vendeg es masik berlet hasznalat megteveszto uzenet javitva
 
+Version 2.3.0.1
+===============
+- HIBAJAVITAS: csak keszpenzes varakozo listas inditasnal berlet egyseg informaciot probalt hibasan beolvasni, ezert nem jelent meg a varakozo lista ikon es nem lehetett a varakozo listabol inditani a gepeket
+

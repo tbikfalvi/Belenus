@@ -2231,15 +2231,22 @@ void cWndMain::on_action_UseDeviceLater_triggered()
 
         if( obDlgPanelUse.panelUsePatientCardId() > 0 && obDlgPanelUse.panelUseSecondsCard() > 0 )
         {
-            cDBPatientCard  obDBPatientCard;
+            try
+            {
+                cDBPatientCard  obDBPatientCard;
 
-            obDBPatientCard.load( obDlgPanelUse.panelUsePatientCardId() );
+                obDBPatientCard.load( obDlgPanelUse.panelUsePatientCardId() );
 
-            uiGuestId = obDBPatientCard.patientId();
-            uiPatientCardId = obDlgPanelUse.panelUsePatientCardId();
-            qsBarcode = obDlgPanelUse.panelUsePatientCardBarcode();
-            qsUnitIds = obDlgPanelUse.panelUnitIds().join( "|" );
-            inLengthCard = obDlgPanelUse.panelUseSecondsCard();
+                uiGuestId = obDBPatientCard.patientId();
+                uiPatientCardId = obDlgPanelUse.panelUsePatientCardId();
+                qsBarcode = obDlgPanelUse.panelUsePatientCardBarcode();
+                qsUnitIds = obDlgPanelUse.panelUnitIds().join( "|" );
+                inLengthCard = obDlgPanelUse.panelUseSecondsCard();
+            }
+            catch( cSevException &e )
+            {
+                g_obLogger(e.severity()) << e.what() << EOM;
+            }
         }
         if( obDlgPanelUse.panelUseSecondsCash() > 0 )
         {
@@ -2261,7 +2268,14 @@ void cWndMain::on_action_UseDeviceLater_triggered()
 
                         if( obDlgAddGuest.exec() == QDialog::Accepted )
                         {
-                            g_obGuest.load( obDlgAddGuest.patientId() );
+                            try
+                            {
+                                g_obGuest.load( obDlgAddGuest.patientId() );
+                            }
+                            catch( cSevException &e )
+                            {
+                                g_obLogger(e.severity()) << e.what() << EOM;
+                            }
                         }
                         break;
                     }
@@ -2321,8 +2335,7 @@ void cWndMain::on_action_UseDeviceLater_triggered()
             }
             catch( cSevException &e )
             {
-        //        g_obLogger(e.severity()) << e.what() << EOM;
-//                g_obGen.showTrayError( e.what() );
+                g_obLogger(e.severity()) << e.what() << EOM;
             }
 
             cDBShoppingCart obDBShoppingCart;
@@ -2349,23 +2362,15 @@ void cWndMain::on_action_UseDeviceLater_triggered()
             QString         qsComment       = tr("Using device later");
             bool            bShoppingCart   = false;
             unsigned int    uiCouponId      = 0;
-//            cDBDiscount     obDBDiscount;
 
             obDlgCassaAction.cassaResult( &inPayType, &bShoppingCart, &uiCouponId );
 
             if( inCassaAction == QDialog::Accepted && !bShoppingCart )
             {
-                /*if( uiCouponId > 0 )
-                {
-                    obDBDiscount.load( uiCouponId );
-
-                    obDBShoppingCart.setItemDiscount( obDBShoppingCart.itemDiscount()+obDBDiscount.discount(obDBShoppingCart.itemSumPrice()) );
-                }*/
                 uiLedgerId = g_obCassa.cassaProcessDeviceUse( obDBShoppingCart, qsComment, inPayType, mdiPanels->getPanelCaption(obDBShoppingCart.panelId()) );
             }
             else if( inCassaAction == QDialog::Accepted && bShoppingCart )
             {
-                //mdiPanels->itemAddedToShoppingCart();
                 uiShoppingCartItemId = obDBShoppingCart.id();
             }
         }
@@ -2402,20 +2407,21 @@ void cWndMain::on_action_UseDeviceLater_triggered()
                 on_action_PatientEmpty_triggered();
             }
 
-            QStringList qslUnitIds = qsUnitIds.split( '|' );
-
-            for( int i=0; i<qslUnitIds.count(); i++ )
+            if( uiPatientCardId > 0 )
             {
-                cDBPatientcardUnit obDBPatientcardUnit;
+                QStringList qslUnitIds = qsUnitIds.split( '|' );
 
-                obDBPatientcardUnit.load( qslUnitIds.at(i).toInt() );
-                obDBPatientcardUnit.setPrepared( true );
-                obDBPatientcardUnit.save();
+                for( int i=0; i<qslUnitIds.count(); i++ )
+                {
+                    cDBPatientcardUnit obDBPatientcardUnit;
+
+                    obDBPatientcardUnit.load( qslUnitIds.at(i).toInt() );
+                    obDBPatientcardUnit.setPrepared( true );
+                    obDBPatientcardUnit.save();
+                }
             }
 
             mdiPanels->addPatientToWaitingQueue( true );
-    //        mdiPanels->addPatientToWaitingQueue( inLengthCash, inPrice, uiPatientCardId, qsUnitIds, inLengthCard, uiLedgerId, inPayType );
-
             m_bShoppingCartHasItem = g_obGen.isShoppingCartHasItems();
         }
         catch( cSevException &e )
