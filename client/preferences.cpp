@@ -113,6 +113,8 @@ void cPreferences::init()
 
     m_bLogFilesDeleteAllowed        = false;
     m_nDeleteLogFilesMonths         = 3;
+
+    m_bSaveAdhocGuest               = true;
 }
 
 void cPreferences::loadSettings() throw (cSevException)
@@ -226,6 +228,8 @@ void cPreferences::loadSettings() throw (cSevException)
         m_nPCExpirationDays             = loadSettingI( "AUTOMAIL_ExpirationDays", 7 );
         m_bAutoMailOnPCUnitChange       = loadSettingB( "AUTOMAIL_OnUnitChange", false );
         m_bCardyGoSync                  = loadSettingB( "AUTOMAIL_OnCardyGo", false );
+
+        m_bSaveAdhocGuest               = loadSettingB( "GEN_SaveAdhocGuest", true );
 
         m_qpSecondaryPosition = QPoint( nLeft, nTop );
         m_qsSecondarySize = QSize( nWidth, nHeight );
@@ -373,6 +377,8 @@ void cPreferences::saveSettings() throw (cSevException)
         saveSettingI( "AUTOMAIL_ExpirationDays", m_nPCExpirationDays );
         saveSettingB( "AUTOMAIL_OnUnitChange", m_bAutoMailOnPCUnitChange );
         saveSettingB( "AUTOMAIL_OnCardyGo", m_bCardyGoSync );
+
+        saveSettingB( "GEN_SaveAdhocGuest", m_bSaveAdhocGuest );
 
         delete poQuery;
     }
@@ -1888,5 +1894,15 @@ void cPreferences::setDeleteLogFilesMonths( const int p_nDeleteLogFilesMonths )
 int cPreferences::getDeleteLogFilesMonths() const
 {
     return m_nDeleteLogFilesMonths;
+}
+
+void cPreferences::setSaveAdhocGuest(bool p_bSaveAdhocGuest)
+{
+    m_bSaveAdhocGuest = p_bSaveAdhocGuest;
+}
+
+bool cPreferences::isSaveAdhocGuest()
+{
+    return m_bSaveAdhocGuest;
 }
 

@@ -212,6 +212,7 @@ cWndMain::cWndMain( QWidget *parent ) : QMainWindow( parent )
     connect( mdiPanels, SIGNAL( signalSetWaitTime(uint,uint) ),          this, SLOT( slotSetWaitTime(uint,uint) ) );
     connect( mdiPanels, SIGNAL( signalSetInfoText(uint,QString) ),       this, SLOT( slotSetInfoText(uint,QString) ) );
     connect( mdiPanels, SIGNAL( signalMainWindowActivated()),            this, SLOT( slotMainWindowActivated() ) );
+    connect( mdiPanels, SIGNAL( signalEmptyCurrentPatient() ),           this, SLOT( on_action_PatientEmpty_triggered() ) );
 
     updateTitle();
     setWindowIcon( QIcon("./resources/belenus.ico") );
@@ -1605,25 +1606,7 @@ void cWndMain::closeEvent( QCloseEvent *p_poEvent )
         {
             g_obLogger(cSeverity::INFO) << "User selected to close the application" << EOM;
             logoutUser();
-/*
-            if( g_obDBMirror.isAvailable() )
-            {
-                if( g_poPrefs->getDBAutoArchive() ||
-                    (g_obDBMirror.checkIsSynchronizationNeeded() &&
-                     QMessageBox::question( this, tr("Question"),
-                                            tr("Database synchronization needed.\n"
-                                               "Do you want to synchronize database with server?"),
-                                            QMessageBox::Yes | QMessageBox::No, QMessageBox::No ) == QMessageBox::Yes ) )
-                {
-                    hide();
 
-                    cDlgSynchronization     obDlgSynchronization( this );
-
-                    obDlgSynchronization.autoSynchronization();
-                    obDlgSynchronization.exec();
-                }
-            }
-*/
             p_poEvent->accept();
             _checkArchiveDir();
             g_obGen.backupDatabase( this );
@@ -1682,16 +1665,6 @@ void cWndMain::on_action_Preferences_triggered()
     }
 
     slotMainWindowActivated();
-/*
-    if( g_poPrefs->isBlnsHttpEnabled() )
-    {
-        m_pbStatusHttp.setIcon( QIcon( "./resources/40x40_http_enabled.png" ) );
-    }
-    else
-    {
-        m_pbStatusHttp.setIcon( QIcon( "./resources/40x40_http_disabled.png" ) );
-    }
-*/
 }
 //====================================================================================
 void cWndMain::on_action_Users_triggered()
@@ -1759,7 +1732,6 @@ void cWndMain::on_action_LogOut_triggered()
     g_obLogger(cSeverity::INFO) << "User " << g_obUser.name() << " (" << g_obUser.realName() << ") logged out" << EOM;
 
     g_obUser.logOut();
-//    g_obLogDBWriter.setAppUser( 0 );
     updateTitle();
 
     if( !showLogIn() ) close();
@@ -2158,7 +2130,7 @@ void cWndMain::on_action_UseDevice_triggered()
         }
         if( obDlgPanelUse.panelUseSecondsCash() > 0 )
         {
-            if( g_obGuest.id() == 0 )
+            if( g_poPrefs->isSaveAdhocGuest() && g_obGuest.id() == 0 )
             {
                 // Keszpenzes hasznalat, de nincs vendeg kivalasztva
                 switch( customMsgBox( this, MSG_QUESTION,
@@ -2250,7 +2222,7 @@ void cWndMain::on_action_UseDeviceLater_triggered()
         }
         if( obDlgPanelUse.panelUseSecondsCash() > 0 )
         {
-            if( g_obGuest.id() == 0 && uiGuestId == 0 )
+            if( g_poPrefs->isSaveAdhocGuest() && g_obGuest.id() == 0 && uiGuestId == 0 )
             {
                 // Keszpenzes hasznalat, de nincs vendeg kivalasztva
                 switch( customMsgBox( this, MSG_QUESTION,

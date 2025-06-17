@@ -168,6 +168,8 @@ cDlgPreferences::cDlgPreferences( QWidget *p_poParent )
     chkVisibleSecTubeCleanup->setChecked( g_poPrefs->isTextTubeCleanupVisible() );
     chkVisibleSecTubeCleanup->setEnabled( g_obUser.isInGroup( cAccessGroup::SYSTEM ) );
 
+    chkSaveAdhocGuest->setChecked( g_poPrefs->isSaveAdhocGuest() );
+
     //---------------------------------------------------------------------------------------------------------------------------------------------------
     // Patientcard page
     //---------------------------------------------------------------------------------------------------------------------------------------------------
@@ -677,6 +679,9 @@ void cDlgPreferences::accept()
     g_poPrefs->setLogFilesDeleteAllowed( chkDeleteLogFilesMonths->isChecked() );
     g_poPrefs->setDeleteLogFilesMonths( ledDeleteLogFilesMonths->text().toInt() );
 
+    g_poPrefs->setSaveAdhocGuest( chkSaveAdhocGuest->isChecked() );
+
+
     m_dlgProgress->showProgress();
         g_poPrefs->saveSettings();
     m_dlgProgress->hideProgress();
@@ -797,6 +802,7 @@ void cDlgPreferences::_updateDatabaseLanguage()
     g_poDB->executeQTQuery( QString("UPDATE genders SET genderName=\"%1\" WHERE genderId=0 ").arg( tr("Not defined") ) );
     g_poDB->executeQTQuery( QString("UPDATE genders SET genderName=\"%1\" WHERE genderId=1 ").arg( tr("Male") ) );
     g_poDB->executeQTQuery( QString("UPDATE genders SET genderName=\"%1\" WHERE genderId=2 ").arg( tr("Female") ) );
+    g_poDB->executeQTQuery( QString("UPDATE genders SET genderName=\"%1\" WHERE genderId=3 ").arg( tr("Prefer not to say") ) );
 
     g_poDB->executeQTQuery( QString("UPDATE skinTypes SET skinTypeName=\"%1\" WHERE skinTypeId=0 ").arg( tr("Not defined") ) );
 
