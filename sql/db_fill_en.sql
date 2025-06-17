@@ -2,7 +2,7 @@
 -- Belenus Szoftver Rendszer (c) Bikfalvi Tamas
 -- -----------------------------------------------------------------------------------
 -- Filename    : db_fill_en.sql
--- DbVersion   : 2.3.0.0
+-- DbVersion   : 2.3.1.0
 -- Author      : Bikfalvi Tamas
 -- -----------------------------------------------------------------------------------
 -- Adatbazist default adatokkal feltolto SQL script
@@ -325,8 +325,8 @@ INSERT INTO `settings` (`settingId`, `identifier`, `value`) VALUES
  (NULL, 'CURRENT_CASSA_ID', '0'),
  (NULL, 'APPLICATION_VERSION', '2_3_1_0'),
  (NULL, 'WEBSYNC_VERSION', '2_3_1_0'),
- (NULL, 'VIEWER_VERSION', '2_3_1_0'),
- (NULL, 'BACKUP_VERSION', '2_3_1_0'),
+ (NULL, 'VIEWER_VERSION', '2_3_0_0'),
+ (NULL, 'BACKUP_VERSION', '2_3_0_0'),
  (NULL, 'DATABASE_VERSION', '2_3_1_0'),
  (NULL, 'LICENCE_CHECK', 56),
  (NULL, 'LICENCE_CHECK_COUNTER', 56),

@@ -188,9 +188,9 @@
     </message>
     <message>
         <location filename="general.cpp" line="82"/>
-        <location filename="general.cpp" line="692"/>
-        <location filename="general.cpp" line="699"/>
-        <location filename="general.cpp" line="706"/>
+        <location filename="general.cpp" line="698"/>
+        <location filename="general.cpp" line="705"/>
+        <location filename="general.cpp" line="712"/>
         <location filename="wndmain.cpp" line="3623"/>
         <source>Information</source>
         <translation type="unfinished"></translation>
@@ -299,22 +299,27 @@
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="general.cpp" line="598"/>
+        <location filename="general.cpp" line="599"/>
         <source>&lt;table&gt;&lt;tr&gt;&lt;td&gt;&lt;b&gt;Last visit&lt;/b&gt;&lt;/td&gt;&lt;/tr&gt;&lt;/table&gt;</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="general.cpp" line="607"/>
+        <location filename="general.cpp" line="609"/>
         <source>&lt;tr&gt;&lt;td width=&quot;150&quot;&gt;&lt;b&gt;Date:&lt;/b&gt;&lt;/td&gt;&lt;td&gt;%1&lt;/td&gt;&lt;/tr&gt;</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="general.cpp" line="608"/>
+        <location filename="general.cpp" line="610"/>
         <source>&lt;tr&gt;&lt;td width=&quot;150&quot;&gt;&lt;b&gt;Length:&lt;/b&gt;&lt;/td&gt;&lt;td&gt;%1 minutes&lt;/td&gt;&lt;/tr&gt;</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="general.cpp" line="612"/>
+        <location filename="general.cpp" line="611"/>
+        <source>&lt;tr&gt;&lt;td width=&quot;150&quot;&gt;&lt;b&gt;Device:&lt;/b&gt;&lt;/td&gt;&lt;td&gt;%1&lt;/td&gt;&lt;/tr&gt;</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="general.cpp" line="615"/>
         <source>&lt;tr&gt;&lt;td&gt;&lt;i&gt;There is no recorded usage of this card yet&lt;/i&gt;&lt;/td&gt;&lt;/tr&gt;</source>
         <translation type="unfinished"></translation>
     </message>
