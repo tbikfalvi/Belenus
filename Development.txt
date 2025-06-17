@@ -230,3 +230,7 @@ Version 2.3.0.1
 ===============
 - HIBAJAVITAS: csak keszpenzes varakozo listas inditasnal berlet egyseg informaciot probalt hibasan beolvasni, ezert nem jelent meg a varakozo lista ikon es nem lehetett a varakozo listabol inditani a gepeket
 
+Version 2.3.1.0
+===============
+- HIBAJAVITAS: aktualis vendeg kitorlese nem mukodott jol
+- KIEGESZITES: az alkalmi vendeg rogziteset felkinalo ablak megjeleneset a beallitasoknal lehet engedelyezni vagy letiltani
