@@ -588,8 +588,9 @@ void cGeneral::showPatientLastVisitInformation(QString p_qsBarcode, int p_nClose
         qsText.append( QString("</table>") );
         qsText.append( "<p>" );
 
-        QString qsQuery = QString( "SELECT dateTimeUsed, COUNT(dateTimeUsed), patientcardunits.unitTime "
-                                   "FROM patientcardunits WHERE "
+        QString qsQuery = QString( "SELECT dateTimeUsed, COUNT(dateTimeUsed), patientcardunits.unitTime, title "
+                                   "FROM patientcardunits, panels WHERE "
+                                   "patientcardunits.panelid = panels.panelid AND "
                                    "patientcardunits.active=0 AND "
                                    "patientcardid=%1 GROUP BY "
                                    "patientcardid, dateTimeUsed ORDER BY dateTimeUsed" ).arg( obDBPatientCard.id() );
@@ -603,14 +604,19 @@ void cGeneral::showPatientLastVisitInformation(QString p_qsBarcode, int p_nClose
 
             QString qsDate      = poQuery->value(0).toDateTime().toString( QString("%1  hh:mm").arg( g_poPrefs->getDateFormat() ) );
             QString qsLength    = QString::number( poQuery->value(1).toInt()*poQuery->value(2).toInt() );
+            QString qsTitle     = poQuery->value( 3 ).toString();
 
             qsText.append( QObject::tr("<tr><td width=\"150\"><b>Date:</b></td><td>%1</td></tr>").arg( qsDate ) );
             qsText.append( QObject::tr("<tr><td width=\"150\"><b>Length:</b></td><td>%1 minutes</td></tr>").arg( qsLength ) );
+            qsText.append( QObject::tr("<tr><td width=\"150\"><b>Device:</b></td><td>%1</td></tr>").arg( qsTitle ) );
         }
         else
         {
             qsText.append( QObject::tr("<tr><td><i>There is no recorded usage of this card yet</i></td></tr>") );
         }
+
+
+
         qsText.append( QString("</table>") );
 
         obDlgInformation.setInformationTitle( qsTitle );

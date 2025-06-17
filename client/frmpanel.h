@@ -166,6 +166,7 @@ private:
     QPushButton                 *icoPanelStop;
     QPushButton                 *icoPanelCassa;
     QPushButton                 *icoScheduledGuest;
+    QPushButton                 *icoCurrentPatient;
     QProgressBar                *prgUsageMonitor;
 
     QString                         m_qsStatus;
@@ -201,6 +202,7 @@ signals:
     void            signalSetInfoText( unsigned int p_uiPanelId, const QString &p_qsInfo );
     void            signalSelectedFromWaitingQueue();
     void            signalMainWindowActivated();
+    void            signalEmptyCurrentPatient();
 
 private slots:
     void            slotPanelStartClicked();

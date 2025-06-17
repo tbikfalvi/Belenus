@@ -4,8 +4,8 @@
 //
 //====================================================================================
 
-#define APPLICATION_VERSION_NUMBER  "2.3.0.0"
-#define DATABASE_VERSION_NUMBER     "2.3.0.0"
+#define APPLICATION_VERSION_NUMBER  "2.3.1.0"
+#define DATABASE_VERSION_NUMBER     "2.3.1.0"
 
 //====================================================================================
 

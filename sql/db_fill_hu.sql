@@ -2,7 +2,7 @@
 -- Belenus Szoftver Rendszer (c) Bikfalvi Tamas
 -- -----------------------------------------------------------------------------------
 -- Filename    : db_fill_hu.sql
--- DbVersion   : 2.3.0.0
+-- DbVersion   : 2.3.1.0
 -- Author      : Bikfalvi Tamas
 -- -----------------------------------------------------------------------------------
 -- Adatbazist default adatokkal feltolto SQL script
@@ -3652,11 +3652,11 @@ INSERT INTO `settings` (`settingId`, `identifier`, `value`) VALUES
  (NULL, 'LICENCE_LAST_VALIDATED', '2024-03-25 12:00:00'),
  (NULL, 'ABOUT_INFO_LINK', 'http://www.kiwisun.eu/elerhetosegeink.html'),
  (NULL, 'CURRENT_CASSA_ID', '0'),
- (NULL, 'APPLICATION_VERSION', '2_2_2_0'),
- (NULL, 'WEBSYNC_VERSION', '2_2_2_0'),
- (NULL, 'VIEWER_VERSION', '2_2_2_0'),
- (NULL, 'BACKUP_VERSION', '2_2_2_0'),
- (NULL, 'DATABASE_VERSION', '2_2_2_0'),
+ (NULL, 'APPLICATION_VERSION', '2_3_1_0'),
+ (NULL, 'WEBSYNC_VERSION', '2_3_1_0'),
+ (NULL, 'VIEWER_VERSION', '2_3_0_0'),
+ (NULL, 'BACKUP_VERSION', '2_3_0_0'),
+ (NULL, 'DATABASE_VERSION', '2_3_1_0'),
  (NULL, 'LICENCE_CHECK', 56),
  (NULL, 'LICENCE_CHECK_COUNTER', 56),
  (NULL, 'LICENCE_WORKTIME', 336),
@@ -3679,6 +3679,7 @@ INSERT INTO `settings` (`settingId`, `identifier`, `value`) VALUES
  (NULL, "GEN_SecondsWaitOnSlpashScreen", 3 ),
  (NULL, "GEN_DateFormat", "yyyy-MM-dd" ),
  (NULL, "GEN_Component", 0 ),
+ (NULL, 'GEN_SaveAdhocGuest', '1'),
  (NULL, "DB_AllowDeleteObsoleteUnits", 0 ),
  (NULL, "DB_ObsolateUnitsDays", 30 ),
  (NULL, "FILE_AllowDeleteLogFiles", 0 ),
