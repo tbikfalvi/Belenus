@@ -294,6 +294,8 @@ public:
     void            setDeleteLogFilesMonths( const int p_nDeleteLogFilesMonths );
     int             getDeleteLogFilesMonths() const;
 
+    void            setSaveAdhocGuest( bool p_bSaveAdhocGuest );
+    bool            isSaveAdhocGuest();
 
 //void            setXXX( const QString &p_qsXXX );
 //QString         getXXX() const;
@@ -413,6 +415,7 @@ private:
     int             m_nObsolateUnitsDays;
     int             m_nDeleteLogFilesMonths;
     bool            m_bLogFilesDeleteAllowed;
+    bool            m_bSaveAdhocGuest;
 
     void init();
 };

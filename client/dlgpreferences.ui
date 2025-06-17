@@ -23,7 +23,7 @@
    <item>
     <widget class="QTabWidget" name="tbwPreferences">
      <property name="currentIndex">
-      <number>0</number>
+      <number>2</number>
      </property>
      <widget class="QWidget" name="tab_General">
       <attribute name="title">
@@ -872,7 +872,7 @@
       <attribute name="title">
        <string>Device</string>
       </attribute>
-      <layout class="QVBoxLayout" name="verticalLayout_27">
+      <layout class="QVBoxLayout" name="verticalLayout_31">
        <item>
         <widget class="QGroupBox" name="gbLedger">
          <property name="title">
@@ -1127,6 +1127,39 @@
                </widget>
               </item>
              </layout>
+            </item>
+           </layout>
+          </item>
+         </layout>
+        </widget>
+       </item>
+       <item>
+        <widget class="QGroupBox" name="gbAdhocGuest">
+         <property name="title">
+          <string> When device planned to start with only cash usage ... </string>
+         </property>
+         <layout class="QVBoxLayout" name="verticalLayout_27">
+          <item>
+           <layout class="QHBoxLayout" name="horizontalLayout_2">
+            <item>
+             <widget class="QCheckBox" name="chkSaveAdhocGuest">
+              <property name="text">
+               <string>Pop-up message box to ask if the ad-hoc guest is willing to register</string>
+              </property>
+             </widget>
+            </item>
+            <item>
+             <spacer name="horizontalSpacer_37">
+              <property name="orientation">
+               <enum>Qt::Horizontal</enum>
+              </property>
+              <property name="sizeHint" stdset="0">
+               <size>
+                <width>40</width>
+                <height>20</height>
+               </size>
+              </property>
+             </spacer>
             </item>
            </layout>
           </item>
