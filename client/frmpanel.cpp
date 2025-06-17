@@ -57,6 +57,7 @@ cFrmPanel::cFrmPanel( const unsigned int p_uiPanelId ) : QFrame()
     icoPanelCassa       = new QPushButton( this );
     icoShoppingCart     = new QPushButton( this );
     icoScheduledGuest   = new QPushButton( this );
+    icoCurrentPatient   = new QPushButton( this );
     prgUsageMonitor     = new QProgressBar( this );
 
     lblCurrStatus->setWordWrap( true );
@@ -71,6 +72,7 @@ cFrmPanel::cFrmPanel( const unsigned int p_uiPanelId ) : QFrame()
     layoutIcons->addItem( spacerIcons );
     layoutIcons->addWidget( icoShoppingCart );
     layoutIcons->addWidget( icoScheduledGuest );
+    layoutIcons->addWidget( icoCurrentPatient );
 
     verticalLayout->setContentsMargins( 0, 0, 0, 0 );
     verticalLayout->addWidget( lblTitle );
@@ -129,6 +131,12 @@ cFrmPanel::cFrmPanel( const unsigned int p_uiPanelId ) : QFrame()
     icoScheduledGuest->setIcon( QIcon(QString("./resources/40x40_hourglass.png")) );
     icoScheduledGuest->setFocusPolicy( Qt::NoFocus );
     connect( icoScheduledGuest, SIGNAL(clicked()), this, SLOT(slotScheduledGuestClicked()) );
+
+    icoCurrentPatient->setIconSize( QSize(20,20) );
+    icoCurrentPatient->setIcon( QIcon(QString("./resources/40x40_patient.png")) );
+    icoCurrentPatient->setFocusPolicy( Qt::NoFocus );
+//    connect( icoCurrentPatient, SIGNAL(clicked()), this, SLOT(slotScheduledGuestClicked()) );
+
 
     prgUsageMonitor->setTextVisible( false );
     prgUsageMonitor->setFormat( "" );
@@ -279,6 +287,8 @@ void cFrmPanel::start()
                                 << _transactionId()
                                 << "] Time ["
                                 << m_inMainProcessLength/60
+                                << "] GuestId ["
+                                << m_uiCurrentPatient
                                 << "] CardIds ["
                                 << qslPCUsed.join(" ")
                                 << "] CashLength ["
@@ -294,6 +304,8 @@ void cFrmPanel::start()
 
     activateNextStatus();
     m_inTimerId = startTimer( 1000 );
+
+    emit signalEmptyCurrentPatient();
 }
 //====================================================================================
 void cFrmPanel::continueStoppedDevice()
@@ -581,6 +593,7 @@ void cFrmPanel::setMainProcessTime( const unsigned int p_uiPatientCardId, const 
     m_vrPatientCards.push_back( stTemp );
 
     m_inCardTimeRemains    += p_inLength;
+    m_uiCurrentPatient      = g_obGuest.id();
 
     for( int i=0; i<p_qslUnitIds.count(); i++ )
     {
@@ -724,6 +737,7 @@ void cFrmPanel::timerEvent ( QTimerEvent * )
         icoPanelCassa->setVisible( isHasToPay() );
         icoShoppingCart->setVisible( m_bIsItemInShoppingCart );
         icoScheduledGuest->setVisible( m_bIsPatientWaiting );
+        icoCurrentPatient->setVisible( m_uiCurrentPatient>0 );
     }
     catch( cSevException &e )
     {
@@ -970,6 +984,7 @@ void cFrmPanel::displayStatus()
     icoPanelCassa->setVisible( isHasToPay() );
     icoShoppingCart->setVisible( m_bIsItemInShoppingCart );
     icoScheduledGuest->setVisible( m_bIsPatientWaiting );
+    icoCurrentPatient->setVisible( m_uiCurrentPatient>0 );
 }
 //====================================================================================
 void cFrmPanel::formatStatusString( QString p_qsStatusText )

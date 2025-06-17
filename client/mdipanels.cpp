@@ -45,16 +45,17 @@ void cMdiPanels::initPanels()
         poFrame->setFrameShadow( QFrame::Sunken );
         poFrame->setLineWidth( 3 );
 
-        connect( poFrame, SIGNAL( panelClicked( unsigned int ) ),           this, SLOT( activatePanel( unsigned int ) ) );
-        connect( poFrame, SIGNAL( signalOpenShoppingCart( uint ) ),         this, SLOT( openShoppingCart( uint ) ) );
-        connect( poFrame, SIGNAL( signalPaymentActivated(uint) ),           this, SLOT( slotPaymentActivated(uint) ) );
-        connect( poFrame, SIGNAL( signalOpenScheduleTable(uint) ),          this, SLOT( slotOpenScheduleTable(uint) ) );
-        connect( poFrame, SIGNAL( signalStatusChanged(uint,uint,QString)),  this, SLOT( slotStatusChanged(uint,uint,QString) ) );
-        connect( poFrame, SIGNAL( signalSetCounterText(uint,QString)),      this, SLOT( slotSetCounterText(uint,QString) ) );
-        connect( poFrame, SIGNAL( signalSetWaitTime(uint,uint) ),           this, SLOT( slotSetWaitTime(uint,uint) ) );
-        connect( poFrame, SIGNAL( signalSetInfoText(uint,QString) ),        this, SLOT( slotSetInfoText(uint,QString) ) );
-        connect( poFrame, SIGNAL( signalSelectedFromWaitingQueue()),        this, SLOT( slotSelectedFromWaitingQueue()) );
-        connect( poFrame, SIGNAL( signalMainWindowActivated()),             this, SLOT( slotMainWindowActivated()) );
+        connect( poFrame, SIGNAL( panelClicked( unsigned int )              ), this, SLOT( activatePanel( unsigned int )        ) );
+        connect( poFrame, SIGNAL( signalOpenShoppingCart( uint )            ), this, SLOT( openShoppingCart( uint )             ) );
+        connect( poFrame, SIGNAL( signalPaymentActivated(uint)              ), this, SLOT( slotPaymentActivated(uint)           ) );
+        connect( poFrame, SIGNAL( signalOpenScheduleTable(uint)             ), this, SLOT( slotOpenScheduleTable(uint)          ) );
+        connect( poFrame, SIGNAL( signalStatusChanged(uint,uint,QString)    ), this, SLOT( slotStatusChanged(uint,uint,QString) ) );
+        connect( poFrame, SIGNAL( signalSetCounterText(uint,QString)        ), this, SLOT( slotSetCounterText(uint,QString)     ) );
+        connect( poFrame, SIGNAL( signalSetWaitTime(uint,uint)              ), this, SLOT( slotSetWaitTime(uint,uint)           ) );
+        connect( poFrame, SIGNAL( signalSetInfoText(uint,QString)           ), this, SLOT( slotSetInfoText(uint,QString)        ) );
+        connect( poFrame, SIGNAL( signalSelectedFromWaitingQueue()          ), this, SLOT( slotSelectedFromWaitingQueue()       ) );
+        connect( poFrame, SIGNAL( signalMainWindowActivated()               ), this, SLOT( slotMainWindowActivated()            ) );
+        connect( poFrame, SIGNAL( signalEmptyCurrentPatient()               ), this, SLOT( slotEmptyCurrentPatient()            ) );
 
         poPanel = new QMdiSubWindow( 0, Qt::FramelessWindowHint );
         poPanel->setWidget( poFrame );
@@ -527,5 +528,10 @@ void cMdiPanels::slotSelectedFromWaitingQueue()
 void cMdiPanels::slotMainWindowActivated()
 {
     emit signalMainWindowActivated();
+}
+//====================================================================================
+void cMdiPanels::slotEmptyCurrentPatient()
+{
+    emit signalEmptyCurrentPatient();
 }
 //====================================================================================

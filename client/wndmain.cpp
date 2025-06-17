@@ -212,6 +212,7 @@ cWndMain::cWndMain( QWidget *parent ) : QMainWindow( parent )
     connect( mdiPanels, SIGNAL( signalSetWaitTime(uint,uint) ),          this, SLOT( slotSetWaitTime(uint,uint) ) );
     connect( mdiPanels, SIGNAL( signalSetInfoText(uint,QString) ),       this, SLOT( slotSetInfoText(uint,QString) ) );
     connect( mdiPanels, SIGNAL( signalMainWindowActivated()),            this, SLOT( slotMainWindowActivated() ) );
+    connect( mdiPanels, SIGNAL( signalEmptyCurrentPatient() ),           this, SLOT( on_action_PatientEmpty_triggered() ) );
 
     updateTitle();
     setWindowIcon( QIcon("./resources/belenus.ico") );
