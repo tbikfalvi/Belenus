@@ -422,6 +422,8 @@ void cFrmPanel::clear()
     m_bIsDeviceStopped = false;
     icoPanelStart->setVisible( false );
 
+    emit signalEmptyCurrentPatient();
+
     displayStatus();
 }
 //====================================================================================
