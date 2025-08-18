@@ -642,11 +642,18 @@ void dlgMain::timerEvent(QTimerEvent *)
     if( m_nIndexPCOnlineSync >= m_nTimerPCOnlineSync && !m_bSyncPCFromServer && !m_bSyncPCToServer && !m_bSendMailToServer )
     {
         m_nIndexPCOnlineSync = 0;
+
+//**********************************************************************************************************************
+// jelenleg nincs online eladott berlet, tehat nem is kell lekerdezni
+// kesobb majd ezt a reszt lehet hasznalni
+//**********************************************************************************************************************
+        /*
         m_bSyncPCFromServer = true;
         g_obLogger(cSeverity::DEBUG) << "Process started: retrieving patientcard data sold online." << EOM;
         ui->lblStatusSync->setPixmap( QPixmap( ":/hourglass.png" ) );
         trayIcon->setIcon( QIcon( ":/hourglass.png" ) );
         g_poBlnsHttp->getPatientCardsSoldOnline();
+        */
     }
 
     //---------------------------------------------------------------------------------------------
