@@ -234,3 +234,8 @@ Version 2.3.1.0
 ===============
 - HIBAJAVITAS: aktualis vendeg kitorlese nem mukodott jol
 - KIEGESZITES: az alkalmi vendeg rogziteset felkinalo ablak megjeleneset a beallitasoknal lehet engedelyezni vagy letiltani
+
+Version 2.3.1.0
+===============
+- HIBAJAVITAS: olyan berleteknel, ahol kulonbozo gepcsoportokra ervenyes es mindenhova ervenyes egysegek voltak es a lejarati ido egyezett, a berlet egyseg hasznalat nem mukodott
+- 
