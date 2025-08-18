@@ -12,6 +12,16 @@
 #include <QHBoxLayout>
 #include <QPushButton>
 
+//*************************************************************************************************************************
+// IPC_Communication
+//-------------------------------------------------------------------------------------------------------------------------
+#include <QLocalServer>
+#include <QLocalSocket>
+#include <QHash>
+#include <QByteArray>
+#include <QDataStream>
+//-------------------------------------------------------------------------------------------------------------------------
+
 #include "../framework/qtframework.h"
 #include "../language/language.h"
 #include "http.h"
@@ -85,6 +95,14 @@ signals:
     void signalSetExtTimer(int p_nExtendedLength);
 
 private slots:
+
+//*************************************************************************************************************************
+// IPC_Communication
+//-------------------------------------------------------------------------------------------------------------------------
+    void _ipcOnNewConnection();
+    void _ipcOnReadyRead();
+//-------------------------------------------------------------------------------------------------------------------------
+
     void on_pbHide_clicked();
     void on_pbExit_clicked();
     void on_cmbLang_currentIndexChanged(const QString &arg1);
@@ -122,6 +140,19 @@ private slots:
     void on_pbReloadCounterInfo_clicked();
 
 private:
+
+//*************************************************************************************************************************
+// IPC_Communication
+//-------------------------------------------------------------------------------------------------------------------------
+    QLocalServer        *m_ipcServer;
+    QHash<QLocalSocket*, QByteArray> m_ipcBuffers;
+
+    void                 _ipcStart(const QString& name = "Blns.Ipc.v1");
+    void                 _ipcSendFramed(QLocalSocket* sock, const QByteArray& msg);
+    void                 _ipcProcessMessage(QLocalSocket* sock, const QByteArray& payload);
+    QByteArray           _ipcBuildReply(const QByteArray& request); // itt az üzleti logika
+//-------------------------------------------------------------------------------------------------------------------------
+
     Ui::dlgMain         *ui;
     QSystemTrayIcon     *trayIcon;
     QMenu               *trayIconMenu;

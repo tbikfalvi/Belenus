@@ -328,6 +328,9 @@ dlgMain::dlgMain(QWidget *parent, QString p_qsAppVersion, QString p_qsDbVersion)
     m_bStartTimerOnStart = true;
     m_nTimer = startTimer( 500 );
     m_bStartFinished = true;
+
+    // IPC_Communication
+//    _ipcStart("Blns.Ipc.v1");
 }
 
 //=================================================================================================================================================
@@ -642,11 +645,18 @@ void dlgMain::timerEvent(QTimerEvent *)
     if( m_nIndexPCOnlineSync >= m_nTimerPCOnlineSync && !m_bSyncPCFromServer && !m_bSyncPCToServer && !m_bSendMailToServer )
     {
         m_nIndexPCOnlineSync = 0;
+
+//**********************************************************************************************************************
+// jelenleg nincs online eladott berlet, tehat nem is kell lekerdezni
+// kesobb majd ezt a reszt lehet hasznalni
+//**********************************************************************************************************************
+        /*
         m_bSyncPCFromServer = true;
         g_obLogger(cSeverity::DEBUG) << "Process started: retrieving patientcard data sold online." << EOM;
         ui->lblStatusSync->setPixmap( QPixmap( ":/hourglass.png" ) );
         trayIcon->setIcon( QIcon( ":/hourglass.png" ) );
         g_poBlnsHttp->getPatientCardsSoldOnline();
+        */
     }
 
     //---------------------------------------------------------------------------------------------
@@ -2183,5 +2193,116 @@ void dlgMain::_displayLicenceStatus(QString p_qsState)
         ui->ledLicenceStatus->setText( tr( "Demo" ) );
     }
 }
+
+//*************************************************************************************************************************
+//
+// IPC_Communication
+//
+//*************************************************************************************************************************
+void dlgMain::_ipcStart(const QString& name)
+//-------------------------------------------------------------------------------------------------------------------------
+{
+    if( m_ipcServer )
+    {
+        m_ipcServer->close();
+        m_ipcServer->deleteLater();
+    }
+    m_ipcServer = new QLocalServer(this);
+
+    // Crash után árva pipe takarítás:
+    QLocalServer::removeServer(name);
+
+    connect( m_ipcServer, SIGNAL(newConnection()), this, SLOT(_ipcOnNewConnection()) );
+    if( !m_ipcServer->listen(name) )
+    {
+        // opcionális: tálcaüzi / log
+        _displayUserNotification(INFO_Custom, tr("IPC szerver indítása sikertelen: %1").arg(m_ipcServer->errorString()));
+    }
+    else
+    {
+        _displayUserNotification(INFO_Custom, tr("IPC szerver fut (%1).").arg(name));
+    }
+}
+//*************************************************************************************************************************
+void dlgMain::_ipcOnNewConnection()
+//-------------------------------------------------------------------------------------------------------------------------
+{
+    while (m_ipcServer->hasPendingConnections())
+    {
+        QLocalSocket* sock = m_ipcServer->nextPendingConnection();
+        connect( sock, SIGNAL(readyRead()), this, SLOT(_ipcOnReadyRead()) );
+        connect( sock, SIGNAL(disconnected()), sock, SLOT(deleteLater()) );
+        m_ipcBuffers[sock] = QByteArray();
+    }
+}
+//*************************************************************************************************************************
+void dlgMain::_ipcOnReadyRead()
+//-------------------------------------------------------------------------------------------------------------------------
+{
+    QLocalSocket* sock = qobject_cast<QLocalSocket*>(sender());
+    if (!sock) return;
+
+    QByteArray& buf = m_ipcBuffers[sock];
+    buf.append(sock->readAll());
+
+    // [uint32 big-endian length][payload] keretezés
+    while (true)
+    {
+        if (buf.size() < 4) return;
+
+        QDataStream ds(buf);
+        ds.setByteOrder(QDataStream::BigEndian);
+        quint32 len = 0;
+        ds >> len;
+        if ((int)(len + 4) > buf.size()) return;
+
+        QByteArray payload = buf.mid(4, len);
+        buf.remove(0, 4 + len);
+
+        _ipcProcessMessage(sock, payload);
+    }
+}
+//*************************************************************************************************************************
+void dlgMain::_ipcProcessMessage(QLocalSocket* sock, const QByteArray& payload)
+//-------------------------------------------------------------------------------------------------------------------------
+{
+    // Itt parse-olhatod a bejövő tartalmat (JSON helyett Qt4-ben akár kulcs=érték; vagy QtScript-tel JSON).
+    // Példa: visszaecho-zzuk + "status":"ok"
+    QByteArray reply = _ipcBuildReply(payload);
+    _ipcSendFramed(sock, reply);
+}
+//*************************************************************************************************************************
+QByteArray dlgMain::_ipcBuildReply(const QByteArray& request)
+//-------------------------------------------------------------------------------------------------------------------------
+{
+    // Minimál saját formátum: "id=123|cmd=ping|data=..."
+    // A valóságban itt tedd be az üzleti logikát (pl. licence állapot, HTTP modul státusz, stb.)
+    // Válasz formátum: "id=123|ok=1|msg=...".
+    // Egyszerű minta (id-t visszatesszük, ha megtaláljuk):
+    QByteArray id("0");
+    QList<QByteArray> parts = request.split('|');
+
+    foreach (const QByteArray& p, parts)
+    {
+        if (p.startsWith("id=")) { id = p.mid(3); break; }
+    }
+    QByteArray msg("id=" + id + "|ok=1|reply=pong");
+
+    return msg;
+}
+//*************************************************************************************************************************
+void dlgMain::_ipcSendFramed(QLocalSocket* sock, const QByteArray& msg)
+//-------------------------------------------------------------------------------------------------------------------------
+{
+    QByteArray frame;
+    QDataStream ds(&frame, QIODevice::WriteOnly);
+    ds.setByteOrder(QDataStream::BigEndian);
+    ds << (quint32)msg.size();
+    frame.append(msg);
+    sock->write(frame);
+    sock->flush();
+}
+//-------------------------------------------------------------------------------------------------------------------------
+//-------------------------------------------------------------------------------------------------------------------------
 
 
