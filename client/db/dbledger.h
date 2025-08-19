@@ -17,10 +17,12 @@ public:
         LT_PROD_SELL,
         LT_PC_LOST_REPLACE,
         LT_PC_ASSIGN_PARTNER,
-        LT_OTHER7,
-        LT_OTHER8,
+        LT_PC_SELL_ONLINE,
+        LT_PC_REFILL_ONLINE,
         LT_PROD_STORAGE_CHANGE,
-        LT_CASSA_EXPENSE
+        LT_CASSA_EXPENSE,
+        LT_PC_UNIT_INCREASE,
+        LT_PC_UNIT_DECREASE
     };
 
     cDBLedger();

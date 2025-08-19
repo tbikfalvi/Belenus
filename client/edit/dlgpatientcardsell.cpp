@@ -529,7 +529,7 @@ void cDlgPatientCardSell::on_pbSell_clicked()
                 obDBPatientcardUnit.setPanelGroupId( cmbPanelGroup->itemData( cmbPanelGroup->currentIndex() ).toUInt() );
                 obDBPatientcardUnit.setLedgerId( uiLedgerId );
                 obDBPatientcardUnit.setUnitTime( m_poPatientCardType->unitTime() );
-                obDBPatientcardUnit.setUnitPrice( m_poPatientCardType->price()/ledUnits->text().toInt() );
+                obDBPatientcardUnit.setUnitPrice( m_poPatientCardType->price()/nUnitCount );
                 obDBPatientcardUnit.setValidDateFrom( m_poPatientCard->validDateFrom() );
                 obDBPatientcardUnit.setValidDateTo( m_poPatientCard->validDateTo() );
                 obDBPatientcardUnit.setDateTime( "" );
@@ -543,7 +543,7 @@ void cDlgPatientCardSell::on_pbSell_clicked()
                                         << "] sold with Type ["
                                         << m_poPatientCardType->name()
                                         << "] Units ["
-                                        << ledUnits->text().toInt()
+                                        << nUnitCount
                                         << "]"
                                         << EOM;
 

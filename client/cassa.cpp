@@ -323,6 +323,47 @@ unsigned int cCassa::cassaProcessPatientCardRefill( const cDBPatientCard &p_DBPa
     return cassaProcessPatientCardSell( p_DBPatientCard, p_obDBShoppingCart, p_qsComment, false, p_inPayType );
 }
 //====================================================================================
+unsigned int cCassa::cassaProcessPatientCardUnitChange(  const cDBPatientCard &p_DBPatientCard, const cDBShoppingCart &p_obDBShoppingCart, QString p_qsComment, bool p_bIncrease )
+//====================================================================================
+{
+    QString     qsComment = p_qsComment;
+
+    if( qsComment.length() > 0 && p_obDBShoppingCart.comment().length() > 0 )
+        qsComment.append( "\n" );
+    qsComment.append( p_obDBShoppingCart.comment() );
+
+    cDBLedger   obDBLedger;
+
+    obDBLedger.createNew();
+    obDBLedger.setLicenceId( g_poPrefs->getLicenceId() );
+    if( p_bIncrease )
+        obDBLedger.setLedgerTypeId( cDBLedger::LT_PC_UNIT_INCREASE );
+    else
+        obDBLedger.setLedgerTypeId( cDBLedger::LT_PC_UNIT_DECREASE );
+    obDBLedger.setLedgerDeviceId( 0 );
+    obDBLedger.setPaymentMethod( 0 );
+    obDBLedger.setUserId( g_obUser.id() );
+    obDBLedger.setProductId( 0 );
+    obDBLedger.setPatientCardTypeId( p_obDBShoppingCart.patientCardTypeId() );
+    obDBLedger.setPatientCardId( p_DBPatientCard.id() );
+    obDBLedger.setPanelId( 0 );
+    obDBLedger.setName( p_obDBShoppingCart.itemName() );
+    obDBLedger.setItemCount( p_obDBShoppingCart.itemCount() );
+    obDBLedger.setNetPrice( 0 );
+    obDBLedger.setCard( 0 );
+    obDBLedger.setCash( 0 );
+    obDBLedger.setVoucher( 0 );
+    obDBLedger.setDiscount( 0 );
+    obDBLedger.setVatpercent( 0 );
+    obDBLedger.setTotalPrice( 0 );
+    obDBLedger.setComment( qsComment );
+    obDBLedger.setActive( true );
+    obDBLedger.save();
+
+    return obDBLedger.id();
+}
+
+//====================================================================================
 unsigned int cCassa::cassaProcessProductStorageChange( const cDBShoppingCart &p_obDBShoppingCart, QString p_qsComment, bool p_bGlobalCassa )
 //====================================================================================
 {
