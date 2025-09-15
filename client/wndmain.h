@@ -109,7 +109,6 @@ private:
     int                      m_nCounterAdWindowReset;
 
     int                      m_nTickMinute;
-    bool                     m_bTickMinute;
     int                      m_nTickQuarter;
     bool                     m_bTickQuarter;
 

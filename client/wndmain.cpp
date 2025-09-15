@@ -142,7 +142,6 @@ cWndMain::cWndMain( QWidget *parent ) : QMainWindow( parent )
     m_nCounterAdWindowReset         = 0;
 
     m_nTickMinute                   = 0;
-    m_bTickMinute                   = false;
 
     m_nTickQuarter                  = 0;
     m_bTickQuarter                  = false;
@@ -1407,9 +1406,9 @@ void cWndMain::timerEvent(QTimerEvent *)
     if( m_nTickMinute > 239 )
     {
         m_nTickMinute = 0;
-//        m_bTickMinute = true;
     }
 
+    // 15 percenkent az m_bTickQuarter true-ra vált
     m_nTickQuarter++;
     if( m_nTickQuarter > 3599 )
     {
@@ -1490,22 +1489,27 @@ void cWndMain::timerEvent(QTimerEvent *)
         m_lblStatusRight.setText( QDateTime::currentDateTime().toString( "yyyy-MM-dd hh:mm:ss  " ) );
     }
 
+    //-----------------------------------------------------------------------------------------------------------------------
+    // Minden 15 percben a liszensz számlálót csökkentjük 1-el
     if( m_bTickQuarter )
     {
         m_bTickQuarter = false;
 
-        //-----------------------------------------------------------------------------------------------------------------------
-        // Process licence check management
+        // Liszensz ellenőrzés, ha nem Demó módban vagyunk
         if( g_obLicenceManager.licenceState() != cLicenceManager::LTYPE_DEMO )
         {
+            // Liszensz ellenőrző számláló csökkentés, ha eléri a 0-t, akkor próbálja validálni a liszensz kulcsot
             g_poPrefs->decreaseLicenceCheckCounter();
 
+            // Ha nincs validált állapotban a liszensz kulcs
             if( g_obLicenceManager.checkLicenceState() != cLicenceManager::LTYPE_VALIDATED )
             {
+                // Hátralévő működési számláló csökkentés, ha eléri a 0-t, átvált demó módba
                 g_poPrefs->decreaseWorktimeCounter();
 
                 if( g_poPrefs->getWorktimeCounter() < 1 )
                 {
+                    // Demó mód aktiválás és kijelentkezés
                     g_obLicenceManager.deactivate();
                     on_action_LogOut_triggered();
                 }
