@@ -2,7 +2,7 @@
 -- Belenus Szoftver Rendszer (c) Bikfalvi Tamas
 -- -----------------------------------------------------------------------------------
 -- Filename    : db_fill_hu.sql
--- DbVersion   : 2.3.1.0
+-- DbVersion   : 2.3.2.0
 -- Author      : Bikfalvi Tamas
 -- -----------------------------------------------------------------------------------
 -- Adatbazist default adatokkal feltolto SQL script
@@ -232,7 +232,9 @@ INSERT INTO `ledgerTypes` (`ledgerTypeId` ,`licenceId` ,`name` ,`active` ,`archi
  (7 , '0', 'Online bérlet eladás', '1', 'ARC'),
  (8 , '0', 'Online bérlet feltöltés', '1', 'ARC'),
  (9 , '0', 'Raktár esemény', '1', 'ARC'),
- (10, '0', 'Pénztár kiadás', '1', 'ARC');
+ (10, '0', 'Pénztár kiadás', '1', 'ARC'),
+ (11, '0', 'Bérlet egység növelés', '1', 'ARC'),
+ (12, '0', 'Bérlet egység csökkentés', '1', 'ARC');
 
 -- -----------------------------------------------------------------------------------
 

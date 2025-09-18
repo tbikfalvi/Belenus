@@ -29,6 +29,7 @@ public:
     licenceType     licenceState();
     licenceType     checkLicenceState();
     void            deactivate();
+    void            sysadminActivateLicence();
 
 private:
 

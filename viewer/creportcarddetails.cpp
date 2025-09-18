@@ -252,6 +252,7 @@ void cReportCardDetails::refreshReport()
                                 "FROM patientcardunits, patientcardtypes WHERE "
                                 "patientcardunits.patientCardTypeId=patientcardtypes.patientCardTypeId AND "
                                 "patientCardId=%1 AND "
+                                "panelId>0 AND "
                                 "patientcardunits.active=0 "
                                 "GROUP BY "
                                 "patientcardunits.dateTimeUsed, "
@@ -277,7 +278,7 @@ void cReportCardDetails::refreshReport()
         }
 
         //----------------------------------------------------------------------------------------------
-        // Unit sell, refill
+        // Unit sell, refill, increase
         qsQueryCards = QString( "SELECT ledger.ledgertime, "
                                 "ledgertypes.name, "
                                 "patientcardtypes.name, "
@@ -306,6 +307,44 @@ void cReportCardDetails::refreshReport()
                                             .arg( poQueryResultCards->value(2).toString().replace( QString("\'"), QString("\\\'") ) )
                                             .arg( poQueryResultCards->value(5).toString() )
                                             .arg( poQueryResultCards->value(6).toString() ) );
+
+            m_dlgProgress.increaseProgressValue();
+        }
+
+        //----------------------------------------------------------------------------------------------
+        // Unit decrease
+        qsQueryCards = QString( "SELECT ledger.ledgertime, "
+                                "ledgertypes.name, "
+                                "patientcardtypes.name, "
+                                "itemCount, "
+                                "users.realname "
+                                "FROM `ledger` , `ledgertypes` , `patientcardtypes` , `users` "
+                                "WHERE "
+                                "ledger.userid = users.userid AND "
+                                "ledger.patientcardtypeid = patientcardtypes.patientcardtypeid AND "
+                                "ledger.ledgertypeid = ledgertypes.ledgertypeid AND "
+                                "ledger.ledgertypeid = 12 AND "
+                                "ledger.patientcardid = %1 " ).arg( queryPatientCardId );
+        poQueryResultCards = g_poDB->executeQTQuery( qsQueryCards );
+        m_dlgProgress.increaseProgressMax( poQueryResultCards->size() );
+
+        while( poQueryResultCards->next() )
+        {
+            QString     qsLedgertime        = poQueryResultCards->value(0).toDateTime().toString( "yyyy-MM-dd hh:mm:ss" );
+            QString     qsLedgerTypeName    = poQueryResultCards->value(1).toString();
+            QString     qsPatientCardType   = poQueryResultCards->value(2).toString().replace( QString("\'"), QString("\\\'") );
+            int         nItemCount          = poQueryResultCards->value(3).toInt() * (-1);
+            QString     qsUser              = poQueryResultCards->value(4).toString();
+
+            g_poDB->executeQTQuery( QString( "INSERT INTO `report_cardhistory` ( `dateCardAction`, `cardAction`, `countUnits`, `unitTime`, `unitType`, `priceAction`, `userName` ) "
+                                             " VALUES ( '%1', '%2', '%3', '%4', '%5', '%6', '%7' ) " )
+                                            .arg( qsLedgertime )
+                                            .arg( qsLedgerTypeName )
+                                            .arg( QString::number( nItemCount ) )
+                                            .arg( "" )
+                                            .arg( qsPatientCardType )
+                                            .arg( "" )
+                                            .arg( qsUser ) );
 
             m_dlgProgress.increaseProgressValue();
         }

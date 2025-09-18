@@ -681,7 +681,7 @@ Ha nincs bepipálva, az alul megadott esemény következik be</translation>
     </message>
     <message>
         <location filename="dlgmain.ui" line="1462"/>
-        <location filename="dlgmain.cpp" line="1965"/>
+        <location filename="dlgmain.cpp" line="1972"/>
         <source>Register new licence key</source>
         <translation>Új liszensz kulcs regisztráció</translation>
     </message>
@@ -911,7 +911,7 @@ Ha nincs bepipálva, az alkalmazás nem menti el automatikusan a módosításoka
         <translation type="obsolete">Beállítások mentés</translation>
     </message>
     <message>
-        <location filename="dlgmain.cpp" line="2110"/>
+        <location filename="dlgmain.cpp" line="2117"/>
         <source>Warning</source>
         <translation>Figyelem</translation>
     </message>
@@ -944,7 +944,7 @@ Ha nincs bepipálva, az alkalmazás nem menti el automatikusan a módosításoka
         <translation type="obsolete">&amp;Vissza kezdőértékre</translation>
     </message>
     <message>
-        <location filename="dlgmain.cpp" line="1146"/>
+        <location filename="dlgmain.cpp" line="1153"/>
         <source>&amp;Exit application</source>
         <translation>&amp;Alkalmazás bezárása</translation>
     </message>
@@ -984,7 +984,7 @@ Ha nincs bepipálva, az alkalmazás nem menti el automatikusan a módosításoka
         <translation>A &apos;%1&apos; felhasználó bejelentkezett</translation>
     </message>
     <message>
-        <location filename="dlgmain.cpp" line="737"/>
+        <location filename="dlgmain.cpp" line="744"/>
         <source>Are you sure you want to close this application?
 
 With closing the application the data of the patientcards will not be synchronized with the KiwiSun server.</source>
@@ -1009,7 +1009,7 @@ Az alkalmazás bezárásával a bérlet adatok nem lesznek szinkronizálva a Kiw
         <translation type="obsolete">Kapcsolat</translation>
     </message>
     <message>
-        <location filename="dlgmain.cpp" line="1486"/>
+        <location filename="dlgmain.cpp" line="1493"/>
         <source>Http error occured!
 %1</source>
         <translation>Http hiba következett be!
@@ -1030,7 +1030,7 @@ Az alkalmazás bezárásával a bérlet adatok nem lesznek szinkronizálva a Kiw
         <translation type="obsolete">Http kommunikáció folytatódik</translation>
     </message>
     <message>
-        <location filename="dlgmain.cpp" line="1475"/>
+        <location filename="dlgmain.cpp" line="1482"/>
         <source>Http server address is not defined!
 Http connection is going to be disabled.</source>
         <translation>Http szerver cím nincs megadva!
@@ -1041,22 +1041,22 @@ A Http kommunikáció le lesz tiltva.</translation>
         <translation type="obsolete">Http hiba következett be!</translation>
     </message>
     <message>
-        <location filename="dlgmain.cpp" line="1496"/>
+        <location filename="dlgmain.cpp" line="1503"/>
         <source>Http communication disabled.</source>
         <translation>Http kommunikáció letiltva.</translation>
     </message>
     <message>
-        <location filename="dlgmain.cpp" line="1506"/>
+        <location filename="dlgmain.cpp" line="1513"/>
         <source>Http communication enabled.</source>
         <translation>Http kommunikáció engedélyezve.</translation>
     </message>
     <message>
-        <location filename="dlgmain.cpp" line="1516"/>
+        <location filename="dlgmain.cpp" line="1523"/>
         <source>Http communication suspended.</source>
         <translation>Http kommunikáció szüneteltetve.</translation>
     </message>
     <message>
-        <location filename="dlgmain.cpp" line="1526"/>
+        <location filename="dlgmain.cpp" line="1533"/>
         <source>Http communication continued.</source>
         <translation>Http kommunikáció folytatódik.</translation>
     </message>
@@ -1073,12 +1073,12 @@ Http connection is going to be disabled.</source>
 A Http kommunikáció le lesz tiltva.</translation>
     </message>
     <message>
-        <location filename="dlgmain.cpp" line="1038"/>
+        <location filename="dlgmain.cpp" line="1045"/>
         <source>HTTP Connection established</source>
         <translation>HTTP kapcsolat létrejött</translation>
     </message>
     <message>
-        <location filename="dlgmain.cpp" line="799"/>
+        <location filename="dlgmain.cpp" line="806"/>
         <source>Are you sure you want send all patientcard data to KiwiSun Web server?
 
 Sending all patientcard data could take long time.
@@ -1101,10 +1101,10 @@ Vegye figyelembe, hogy van-e ideje kivárni a folyamat végét.</translation>
         <translation>%1 üzemperc letelte után</translation>
     </message>
     <message>
-        <location filename="dlgmain.cpp" line="1805"/>
-        <location filename="dlgmain.cpp" line="1856"/>
-        <location filename="dlgmain.cpp" line="1895"/>
-        <location filename="dlgmain.cpp" line="2165"/>
+        <location filename="dlgmain.cpp" line="1812"/>
+        <location filename="dlgmain.cpp" line="1863"/>
+        <location filename="dlgmain.cpp" line="1902"/>
+        <location filename="dlgmain.cpp" line="2172"/>
         <source>Validated</source>
         <translation>Ellenőrzött</translation>
     </message>
@@ -1113,8 +1113,8 @@ Vegye figyelembe, hogy van-e ideje kivárni a folyamat végét.</translation>
         <translation type="obsolete">Nincs aktiválva</translation>
     </message>
     <message>
-        <location filename="dlgmain.cpp" line="979"/>
-        <location filename="dlgmain.cpp" line="2170"/>
+        <location filename="dlgmain.cpp" line="986"/>
+        <location filename="dlgmain.cpp" line="2177"/>
         <source>Not validated</source>
         <translation>Nincs validálva</translation>
     </message>
@@ -1123,14 +1123,14 @@ Vegye figyelembe, hogy van-e ideje kivárni a folyamat végét.</translation>
         <translation type="obsolete">Nincs ellenőrizve</translation>
     </message>
     <message>
-        <location filename="dlgmain.cpp" line="938"/>
-        <location filename="dlgmain.cpp" line="2179"/>
+        <location filename="dlgmain.cpp" line="945"/>
+        <location filename="dlgmain.cpp" line="2186"/>
         <source>Expired / Invalid</source>
         <translation>Lejárt / Érvénytelen</translation>
     </message>
     <message>
-        <location filename="dlgmain.cpp" line="942"/>
-        <location filename="dlgmain.cpp" line="2183"/>
+        <location filename="dlgmain.cpp" line="949"/>
+        <location filename="dlgmain.cpp" line="2190"/>
         <source>Demo</source>
         <translation>Demó</translation>
     </message>
@@ -1140,72 +1140,72 @@ Vegye figyelembe, hogy van-e ideje kivárni a folyamat végét.</translation>
         <translation>Liszensz kulcs érvényesség ellenőrzés </translation>
     </message>
     <message>
-        <location filename="dlgmain.cpp" line="847"/>
+        <location filename="dlgmain.cpp" line="854"/>
         <source>Enter barcode of the patientcard:</source>
         <translation>Adja meg a bérlet vonalkódját:</translation>
     </message>
     <message>
-        <location filename="dlgmain.cpp" line="859"/>
+        <location filename="dlgmain.cpp" line="866"/>
         <source>The defined barcode not found in the database.</source>
         <translation>A megadott vonalkód nem található az adatbázisban.</translation>
     </message>
     <message>
-        <location filename="dlgmain.cpp" line="949"/>
+        <location filename="dlgmain.cpp" line="956"/>
         <source>Licence code integrity broken</source>
         <translation>Liszensz kod integritas hiba</translation>
     </message>
     <message>
-        <location filename="dlgmain.cpp" line="951"/>
-        <location filename="dlgmain.cpp" line="1957"/>
+        <location filename="dlgmain.cpp" line="958"/>
+        <location filename="dlgmain.cpp" line="1964"/>
         <source>Error</source>
         <translation>Hiba</translation>
     </message>
     <message>
-        <location filename="dlgmain.cpp" line="951"/>
+        <location filename="dlgmain.cpp" line="958"/>
         <source>The given licence code is not validated in licence server.
 Please contact the licence code provider.</source>
         <translation>A megadott liszensz kulcs nem szerepel a liszensz szerveren.
 Kérem lépjen kapcsolatba a liszensz kulcs szolgáltatóval.</translation>
     </message>
     <message>
-        <location filename="dlgmain.cpp" line="1009"/>
+        <location filename="dlgmain.cpp" line="1016"/>
         <source>HTTP Communication succeeded</source>
         <translation>HTTP Kommunikáció sikeres</translation>
     </message>
     <message>
-        <location filename="dlgmain.cpp" line="1116"/>
+        <location filename="dlgmain.cpp" line="1123"/>
         <source>Database connection</source>
         <translation>Adatbázis kapcsolat</translation>
     </message>
     <message>
-        <location filename="dlgmain.cpp" line="1119"/>
+        <location filename="dlgmain.cpp" line="1126"/>
         <source>Http connection</source>
         <translation>Http kapcsolat</translation>
     </message>
     <message>
-        <location filename="dlgmain.cpp" line="1126"/>
+        <location filename="dlgmain.cpp" line="1133"/>
         <source>Send all patientcard</source>
         <translation>Összes bérlet adat elküldése</translation>
     </message>
     <message>
-        <location filename="dlgmain.cpp" line="1130"/>
+        <location filename="dlgmain.cpp" line="1137"/>
         <source>Clear waiting queue</source>
         <translation>Várakozó lista kiürítése</translation>
     </message>
     <message>
-        <location filename="dlgmain.cpp" line="1812"/>
+        <location filename="dlgmain.cpp" line="1819"/>
         <source>Licence key registration succeeded.</source>
         <translation>Liszensz kulcs regisztráció sikeres.</translation>
     </message>
     <message>
-        <location filename="dlgmain.cpp" line="1817"/>
+        <location filename="dlgmain.cpp" line="1824"/>
         <source>Licence key registration succeeded.
 </source>
         <translation>Liszensz kulcs regisztráció sikeres.
 </translation>
     </message>
     <message>
-        <location filename="dlgmain.cpp" line="1824"/>
+        <location filename="dlgmain.cpp" line="1831"/>
         <source>Licence registration failed due to database process error
 
 %1</source>
@@ -1214,24 +1214,24 @@ Kérem lépjen kapcsolatba a liszensz kulcs szolgáltatóval.</translation>
 %1</translation>
     </message>
     <message>
-        <location filename="dlgmain.cpp" line="1827"/>
+        <location filename="dlgmain.cpp" line="1834"/>
         <source>Licence key registration failed.</source>
         <translation>Liszensz kulcs regisztráció sikertelen.</translation>
     </message>
     <message>
-        <location filename="dlgmain.cpp" line="1858"/>
+        <location filename="dlgmain.cpp" line="1865"/>
         <source>Licence key activation succeeded.</source>
         <translation>Liszensz kulcs aktiválás sikeres.</translation>
     </message>
     <message>
-        <location filename="dlgmain.cpp" line="1861"/>
+        <location filename="dlgmain.cpp" line="1868"/>
         <source>Licence key activation succeeded.
 </source>
         <translation>Liszensz kulcs aktiválás sikeres.
 </translation>
     </message>
     <message>
-        <location filename="dlgmain.cpp" line="1869"/>
+        <location filename="dlgmain.cpp" line="1876"/>
         <source>Licence activation failed due to database process error
 
 %1</source>
@@ -1240,23 +1240,23 @@ Kérem lépjen kapcsolatba a liszensz kulcs szolgáltatóval.</translation>
 %1</translation>
     </message>
     <message>
-        <location filename="dlgmain.cpp" line="1872"/>
+        <location filename="dlgmain.cpp" line="1879"/>
         <source>Licence key activation failed.</source>
         <translation>Liszensz kulcs aktiválás sikertelen.</translation>
     </message>
     <message>
-        <location filename="dlgmain.cpp" line="1897"/>
+        <location filename="dlgmain.cpp" line="1904"/>
         <source>Licence key validation succeeded.</source>
         <translation>Liszensz kulcs érvényesség ellenőrzése sikerült.</translation>
     </message>
     <message>
-        <location filename="dlgmain.cpp" line="1900"/>
+        <location filename="dlgmain.cpp" line="1907"/>
         <source>Licence key validation succeeded.
 </source>
         <translation>Liszensz kulcs érvényesség ellenőrzése sikerült.</translation>
     </message>
     <message>
-        <location filename="dlgmain.cpp" line="1908"/>
+        <location filename="dlgmain.cpp" line="1915"/>
         <source>Licence validation failed due to database process error
 
 %1</source>
@@ -1265,12 +1265,12 @@ Kérem lépjen kapcsolatba a liszensz kulcs szolgáltatóval.</translation>
 %1</translation>
     </message>
     <message>
-        <location filename="dlgmain.cpp" line="1911"/>
+        <location filename="dlgmain.cpp" line="1918"/>
         <source>Licence key validation failed.</source>
         <translation>Liszensz kulcs érvényességének ellenőrzése sikertelen.</translation>
     </message>
     <message>
-        <location filename="dlgmain.cpp" line="1957"/>
+        <location filename="dlgmain.cpp" line="1964"/>
         <source>The format of the licence key is invalid.
 The licence key must be 13 characters length
 .Please check and retype it again.</source>
@@ -1279,17 +1279,17 @@ A liszensz kulcsnak 13 karakter hosszúnak kell lennie.
 Kérem ellenőrizze és írja be újra.</translation>
     </message>
     <message>
-        <location filename="dlgmain.cpp" line="1979"/>
+        <location filename="dlgmain.cpp" line="1986"/>
         <source>Activate current licence key</source>
         <translation>Meglévő liszensz kulcs aktiválása</translation>
     </message>
     <message>
-        <location filename="dlgmain.cpp" line="1991"/>
+        <location filename="dlgmain.cpp" line="1998"/>
         <source>Question</source>
         <translation>Kérdés</translation>
     </message>
     <message>
-        <location filename="dlgmain.cpp" line="1992"/>
+        <location filename="dlgmain.cpp" line="1999"/>
         <source>Are you sure you want to replace the licence key
 
 from this: %1  to this %2
@@ -1304,7 +1304,7 @@ Kérem vegye figyelembe, hogy ez a módosítás a liszensz kulcshoz kapcsolt ös
 Ha egy már aktív liszensz kulcsot használ fel, a kapcsolódó adatok sérülhetnek!</translation>
     </message>
     <message>
-        <location filename="dlgmain.cpp" line="2175"/>
+        <location filename="dlgmain.cpp" line="2182"/>
         <source>Not registered</source>
         <translation>Nincs regisztrálva</translation>
     </message>
@@ -1317,7 +1317,7 @@ Please note this modification affect all data connected to this licence key. If 
 Kérem vegye figyelembe, hogy ez a módosítás a liszensz kulcshoz kapcsolt összes adatot érinti. Ha egy már aktív liszensz kulcsot használ fel, a kapcsolódó adatok sérülhetnek!</translation>
     </message>
     <message>
-        <location filename="dlgmain.cpp" line="2111"/>
+        <location filename="dlgmain.cpp" line="2118"/>
         <source>The version information stored in database is not match.
 
 Correct version numbers:
@@ -1344,53 +1344,53 @@ Az alkalmazás megfelelő működése nem garantált.
 Ajánlott az alkalmazást bezárni és felvenni a kapcsolatot a rendszer adminisztrátorral.</translation>
     </message>
     <message>
-        <location filename="dlgmain.cpp" line="1134"/>
+        <location filename="dlgmain.cpp" line="1141"/>
         <source>Get online sold patientcards</source>
         <translation>Online eladott bérletek lekérdezése</translation>
     </message>
     <message>
-        <location filename="dlgmain.cpp" line="1138"/>
+        <location filename="dlgmain.cpp" line="1145"/>
         <source>Clear patientcard</source>
         <translation>Bérlet törlése</translation>
     </message>
     <message>
-        <location filename="dlgmain.cpp" line="1142"/>
+        <location filename="dlgmain.cpp" line="1149"/>
         <source>Clear all inactive patientcards</source>
         <oldsource>Clear all patientcard</oldsource>
         <translation>Összes inaktív bérlet törlése</translation>
     </message>
     <message>
-        <location filename="dlgmain.cpp" line="1158"/>
+        <location filename="dlgmain.cpp" line="1165"/>
         <source>User actions</source>
         <translation> Felhasználói folyamatok </translation>
     </message>
     <message>
-        <location filename="dlgmain.cpp" line="1349"/>
+        <location filename="dlgmain.cpp" line="1356"/>
         <source>Need authentication ...</source>
         <translation>Azonosítás szükséges ...</translation>
     </message>
     <message>
-        <location filename="dlgmain.cpp" line="1353"/>
+        <location filename="dlgmain.cpp" line="1360"/>
         <source>User successfully authenticated.</source>
         <translation>Azonosítás sikeres.</translation>
     </message>
     <message>
-        <location filename="dlgmain.cpp" line="1363"/>
+        <location filename="dlgmain.cpp" line="1370"/>
         <source>The username entered not found in the Belenus database</source>
         <translation>A megadott felhasználó név nincs benne a Belenus adatbázisában</translation>
     </message>
     <message>
-        <location filename="dlgmain.cpp" line="1365"/>
+        <location filename="dlgmain.cpp" line="1372"/>
         <source>The password entered is incorrect</source>
         <translation>A megadott jelszó nem megfelelő</translation>
     </message>
     <message>
-        <location filename="dlgmain.cpp" line="1367"/>
+        <location filename="dlgmain.cpp" line="1374"/>
         <source>Connection to Belenus database failed</source>
         <translation>Az adatbázishoz való kapcsolódás sikertelen</translation>
     </message>
     <message>
-        <location filename="dlgmain.cpp" line="1369"/>
+        <location filename="dlgmain.cpp" line="1376"/>
         <source>Authentication failed. Please retry later ...</source>
         <translation>Sikertelen azonosítás. Kérem próbálja meg mégegyszer ...</translation>
     </message>

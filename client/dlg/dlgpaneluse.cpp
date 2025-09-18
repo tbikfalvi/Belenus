@@ -18,8 +18,21 @@ extern cCommRFID       *g_poCommRFID;
 //==============================================================================================
 cPanelPCUnitUse::cPanelPCUnitUse(QWidget *p_poParent, QStringList *p_qslParameters)
 {
+    cTracer obTracer( "cPanelPCUnitUse::cPanelPCUnitUse" );
+
     setParent( p_poParent );
 
+/*
+p_qslParameters->at(0)    "patientcardunits.patientCardUnitId, "
+p_qslParameters->at(1)    "patientcardunits.patientCardTypeId, "
+p_qslParameters->at(2)    "patientcardunits.unitTime, "
+p_qslParameters->at(3)    "patientcardunits.validDateFrom, "
+p_qslParameters->at(4)    "patientcardunits.validDateTo, "
+p_qslParameters->at(5)    "COUNT(patientcardunits.unitTime), "
+p_qslParameters->at(6)    "name, "
+p_qslParameters->at(7)    "patientcardunits.panelGroupId "
+p_qslParameters->at(8)    qsValid
+*/
     m_uiOrderNum    = 0;
 
     horizontalLayout = new QHBoxLayout( this );
@@ -34,7 +47,7 @@ cPanelPCUnitUse::cPanelPCUnitUse(QWidget *p_poParent, QStringList *p_qslParamete
                            "<b>Valid:</b> %4").arg( p_qslParameters->at(5) )
                                               .arg( p_qslParameters->at(6) )
                                               .arg( p_qslParameters->at(2) )
-                                              .arg( p_qslParameters->at(7) );
+                                              .arg( p_qslParameters->at(8) );
 
     pbUseUnitType = new QPushButton( this );
     pbUseUnitType->setObjectName( QString::fromUtf8( "pbUseUnitType" ) );
@@ -94,17 +107,23 @@ cPanelPCUnitUse::cPanelPCUnitUse(QWidget *p_poParent, QStringList *p_qslParamete
                                    "patientCardTypeId=%2 AND "
                                    "unitTime=%3 AND "
                                    "validDateTo=\"%4\" AND "
+                                   "panelGroupID=%5 AND "
                                    "prepared=0 AND "
                                    "active=1" ).arg( obDBPatientcardUnit.patientCardId() )
                                                .arg( p_qslParameters->at(1).toInt() )
                                                .arg( obDBPatientcardUnit.unitTime() )
-                                               .arg( obDBPatientcardUnit.validDateTo() );
+                                               .arg( obDBPatientcardUnit.validDateTo() )
+                                               .arg( p_qslParameters->at(7).toUInt() );
         QSqlQuery      *poQuery = g_poDB->executeQTQuery( qsQuery );
 
         while( poQuery->next() )
         {
             m_qslUnitIds << poQuery->value( 0 ).toString();
         }
+        g_obLogger(cSeverity::DEBUG) << "Number of units ["
+                                     << m_qslUnitIds.count()
+                                     << "]"
+                                     << EOM;
     }
     catch( cSevException &e )
     {
@@ -459,6 +478,7 @@ void cDlgPanelUse::setPanelUsePatientCard(/*unsigned int p_uiPatientCardId*/)
                          << poQuery->value( 4 ).toString()
                          << poQuery->value( 5 ).toString()
                          << poQuery->value( 6 ).toString()
+                         << poQuery->value( 7 ).toString()
                          << qsValid;
                 cPanelPCUnitUse *pPanelUseFrame = new cPanelPCUnitUse( this, &qslUnits );
                 vlUnits->insertWidget( qvPanelUseUnits.count(), pPanelUseFrame );

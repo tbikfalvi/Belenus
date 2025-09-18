@@ -12,6 +12,9 @@
 #include "dlgpreferences.h"
 #include "../framework/sevexception.h"
 #include "dlgpanelappereance.h"
+#include "licenceManager.h"
+
+extern cLicenceManager  g_obLicenceManager;
 
 cDlgPreferences::cDlgPreferences( QWidget *p_poParent )
     : QDialog( p_poParent )
@@ -270,6 +273,10 @@ cDlgPreferences::cDlgPreferences( QWidget *p_poParent )
     gbLicenceCheck->setEnabled( g_obUser.isInGroup( cAccessGroup::SYSTEM ) );
     ledLicenceCheckValue->setEnabled( g_obUser.isInGroup( cAccessGroup::SYSTEM ) );
     ledMaxWorkHours->setEnabled( g_obUser.isInGroup( cAccessGroup::SYSTEM ) );
+    ledMaxWorkHoursCounter->setEnabled( g_obUser.isInGroup( cAccessGroup::SYSTEM ) );
+    pbValidateLicenceKey->setEnabled( g_obUser.isInGroup( cAccessGroup::SYSTEM ) );
+
+    pbValidateLicenceKey->setIcon( QIcon("./resources/40x40_key.png") );
 
     int nLicenceCheckValue      = g_poPrefs->getLicenceCheck() / 4;
     int nLicenceCheckCounter    = g_poPrefs->getLicenceCheckCounter() / 4;
@@ -289,11 +296,13 @@ cDlgPreferences::cDlgPreferences( QWidget *p_poParent )
     ledMaxWorkHours->setText( QString::number( nLicenceWorkHours ) );
     if( nLicenceWorkHoursCounter > 3 )
     {
-        lblMaxWorkHoursCounter->setText( tr( "Remaining work hours: %1" ).arg( nLicenceWorkHoursCounter ) );
+        lblMaxWorkHoursCounter->setText( tr( "Remaining work hours:" ) );
+        ledMaxWorkHoursCounter->setText( QString::number( nLicenceWorkHoursCounter ) );
     }
     else
     {
-        lblMaxWorkHoursCounter->setText( tr( "Remaining work minutes: %1" ).arg( nLicenceWorkHoursCounter/15 ) );
+        lblMaxWorkHoursCounter->setText( tr( "Remaining work minutes:" ).arg( nLicenceWorkHoursCounter/15 ) );
+        ledMaxWorkHoursCounter->setText( QString::number( nLicenceWorkHoursCounter/15 ) );
     }
 
 
@@ -639,6 +648,7 @@ void cDlgPreferences::accept()
 
     g_poPrefs->setLicenceCheck( ledLicenceCheckValue->text().toInt()*4 );
     g_poPrefs->setWorktime( ledMaxWorkHours->text().toInt()*4 );
+    g_poPrefs->setWorktimeCounter( ledMaxWorkHoursCounter->text().toInt()*4 );
 
     if( g_obUser.isInGroup( cAccessGroup::SYSTEM ) )
     {
@@ -1096,4 +1106,9 @@ void cDlgPreferences::on_chkShowPatientInfoOnStart_toggled(bool checked)
         rbShowInfoOnSecondary->setEnabled( false );
         ledCloseInfoWindowSecs->setEnabled( false );
     }
+}
+
+void cDlgPreferences::on_pbValidateLicenceKey_clicked()
+{
+    g_obLicenceManager.sysadminActivateLicence();
 }
