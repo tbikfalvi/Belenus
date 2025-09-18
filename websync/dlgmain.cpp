@@ -64,7 +64,7 @@ dlgMain::dlgMain(QWidget *parent, QString p_qsAppVersion, QString p_qsDbVersion)
     m_bValidateLicenceKey               = false;
 
     m_nIndexPCStatusSync                = 0;
-    m_nIndexPCOnlineSync              = 0;
+    m_nIndexPCOnlineSync                = 0;
     m_nIndexUpdateSyncDataCount         = 0;
     m_nIndexUser                        = 0;
     m_nIndexCheckEnablers               = 0;

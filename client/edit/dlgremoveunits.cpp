@@ -132,6 +132,18 @@ void cDlgRemoveUnits::on_pbRemove_clicked()
 
     try
     {
+        cDBShoppingCart     obDBShoppingCart;
+        QString             qsComment = tr("Decrease patientcard units [%1]").arg( nCountUnits );
+
+        obDBShoppingCart.setLicenceId( g_poPrefs->getLicenceId() );
+        obDBShoppingCart.setGuestId( m_poPatientCard->patientId() );
+        obDBShoppingCart.setPatientCardId( m_poPatientCard->id() );
+        obDBShoppingCart.setPatientCardTypeId( uiPatientCardTypeId );
+        obDBShoppingCart.setItemName( QString("%1").arg(m_poPatientCard->barcode()) );
+        obDBShoppingCart.setItemCount( nCountUnits );
+
+        g_obCassa.cassaProcessPatientCardUnitChange( *m_poPatientCard, obDBShoppingCart, qsComment, false );
+
         for( int i=0; i<nCountUnits; i++ )
         {
             poQuery = g_poDB->executeQTQuery( QString( "SELECT * FROM patientCardUnits "
