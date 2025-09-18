@@ -22,6 +22,8 @@
 #include "dlgaddunits.h"
 #include "../db/dbpatientcardtype.h"
 #include "../db/dbpatientcardunits.h"
+#include "../db/dbledger.h"
+#include "../db/dbshoppingcart.h"
 
 //===========================================================================================================
 //
@@ -161,19 +163,32 @@ void cDlgAddUnits::on_pbAdd_clicked()
                 m_poPatientCardType->load( cmbCardType->itemData( cmbCardType->currentIndex() ).toInt() );
             }
 
+            cDBShoppingCart     obDBShoppingCart;
             cDBPatientcardUnit  obDBPatientcardUnit;
             QStringList         qslUnitIds;
+            int                 nUnitCount = ledUnits->text().toInt();
+            unsigned int        uiLedgerId = 0;
+            QString             qsComment = tr("Increase patientcard units [%1]").arg( nUnitCount );
 
-            for( int i=0; i<ledUnits->text().toInt(); i++ )
+            obDBShoppingCart.setLicenceId( g_poPrefs->getLicenceId() );
+            obDBShoppingCart.setGuestId( m_poPatientCard->patientId() );
+            obDBShoppingCart.setPatientCardId( m_poPatientCard->id() );
+            obDBShoppingCart.setPatientCardTypeId( m_poPatientCardType->id() );
+            obDBShoppingCart.setItemName( QString("%1 - %2").arg(m_poPatientCardType->name()).arg(m_poPatientCard->barcode()) );
+            obDBShoppingCart.setItemCount( nUnitCount );
+
+            uiLedgerId = g_obCassa.cassaProcessPatientCardUnitChange( *m_poPatientCard, obDBShoppingCart, qsComment, true );
+
+            for( int i=0; i<nUnitCount; i++ )
             {
                 obDBPatientcardUnit.createNew();
                 obDBPatientcardUnit.setLicenceId( m_poPatientCard->licenceId() );
                 obDBPatientcardUnit.setPatientCardId( m_poPatientCard->id() );
                 obDBPatientcardUnit.setPatientCardTypeId( m_poPatientCardType->id() );
                 obDBPatientcardUnit.setPanelGroupId( cmbPanelGroup->itemData( cmbPanelGroup->currentIndex() ).toUInt() );
-                obDBPatientcardUnit.setLedgerId( 0 );
+                obDBPatientcardUnit.setLedgerId( uiLedgerId );
                 obDBPatientcardUnit.setUnitTime( m_poPatientCardType->unitTime() );
-                obDBPatientcardUnit.setUnitPrice( m_poPatientCardType->price()/ledUnits->text().toInt() );
+                obDBPatientcardUnit.setUnitPrice( m_poPatientCardType->price()/nUnitCount );
                 obDBPatientcardUnit.setValidDateFrom( m_poPatientCard->validDateFrom() );
                 obDBPatientcardUnit.setValidDateTo( deValidDateTo->date().toString( QString("yyyy-MM-dd") ) );
                 obDBPatientcardUnit.setDateTime( "" );
@@ -187,7 +202,7 @@ void cDlgAddUnits::on_pbAdd_clicked()
                                         << "] filled by sysadmin with type ["
                                         << m_poPatientCardType->name()
                                         << "] units ["
-                                        << ledUnits->text().toInt()
+                                        << nUnitCount
                                         << "]"
                                         << EOM;
 

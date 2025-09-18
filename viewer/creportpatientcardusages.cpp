@@ -52,7 +52,8 @@ void cReportPCUsages::refreshReport()
                                         "barcode, "
                                         "COUNT(dateTimeUsed), "
                                         "patientcardtypes.name, "
-                                        "patientcardunits.unitTime "
+                                        "patientcardunits.unitTime, "
+                                        "patientcardunits.panelid "
                                     "FROM patientcardunits "
                                         "JOIN patientcards ON "
                                             "patientcardunits.patientCardId=patientcards.patientCardId "
@@ -81,6 +82,7 @@ void cReportPCUsages::refreshReport()
     addTableCell( tr( "Unit count" ), "center bold" );
     addTableCell( tr( "Unit type"), "center bold" );
     addTableCell( tr( "Unit length"), "center bold" );
+    addTableCell( tr( "Panel id"), "center bold" );
 
     m_dlgProgress.setProgressMax( poQueryResultCards->size()+10 );
 
@@ -94,6 +96,7 @@ void cReportPCUsages::refreshReport()
         addTableCell( poQueryResultCards->value(2).toString(), "center" );
         addTableCell( poQueryResultCards->value(3).toString(), "" );
         addTableCell( poQueryResultCards->value(4).toString(), "center" );
+        addTableCell( poQueryResultCards->value(5).toString(), "center" );
         m_dlgProgress.increaseProgressValue();
 
         sumCount += poQueryResultCards->value(2).toInt();

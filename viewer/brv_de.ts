@@ -51,7 +51,7 @@
     </message>
     <message>
         <location filename="creportcarddetails.cpp" line="120"/>
-        <location filename="creportcarddetails.cpp" line="432"/>
+        <location filename="creportcarddetails.cpp" line="471"/>
         <source>Barcode</source>
         <translation>Strichcode</translation>
     </message>
@@ -97,12 +97,12 @@
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="creportcarddetails.cpp" line="269"/>
+        <location filename="creportcarddetails.cpp" line="270"/>
         <source>Patientcard usage</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="creportcarddetails.cpp" line="465"/>
+        <location filename="creportcarddetails.cpp" line="504"/>
         <source>Sum</source>
         <translation type="unfinished">Insgesammt</translation>
     </message>
@@ -112,13 +112,13 @@
     </message>
     <message>
         <location filename="creportcarddetails.cpp" line="126"/>
-        <location filename="creportcarddetails.cpp" line="436"/>
+        <location filename="creportcarddetails.cpp" line="475"/>
         <source>Owner</source>
         <translation>Besitzer</translation>
     </message>
     <message>
         <location filename="creportcarddetails.cpp" line="179"/>
-        <location filename="creportcarddetails.cpp" line="433"/>
+        <location filename="creportcarddetails.cpp" line="472"/>
         <source>No. units</source>
         <translation>Anzahl der Einheiten</translation>
     </message>
@@ -129,13 +129,13 @@
     <message>
         <location filename="creportcarddetails.cpp" line="132"/>
         <location filename="creportcarddetails.cpp" line="182"/>
-        <location filename="creportcarddetails.cpp" line="435"/>
+        <location filename="creportcarddetails.cpp" line="474"/>
         <source>Valid</source>
         <translation>Gültig</translation>
     </message>
     <message>
         <location filename="creportcarddetails.cpp" line="138"/>
-        <location filename="creportcarddetails.cpp" line="437"/>
+        <location filename="creportcarddetails.cpp" line="476"/>
         <source>Comment</source>
         <translation>Bemerkung</translation>
     </message>
@@ -173,7 +173,7 @@
         <translation type="obsolete">Anzahl der Einheiten</translation>
     </message>
     <message>
-        <location filename="creportcarddetails.cpp" line="434"/>
+        <location filename="creportcarddetails.cpp" line="473"/>
         <source>Time</source>
         <translation>Zeit</translation>
     </message>
@@ -1193,32 +1193,37 @@
         <translation>Zeitraum :</translation>
     </message>
     <message>
-        <location filename="creportpatientcardusages.cpp" line="79"/>
+        <location filename="creportpatientcardusages.cpp" line="80"/>
         <source>Date of usage</source>
         <translation>Datum der Benutzung</translation>
     </message>
     <message>
-        <location filename="creportpatientcardusages.cpp" line="80"/>
+        <location filename="creportpatientcardusages.cpp" line="81"/>
         <source>Patientcard barcode</source>
         <translation>Strichcode der Club-Karte</translation>
     </message>
     <message>
-        <location filename="creportpatientcardusages.cpp" line="81"/>
+        <location filename="creportpatientcardusages.cpp" line="82"/>
         <source>Unit count</source>
         <translation>Anzahl der Einheiten</translation>
     </message>
     <message>
-        <location filename="creportpatientcardusages.cpp" line="82"/>
+        <location filename="creportpatientcardusages.cpp" line="83"/>
         <source>Unit type</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="creportpatientcardusages.cpp" line="83"/>
+        <location filename="creportpatientcardusages.cpp" line="84"/>
         <source>Unit length</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="creportpatientcardusages.cpp" line="103"/>
+        <location filename="creportpatientcardusages.cpp" line="85"/>
+        <source>Panel id</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="creportpatientcardusages.cpp" line="106"/>
         <source>Sum</source>
         <translation>Insgesammt</translation>
     </message>
