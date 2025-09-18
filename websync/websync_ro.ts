@@ -591,7 +591,7 @@ Please contact your Kiwisun administrator!</source>
     </message>
     <message>
         <location filename="dlgmain.ui" line="1462"/>
-        <location filename="dlgmain.cpp" line="1965"/>
+        <location filename="dlgmain.cpp" line="1972"/>
         <source>Register new licence key</source>
         <translation type="unfinished"></translation>
     </message>
@@ -723,7 +723,7 @@ de pe server-ul web</translation>
         <translation>Utilizatorul &apos;%1&apos; nu este logat</translation>
     </message>
     <message>
-        <location filename="dlgmain.cpp" line="737"/>
+        <location filename="dlgmain.cpp" line="744"/>
         <source>Are you sure you want to close this application?
 
 With closing the application the data of the patientcards will not be synchronized with the KiwiSun server.</source>
@@ -732,7 +732,7 @@ With closing the application the data of the patientcards will not be synchroniz
 Odată cu închiderea aplicației, datele cardurilor de pacient nu vor mai fi sincronizate cu serverul KiwiSun.</translation>
     </message>
     <message>
-        <location filename="dlgmain.cpp" line="799"/>
+        <location filename="dlgmain.cpp" line="806"/>
         <source>Are you sure you want send all patientcard data to KiwiSun Web server?
 
 Sending all patientcard data could take long time.
@@ -743,42 +743,42 @@ Trimiterea datelor tuturor cardurilor de pacient poate dura mult.
 Te rog, ia în considerare dacă ai suficient timp la dispoziție pentru a aștepta încheierea procesului.</translation>
     </message>
     <message>
-        <location filename="dlgmain.cpp" line="847"/>
+        <location filename="dlgmain.cpp" line="854"/>
         <source>Enter barcode of the patientcard:</source>
         <translation>Introdu codul de bare a cardului de pacient:</translation>
     </message>
     <message>
-        <location filename="dlgmain.cpp" line="859"/>
+        <location filename="dlgmain.cpp" line="866"/>
         <source>The defined barcode not found in the database.</source>
         <translation>Codul de bare definit nu a fost găsit în baza de date.</translation>
     </message>
     <message>
-        <location filename="dlgmain.cpp" line="1038"/>
+        <location filename="dlgmain.cpp" line="1045"/>
         <source>HTTP Connection established</source>
         <translation>Conexiune SQL stabilită</translation>
     </message>
     <message>
-        <location filename="dlgmain.cpp" line="1116"/>
+        <location filename="dlgmain.cpp" line="1123"/>
         <source>Database connection</source>
         <translation>Conexiune bază de date</translation>
     </message>
     <message>
-        <location filename="dlgmain.cpp" line="1119"/>
+        <location filename="dlgmain.cpp" line="1126"/>
         <source>Http connection</source>
         <translation>Conexiune HTTP</translation>
     </message>
     <message>
-        <location filename="dlgmain.cpp" line="1126"/>
+        <location filename="dlgmain.cpp" line="1133"/>
         <source>Send all patientcard</source>
         <translation>Trimite toate cardurile de pacient</translation>
     </message>
     <message>
-        <location filename="dlgmain.cpp" line="1130"/>
+        <location filename="dlgmain.cpp" line="1137"/>
         <source>Clear waiting queue</source>
         <translation>Curăță coada de așteptare</translation>
     </message>
     <message>
-        <location filename="dlgmain.cpp" line="1134"/>
+        <location filename="dlgmain.cpp" line="1141"/>
         <source>Get online sold patientcards</source>
         <translation type="unfinished">Obține cardurile de pacient vândute online</translation>
     </message>
@@ -795,28 +795,28 @@ Te rog, ia în considerare dacă ai suficient timp la dispoziție pentru a aște
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="dlgmain.cpp" line="1805"/>
-        <location filename="dlgmain.cpp" line="1856"/>
-        <location filename="dlgmain.cpp" line="1895"/>
-        <location filename="dlgmain.cpp" line="2165"/>
+        <location filename="dlgmain.cpp" line="1812"/>
+        <location filename="dlgmain.cpp" line="1863"/>
+        <location filename="dlgmain.cpp" line="1902"/>
+        <location filename="dlgmain.cpp" line="2172"/>
         <source>Validated</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="dlgmain.cpp" line="979"/>
-        <location filename="dlgmain.cpp" line="2170"/>
+        <location filename="dlgmain.cpp" line="986"/>
+        <location filename="dlgmain.cpp" line="2177"/>
         <source>Not validated</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="dlgmain.cpp" line="938"/>
-        <location filename="dlgmain.cpp" line="2179"/>
+        <location filename="dlgmain.cpp" line="945"/>
+        <location filename="dlgmain.cpp" line="2186"/>
         <source>Expired / Invalid</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="dlgmain.cpp" line="942"/>
-        <location filename="dlgmain.cpp" line="2183"/>
+        <location filename="dlgmain.cpp" line="949"/>
+        <location filename="dlgmain.cpp" line="2190"/>
         <source>Demo</source>
         <translation type="unfinished"></translation>
     </message>
@@ -826,199 +826,199 @@ Te rog, ia în considerare dacă ai suficient timp la dispoziție pentru a aște
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="dlgmain.cpp" line="949"/>
+        <location filename="dlgmain.cpp" line="956"/>
         <source>Licence code integrity broken</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="dlgmain.cpp" line="951"/>
-        <location filename="dlgmain.cpp" line="1957"/>
+        <location filename="dlgmain.cpp" line="958"/>
+        <location filename="dlgmain.cpp" line="1964"/>
         <source>Error</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="dlgmain.cpp" line="951"/>
+        <location filename="dlgmain.cpp" line="958"/>
         <source>The given licence code is not validated in licence server.
 Please contact the licence code provider.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="dlgmain.cpp" line="1009"/>
+        <location filename="dlgmain.cpp" line="1016"/>
         <source>HTTP Communication succeeded</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="dlgmain.cpp" line="1138"/>
+        <location filename="dlgmain.cpp" line="1145"/>
         <source>Clear patientcard</source>
         <translation>Curăță cardul de pacient</translation>
     </message>
     <message>
-        <location filename="dlgmain.cpp" line="1142"/>
+        <location filename="dlgmain.cpp" line="1149"/>
         <source>Clear all inactive patientcards</source>
         <translation>Șterge toate cardurile de pacient inactive</translation>
     </message>
     <message>
-        <location filename="dlgmain.cpp" line="1146"/>
+        <location filename="dlgmain.cpp" line="1153"/>
         <source>&amp;Exit application</source>
         <translation>&amp;Părăsirea aplicatiei</translation>
     </message>
     <message>
-        <location filename="dlgmain.cpp" line="1158"/>
+        <location filename="dlgmain.cpp" line="1165"/>
         <source>User actions</source>
         <translation>Acțiuni utilizator</translation>
     </message>
     <message>
-        <location filename="dlgmain.cpp" line="1349"/>
+        <location filename="dlgmain.cpp" line="1356"/>
         <source>Need authentication ...</source>
         <translation>Este nevoie de autentificare ...</translation>
     </message>
     <message>
-        <location filename="dlgmain.cpp" line="1353"/>
+        <location filename="dlgmain.cpp" line="1360"/>
         <source>User successfully authenticated.</source>
         <translation>Utilizatorul a fost autentificat cu succes.</translation>
     </message>
     <message>
-        <location filename="dlgmain.cpp" line="1363"/>
+        <location filename="dlgmain.cpp" line="1370"/>
         <source>The username entered not found in the Belenus database</source>
         <translation>Numele de utilizator introdus nu a fost găsit în baza de date Belenus</translation>
     </message>
     <message>
-        <location filename="dlgmain.cpp" line="1365"/>
+        <location filename="dlgmain.cpp" line="1372"/>
         <source>The password entered is incorrect</source>
         <translation>Parola introdusă este incorectă</translation>
     </message>
     <message>
-        <location filename="dlgmain.cpp" line="1367"/>
+        <location filename="dlgmain.cpp" line="1374"/>
         <source>Connection to Belenus database failed</source>
         <translation>Conexiunea la baza de date Belenus a eșuat</translation>
     </message>
     <message>
-        <location filename="dlgmain.cpp" line="1369"/>
+        <location filename="dlgmain.cpp" line="1376"/>
         <source>Authentication failed. Please retry later ...</source>
         <translation>Autentificarea a eșuat. Te rog, reîncearcă mai târziu ...</translation>
     </message>
     <message>
-        <location filename="dlgmain.cpp" line="1475"/>
+        <location filename="dlgmain.cpp" line="1482"/>
         <source>Http server address is not defined!
 Http connection is going to be disabled.</source>
         <translation>Adresa serverului HTTP nu a fost definită!
 Conexiunea HTTP va fi dezactivată.</translation>
     </message>
     <message>
-        <location filename="dlgmain.cpp" line="1486"/>
+        <location filename="dlgmain.cpp" line="1493"/>
         <source>Http error occured!
 %1</source>
         <translation>Eroare HTTP!
 %1</translation>
     </message>
     <message>
-        <location filename="dlgmain.cpp" line="1496"/>
+        <location filename="dlgmain.cpp" line="1503"/>
         <source>Http communication disabled.</source>
         <translation>Comunicare HTTP dezactivată.</translation>
     </message>
     <message>
-        <location filename="dlgmain.cpp" line="1506"/>
+        <location filename="dlgmain.cpp" line="1513"/>
         <source>Http communication enabled.</source>
         <translation>Comunicare HTTP activată.</translation>
     </message>
     <message>
-        <location filename="dlgmain.cpp" line="1516"/>
+        <location filename="dlgmain.cpp" line="1523"/>
         <source>Http communication suspended.</source>
         <translation>Comunicare HTTP suspendată.</translation>
     </message>
     <message>
-        <location filename="dlgmain.cpp" line="1526"/>
+        <location filename="dlgmain.cpp" line="1533"/>
         <source>Http communication continued.</source>
         <translation>Comunicare HTTP reluată.</translation>
     </message>
     <message>
-        <location filename="dlgmain.cpp" line="1812"/>
+        <location filename="dlgmain.cpp" line="1819"/>
         <source>Licence key registration succeeded.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="dlgmain.cpp" line="1817"/>
+        <location filename="dlgmain.cpp" line="1824"/>
         <source>Licence key registration succeeded.
 </source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="dlgmain.cpp" line="1824"/>
+        <location filename="dlgmain.cpp" line="1831"/>
         <source>Licence registration failed due to database process error
 
 %1</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="dlgmain.cpp" line="1827"/>
+        <location filename="dlgmain.cpp" line="1834"/>
         <source>Licence key registration failed.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="dlgmain.cpp" line="1858"/>
+        <location filename="dlgmain.cpp" line="1865"/>
         <source>Licence key activation succeeded.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="dlgmain.cpp" line="1861"/>
+        <location filename="dlgmain.cpp" line="1868"/>
         <source>Licence key activation succeeded.
 </source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="dlgmain.cpp" line="1869"/>
+        <location filename="dlgmain.cpp" line="1876"/>
         <source>Licence activation failed due to database process error
 
 %1</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="dlgmain.cpp" line="1872"/>
+        <location filename="dlgmain.cpp" line="1879"/>
         <source>Licence key activation failed.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="dlgmain.cpp" line="1897"/>
+        <location filename="dlgmain.cpp" line="1904"/>
         <source>Licence key validation succeeded.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="dlgmain.cpp" line="1900"/>
+        <location filename="dlgmain.cpp" line="1907"/>
         <source>Licence key validation succeeded.
 </source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="dlgmain.cpp" line="1908"/>
+        <location filename="dlgmain.cpp" line="1915"/>
         <source>Licence validation failed due to database process error
 
 %1</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="dlgmain.cpp" line="1911"/>
+        <location filename="dlgmain.cpp" line="1918"/>
         <source>Licence key validation failed.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="dlgmain.cpp" line="1957"/>
+        <location filename="dlgmain.cpp" line="1964"/>
         <source>The format of the licence key is invalid.
 The licence key must be 13 characters length
 .Please check and retype it again.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="dlgmain.cpp" line="1979"/>
+        <location filename="dlgmain.cpp" line="1986"/>
         <source>Activate current licence key</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="dlgmain.cpp" line="1991"/>
+        <location filename="dlgmain.cpp" line="1998"/>
         <source>Question</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="dlgmain.cpp" line="1992"/>
+        <location filename="dlgmain.cpp" line="1999"/>
         <source>Are you sure you want to replace the licence key
 
 from this: %1  to this %2
@@ -1028,12 +1028,12 @@ If you use a currently active licence key, the related data will be corrupted!</
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="dlgmain.cpp" line="2110"/>
+        <location filename="dlgmain.cpp" line="2117"/>
         <source>Warning</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="dlgmain.cpp" line="2111"/>
+        <location filename="dlgmain.cpp" line="2118"/>
         <source>The version information stored in database is not match.
 
 Correct version numbers:
@@ -1049,7 +1049,7 @@ It is recommended to exit application and to contact system administrator.</sour
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="dlgmain.cpp" line="2175"/>
+        <location filename="dlgmain.cpp" line="2182"/>
         <source>Not registered</source>
         <translation type="unfinished"></translation>
     </message>
