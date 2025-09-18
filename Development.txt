@@ -239,4 +239,6 @@ Version 2.3.2.0
 ===============
 - HIBAJAVITAS: olyan berleteknel, ahol kulonbozo gepcsoportokra ervenyes es mindenhova ervenyes egysegek voltak es a lejarati ido egyezett, a berlet egyseg hasznalat nem mukodott
 - HIBAJAVITAS: websync egy ido utan le akarta kerdezni a nem letezo web-en eladott berleteket, ezert letiltotta a tobbi szinkront
+- FEJLESZTES:  berlet egyseg feltoltes, levonas logolva van es megjelenik a berlet kimutatasnal
+- FEJLESZTES:  Belenus-ban rendszer adminkent lehet a liszensz kulcsot validalni es a hatralevo uzemorat megvaltoztatni
 
