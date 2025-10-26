@@ -1225,4 +1225,24 @@
         </execute>
     </version>    
 	
+	<version current="2.3.2.0" next="2.3.2.1">
+        <download>
+            <file path="http://download.bikfalvi.hu/belenus/official/Update_2_3_2_1.zip" />
+        </download>
+        <uncompress>
+            <file path="%DOWNLOAD_DIR%" name="Update_2_3_2_1.zip" />
+        </uncompress>
+        <backup>
+            <file path="%INSTALL_DIR%" directory="" name="ReportViewer.exe" move="yes" />
+        </backup>
+        <update>
+            <file src="%DOWNLOAD_DIR%/ReportViewer.exe" dst="%INSTALL_DIR%/ReportViewer.exe" />
+            <file src="%DOWNLOAD_DIR%/lang/brv_hu.qm" dst="%INSTALL_DIR%/lang/brv_hu.qm" />
+            <file src="%DOWNLOAD_DIR%/resources/40x40_report_patientcard_unitchange.png" dst="%INSTALL_DIR%/resources/40x40_report_patientcard_unitchange.png" />
+        </update>
+        <execute>
+            <application home="%CURRENT_DIR%" name="DBBackup.exe" params='-execute "%DOWNLOAD_DIR%/sql/db_update_2_3_2_1.sql"' />
+        </execute>
+    </version>    
+	
 </Process>

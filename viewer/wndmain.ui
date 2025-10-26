@@ -284,6 +284,25 @@
         </widget>
        </item>
        <item>
+        <widget class="QPushButton" name="pbPatientcardUnitchange">
+         <property name="toolTip">
+          <string>Summary of patientcard unit changes on the given time period.</string>
+         </property>
+         <property name="text">
+          <string/>
+         </property>
+         <property name="iconSize">
+          <size>
+           <width>30</width>
+           <height>30</height>
+          </size>
+         </property>
+         <property name="checkable">
+          <bool>true</bool>
+         </property>
+        </widget>
+       </item>
+       <item>
         <widget class="Line" name="line_3">
          <property name="orientation">
           <enum>Qt::Vertical</enum>
@@ -930,7 +949,7 @@
      <x>0</x>
      <y>0</y>
      <width>1043</width>
-     <height>26</height>
+     <height>21</height>
     </rect>
    </property>
    <widget class="QMenu" name="menu_File">
@@ -971,6 +990,7 @@
      <addaction name="action_Patientcards_Inactive"/>
      <addaction name="action_Patientcard_Sells"/>
      <addaction name="action_Patientcard_Debts"/>
+     <addaction name="action_PatientcardUnitchange"/>
     </widget>
     <widget class="QMenu" name="menuProducts_2">
      <property name="title">
@@ -1211,6 +1231,14 @@
    </property>
    <property name="toolTip">
     <string>Summary of dispersion of the panel usages per patients</string>
+   </property>
+  </action>
+  <action name="action_PatientcardUnitchange">
+   <property name="checkable">
+    <bool>true</bool>
+   </property>
+   <property name="text">
+    <string>Patientcard unit change</string>
    </property>
   </action>
  </widget>
