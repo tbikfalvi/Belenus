@@ -82,7 +82,7 @@ void cReportDaily::refreshReport()
     addSeparator();
     addSubTitle( tr( "Patientcard unit modifications" ) );
     addDescription( tr( "The items in the list show the interventions through which the "
-                        "number of units of the respective passes was increased or decreased.") );
+                        "number of units of the respective card was increased or decreased.") );
     _reportPatientcardUnitschange();
 
     // Withdrawed items (storno)
