@@ -78,6 +78,13 @@ void cReportDaily::refreshReport()
 
     addHorizontalLine();
 
+    // Berlet egyseg feltoltesek es levonasok
+    addSeparator();
+    addSubTitle( tr( "Patientcard unit modifications" ) );
+    addDescription( tr( "The items in the list show the interventions through which the "
+                        "number of units of the respective card was increased or decreased.") );
+    _reportPatientcardUnitschange();
+
     // Withdrawed items (storno)
     addSeparator();
     addSubTitle( tr( "Storno items" ) );
@@ -867,6 +874,135 @@ void cReportDaily::_reportPartIncomeSummary( unsigned int p_uiProductSoldTotal, 
     finishTable();
     finishSection();
 }
+//------------------------------------------------------------------------------------
+void cReportDaily::_reportPatientcardUnitschange()
+//------------------------------------------------------------------------------------
+{
+    QSqlQuery   *poQueryResultCards = NULL;
+    QString      qsQueryCards = "";
+    QString      qsDateCondition = "";
+
+    g_poDB->executeQTQuery( "DELETE FROM `report_cardhistory` " );
+
+    qsDateCondition = QString(" AND ledgerTime>\"%1 00:00:00\" AND ledgerTime<\"%1 23:59:59\" ").arg( filterDateStart().toString( "yyyy-MM-dd" ) );
+
+    //----------------------------------------------------------------------------------------------
+    // Unit increase
+    qsQueryCards = QString( "SELECT ledger.ledgertime, "
+                            "ledgertypes.name, "
+                            "patientcardtypes.name, "
+                            "COUNT( patientcardunits.unittime ), "
+                            "patientcardunits.unittime, "
+                            "ledger.totalprice, "
+                            "users.realname, "
+                            "barcode "
+                            "FROM `ledger`, `ledgertypes`, `patientcards`, `patientcardtypes`, `users`, `patientcardunits` "
+                            "WHERE "
+                            "ledger.ledgerid = patientcardunits.ledgerid AND "
+                            "ledger.userid = users.userid AND "
+                            "ledger.patientcardid = patientcards.patientcardid AND "
+                            "ledger.patientcardtypeid = patientcardtypes.patientcardtypeid AND "
+                            "ledger.ledgertypeid = ledgertypes.ledgertypeid AND "
+                            "ledger.ledgertypeid = 11 %1 "
+                            "GROUP BY ledger.ledgerid" ).arg( qsDateCondition );
+
+    poQueryResultCards = g_poDB->executeQTQuery( qsQueryCards );
+    m_dlgProgress.increaseProgressMax( poQueryResultCards->size() );
+
+    while( poQueryResultCards->next() )
+    {
+        g_poDB->executeQTQuery( QString( "INSERT INTO `report_cardhistory` ( `dateCardAction`, `cardAction`, `countUnits`, `unitTime`, `unitType`, `priceAction`, `userName`, `barcode` ) "
+                                         " VALUES ( '%1', '%2', '%3', '%4', '%5', '%6', '%7', '%8' ) " )
+                                        .arg( poQueryResultCards->value(0).toDateTime().toString( "yyyy-MM-dd hh:mm:ss" ) )
+                                        .arg( poQueryResultCards->value(1).toString() )
+                                        .arg( poQueryResultCards->value(3).toString() )
+                                        .arg( poQueryResultCards->value(4).toString() )
+                                        .arg( poQueryResultCards->value(2).toString().replace( QString("\'"), QString("\\\'") ) )
+                                        .arg( poQueryResultCards->value(5).toString() )
+                                        .arg( poQueryResultCards->value(6).toString() )
+                                        .arg( poQueryResultCards->value(7).toString() ) );
+    }
+
+    //----------------------------------------------------------------------------------------------
+    // Unit decrease
+    qsQueryCards = QString( "SELECT ledger.ledgertime, "
+                            "ledgertypes.name, "
+                            "patientcardtypes.name, "
+                            "itemCount, "
+                            "users.realname, "
+                            "barcode "
+                            "FROM `ledger`, `ledgertypes`, `patientcards`, `patientcardtypes`, `users` "
+                            "WHERE "
+                            "ledger.userid = users.userid AND "
+                            "ledger.patientcardid = patientcards.patientcardid AND "
+                            "ledger.patientcardtypeid = patientcardtypes.patientcardtypeid AND "
+                            "ledger.ledgertypeid = ledgertypes.ledgertypeid AND "
+                            "ledger.ledgertypeid = 12 %1 " ).arg( qsDateCondition );
+
+    poQueryResultCards = g_poDB->executeQTQuery( qsQueryCards );
+
+    while( poQueryResultCards->next() )
+    {
+        QString     qsLedgertime        = poQueryResultCards->value(0).toDateTime().toString( "yyyy-MM-dd hh:mm:ss" );
+        QString     qsLedgerTypeName    = poQueryResultCards->value(1).toString();
+        QString     qsPatientCardType   = poQueryResultCards->value(2).toString().replace( QString("\'"), QString("\\\'") );
+        int         nItemCount          = poQueryResultCards->value(3).toInt() * (-1);
+        QString     qsUser              = poQueryResultCards->value(4).toString();
+        QString     qsBarcode           = poQueryResultCards->value(5).toString();
+
+        g_poDB->executeQTQuery( QString( "INSERT INTO `report_cardhistory` ( `dateCardAction`, `cardAction`, `countUnits`, `unitTime`, `unitType`, `priceAction`, `userName`, `barcode` ) "
+                                         " VALUES ( '%1', '%2', '%3', '%4', '%5', '%6', '%7', '%8' ) " )
+                                        .arg( qsLedgertime )
+                                        .arg( qsLedgerTypeName )
+                                        .arg( QString::number( nItemCount ) )
+                                        .arg( "" )
+                                        .arg( qsPatientCardType )
+                                        .arg( "" )
+                                        .arg( qsUser )
+                                        .arg( qsBarcode ) );
+    }
+
+    startSection();
+    addTable();
+
+    addTableRow();
+    addTableCell( tr( "Patientcard barcode" ), "center bold" );
+    addTableCell( tr( "Date of action" ), "center bold" );
+    addTableCell( tr( "Action name" ), "center bold" );
+    addTableCell( tr( "Number of units" ), "center bold" );
+    addTableCell( tr( "Unit time" ), "center bold" );
+    addTableCell( tr( "Unit type" ), "center bold" );
+    addTableCell( tr( "Action performed by" ), "center bold" );
+
+    poQueryResultCards = g_poDB->executeQTQuery( "SELECT dateCardAction, cardAction, countUnits, unitTime, unitType, priceAction, userName, barcode FROM `report_cardhistory` ORDER BY dateCardAction " );
+
+    while( poQueryResultCards->next() )
+    {
+        QString     queryDateCardAction = poQueryResultCards->value(0).toDateTime().toString( "yyyy-MM-dd hh:mm" );
+        QString     queryCardAction     = poQueryResultCards->value(1).toString();
+        int         queryUnitCount      = poQueryResultCards->value(2).toInt();
+        int         queryUnitTime       = poQueryResultCards->value(3).toInt();
+        QString     queryUnitType       = poQueryResultCards->value(4).toString();
+        //int         queryPriceAction    = poQueryResultCards->value(5).toInt();
+        QString     queryUserName       = poQueryResultCards->value(6).toString();
+        QString     queryBarcode        = poQueryResultCards->value(7).toString();
+
+        addTableRow();
+        addTableCell( queryBarcode );
+        addTableCell( queryDateCardAction );
+        addTableCell( queryCardAction );
+        addTableCell( QString::number( queryUnitCount ) );
+        addTableCell( QString::number( queryUnitTime ) );
+        addTableCell( queryUnitType );
+        addTableCell( queryUserName );
+    }
+
+    finishTable();
+    finishSection();
+}
+
+
+
 //------------------------------------------------------------------------------------
 QString cReportDaily::_countsumPatientCardTypeSell( QString p_qsCassaId, unsigned int p_uiPatientCardTypeId, unsigned int *p_uiPricePCSell )
 //------------------------------------------------------------------------------------

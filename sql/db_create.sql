@@ -2,7 +2,7 @@
 -- Belenus Szoftver Rendszer (c) Bikfalvi Tamas - 2025
 -- -----------------------------------------------------------------------------------
 -- Filename    : db_create.sql
--- DbVersion   : 2.3.2.0
+-- DbVersion   : 2.3.2.1
 -- -----------------------------------------------------------------------------------
 -- Adatbazist letrehozo SQL script
 -- -----------------------------------------------------------------------------------
@@ -973,6 +973,9 @@ CREATE TABLE IF NOT EXISTS `report_cardhistory` (
   `unitTime`	 			int(11) 				NOT NULL,
   `unitType` 				varchar(500)            NOT NULL,
   `priceAction` 			int(11) 				NOT NULL,
-  `userName` 				varchar(500)            NOT NULL
+  `userName` 				varchar(500)            NOT NULL,
+  `barcode`                 varchar(20)             NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+
+
 

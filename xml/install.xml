@@ -1,4 +1,4 @@
-<installer version="2.3.2.0">
+<installer version="2.3.2.1">
 
     <files>
 
@@ -117,6 +117,7 @@
         <file src="%CURRENT_DIR%/resources/40x40_refresh.png" dst="%INSTALL_DIR%/resources/40x40_refresh.png" />
         <file src="%CURRENT_DIR%/resources/40x40_report_patientcardtypes.png" dst="%INSTALL_DIR%/resources/40x40_report_patientcardtypes.png" />
         <file src="%CURRENT_DIR%/resources/40x40_report_patientcard_debt.png" dst="%INSTALL_DIR%/resources/40x40_report_patientcard_debt.png" />
+        <file src="%CURRENT_DIR%/resources/40x40_report_patientcard_unitchange.png" dst="%INSTALL_DIR%/resources/40x40_report_patientcard_unitchange.png" />
         <file src="%CURRENT_DIR%/resources/40x40_report_patientcard_details.png" dst="%INSTALL_DIR%/resources/40x40_report_patientcard_details.png" />
         <file src="%CURRENT_DIR%/resources/40x40_report_patientcard_inactive.png" dst="%INSTALL_DIR%/resources/40x40_report_patientcard_inactive.png" />
         <file src="%CURRENT_DIR%/resources/40x40_report_patientcard_sell.png" dst="%INSTALL_DIR%/resources/40x40_report_patientcard_sell.png" />
