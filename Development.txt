@@ -246,3 +246,6 @@ Version 2.3.2.1
 ===============
 - KIEGESZITES: Berletegyseg csokkentest novelest osszegzo kimutatas
 
+Version 2.3.3.0
+===============
+
