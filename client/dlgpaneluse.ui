@@ -6,8 +6,8 @@
    <rect>
     <x>0</x>
     <y>0</y>
-    <width>500</width>
-    <height>400</height>
+    <width>570</width>
+    <height>463</height>
    </rect>
   </property>
   <property name="minimumSize">
@@ -21,7 +21,7 @@
   </property>
   <layout class="QHBoxLayout" name="horizontalLayout_6">
    <item>
-    <layout class="QVBoxLayout" name="verticalLayout_3">
+    <layout class="QVBoxLayout" name="verticalLayout_5">
      <item>
       <widget class="QGroupBox" name="gbPanelData">
        <property name="minimumSize">
@@ -299,6 +299,22 @@
            </size>
           </property>
          </spacer>
+        </item>
+       </layout>
+      </widget>
+     </item>
+     <item>
+      <widget class="QGroupBox" name="gbRestrictions">
+       <property name="title">
+        <string> Restrictions </string>
+       </property>
+       <layout class="QVBoxLayout" name="verticalLayout_3">
+        <item>
+         <widget class="QLabel" name="lblRestrictions">
+          <property name="text">
+           <string>No restrictions for planned usage</string>
+          </property>
+         </widget>
         </item>
        </layout>
       </widget>

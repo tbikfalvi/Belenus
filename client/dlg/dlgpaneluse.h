@@ -102,6 +102,9 @@ private:
     int                          m_nTimerCounter;
     bool                         m_bIsCardReadByRFIDReader;
     bool                         m_bParentLoaded;
+    QString                      m_qsRestriction;
+    QString                      m_qsTimeRestriction;
+    unsigned int                 m_uiMinimumTime;
 
     void                        _initUiItems();
     void                        _fillUiItems();

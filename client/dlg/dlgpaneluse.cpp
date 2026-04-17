@@ -220,6 +220,11 @@ cDlgPanelUse::cDlgPanelUse( QWidget *p_poParent, unsigned int p_uiPanelId ) : QD
     m_bIsCardReadByRFIDReader   = false;
     m_bParentLoaded             = false;
 
+    m_qsRestriction             = tr( "There are no constraints preventing the planned usage." );
+    m_qsTimeRestriction         = "";
+
+    m_uiMinimumTime             = 0;
+
     m_obDBPatientCard.createNew();
 
     _fillUiItems();
@@ -562,11 +567,21 @@ void cDlgPanelUse::calculateTotalTimeValue()
         cmbTimeIntervall->setFocus();
     }
 
-    QTime   qtPanelUseTime = QTime( (m_uiPanelBaseTimeCard+m_uiPanelBaseTimeCash+m_uiPanelUseTimeCard+m_uiPanelUseTimeCash)/3600,
-                            ((m_uiPanelBaseTimeCard+m_uiPanelBaseTimeCash+m_uiPanelUseTimeCard+m_uiPanelUseTimeCash)%3600)/60,
-                            ((m_uiPanelBaseTimeCard+m_uiPanelBaseTimeCash+m_uiPanelUseTimeCard+m_uiPanelUseTimeCash)%3600)%60 );
+    unsigned int uiPanelUseTime = m_uiPanelBaseTimeCard + m_uiPanelBaseTimeCash + m_uiPanelUseTimeCard + m_uiPanelUseTimeCash;
+
+    QTime   qtPanelUseTime = QTime( (uiPanelUseTime)/3600, ((uiPanelUseTime)%3600)/60, ((uiPanelUseTime)%3600)%60 );
 
     lblTotalTimeValue->setText( qtPanelUseTime.toString( "hh:mm:ss" ) );
+
+    m_qsRestriction = tr( "There are no constraints preventing the planned usage." );
+
+    if( uiPanelUseTime < m_uiMinimumTime )
+    {
+        m_qsRestriction = tr( "The total planned machine usage time is less than the minimum required duration." );
+
+        pbOk->setEnabled( false );
+        return;
+    }
 
     if( (m_uiPanelUseTimeCard+m_uiPanelUseTimeCash) > 0 )
     {
