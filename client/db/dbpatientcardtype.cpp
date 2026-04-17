@@ -17,16 +17,19 @@
 #include "dbpatientcardtype.h"
 #include "dbpatientcard.h"
 
+//====================================================================================
 cDBPatientCardType::cDBPatientCardType()
 {
     init();
 }
 
+//====================================================================================
 cDBPatientCardType::~cDBPatientCardType()
 {
 }
 
-void cDBPatientCardType::init( const unsigned int p_uiId,
+//====================================================================================
+void cDBPatientCardType::init(const unsigned int p_uiId,
                                const unsigned int p_uiLicenceId,
                                const unsigned int p_uiPanelGroupId,
                                const QString &p_qsName,
@@ -37,13 +40,14 @@ void cDBPatientCardType::init( const unsigned int p_uiId,
                                const QString &p_qsValidDateTo,
                                const int p_nValidDays,
                                const int p_nUnitTime,
+                               const int p_nMinimumTime,
                                const QString &p_qsModified,
                                const bool p_bActive,
                                const QString &p_qsArchive ) throw()
 {
     m_uiId              = p_uiId;
     m_uiLicenceId       = p_uiLicenceId;
-    m_uiPanelGroupId        = p_uiPanelGroupId;
+    m_uiPanelGroupId    = p_uiPanelGroupId;
     m_qsName            = p_qsName;
     m_fPrice            = p_fPrice;
     m_nVatpercent       = p_nVatpercent;
@@ -52,11 +56,13 @@ void cDBPatientCardType::init( const unsigned int p_uiId,
     m_qsValidDateTo     = p_qsValidDateTo;
     m_nValidDays        = p_nValidDays;
     m_nUnitTime         = p_nUnitTime;
+    m_nMinimumTime      = p_nMinimumTime;
     m_qsModified        = p_qsModified;
     m_bActive           = p_bActive;
     m_qsArchive         = p_qsArchive;
 }
 
+//====================================================================================
 void cDBPatientCardType::init( const QSqlRecord &p_obRecord ) throw()
 {
     int inIdIdx             = p_obRecord.indexOf( "patientCardTypeId" );
@@ -70,6 +76,7 @@ void cDBPatientCardType::init( const QSqlRecord &p_obRecord ) throw()
     int inValidDateToIdx    = p_obRecord.indexOf( "validDateTo" );
     int inValidDaysIdx      = p_obRecord.indexOf( "validDays" );
     int inUnitTimeIdx       = p_obRecord.indexOf( "unitTime" );
+    int inMinimumTimeIdx    = p_obRecord.indexOf( "minimumTime" );
     int inModifiedIdx       = p_obRecord.indexOf( "modified" );
     int inActiveIdx         = p_obRecord.indexOf( "active" );
     int inArchiveIdx        = p_obRecord.indexOf( "archive" );
@@ -85,11 +92,13 @@ void cDBPatientCardType::init( const QSqlRecord &p_obRecord ) throw()
           p_obRecord.value( inValidDateToIdx ).toString(),
           p_obRecord.value( inValidDaysIdx ).toInt(),
           p_obRecord.value( inUnitTimeIdx ).toInt(),
+          p_obRecord.value( inMinimumTimeIdx ).toInt(),
           p_obRecord.value( inModifiedIdx ).toString(),
           p_obRecord.value( inActiveIdx ).toBool(),
           p_obRecord.value( inArchiveIdx ).toString() );
 }
 
+//====================================================================================
 void cDBPatientCardType::load( const unsigned int p_uiId ) throw( cSevException )
 {
     cTracer obTrace( "cDBPatientCardType::load", QString( "id: %1" ).arg( p_uiId ) );
@@ -103,6 +112,7 @@ void cDBPatientCardType::load( const unsigned int p_uiId ) throw( cSevException 
     init( poQuery->record() );
 }
 
+//====================================================================================
 void cDBPatientCardType::load( const QString &p_qsName ) throw( cSevException )
 {
     cTracer obTrace( "cDBPatientCardType::load", QString("name: \"%1\"").arg(p_qsName) );
@@ -116,6 +126,7 @@ void cDBPatientCardType::load( const QString &p_qsName ) throw( cSevException )
     init( poQuery->record() );
 }
 
+//====================================================================================
 void cDBPatientCardType::save() throw( cSevException )
 {
     cTracer obTrace( "cDBPatientCardType::save" );
@@ -142,6 +153,7 @@ void cDBPatientCardType::save() throw( cSevException )
     qsQuery += QString( "validDateTo = \"%1\", " ).arg( m_qsValidDateTo );
     qsQuery += QString( "validDays = \"%1\", " ).arg( m_nValidDays );
     qsQuery += QString( "unitTime = \"%1\", " ).arg( m_nUnitTime );
+    qsQuery += QString( "minimumTime = \"%1\", " ).arg( m_nMinimumTime );
     qsQuery += QString( "modified = \"%1\", " ).arg( QDateTime::currentDateTime().toString( QString("yyyy-MM-dd hh:mm:ss") ) );
     qsQuery += QString( "active = %1, " ).arg( m_bActive );
     qsQuery += QString( "archive = \"%1\" " ).arg( m_qsArchive );
@@ -153,14 +165,9 @@ void cDBPatientCardType::save() throw( cSevException )
     QSqlQuery  *poQuery = g_poDB->executeQTQuery( qsQuery );
     if( !m_uiId && poQuery ) m_uiId = poQuery->lastInsertId().toUInt();
     if( poQuery ) delete poQuery;
-/*
-    if( m_uiId > 0 && m_uiLicenceId != 1 )
-        g_obDBMirror.updateSynchronizationLevel( DB_PATIENTCARD_TYPE );
-    if( m_uiId > 0 && m_uiLicenceId == 0 )
-        g_obDBMirror.updateGlobalSyncLevel( DB_PATIENTCARD_TYPE );
-*/
 }
 
+//====================================================================================
 void cDBPatientCardType::remove() throw( cSevException )
 {
     cTracer obTrace( "cDBPatientCardType::remove" );
@@ -184,142 +191,182 @@ void cDBPatientCardType::remove() throw( cSevException )
     }
 }
 
+//====================================================================================
 void cDBPatientCardType::createNew() throw()
 {
     init();
 }
 
+//====================================================================================
 unsigned int cDBPatientCardType::id() const throw()
 {
     return m_uiId;
 }
 
+//====================================================================================
 unsigned int cDBPatientCardType::licenceId() const throw()
 {
     return m_uiLicenceId;
 }
 
+//====================================================================================
 void cDBPatientCardType::setLicenceId( const unsigned int p_uiLicenceId ) throw()
 {
     m_uiLicenceId = p_uiLicenceId;
 }
 
+//====================================================================================
 unsigned int cDBPatientCardType::panelGroupId() const throw()
 {
     return m_uiPanelGroupId;
 }
 
+//====================================================================================
 void cDBPatientCardType::setPanelGroupId( const unsigned int p_nPanelGroupId ) throw()
 {
     m_uiPanelGroupId = p_nPanelGroupId;
 }
 
+//====================================================================================
 QString cDBPatientCardType::name() const throw()
 {
     return m_qsName;
 }
 
+//====================================================================================
 void cDBPatientCardType::setName( const QString &p_qsName ) throw()
 {
     m_qsName = p_qsName;
     m_qsName = m_qsName.replace( QString("\""), QString("\\\"") );
 }
 
+//====================================================================================
 float cDBPatientCardType::price() const throw()
 {
     return m_fPrice;
 }
 
+//====================================================================================
 void cDBPatientCardType::setPrice( const float p_fPrice ) throw()
 {
     m_fPrice = p_fPrice;
 }
 
+//====================================================================================
 int cDBPatientCardType::vatpercent() const throw()
 {
     return m_nVatpercent;
 }
 
+//====================================================================================
 void cDBPatientCardType::setVatpercent( const int p_nVatpercent ) throw()
 {
     m_nVatpercent = p_nVatpercent;
 }
 
+//====================================================================================
 int cDBPatientCardType::units() const throw()
 {
     return m_nUnits;
 }
 
+//====================================================================================
 void cDBPatientCardType::setUnits( const int p_nUnits ) throw()
 {
     m_nUnits = p_nUnits;
 }
 
+//====================================================================================
 QString cDBPatientCardType::validDateFrom() const throw()
 {
     return m_qsValidDateFrom;
 }
 
+//====================================================================================
 void cDBPatientCardType::setValidDateFrom( const QString &p_qsVDFrom ) throw()
 {
     m_qsValidDateFrom = p_qsVDFrom;
 }
 
+//====================================================================================
 QString cDBPatientCardType::validDateTo() const throw()
 {
     return m_qsValidDateTo;
 }
 
+//====================================================================================
 void cDBPatientCardType::setValidDateTo( const QString &p_qsVDTo ) throw()
 {
     m_qsValidDateTo = p_qsVDTo;
 }
 
+//====================================================================================
 int cDBPatientCardType::validDays() const throw()
 {
     return m_nValidDays;
 }
 
+//====================================================================================
 void cDBPatientCardType::setValidDays( const int p_nValidDays ) throw()
 {
     m_nValidDays = p_nValidDays;
 }
 
+//====================================================================================
 int cDBPatientCardType::unitTime() const throw()
 {
     return m_nUnitTime;
 }
 
+//====================================================================================
 void cDBPatientCardType::setUnitTime( const int p_nUnitTime ) throw()
 {
     m_nUnitTime = p_nUnitTime;
 }
 
+//====================================================================================
+int cDBPatientCardType::minimumTime() const throw()
+{
+    return m_nMinimumTime;
+}
+
+//====================================================================================
+void cDBPatientCardType::setMinimumTime( const int p_nMinimumTime ) throw()
+{
+    m_nMinimumTime = p_nMinimumTime;
+}
+
+//====================================================================================
 QString cDBPatientCardType::modified() const throw()
 {
     return m_qsModified;
 }
 
+//====================================================================================
 bool cDBPatientCardType::active() const throw()
 {
     return m_bActive;
 }
 
+//====================================================================================
 void cDBPatientCardType::setActive( const bool p_bActive ) throw()
 {
     m_bActive = p_bActive;
 }
 
+//====================================================================================
 QString cDBPatientCardType::archive() const throw()
 {
     return m_qsArchive;
 }
 
+//====================================================================================
 void cDBPatientCardType::setArchive( const QString &p_qsArchive ) throw()
 {
     m_qsArchive = p_qsArchive;
 }
 
+//====================================================================================
 void cDBPatientCardType::updatePatientCardUnits( int p_nUnitTime ) throw()
 {
     QSqlQuery *poQuery = g_poDB->executeQTQuery( QString( "SELECT patientCardId FROM patientcards WHERE patientCardTypeId = %1" ).arg( m_uiId ) );
