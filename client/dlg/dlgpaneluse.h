@@ -30,10 +30,12 @@ public:
     void             setAutoSelected();
     void             setOrderNum( unsigned int p_uiOrderNum );
     int              lengthSeconds();
+    int              lengthMinimumTime();
     QStringList      usedUnitIds();
 
 private:
     int              m_nUnitTime;
+    int              m_nMinimumTime;
     unsigned int     m_uiOrderNum;
     QStringList      m_qslUnitIds;
 
@@ -104,7 +106,7 @@ private:
     bool                         m_bParentLoaded;
     QString                      m_qsRestriction;
     QString                      m_qsTimeRestriction;
-    unsigned int                 m_uiMinimumTime;
+    int                          m_nMinimumTime;
 
     void                        _initUiItems();
     void                        _fillUiItems();

@@ -470,6 +470,7 @@ void cDlgPatientCardRefill::on_pbSell_clicked()
                 obDBPatientcardUnit.setPanelGroupId( cmbPanelGroup->itemData( cmbPanelGroup->currentIndex() ).toUInt() );
                 obDBPatientcardUnit.setLedgerId( uiLedgerId );
                 obDBPatientcardUnit.setUnitTime( m_poPatientCardType->unitTime() );
+                obDBPatientcardUnit.setMinimumTime( m_poPatientCardType->minimumTime() );
                 obDBPatientcardUnit.setUnitPrice( m_poPatientCardType->price()/ledUnits->text().toInt() );
                 obDBPatientcardUnit.setValidDateFrom( deValidDateFrom->date().toString("yyyy-MM-dd") );
                 obDBPatientcardUnit.setValidDateTo( deValidDateTo->date().toString("yyyy-MM-dd") );

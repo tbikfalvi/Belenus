@@ -712,7 +712,7 @@ You must select a valid patientcard type.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="edit/dlgaddunits.cpp" line="237"/>
+        <location filename="edit/dlgaddunits.cpp" line="238"/>
         <source>Error</source>
         <translation type="unfinished">Eroare</translation>
     </message>
@@ -3053,61 +3053,61 @@ asociat cu unul sau mai multe panouri nu este permisă.</translation>
 <context>
     <name>cDlgPanelUse</name>
     <message>
-        <location filename="dlg/dlgpaneluse.cpp" line="262"/>
+        <location filename="dlg/dlgpaneluse.cpp" line="277"/>
         <source>Start</source>
         <translation>Start</translation>
     </message>
     <message>
-        <location filename="dlg/dlgpaneluse.cpp" line="266"/>
+        <location filename="dlg/dlgpaneluse.cpp" line="281"/>
         <source>Owner : </source>
         <translation>Proprietar : </translation>
     </message>
     <message>
-        <location filename="dlg/dlgpaneluse.cpp" line="267"/>
-        <location filename="dlg/dlgpaneluse.cpp" line="937"/>
+        <location filename="dlg/dlgpaneluse.cpp" line="282"/>
+        <location filename="dlg/dlgpaneluse.cpp" line="960"/>
         <source>Comment :
 </source>
         <translation>Observații :
 </translation>
     </message>
     <message>
-        <location filename="dlg/dlgpaneluse.cpp" line="296"/>
+        <location filename="dlg/dlgpaneluse.cpp" line="311"/>
         <source>&lt;No time intervall selected&gt;</source>
         <translation>&lt;Nu a fost selectat interval de tip&gt;</translation>
     </message>
     <message>
-        <location filename="dlg/dlgpaneluse.cpp" line="771"/>
+        <location filename="dlg/dlgpaneluse.cpp" line="794"/>
         <source>You are not allowed to use RFID card with barcode.
 Please use the RFID reader if you want to use this card.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="dlg/dlgpaneluse.cpp" line="464"/>
+        <location filename="dlg/dlgpaneluse.cpp" line="481"/>
         <source>
 &lt;b&gt;%1 units (%2 minutes) valid on&lt;/b&gt;%3</source>
         <translation>
 &lt;b&gt;%1 unități (%2 minute) valabile la&lt;/b&gt;%3</translation>
     </message>
     <message>
-        <location filename="dlg/dlgpaneluse.cpp" line="416"/>
+        <location filename="dlg/dlgpaneluse.cpp" line="431"/>
         <source>Owner : %1</source>
         <translation>Proprietar : %1</translation>
     </message>
     <message>
-        <location filename="dlg/dlgpaneluse.cpp" line="417"/>
+        <location filename="dlg/dlgpaneluse.cpp" line="432"/>
         <source>Comment :
 %1</source>
         <translation>Observații :
 %1</translation>
     </message>
     <message>
-        <location filename="dlg/dlgpaneluse.cpp" line="561"/>
-        <location filename="dlg/dlgpaneluse.cpp" line="748"/>
+        <location filename="dlg/dlgpaneluse.cpp" line="579"/>
+        <location filename="dlg/dlgpaneluse.cpp" line="771"/>
         <source>Warning</source>
         <translation>Avertisment</translation>
     </message>
     <message>
-        <location filename="dlg/dlgpaneluse.cpp" line="562"/>
+        <location filename="dlg/dlgpaneluse.cpp" line="580"/>
         <source>This time period did not saved in the database
 for the actually selected device.
 Please select valid value from the list.</source>
@@ -3116,56 +3116,56 @@ pentru dispozitivul actual selectat.
 Te rog, selectează valoarea validă de pe listă.</translation>
     </message>
     <message>
-        <location filename="dlg/dlgpaneluse.cpp" line="702"/>
+        <location filename="dlg/dlgpaneluse.cpp" line="725"/>
         <source>Ok</source>
         <translation>OK</translation>
     </message>
     <message>
-        <location filename="dlg/dlgpaneluse.cpp" line="749"/>
+        <location filename="dlg/dlgpaneluse.cpp" line="772"/>
         <source>Invalid barcode length.
 The length of the barcode should be %1.</source>
         <translation>Lungimea codului de bare este incorectă.
 Lungimea codului de bare ar trebui să fie %1.</translation>
     </message>
     <message>
-        <location filename="dlg/dlgpaneluse.cpp" line="762"/>
-        <location filename="dlg/dlgpaneluse.cpp" line="770"/>
-        <location filename="dlg/dlgpaneluse.cpp" line="777"/>
+        <location filename="dlg/dlgpaneluse.cpp" line="785"/>
+        <location filename="dlg/dlgpaneluse.cpp" line="793"/>
+        <location filename="dlg/dlgpaneluse.cpp" line="800"/>
         <source>Attention</source>
         <translation>Atenție</translation>
     </message>
     <message>
-        <location filename="dlg/dlgpaneluse.cpp" line="349"/>
+        <location filename="dlg/dlgpaneluse.cpp" line="364"/>
         <source>Reading card data failed or this card is not registered in database.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="dlg/dlgpaneluse.cpp" line="223"/>
-        <location filename="dlg/dlgpaneluse.cpp" line="576"/>
+        <location filename="dlg/dlgpaneluse.cpp" line="238"/>
+        <location filename="dlg/dlgpaneluse.cpp" line="594"/>
         <source>There are no constraints preventing the planned usage.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="dlg/dlgpaneluse.cpp" line="580"/>
+        <location filename="dlg/dlgpaneluse.cpp" line="598"/>
         <source>The total planned machine usage time is less than the minimum required duration.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="dlg/dlgpaneluse.cpp" line="763"/>
+        <location filename="dlg/dlgpaneluse.cpp" line="786"/>
         <source>You are not allowed to use system administrator card.
 Please log in as a system administrator if you want to use this card.</source>
         <translation>Nu ai voie să folosești cardul de administrator sistem.
 Te rog, înregistrează-te ca administrator de sistem dacă vrei să folosești acest card.</translation>
     </message>
     <message>
-        <location filename="dlg/dlgpaneluse.cpp" line="778"/>
+        <location filename="dlg/dlgpaneluse.cpp" line="801"/>
         <source>This patientcard has been lost and replaced
 and can not be used or sold again.</source>
         <translation>Acest card pacient a fost pierdut și înlocuit
 și nu poate fi folosit sau vândut din nou.</translation>
     </message>
     <message>
-        <location filename="dlg/dlgpaneluse.cpp" line="794"/>
+        <location filename="dlg/dlgpaneluse.cpp" line="817"/>
         <source>
 
 Due to there is no time left, the patientcard will be reseted and deactivated.</source>
@@ -3174,14 +3174,14 @@ Due to there is no time left, the patientcard will be reseted and deactivated.</
 Deoarece nu a mai rămas timp, cardul de pacient va fi resetat și dezactivat.</translation>
     </message>
     <message>
-        <location filename="dlg/dlgpaneluse.cpp" line="796"/>
-        <location filename="dlg/dlgpaneluse.cpp" line="830"/>
-        <location filename="dlg/dlgpaneluse.cpp" line="855"/>
+        <location filename="dlg/dlgpaneluse.cpp" line="819"/>
+        <location filename="dlg/dlgpaneluse.cpp" line="853"/>
+        <location filename="dlg/dlgpaneluse.cpp" line="878"/>
         <source>Question</source>
         <translation>Întrebare</translation>
     </message>
     <message>
-        <location filename="dlg/dlgpaneluse.cpp" line="797"/>
+        <location filename="dlg/dlgpaneluse.cpp" line="820"/>
         <source>This patientcard can not be used with these settings:
 
 Available units: %1
@@ -3196,21 +3196,21 @@ Timp disponibil: %2 (hh:mm:ss)
 Vrei să reîncarci cardul de pacient acum?%3</translation>
     </message>
     <message>
-        <location filename="dlg/dlgpaneluse.cpp" line="831"/>
+        <location filename="dlg/dlgpaneluse.cpp" line="854"/>
         <source>This barcode has not been activated yet.
 Do you want to activate and sell it now?</source>
         <translation>Acest cod de bare nu a fost încă activat.
 Vrei să-l activezi și să-l vinzi acum?</translation>
     </message>
     <message>
-        <location filename="dlg/dlgpaneluse.cpp" line="856"/>
+        <location filename="dlg/dlgpaneluse.cpp" line="879"/>
         <source>This barcode has not found in the database.
 Do you want to save it and sell it now?</source>
         <translation>Acest cod de bare nu a fost găsit în baza de date.
 Vrei să-l salvezi și să-l vinzi acum?</translation>
     </message>
     <message>
-        <location filename="dlg/dlgpaneluse.cpp" line="903"/>
+        <location filename="dlg/dlgpaneluse.cpp" line="926"/>
         <source>Please read your RFID card!</source>
         <translation type="unfinished"></translation>
     </message>
@@ -3900,7 +3900,7 @@ Te rog, reautentifică-te pentru a activa casa.</translation>
         <translation type="unfinished">Reîncărcare card pacient &lt;%1&gt;</translation>
     </message>
     <message>
-        <location filename="edit/dlgpatientcardrefill.cpp" line="534"/>
+        <location filename="edit/dlgpatientcardrefill.cpp" line="535"/>
         <source>Error</source>
         <translation>Eroare</translation>
     </message>
@@ -3984,7 +3984,7 @@ Te rog, reautentifică-te pentru a activa casa.</translation>
     <message>
         <location filename="edit/dlgpatientcardsell.cpp" line="73"/>
         <location filename="edit/dlgpatientcardsell.cpp" line="91"/>
-        <location filename="edit/dlgpatientcardsell.cpp" line="638"/>
+        <location filename="edit/dlgpatientcardsell.cpp" line="639"/>
         <source>&lt;Not selected&gt;</source>
         <translation>&lt;Nu a fost selectat&gt;</translation>
     </message>
@@ -4086,17 +4086,17 @@ Te rog, reautentifică-te pentru a activa casa.</translation>
         <translation type="unfinished">Vânzare card pacient &lt;%1&gt;</translation>
     </message>
     <message>
-        <location filename="edit/dlgpatientcardsell.cpp" line="596"/>
+        <location filename="edit/dlgpatientcardsell.cpp" line="597"/>
         <source>Error</source>
         <translation>Eroare</translation>
     </message>
     <message>
-        <location filename="edit/dlgpatientcardsell.cpp" line="628"/>
+        <location filename="edit/dlgpatientcardsell.cpp" line="629"/>
         <source>New Patient</source>
         <translation>Pacient nou</translation>
     </message>
     <message>
-        <location filename="edit/dlgpatientcardsell.cpp" line="664"/>
+        <location filename="edit/dlgpatientcardsell.cpp" line="665"/>
         <source>Please read your RFID card!</source>
         <translation type="unfinished"></translation>
     </message>
@@ -4130,78 +4130,84 @@ Te rog, reautentifică-te pentru a activa casa.</translation>
     </message>
     <message>
         <location filename="crud/dlgpatientcardtype.cpp" line="67"/>
-        <location filename="crud/dlgpatientcardtype.cpp" line="93"/>
+        <location filename="crud/dlgpatientcardtype.cpp" line="95"/>
         <source>Name</source>
         <translation>Nume</translation>
     </message>
     <message>
         <location filename="crud/dlgpatientcardtype.cpp" line="68"/>
-        <location filename="crud/dlgpatientcardtype.cpp" line="94"/>
+        <location filename="crud/dlgpatientcardtype.cpp" line="96"/>
         <source>Price</source>
         <translation>Preț</translation>
     </message>
     <message>
         <location filename="crud/dlgpatientcardtype.cpp" line="69"/>
-        <location filename="crud/dlgpatientcardtype.cpp" line="95"/>
+        <location filename="crud/dlgpatientcardtype.cpp" line="97"/>
         <source>Units</source>
         <translation>Unități</translation>
     </message>
     <message>
         <location filename="crud/dlgpatientcardtype.cpp" line="70"/>
-        <location filename="crud/dlgpatientcardtype.cpp" line="96"/>
+        <location filename="crud/dlgpatientcardtype.cpp" line="98"/>
         <source>Unit time</source>
         <translation>Timp unitate</translation>
     </message>
     <message>
         <location filename="crud/dlgpatientcardtype.cpp" line="71"/>
-        <location filename="crud/dlgpatientcardtype.cpp" line="97"/>
+        <location filename="crud/dlgpatientcardtype.cpp" line="99"/>
+        <source>Minimum time</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="crud/dlgpatientcardtype.cpp" line="72"/>
+        <location filename="crud/dlgpatientcardtype.cpp" line="100"/>
         <source>Valid from</source>
         <translation>Valabil de la</translation>
     </message>
     <message>
-        <location filename="crud/dlgpatientcardtype.cpp" line="72"/>
-        <location filename="crud/dlgpatientcardtype.cpp" line="98"/>
+        <location filename="crud/dlgpatientcardtype.cpp" line="73"/>
+        <location filename="crud/dlgpatientcardtype.cpp" line="101"/>
         <source>Valid to</source>
         <translation>Valabil până la</translation>
     </message>
     <message>
-        <location filename="crud/dlgpatientcardtype.cpp" line="73"/>
-        <location filename="crud/dlgpatientcardtype.cpp" line="99"/>
+        <location filename="crud/dlgpatientcardtype.cpp" line="74"/>
+        <location filename="crud/dlgpatientcardtype.cpp" line="102"/>
         <source>Valid days</source>
         <translation>Valabil zile</translation>
     </message>
     <message>
-        <location filename="crud/dlgpatientcardtype.cpp" line="74"/>
+        <location filename="crud/dlgpatientcardtype.cpp" line="75"/>
         <source>Active</source>
         <translation>Activ</translation>
     </message>
     <message>
-        <location filename="crud/dlgpatientcardtype.cpp" line="75"/>
+        <location filename="crud/dlgpatientcardtype.cpp" line="76"/>
         <source>Archive</source>
         <translation>Arhivă</translation>
     </message>
     <message>
-        <location filename="crud/dlgpatientcardtype.cpp" line="160"/>
+        <location filename="crud/dlgpatientcardtype.cpp" line="164"/>
         <source>New PatientCard Type</source>
         <translation>Tip nou de card pacient</translation>
     </message>
     <message>
-        <location filename="crud/dlgpatientcardtype.cpp" line="200"/>
+        <location filename="crud/dlgpatientcardtype.cpp" line="204"/>
         <source>Question</source>
         <translation>Întrebare</translation>
     </message>
     <message>
-        <location filename="crud/dlgpatientcardtype.cpp" line="201"/>
+        <location filename="crud/dlgpatientcardtype.cpp" line="205"/>
         <source>Are you sure you want to delete this PatientCard Type?</source>
         <translation>Sigur vrei să ștergi acest tip de card pacient?</translation>
     </message>
     <message>
-        <location filename="crud/dlgpatientcardtype.cpp" line="209"/>
+        <location filename="crud/dlgpatientcardtype.cpp" line="213"/>
         <source>Attention</source>
         <translation>Atenție</translation>
     </message>
     <message>
-        <location filename="crud/dlgpatientcardtype.cpp" line="210"/>
+        <location filename="crud/dlgpatientcardtype.cpp" line="214"/>
         <source>Unfortunatelly delete of this card type is not possible.
 There are active patientcard units attached to this card type.</source>
         <oldsource>Unfortunatelly delete of this card type is not possible.
@@ -4210,12 +4216,12 @@ There are patientcards attached to this card type.</oldsource>
 Există carduri de pacient atașate la acest tip de card.</translation>
     </message>
     <message>
-        <location filename="crud/dlgpatientcardtype.cpp" line="219"/>
+        <location filename="crud/dlgpatientcardtype.cpp" line="223"/>
         <source>Warning</source>
         <translation>Avertisment</translation>
     </message>
     <message>
-        <location filename="crud/dlgpatientcardtype.cpp" line="220"/>
+        <location filename="crud/dlgpatientcardtype.cpp" line="224"/>
         <source>You are not allowed to delete studio independent data.</source>
         <translation>Ștergerea datelor independente de studio nu este permisă.</translation>
     </message>
@@ -7178,22 +7184,26 @@ Vor fi afișate numai %1 panouri.</translation>
 <context>
     <name>cPanelPCUnitUse</name>
     <message>
-        <location filename="dlg/dlgpaneluse.cpp" line="44"/>
         <source>&lt;b&gt;Number of units:&lt;/b&gt; %1&lt;br&gt;&lt;b&gt;Card type:&lt;/b&gt; %2&lt;br&gt;&lt;b&gt;Unit time:&lt;/b&gt; %3 minute(s)&lt;br&gt;&lt;b&gt;Valid:&lt;/b&gt; %4</source>
-        <translation>&lt;b&gt;Numărul de unități:&lt;/b&gt; %1&lt;br&gt;&lt;b&gt;Tipul de card:&lt;/b&gt; %2&lt;br&gt;&lt;b&gt;Timp unitate:&lt;/b&gt; %3 minut(e)&lt;br&gt;&lt;b&gt;Valabil:&lt;/b&gt;%4</translation>
+        <translation type="obsolete">&lt;b&gt;Numărul de unități:&lt;/b&gt; %1&lt;br&gt;&lt;b&gt;Tipul de card:&lt;/b&gt; %2&lt;br&gt;&lt;b&gt;Timp unitate:&lt;/b&gt; %3 minut(e)&lt;br&gt;&lt;b&gt;Valabil:&lt;/b&gt;%4</translation>
     </message>
     <message>
-        <location filename="dlg/dlgpaneluse.cpp" line="57"/>
+        <location filename="dlg/dlgpaneluse.cpp" line="45"/>
+        <source>&lt;b&gt;Number of units:&lt;/b&gt; %1&lt;br&gt;&lt;b&gt;Card type:&lt;/b&gt; %2&lt;br&gt;&lt;b&gt;Unit time:&lt;/b&gt; %3 minute(s)&lt;br&gt;&lt;b&gt;Minimum time:&lt;/b&gt; %4 minute(s)&lt;br&gt;&lt;b&gt;Valid:&lt;/b&gt; %5</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="dlg/dlgpaneluse.cpp" line="60"/>
         <source>%1 min. (%2)</source>
         <translation>%1 min. (%2)</translation>
     </message>
     <message>
-        <location filename="dlg/dlgpaneluse.cpp" line="86"/>
+        <location filename="dlg/dlgpaneluse.cpp" line="89"/>
         <source>Valid for </source>
         <translation>Valabil pentru </translation>
     </message>
     <message>
-        <location filename="dlg/dlgpaneluse.cpp" line="91"/>
+        <location filename="dlg/dlgpaneluse.cpp" line="94"/>
         <source>%1 day(s)</source>
         <translation>%1 zi(le)</translation>
     </message>
