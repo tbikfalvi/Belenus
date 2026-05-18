@@ -38,17 +38,17 @@ void cReportPatientCardType::refreshReport()
 
     if( nFilterType == 0 )
     {
-        qsQueryCards = QString( "SELECT name, price, units, validDateFrom, validDateTo, validDays, unitTime " );
+        qsQueryCards = QString( "SELECT name, price, units, validDateFrom, validDateTo, validDays, unitTime, minimumTime " );
         qsQueryCards += QString( "FROM patientcardtypes WHERE patientCardTypeId>1 AND active=1 " );
     }
     else if( nFilterType == 1 )
     {
-        qsQueryCards = QString( "SELECT name, price, units, validDays, unitTime " );
+        qsQueryCards = QString( "SELECT name, price, units, validDays, unitTime, minimumTime " );
         qsQueryCards += QString( "FROM patientcardtypes WHERE patientCardTypeId>1 AND validDays>0 AND active=1 " );
     }
     else if( nFilterType == 2 )
     {
-        qsQueryCards = QString( "SELECT name, price, units, validDateFrom, validDateTo, unitTime " );
+        qsQueryCards = QString( "SELECT name, price, units, validDateFrom, validDateTo, unitTime, minimumTime " );
         qsQueryCards += QString( "FROM patientcardtypes WHERE patientCardTypeId>1 AND validDays=0 AND active=1 " );
     }
 
@@ -73,16 +73,19 @@ void cReportPatientCardType::refreshReport()
         {
             qslRecord << tr( "%1 -> %2 | %3 days" ).arg( poQueryResultCards->value(3).toString() ).arg( poQueryResultCards->value(4).toString() ).arg( poQueryResultCards->value(5).toString() );
             qslRecord << poQueryResultCards->value(6).toString();
+            qslRecord << poQueryResultCards->value(7).toString();
         }
         else if( nFilterType == 1 )
         {
             qslRecord << tr( "%1 days" ).arg( poQueryResultCards->value(3).toString() );
             qslRecord << poQueryResultCards->value(4).toString();
+            qslRecord << poQueryResultCards->value(5).toString();
         }
         else if( nFilterType == 2 )
         {
             qslRecord << tr( "%1 -> %2" ).arg( poQueryResultCards->value(3).toString() ).arg( poQueryResultCards->value(4).toString() );
             qslRecord << poQueryResultCards->value(5).toString();
+            qslRecord << poQueryResultCards->value(6).toString();
         }
 
         qslQueryResult << qslRecord.join("#");
@@ -103,6 +106,7 @@ void cReportPatientCardType::refreshReport()
     addTableCell( tr( "Units" ), "center bold" );
     addTableCell( tr( "Valid" ), "center bold" );
     addTableCell( tr( "Unit time" ), "center bold" );
+    addTableCell( tr( "Minimum time" ), "center bold" );
 
     for( int i=0; i<qslQueryResult.size(); i++ )
     {
@@ -116,6 +120,7 @@ void cReportPatientCardType::refreshReport()
         addTableCell( qslRecord.at(2), "center" );
         addTableCell( qslRecord.at(3), "center" );
         addTableCell( tr( "%1 minute(s)" ).arg( qslRecord.at(4) ), "center" );
+        addTableCell( tr( "%1 minute(s)" ).arg( qslRecord.at(5) ), "center" );
 
         m_dlgProgress.increaseProgressValue();
     }
