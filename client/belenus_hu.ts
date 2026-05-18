@@ -4443,7 +4443,7 @@ amihez egy vagy több gép van hozzárendelve.</translation>
     </message>
     <message>
         <location filename="dlg/dlgpaneluse.cpp" line="282"/>
-        <location filename="dlg/dlgpaneluse.cpp" line="960"/>
+        <location filename="dlg/dlgpaneluse.cpp" line="965"/>
         <source>Comment :
 </source>
         <translation>Megjegyzés :
@@ -4469,7 +4469,7 @@ amihez egy vagy több gép van hozzárendelve.</translation>
         <translation type="obsolete">Ez a bérlet nincs regisztrálva az adatbázisban.</translation>
     </message>
     <message>
-        <location filename="dlg/dlgpaneluse.cpp" line="794"/>
+        <location filename="dlg/dlgpaneluse.cpp" line="799"/>
         <source>You are not allowed to use RFID card with barcode.
 Please use the RFID reader if you want to use this card.</source>
         <translation>Nincs jogosultsága RFID kártya használatára vonalkód megadásával.
@@ -4484,7 +4484,7 @@ Ha használni akarja a kártyát, használja az RFID olvasót.</translation>
     </message>
     <message>
         <location filename="dlg/dlgpaneluse.cpp" line="238"/>
-        <location filename="dlg/dlgpaneluse.cpp" line="594"/>
+        <location filename="dlg/dlgpaneluse.cpp" line="596"/>
         <source>There are no constraints preventing the planned usage.</source>
         <translation>Nincs akadálya a tervezett géphasználatnak.</translation>
     </message>
@@ -4497,7 +4497,7 @@ Ha használni akarja a kártyát, használja az RFID olvasót.</translation>
     </message>
     <message>
         <location filename="dlg/dlgpaneluse.cpp" line="579"/>
-        <location filename="dlg/dlgpaneluse.cpp" line="771"/>
+        <location filename="dlg/dlgpaneluse.cpp" line="776"/>
         <source>Warning</source>
         <translation>Figyelmeztetés</translation>
     </message>
@@ -4511,31 +4511,31 @@ az aktuálisan kiválasztott géphez.
 Kérem válasszon egy helyes értéket a listából.</translation>
     </message>
     <message>
-        <location filename="dlg/dlgpaneluse.cpp" line="598"/>
+        <location filename="dlg/dlgpaneluse.cpp" line="601"/>
         <source>The total planned machine usage time is less than the minimum required duration.</source>
         <translation>A tervezett géphasználat teljes ideje kevesebb, mint a szükséges minimális idő hossz!</translation>
     </message>
     <message>
-        <location filename="dlg/dlgpaneluse.cpp" line="725"/>
+        <location filename="dlg/dlgpaneluse.cpp" line="730"/>
         <source>Ok</source>
         <translation>Rendben</translation>
     </message>
     <message>
-        <location filename="dlg/dlgpaneluse.cpp" line="772"/>
+        <location filename="dlg/dlgpaneluse.cpp" line="777"/>
         <source>Invalid barcode length.
 The length of the barcode should be %1.</source>
         <translation>Nem megfelelő vonalkód hosszúság.
 A vonalkódnak %1 karakter hosszúnak kell lennie.</translation>
     </message>
     <message>
-        <location filename="dlg/dlgpaneluse.cpp" line="926"/>
+        <location filename="dlg/dlgpaneluse.cpp" line="931"/>
         <source>Please read your RFID card!</source>
         <translation>Kérem olvassa be az RFID kártyát!</translation>
     </message>
     <message>
-        <location filename="dlg/dlgpaneluse.cpp" line="785"/>
-        <location filename="dlg/dlgpaneluse.cpp" line="793"/>
-        <location filename="dlg/dlgpaneluse.cpp" line="800"/>
+        <location filename="dlg/dlgpaneluse.cpp" line="790"/>
+        <location filename="dlg/dlgpaneluse.cpp" line="798"/>
+        <location filename="dlg/dlgpaneluse.cpp" line="805"/>
         <source>Attention</source>
         <translation>Figyelmeztetés</translation>
     </message>
@@ -4545,21 +4545,21 @@ A vonalkódnak %1 karakter hosszúnak kell lennie.</translation>
         <translation>Nem sikerült a kártya beolvasása, vagy a kártya nincs regisztrálva az adatbázisban.</translation>
     </message>
     <message>
-        <location filename="dlg/dlgpaneluse.cpp" line="786"/>
+        <location filename="dlg/dlgpaneluse.cpp" line="791"/>
         <source>You are not allowed to use system administrator card.
 Please log in as a system administrator if you want to use this card.</source>
         <translation>Nincs jogosultsága szervízkártya használatára.
 Ha használni akarja a kártyát, jelentkezzen be rendszer adminisztrátorként.</translation>
     </message>
     <message>
-        <location filename="dlg/dlgpaneluse.cpp" line="801"/>
+        <location filename="dlg/dlgpaneluse.cpp" line="806"/>
         <source>This patientcard has been lost and replaced
 and can not be used or sold again.</source>
         <translation>Ez a bérlet elveszett és lecserélték másik bérletre
 ezért nem lehet használni vagy eladni újra.</translation>
     </message>
     <message>
-        <location filename="dlg/dlgpaneluse.cpp" line="817"/>
+        <location filename="dlg/dlgpaneluse.cpp" line="822"/>
         <source>
 
 Due to there is no time left, the patientcard will be reseted and deactivated.</source>
@@ -4568,14 +4568,14 @@ Due to there is no time left, the patientcard will be reseted and deactivated.</
 A bérleten nincs felhasználható idő, ezért a bérlet deaktiválásra kerül.</translation>
     </message>
     <message>
-        <location filename="dlg/dlgpaneluse.cpp" line="819"/>
-        <location filename="dlg/dlgpaneluse.cpp" line="853"/>
-        <location filename="dlg/dlgpaneluse.cpp" line="878"/>
+        <location filename="dlg/dlgpaneluse.cpp" line="824"/>
+        <location filename="dlg/dlgpaneluse.cpp" line="858"/>
+        <location filename="dlg/dlgpaneluse.cpp" line="883"/>
         <source>Question</source>
         <translation>Kérdés</translation>
     </message>
     <message>
-        <location filename="dlg/dlgpaneluse.cpp" line="820"/>
+        <location filename="dlg/dlgpaneluse.cpp" line="825"/>
         <source>This patientcard can not be used with these settings:
 
 Available units: %1
@@ -4600,14 +4600,14 @@ Kérem ellenőrizze a bérlet érvényességi időintervallumát.
 %1</translation>
     </message>
     <message>
-        <location filename="dlg/dlgpaneluse.cpp" line="854"/>
+        <location filename="dlg/dlgpaneluse.cpp" line="859"/>
         <source>This barcode has not been activated yet.
 Do you want to activate and sell it now?</source>
         <translation>Ilyen vonalkóddal bérlet még nincs aktiválva.
 Akarja aktiválni és eladni most?</translation>
     </message>
     <message>
-        <location filename="dlg/dlgpaneluse.cpp" line="879"/>
+        <location filename="dlg/dlgpaneluse.cpp" line="884"/>
         <source>This barcode has not found in the database.
 Do you want to save it and sell it now?</source>
         <translation>Ez a vonalkód nincs elmentve az adatbázisban.

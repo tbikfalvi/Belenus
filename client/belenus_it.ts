@@ -2900,7 +2900,7 @@ linked to one or more panels.</source>
     </message>
     <message>
         <location filename="dlg/dlgpaneluse.cpp" line="282"/>
-        <location filename="dlg/dlgpaneluse.cpp" line="960"/>
+        <location filename="dlg/dlgpaneluse.cpp" line="965"/>
         <source>Comment :
 </source>
         <translation type="unfinished"></translation>
@@ -2911,7 +2911,7 @@ linked to one or more panels.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="dlg/dlgpaneluse.cpp" line="794"/>
+        <location filename="dlg/dlgpaneluse.cpp" line="799"/>
         <source>You are not allowed to use RFID card with barcode.
 Please use the RFID reader if you want to use this card.</source>
         <translation type="unfinished"></translation>
@@ -2935,7 +2935,7 @@ Please use the RFID reader if you want to use this card.</source>
     </message>
     <message>
         <location filename="dlg/dlgpaneluse.cpp" line="579"/>
-        <location filename="dlg/dlgpaneluse.cpp" line="771"/>
+        <location filename="dlg/dlgpaneluse.cpp" line="776"/>
         <source>Warning</source>
         <translation type="unfinished"></translation>
     </message>
@@ -2947,20 +2947,20 @@ Please select valid value from the list.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="dlg/dlgpaneluse.cpp" line="725"/>
+        <location filename="dlg/dlgpaneluse.cpp" line="730"/>
         <source>Ok</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="dlg/dlgpaneluse.cpp" line="772"/>
+        <location filename="dlg/dlgpaneluse.cpp" line="777"/>
         <source>Invalid barcode length.
 The length of the barcode should be %1.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="dlg/dlgpaneluse.cpp" line="785"/>
-        <location filename="dlg/dlgpaneluse.cpp" line="793"/>
-        <location filename="dlg/dlgpaneluse.cpp" line="800"/>
+        <location filename="dlg/dlgpaneluse.cpp" line="790"/>
+        <location filename="dlg/dlgpaneluse.cpp" line="798"/>
+        <location filename="dlg/dlgpaneluse.cpp" line="805"/>
         <source>Attention</source>
         <translation type="unfinished"></translation>
     </message>
@@ -2971,43 +2971,43 @@ The length of the barcode should be %1.</source>
     </message>
     <message>
         <location filename="dlg/dlgpaneluse.cpp" line="238"/>
-        <location filename="dlg/dlgpaneluse.cpp" line="594"/>
+        <location filename="dlg/dlgpaneluse.cpp" line="596"/>
         <source>There are no constraints preventing the planned usage.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="dlg/dlgpaneluse.cpp" line="598"/>
+        <location filename="dlg/dlgpaneluse.cpp" line="601"/>
         <source>The total planned machine usage time is less than the minimum required duration.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="dlg/dlgpaneluse.cpp" line="786"/>
+        <location filename="dlg/dlgpaneluse.cpp" line="791"/>
         <source>You are not allowed to use system administrator card.
 Please log in as a system administrator if you want to use this card.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="dlg/dlgpaneluse.cpp" line="801"/>
+        <location filename="dlg/dlgpaneluse.cpp" line="806"/>
         <source>This patientcard has been lost and replaced
 and can not be used or sold again.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="dlg/dlgpaneluse.cpp" line="817"/>
+        <location filename="dlg/dlgpaneluse.cpp" line="822"/>
         <source>
 
 Due to there is no time left, the patientcard will be reseted and deactivated.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="dlg/dlgpaneluse.cpp" line="819"/>
-        <location filename="dlg/dlgpaneluse.cpp" line="853"/>
-        <location filename="dlg/dlgpaneluse.cpp" line="878"/>
+        <location filename="dlg/dlgpaneluse.cpp" line="824"/>
+        <location filename="dlg/dlgpaneluse.cpp" line="858"/>
+        <location filename="dlg/dlgpaneluse.cpp" line="883"/>
         <source>Question</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="dlg/dlgpaneluse.cpp" line="820"/>
+        <location filename="dlg/dlgpaneluse.cpp" line="825"/>
         <source>This patientcard can not be used with these settings:
 
 Available units: %1
@@ -3017,19 +3017,19 @@ Do you want to refill the patientcard now?%3</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="dlg/dlgpaneluse.cpp" line="854"/>
+        <location filename="dlg/dlgpaneluse.cpp" line="859"/>
         <source>This barcode has not been activated yet.
 Do you want to activate and sell it now?</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="dlg/dlgpaneluse.cpp" line="879"/>
+        <location filename="dlg/dlgpaneluse.cpp" line="884"/>
         <source>This barcode has not found in the database.
 Do you want to save it and sell it now?</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="dlg/dlgpaneluse.cpp" line="926"/>
+        <location filename="dlg/dlgpaneluse.cpp" line="931"/>
         <source>Please read your RFID card!</source>
         <translation type="unfinished"></translation>
     </message>
