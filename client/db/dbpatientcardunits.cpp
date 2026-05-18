@@ -33,6 +33,7 @@ void cDBPatientcardUnit::init( const unsigned int p_uiId,
                                const unsigned int p_uiLedgerId,
                                const unsigned int p_uiPanelId,
                                const int p_nUnitTime,
+                               const int p_nMinimumTime,
                                const int p_nUnitPrice,
                                const QString &p_qsValidDateFrom,
                                const QString &p_qsValidDateTo,
@@ -49,6 +50,7 @@ void cDBPatientcardUnit::init( const unsigned int p_uiId,
     m_uiLedgerId            = p_uiLedgerId;
     m_uiPanelId             = p_uiPanelId;
     m_nUnitTime             = p_nUnitTime;
+    m_nMinimumTime          = p_nMinimumTime;
     m_nUnitPrice            = p_nUnitPrice;
     m_qsValidDateFrom       = p_qsValidDateFrom;
     m_qsValidDateTo         = p_qsValidDateTo;
@@ -68,6 +70,7 @@ void cDBPatientcardUnit::init( const QSqlRecord &p_obRecord ) throw()
     int inLedgerIdIdx           = p_obRecord.indexOf( "ledgerId" );
     int inPanelIdIdx            = p_obRecord.indexOf( "panelId" );
     int inUnitTimeIdx           = p_obRecord.indexOf( "unitTime" );
+    int inMinimumTimeIdx        = p_obRecord.indexOf( "minimumTime" );
     int inUnitPriceIdx          = p_obRecord.indexOf( "unitPrice" );
     int inValidDateFromIdx      = p_obRecord.indexOf( "validDateFrom" );
     int inValidDateToIdx        = p_obRecord.indexOf( "validDateTo" );
@@ -84,6 +87,7 @@ void cDBPatientcardUnit::init( const QSqlRecord &p_obRecord ) throw()
           p_obRecord.value( inLedgerIdIdx ).toInt(),
           p_obRecord.value( inPanelIdIdx ).toInt(),
           p_obRecord.value( inUnitTimeIdx ).toInt(),
+          p_obRecord.value( inMinimumTimeIdx ).toInt(),
           p_obRecord.value( inUnitPriceIdx ).toInt(),
           p_obRecord.value( inValidDateFromIdx ).toString(),
           p_obRecord.value( inValidDateToIdx ).toString(),
@@ -93,6 +97,7 @@ void cDBPatientcardUnit::init( const QSqlRecord &p_obRecord ) throw()
           p_obRecord.value( inArchiveIdx ).toString() );
 }
 
+//====================================================================================
 void cDBPatientcardUnit::load( const unsigned int p_uiId ) throw( cSevException )
 {
     cTracer obTrace( "cDBPatientcardUnit::load", QString( "id: %1" ).arg( p_uiId ) );
@@ -107,6 +112,8 @@ void cDBPatientcardUnit::load( const unsigned int p_uiId ) throw( cSevException 
     if( poQuery ) delete poQuery;
 }
 
+//====================================================================================
+/*
 QStringList cDBPatientcardUnit::loadPCId( const unsigned int p_uiId ) throw( cSevException )
 {
     cTracer obTrace( "cDBPatientcardUnit::load", QString( "id: %1" ).arg( p_uiId ) );
@@ -147,6 +154,8 @@ QStringList cDBPatientcardUnit::loadPCId( const unsigned int p_uiId ) throw( cSe
         qsPCUnit.append( poQuery->value(12).toString() );
         qsPCUnit.append( "\t" );
         qsPCUnit.append( poQuery->value(13).toString() );
+        qsPCUnit.append( "\t" );
+        qsPCUnit.append( poQuery->value(14).toString() );
         qslRet.append( qsPCUnit );
     }
 
@@ -154,6 +163,7 @@ QStringList cDBPatientcardUnit::loadPCId( const unsigned int p_uiId ) throw( cSe
 
     return qslRet;
 }
+*/
 
 void cDBPatientcardUnit::replacePatientCard(const unsigned int p_uiId) throw( cSevException )
 {
@@ -189,6 +199,7 @@ void cDBPatientcardUnit::save() throw( cSevException )
     qsQuery += QString( "ledgerId = \"%1\", " ).arg( m_uiLedgerId );
     qsQuery += QString( "panelId = \"%1\", " ).arg( m_uiPanelId );
     qsQuery += QString( "unitTime = \"%1\", " ).arg( m_nUnitTime );
+    qsQuery += QString( "minimumTime = \"%1\", " ).arg( m_nMinimumTime );
     qsQuery += QString( "unitPrice = \"%1\", " ).arg( m_nUnitPrice );
     qsQuery += QString( "validDateFrom = \"%1\", " ).arg( m_qsValidDateFrom );
     qsQuery += QString( "validDateTo = \"%1\", " ).arg( m_qsValidDateTo );
@@ -347,6 +358,16 @@ int cDBPatientcardUnit::unitTime() const throw()
 void cDBPatientcardUnit::setUnitTime(const int p_nUnitTime) throw()
 {
     m_nUnitTime = p_nUnitTime;
+}
+
+int cDBPatientcardUnit::minimumTime() const throw()
+{
+    return m_nMinimumTime;
+}
+
+void cDBPatientcardUnit::setMinimumTime( const int p_nMinimumTime ) throw()
+{
+    m_nMinimumTime = p_nMinimumTime;
 }
 
 int cDBPatientcardUnit::unitPrice() const throw()

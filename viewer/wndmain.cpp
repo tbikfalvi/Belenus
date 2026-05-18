@@ -70,6 +70,7 @@ cWndMain::cWndMain(QWidget *parent , QString p_qsAppVersion) : QMainWindow( pare
     connect( this, SIGNAL(setCheckedReportGuests(bool)), this, SLOT(slotCheckReportGuests(bool)) );
     connect( this, SIGNAL(setCheckedReportDeviceUsages(bool)), this, SLOT(slotCheckReportDeviceUsages(bool)) );
     connect( this, SIGNAL(setCheckedReportDeviceMinuteUsages(bool)), this, SLOT(slotCheckReportDeviceMinuteUsages(bool)) );
+    connect( this, SIGNAL(setCheckedReportDeviceDailySummary(bool)), this, SLOT(slotCheckReportDeviceDailySummary(bool)) );
     connect( this, SIGNAL(setCheckedReportDevicePatientDispersion(bool)), this, SLOT(slotCheckReportDevicePatientDispersion(bool)) );
 
     connect( cmbName, SIGNAL(returnPressed()), this, SLOT(on_pbAuthenticate_clicked()) );
@@ -158,6 +159,7 @@ void cWndMain::_initActions()
 
     connect( action_DeviceUsages, SIGNAL(triggered(bool)), this, SLOT(slotCheckReportDeviceUsages(bool)) );
     connect( action_DeviceMinuteUsages, SIGNAL(triggered(bool)), this, SLOT(slotCheckReportDeviceMinuteUsages(bool)) );
+    connect( action_DeviceDailySummary, SIGNAL(triggered(bool)), this, SLOT(slotCheckReportDeviceDailySummary(bool)) );
     connect( action_DevicePatientDispersion, SIGNAL(triggered(bool)), this, SLOT(slotCheckReportDevicePatientDispersion(bool)) );
 
     // ICONS
@@ -185,6 +187,7 @@ void cWndMain::_initActions()
 
     action_DeviceUsages->setIcon( QIcon("./resources/40x40_device.png") );
     action_DeviceMinuteUsages->setIcon( QIcon("./resources/40x40_device_later.png") );
+    action_DeviceDailySummary->setIcon( QIcon("./resources/40x40_device_time.png") );
     action_DevicePatientDispersion->setIcon( QIcon("./resources/40x40_device_dispersion.png") );
 
     // BEHAVIOUR
@@ -212,6 +215,7 @@ void cWndMain::_initActions()
 
     action_DeviceUsages->setEnabled( false );
     action_DeviceMinuteUsages->setEnabled( false );
+    action_DeviceDailySummary->setEnabled( false );
     action_DevicePatientDispersion->setEnabled( false );
 }
 //------------------------------------------------------------------------------------
@@ -245,6 +249,7 @@ void cWndMain::_initToolbar()
 
     connect( pbDeviceUsages, SIGNAL(clicked(bool)), this, SLOT(slotCheckReportDeviceUsages(bool)) );
     connect( pbDeviceMinuteUsages, SIGNAL(clicked(bool)), this, SLOT(slotCheckReportDeviceMinuteUsages(bool)) );
+    connect( pbDeviceDailySummary, SIGNAL(clicked(bool)), this, SLOT(slotCheckReportDeviceDailySummary(bool)) );
     connect( pbDevicePatientDispersion, SIGNAL(clicked(bool)), this, SLOT(slotCheckReportDevicePatientDispersion(bool)) );
 
     // ICONS
@@ -272,6 +277,7 @@ void cWndMain::_initToolbar()
 
     pbDeviceUsages->setIcon( QIcon("./resources/40x40_device.png") );
     pbDeviceMinuteUsages->setIcon( QIcon("./resources/40x40_device_later.png") );
+    pbDeviceDailySummary->setIcon( QIcon("./resources/40x40_device_time.png") );
     pbDevicePatientDispersion->setIcon( QIcon("./resources/40x40_device_dispersion.png") );
 
     pbSave->setIcon( QIcon("./resources/40x40_save.png") );
@@ -300,6 +306,7 @@ void cWndMain::_initToolbar()
 
     pbDeviceUsages->setEnabled( false );
     pbDeviceMinuteUsages->setEnabled( false );
+    pbDeviceDailySummary->setEnabled( false );
     pbDevicePatientDispersion->setEnabled( false );
 
     pbSave->setEnabled( false );
@@ -415,6 +422,8 @@ return;
             emit setCheckedReportDeviceUsages( false );
         else if( m_repDeviceMinuteUsages && m_repDeviceMinuteUsages->index() == index )
             emit setCheckedReportDeviceMinuteUsages( false );
+        else if( m_repDeviceDailySummary && m_repDeviceDailySummary->index() == index )
+            emit setCheckedReportDeviceDailySummary( false );
         else if( m_repDevicePatientDispersion && m_repDevicePatientDispersion->index() == index )
             emit setCheckedReportDevicePatientDispersion( false );
     }
@@ -554,6 +563,7 @@ void cWndMain::_setReportsEnabled(bool p_bEnable)
 
     action_DeviceUsages->setEnabled( p_bEnable && _isInGroup( GROUP_USER ) );
     action_DeviceMinuteUsages->setEnabled( p_bEnable && _isInGroup( GROUP_USER ) );
+    action_DeviceDailySummary->setEnabled( p_bEnable && _isInGroup( GROUP_USER ) );
     action_DevicePatientDispersion->setEnabled( p_bEnable && _isInGroup( GROUP_USER ) );
 
     // <_NEW_REPORT_> a toolbar gomb engedelyezese/tiltasa
@@ -578,6 +588,7 @@ void cWndMain::_setReportsEnabled(bool p_bEnable)
 
     pbDeviceUsages->setEnabled( p_bEnable && _isInGroup( GROUP_USER ) );
     pbDeviceMinuteUsages->setEnabled( p_bEnable && _isInGroup( GROUP_USER ) );
+    pbDeviceDailySummary->setEnabled( p_bEnable && _isInGroup( GROUP_USER ) );
     pbDevicePatientDispersion->setEnabled( p_bEnable && _isInGroup( GROUP_USER ) );
 
     _updateReportButtons( p_bEnable );
@@ -1092,6 +1103,36 @@ void cWndMain::slotCheckReportDeviceMinuteUsages(bool p_bChecked)
         tabReports->removeTab( m_repDeviceMinuteUsages->index() );
         delete m_repDeviceMinuteUsages;
         m_repDeviceMinuteUsages = NULL;
+    }
+
+    _updateReportIndexes();
+    m_bReportTabSwitching = false;
+}
+//------------------------------------------------------------------------------------
+void cWndMain::slotCheckReportDeviceDailySummary(bool p_bChecked)
+//------------------------------------------------------------------------------------
+{
+    cTracer obTrace( "cWndMain::slotCheckReportDeviceDailySummary" );
+
+    m_bReportTabSwitching = true;
+
+    action_DeviceDailySummary->setChecked( p_bChecked );
+    pbDeviceDailySummary->setChecked( p_bChecked );
+
+    if( p_bChecked )
+    {
+        m_repDeviceDailySummary = new cReportDeviceDailySummary( this, "", _isInGroup( GROUP_ADMIN ) );
+
+        m_qvReports.append( m_repDeviceDailySummary );
+        m_repDeviceDailySummary->setIndex( tabReports->addTab( m_repDeviceDailySummary, QIcon("./resources/40x40_device_time.png"), m_repDeviceDailySummary->name() ) );
+        tabReports->setCurrentIndex( m_repDeviceDailySummary->index() );
+    }
+    else
+    {
+        m_qvReports.remove( m_repDeviceDailySummary->index()-1 );
+        tabReports->removeTab( m_repDeviceDailySummary->index() );
+        delete m_repDeviceDailySummary;
+        m_repDeviceDailySummary = NULL;
     }
 
     _updateReportIndexes();

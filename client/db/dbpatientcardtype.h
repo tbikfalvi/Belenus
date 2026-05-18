@@ -37,6 +37,8 @@ public:
     void            setValidDays( const int p_nValidDays )              throw();
     int             unitTime() const                                    throw();
     void            setUnitTime( const int p_nUnitTime )                throw();
+    int             minimumTime() const                                 throw();
+    void            setMinimumTime(const int p_nMinimumTime )           throw();
     QString         modified() const                                    throw();
     bool            active() const                                      throw();
     void            setActive( const bool p_bActive )                   throw();
@@ -56,6 +58,7 @@ private:
     QString         m_qsValidDateTo;
     int             m_nValidDays;
     int             m_nUnitTime;
+    int             m_nMinimumTime;
     QString         m_qsModified;
     bool            m_bActive;
     QString          m_qsArchive;
@@ -71,6 +74,7 @@ private:
                const QString &p_qsValidDateTo = "",
                const int p_nValidDays = 0,
                const int p_nUnitTime = 0,
+               const int p_nMinimumTime = 0,
                const QString &p_qsModified = "",
                const bool p_bActive = true,
                const QString &p_qsArchive = "NEW" )                     throw();

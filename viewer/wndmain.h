@@ -23,6 +23,7 @@
 #include "creportguests.h"
 #include "creportdeviceusages.h"
 #include "creportdeviceminuteusages.h"
+#include "creportdevicedailysummary.h"
 #include "creportdevicepatientdispersion.h"
 
 extern cQTMySQLConnection  *g_poDB;
@@ -75,6 +76,7 @@ signals: // <_NEW_REPORT_>  report signal-ja
     void                    setCheckedReportGuests( bool p_bChecked );
     void                    setCheckedReportDeviceUsages( bool p_bChecked );
     void                    setCheckedReportDeviceMinuteUsages( bool p_bChecked );
+    void                    setCheckedReportDeviceDailySummary( bool p_bChecked );
     void                    setCheckedReportDevicePatientDispersion( bool p_bChecked );
 
 public slots: // <_NEW_REPORT_> report slot-ja
@@ -95,6 +97,7 @@ public slots: // <_NEW_REPORT_> report slot-ja
     void                    slotCheckReportGuests( bool p_bChecked );
     void                    slotCheckReportDeviceUsages( bool p_bChecked );
     void                    slotCheckReportDeviceMinuteUsages( bool p_bChecked );
+    void                    slotCheckReportDeviceDailySummary( bool p_bChecked );
     void                    slotCheckReportDevicePatientDispersion( bool p_bChecked );
 
 private:
@@ -119,6 +122,8 @@ private:
     cReportGuests                   *m_repGuests;
     cReportDeviceUsages             *m_repDeviceUsages;
     cReportDeviceMinuteUsages       *m_repDeviceMinuteUsages;
+    cReportDeviceDailySummary       *m_repDeviceDailySummary;
+
     cReportDevicePatientDispersion  *m_repDevicePatientDispersion;
 
     QVector<cReport*>                m_qvReports;

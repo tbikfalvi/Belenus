@@ -31,7 +31,8 @@ p_qslParameters->at(4)    "patientcardunits.validDateTo, "
 p_qslParameters->at(5)    "COUNT(patientcardunits.unitTime), "
 p_qslParameters->at(6)    "name, "
 p_qslParameters->at(7)    "patientcardunits.panelGroupId "
-p_qslParameters->at(8)    qsValid
+p_qslParameters->at(8)    "patientcardunits.minimumTime "
+p_qslParameters->at(9)    qsValid
 */
     m_uiOrderNum    = 0;
 
@@ -44,10 +45,12 @@ p_qslParameters->at(8)    qsValid
     QString qsToolTip = tr("<b>Number of units:</b> %1<br>"
                            "<b>Card type:</b> %2<br>"
                            "<b>Unit time:</b> %3 minute(s)<br>"
-                           "<b>Valid:</b> %4").arg( p_qslParameters->at(5) )
+                           "<b>Minimum time:</b> %4 minute(s)<br>"
+                           "<b>Valid:</b> %5").arg( p_qslParameters->at(5) )
                                               .arg( p_qslParameters->at(6) )
                                               .arg( p_qslParameters->at(2) )
-                                              .arg( p_qslParameters->at(8) );
+                                              .arg( p_qslParameters->at(8) )
+                                              .arg( p_qslParameters->at(9) );
 
     pbUseUnitType = new QPushButton( this );
     pbUseUnitType->setObjectName( QString::fromUtf8( "pbUseUnitType" ) );
@@ -95,7 +98,8 @@ p_qslParameters->at(8)    qsValid
     horizontalSpacer3 = new QSpacerItem( 500, 20, QSizePolicy::Expanding, QSizePolicy::Minimum );
     horizontalLayout->addItem( horizontalSpacer3 );
 
-    m_nUnitTime = p_qslParameters->at(2).toInt();
+    m_nUnitTime     = p_qslParameters->at(2).toInt();
+    m_nMinimumTime  = p_qslParameters->at(8).toInt();
 
     cDBPatientcardUnit  obDBPatientcardUnit;
 
@@ -151,6 +155,17 @@ int cPanelPCUnitUse::lengthSeconds()
     if( pbUseUnitType->isChecked() )
     {
         nRet = m_nUnitTime * 60 * ( cmbUseUnitCount->currentIndex() + 1 );
+    }
+    return nRet;
+}
+//----------------------------------------------------------------------------------------------
+int cPanelPCUnitUse::lengthMinimumTime()
+{
+    int nRet = 0;
+
+    if( pbUseUnitType->isChecked() )
+    {
+        nRet = m_nMinimumTime;
     }
     return nRet;
 }
@@ -219,6 +234,11 @@ cDlgPanelUse::cDlgPanelUse( QWidget *p_poParent, unsigned int p_uiPanelId ) : QD
     m_uiPanelTypeId             = 0;
     m_bIsCardReadByRFIDReader   = false;
     m_bParentLoaded             = false;
+
+    m_qsRestriction             = tr( "There are no constraints preventing the planned usage." );
+    m_qsTimeRestriction         = "";
+
+    m_nMinimumTime             = 0;
 
     m_obDBPatientCard.createNew();
 
@@ -428,7 +448,8 @@ void cDlgPanelUse::setPanelUsePatientCard(/*unsigned int p_uiPatientCardId*/)
                                             "patientcardunits.validDateTo, "
                                             "COUNT(patientcardunits.unitTime), "
                                             "name, "
-                                            "patientcardunits.panelGroupId "
+                                            "patientcardunits.panelGroupId, "
+                                            "patientcardunits.minimumTime "
                                        "FROM patientcardunits, patientcardtypes "
                                        "WHERE "
                                             "patientCardId=%1 "
@@ -441,7 +462,8 @@ void cDlgPanelUse::setPanelUsePatientCard(/*unsigned int p_uiPatientCardId*/)
                                             "patientcardunits.unitTime, "
                                             "patientcardunits.validDateTo, "
                                             "patientcardunits.patientCardTypeId, "
-                                            "patientcardunits.panelGroupId "
+                                            "patientcardunits.panelGroupId, "
+                                            "patientcardunits.minimumTime "
                                        "ORDER BY "
                                             "patientcardunits.validDateTo, "
                                             "patientcardunits.patientCardUnitId" ).arg( m_obDBPatientCard.id() );
@@ -479,6 +501,7 @@ void cDlgPanelUse::setPanelUsePatientCard(/*unsigned int p_uiPatientCardId*/)
                          << poQuery->value( 5 ).toString()
                          << poQuery->value( 6 ).toString()
                          << poQuery->value( 7 ).toString()
+                         << poQuery->value( 8 ).toString()
                          << qsValid;
                 cPanelPCUnitUse *pPanelUseFrame = new cPanelPCUnitUse( this, &qslUnits );
                 vlUnits->insertWidget( qvPanelUseUnits.count(), pPanelUseFrame );
@@ -562,11 +585,26 @@ void cDlgPanelUse::calculateTotalTimeValue()
         cmbTimeIntervall->setFocus();
     }
 
-    QTime   qtPanelUseTime = QTime( (m_uiPanelBaseTimeCard+m_uiPanelBaseTimeCash+m_uiPanelUseTimeCard+m_uiPanelUseTimeCash)/3600,
-                            ((m_uiPanelBaseTimeCard+m_uiPanelBaseTimeCash+m_uiPanelUseTimeCard+m_uiPanelUseTimeCash)%3600)/60,
-                            ((m_uiPanelBaseTimeCard+m_uiPanelBaseTimeCash+m_uiPanelUseTimeCard+m_uiPanelUseTimeCash)%3600)%60 );
+    unsigned int uiPanelUseTime = m_uiPanelBaseTimeCard + m_uiPanelBaseTimeCash + m_uiPanelUseTimeCard + m_uiPanelUseTimeCash;
+
+    QTime   qtPanelUseTime = QTime( (uiPanelUseTime)/3600, ((uiPanelUseTime)%3600)/60, ((uiPanelUseTime)%3600)%60 );
 
     lblTotalTimeValue->setText( qtPanelUseTime.toString( "hh:mm:ss" ) );
+
+    lblRestrictions->setStyleSheet( "QLabel {font: normal;}" );
+
+    m_qsRestriction = tr( "There are no constraints preventing the planned usage." );
+    lblRestrictions->setText( m_qsRestriction );
+
+    if( uiPanelUseTime < m_nMinimumTime * 60 )
+    {
+        m_qsRestriction = tr( "The total planned machine usage time is less than the minimum required duration." );
+
+        lblRestrictions->setStyleSheet( "QLabel {font: bold; color: red;}" );
+        lblRestrictions->setText( m_qsRestriction );
+        pbOk->setEnabled( false );
+        return;
+    }
 
     if( (m_uiPanelUseTimeCard+m_uiPanelUseTimeCash) > 0 )
     {
@@ -669,11 +707,16 @@ void cDlgPanelUse::slotPatientCardUseUpdated()
 {
     m_uiPanelUseTimeCard = 0;
     m_qslUnitIds.clear();
+    m_nMinimumTime = 0;
 
     for( int i=0; i<qvPanelUseUnits.count(); i++ )
     {
         m_uiPanelUseTimeCard += qvPanelUseUnits.at(i)->lengthSeconds();
         m_qslUnitIds << qvPanelUseUnits.at(i)->usedUnitIds();
+        if( qvPanelUseUnits.at(i)->lengthMinimumTime() > m_nMinimumTime )
+        {
+            m_nMinimumTime = qvPanelUseUnits.at(i)->lengthMinimumTime();
+        }
     }
     calculateTotalTimeValue();
 

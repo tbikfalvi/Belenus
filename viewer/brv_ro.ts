@@ -569,6 +569,80 @@
     </message>
 </context>
 <context>
+    <name>cReportDeviceDailySummary</name>
+    <message>
+        <location filename="creportdevicedailysummary.cpp" line="7"/>
+        <source> Device daily summary </source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="creportdevicedailysummary.cpp" line="8"/>
+        <source>This report shows daily usage of the selected device on the selected date intervall.</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="creportdevicedailysummary.cpp" line="11"/>
+        <source>Panel :</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="creportdevicedailysummary.cpp" line="14"/>
+        <source>First date of intervall :</source>
+        <translation type="unfinished">Prima dată a intervalului:</translation>
+    </message>
+    <message>
+        <location filename="creportdevicedailysummary.cpp" line="18"/>
+        <source>Last date of intervall :</source>
+        <translation type="unfinished">Ultima dată a intervalului:</translation>
+    </message>
+    <message>
+        <location filename="creportdevicedailysummary.cpp" line="26"/>
+        <location filename="creportdevicedailysummary.cpp" line="33"/>
+        <source>&lt;Not selected&gt;</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="creportdevicedailysummary.cpp" line="39"/>
+        <source>Create selected report ...</source>
+        <translation type="unfinished">Creează raportul selectat ...</translation>
+    </message>
+    <message>
+        <location filename="creportdevicedailysummary.cpp" line="77"/>
+        <source>Date</source>
+        <translation type="unfinished">Data</translation>
+    </message>
+    <message>
+        <location filename="creportdevicedailysummary.cpp" line="78"/>
+        <source>Planned time</source>
+        <translation type="unfinished">Timp planificat</translation>
+    </message>
+    <message>
+        <location filename="creportdevicedailysummary.cpp" line="79"/>
+        <source>Real time</source>
+        <translation type="unfinished">Timp real</translation>
+    </message>
+    <message>
+        <location filename="creportdevicedailysummary.cpp" line="80"/>
+        <source>Aborted time</source>
+        <translation type="unfinished">Timp anulat</translation>
+    </message>
+    <message>
+        <location filename="creportdevicedailysummary.cpp" line="81"/>
+        <source>Payed by cash</source>
+        <translation type="unfinished">Plătit în numerar</translation>
+    </message>
+    <message>
+        <location filename="creportdevicedailysummary.cpp" line="82"/>
+        <source>Used by card</source>
+        <translation type="unfinished">Folosit cu cardul</translation>
+    </message>
+    <message>
+        <location filename="creportdevicedailysummary.cpp" line="83"/>
+        <source>No. units used</source>
+        <translation type="unfinished">Nr. de unități folosite</translation>
+    </message>
+</context>
+<context>
     <name>cReportDeviceMinuteUsages</name>
     <message>
         <location filename="creportdeviceminuteusages.cpp" line="7"/>
@@ -1293,42 +1367,48 @@
         <translation>%1 -&gt; %2 | %3 zile</translation>
     </message>
     <message>
-        <location filename="creportpatientcardtype.cpp" line="79"/>
+        <location filename="creportpatientcardtype.cpp" line="80"/>
         <source>%1 days</source>
         <translation>%1 zile</translation>
     </message>
     <message>
-        <location filename="creportpatientcardtype.cpp" line="84"/>
+        <location filename="creportpatientcardtype.cpp" line="86"/>
         <source>%1 -&gt; %2</source>
         <translation>%1 -&gt; %2</translation>
     </message>
     <message>
-        <location filename="creportpatientcardtype.cpp" line="101"/>
+        <location filename="creportpatientcardtype.cpp" line="104"/>
         <source>Name</source>
         <translation>Nume</translation>
     </message>
     <message>
-        <location filename="creportpatientcardtype.cpp" line="102"/>
+        <location filename="creportpatientcardtype.cpp" line="105"/>
         <source>Price</source>
         <translation>Preț</translation>
     </message>
     <message>
-        <location filename="creportpatientcardtype.cpp" line="103"/>
+        <location filename="creportpatientcardtype.cpp" line="106"/>
         <source>Units</source>
         <translation>Unități</translation>
     </message>
     <message>
-        <location filename="creportpatientcardtype.cpp" line="104"/>
+        <location filename="creportpatientcardtype.cpp" line="107"/>
         <source>Valid</source>
         <translation>Valabil</translation>
     </message>
     <message>
-        <location filename="creportpatientcardtype.cpp" line="105"/>
+        <location filename="creportpatientcardtype.cpp" line="108"/>
         <source>Unit time</source>
         <translation>Timp unitate</translation>
     </message>
     <message>
-        <location filename="creportpatientcardtype.cpp" line="118"/>
+        <location filename="creportpatientcardtype.cpp" line="109"/>
+        <source>Minimum time</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="creportpatientcardtype.cpp" line="122"/>
+        <location filename="creportpatientcardtype.cpp" line="123"/>
         <source>%1 minute(s)</source>
         <translation>%1 minut(e)</translation>
     </message>
@@ -1879,58 +1959,58 @@
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="wndmain.cpp" line="342"/>
-        <location filename="wndmain.cpp" line="448"/>
+        <location filename="wndmain.cpp" line="349"/>
+        <location filename="wndmain.cpp" line="457"/>
         <source>Login</source>
         <translation>Autentificare</translation>
     </message>
     <message>
-        <location filename="wndmain.cpp" line="347"/>
+        <location filename="wndmain.cpp" line="354"/>
         <source>Need authentication ...</source>
         <translation>Este nevoie de autentificare ...</translation>
     </message>
     <message>
-        <location filename="wndmain.cpp" line="352"/>
+        <location filename="wndmain.cpp" line="359"/>
         <source>User successfully authenticated.</source>
         <translation>Utilizatorul a fost autentificat cu succes.</translation>
     </message>
     <message>
-        <location filename="wndmain.cpp" line="357"/>
+        <location filename="wndmain.cpp" line="364"/>
         <source>Logout</source>
         <translation>Ieșire</translation>
     </message>
     <message>
-        <location filename="wndmain.cpp" line="363"/>
+        <location filename="wndmain.cpp" line="370"/>
         <source>The username entered not found in the Belenus database</source>
         <translation>Numele de utilizator introdus nu a fost găsit în baza de date Belenus</translation>
     </message>
     <message>
-        <location filename="wndmain.cpp" line="365"/>
+        <location filename="wndmain.cpp" line="372"/>
         <source>The password entered is incorrect</source>
         <translation>Parola introdusă este incorectă</translation>
     </message>
     <message>
-        <location filename="wndmain.cpp" line="367"/>
+        <location filename="wndmain.cpp" line="374"/>
         <source>Connection to Belenus database failed</source>
         <translation>Conexiunea la baza de date Belenus a eșuat</translation>
     </message>
     <message>
-        <location filename="wndmain.cpp" line="369"/>
+        <location filename="wndmain.cpp" line="376"/>
         <source>Authentication failed. Please retry later ...</source>
         <translation>Autentificarea a eșuat. Te rog, reîncearcă mai târziu ...</translation>
     </message>
     <message>
-        <location filename="wndmain.cpp" line="1144"/>
+        <location filename="wndmain.cpp" line="1185"/>
         <source>&lt;i&gt;Please select a report to show the related filters ...&lt;/i&gt;</source>
         <translation>&lt;i&gt;Selectează un raport pentru a arăta filtrele aferente...&lt;/i&gt;</translation>
     </message>
     <message>
-        <location filename="wndmain.cpp" line="1475"/>
+        <location filename="wndmain.cpp" line="1516"/>
         <source>Save report to ...</source>
         <translation>Salvează raportul pe ...</translation>
     </message>
     <message>
-        <location filename="wndmain.cpp" line="1477"/>
+        <location filename="wndmain.cpp" line="1518"/>
         <source>Html files (*.html);;Text files (*.txt)</source>
         <translation>Fișiere html files (*.html);; fișiere text (*.txt)</translation>
     </message>
@@ -1967,26 +2047,26 @@
     </message>
     <message>
         <location filename="wndmain.ui" line="130"/>
-        <location filename="wndmain.ui" line="1189"/>
+        <location filename="wndmain.ui" line="1206"/>
         <source>Additional information for monthly closure</source>
         <translation>Informații suplimentare pentru bilanțul lunar</translation>
     </message>
     <message>
         <location filename="wndmain.ui" line="149"/>
-        <location filename="wndmain.ui" line="1112"/>
+        <location filename="wndmain.ui" line="1129"/>
         <source>History of cassa events and actions</source>
         <translation>Istoria evenimentelor și acțiunilor aferente casei</translation>
     </message>
     <message>
         <location filename="wndmain.ui" line="175"/>
-        <location filename="wndmain.ui" line="1082"/>
+        <location filename="wndmain.ui" line="1099"/>
         <source>Active patientcard types</source>
         <translation>Tipuri de carduri de pacient active</translation>
     </message>
     <message>
         <location filename="wndmain.ui" line="194"/>
-        <location filename="wndmain.ui" line="1098"/>
-        <location filename="wndmain.ui" line="1101"/>
+        <location filename="wndmain.ui" line="1115"/>
+        <location filename="wndmain.ui" line="1118"/>
         <source>Patientcard details</source>
         <translation>Detalii despre cardul de pacient</translation>
     </message>
@@ -2002,13 +2082,13 @@
     </message>
     <message>
         <location filename="wndmain.ui" line="251"/>
-        <location filename="wndmain.ui" line="1123"/>
+        <location filename="wndmain.ui" line="1140"/>
         <source>History of patientcard cassa actions</source>
         <translation>Istoria acțiunilor de casă aferente cardurilor de pacient</translation>
     </message>
     <message>
         <location filename="wndmain.ui" line="270"/>
-        <location filename="wndmain.ui" line="1145"/>
+        <location filename="wndmain.ui" line="1162"/>
         <source>Summary of valid patientcards and the price of its units available</source>
         <translation>Sinteza cardurilor de pacient valabile și prețul unităților disponibile</translation>
     </message>
@@ -2019,311 +2099,316 @@
     </message>
     <message>
         <location filename="wndmain.ui" line="315"/>
-        <location filename="wndmain.ui" line="1134"/>
+        <location filename="wndmain.ui" line="1151"/>
         <source>Products registered in database</source>
         <translation>Produse înregistrate în baza de date</translation>
     </message>
     <message>
         <location filename="wndmain.ui" line="334"/>
-        <location filename="wndmain.ui" line="1156"/>
+        <location filename="wndmain.ui" line="1173"/>
         <source>Product status on the selected date</source>
         <translation>Starea produsului la data selectată</translation>
     </message>
     <message>
         <location filename="wndmain.ui" line="353"/>
-        <location filename="wndmain.ui" line="1167"/>
+        <location filename="wndmain.ui" line="1184"/>
         <source>History of the selected product</source>
         <translation>Istoria produsului selectat</translation>
     </message>
     <message>
         <location filename="wndmain.ui" line="379"/>
-        <location filename="wndmain.ui" line="1200"/>
+        <location filename="wndmain.ui" line="1217"/>
         <source>Summarized information about registered guests</source>
         <translation>Informații sintetizate despre oaspeții înregistrați</translation>
     </message>
     <message>
         <location filename="wndmain.ui" line="405"/>
-        <location filename="wndmain.ui" line="1211"/>
+        <location filename="wndmain.ui" line="1228"/>
         <source>Summary of device usages</source>
         <translation>Sinteză privind utilizarea dispozitivelor</translation>
     </message>
     <message>
         <location filename="wndmain.ui" line="424"/>
-        <location filename="wndmain.ui" line="1222"/>
+        <location filename="wndmain.ui" line="1239"/>
         <source>Summary of device minute usages</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="wndmain.ui" line="443"/>
-        <location filename="wndmain.ui" line="1233"/>
+        <location filename="wndmain.ui" line="459"/>
+        <location filename="wndmain.ui" line="1250"/>
         <source>Summary of dispersion of the panel usages per patients</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="wndmain.ui" line="475"/>
+        <location filename="wndmain.ui" line="491"/>
         <source>Save report content to file</source>
         <translation>Salvează conținutul raportului în fișierul</translation>
     </message>
     <message>
-        <location filename="wndmain.ui" line="478"/>
+        <location filename="wndmain.ui" line="494"/>
         <source>Save report</source>
         <translation>Salvează raportul</translation>
     </message>
     <message>
-        <location filename="wndmain.ui" line="491"/>
+        <location filename="wndmain.ui" line="507"/>
         <source> Print report </source>
         <translation> Listează raportul </translation>
     </message>
     <message>
-        <location filename="wndmain.ui" line="540"/>
+        <location filename="wndmain.ui" line="556"/>
         <source>Report description ... </source>
         <translation>Descrierea raportului ... </translation>
     </message>
     <message>
-        <location filename="wndmain.ui" line="556"/>
+        <location filename="wndmain.ui" line="572"/>
         <source> Refresh </source>
         <translation> Reîncărcare </translation>
     </message>
     <message>
-        <location filename="wndmain.ui" line="589"/>
+        <location filename="wndmain.ui" line="605"/>
         <source>Date start :</source>
         <translation>Data începere :</translation>
     </message>
     <message>
-        <location filename="wndmain.ui" line="606"/>
+        <location filename="wndmain.ui" line="622"/>
         <source>Date stop :</source>
         <translation>Data oprire :</translation>
     </message>
     <message>
-        <location filename="wndmain.ui" line="639"/>
+        <location filename="wndmain.ui" line="655"/>
         <source>Data name :</source>
         <translation>Nume date :</translation>
     </message>
     <message>
-        <location filename="wndmain.ui" line="672"/>
+        <location filename="wndmain.ui" line="688"/>
         <source>Data types :</source>
         <translation>Tipuri date :</translation>
     </message>
     <message>
-        <location filename="wndmain.ui" line="682"/>
+        <location filename="wndmain.ui" line="698"/>
         <source>Data subtypes :</source>
         <translation>Subtipuri date :</translation>
     </message>
     <message>
-        <location filename="wndmain.ui" line="708"/>
+        <location filename="wndmain.ui" line="724"/>
         <source>Is visible</source>
         <translation>Este vizibil</translation>
     </message>
     <message>
-        <location filename="wndmain.ui" line="735"/>
+        <location filename="wndmain.ui" line="751"/>
         <source>Report will be printed with the selected paper orientation :</source>
         <translation>Raportul va fi listat cu orientarea selectată a hârtiei :</translation>
     </message>
     <message>
-        <location filename="wndmain.ui" line="742"/>
+        <location filename="wndmain.ui" line="758"/>
         <source>Portrait</source>
         <translation>Portret</translation>
     </message>
     <message>
-        <location filename="wndmain.ui" line="752"/>
+        <location filename="wndmain.ui" line="768"/>
         <source>Landscape</source>
         <translation>Peisaj</translation>
     </message>
     <message>
-        <location filename="wndmain.ui" line="784"/>
+        <location filename="wndmain.ui" line="800"/>
         <source> Information </source>
         <translation> Informații </translation>
     </message>
     <message>
-        <location filename="wndmain.ui" line="799"/>
+        <location filename="wndmain.ui" line="815"/>
         <source>How to use report viewer ...</source>
         <translation>Cum trebuie folosit vizualizatorul de rapoarte ...</translation>
     </message>
     <message>
-        <location filename="wndmain.ui" line="821"/>
+        <location filename="wndmain.ui" line="837"/>
         <source>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;Welcome to Belenus Report Viewer application.&lt;br/&gt;To use the application you need to authenticate yourself. Please enter your Belenus user name and password below.&lt;br/&gt;After successfull authentication you will be able to query different filtered reports.&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</source>
         <translation>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;Bine ai venit în aplicație Vizualizator Rapoarte Belenus.&lt;br/&gt;Pentru a folosi această aplicație, va trebui să te autentifi. Introdu mai jos numele tău de utilzator și parola Belenus.&lt;br/&gt;După autentificarea cu succes, vei putea cere raporte realizate în funcție de diferite filtre.&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</translation>
     </message>
     <message>
-        <location filename="wndmain.ui" line="831"/>
+        <location filename="wndmain.ui" line="847"/>
         <source>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;Click on the appropriate button above to open the related report. Use the related filters to display filtered data in the actual report.&lt;br/&gt;Click the Export button on the top right to export the actual report to a formatted text file or click the Print button to send it to a printer.&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</source>
         <translation>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;Dă click pe butonul corespunzător de mai sus pentru a deschide raportul aferent. Folosește filtrele aferente pentru a arăta datele filtrare în raportul propriu-zis.&lt;br/&gt;Dă click pe buton Export din colțul superior din dreapta pentru a exporta raportul propriu-zis într-un fișier de text formatat sau pe butonul Listează pentru a-l trimite la imprimantă.&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</translation>
     </message>
     <message>
-        <location filename="wndmain.ui" line="838"/>
+        <location filename="wndmain.ui" line="854"/>
         <source> Authentication </source>
         <translation> Autentificare </translation>
     </message>
     <message>
-        <location filename="wndmain.ui" line="844"/>
+        <location filename="wndmain.ui" line="860"/>
         <source>Need authentication ...</source>
         <translation>Este nevoie de autentificare ...</translation>
     </message>
     <message>
-        <location filename="wndmain.ui" line="853"/>
+        <location filename="wndmain.ui" line="869"/>
         <source>User name :</source>
         <translation>Nume utilizator :</translation>
     </message>
     <message>
-        <location filename="wndmain.ui" line="863"/>
+        <location filename="wndmain.ui" line="879"/>
         <source>Password :</source>
         <translation>Parolă :</translation>
     </message>
     <message>
-        <location filename="wndmain.ui" line="883"/>
+        <location filename="wndmain.ui" line="899"/>
         <source> Login </source>
         <translation> Autentificare </translation>
     </message>
     <message>
-        <location filename="wndmain.ui" line="914"/>
+        <location filename="wndmain.ui" line="930"/>
         <source> Filter settings </source>
         <translation> Setări filtru </translation>
     </message>
     <message>
-        <location filename="wndmain.ui" line="920"/>
+        <location filename="wndmain.ui" line="936"/>
         <source>Refresh the report automatically after one of the filter has been changed</source>
         <translation>Actualizează raportul automat după schimbarea unui filtru</translation>
     </message>
     <message>
-        <location filename="wndmain.ui" line="957"/>
+        <location filename="wndmain.ui" line="973"/>
         <source>&amp;File</source>
         <translation>&amp;Fișier</translation>
     </message>
     <message>
-        <location filename="wndmain.ui" line="964"/>
+        <location filename="wndmain.ui" line="980"/>
         <source>&amp;View</source>
         <translation>&amp;Vizualizare</translation>
     </message>
     <message>
-        <location filename="wndmain.ui" line="971"/>
+        <location filename="wndmain.ui" line="987"/>
         <source>&amp;Reports</source>
         <translation>&amp;Rapoarte</translation>
     </message>
     <message>
-        <location filename="wndmain.ui" line="975"/>
+        <location filename="wndmain.ui" line="991"/>
         <source>&amp;Bookkeeping</source>
         <translation>&amp;Contabilitate</translation>
     </message>
     <message>
-        <location filename="wndmain.ui" line="985"/>
+        <location filename="wndmain.ui" line="1001"/>
         <source>Patientcards</source>
         <translation>Carduri de pacient</translation>
     </message>
     <message>
-        <location filename="wndmain.ui" line="997"/>
-        <location filename="wndmain.ui" line="1131"/>
+        <location filename="wndmain.ui" line="1013"/>
+        <location filename="wndmain.ui" line="1148"/>
         <source>Products</source>
         <translation>Produse</translation>
     </message>
     <message>
-        <location filename="wndmain.ui" line="1005"/>
-        <location filename="wndmain.ui" line="1197"/>
+        <location filename="wndmain.ui" line="1021"/>
+        <location filename="wndmain.ui" line="1214"/>
         <source>Guests</source>
         <translation>Oaspeți</translation>
     </message>
     <message>
-        <location filename="wndmain.ui" line="1011"/>
+        <location filename="wndmain.ui" line="1027"/>
         <source>Devices</source>
         <translation>Dispozitive</translation>
     </message>
     <message>
-        <location filename="wndmain.ui" line="1030"/>
+        <location filename="wndmain.ui" line="1047"/>
         <source>E&amp;xit</source>
         <translation>I&amp;eșire</translation>
     </message>
     <message>
-        <location filename="wndmain.ui" line="1041"/>
+        <location filename="wndmain.ui" line="1058"/>
         <source>&amp;Toolbar</source>
         <translation>&amp;Bara de instrumente</translation>
     </message>
     <message>
-        <location filename="wndmain.ui" line="1052"/>
+        <location filename="wndmain.ui" line="1069"/>
         <source>&amp;Filter bar</source>
         <translation>&amp;Bara de filtre</translation>
     </message>
     <message>
-        <location filename="wndmain.ui" line="1060"/>
+        <location filename="wndmain.ui" line="1077"/>
         <source>&amp;Daily</source>
         <translation>&amp;Zilnic</translation>
     </message>
     <message>
-        <location filename="wndmain.ui" line="1063"/>
+        <location filename="wndmain.ui" line="1080"/>
         <source>Daily bookkeeping</source>
         <translation>Contabilitate zilnică</translation>
     </message>
     <message>
-        <location filename="wndmain.ui" line="1071"/>
+        <location filename="wndmain.ui" line="1088"/>
         <source>&amp;Ledger</source>
         <translation>&amp;Registru contabil</translation>
     </message>
     <message>
-        <location filename="wndmain.ui" line="1079"/>
+        <location filename="wndmain.ui" line="1096"/>
         <source>&amp;Active patientcard types</source>
         <translation>&amp;Tipuri de carduri de pacient active</translation>
     </message>
     <message>
-        <location filename="wndmain.ui" line="1090"/>
+        <location filename="wndmain.ui" line="1107"/>
         <source>Inactive patientcards</source>
         <translation>Carduri de pacient inactive</translation>
     </message>
     <message>
-        <location filename="wndmain.ui" line="1109"/>
+        <location filename="wndmain.ui" line="1126"/>
         <source>&amp;Cassa history</source>
         <translation>&amp;Istoria casei</translation>
     </message>
     <message>
-        <location filename="wndmain.ui" line="1120"/>
+        <location filename="wndmain.ui" line="1137"/>
         <source>Patientcard sells</source>
         <translation>Vânzările cardurilor de pacient</translation>
     </message>
     <message>
-        <location filename="wndmain.ui" line="1142"/>
+        <location filename="wndmain.ui" line="1159"/>
         <source>Patientcard debts</source>
         <translation>Debit carduri de pacient</translation>
     </message>
     <message>
-        <location filename="wndmain.ui" line="1153"/>
+        <location filename="wndmain.ui" line="1170"/>
         <source>Product status</source>
         <translation>Stare produs</translation>
     </message>
     <message>
-        <location filename="wndmain.ui" line="1164"/>
+        <location filename="wndmain.ui" line="1181"/>
         <source>Product history</source>
         <translation>Istorie produs</translation>
     </message>
     <message>
-        <location filename="wndmain.ui" line="1175"/>
+        <location filename="wndmain.ui" line="1192"/>
         <source>Patient card usages</source>
         <translation>Utilizarea cardurilor de pacient</translation>
     </message>
     <message>
-        <location filename="wndmain.ui" line="1178"/>
+        <location filename="wndmain.ui" line="1195"/>
         <source>Patientcard usages on a defined date intervall</source>
         <translation>Utilizarea cardurilor de pacient într-un interval de date determinat</translation>
     </message>
     <message>
-        <location filename="wndmain.ui" line="1186"/>
+        <location filename="wndmain.ui" line="1203"/>
         <source>Monthly</source>
         <translation>Lunar</translation>
     </message>
     <message>
-        <location filename="wndmain.ui" line="1208"/>
+        <location filename="wndmain.ui" line="1225"/>
         <source>Device usages</source>
         <translation>Utilizarea dispozitivelor</translation>
     </message>
     <message>
-        <location filename="wndmain.ui" line="1219"/>
+        <location filename="wndmain.ui" line="1236"/>
         <source>Device Minute Usages</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="wndmain.ui" line="1230"/>
+        <location filename="wndmain.ui" line="1247"/>
         <source>Device patient dispersion</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="wndmain.ui" line="1241"/>
+        <location filename="wndmain.ui" line="1258"/>
         <source>Patientcard unit change</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="wndmain.ui" line="1266"/>
+        <source>Device daily summary</source>
         <translation type="unfinished"></translation>
     </message>
 </context>
