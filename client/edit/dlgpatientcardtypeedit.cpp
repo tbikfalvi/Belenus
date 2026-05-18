@@ -6,6 +6,7 @@
 #include "dlgvalidtimeperiodedit.h"
 #include "../db/dbvalidtimeperiods.h"
 
+//===============================================================================================================================
 cDlgPatientCardTypeEdit::cDlgPatientCardTypeEdit( QWidget *p_poParent, cDBPatientCardType *p_poPatientCardType )
     : QDialog( p_poParent )
 {
@@ -52,6 +53,7 @@ cDlgPatientCardTypeEdit::cDlgPatientCardTypeEdit( QWidget *p_poParent, cDBPatien
         ledVatpercent->setText( QString::number(m_poPatientCardType->vatpercent()) );
         ledUnits->setText( QString::number(m_poPatientCardType->units()) );
         ledUnitTime->setText( QString::number(m_poPatientCardType->unitTime()) );
+        ledMinimumTime->setText( QString::number(m_poPatientCardType->minimumTime() ) );
         deValidDateFrom->setDate( QDate::fromString(m_poPatientCardType->validDateFrom(),"yyyy-MM-dd") );
         deValidDateTo->setDate( QDate::fromString(m_poPatientCardType->validDateTo(),"yyyy-MM-dd") );
         ledValidDays->setText( QString::number(m_poPatientCardType->validDays()) );
@@ -99,6 +101,7 @@ cDlgPatientCardTypeEdit::cDlgPatientCardTypeEdit( QWidget *p_poParent, cDBPatien
                 ledVatpercent->setEnabled( false );
                 ledUnits->setEnabled( false );
                 ledUnitTime->setEnabled( false );
+                ledMinimumTime->setEnabled( false );
                 rbInterval->setEnabled( false );
                 deValidDateFrom->setEnabled( false );
                 deValidDateTo->setEnabled( false );
@@ -113,6 +116,7 @@ cDlgPatientCardTypeEdit::cDlgPatientCardTypeEdit( QWidget *p_poParent, cDBPatien
     m_dlgProgress = new cDlgProgress( this );
 }
 
+//===============================================================================================================================
 cDlgPatientCardTypeEdit::~cDlgPatientCardTypeEdit()
 {
     g_poPrefs->setDialogSize( "EditPatientCardType", QPoint( width(), height() ) );
@@ -120,6 +124,7 @@ cDlgPatientCardTypeEdit::~cDlgPatientCardTypeEdit()
     delete m_dlgProgress;
 }
 
+//===============================================================================================================================
 void cDlgPatientCardTypeEdit::on_rbInterval_toggled(bool checked)
 {
     if( checked )
@@ -136,6 +141,7 @@ void cDlgPatientCardTypeEdit::on_rbInterval_toggled(bool checked)
     }
 }
 
+//===============================================================================================================================
 void cDlgPatientCardTypeEdit::on_pbSave_clicked()
 {
     bool  boCanBeSaved = true;
@@ -184,6 +190,12 @@ void cDlgPatientCardTypeEdit::on_pbSave_clicked()
         qsErrorMessage.append( tr( "Unittime of patientcard type must be set." ) );
         lblUnitTime->setStyleSheet( "QLabel {font: bold; color: red;}" );
     }
+
+    if( ledMinimumTime->text() == "" )
+    {
+        ledMinimumTime->setText( "0" );
+    }
+
     if( rbDays->isChecked() && (ledValidDays->text() == "" || ledValidDays->text().toInt() < 1) )
     {
         boCanBeSaved = false;
@@ -243,6 +255,7 @@ void cDlgPatientCardTypeEdit::on_pbSave_clicked()
             m_poPatientCardType->setVatpercent( ledVatpercent->text().toInt() );
             m_poPatientCardType->setUnits( ledUnits->text().toUInt() );
             m_poPatientCardType->setUnitTime( ledUnitTime->text().toInt() );
+            m_poPatientCardType->setMinimumTime( ledMinimumTime->text().toInt() );
             m_poPatientCardType->setValidDateFrom( (rbDays->isChecked()?"2000-01-01":deValidDateFrom->date().toString("yyyy-MM-dd")) );
             m_poPatientCardType->setValidDateTo( (rbDays->isChecked()?"2000-01-01":deValidDateTo->date().toString("yyyy-MM-dd")) );
             m_poPatientCardType->setValidDays( ledValidDays->text().toUInt() );
@@ -287,11 +300,13 @@ void cDlgPatientCardTypeEdit::on_pbSave_clicked()
     }
 }
 
+//===============================================================================================================================
 void cDlgPatientCardTypeEdit::on_pbCancel_clicked()
 {
     QDialog::reject();
 }
 
+//===============================================================================================================================
 void cDlgPatientCardTypeEdit::on_pbAdd_clicked()
 {
     cDlgValidTimePeriodEdit     obDlgValidTimePeriodEdit;
@@ -310,6 +325,7 @@ void cDlgPatientCardTypeEdit::on_pbAdd_clicked()
     }
 }
 
+//===============================================================================================================================
 void cDlgPatientCardTypeEdit::on_pbEdit_clicked()
 {
     cDlgValidTimePeriodEdit     obDlgValidTimePeriodEdit( this, listValidInterval->currentItem()->text() );
@@ -333,17 +349,20 @@ void cDlgPatientCardTypeEdit::on_pbEdit_clicked()
     }
 }
 
+//===============================================================================================================================
 void cDlgPatientCardTypeEdit::on_pbDelete_clicked()
 {
     listValidInterval->takeItem( listValidInterval->currentRow() );
 }
 
+//===============================================================================================================================
 void cDlgPatientCardTypeEdit::on_listValidInterval_currentItemChanged(QListWidgetItem* current, QListWidgetItem*)
 {
     pbEdit->setEnabled( current != NULL ? true : false );
     pbDelete->setEnabled( current != NULL ? true : false );
 }
 
+//===============================================================================================================================
 void cDlgPatientCardTypeEdit::on_ledPrice_textChanged(const QString &/*arg1*/)
 {
     cCurrency currPrice( ledPrice->text(), cCurrency::CURR_GROSS, ledVatpercent->text().toInt() );

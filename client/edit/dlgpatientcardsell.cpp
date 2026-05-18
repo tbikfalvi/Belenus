@@ -529,6 +529,7 @@ void cDlgPatientCardSell::on_pbSell_clicked()
                 obDBPatientcardUnit.setPanelGroupId( cmbPanelGroup->itemData( cmbPanelGroup->currentIndex() ).toUInt() );
                 obDBPatientcardUnit.setLedgerId( uiLedgerId );
                 obDBPatientcardUnit.setUnitTime( m_poPatientCardType->unitTime() );
+                obDBPatientcardUnit.setMinimumTime( m_poPatientCardType->minimumTime() );
                 obDBPatientcardUnit.setUnitPrice( m_poPatientCardType->price()/nUnitCount );
                 obDBPatientcardUnit.setValidDateFrom( m_poPatientCard->validDateFrom() );
                 obDBPatientcardUnit.setValidDateTo( m_poPatientCard->validDateTo() );
