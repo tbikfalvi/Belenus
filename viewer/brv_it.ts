@@ -1367,42 +1367,48 @@
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="creportpatientcardtype.cpp" line="79"/>
+        <location filename="creportpatientcardtype.cpp" line="80"/>
         <source>%1 days</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="creportpatientcardtype.cpp" line="84"/>
+        <location filename="creportpatientcardtype.cpp" line="86"/>
         <source>%1 -&gt; %2</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="creportpatientcardtype.cpp" line="101"/>
+        <location filename="creportpatientcardtype.cpp" line="104"/>
         <source>Name</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="creportpatientcardtype.cpp" line="102"/>
+        <location filename="creportpatientcardtype.cpp" line="105"/>
         <source>Price</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="creportpatientcardtype.cpp" line="103"/>
+        <location filename="creportpatientcardtype.cpp" line="106"/>
         <source>Units</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="creportpatientcardtype.cpp" line="104"/>
+        <location filename="creportpatientcardtype.cpp" line="107"/>
         <source>Valid</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="creportpatientcardtype.cpp" line="105"/>
+        <location filename="creportpatientcardtype.cpp" line="108"/>
         <source>Unit time</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="creportpatientcardtype.cpp" line="118"/>
+        <location filename="creportpatientcardtype.cpp" line="109"/>
+        <source>Minimum time</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="creportpatientcardtype.cpp" line="122"/>
+        <location filename="creportpatientcardtype.cpp" line="123"/>
         <source>%1 minute(s)</source>
         <translation type="unfinished"></translation>
     </message>

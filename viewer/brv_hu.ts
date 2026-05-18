@@ -1485,7 +1485,13 @@
         <translation>Kimutatás összeállítása ...</translation>
     </message>
     <message>
-        <location filename="creportpatientcardtype.cpp" line="118"/>
+        <location filename="creportpatientcardtype.cpp" line="109"/>
+        <source>Minimum time</source>
+        <translation>Minimum idő</translation>
+    </message>
+    <message>
+        <location filename="creportpatientcardtype.cpp" line="122"/>
+        <location filename="creportpatientcardtype.cpp" line="123"/>
         <source>%1 minute(s)</source>
         <translation>%1 perc</translation>
     </message>
@@ -1499,12 +1505,12 @@
         <translation>%1 -&gt; %2 | %3 nap</translation>
     </message>
     <message>
-        <location filename="creportpatientcardtype.cpp" line="79"/>
+        <location filename="creportpatientcardtype.cpp" line="80"/>
         <source>%1 days</source>
         <translation>%1 nap</translation>
     </message>
     <message>
-        <location filename="creportpatientcardtype.cpp" line="84"/>
+        <location filename="creportpatientcardtype.cpp" line="86"/>
         <source>%1 -&gt; %2</source>
         <translation>%1 -&gt; %2</translation>
     </message>
@@ -1513,27 +1519,27 @@
         <translation type="obsolete">Adatok megjelenítése ...</translation>
     </message>
     <message>
-        <location filename="creportpatientcardtype.cpp" line="101"/>
+        <location filename="creportpatientcardtype.cpp" line="104"/>
         <source>Name</source>
         <translation>Név</translation>
     </message>
     <message>
-        <location filename="creportpatientcardtype.cpp" line="102"/>
+        <location filename="creportpatientcardtype.cpp" line="105"/>
         <source>Price</source>
         <translation>Ár</translation>
     </message>
     <message>
-        <location filename="creportpatientcardtype.cpp" line="103"/>
+        <location filename="creportpatientcardtype.cpp" line="106"/>
         <source>Units</source>
         <translation>Egységek</translation>
     </message>
     <message>
-        <location filename="creportpatientcardtype.cpp" line="104"/>
+        <location filename="creportpatientcardtype.cpp" line="107"/>
         <source>Valid</source>
         <translation>Érvényes</translation>
     </message>
     <message>
-        <location filename="creportpatientcardtype.cpp" line="105"/>
+        <location filename="creportpatientcardtype.cpp" line="108"/>
         <source>Unit time</source>
         <translation>Egység idő</translation>
     </message>
