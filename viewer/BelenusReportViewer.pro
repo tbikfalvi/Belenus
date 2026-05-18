@@ -48,6 +48,7 @@ SOURCES      = ../framework/dbconnection.cpp \
                creportguests.cpp \
                creportdeviceusages.cpp \
                creportdeviceminuteusages.cpp \
+               creportdevicedailysummary.cpp \
                creportdevicepatientdispersion.cpp \
                dlgprogress.cpp
 
@@ -79,6 +80,7 @@ HEADERS      = ../framework/dbconnection.h \
                creportguests.h \
                creportdeviceusages.h \
                creportdeviceminuteusages.h \
+               creportdevicedailysummary.h \
                creportdevicepatientdispersion.h \
                dlgprogress.h
 

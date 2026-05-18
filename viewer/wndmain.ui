@@ -438,6 +438,22 @@
         </widget>
        </item>
        <item>
+        <widget class="QPushButton" name="pbDeviceDailySummary">
+         <property name="text">
+          <string/>
+         </property>
+         <property name="iconSize">
+          <size>
+           <width>30</width>
+           <height>30</height>
+          </size>
+         </property>
+         <property name="checkable">
+          <bool>true</bool>
+         </property>
+        </widget>
+       </item>
+       <item>
         <widget class="QPushButton" name="pbDevicePatientDispersion">
          <property name="toolTip">
           <string>Summary of dispersion of the panel usages per patients</string>
@@ -1012,6 +1028,7 @@
      </property>
      <addaction name="action_DeviceUsages"/>
      <addaction name="action_DeviceMinuteUsages"/>
+     <addaction name="action_DeviceDailySummary"/>
      <addaction name="action_DevicePatientDispersion"/>
     </widget>
     <addaction name="menu_Bookkeeping"/>
@@ -1239,6 +1256,14 @@
    </property>
    <property name="text">
     <string>Patientcard unit change</string>
+   </property>
+  </action>
+  <action name="action_DeviceDailySummary">
+   <property name="checkable">
+    <bool>true</bool>
+   </property>
+   <property name="text">
+    <string>Device daily summary</string>
    </property>
   </action>
  </widget>
