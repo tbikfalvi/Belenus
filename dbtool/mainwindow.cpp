@@ -38,6 +38,7 @@ MainWindow::MainWindow(QWidget *parent, QString p_qsVersion) : QMainWindow(paren
 
     ui->pageController->setCurrentIndex( m_nCurrentPage );
 
+    //------------------------------------------------------------------------------------------------
     // Initialize GUI components
     ui->cmbLanguage->addItem( "Magyar (hu)" );
     ui->cmbLanguage->addItem( "English (en)" );
@@ -63,6 +64,52 @@ MainWindow::MainWindow(QWidget *parent, QString p_qsVersion) : QMainWindow(paren
     m_poModel->setQuery( "SELECT CONCAT(name,\" (\",realName,\")\") AS n FROM users WHERE active = 1 ORDER BY name" );
     ui->cmbName->setModel( m_poModel );
 
+    //------------------------------------------------------------------------------------------------
+    // DB Updgrade-hez string-ek
+    //------------------------------------------------------------------------------------------------
+    m_qslVersions  << "2_0_0_0";
+
+    m_qslVersions  << "2_1_0_0";
+    m_qslDBUpdates << "2_1_0_0-- ----------------------------------------------------------------------------------- ";
+    m_qslDBUpdates << "2_1_0_0-- Upgrade to version 2_1_0_0 ";
+    m_qslDBUpdates << "2_1_0_0-- ----------------------------------------------------------------------------------- ";
+    m_qslDBUpdates << "2_1_0_0ALTER TABLE `patientcardunits` ADD `panelGroupID` int(10) unsigned NOT NULL DEFAULT 0 AFTER `patientCardTypeId`; ";
+    m_qslDBUpdates << "2_1_0_0UPDATE `panelgroups` SET `name` = '* Osszes *' WHERE `panelGroupId` = 0; ";
+    m_qslDBUpdates << "2_1_0_0ALTER TABLE `panels` ADD `imagePathFileName` VARCHAR( 500 ) NOT NULL AFTER `title`; ";
+    m_qslDBUpdates << "2_1_0_0-- ----------------------------------------------------------------------------------- ";
+    m_qslDBUpdates << "2_1_0_0UPDATE settings SET value='2_1_0_0' WHERE identifier='APPLICATION_VERSION';";
+    m_qslDBUpdates << "2_1_0_0UPDATE settings SET value='2_1_0_0' WHERE identifier='DATABASE_VERSION'; ";
+
+    m_qslVersions  << "2_1_1_0";
+
+    m_qslVersions  << "2_1_2_0";
+
+    m_qslVersions  << "2_1_2_1";
+
+    m_qslVersions  << "2_1_2_2";
+
+    m_qslVersions  << "2_1_3_0";
+
+    m_qslVersions  << "2_2_0_0";
+
+    m_qslVersions  << "2_2_1_0";
+
+    m_qslVersions  << "2_2_1_1";
+
+    m_qslVersions  << "2_2_2_1";
+
+    m_qslVersions  << "2_3_0_0";
+
+    m_qslVersions  << "2_3_0_1";
+
+    m_qslVersions  << "2_3_1_0";
+
+    m_qslVersions  << "2_3_2_0";
+
+    m_qslVersions  << "2_3_2_1";
+
+    m_qslVersions  << "2_3_3_0";
+
     _initializePage();
 }
 //=========================================================================================================================================
@@ -78,6 +125,11 @@ MainWindow::~MainWindow()
 void MainWindow::on_pbNext_clicked()
 //-----------------------------------------------------------------------------------------------------------------------------------------
 {
+    if( m_nCurrentPage == CONST_PAGE_START && m_enGroup != GROUP_ROOT && m_enGroup != GROUP_SYSTEM )
+    {
+        m_nCurrentPage++;
+    }
+
     if( m_nCurrentPage < CONST_PAGE_EXECUTE_PROCESS )
         m_nCurrentPage++;
 
@@ -92,7 +144,12 @@ void MainWindow::on_pbNext_clicked()
 void MainWindow::on_pbPrev_clicked()
 //-----------------------------------------------------------------------------------------------------------------------------------------
 {
-    if( m_nCurrentPage == CONST_PAGE_SELECT_PROCESS )
+    if( m_nCurrentPage == CONST_PAGE_SELECT_PROCESS && m_enGroup != GROUP_ROOT && m_enGroup != GROUP_SYSTEM )
+    {
+        m_nCurrentPage--;
+    }
+
+    if( m_nCurrentPage == 1 )
     {
         if( QMessageBox::question( this, tr("Question"), tr("Do you want to authenticate with another user account?"),
                                    QMessageBox::Yes | QMessageBox::No, QMessageBox::No ) == QMessageBox::No )
@@ -239,6 +296,7 @@ void MainWindow::_initializePage()
     {
         case CONST_PAGE_START:
         {
+            m_bUpgradeDatabase = false;
             ui->cmbName->setEnabled( true );
             ui->ledPassword->setEnabled( true );
             ui->pbLogin->setEnabled( true );
@@ -248,12 +306,36 @@ void MainWindow::_initializePage()
             ui->pbPrev->setVisible( false );
             ui->pbNext->setEnabled( false );
             ui->pbNext->setVisible( true );
+            ui->lblUpgradeDB2->setVisible( false );
+            ui->lblUpgradeDB3->setVisible( false );
+            ui->lblCurrentVersion->setVisible( false );
+            ui->cmbTargetVersion->setVisible( false );
+            ui->cmbTargetVersion->setEnabled( false );
             ui->ledPassword->setText( "" );
             ui->cmbName->setFocus();
             break;
         }
+        case CONST_PAGE_DATABASE_ADMIN:
+        {
+            m_bUpgradeDatabase = false;
+            ui->pbPrev->setEnabled( true );
+            ui->pbPrev->setVisible( true );
+            ui->pbNext->setEnabled( true );
+            ui->pbNext->setVisible( true );
+            if( m_enGroup == GROUP_ROOT || m_enGroup == GROUP_SYSTEM )
+            {
+                ui->lblUpgradeDB2->setVisible( true );
+                ui->lblUpgradeDB3->setVisible( true );
+                ui->lblCurrentVersion->setVisible( true );
+                ui->cmbTargetVersion->setVisible( true );
+                ui->cmbTargetVersion->setEnabled( true );
+            }
+            _loadCurrentVersion();
+            break;
+        }
         case CONST_PAGE_SELECT_PROCESS:
         {
+            m_bUpgradeDatabase = false;
             ui->pbPrev->setEnabled( true );
             ui->pbPrev->setVisible( true );
             ui->pbNext->setEnabled( false );
@@ -268,11 +350,48 @@ void MainWindow::_initializePage()
             ui->pbPrev->setVisible( true );
             ui->pbNext->setEnabled( false );
             ui->pbNext->setVisible( false );
-            ui->lblNotificationBeforeProcess->setVisible( true );
             ui->pbExecuteProcess->setEnabled( true );
             ui->listProgress->clear();
-            _calculateRelatedRecords();
+            if( m_bUpgradeDatabase )
+            {
+                ui->lblNotificationBeforeProcess->setVisible( false );
+                ui->listProgress->addItem( tr( "Upgrading database" ) );
+                ui->listProgress->addItem( tr( "Current version: " ) + ui->lblCurrentVersion->text() );
+                ui->listProgress->addItem( tr( "Target version: " ) + ui->cmbTargetVersion->currentText() );
+            }
+            else
+            {
+                ui->lblNotificationBeforeProcess->setVisible( true );
+                _calculateRelatedRecords();
+            }
             break;
+        }
+    }
+}
+//=========================================================================================================================================
+void MainWindow::_loadCurrentVersion()
+//-----------------------------------------------------------------------------------------------------------------------------------------
+{
+    QString qsSelect = QString( "SELECT value FROM `settings` WHERE `identifier` = 'DATABASE_VERSION' ");
+    QSqlQuery oSelect(qsSelect);
+
+    oSelect.first();
+    ui->lblCurrentVersion->setText( oSelect.value(0).toString() );
+
+    ui->cmbTargetVersion->clear();
+
+    bool bFoundCurrent = false;
+
+    foreach( QString qsVersion, m_qslVersions )
+    {
+        if( bFoundCurrent )
+        {
+            ui->cmbTargetVersion->addItem( qsVersion );
+        }
+
+        if( qsVersion.compare( ui->lblCurrentVersion->text() ) == 0 )
+        {
+            bFoundCurrent = true;
         }
     }
 }
@@ -354,9 +473,16 @@ void MainWindow::on_cmbLanguage_currentIndexChanged(int /*index*/)
 }
 //=========================================================================================================================================
 //
-// PAGE PROCESS SELECTION
+// PAGE DATABASE ADMIN
 //
 //=========================================================================================================================================
+void MainWindow::on_pbUpgradeDB_clicked()
+//-----------------------------------------------------------------------------------------------------------------------------------------
+{
+    m_bUpgradeDatabase = true;
+    m_nCurrentPage++;
+    on_pbNext_clicked();
+}
 
 //=========================================================================================================================================
 //
@@ -398,29 +524,36 @@ void MainWindow::on_pbExecuteProcess_clicked()
     ui->lblNotificationBeforeProcess->setVisible( false );
     ui->pbExecuteProcess->setEnabled( false );
 
-    if( ui->rbDeactivatePatientCards->isChecked() )
+    if( m_bUpgradeDatabase )
     {
-        _processDeactivatePatientcards();
+        _executeDBUpgrade();
     }
-    else if( ui->rbDeleteDeactivatedPatientcards->isChecked() )
+    else
     {
-        _processDeleteDeactivatedPatientcards();
-    }
-    else if( ui->rbDeleteObsoletePCUnits->isChecked() )
-    {
-        _processDeleteObsoletePatientcardUnits();
-    }
-    else if( ui->rbDeleteLedgerEntries->isChecked() )
-    {
-        _processDeleteLedgerEntries();
-    }
-    else if( ui->rbDeleteDeviceLedgerEntries->isChecked() )
-    {
-        _processDeleteDeviceLedger();
-    }
-    else if( ui->rbDeleteCassaEntries->isChecked() )
-    {
-        _processDeleteCassa();
+        if( ui->rbDeactivatePatientCards->isChecked() )
+        {
+            _processDeactivatePatientcards();
+        }
+        else if( ui->rbDeleteDeactivatedPatientcards->isChecked() )
+        {
+            _processDeleteDeactivatedPatientcards();
+        }
+        else if( ui->rbDeleteObsoletePCUnits->isChecked() )
+        {
+            _processDeleteObsoletePatientcardUnits();
+        }
+        else if( ui->rbDeleteLedgerEntries->isChecked() )
+        {
+            _processDeleteLedgerEntries();
+        }
+        else if( ui->rbDeleteDeviceLedgerEntries->isChecked() )
+        {
+            _processDeleteDeviceLedger();
+        }
+        else if( ui->rbDeleteCassaEntries->isChecked() )
+        {
+            _processDeleteCassa();
+        }
     }
 }
 
@@ -1129,5 +1262,13 @@ void MainWindow::_processDeleteCassa()
     m_dlgProgress->hide();
     ui->listProgress->addItem("");
 }
+//=========================================================================================================================================
+void MainWindow::_executeDBUpgrade()
+//-----------------------------------------------------------------------------------------------------------------------------------------
+{
+//    ui->listProgress->addItem( m_qslDBUpdates.at( 0 ) );
+}
+//=========================================================================================================================================
+
 
 

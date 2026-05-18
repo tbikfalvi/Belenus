@@ -188,6 +188,7 @@ void cDlgAddUnits::on_pbAdd_clicked()
                 obDBPatientcardUnit.setPanelGroupId( cmbPanelGroup->itemData( cmbPanelGroup->currentIndex() ).toUInt() );
                 obDBPatientcardUnit.setLedgerId( uiLedgerId );
                 obDBPatientcardUnit.setUnitTime( m_poPatientCardType->unitTime() );
+                obDBPatientcardUnit.setMinimumTime( m_poPatientCardType->minimumTime() );
                 obDBPatientcardUnit.setUnitPrice( m_poPatientCardType->price()/nUnitCount );
                 obDBPatientcardUnit.setValidDateFrom( m_poPatientCard->validDateFrom() );
                 obDBPatientcardUnit.setValidDateTo( deValidDateTo->date().toString( QString("yyyy-MM-dd") ) );

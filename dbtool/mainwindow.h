@@ -22,8 +22,9 @@ extern cQTMySQLConnection   *g_poDB;
 //====================================================================================
 
 const int   CONST_PAGE_START            = 0;
-const int   CONST_PAGE_SELECT_PROCESS   = 1;
-const int   CONST_PAGE_EXECUTE_PROCESS  = 2;
+const int   CONST_PAGE_DATABASE_ADMIN   = 1;
+const int   CONST_PAGE_SELECT_PROCESS   = 2;
+const int   CONST_PAGE_EXECUTE_PROCESS  = 3;
 
 //====================================================================================
 
@@ -66,6 +67,7 @@ protected:
 
 private:
     void            _initializePage();
+    void            _loadCurrentVersion();
     void            _connectDatabase();
     bool            _isSystemVerificationOk();
     void            _logProcessInfo( QString p_qsText );
@@ -82,6 +84,7 @@ private:
     void            _processDeleteDeviceLedger();
     void            _calculateDeleteCassa();
     void            _processDeleteCassa();
+    void            _executeDBUpgrade();
 
     Ui::MainWindow  *ui;
 
@@ -98,6 +101,10 @@ private:
 
     cDlgProgress    *m_dlgProgress;
 
+    QStringList      m_qslVersions;
+    QStringList      m_qslDBUpdates;
+    bool             m_bUpgradeDatabase;
+
 private slots:
     void on_pbExpSelectDir_clicked();
     void on_pbNext_clicked();
@@ -107,6 +114,7 @@ private slots:
     void on_pbLogin_clicked();
     void on_pbExecuteProcess_clicked();
     void on_rbDefault_toggled(bool checked);
+    void on_pbUpgradeDB_clicked();
 };
 
 #endif // MAINWINDOW_H

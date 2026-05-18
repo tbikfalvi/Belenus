@@ -12,7 +12,7 @@ public:
     ~cDBPatientcardUnit();
 
     void            load( const unsigned int p_uiId )                       throw( cSevException );
-    QStringList     loadPCId( const unsigned int p_uiId )                   throw( cSevException );
+//    QStringList     loadPCId( const unsigned int p_uiId )                   throw( cSevException );
     void            replacePatientCard( const unsigned int p_uiId )         throw( cSevException );
     void            save()                                                  throw( cSevException );
     void            remove()                                                throw( cSevException );
@@ -34,6 +34,8 @@ public:
     void            setPanelId( const unsigned int p_nPanelId )             throw();
     int             unitTime() const                                        throw();
     void            setUnitTime( const int p_nUnitTime )                    throw();
+    int             minimumTime() const                                 throw();
+    void            setMinimumTime(const int p_nMinimumTime )           throw();
     int             unitPrice() const                                       throw();
     void            setUnitPrice( const int p_nUnitPrice )                  throw();
     QString         validDateFrom() const                                   throw();
@@ -58,6 +60,7 @@ private:
     unsigned int    m_uiLedgerId;
     unsigned int    m_uiPanelId;
     int             m_nUnitTime;
+    int             m_nMinimumTime;
     int             m_nUnitPrice;
     QString         m_qsValidDateFrom;
     QString         m_qsValidDateTo;
@@ -74,6 +77,7 @@ private:
                const unsigned int p_uiLedgerId = 0,
                const unsigned int p_uiPanelId = 0,
                const int p_nUnitTime = 0,
+               const int p_nMinimumTime = 0,
                const int p_nUnitPrice = 0,
                const QString &p_qsValidDateFrom = "",
                const QString &p_qsValidDateTo = "",

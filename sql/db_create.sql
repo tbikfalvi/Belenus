@@ -2,7 +2,7 @@
 -- Belenus Szoftver Rendszer (c) Bikfalvi Tamas - 2025
 -- -----------------------------------------------------------------------------------
 -- Filename    : db_create.sql
--- DbVersion   : 2.3.2.1
+-- DbVersion   : 2.3.3.0
 -- -----------------------------------------------------------------------------------
 -- Adatbazist letrehozo SQL script
 -- -----------------------------------------------------------------------------------
@@ -207,6 +207,7 @@ CREATE TABLE `patientCardTypes` (
   `validDateTo`             date                    DEFAULT NULL,
   `validDays`               int(11)                 NOT NULL DEFAULT 365,
   `unitTime`                int(11)                 NOT NULL DEFAULT 0,
+  `minimumTime`             int(11)                 NOT NULL DEFAULT 0,
   `modified`                datetime                NOT NULL,
   `active`                  tinyint(1)              DEFAULT 0,
   `archive`                 varchar(10)             NOT NULL,
@@ -408,6 +409,7 @@ CREATE TABLE `patientCardUnits` (
   `ledgerId`                int(10) unsigned        NOT NULL,
   `panelId`                 int(10) unsigned        NOT NULL,
   `unitTime`                int(11)                 NOT NULL DEFAULT 0,
+  `minimumTime`             int(11)                 NOT NULL DEFAULT 0,
   `unitPrice`               int(11)                 NOT NULL DEFAULT 0,
   `validDateFrom`           date                    DEFAULT NULL,
   `validDateTo`             date                    DEFAULT NULL,

@@ -246,3 +246,8 @@ Version 2.3.2.1
 ===============
 - KIEGESZITES: Berletegyseg csokkentest novelest osszegzo kimutatas
 
+Version 2.3.3.0
+===============
+- FEJLESZTES:  Berlet tipusnal meg lehet adni egy minimum idot, aminel kevesebbel nem engedi a program elinditani a gepet az adott berletegyseg hasznalataval
+- FEJLESZTES:  Uj kimutatas a kivalasztott gep napi bontasu hasznalati statisztikajaval
+

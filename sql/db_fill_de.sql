@@ -2,7 +2,7 @@
 -- Belenus Szoftver Rendszer (c) Bikfalvi Tamas
 -- -----------------------------------------------------------------------------------
 -- Filename    : db_fill_de.sql
--- DbVersion   : 2.3.2.1
+-- DbVersion   : 2.3.3.0
 -- Author      : Bikfalvi Tamas
 -- -----------------------------------------------------------------------------------
 -- Adatbazist default adatokkal feltolto SQL script
