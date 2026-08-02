@@ -16,3 +16,5 @@ package_creator/*.xml
 package_creator/*.sql
 package_creator/*.inf
 websync/*.pro.*
+.DS_Store
+
