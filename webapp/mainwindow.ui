@@ -1,0 +1,684 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<ui version="4.0">
+ <class>WebAppWindow</class>
+ <widget class="QDialog" name="WebAppWindow">
+  <property name="geometry"><rect><x>0</x><y>0</y><width>780</width><height>465</height></rect></property>
+  <property name="minimumSize"><size><width>780</width><height>450</height></size></property>
+  <property name="windowTitle"><string>Belenus - WebApp</string></property>
+  <property name="windowIcon"><iconset resource="webapp.qrc"><normaloff>:/icons/websync.png</normaloff>:/icons/websync.png</iconset></property>
+  <layout class="QVBoxLayout" name="windowLayout">
+   <item>
+    <widget class="QGroupBox" name="header">
+     <property name="minimumHeight"><number>82</number></property>
+     <property name="title"><string></string></property>
+     <layout class="QHBoxLayout" name="headingLayout" stretch="0,0,1,0">
+      <item>
+       <widget class="QLabel" name="brandIcon">
+        <property name="minimumSize"><size><width>44</width><height>44</height></size></property>
+        <property name="maximumSize"><size><width>44</width><height>44</height></size></property>
+        <property name="pixmap"><pixmap resource="webapp.qrc">:/icons/websync.png</pixmap></property>
+        <property name="scaledContents"><bool>true</bool></property>
+       </widget>
+      </item>
+      <item>
+       <widget class="QLabel" name="title">
+        <property name="font"><font><pointsize>27</pointsize></font></property>
+        <property name="text"><string>Belenus - WebApp</string></property>
+       </widget>
+      </item>
+      <item>
+       <spacer name="headerSpace"><property name="orientation"><enum>Qt::Horizontal</enum></property><property name="sizeHint" stdset="0"><size><width>12</width><height>12</height></size></property></spacer>
+      </item>
+      <item>
+       <widget class="QPushButton" name="exitButton">
+        <property name="text"><string></string></property>
+        <property name="enabled"><bool>true</bool></property>
+        <property name="autoDefault"><bool>false</bool></property>
+        <property name="icon"><iconset resource="webapp.qrc"><normaloff>:/icons/exit.png</normaloff>:/icons/exit.png</iconset></property>
+        <property name="iconSize"><size><width>32</width><height>32</height></size></property>
+        <property name="toolTip"><string>Kilépés</string></property>
+        <property name="accessibleName"><string>Kilépés</string></property>
+       </widget>
+      </item>
+     </layout>
+    </widget>
+   </item>
+   <item>
+    <widget class="QLabel" name="logStatus">
+     <property name="text"><string></string></property>
+     <property name="textFormat"><enum>Qt::PlainText</enum></property>
+     <property name="wordWrap"><bool>true</bool></property>
+    </widget>
+   </item>
+   <item>
+    <widget class="QTabWidget" name="tabs">
+     <property name="currentIndex"><number>0</number></property>
+     <widget class="QWidget" name="statusTab">
+      <attribute name="title"><string>Státusz</string></attribute>
+      <layout class="QVBoxLayout" name="statusLayout">
+       <item>
+        <widget class="QGroupBox" name="statusGroup">
+         <property name="title"><string></string></property>
+         <layout class="QHBoxLayout" name="indicators" stretch="1,0,1">
+          <item>
+           <layout class="QHBoxLayout" name="dbIndicator" stretch="0,1,0">
+            <item>
+             <widget class="QLabel" name="databaseLight">
+              <property name="minimumSize"><size><width>36</width><height>36</height></size></property>
+              <property name="maximumSize"><size><width>36</width><height>36</height></size></property>
+              <property name="pixmap"><pixmap resource="webapp.qrc">:/icons/status_yellow.png</pixmap></property>
+              <property name="scaledContents"><bool>true</bool></property>
+             </widget>
+            </item>
+            <item>
+             <layout class="QVBoxLayout" name="databaseLabels">
+              <item>
+               <widget class="QLabel" name="databaseTitle">
+                <property name="text"><string>Belenus adatbázis kapcsolat</string></property>
+                <property name="textFormat"><enum>Qt::PlainText</enum></property>
+               </widget>
+              </item>
+              <item>
+               <widget class="QLabel" name="databaseStatus">
+                <property name="text"><string>Még nincs ellenőrizve.</string></property>
+                <property name="textFormat"><enum>Qt::PlainText</enum></property>
+                <property name="wordWrap"><bool>true</bool></property>
+               </widget>
+              </item>
+             </layout>
+            </item>
+            <item>
+             <widget class="QPushButton" name="databaseRefresh">
+              <property name="text"><string></string></property>
+              <property name="enabled"><bool>true</bool></property>
+              <property name="autoDefault"><bool>false</bool></property>
+              <property name="icon"><iconset resource="webapp.qrc"><normaloff>:/icons/reset.png</normaloff>:/icons/reset.png</iconset></property>
+              <property name="iconSize"><size><width>34</width><height>34</height></size></property>
+              <property name="toolTip"><string>Adatbázis-kapcsolat ellenőrzése</string></property>
+              <property name="accessibleName"><string>Adatbázis-kapcsolat ellenőrzése</string></property>
+             </widget>
+            </item>
+           </layout>
+          </item>
+          <item>
+           <widget class="QFrame" name="indicatorDivider">
+            <property name="frameShape"><enum>QFrame::VLine</enum></property>
+           </widget>
+          </item>
+          <item>
+           <layout class="QHBoxLayout" name="serverIndicator" stretch="0,1,0,0">
+            <item>
+             <widget class="QLabel" name="serverLight">
+              <property name="minimumSize"><size><width>36</width><height>36</height></size></property>
+              <property name="maximumSize"><size><width>36</width><height>36</height></size></property>
+              <property name="pixmap"><pixmap resource="webapp.qrc">:/icons/status_yellow.png</pixmap></property>
+              <property name="scaledContents"><bool>true</bool></property>
+             </widget>
+            </item>
+            <item>
+             <layout class="QVBoxLayout" name="serverLabels">
+              <item>
+               <widget class="QLabel" name="serverTitle">
+                <property name="text"><string>KiwiSun Szerver kapcsolat</string></property>
+                <property name="textFormat"><enum>Qt::PlainText</enum></property>
+               </widget>
+              </item>
+              <item>
+               <widget class="QLabel" name="serverStatus">
+                <property name="text"><string>Még nincs ellenőrizve.</string></property>
+                <property name="textFormat"><enum>Qt::PlainText</enum></property>
+                <property name="wordWrap"><bool>true</bool></property>
+               </widget>
+              </item>
+             </layout>
+            </item>
+            <item>
+             <widget class="QPushButton" name="serverStart">
+              <property name="text"><string></string></property>
+              <property name="enabled"><bool>false</bool></property>
+              <property name="autoDefault"><bool>false</bool></property>
+              <property name="icon"><iconset resource="webapp.qrc"><normaloff>:/icons/start.png</normaloff>:/icons/start.png</iconset></property>
+              <property name="iconSize"><size><width>34</width><height>34</height></size></property>
+              <property name="toolTip"><string>Automatikus szinkronizálás</string></property>
+              <property name="accessibleName"><string>Automatikus szinkronizálás</string></property>
+             </widget>
+            </item>
+            <item>
+             <widget class="QPushButton" name="serverRefresh">
+              <property name="text"><string></string></property>
+              <property name="enabled"><bool>true</bool></property>
+              <property name="autoDefault"><bool>false</bool></property>
+              <property name="icon"><iconset resource="webapp.qrc"><normaloff>:/icons/reset.png</normaloff>:/icons/reset.png</iconset></property>
+              <property name="iconSize"><size><width>34</width><height>34</height></size></property>
+              <property name="toolTip"><string>Szerverkapcsolat ellenőrzése</string></property>
+              <property name="accessibleName"><string>Szerverkapcsolat ellenőrzése</string></property>
+             </widget>
+            </item>
+           </layout>
+          </item>
+         </layout>
+        </widget>
+       </item>
+       <item>
+        <widget class="QGroupBox" name="queueGroup">
+         <property name="title"><string></string></property>
+         <layout class="QHBoxLayout" name="queueLayout">
+          <item>
+           <widget class="QLabel" name="queueLabel">
+            <property name="text"><string>Szinkronizálásra váró bérletek száma:</string></property>
+            <property name="textFormat"><enum>Qt::PlainText</enum></property>
+           </widget>
+          </item>
+          <item>
+           <widget class="QLineEdit" name="queueCount">
+            <property name="maximumSize"><size><width>52</width><height>24</height></size></property>
+            <property name="enabled"><bool>false</bool></property>
+            <property name="text"><string>—</string></property>
+           </widget>
+          </item>
+          <item>
+           <widget class="QLabel" name="queueIcon">
+            <property name="minimumSize"><size><width>20</width><height>20</height></size></property>
+            <property name="maximumSize"><size><width>20</width><height>20</height></size></property>
+            <property name="pixmap"><pixmap resource="webapp.qrc">:/icons/hourglass.png</pixmap></property>
+            <property name="scaledContents"><bool>true</bool></property>
+           </widget>
+          </item>
+          <item>
+           <spacer name="queueSpace"><property name="orientation"><enum>Qt::Horizontal</enum></property><property name="sizeHint" stdset="0"><size><width>12</width><height>12</height></size></property></spacer>
+          </item>
+         </layout>
+        </widget>
+       </item>
+       <item>
+        <spacer name="statusSpace"><property name="orientation"><enum>Qt::Vertical</enum></property><property name="sizeHint" stdset="0"><size><width>12</width><height>12</height></size></property></spacer>
+       </item>
+      </layout>
+     </widget>
+     <widget class="QWidget" name="settingsTab">
+      <attribute name="title"><string>Beállítások</string></attribute>
+      <layout class="QVBoxLayout" name="settingsLayout">
+       <item>
+        <layout class="QHBoxLayout" name="legacySettings" stretch="56,44">
+         <item>
+          <widget class="QGroupBox" name="applicationGroup">
+           <property name="title"><string>Alkalmazás beállítások</string></property>
+           <layout class="QVBoxLayout" name="applicationLayout">
+            <item>
+             <layout class="QHBoxLayout" name="languageRow">
+              <item>
+               <widget class="QLabel" name="languageLabel">
+                <property name="text"><string>Alkalmazás nyelve:</string></property>
+                <property name="textFormat"><enum>Qt::PlainText</enum></property>
+               </widget>
+              </item>
+              <item>
+               <widget class="QComboBox" name="language">
+                <property name="enabled"><bool>false</bool></property>
+                <item><property name="text"><string>hu (Magyar)</string></property></item>
+               </widget>
+              </item>
+              <item>
+               <widget class="QPushButton" name="reloadLanguage">
+                <property name="text"><string></string></property>
+                <property name="enabled"><bool>false</bool></property>
+                <property name="autoDefault"><bool>false</bool></property>
+                <property name="icon"><iconset resource="webapp.qrc"><normaloff>:/icons/reset.png</normaloff>:/icons/reset.png</iconset></property>
+                <property name="iconSize"><size><width>16</width><height>16</height></size></property>
+                <property name="toolTip"><string>Nyelv betöltése</string></property>
+                <property name="accessibleName"><string>Nyelv betöltése</string></property>
+               </widget>
+              </item>
+              <item>
+               <spacer name="languageSpace"><property name="orientation"><enum>Qt::Horizontal</enum></property><property name="sizeHint" stdset="0"><size><width>12</width><height>12</height></size></property></spacer>
+              </item>
+             </layout>
+            </item>
+            <item>
+             <layout class="QHBoxLayout" name="startupRow">
+              <item>
+               <widget class="QCheckBox" name="showAtStartup">
+                <property name="text"><string>Alkalmazás indulásakor a fő ablak megjelenik</string></property>
+                <property name="enabled"><bool>false</bool></property>
+               </widget>
+              </item>
+              <item>
+               <spacer name="startupSpace"><property name="orientation"><enum>Qt::Horizontal</enum></property><property name="sizeHint" stdset="0"><size><width>12</width><height>12</height></size></property></spacer>
+              </item>
+              <item>
+               <widget class="QPushButton" name="saveSettings">
+                <property name="text"><string></string></property>
+                <property name="enabled"><bool>false</bool></property>
+                <property name="autoDefault"><bool>false</bool></property>
+                <property name="icon"><iconset resource="webapp.qrc"><normaloff>:/icons/save.png</normaloff>:/icons/save.png</iconset></property>
+                <property name="iconSize"><size><width>16</width><height>16</height></size></property>
+                <property name="toolTip"><string>Alkalmazásbeállítások mentése</string></property>
+                <property name="accessibleName"><string>Alkalmazásbeállítások mentése</string></property>
+               </widget>
+              </item>
+             </layout>
+            </item>
+            <item>
+             <layout class="QHBoxLayout" name="cardsIntervalLayout">
+              <item>
+               <widget class="QLabel" name="cardsIntervalLabel">
+                <property name="text"><string>Bérlet adatszinkronizálás minden</string></property>
+                <property name="textFormat"><enum>Qt::PlainText</enum></property>
+               </widget>
+              </item>
+              <item>
+               <widget class="QLineEdit" name="cardsInterval">
+                <property name="text"><string>2</string></property>
+                <property name="maximumSize"><size><width>38</width><height>24</height></size></property>
+                <property name="enabled"><bool>false</bool></property>
+               </widget>
+              </item>
+              <item>
+               <widget class="QLabel" name="cardsIntervalUnit">
+                <property name="text"><string>másodpercben</string></property>
+                <property name="textFormat"><enum>Qt::PlainText</enum></property>
+               </widget>
+              </item>
+              <item>
+               <spacer name="cardsIntervalSpace"><property name="orientation"><enum>Qt::Horizontal</enum></property><property name="sizeHint" stdset="0"><size><width>12</width><height>12</height></size></property></spacer>
+              </item>
+             </layout>
+            </item>
+            <item>
+             <layout class="QHBoxLayout" name="salesIntervalLayout">
+              <item>
+               <widget class="QLabel" name="salesIntervalLabel">
+                <property name="text"><string>Online eladott bérletek lekérdezése minden</string></property>
+                <property name="textFormat"><enum>Qt::PlainText</enum></property>
+               </widget>
+              </item>
+              <item>
+               <widget class="QLineEdit" name="salesInterval">
+                <property name="text"><string>60</string></property>
+                <property name="maximumSize"><size><width>38</width><height>24</height></size></property>
+                <property name="enabled"><bool>false</bool></property>
+               </widget>
+              </item>
+              <item>
+               <widget class="QLabel" name="salesIntervalUnit">
+                <property name="text"><string>másodpercben</string></property>
+                <property name="textFormat"><enum>Qt::PlainText</enum></property>
+               </widget>
+              </item>
+              <item>
+               <spacer name="salesIntervalSpace"><property name="orientation"><enum>Qt::Horizontal</enum></property><property name="sizeHint" stdset="0"><size><width>12</width><height>12</height></size></property></spacer>
+              </item>
+             </layout>
+            </item>
+            <item>
+             <layout class="QHBoxLayout" name="mailIntervalLayout">
+              <item>
+               <widget class="QLabel" name="mailIntervalLabel">
+                <property name="text"><string>Elküldésre váró levelek kiküldése minden</string></property>
+                <property name="textFormat"><enum>Qt::PlainText</enum></property>
+               </widget>
+              </item>
+              <item>
+               <widget class="QLineEdit" name="mailInterval">
+                <property name="text"><string>11</string></property>
+                <property name="maximumSize"><size><width>38</width><height>24</height></size></property>
+                <property name="enabled"><bool>false</bool></property>
+               </widget>
+              </item>
+              <item>
+               <widget class="QLabel" name="mailIntervalUnit">
+                <property name="text"><string>másodpercben</string></property>
+                <property name="textFormat"><enum>Qt::PlainText</enum></property>
+               </widget>
+              </item>
+              <item>
+               <spacer name="mailIntervalSpace"><property name="orientation"><enum>Qt::Horizontal</enum></property><property name="sizeHint" stdset="0"><size><width>12</width><height>12</height></size></property></spacer>
+              </item>
+             </layout>
+            </item>
+            <item>
+             <layout class="QHBoxLayout" name="logLevelRow">
+              <item>
+               <widget class="QLabel" name="logLevelLabel">
+                <property name="text"><string>Log szint:</string></property>
+                <property name="textFormat"><enum>Qt::PlainText</enum></property>
+               </widget>
+              </item>
+              <item>
+               <widget class="QLabel" name="logLevelValue">
+                <property name="text"><string>INFO</string></property>
+                <property name="textFormat"><enum>Qt::PlainText</enum></property>
+               </widget>
+              </item>
+              <item>
+               <widget class="QSlider" name="logLevel">
+                <property name="enabled"><bool>false</bool></property>
+                <property name="orientation"><enum>Qt::Horizontal</enum></property>
+               </widget>
+              </item>
+             </layout>
+            </item>
+            <item>
+             <spacer name="applicationSpace"><property name="orientation"><enum>Qt::Vertical</enum></property><property name="sizeHint" stdset="0"><size><width>12</width><height>12</height></size></property></spacer>
+            </item>
+           </layout>
+          </widget>
+         </item>
+         <item>
+          <widget class="QGroupBox" name="webGroup">
+           <property name="title"><string>Web kapcsolat beállítások</string></property>
+           <layout class="QVBoxLayout" name="webLayout">
+            <item>
+             <widget class="QCheckBox" name="communicationEnabled">
+              <property name="text"><string>Http kommunikáció engedélyezve</string></property>
+              <property name="enabled"><bool>false</bool></property>
+             </widget>
+            </item>
+            <item>
+             <layout class="QHBoxLayout" name="serverAddressRow">
+              <item>
+               <widget class="QLabel" name="serverAddressLabel">
+                <property name="text"><string>Web szerver cím:</string></property>
+                <property name="textFormat"><enum>Qt::PlainText</enum></property>
+               </widget>
+              </item>
+              <item>
+               <widget class="QLineEdit" name="serverAddress">
+                <property name="text"><string></string></property>
+                <property name="readOnly"><bool>true</bool></property>
+               </widget>
+              </item>
+             </layout>
+            </item>
+            <item>
+             <spacer name="webSpace"><property name="orientation"><enum>Qt::Vertical</enum></property><property name="sizeHint" stdset="0"><size><width>12</width><height>12</height></size></property></spacer>
+            </item>
+           </layout>
+          </widget>
+         </item>
+        </layout>
+       </item>
+       <item>
+        <spacer name="settingsSpace"><property name="orientation"><enum>Qt::Vertical</enum></property><property name="sizeHint" stdset="0"><size><width>12</width><height>12</height></size></property></spacer>
+       </item>
+      </layout>
+     </widget>
+     <widget class="QWidget" name="actionsTab">
+      <attribute name="title"><string>Beavatkozások</string></attribute>
+      <layout class="QVBoxLayout" name="actionsLayout">
+       <item>
+        <layout class="QGridLayout" name="actionGrid" columnstretch="38,62">
+         <item row="0" column="0">
+          <widget class="QPushButton" name="syncAll">
+           <property name="text"><string>Összes bérlet adat elküldése a web szervernek</string></property>
+           <property name="enabled"><bool>false</bool></property>
+           <property name="autoDefault"><bool>false</bool></property>
+           <property name="icon"><iconset resource="webapp.qrc"><normaloff>:/icons/patientcards.png</normaloff>:/icons/patientcards.png</iconset></property>
+           <property name="iconSize"><size><width>36</width><height>36</height></size></property>
+          </widget>
+         </item>
+         <item row="0" column="1">
+          <widget class="QPushButton" name="clearQueue">
+           <property name="text"><string>Szinkronizálásra váró bérlet adatok törlése</string></property>
+           <property name="enabled"><bool>false</bool></property>
+           <property name="autoDefault"><bool>false</bool></property>
+           <property name="icon"><iconset resource="webapp.qrc"><normaloff>:/icons/trash.png</normaloff>:/icons/trash.png</iconset></property>
+           <property name="iconSize"><size><width>36</width><height>36</height></size></property>
+          </widget>
+         </item>
+         <item row="1" column="0">
+          <widget class="QPushButton" name="clearCard">
+           <property name="text"><string>Bérlet adatok törlése a web szerverről</string></property>
+           <property name="enabled"><bool>false</bool></property>
+           <property name="autoDefault"><bool>false</bool></property>
+           <property name="icon"><iconset resource="webapp.qrc"><normaloff>:/icons/patientcard_delete.png</normaloff>:/icons/patientcard_delete.png</iconset></property>
+           <property name="iconSize"><size><width>36</width><height>36</height></size></property>
+          </widget>
+         </item>
+         <item row="1" column="1">
+          <widget class="QPushButton" name="clearInactive">
+           <property name="text"><string>Inaktív bérlet adatok törlése a web szerverről</string></property>
+           <property name="enabled"><bool>false</bool></property>
+           <property name="autoDefault"><bool>false</bool></property>
+           <property name="icon"><iconset resource="webapp.qrc"><normaloff>:/icons/patientcards_delete.png</normaloff>:/icons/patientcards_delete.png</iconset></property>
+           <property name="iconSize"><size><width>36</width><height>36</height></size></property>
+          </widget>
+         </item>
+         <item row="2" column="0">
+          <widget class="QComboBox" name="cardType">
+           <property name="enabled"><bool>false</bool></property>
+           <item><property name="text"><string>&lt;Nincs kiválasztva></string></property></item>
+          </widget>
+         </item>
+         <item row="2" column="1">
+          <widget class="QPushButton" name="fetchCards">
+           <property name="text"><string>Online eladott bérletek lekérdezése</string></property>
+           <property name="enabled"><bool>false</bool></property>
+           <property name="autoDefault"><bool>false</bool></property>
+           <property name="icon"><iconset resource="webapp.qrc"><normaloff>:/icons/onlinepcsync.png</normaloff>:/icons/onlinepcsync.png</iconset></property>
+           <property name="iconSize"><size><width>36</width><height>36</height></size></property>
+          </widget>
+         </item>
+        </layout>
+       </item>
+       <item>
+        <spacer name="actionsSpace"><property name="orientation"><enum>Qt::Vertical</enum></property><property name="sizeHint" stdset="0"><size><width>12</width><height>12</height></size></property></spacer>
+       </item>
+      </layout>
+     </widget>
+     <widget class="QWidget" name="licenceTab">
+      <attribute name="title"><string>Liszensz menedzsment</string></attribute>
+      <layout class="QVBoxLayout" name="licenceLayout">
+       <item>
+        <layout class="QHBoxLayout" name="licenceColumns" stretch="46,33,21">
+         <item>
+          <widget class="QGroupBox" name="localLicenceGroup">
+           <property name="title"><string>Liszensz információk</string></property>
+           <layout class="QVBoxLayout" name="localLicenceLayout">
+            <item>
+             <layout class="QGridLayout" name="licenceFields" columnstretch="0,1,0">
+              <item row="0" column="0">
+               <widget class="QLabel" name="serialLabel">
+                <property name="text"><string>Aktuális liszensz kulcs :</string></property>
+                <property name="textFormat"><enum>Qt::PlainText</enum></property>
+               </widget>
+              </item>
+              <item row="0" column="1">
+               <widget class="QLineEdit" name="localSerial">
+                <property name="text"><string></string></property>
+                <property name="readOnly"><bool>true</bool></property>
+               </widget>
+              </item>
+              <item row="0" column="2">
+               <widget class="QPushButton" name="licenceRefresh">
+                <property name="text"><string></string></property>
+                <property name="enabled"><bool>true</bool></property>
+                <property name="autoDefault"><bool>false</bool></property>
+                <property name="icon"><iconset resource="webapp.qrc"><normaloff>:/icons/reset.png</normaloff>:/icons/reset.png</iconset></property>
+                <property name="iconSize"><size><width>16</width><height>16</height></size></property>
+                <property name="toolTip"><string>Helyi liszenszadatok frissítése</string></property>
+                <property name="accessibleName"><string>Helyi liszenszadatok frissítése</string></property>
+               </widget>
+              </item>
+              <item row="1" column="0">
+               <widget class="QLabel" name="dateLabel">
+                <property name="text"><string>Ellenőrzési dátum :</string></property>
+                <property name="textFormat"><enum>Qt::PlainText</enum></property>
+               </widget>
+              </item>
+              <item row="1" column="1">
+               <widget class="QLineEdit" name="localDate">
+                <property name="text"><string></string></property>
+                <property name="readOnly"><bool>true</bool></property>
+               </widget>
+              </item>
+              <item row="2" column="0">
+               <widget class="QLabel" name="localStatusLabel">
+                <property name="text"><string>Státusz :</string></property>
+                <property name="textFormat"><enum>Qt::PlainText</enum></property>
+               </widget>
+              </item>
+              <item row="2" column="1">
+               <widget class="QLabel" name="licenceStatus">
+                <property name="text"><string>Még nincs beolvasva.</string></property>
+                <property name="textFormat"><enum>Qt::PlainText</enum></property>
+                <property name="wordWrap"><bool>true</bool></property>
+               </widget>
+              </item>
+              <item row="3" column="0">
+               <widget class="QLabel" name="serverCodeLabel">
+                <property name="text"><string>Szerver kód :</string></property>
+                <property name="textFormat"><enum>Qt::PlainText</enum></property>
+               </widget>
+              </item>
+              <item row="3" column="1">
+               <widget class="QLineEdit" name="localServerCode">
+                <property name="text"><string></string></property>
+                <property name="readOnly"><bool>true</bool></property>
+               </widget>
+              </item>
+              <item row="4" column="0">
+               <widget class="QLabel" name="clientCodeLabel">
+                <property name="text"><string>Kliens kód :</string></property>
+                <property name="textFormat"><enum>Qt::PlainText</enum></property>
+               </widget>
+              </item>
+              <item row="4" column="1">
+               <widget class="QLineEdit" name="localClientCode">
+                <property name="text"><string></string></property>
+                <property name="readOnly"><bool>true</bool></property>
+               </widget>
+              </item>
+              <item row="5" column="0">
+               <widget class="QLabel" name="counterLabel">
+                <property name="text"><string>Adatellenőrzés visszaszámláló :</string></property>
+                <property name="textFormat"><enum>Qt::PlainText</enum></property>
+               </widget>
+              </item>
+              <item row="5" column="1">
+               <widget class="QLineEdit" name="counter">
+                <property name="text"><string></string></property>
+                <property name="enabled"><bool>false</bool></property>
+               </widget>
+              </item>
+              <item row="5" column="2">
+               <widget class="QPushButton" name="counterRefresh">
+                <property name="text"><string></string></property>
+                <property name="enabled"><bool>false</bool></property>
+                <property name="autoDefault"><bool>false</bool></property>
+                <property name="icon"><iconset resource="webapp.qrc"><normaloff>:/icons/reset.png</normaloff>:/icons/reset.png</iconset></property>
+                <property name="iconSize"><size><width>16</width><height>16</height></size></property>
+                <property name="toolTip"><string>Számláló frissítése</string></property>
+                <property name="accessibleName"><string>Számláló frissítése</string></property>
+               </widget>
+              </item>
+              <item row="6" column="0">
+               <widget class="QLabel" name="scheduleLabel">
+                <property name="text"><string>Liszensz ellenőrzés …</string></property>
+                <property name="textFormat"><enum>Qt::PlainText</enum></property>
+               </widget>
+              </item>
+              <item row="6" column="1">
+               <widget class="QLineEdit" name="schedule">
+                <property name="text"><string></string></property>
+                <property name="enabled"><bool>false</bool></property>
+               </widget>
+              </item>
+             </layout>
+            </item>
+            <item>
+             <spacer name="localLicenceSpace"><property name="orientation"><enum>Qt::Vertical</enum></property><property name="sizeHint" stdset="0"><size><width>12</width><height>12</height></size></property></spacer>
+            </item>
+           </layout>
+          </widget>
+         </item>
+         <item>
+          <widget class="QGroupBox" name="licenceActionsGroup">
+           <property name="title"><string>Liszensz kezelés</string></property>
+           <layout class="QVBoxLayout" name="licenceActionsLayout">
+            <item>
+             <layout class="QHBoxLayout" name="newLicenceRow">
+              <item>
+               <widget class="QLabel" name="newLicenceLabel">
+                <property name="text"><string>Új liszensz kulcs :</string></property>
+                <property name="textFormat"><enum>Qt::PlainText</enum></property>
+               </widget>
+              </item>
+              <item>
+               <widget class="QLineEdit" name="newLicence">
+                <property name="text"><string></string></property>
+                <property name="enabled"><bool>false</bool></property>
+               </widget>
+              </item>
+             </layout>
+            </item>
+            <item>
+             <widget class="QPushButton" name="registerLicence">
+              <property name="text"><string>Új liszensz kulcs regisztráció</string></property>
+              <property name="enabled"><bool>false</bool></property>
+              <property name="autoDefault"><bool>false</bool></property>
+              <property name="icon"><iconset resource="webapp.qrc"><normaloff>:/icons/reset_http.png</normaloff>:/icons/reset_http.png</iconset></property>
+              <property name="iconSize"><size><width>20</width><height>20</height></size></property>
+             </widget>
+            </item>
+            <item>
+             <widget class="QPushButton" name="activateLicence">
+              <property name="text"><string>Meglévő liszensz kulcs újra aktiválása</string></property>
+              <property name="enabled"><bool>false</bool></property>
+              <property name="autoDefault"><bool>false</bool></property>
+              <property name="icon"><iconset resource="webapp.qrc"><normaloff>:/icons/ok.png</normaloff>:/icons/ok.png</iconset></property>
+              <property name="iconSize"><size><width>20</width><height>20</height></size></property>
+             </widget>
+            </item>
+            <item>
+             <widget class="QPushButton" name="replaceLicence">
+              <property name="text"><string>Meglévő liszensz kulcs cseréje az újra</string></property>
+              <property name="enabled"><bool>false</bool></property>
+              <property name="autoDefault"><bool>false</bool></property>
+              <property name="icon"><iconset resource="webapp.qrc"><normaloff>:/icons/reset.png</normaloff>:/icons/reset.png</iconset></property>
+              <property name="iconSize"><size><width>20</width><height>20</height></size></property>
+             </widget>
+            </item>
+            <item>
+             <spacer name="licenceActionsSpace"><property name="orientation"><enum>Qt::Vertical</enum></property><property name="sizeHint" stdset="0"><size><width>12</width><height>12</height></size></property></spacer>
+            </item>
+           </layout>
+          </widget>
+         </item>
+         <item>
+          <layout class="QVBoxLayout" name="onlineLayout">
+           <item>
+            <widget class="QPushButton" name="onlineButton">
+             <property name="text"><string>Online licencellenőrzés</string></property>
+             <property name="enabled"><bool>true</bool></property>
+             <property name="autoDefault"><bool>false</bool></property>
+             <property name="icon"><iconset resource="webapp.qrc"><normaloff>:/icons/settings.png</normaloff>:/icons/settings.png</iconset></property>
+             <property name="iconSize"><size><width>20</width><height>20</height></size></property>
+            </widget>
+           </item>
+           <item>
+            <widget class="QLabel" name="onlineStatus">
+             <property name="text"><string>Még nem történt ellenőrzés.</string></property>
+             <property name="textFormat"><enum>Qt::PlainText</enum></property>
+             <property name="wordWrap"><bool>true</bool></property>
+            </widget>
+           </item>
+           <item>
+            <spacer name="onlineSpace"><property name="orientation"><enum>Qt::Vertical</enum></property><property name="sizeHint" stdset="0"><size><width>12</width><height>12</height></size></property></spacer>
+           </item>
+          </layout>
+         </item>
+        </layout>
+       </item>
+       <item>
+        <spacer name="licenceSpace"><property name="orientation"><enum>Qt::Vertical</enum></property><property name="sizeHint" stdset="0"><size><width>12</width><height>12</height></size></property></spacer>
+       </item>
+      </layout>
+     </widget>
+    </widget>
+   </item>
+  </layout>
+ </widget>
+ <resources><include location="webapp.qrc"/></resources>
+ <connections/>
+</ui>

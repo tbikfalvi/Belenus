@@ -1,0 +1,28 @@
+# Qt Creator and local configuration
+*.pro.user*
+*.pro.shared
+CMakeLists.txt.user*
+*.ini
+*.inf
+*.local.*
+
+# qmake and other local build output
+/build*/
+/debug/
+/release/
+/.qmake.*
+/Makefile*
+/CMakeCache.txt
+/CMakeFiles/
+/ui_*.h
+/moc_*.cpp
+/qrc_*.cpp
+*.o
+*.obj
+*.exe
+*.dll
+*.a
+
+# Runtime diagnostics
+*.log
+/licence-response.txt
