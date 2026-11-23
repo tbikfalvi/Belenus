@@ -1,3 +1,15 @@
+//====================================================================================
+//
+// Belenus WebApp alkalmazas (c) Bikfalvi Tamas
+//
+//====================================================================================
+
+#define APPLICATION_VERSION_NUMBER  "2.4.0.0"
+#define DATABASE_VERSION_NUMBER     "2.4.0.0"
+
+//====================================================================================
+
+
 #include <QApplication>
 #include <QDateTime>
 #include <QDialog>
@@ -380,6 +392,7 @@ public:
     Window()
     {
         ui.setupUi(this);
+        setWindowTitle(QStringLiteral("Belenus WebApp - v" APPLICATION_VERSION_NUMBER));
         ui.logStatus->setVisible(!eventLog.error.isEmpty());
         if (!eventLog.error.isEmpty())
             ui.logStatus->setText(tr("A webapp.log nem megnyitható vagy nem írható: %1").arg(eventLog.error));
