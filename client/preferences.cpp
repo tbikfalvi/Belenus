@@ -115,6 +115,8 @@ void cPreferences::init()
     m_nDeleteLogFilesMonths         = 3;
 
     m_bSaveAdhocGuest               = true;
+
+    m_bLicenceCheckEnabled          = true;
 }
 
 void cPreferences::loadSettings() throw (cSevException)
@@ -123,6 +125,7 @@ void cPreferences::loadSettings() throw (cSevException)
 
     try
     {
+        m_bLicenceCheckEnabled          = loadSettingB( "LICENCE_CHECK_ENABLED", true );
         m_nLicenceCheck                 = loadSettingI( "LICENCE_CHECK", 56 );
         m_nLicenceCheckCounter          = loadSettingI( "LICENCE_CHECK_COUNTER", 56 );
         m_nWorkTime                     = loadSettingI( "LICENCE_WORKTIME", 336 );
@@ -266,6 +269,8 @@ void cPreferences::saveSettings() throw (cSevException)
     {
         if( m_qsLang != "" )        g_obLanguage.saveCurrentLanguage( m_qsLang );
         if( m_qsLastUser != "" )    saveSettingS( "GEN_LastUser", m_qsLastUser );
+
+        saveSettingB( "LICENCE_CHECK_ENABLED", m_bLicenceCheckEnabled );
 
         saveSettingI( "LICENCE_CHECK", m_nLicenceCheck );
         saveSettingI( "LICENCE_CHECK_COUNTER", m_nLicenceCheckCounter );
@@ -1904,5 +1909,15 @@ void cPreferences::setSaveAdhocGuest(bool p_bSaveAdhocGuest)
 bool cPreferences::isSaveAdhocGuest()
 {
     return m_bSaveAdhocGuest;
+}
+
+void cPreferences::setLicenceCheckEnabled( bool p_bLicenceCheckEnabled )
+{
+    m_bLicenceCheckEnabled = p_bLicenceCheckEnabled;
+}
+
+bool cPreferences::isLicenceCheckEnabled()
+{
+    return m_bLicenceCheckEnabled;
 }
 

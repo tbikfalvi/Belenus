@@ -297,6 +297,9 @@ public:
     void            setSaveAdhocGuest( bool p_bSaveAdhocGuest );
     bool            isSaveAdhocGuest();
 
+    void            setLicenceCheckEnabled( bool p_bLicenceCheckEnabled );
+    bool            isLicenceCheckEnabled();
+
 //void            setXXX( const QString &p_qsXXX );
 //QString         getXXX() const;
 //void            setXXX( const int p_nXXX );
@@ -416,6 +419,7 @@ private:
     int             m_nDeleteLogFilesMonths;
     bool            m_bLogFilesDeleteAllowed;
     bool            m_bSaveAdhocGuest;
+    bool            m_bLicenceCheckEnabled;
 
     void init();
 };

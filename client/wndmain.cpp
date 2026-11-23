@@ -1495,23 +1495,27 @@ void cWndMain::timerEvent(QTimerEvent *)
     {
         m_bTickQuarter = false;
 
-        // Liszensz ellenőrzés, ha nem Demó módban vagyunk
-        if( g_obLicenceManager.licenceState() != cLicenceManager::LTYPE_DEMO )
+        // Liszensz ellenőrzés, ha nincs kikapcsolva
+        if( g_poPrefs->isLicenceCheckEnabled() )
         {
-            // Liszensz ellenőrző számláló csökkentés, ha eléri a 0-t, akkor próbálja validálni a liszensz kulcsot
-            g_poPrefs->decreaseLicenceCheckCounter();
-
-            // Ha nincs validált állapotban a liszensz kulcs
-            if( g_obLicenceManager.checkLicenceState() != cLicenceManager::LTYPE_VALIDATED )
+            // Liszensz ellenőrzés, ha nem Demó módban vagyunk
+            if( g_obLicenceManager.licenceState() != cLicenceManager::LTYPE_DEMO )
             {
-                // Hátralévő működési számláló csökkentés, ha eléri a 0-t, átvált demó módba
-                g_poPrefs->decreaseWorktimeCounter();
+                // Liszensz ellenőrző számláló csökkentés, ha eléri a 0-t, akkor próbálja validálni a liszensz kulcsot
+                g_poPrefs->decreaseLicenceCheckCounter();
 
-                if( g_poPrefs->getWorktimeCounter() < 1 )
+                // Ha nincs validált állapotban a liszensz kulcs
+                if( g_obLicenceManager.checkLicenceState() != cLicenceManager::LTYPE_VALIDATED )
                 {
-                    // Demó mód aktiválás és kijelentkezés
-                    g_obLicenceManager.deactivate();
-                    on_action_LogOut_triggered();
+                    // Hátralévő működési számláló csökkentés, ha eléri a 0-t, átvált demó módba
+                    g_poPrefs->decreaseWorktimeCounter();
+
+                    if( g_poPrefs->getWorktimeCounter() < 1 )
+                    {
+                        // Demó mód aktiválás és kijelentkezés
+                        g_obLicenceManager.deactivate();
+                        on_action_LogOut_triggered();
+                    }
                 }
             }
         }
