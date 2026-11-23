@@ -11,7 +11,10 @@ SOURCES += main.cpp \
            licencemanager.cpp \
            logger.cpp \
            filemanager.cpp \
-           languagemanager.cpp
+           languagemanager.cpp \
+           applicationsettings.cpp \
+           connectionmonitor.cpp \
+           traycontroller.cpp
 
 HEADERS += mainwindow.h \
            database.h \
@@ -20,7 +23,10 @@ HEADERS += mainwindow.h \
            logger.h \
            filemanager.h \
            languagemanager.h \
-           uimessage.h
+           uimessage.h \
+           applicationsettings.h \
+           connectionmonitor.h \
+           traycontroller.h
 
 TRANSLATIONS += translations/webapp_en.ts \
                 translations/webapp_hu.ts

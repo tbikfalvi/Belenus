@@ -203,6 +203,38 @@
     <context>
         <name>MainWindow</name>
         <message>
+            <source>Exit application</source>
+            <translation>Kilépés az alkalmazásból</translation>
+        </message>
+        <message>
+            <source>Are you sure you want to close the application? Synchronization will stop if you exit.</source>
+            <translation>Biztosan be szeretnéd zárni az alkalmazást? Kilépéskor a szinkronizálás leáll.</translation>
+        </message>
+        <message>
+            <source>Exit</source>
+            <translation>Kilépés</translation>
+        </message>
+        <message>
+            <source>Cancel</source>
+            <translation>Mégse</translation>
+        </message>
+        <message>
+            <source>Startup settings</source>
+            <translation>Indulási beállítás</translation>
+        </message>
+        <message>
+            <source>The startup setting was saved.</source>
+            <translation>Az indulási beállítás mentve.</translation>
+        </message>
+        <message>
+            <source>Could not save the startup setting.</source>
+            <translation>Az indulási beállítás mentése sikertelen.</translation>
+        </message>
+        <message>
+            <source>OK</source>
+            <translation>Rendben</translation>
+        </message>
+        <message>
             <source>Cannot open or write to webapp.log: %1</source>
             <translation>A webapp.log nem nyitható meg vagy nem írható: %1</translation>
         </message>
@@ -355,6 +387,44 @@
         <message>
             <source>Token request: %1</source>
             <translation>Tokenkérés: %1</translation>
+        </message>
+    </context>
+    <context>
+        <name>ConnectionMonitor</name>
+        <message>
+            <source>The database connection check failed.</source>
+            <translation>Az adatbázis-kapcsolat ellenőrzése sikertelen.</translation>
+        </message>
+    </context>
+    <context>
+        <name>TrayController</name>
+        <message>
+            <source>Not checked</source>
+            <translation>Még nincs ellenőrizve</translation>
+        </message>
+        <message>
+            <source>Connected</source>
+            <translation>Kapcsolódva</translation>
+        </message>
+        <message>
+            <source>Connection failed</source>
+            <translation>A kapcsolat sikertelen</translation>
+        </message>
+        <message>
+            <source>Database: %1</source>
+            <translation>Adatbázis: %1</translation>
+        </message>
+        <message>
+            <source>HTTPS server: %1</source>
+            <translation>HTTPS-szerver: %1</translation>
+        </message>
+        <message>
+            <source>Open Belenus WebApp</source>
+            <translation>Belenus WebApp megnyitása</translation>
+        </message>
+        <message>
+            <source>Exit</source>
+            <translation>Kilépés</translation>
         </message>
     </context>
 </TS>

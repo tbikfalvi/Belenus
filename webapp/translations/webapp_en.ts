@@ -203,6 +203,38 @@
     <context>
         <name>MainWindow</name>
         <message>
+            <source>Exit application</source>
+            <translation>Exit application</translation>
+        </message>
+        <message>
+            <source>Are you sure you want to close the application? Synchronization will stop if you exit.</source>
+            <translation>Are you sure you want to close the application? Synchronization will stop if you exit.</translation>
+        </message>
+        <message>
+            <source>Exit</source>
+            <translation>Exit</translation>
+        </message>
+        <message>
+            <source>Cancel</source>
+            <translation>Cancel</translation>
+        </message>
+        <message>
+            <source>Startup settings</source>
+            <translation>Startup settings</translation>
+        </message>
+        <message>
+            <source>The startup setting was saved.</source>
+            <translation>The startup setting was saved.</translation>
+        </message>
+        <message>
+            <source>Could not save the startup setting.</source>
+            <translation>Could not save the startup setting.</translation>
+        </message>
+        <message>
+            <source>OK</source>
+            <translation>OK</translation>
+        </message>
+        <message>
             <source>Cannot open or write to webapp.log: %1</source>
             <translation>Cannot open or write to webapp.log: %1</translation>
         </message>
@@ -355,6 +387,44 @@
         <message>
             <source>Token request: %1</source>
             <translation>Token request: %1</translation>
+        </message>
+    </context>
+    <context>
+        <name>ConnectionMonitor</name>
+        <message>
+            <source>The database connection check failed.</source>
+            <translation>The database connection check failed.</translation>
+        </message>
+    </context>
+    <context>
+        <name>TrayController</name>
+        <message>
+            <source>Not checked</source>
+            <translation>Not checked</translation>
+        </message>
+        <message>
+            <source>Connected</source>
+            <translation>Connected</translation>
+        </message>
+        <message>
+            <source>Connection failed</source>
+            <translation>Connection failed</translation>
+        </message>
+        <message>
+            <source>Database: %1</source>
+            <translation>Database: %1</translation>
+        </message>
+        <message>
+            <source>HTTPS server: %1</source>
+            <translation>HTTPS server: %1</translation>
+        </message>
+        <message>
+            <source>Open Belenus WebApp</source>
+            <translation>Open Belenus WebApp</translation>
+        </message>
+        <message>
+            <source>Exit</source>
+            <translation>Exit</translation>
         </message>
     </context>
 </TS>

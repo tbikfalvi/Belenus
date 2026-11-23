@@ -19,6 +19,17 @@ WebCommunication::WebCommunication(Logger &logger) : logger(logger)
 {
 }
 
+// Kilépéskor megszakítja a függő kéréseket, az üzleti visszahívások futtatása nélkül.
+void WebCommunication::shutdown()
+{
+    stopping = true;
+    const auto replies = network.findChildren<QNetworkReply *>();
+    for (auto *reply : replies) {
+        if (reply->isRunning())
+            reply->abort();
+    }
+}
+
 QString WebCommunication::Response::statusText() const
 {
     return status ? QString::number(*status) : QStringLiteral("unavailable");
@@ -56,7 +67,9 @@ void WebCommunication::get(const QUrl &url, QObject *context, std::function<void
         reply->setProperty("certificateErrors", messages.join(QStringLiteral("; ")));
     });
     QObject::connect(reply, &QNetworkReply::finished, reply, &QObject::deleteLater);
-    QObject::connect(reply, &QNetworkReply::finished, context, [reply, finished] {
+    QObject::connect(reply, &QNetworkReply::finished, context, [this, reply, finished] {
+        if (stopping)
+            return;
         const auto status = reply->attribute(QNetworkRequest::HttpStatusCodeAttribute);
         finished(Response{
             status.isValid() ? std::optional<int>(status.toInt()) : std::nullopt,

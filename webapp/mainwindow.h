@@ -15,7 +15,10 @@
 #include <optional>
 
 class QEvent;
+class QCloseEvent;
 class QLabel;
+class ApplicationSettings;
+class ConnectionMonitor;
 class LanguageManager;
 class LicenceManager;
 class Logger;
@@ -24,14 +27,23 @@ namespace Ui { class WebAppWindow; }
 
 // A Designer-felület vezérlőit a LicenceManager műveleteihez és jelzéseihez köti.
 class MainWindow : public QDialog {
-    Q_DECLARE_TR_FUNCTIONS(MainWindow)
+    Q_OBJECT
 
 public:
-    MainWindow(LicenceManager &licences, const Logger &logger, LanguageManager &languages);
+    MainWindow(LicenceManager &licences, const Logger &logger, LanguageManager &languages,
+               ApplicationSettings &settings, ConnectionMonitor &monitor, bool showAtStartup);
     ~MainWindow() override;
+    void setTrayAvailable(bool available);
+    void bringToFront();
+    void quitApplication();
+
+signals:
+    void languageChanged();
 
 protected:
     void changeEvent(QEvent *event) override;
+    void closeEvent(QCloseEvent *event) override;
+    void reject() override;
 
 private:
     enum class ServerStatus { Unchecked, Connecting, Connected, Failed, NotStarted };
@@ -58,4 +70,7 @@ private:
     UiMessage serverDetails;
     UiMessage localMessage;
     UiMessage onlineMessage;
+    bool trayAvailable = false;
+    bool confirmingQuit = false;
+    bool quitting = false;
 };

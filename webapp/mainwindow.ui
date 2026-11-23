@@ -20,7 +20,7 @@
    <string notr="true">webapp</string>
   </property>
   <property name="windowIcon">
-   <iconset resource="webapp.qrc">
+   <iconset>
     <normaloff>:/icons/websync.png</normaloff>:/icons/websync.png</iconset>
   </property>
   <layout class="QVBoxLayout" name="windowLayout">
@@ -45,7 +45,7 @@
          </size>
         </property>
         <property name="pixmap">
-         <pixmap resource="webapp.qrc">:/icons/websync.png</pixmap>
+         <pixmap>:/icons/websync.png</pixmap>
         </property>
         <property name="scaledContents">
          <bool>true</bool>
@@ -92,7 +92,7 @@
          <string/>
         </property>
         <property name="icon">
-         <iconset resource="webapp.qrc">
+         <iconset>
           <normaloff>:/icons/exit.png</normaloff>:/icons/exit.png</iconset>
         </property>
         <property name="iconSize">
@@ -125,7 +125,7 @@
    <item>
     <widget class="QTabWidget" name="tabs">
      <property name="currentIndex">
-      <number>1</number>
+      <number>0</number>
      </property>
      <widget class="QWidget" name="statusTab">
       <attribute name="title">
@@ -155,7 +155,7 @@
                </size>
               </property>
               <property name="pixmap">
-               <pixmap resource="webapp.qrc">:/icons/status_yellow.png</pixmap>
+               <pixmap>:/icons/status_yellow.png</pixmap>
               </property>
               <property name="scaledContents">
                <bool>true</bool>
@@ -204,7 +204,7 @@
                <string/>
               </property>
               <property name="icon">
-               <iconset resource="webapp.qrc">
+               <iconset>
                 <normaloff>:/icons/reset.png</normaloff>:/icons/reset.png</iconset>
               </property>
               <property name="iconSize">
@@ -244,7 +244,7 @@
                </size>
               </property>
               <property name="pixmap">
-               <pixmap resource="webapp.qrc">:/icons/status_yellow.png</pixmap>
+               <pixmap>:/icons/status_yellow.png</pixmap>
               </property>
               <property name="scaledContents">
                <bool>true</bool>
@@ -293,7 +293,7 @@
                <string/>
               </property>
               <property name="icon">
-               <iconset resource="webapp.qrc">
+               <iconset>
                 <normaloff>:/icons/start.png</normaloff>:/icons/start.png</iconset>
               </property>
               <property name="iconSize">
@@ -322,7 +322,7 @@
                <string/>
               </property>
               <property name="icon">
-               <iconset resource="webapp.qrc">
+               <iconset>
                 <normaloff>:/icons/reset.png</normaloff>:/icons/reset.png</iconset>
               </property>
               <property name="iconSize">
@@ -388,7 +388,7 @@
              </size>
             </property>
             <property name="pixmap">
-             <pixmap resource="webapp.qrc">:/icons/hourglass.png</pixmap>
+             <pixmap>:/icons/hourglass.png</pixmap>
             </property>
             <property name="scaledContents">
              <bool>true</bool>
@@ -466,7 +466,7 @@
                  <string/>
                 </property>
                 <property name="icon">
-                 <iconset resource="webapp.qrc">
+                 <iconset>
                   <normaloff>:/icons/reset.png</normaloff>:/icons/reset.png</iconset>
                 </property>
                 <property name="iconSize">
@@ -499,9 +499,6 @@
              <layout class="QHBoxLayout" name="startupRow">
               <item>
                <widget class="QCheckBox" name="showAtStartup">
-                <property name="enabled">
-                 <bool>false</bool>
-                </property>
                 <property name="text">
                  <string>Show the main window at startup</string>
                 </property>
@@ -522,9 +519,6 @@
               </item>
               <item>
                <widget class="QPushButton" name="saveSettings">
-                <property name="enabled">
-                 <bool>false</bool>
-                </property>
                 <property name="toolTip">
                  <string>Save application settings</string>
                 </property>
@@ -535,7 +529,7 @@
                  <string/>
                 </property>
                 <property name="icon">
-                 <iconset resource="webapp.qrc">
+                 <iconset>
                   <normaloff>:/icons/save.png</normaloff>:/icons/save.png</iconset>
                 </property>
                 <property name="iconSize">
@@ -846,7 +840,7 @@
             <string>Send all card data to the web server</string>
            </property>
            <property name="icon">
-            <iconset resource="webapp.qrc">
+            <iconset>
              <normaloff>:/icons/patientcards.png</normaloff>:/icons/patientcards.png</iconset>
            </property>
            <property name="iconSize">
@@ -869,7 +863,7 @@
             <string>Clear card data waiting for synchronization</string>
            </property>
            <property name="icon">
-            <iconset resource="webapp.qrc">
+            <iconset>
              <normaloff>:/icons/trash.png</normaloff>:/icons/trash.png</iconset>
            </property>
            <property name="iconSize">
@@ -892,7 +886,7 @@
             <string>Delete card data from the web server</string>
            </property>
            <property name="icon">
-            <iconset resource="webapp.qrc">
+            <iconset>
              <normaloff>:/icons/patientcard_delete.png</normaloff>:/icons/patientcard_delete.png</iconset>
            </property>
            <property name="iconSize">
@@ -915,7 +909,7 @@
             <string>Delete inactive card data from the web server</string>
            </property>
            <property name="icon">
-            <iconset resource="webapp.qrc">
+            <iconset>
              <normaloff>:/icons/patientcards_delete.png</normaloff>:/icons/patientcards_delete.png</iconset>
            </property>
            <property name="iconSize">
@@ -950,7 +944,7 @@
             <string>Retrieve online card sales</string>
            </property>
            <property name="icon">
-            <iconset resource="webapp.qrc">
+            <iconset>
              <normaloff>:/icons/onlinepcsync.png</normaloff>:/icons/onlinepcsync.png</iconset>
            </property>
            <property name="iconSize">
@@ -1028,7 +1022,7 @@
                  <string/>
                 </property>
                 <property name="icon">
-                 <iconset resource="webapp.qrc">
+                 <iconset>
                   <normaloff>:/icons/reset.png</normaloff>:/icons/reset.png</iconset>
                 </property>
                 <property name="iconSize">
@@ -1151,7 +1145,7 @@
                  <string/>
                 </property>
                 <property name="icon">
-                 <iconset resource="webapp.qrc">
+                 <iconset>
                   <normaloff>:/icons/reset.png</normaloff>:/icons/reset.png</iconset>
                 </property>
                 <property name="iconSize">
@@ -1242,7 +1236,7 @@
                <string>Register new licence key</string>
               </property>
               <property name="icon">
-               <iconset resource="webapp.qrc">
+               <iconset>
                 <normaloff>:/icons/reset_http.png</normaloff>:/icons/reset_http.png</iconset>
               </property>
               <property name="iconSize">
@@ -1265,7 +1259,7 @@
                <string>Reactivate current licence key</string>
               </property>
               <property name="icon">
-               <iconset resource="webapp.qrc">
+               <iconset>
                 <normaloff>:/icons/ok.png</normaloff>:/icons/ok.png</iconset>
               </property>
               <property name="iconSize">
@@ -1288,7 +1282,7 @@
                <string>Replace current licence key</string>
               </property>
               <property name="icon">
-               <iconset resource="webapp.qrc">
+               <iconset>
                 <normaloff>:/icons/reset.png</normaloff>:/icons/reset.png</iconset>
               </property>
               <property name="iconSize">
@@ -1329,7 +1323,7 @@
               <string>Online licence check</string>
              </property>
              <property name="icon">
-              <iconset resource="webapp.qrc">
+              <iconset>
                <normaloff>:/icons/settings.png</normaloff>:/icons/settings.png</iconset>
              </property>
              <property name="iconSize">
@@ -1392,8 +1386,6 @@
    </item>
   </layout>
  </widget>
- <resources>
-  <include location="webapp.qrc"/>
- </resources>
+ <resources/>
  <connections/>
 </ui>

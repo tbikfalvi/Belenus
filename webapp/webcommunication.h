@@ -39,6 +39,7 @@ public:
     };
 
     explicit WebCommunication(Logger &logger);
+    void shutdown();
 
     // Az eredménykezelő csak a context élettartama alatt hívható.
     void get(const QUrl &url, QObject *context, std::function<void(const Response &)> finished);
@@ -50,4 +51,5 @@ private:
 
     Logger &logger;
     QNetworkAccessManager network;
+    bool stopping = false;
 };

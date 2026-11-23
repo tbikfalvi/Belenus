@@ -6,6 +6,7 @@
 
 #include "licencemanager.h"
 
+#include "applicationsettings.h"
 #include "filemanager.h"
 #include "logger.h"
 
@@ -61,27 +62,6 @@ UiMessage LicenceManager::readLiveLicence(Licence &licence)
     return {};
 }
 
-UiMessage LicenceManager::readLicenceServer(QUrl &server)
-{
-    // A meglévő WebSync-beállítás adja az API alapcímét.
-    auto query = database.executeSelect(
-        QStringLiteral("SELECT value FROM settings WHERE identifier = 'SERVER_Address'"));
-    if (!query.isActive() || (!query.next() && query.lastError().isValid()))
-        return UiMessage([error = query.lastError()] {
-            return QObject::tr("Database error while reading the server address%1.")
-                .arg(DatabaseManager::errorCodeSuffix(error));
-        });
-
-    if (query.isValid())
-        server = QUrl(query.value(0).toString().trimmed(), QUrl::StrictMode);
-    if (server.scheme() == QStringLiteral("http"))
-        server.setScheme(QStringLiteral("https"));
-    if (!server.isValid() || server.scheme() != QStringLiteral("https") || server.host().isEmpty() ||
-        !server.userInfo().isEmpty() || server.hasQuery() || server.hasFragment())
-        return UiMessage([] { return QObject::tr("Missing or invalid HTTPS server address (SERVER_Address)."); });
-    return {};
-}
-
 // A lekérdezések itt már lezárultak, mielőtt a hívó bontja az adatbázis-kapcsolatot.
 UiMessage LicenceManager::loadLocalLicence(Licence &licence)
 {
@@ -93,7 +73,7 @@ UiMessage LicenceManager::loadLocalLicence(Licence &licence)
 
 UiMessage LicenceManager::loadServer(QUrl &server)
 {
-    const auto error = readLicenceServer(server);
+    const auto error = ApplicationSettings::readServerAddress(database, server);
     emit serverAddressChanged(error.isEmpty() ? server.toDisplayString() : QString());
     return error;
 }

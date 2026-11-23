@@ -49,7 +49,6 @@ signals:
 private:
     UiMessage openDatabase();
     UiMessage readLiveLicence(Licence &licence);
-    UiMessage readLicenceServer(QUrl &server);
     UiMessage loadLocalLicence(Licence &licence);
     UiMessage loadServer(QUrl &server);
 

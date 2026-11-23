@@ -1,6 +1,8 @@
 <RCC>
  <qresource prefix="/">
   <file>icons/websync.png</file>
+  <file>icons/websync_yellow.png</file>
+  <file>icons/websync_red.png</file>
   <file>icons/exit.png</file>
   <file>icons/status_yellow.png</file>
   <file>icons/status_green.png</file>
