@@ -17,7 +17,7 @@
    </size>
   </property>
   <property name="windowTitle">
-   <string>webapp</string>
+   <string notr="true">webapp</string>
   </property>
   <property name="windowIcon">
    <iconset resource="webapp.qrc">
@@ -60,7 +60,7 @@
          </font>
         </property>
         <property name="text">
-         <string>Belenus - WebApp</string>
+         <string notr="true">Belenus - WebApp</string>
         </property>
        </widget>
       </item>
@@ -83,10 +83,10 @@
          <bool>true</bool>
         </property>
         <property name="toolTip">
-         <string>Kilépés</string>
+         <string>Exit</string>
         </property>
         <property name="accessibleName">
-         <string>Kilépés</string>
+         <string>Exit</string>
         </property>
         <property name="text">
          <string/>
@@ -129,7 +129,7 @@
      </property>
      <widget class="QWidget" name="statusTab">
       <attribute name="title">
-       <string>Státusz</string>
+       <string>Status</string>
       </attribute>
       <layout class="QVBoxLayout" name="statusLayout">
        <item>
@@ -167,7 +167,7 @@
               <item>
                <widget class="QLabel" name="databaseTitle">
                 <property name="text">
-                 <string>Belenus adatbázis kapcsolat</string>
+                 <string>Belenus database connection</string>
                 </property>
                 <property name="textFormat">
                  <enum>Qt::TextFormat::PlainText</enum>
@@ -177,7 +177,7 @@
               <item>
                <widget class="QLabel" name="databaseStatus">
                 <property name="text">
-                 <string>Még nincs ellenőrizve.</string>
+                 <string>Not checked yet.</string>
                 </property>
                 <property name="textFormat">
                  <enum>Qt::TextFormat::PlainText</enum>
@@ -195,10 +195,10 @@
                <bool>true</bool>
               </property>
               <property name="toolTip">
-               <string>Adatbázis-kapcsolat ellenőrzése</string>
+               <string>Check database connection</string>
               </property>
               <property name="accessibleName">
-               <string>Adatbázis-kapcsolat ellenőrzése</string>
+               <string>Check database connection</string>
               </property>
               <property name="text">
                <string/>
@@ -256,7 +256,7 @@
               <item>
                <widget class="QLabel" name="serverTitle">
                 <property name="text">
-                 <string>KiwiSun Szerver kapcsolat</string>
+                 <string>KiwiSun server connection</string>
                 </property>
                 <property name="textFormat">
                  <enum>Qt::TextFormat::PlainText</enum>
@@ -266,7 +266,7 @@
               <item>
                <widget class="QLabel" name="serverStatus">
                 <property name="text">
-                 <string>Még nincs ellenőrizve.</string>
+                 <string>Not checked yet.</string>
                 </property>
                 <property name="textFormat">
                  <enum>Qt::TextFormat::PlainText</enum>
@@ -284,10 +284,10 @@
                <bool>false</bool>
               </property>
               <property name="toolTip">
-               <string>Automatikus szinkronizálás</string>
+               <string>Automatic synchronization</string>
               </property>
               <property name="accessibleName">
-               <string>Automatikus szinkronizálás</string>
+               <string>Automatic synchronization</string>
               </property>
               <property name="text">
                <string/>
@@ -313,10 +313,10 @@
                <bool>true</bool>
               </property>
               <property name="toolTip">
-               <string>Szerverkapcsolat ellenőrzése</string>
+               <string>Check server connection</string>
               </property>
               <property name="accessibleName">
-               <string>Szerverkapcsolat ellenőrzése</string>
+               <string>Check server connection</string>
               </property>
               <property name="text">
                <string/>
@@ -350,7 +350,7 @@
           <item>
            <widget class="QLabel" name="queueLabel">
             <property name="text">
-             <string>Szinkronizálásra váró bérletek száma:</string>
+             <string>Cards waiting for synchronization:</string>
             </property>
             <property name="textFormat">
              <enum>Qt::TextFormat::PlainText</enum>
@@ -369,7 +369,7 @@
              </size>
             </property>
             <property name="text">
-             <string>—</string>
+             <string notr="true">—</string>
             </property>
            </widget>
           </item>
@@ -428,7 +428,7 @@
      </widget>
      <widget class="QWidget" name="settingsTab">
       <attribute name="title">
-       <string>Beállítások</string>
+       <string>Settings</string>
       </attribute>
       <layout class="QVBoxLayout" name="settingsLayout">
        <item>
@@ -436,7 +436,7 @@
          <item>
           <widget class="QGroupBox" name="applicationGroup">
            <property name="title">
-            <string>Alkalmazás beállítások</string>
+            <string>Application settings</string>
            </property>
            <layout class="QVBoxLayout" name="applicationLayout">
             <item>
@@ -444,7 +444,7 @@
               <item>
                <widget class="QLabel" name="languageLabel">
                 <property name="text">
-                 <string>Alkalmazás nyelve:</string>
+                 <string>Application language:</string>
                 </property>
                 <property name="textFormat">
                  <enum>Qt::TextFormat::PlainText</enum>
@@ -458,7 +458,7 @@
                 </property>
                 <item>
                  <property name="text">
-                  <string>hu (Magyar)</string>
+                  <string>en (English)</string>
                  </property>
                 </item>
                </widget>
@@ -469,10 +469,10 @@
                  <bool>false</bool>
                 </property>
                 <property name="toolTip">
-                 <string>Nyelv betöltése</string>
+                 <string>Load language</string>
                 </property>
                 <property name="accessibleName">
-                 <string>Nyelv betöltése</string>
+                 <string>Load language</string>
                 </property>
                 <property name="text">
                  <string/>
@@ -515,7 +515,7 @@
                  <bool>false</bool>
                 </property>
                 <property name="text">
-                 <string>Alkalmazás indulásakor a fő ablak megjelenik</string>
+                 <string>Show the main window at startup</string>
                 </property>
                </widget>
               </item>
@@ -538,10 +538,10 @@
                  <bool>false</bool>
                 </property>
                 <property name="toolTip">
-                 <string>Alkalmazásbeállítások mentése</string>
+                 <string>Save application settings</string>
                 </property>
                 <property name="accessibleName">
-                 <string>Alkalmazásbeállítások mentése</string>
+                 <string>Save application settings</string>
                 </property>
                 <property name="text">
                  <string/>
@@ -568,7 +568,7 @@
               <item>
                <widget class="QLabel" name="cardsIntervalLabel">
                 <property name="text">
-                 <string>Bérlet adatszinkronizálás minden</string>
+                 <string>Synchronize card data every</string>
                 </property>
                 <property name="textFormat">
                  <enum>Qt::TextFormat::PlainText</enum>
@@ -587,14 +587,14 @@
                  </size>
                 </property>
                 <property name="text">
-                 <string>2</string>
+                 <string notr="true">2</string>
                 </property>
                </widget>
               </item>
               <item>
                <widget class="QLabel" name="cardsIntervalUnit">
                 <property name="text">
-                 <string>másodpercben</string>
+                 <string>seconds</string>
                 </property>
                 <property name="textFormat">
                  <enum>Qt::TextFormat::PlainText</enum>
@@ -621,7 +621,7 @@
               <item>
                <widget class="QLabel" name="salesIntervalLabel">
                 <property name="text">
-                 <string>Online eladott bérletek lekérdezése minden</string>
+                 <string>Retrieve online card sales every</string>
                 </property>
                 <property name="textFormat">
                  <enum>Qt::TextFormat::PlainText</enum>
@@ -640,14 +640,14 @@
                  </size>
                 </property>
                 <property name="text">
-                 <string>60</string>
+                 <string notr="true">60</string>
                 </property>
                </widget>
               </item>
               <item>
                <widget class="QLabel" name="salesIntervalUnit">
                 <property name="text">
-                 <string>másodpercben</string>
+                 <string>seconds</string>
                 </property>
                 <property name="textFormat">
                  <enum>Qt::TextFormat::PlainText</enum>
@@ -674,7 +674,7 @@
               <item>
                <widget class="QLabel" name="mailIntervalLabel">
                 <property name="text">
-                 <string>Elküldésre váró levelek kiküldése minden</string>
+                 <string>Send queued emails every</string>
                 </property>
                 <property name="textFormat">
                  <enum>Qt::TextFormat::PlainText</enum>
@@ -693,14 +693,14 @@
                  </size>
                 </property>
                 <property name="text">
-                 <string>11</string>
+                 <string notr="true">11</string>
                 </property>
                </widget>
               </item>
               <item>
                <widget class="QLabel" name="mailIntervalUnit">
                 <property name="text">
-                 <string>másodpercben</string>
+                 <string>seconds</string>
                 </property>
                 <property name="textFormat">
                  <enum>Qt::TextFormat::PlainText</enum>
@@ -727,7 +727,7 @@
               <item>
                <widget class="QLabel" name="logLevelLabel">
                 <property name="text">
-                 <string>Log szint:</string>
+                 <string>Log level:</string>
                 </property>
                 <property name="textFormat">
                  <enum>Qt::TextFormat::PlainText</enum>
@@ -737,7 +737,7 @@
               <item>
                <widget class="QLabel" name="logLevelValue">
                 <property name="text">
-                 <string>INFO</string>
+                 <string notr="true">INFO</string>
                 </property>
                 <property name="textFormat">
                  <enum>Qt::TextFormat::PlainText</enum>
@@ -775,7 +775,7 @@
          <item>
           <widget class="QGroupBox" name="webGroup">
            <property name="title">
-            <string>Web kapcsolat beállítások</string>
+            <string>Web connection settings</string>
            </property>
            <layout class="QVBoxLayout" name="webLayout">
             <item>
@@ -784,7 +784,7 @@
                <bool>false</bool>
               </property>
               <property name="text">
-               <string>Http kommunikáció engedélyezve</string>
+               <string>Enable HTTP communication</string>
               </property>
              </widget>
             </item>
@@ -793,7 +793,7 @@
               <item>
                <widget class="QLabel" name="serverAddressLabel">
                 <property name="text">
-                 <string>Web szerver cím:</string>
+                 <string>Web server address:</string>
                 </property>
                 <property name="textFormat">
                  <enum>Qt::TextFormat::PlainText</enum>
@@ -847,7 +847,7 @@
      </widget>
      <widget class="QWidget" name="actionsTab">
       <attribute name="title">
-       <string>Beavatkozások</string>
+       <string>Actions</string>
       </attribute>
       <layout class="QVBoxLayout" name="actionsLayout">
        <item>
@@ -858,7 +858,7 @@
             <bool>false</bool>
            </property>
            <property name="text">
-            <string>Összes bérlet adat elküldése a web szervernek</string>
+            <string>Send all card data to the web server</string>
            </property>
            <property name="icon">
             <iconset resource="webapp.qrc">
@@ -881,7 +881,7 @@
             <bool>false</bool>
            </property>
            <property name="text">
-            <string>Szinkronizálásra váró bérlet adatok törlése</string>
+            <string>Clear card data waiting for synchronization</string>
            </property>
            <property name="icon">
             <iconset resource="webapp.qrc">
@@ -904,7 +904,7 @@
             <bool>false</bool>
            </property>
            <property name="text">
-            <string>Bérlet adatok törlése a web szerverről</string>
+            <string>Delete card data from the web server</string>
            </property>
            <property name="icon">
             <iconset resource="webapp.qrc">
@@ -927,7 +927,7 @@
             <bool>false</bool>
            </property>
            <property name="text">
-            <string>Inaktív bérlet adatok törlése a web szerverről</string>
+            <string>Delete inactive card data from the web server</string>
            </property>
            <property name="icon">
             <iconset resource="webapp.qrc">
@@ -951,7 +951,7 @@
            </property>
            <item>
             <property name="text">
-             <string>&lt;Nincs kiválasztva&gt;</string>
+             <string>&lt;None selected&gt;</string>
             </property>
            </item>
           </widget>
@@ -962,7 +962,7 @@
             <bool>false</bool>
            </property>
            <property name="text">
-            <string>Online eladott bérletek lekérdezése</string>
+            <string>Retrieve online card sales</string>
            </property>
            <property name="icon">
             <iconset resource="webapp.qrc">
@@ -998,7 +998,7 @@
      </widget>
      <widget class="QWidget" name="licenceTab">
       <attribute name="title">
-       <string>Liszensz menedzsment</string>
+       <string>Licence management</string>
       </attribute>
       <layout class="QVBoxLayout" name="licenceLayout">
        <item>
@@ -1006,7 +1006,7 @@
          <item>
           <widget class="QGroupBox" name="localLicenceGroup">
            <property name="title">
-            <string>Liszensz információk</string>
+            <string>Licence information</string>
            </property>
            <layout class="QVBoxLayout" name="localLicenceLayout">
             <item>
@@ -1014,7 +1014,7 @@
               <item row="0" column="0">
                <widget class="QLabel" name="serialLabel">
                 <property name="text">
-                 <string>Aktuális liszensz kulcs :</string>
+                 <string>Current licence key:</string>
                 </property>
                 <property name="textFormat">
                  <enum>Qt::TextFormat::PlainText</enum>
@@ -1037,10 +1037,10 @@
                  <bool>true</bool>
                 </property>
                 <property name="toolTip">
-                 <string>Helyi liszenszadatok frissítése</string>
+                 <string>Refresh local licence data</string>
                 </property>
                 <property name="accessibleName">
-                 <string>Helyi liszenszadatok frissítése</string>
+                 <string>Refresh local licence data</string>
                 </property>
                 <property name="text">
                  <string/>
@@ -1063,7 +1063,7 @@
               <item row="1" column="0">
                <widget class="QLabel" name="dateLabel">
                 <property name="text">
-                 <string>Ellenőrzési dátum :</string>
+                 <string>Validation date:</string>
                 </property>
                 <property name="textFormat">
                  <enum>Qt::TextFormat::PlainText</enum>
@@ -1083,7 +1083,7 @@
               <item row="2" column="0">
                <widget class="QLabel" name="localStatusLabel">
                 <property name="text">
-                 <string>Státusz :</string>
+                 <string>Status:</string>
                 </property>
                 <property name="textFormat">
                  <enum>Qt::TextFormat::PlainText</enum>
@@ -1093,7 +1093,7 @@
               <item row="2" column="1">
                <widget class="QLabel" name="licenceStatus">
                 <property name="text">
-                 <string>Még nincs beolvasva.</string>
+                 <string>Not loaded yet.</string>
                 </property>
                 <property name="textFormat">
                  <enum>Qt::TextFormat::PlainText</enum>
@@ -1106,7 +1106,7 @@
               <item row="3" column="0">
                <widget class="QLabel" name="serverCodeLabel">
                 <property name="text">
-                 <string>Szerver kód :</string>
+                 <string>Server code:</string>
                 </property>
                 <property name="textFormat">
                  <enum>Qt::TextFormat::PlainText</enum>
@@ -1126,7 +1126,7 @@
               <item row="4" column="0">
                <widget class="QLabel" name="clientCodeLabel">
                 <property name="text">
-                 <string>Kliens kód :</string>
+                 <string>Client code:</string>
                 </property>
                 <property name="textFormat">
                  <enum>Qt::TextFormat::PlainText</enum>
@@ -1146,7 +1146,7 @@
               <item row="5" column="0">
                <widget class="QLabel" name="counterLabel">
                 <property name="text">
-                 <string>Adatellenőrzés visszaszámláló :</string>
+                 <string>Validation countdown:</string>
                 </property>
                 <property name="textFormat">
                  <enum>Qt::TextFormat::PlainText</enum>
@@ -1169,10 +1169,10 @@
                  <bool>false</bool>
                 </property>
                 <property name="toolTip">
-                 <string>Számláló frissítése</string>
+                 <string>Refresh countdown</string>
                 </property>
                 <property name="accessibleName">
-                 <string>Számláló frissítése</string>
+                 <string>Refresh countdown</string>
                 </property>
                 <property name="text">
                  <string/>
@@ -1195,7 +1195,7 @@
               <item row="6" column="0">
                <widget class="QLabel" name="scheduleLabel">
                 <property name="text">
-                 <string>Liszensz ellenőrzés …</string>
+                 <string>Licence check …</string>
                 </property>
                 <property name="textFormat">
                  <enum>Qt::TextFormat::PlainText</enum>
@@ -1233,7 +1233,7 @@
          <item>
           <widget class="QGroupBox" name="licenceActionsGroup">
            <property name="title">
-            <string>Liszensz kezelés</string>
+            <string>Licence actions</string>
            </property>
            <layout class="QVBoxLayout" name="licenceActionsLayout">
             <item>
@@ -1241,7 +1241,7 @@
               <item>
                <widget class="QLabel" name="newLicenceLabel">
                 <property name="text">
-                 <string>Új liszensz kulcs :</string>
+                 <string>New licence key:</string>
                 </property>
                 <property name="textFormat">
                  <enum>Qt::TextFormat::PlainText</enum>
@@ -1266,7 +1266,7 @@
                <bool>false</bool>
               </property>
               <property name="text">
-               <string>Új liszensz kulcs regisztráció</string>
+               <string>Register new licence key</string>
               </property>
               <property name="icon">
                <iconset resource="webapp.qrc">
@@ -1289,7 +1289,7 @@
                <bool>false</bool>
               </property>
               <property name="text">
-               <string>Meglévő liszensz kulcs újra aktiválása</string>
+               <string>Reactivate current licence key</string>
               </property>
               <property name="icon">
                <iconset resource="webapp.qrc">
@@ -1312,7 +1312,7 @@
                <bool>false</bool>
               </property>
               <property name="text">
-               <string>Meglévő liszensz kulcs cseréje az újra</string>
+               <string>Replace current licence key</string>
               </property>
               <property name="icon">
                <iconset resource="webapp.qrc">
@@ -1353,7 +1353,7 @@
               <bool>true</bool>
              </property>
              <property name="text">
-              <string>Online licencellenőrzés</string>
+              <string>Online licence check</string>
              </property>
              <property name="icon">
               <iconset resource="webapp.qrc">
@@ -1373,7 +1373,7 @@
            <item>
             <widget class="QLabel" name="onlineStatus">
              <property name="text">
-              <string>Még nem történt ellenőrzés.</string>
+              <string>No check has been run yet.</string>
              </property>
              <property name="textFormat">
               <enum>Qt::TextFormat::PlainText</enum>

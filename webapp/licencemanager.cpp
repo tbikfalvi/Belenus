@@ -39,7 +39,7 @@ QString LicenceManager::readLiveLicence(Licence &licence)
     const auto queryFailure = [this, &query] {
         const auto code = DatabaseManager::errorCodeSuffix(query.lastError());
         logger.write("ERROR", QStringLiteral("Licence record read failed%1").arg(code));
-        return QObject::tr("Adatbázishiba a licenckulcs lekérdezésekor%1.")
+        return QObject::tr("Database error while reading the licence key%1.")
             .arg(code);
     };
     if (!query.isActive())
@@ -48,7 +48,7 @@ QString LicenceManager::readLiveLicence(Licence &licence)
         if (query.lastError().isValid())
             return queryFailure();
         logger.write("WARN", QStringLiteral("No live licence record found"));
-        return QObject::tr("Nincs éles licencrekord (licenceId > 1).");
+        return QObject::tr("No live licence record was found (licenceId > 1).");
     }
 
     licence = {query.value(0).toString(), query.value(1).toString(),
@@ -65,7 +65,7 @@ QString LicenceManager::readLicenceServer(QUrl &server)
     auto query = database.executeSelect(
         QStringLiteral("SELECT value FROM settings WHERE identifier = 'SERVER_Address'"));
     if (!query.isActive() || (!query.next() && query.lastError().isValid()))
-        return QObject::tr("Adatbázishiba a szervercím lekérdezésekor%1.").arg(DatabaseManager::errorCodeSuffix(query.lastError()));
+        return QObject::tr("Database error while reading the server address%1.").arg(DatabaseManager::errorCodeSuffix(query.lastError()));
 
     if (query.isValid())
         server = QUrl(query.value(0).toString().trimmed(), QUrl::StrictMode);
@@ -73,7 +73,7 @@ QString LicenceManager::readLicenceServer(QUrl &server)
         server.setScheme(QStringLiteral("https"));
     if (!server.isValid() || server.scheme() != QStringLiteral("https") || server.host().isEmpty() ||
         !server.userInfo().isEmpty() || server.hasQuery() || server.hasFragment())
-        return QObject::tr("Hiányzó vagy érvénytelen HTTPS-szervercím (SERVER_Address).");
+        return QObject::tr("Missing or invalid HTTPS server address (SERVER_Address).");
     return {};
 }
 
@@ -156,7 +156,7 @@ void LicenceManager::requestLicenceToken(const QUrl &server, const Licence &lice
         emit serverTokenResult(token.ok);
         if (!token.ok) {
             logMissingLicenceResponse();
-            finishOnline(tr("Tokenkérés: %1").arg(token.error));
+            finishOnline(tr("Token request: %1").arg(token.error));
             return;
         }
         sendLicenceCheck(server, licence, token.value);
@@ -243,15 +243,15 @@ QString LicenceManager::processResponse(const WebCommunication::Response &respon
     const int status = response.status.value_or(0);
     if (response.tlsFailed()) {
         logResult("ERROR", "TLS_ERROR");
-        return QObject::tr("Hálózati hiba: a TLS-kapcsolat ellenőrzése sikertelen.");
+        return QObject::tr("Network error: TLS verification failed.");
     }
     if (status != 0 && status != 200) {
         logResult("WARN", "UNEXPECTED_HTTP_STATUS", describeBody());
-        return QObject::tr("Váratlan HTTP-válasz (%1).").arg(status);
+        return QObject::tr("Unexpected HTTP response (%1).").arg(status);
     }
     if (response.networkError != QNetworkReply::NoError) {
         logResult("ERROR", "NETWORK_ERROR", QStringLiteral("; networkError=%1").arg(static_cast<int>(response.networkError)));
-        return QObject::tr("Hálózati hiba a licencellenőrzéskor (Qt hibakód: %1).")
+        return QObject::tr("Network error during licence check (Qt error code: %1).")
                            .arg(static_cast<int>(response.networkError));
     }
 
@@ -259,13 +259,13 @@ QString LicenceManager::processResponse(const WebCommunication::Response &respon
     const auto line = body.first(lineEnd < 0 ? body.size() : lineEnd).trimmed();
     if (line.contains("LICENCE_OK")) {
         logResult("INFO", "LICENCE_OK");
-        return QObject::tr("LICENCE_OK – A licenc érvényes.");
+        return QObject::tr("LICENCE_OK – The licence is valid.");
     }
 
     if (line.contains("SERVER_CODE_INVALID")) {
         logResult("WARN", line.contains("LICENCE_SERVER_CODE_INVALID")
                               ? "LICENCE_SERVER_CODE_INVALID" : "SERVER_CODE_INVALID");
-        return QObject::tr("A helyi licenchez tartozó szerveroldali ellenőrzőkód érvénytelen (SERVER_CODE_INVALID).");
+        return QObject::tr("The server verification code for the local licence is invalid (SERVER_CODE_INVALID).");
     }
 
     constexpr const char *errors[] = {
@@ -275,11 +275,11 @@ QString LicenceManager::processResponse(const WebCommunication::Response &respon
     for (const auto *error : errors) {
         if (line.contains(error)) {
             logResult("WARN", error);
-            return QObject::tr("Szerveroldali licenchiba: %1.").arg(QString::fromLatin1(error));
+            return QObject::tr("Licence server error: %1.").arg(QString::fromLatin1(error));
         }
     }
     logResult("WARN", "UNEXPECTED_RESPONSE", describeBody());
-    return QObject::tr("Váratlan válasz a licencszervertől.");
+    return QObject::tr("Unexpected response from the licence server.");
 }
 
 // 5. Jelzi az eredményt, majd újra engedélyezi a hálózati műveleteket.

@@ -9,6 +9,7 @@
 
 #include "database.h"
 #include "filemanager.h"
+#include "languagemanager.h"
 #include "licencemanager.h"
 #include "logger.h"
 #include "mainwindow.h"
@@ -26,6 +27,9 @@ int main(int argc, char *argv[])
     Logger logger;
     logger.open();
     logger.write("INFO", QStringLiteral("WebApp started"));
+
+    LanguageManager language(logger);
+    language.install();
 
     DatabaseManager database(logger);
     if (app.arguments().contains(QStringLiteral("--check-qmysql"))) {
