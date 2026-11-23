@@ -3,5 +3,7 @@
         <file>belenus.ico</file>
         <file>cancel.png</file>
         <file>ok.png</file>
+        <file>resource/40x40_ok.png</file>
+        <file>resource/40x40_minus.png</file>
     </qresource>
 </RCC>

@@ -276,6 +276,9 @@ cDlgPreferences::cDlgPreferences( QWidget *p_poParent )
     ledMaxWorkHoursCounter->setEnabled( g_obUser.isInGroup( cAccessGroup::SYSTEM ) );
     pbValidateLicenceKey->setEnabled( g_obUser.isInGroup( cAccessGroup::SYSTEM ) );
 
+    gbDisableLicenceCheck->setEnabled( g_obUser.isInGroup( cAccessGroup::SYSTEM ) );
+    chkLicenceCheckStatus->setEnabled( g_obUser.isInGroup( cAccessGroup::SYSTEM ) );
+
     pbValidateLicenceKey->setIcon( QIcon("./resources/40x40_key.png") );
 
     int nLicenceCheckValue      = g_poPrefs->getLicenceCheck() / 4;
@@ -305,6 +308,11 @@ cDlgPreferences::cDlgPreferences( QWidget *p_poParent )
         ledMaxWorkHoursCounter->setText( QString::number( nLicenceWorkHoursCounter/15 ) );
     }
 
+    bool bLicenceCheckEnabled = g_poPrefs->isLicenceCheckEnabled();
+
+    chkLicenceCheckStatus->setChecked( bLicenceCheckEnabled );
+    lblLicenceCheckEnabled->setVisible( bLicenceCheckEnabled );
+    lblLicenceCheckDisabled->setVisible( !bLicenceCheckEnabled );
 
     //---------------------------------------------------------------------------------------------------------------------------------------------------
     // Hardware page
@@ -691,6 +699,7 @@ void cDlgPreferences::accept()
 
     g_poPrefs->setSaveAdhocGuest( chkSaveAdhocGuest->isChecked() );
 
+    g_poPrefs->setLicenceCheckEnabled( chkLicenceCheckStatus->isChecked() );
 
     m_dlgProgress->showProgress();
         g_poPrefs->saveSettings();
@@ -1111,4 +1120,10 @@ void cDlgPreferences::on_chkShowPatientInfoOnStart_toggled(bool checked)
 void cDlgPreferences::on_pbValidateLicenceKey_clicked()
 {
     g_obLicenceManager.sysadminActivateLicence();
+}
+
+void cDlgPreferences::on_chkLicenceCheckStatus_toggled(bool /*checked*/)
+{
+    lblLicenceCheckEnabled->setVisible( chkLicenceCheckStatus->isChecked() );
+    lblLicenceCheckDisabled->setVisible( !chkLicenceCheckStatus->isChecked() );
 }
