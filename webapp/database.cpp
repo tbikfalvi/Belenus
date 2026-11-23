@@ -59,13 +59,15 @@ bool DatabaseManager::driverAvailable() const
     return connection.isValid();
 }
 
-QString DatabaseManager::driverMessage() const
+UiMessage DatabaseManager::driverMessage() const
 {
     if (driverAvailable())
-        return QObject::tr("QMYSQL loaded.");
+        return UiMessage([] { return QObject::tr("QMYSQL loaded."); });
     const auto drivers = QSqlDatabase::drivers().join(QStringLiteral(", "));
-    return QObject::tr("QMYSQL could not be loaded (%1). Available drivers: %2.")
-        .arg(connection.lastError().text(), drivers);
+    const auto error = connection.lastError().text();
+    return UiMessage([error, drivers] {
+        return QObject::tr("QMYSQL could not be loaded (%1). Available drivers: %2.").arg(error, drivers);
+    });
 }
 
 // Megnyitja a helyi kapcsolatot, vagy visszaadja a technikai hiba típusát.
@@ -92,17 +94,19 @@ void DatabaseManager::close()
 }
 
 // A felület részletes diagnosztikája. A naplóba csak numerikus hibakód kerül.
-QString DatabaseManager::connectionError() const
+UiMessage DatabaseManager::connectionError() const
 {
     const auto error = connection.lastError();
     const auto password = connection.password();
-    return QObject::tr("QMYSQL loaded, but the connection failed.\n"
-                       "nativeErrorCode(): %1\n"
-                       "driverText(): %2\n"
-                       "databaseText(): %3")
-        .arg(safeConnectionError(error.nativeErrorCode(), password),
-             safeConnectionError(error.driverText(), password),
-             safeConnectionError(error.databaseText(), password));
+    const auto code = safeConnectionError(error.nativeErrorCode(), password);
+    const auto driver = safeConnectionError(error.driverText(), password);
+    const auto database = safeConnectionError(error.databaseText(), password);
+    return UiMessage([code, driver, database] {
+        return QObject::tr("QMYSQL loaded, but the connection failed.\n"
+                           "nativeErrorCode(): %1\n"
+                           "driverText(): %2\n"
+                           "databaseText(): %3").arg(code, driver, database);
+    });
 }
 
 // A teljes SELECT utasítást hajtja végre. Az eredmény a next() hívással járható be.

@@ -85,18 +85,24 @@ void WebCommunication::requestToken(const QUrl &server, QObject *context,
 WebCommunication::TokenResult WebCommunication::parseToken(const Response &response)
 {
     if (!response.certificateErrors.isEmpty())
-        return {false, {}, QObject::tr("TLS certificate verification failed: %1").arg(response.certificateErrors)};
+        return {false, {}, UiMessage([details = response.certificateErrors] {
+            return QObject::tr("TLS certificate verification failed: %1").arg(details);
+        })};
 
     const int status = response.status.value_or(0);
     if (status != 0 && status != 200)
-        return {false, {}, QObject::tr("Unexpected HTTP status: %1.").arg(status)};
+        return {false, {}, UiMessage([status] { return QObject::tr("Unexpected HTTP status: %1.").arg(status); })};
     if (response.networkError != QNetworkReply::NoError)
-        return {false, {}, QObject::tr("HTTPS request failed: %1").arg(response.errorMessage)};
+        return {false, {}, UiMessage([details = response.errorMessage] {
+            return QObject::tr("HTTPS request failed: %1").arg(details);
+        })};
 
     const auto lineEnd = response.body.indexOf('\n');
     const auto token = response.body.left(lineEnd < 0 ? 16 : qMin<qsizetype>(16, lineEnd + 1));
     static const QRegularExpression format(QStringLiteral("^[A-Za-z0-9_-]{16}$"));
     if (status != 200 || !format.match(QString::fromLatin1(token)).hasMatch())
-        return {false, {}, QObject::tr("The server response does not contain a recognizable token.")};
+        return {false, {}, UiMessage([] {
+            return QObject::tr("The server response does not contain a recognizable token.");
+        })};
     return {true, QString::fromLatin1(token), {}};
 }

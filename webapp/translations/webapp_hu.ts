@@ -52,10 +52,6 @@
             <translation>Alkalmazás nyelve:</translation>
         </message>
         <message>
-            <source>en (English)</source>
-            <translation>hu (Magyar)</translation>
-        </message>
-        <message>
             <source>Load language</source>
             <translation>Nyelv betöltése</translation>
         </message>

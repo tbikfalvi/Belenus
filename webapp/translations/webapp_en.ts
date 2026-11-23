@@ -52,10 +52,6 @@
             <translation>Application language:</translation>
         </message>
         <message>
-            <source>en (English)</source>
-            <translation>en (English)</translation>
-        </message>
-        <message>
             <source>Load language</source>
             <translation>Load language</translation>
         </message>

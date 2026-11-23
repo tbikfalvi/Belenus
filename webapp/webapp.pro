@@ -19,7 +19,8 @@ HEADERS += mainwindow.h \
            licencemanager.h \
            logger.h \
            filemanager.h \
-           languagemanager.h
+           languagemanager.h \
+           uimessage.h
 
 TRANSLATIONS += translations/webapp_en.ts \
                 translations/webapp_hu.ts

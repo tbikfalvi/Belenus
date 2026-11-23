@@ -6,23 +6,34 @@
 
 #include "mainwindow.h"
 
+#include "languagemanager.h"
 #include "licencemanager.h"
 #include "logger.h"
 #include "ui_mainwindow.h"
 
 #include <QCoreApplication>
+#include <QEvent>
 #include <QPixmap>
+#include <QSignalBlocker>
 #include <QTimer>
+#include <QVariant>
 
 // A meglévő Designer-ablakot építi fel, majd beköti a műveleteket és visszajelzéseket.
-MainWindow::MainWindow(LicenceManager &licences, const Logger &logger)
-    : ui(std::make_unique<Ui::WebAppWindow>())
+MainWindow::MainWindow(LicenceManager &licences, const Logger &logger, LanguageManager &languages)
+    : ui(std::make_unique<Ui::WebAppWindow>()), languages(languages), logError(logger.error())
 {
     ui->setupUi(this);
-    setWindowTitle(QStringLiteral("Belenus WebApp - v%1").arg(QCoreApplication::applicationVersion()));
-    ui->logStatus->setVisible(!logger.error().isEmpty());
-    if (!logger.error().isEmpty())
-        ui->logStatus->setText(tr("Cannot open or write to webapp.log: %1").arg(logger.error()));
+    ui->language->addItem(QStringLiteral("English"), QStringLiteral("en"));
+    ui->language->addItem(QStringLiteral("Magyar"), QStringLiteral("hu"));
+    retranslateWindow();
+    // A lista csak előkészíti a választást. A fordítót a mellette lévő gomb aktiválja.
+    connect(ui->reloadLanguage, &QPushButton::clicked, this, [this] {
+        const auto language = ui->language->currentData().toString();
+        if (language.isEmpty() || language == this->languages.currentLanguage())
+            return;
+        if (!this->languages.setLanguage(language))
+            syncLanguageSelection();
+    });
 
     const auto refresh = [this, &licences] {
         resetLocalLicence();
@@ -34,28 +45,62 @@ MainWindow::MainWindow(LicenceManager &licences, const Logger &logger)
     connect(ui->serverRefresh, &QPushButton::clicked, &licences, &LicenceManager::checkServer);
     connect(ui->onlineButton, &QPushButton::clicked, this, [this, &licences] {
         resetLocalLicence();
-        ui->onlineStatus->clear();
+        showOnlineMessage({});
         licences.checkOnline();
     });
 
     connect(&licences, &LicenceManager::databaseStatusChanged, this, &MainWindow::showDatabaseResult);
     connect(&licences, &LicenceManager::localLicenceRead, this, &MainWindow::showLocalLicence);
-    connect(&licences, &LicenceManager::localLicenceReadFailed, ui->licenceStatus, &QLabel::setText);
+    connect(&licences, &LicenceManager::localLicenceReadFailed, this, [this](const UiMessage &message) {
+        localMessage = message;
+        ui->licenceStatus->setText(localMessage.text());
+    });
     connect(&licences, &LicenceManager::serverAddressChanged, ui->serverAddress, &QLineEdit::setText);
-    connect(&licences, &LicenceManager::serverCheckNotStarted, this, [this](const QString &message) {
-        showConnection(ui->serverLight, ui->serverStatus, "yellow", tr("The server check did not start."));
-        ui->serverStatus->setToolTip(message);
+    connect(&licences, &LicenceManager::serverCheckNotStarted, this, [this](const UiMessage &message) {
+        serverStatus = ServerStatus::NotStarted;
+        serverDetails = message;
+        renderServerStatus();
     });
     connect(&licences, &LicenceManager::serverTokenResult, this, &MainWindow::showServerResult);
     connect(&licences, &LicenceManager::networkBusyChanged, this, &MainWindow::setNetworkBusy);
     connect(&licences, &LicenceManager::onlineStarted, this, [this] {
-        ui->onlineStatus->setText(tr("Checking licence online…"));
+        showOnlineMessage(UiMessage([] { return tr("Checking licence online…"); }));
     });
-    connect(&licences, &LicenceManager::onlineFinished, ui->onlineStatus, &QLabel::setText);
+    connect(&licences, &LicenceManager::onlineFinished, this, &MainWindow::showOnlineMessage);
     QTimer::singleShot(0, this, refresh);
 }
 
 MainWindow::~MainWindow() = default;
+
+void MainWindow::changeEvent(QEvent *event)
+{
+    QDialog::changeEvent(event);
+    if (event->type() == QEvent::LanguageChange)
+        retranslateWindow();
+}
+
+void MainWindow::syncLanguageSelection()
+{
+    const QSignalBlocker blocker(ui->language);
+    ui->language->setCurrentIndex(ui->language->findData(languages.currentLanguage()));
+}
+
+// A Designer feliratai után az aktuális állapotokat is újrarajzolja, adatlekérés nélkül.
+void MainWindow::retranslateWindow()
+{
+    ui->retranslateUi(this);
+    setWindowTitle(QStringLiteral("Belenus WebApp - v%1").arg(QCoreApplication::applicationVersion()));
+    syncLanguageSelection();
+    ui->logStatus->setVisible(!logError.isEmpty());
+    if (!logError.isEmpty())
+        ui->logStatus->setText(tr("Cannot open or write to webapp.log: %1").arg(logError));
+    renderDatabaseStatus();
+    renderServerStatus();
+    if (!localMessage.isEmpty())
+        ui->licenceStatus->setText(localMessage.text());
+    if (!onlineMessage.isEmpty())
+        ui->onlineStatus->setText(onlineMessage.text());
+}
 
 // Kicseréli a jelző ikonját és feliratát, egyben törli a korábbi hibaleírást.
 void MainWindow::showConnection(QLabel *light, QLabel *status, const char *icon, const QString &message)
@@ -65,9 +110,18 @@ void MainWindow::showConnection(QLabel *light, QLabel *status, const char *icon,
     status->setToolTip({});
 }
 
-void MainWindow::showDatabaseResult(DatabaseManager::Status status, const QString &details)
+void MainWindow::showDatabaseResult(DatabaseManager::Status status, const UiMessage &details)
 {
-    switch (status) {
+    databaseStatus = status;
+    databaseDetails = details;
+    renderDatabaseStatus();
+}
+
+void MainWindow::renderDatabaseStatus()
+{
+    if (!databaseStatus)
+        return;
+    switch (*databaseStatus) {
     case DatabaseManager::Status::Connected:
         showConnection(ui->databaseLight, ui->databaseStatus, "green", tr("Connection succeeded."));
         break;
@@ -76,7 +130,7 @@ void MainWindow::showDatabaseResult(DatabaseManager::Status status, const QStrin
         break;
     case DatabaseManager::Status::OpenFailed:
         showConnection(ui->databaseLight, ui->databaseStatus, "red", tr("Connection failed."));
-        ui->databaseStatus->setToolTip(details);
+        ui->databaseStatus->setToolTip(databaseDetails.text());
         break;
     }
 }
@@ -84,16 +138,45 @@ void MainWindow::showDatabaseResult(DatabaseManager::Status status, const QStrin
 // A szerverjelző a tokenkérés technikai eredményét mutatja, a licenckód ettől külön jelenik meg.
 void MainWindow::showServerResult(bool ok)
 {
-    showConnection(ui->serverLight, ui->serverStatus, ok ? "green" : "red",
-                   ok ? tr("HTTPS connection established.") : tr("Token request failed."));
+    serverStatus = ok ? ServerStatus::Connected : ServerStatus::Failed;
+    renderServerStatus();
+}
+
+void MainWindow::renderServerStatus()
+{
+    switch (serverStatus) {
+    case ServerStatus::Unchecked:
+        break;
+    case ServerStatus::Connecting:
+        showConnection(ui->serverLight, ui->serverStatus, "yellow", tr("Connecting…"));
+        break;
+    case ServerStatus::Connected:
+        showConnection(ui->serverLight, ui->serverStatus, "green", tr("HTTPS connection established."));
+        break;
+    case ServerStatus::Failed:
+        showConnection(ui->serverLight, ui->serverStatus, "red", tr("Token request failed."));
+        break;
+    case ServerStatus::NotStarted:
+        showConnection(ui->serverLight, ui->serverStatus, "yellow", tr("The server check did not start."));
+        ui->serverStatus->setToolTip(serverDetails.text());
+        break;
+    }
 }
 
 void MainWindow::setNetworkBusy(bool busy)
 {
     ui->serverRefresh->setEnabled(!busy);
     ui->onlineButton->setEnabled(!busy);
-    if (busy)
-        showConnection(ui->serverLight, ui->serverStatus, "yellow", tr("Connecting…"));
+    if (busy) {
+        serverStatus = ServerStatus::Connecting;
+        renderServerStatus();
+    }
+}
+
+void MainWindow::showOnlineMessage(const UiMessage &message)
+{
+    onlineMessage = message;
+    ui->onlineStatus->setText(onlineMessage.text());
 }
 
 void MainWindow::resetLocalLicence()
@@ -102,6 +185,7 @@ void MainWindow::resetLocalLicence()
     ui->localDate->clear();
     ui->localServerCode->clear();
     ui->localClientCode->clear();
+    localMessage = {};
     ui->licenceStatus->setText(tr("Not loaded yet."));
 }
 
@@ -112,8 +196,10 @@ void MainWindow::showLocalLicence(const Licence &licence)
     ui->localDate->setText(licence.checkedAt);
     ui->localServerCode->setText(licence.serverCode);
     ui->localClientCode->setText(licence.clientCode);
-    ui->licenceStatus->setText(licence.serial.trimmed().isEmpty()
-                                   ? tr("The local licence key is empty.") : localLicenceStatus(licence.status));
+    localMessage = UiMessage([emptyKey = licence.serial.trimmed().isEmpty(), status = licence.status] {
+        return emptyKey ? tr("The local licence key is empty.") : localLicenceStatus(status);
+    });
+    ui->licenceStatus->setText(localMessage.text());
 }
 
 // A tárolt azonosítókat érintetlenül hagyja, csak az ismert állapotok feliratát fordítja.

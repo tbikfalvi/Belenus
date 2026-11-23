@@ -6,6 +6,8 @@
 
 #pragma once
 
+#include "uimessage.h"
+
 #include <QSqlDatabase>
 #include <QSqlQuery>
 
@@ -25,12 +27,12 @@ public:
 
     // A parancssori próba csak a meghajtó betöltését ellenőrzi.
     bool driverAvailable() const;
-    QString driverMessage() const;
+    UiMessage driverMessage() const;
 
     Status open();
     // A hívó előbb engedje el az összes, kapcsolatból kapott QSqlQuery objektumot.
     void close();
-    QString connectionError() const;
+    UiMessage connectionError() const;
 
     QSqlQuery executeSelect(const QString &sql);
     bool executeNonQuery(const QString &sql);

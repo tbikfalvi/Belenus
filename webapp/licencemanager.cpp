@@ -19,10 +19,10 @@ LicenceManager::LicenceManager(DatabaseManager &database, WebCommunication &web,
 }
 
 // A modul minden művelet előtt ellenőrzi a kapcsolatot, és jelzi az eredményt a felületnek.
-QString LicenceManager::openDatabase()
+UiMessage LicenceManager::openDatabase()
 {
     const auto status = database.open();
-    QString error;
+    UiMessage error;
     if (status == DatabaseManager::Status::DriverUnavailable)
         error = database.driverMessage();
     else if (status == DatabaseManager::Status::OpenFailed)
@@ -31,16 +31,18 @@ QString LicenceManager::openDatabase()
     return error;
 }
 
-QString LicenceManager::readLiveLicence(Licence &licence)
+UiMessage LicenceManager::readLiveLicence(Licence &licence)
 {
     // A legnagyobb azonosítójú éles licencet olvassa. A Cod a kliens-, az Act a szerverkód.
     auto query = database.executeSelect(QStringLiteral(
         "SELECT serial, Cod, Act, Type, lastValidated FROM licences WHERE licenceId > 1 ORDER BY licenceId DESC LIMIT 1"));
     const auto queryFailure = [this, &query] {
-        const auto code = DatabaseManager::errorCodeSuffix(query.lastError());
-        logger.write("ERROR", QStringLiteral("Licence record read failed%1").arg(code));
-        return QObject::tr("Database error while reading the licence key%1.")
-            .arg(code);
+        const auto error = query.lastError();
+        logger.write("ERROR", QStringLiteral("Licence record read failed%1").arg(DatabaseManager::errorCodeSuffix(error)));
+        return UiMessage([error] {
+            return QObject::tr("Database error while reading the licence key%1.")
+                .arg(DatabaseManager::errorCodeSuffix(error));
+        });
     };
     if (!query.isActive())
         return queryFailure();
@@ -48,7 +50,7 @@ QString LicenceManager::readLiveLicence(Licence &licence)
         if (query.lastError().isValid())
             return queryFailure();
         logger.write("WARN", QStringLiteral("No live licence record found"));
-        return QObject::tr("No live licence record was found (licenceId > 1).");
+        return UiMessage([] { return QObject::tr("No live licence record was found (licenceId > 1)."); });
     }
 
     licence = {query.value(0).toString(), query.value(1).toString(),
@@ -59,13 +61,16 @@ QString LicenceManager::readLiveLicence(Licence &licence)
     return {};
 }
 
-QString LicenceManager::readLicenceServer(QUrl &server)
+UiMessage LicenceManager::readLicenceServer(QUrl &server)
 {
     // A meglévő WebSync-beállítás adja az API alapcímét.
     auto query = database.executeSelect(
         QStringLiteral("SELECT value FROM settings WHERE identifier = 'SERVER_Address'"));
     if (!query.isActive() || (!query.next() && query.lastError().isValid()))
-        return QObject::tr("Database error while reading the server address%1.").arg(DatabaseManager::errorCodeSuffix(query.lastError()));
+        return UiMessage([error = query.lastError()] {
+            return QObject::tr("Database error while reading the server address%1.")
+                .arg(DatabaseManager::errorCodeSuffix(error));
+        });
 
     if (query.isValid())
         server = QUrl(query.value(0).toString().trimmed(), QUrl::StrictMode);
@@ -73,12 +78,12 @@ QString LicenceManager::readLicenceServer(QUrl &server)
         server.setScheme(QStringLiteral("https"));
     if (!server.isValid() || server.scheme() != QStringLiteral("https") || server.host().isEmpty() ||
         !server.userInfo().isEmpty() || server.hasQuery() || server.hasFragment())
-        return QObject::tr("Missing or invalid HTTPS server address (SERVER_Address).");
+        return UiMessage([] { return QObject::tr("Missing or invalid HTTPS server address (SERVER_Address)."); });
     return {};
 }
 
 // A lekérdezések itt már lezárultak, mielőtt a hívó bontja az adatbázis-kapcsolatot.
-QString LicenceManager::loadLocalLicence(Licence &licence)
+UiMessage LicenceManager::loadLocalLicence(Licence &licence)
 {
     const auto error = readLiveLicence(licence);
     if (error.isEmpty())
@@ -86,7 +91,7 @@ QString LicenceManager::loadLocalLicence(Licence &licence)
     return error;
 }
 
-QString LicenceManager::loadServer(QUrl &server)
+UiMessage LicenceManager::loadServer(QUrl &server)
 {
     const auto error = readLicenceServer(server);
     emit serverAddressChanged(error.isEmpty() ? server.toDisplayString() : QString());
@@ -156,7 +161,7 @@ void LicenceManager::requestLicenceToken(const QUrl &server, const Licence &lice
         emit serverTokenResult(token.ok);
         if (!token.ok) {
             logMissingLicenceResponse();
-            finishOnline(tr("Token request: %1").arg(token.error));
+            finishOnline(UiMessage([error = token.error] { return tr("Token request: %1").arg(error.text()); }));
             return;
         }
         sendLicenceCheck(server, licence, token.value);
@@ -205,7 +210,7 @@ void LicenceManager::saveLicenceResponse(const QByteArray &body)
 
 // 4. Elmenti a kapott törzset, majd megkülönbözteti a technikai hibát az üzleti választól.
 // A szerver visszajelzése megjelenik a felületen, a helyi adatbázisba nem ír.
-QString LicenceManager::processResponse(const WebCommunication::Response &response)
+UiMessage LicenceManager::processResponse(const WebCommunication::Response &response)
 {
     const auto &body = response.body;
     if (response.status.has_value() || !body.isEmpty())
@@ -243,29 +248,32 @@ QString LicenceManager::processResponse(const WebCommunication::Response &respon
     const int status = response.status.value_or(0);
     if (response.tlsFailed()) {
         logResult("ERROR", "TLS_ERROR");
-        return QObject::tr("Network error: TLS verification failed.");
+        return UiMessage([] { return QObject::tr("Network error: TLS verification failed."); });
     }
     if (status != 0 && status != 200) {
         logResult("WARN", "UNEXPECTED_HTTP_STATUS", describeBody());
-        return QObject::tr("Unexpected HTTP response (%1).").arg(status);
+        return UiMessage([status] { return QObject::tr("Unexpected HTTP response (%1).").arg(status); });
     }
     if (response.networkError != QNetworkReply::NoError) {
         logResult("ERROR", "NETWORK_ERROR", QStringLiteral("; networkError=%1").arg(static_cast<int>(response.networkError)));
-        return QObject::tr("Network error during licence check (Qt error code: %1).")
-                           .arg(static_cast<int>(response.networkError));
+        return UiMessage([code = static_cast<int>(response.networkError)] {
+            return QObject::tr("Network error during licence check (Qt error code: %1).").arg(code);
+        });
     }
 
     const auto lineEnd = body.indexOf('\n');
     const auto line = body.first(lineEnd < 0 ? body.size() : lineEnd).trimmed();
     if (line.contains("LICENCE_OK")) {
         logResult("INFO", "LICENCE_OK");
-        return QObject::tr("LICENCE_OK – The licence is valid.");
+        return UiMessage([] { return QObject::tr("LICENCE_OK – The licence is valid."); });
     }
 
     if (line.contains("SERVER_CODE_INVALID")) {
         logResult("WARN", line.contains("LICENCE_SERVER_CODE_INVALID")
                               ? "LICENCE_SERVER_CODE_INVALID" : "SERVER_CODE_INVALID");
-        return QObject::tr("The server verification code for the local licence is invalid (SERVER_CODE_INVALID).");
+        return UiMessage([] {
+            return QObject::tr("The server verification code for the local licence is invalid (SERVER_CODE_INVALID).");
+        });
     }
 
     constexpr const char *errors[] = {
@@ -275,15 +283,15 @@ QString LicenceManager::processResponse(const WebCommunication::Response &respon
     for (const auto *error : errors) {
         if (line.contains(error)) {
             logResult("WARN", error);
-            return QObject::tr("Licence server error: %1.").arg(QString::fromLatin1(error));
+            return UiMessage([error] { return QObject::tr("Licence server error: %1.").arg(QString::fromLatin1(error)); });
         }
     }
     logResult("WARN", "UNEXPECTED_RESPONSE", describeBody());
-    return QObject::tr("Unexpected response from the licence server.");
+    return UiMessage([] { return QObject::tr("Unexpected response from the licence server."); });
 }
 
 // 5. Jelzi az eredményt, majd újra engedélyezi a hálózati műveleteket.
-void LicenceManager::finishOnline(const QString &message)
+void LicenceManager::finishOnline(const UiMessage &message)
 {
     emit onlineFinished(message);
     emit networkBusyChanged(false);

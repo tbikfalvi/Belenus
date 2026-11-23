@@ -69,11 +69,42 @@ QString LanguageManager::selectedLanguage() const
 // A qmake által beágyazott katalógust a főablak létrehozása előtt telepíti.
 void LanguageManager::install()
 {
-    const auto language = selectedLanguage();
-    const auto catalog = QStringLiteral(":/i18n/webapp_%1.qm").arg(language);
-    if (translator.load(catalog) && QCoreApplication::installTranslator(&translator))
-        return;
+    if (!setLanguage(selectedLanguage()))
+        setLanguage(QStringLiteral("en"));
+}
 
-    // A forrásszövegek angolok, ezért hibás katalógus mellett is használható a felület.
-    logger.write("WARN", QStringLiteral("Could not install translation %1. Using English source text.").arg(catalog));
+QString LanguageManager::currentLanguage() const
+{
+    return activeLanguage;
+}
+
+// A futás közbeni választás csak memóriában él. A régi fordítót sikeres betöltésig megtartjuk.
+bool LanguageManager::setLanguage(const QString &language)
+{
+    if (language != QStringLiteral("en") && language != QStringLiteral("hu"))
+        return false;
+    if (translator && language == activeLanguage)
+        return true;
+
+    const auto catalog = QStringLiteral(":/i18n/webapp_%1.qm").arg(language);
+    auto next = std::make_unique<QTranslator>();
+    const auto previousLanguage = activeLanguage;
+    activeLanguage = language;
+    if (next->load(catalog) && QCoreApplication::installTranslator(next.get())) {
+        if (translator)
+            QCoreApplication::removeTranslator(translator.get());
+        translator = std::move(next);
+        return true;
+    }
+
+    logger.write("WARN", QStringLiteral("Could not install translation %1.").arg(catalog));
+    if (language == QStringLiteral("en")) {
+        // Angol katalógus nélkül is az angol forrásszövegek jelennek meg.
+        if (translator)
+            QCoreApplication::removeTranslator(translator.get());
+        translator.reset();
+        return true;
+    }
+    activeLanguage = previousLanguage;
+    return false;
 }

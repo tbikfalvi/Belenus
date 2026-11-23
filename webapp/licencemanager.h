@@ -36,27 +36,27 @@ public slots:
     void checkOnline();
 
 signals:
-    void databaseStatusChanged(DatabaseManager::Status status, const QString &details);
+    void databaseStatusChanged(DatabaseManager::Status status, const UiMessage &details);
     void localLicenceRead(const Licence &licence);
-    void localLicenceReadFailed(const QString &message);
+    void localLicenceReadFailed(const UiMessage &message);
     void serverAddressChanged(const QString &address);
-    void serverCheckNotStarted(const QString &message);
+    void serverCheckNotStarted(const UiMessage &message);
     void serverTokenResult(bool ok);
     void networkBusyChanged(bool busy);
     void onlineStarted();
-    void onlineFinished(const QString &message);
+    void onlineFinished(const UiMessage &message);
 
 private:
-    QString openDatabase();
-    QString readLiveLicence(Licence &licence);
-    QString readLicenceServer(QUrl &server);
-    QString loadLocalLicence(Licence &licence);
-    QString loadServer(QUrl &server);
+    UiMessage openDatabase();
+    UiMessage readLiveLicence(Licence &licence);
+    UiMessage readLicenceServer(QUrl &server);
+    UiMessage loadLocalLicence(Licence &licence);
+    UiMessage loadServer(QUrl &server);
 
     void requestLicenceToken(const QUrl &server, const Licence &licence);
     void sendLicenceCheck(const QUrl &server, const Licence &licence, const QString &token);
-    QString processResponse(const WebCommunication::Response &response);
-    void finishOnline(const QString &message);
+    UiMessage processResponse(const WebCommunication::Response &response);
+    void finishOnline(const UiMessage &message);
     void logMissingLicenceResponse();
     void saveLicenceResponse(const QByteArray &body);
 

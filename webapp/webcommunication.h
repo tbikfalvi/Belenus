@@ -6,6 +6,8 @@
 
 #pragma once
 
+#include "uimessage.h"
+
 #include <QNetworkAccessManager>
 #include <QNetworkReply>
 #include <QUrl>
@@ -33,7 +35,7 @@ public:
     struct TokenResult {
         bool ok;
         QString value;
-        QString error;
+        UiMessage error;
     };
 
     explicit WebCommunication(Logger &logger);

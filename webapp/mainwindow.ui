@@ -125,7 +125,7 @@
    <item>
     <widget class="QTabWidget" name="tabs">
      <property name="currentIndex">
-      <number>0</number>
+      <number>1</number>
      </property>
      <widget class="QWidget" name="statusTab">
       <attribute name="title">
@@ -452,22 +452,10 @@
                </widget>
               </item>
               <item>
-               <widget class="QComboBox" name="language">
-                <property name="enabled">
-                 <bool>false</bool>
-                </property>
-                <item>
-                 <property name="text">
-                  <string>en (English)</string>
-                 </property>
-                </item>
-               </widget>
+               <widget class="QComboBox" name="language"/>
               </item>
               <item>
                <widget class="QPushButton" name="reloadLanguage">
-                <property name="enabled">
-                 <bool>false</bool>
-                </property>
                 <property name="toolTip">
                  <string>Load language</string>
                 </property>
@@ -802,9 +790,6 @@
               </item>
               <item>
                <widget class="QLineEdit" name="serverAddress">
-                <property name="text">
-                 <string/>
-                </property>
                 <property name="readOnly">
                  <bool>true</bool>
                 </property>
@@ -1023,9 +1008,6 @@
               </item>
               <item row="0" column="1">
                <widget class="QLineEdit" name="localSerial">
-                <property name="text">
-                 <string/>
-                </property>
                 <property name="readOnly">
                  <bool>true</bool>
                 </property>
@@ -1072,9 +1054,6 @@
               </item>
               <item row="1" column="1">
                <widget class="QLineEdit" name="localDate">
-                <property name="text">
-                 <string/>
-                </property>
                 <property name="readOnly">
                  <bool>true</bool>
                 </property>
@@ -1115,9 +1094,6 @@
               </item>
               <item row="3" column="1">
                <widget class="QLineEdit" name="localServerCode">
-                <property name="text">
-                 <string/>
-                </property>
                 <property name="readOnly">
                  <bool>true</bool>
                 </property>
@@ -1135,9 +1111,6 @@
               </item>
               <item row="4" column="1">
                <widget class="QLineEdit" name="localClientCode">
-                <property name="text">
-                 <string/>
-                </property>
                 <property name="readOnly">
                  <bool>true</bool>
                 </property>

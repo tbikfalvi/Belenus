@@ -12,8 +12,11 @@
 #include <QCoreApplication>
 
 #include <memory>
+#include <optional>
 
+class QEvent;
 class QLabel;
+class LanguageManager;
 class LicenceManager;
 class Logger;
 struct Licence;
@@ -24,17 +27,35 @@ class MainWindow : public QDialog {
     Q_DECLARE_TR_FUNCTIONS(MainWindow)
 
 public:
-    MainWindow(LicenceManager &licences, const Logger &logger);
+    MainWindow(LicenceManager &licences, const Logger &logger, LanguageManager &languages);
     ~MainWindow() override;
 
+protected:
+    void changeEvent(QEvent *event) override;
+
 private:
+    enum class ServerStatus { Unchecked, Connecting, Connected, Failed, NotStarted };
+
+    void retranslateWindow();
+    void syncLanguageSelection();
     static void showConnection(QLabel *light, QLabel *status, const char *icon, const QString &message);
-    void showDatabaseResult(DatabaseManager::Status status, const QString &details);
+    void showDatabaseResult(DatabaseManager::Status status, const UiMessage &details);
+    void renderDatabaseStatus();
     void showServerResult(bool ok);
+    void renderServerStatus();
     void setNetworkBusy(bool busy);
+    void showOnlineMessage(const UiMessage &message);
     void resetLocalLicence();
     void showLocalLicence(const Licence &licence);
     static QString localLicenceStatus(const QString &status);
 
     std::unique_ptr<Ui::WebAppWindow> ui;
+    LanguageManager &languages;
+    QString logError;
+    std::optional<DatabaseManager::Status> databaseStatus;
+    UiMessage databaseDetails;
+    ServerStatus serverStatus = ServerStatus::Unchecked;
+    UiMessage serverDetails;
+    UiMessage localMessage;
+    UiMessage onlineMessage;
 };

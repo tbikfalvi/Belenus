@@ -33,14 +33,14 @@ int main(int argc, char *argv[])
 
     DatabaseManager database(logger);
     if (app.arguments().contains(QStringLiteral("--check-qmysql"))) {
-        QTextStream(stdout) << database.driverMessage() << Qt::endl;
+        QTextStream(stdout) << database.driverMessage().text() << Qt::endl;
         return database.driverAvailable() ? 0 : 1;
     }
 
     FileManager files;
     WebCommunication web(logger);
     LicenceManager licences(database, web, files, logger);
-    MainWindow window(licences, logger);
+    MainWindow window(licences, logger, language);
     window.show();
     return app.exec();
 }
